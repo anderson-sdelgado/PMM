@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="br.com.usinasantafe.pmm">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:name=".PMMContext"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MenuInicialActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".ReceberAlarme">
+            <intent-filter>
+                <action android:name="EXECUTAR_ALARME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".BocalFertActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ConfiguracaoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EquipActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HorimetroActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ImplementoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ItemChecklistActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListaAcoplaCarretelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListaAtividadeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListaEquipFertActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListaHistApontaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListaOSRendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListaParadaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListaRecMangActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListaTurnoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuPrincNormalActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuPrincViagemActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OperadorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OSActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PressaoFertActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RaioFertActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RecolMangFertActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RendimentoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SenhaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TransbordoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".VelocidadeFertActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".PergAtualCheckListActivity"></activity>
+    </application>
+
+</manifest>
