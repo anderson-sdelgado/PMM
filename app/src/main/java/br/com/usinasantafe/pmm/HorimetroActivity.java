@@ -161,7 +161,7 @@ public class HorimetroActivity extends ActivityGeneric {
                                     configTO.commit();
 
                                     RendimentoTO rendimentoTO = new RendimentoTO();
-                                    List rendimentoList = rendimentoTO.get("statusRendimento", 1L);
+                                    List rendimentoList = rendimentoTO.get("idBolRendimento", boletimMMTO.getIdBoletim());
 
                                     if (rendimentoList.size() > 0) {
 

@@ -40,14 +40,13 @@ public class PMMContext extends Application {
     // 19 - Trocar de implemento
     private int contImplemento;
     private String textoHorimetro;
-    public static String versaoAplic = "1.22";
+    public static String versaoAplic = "1.23";
     private int contRendimento;
     private int posRendimento;
     private int contRecolMangFert;
     private int posRecolMangFert;
     private String verAtualCL;
     private Long posChecklist;
-//    private ArrayList<RespItemCheckListTO> listRespChecklist;
 
     @Override
     public void onCreate() {
@@ -92,14 +91,6 @@ public class PMMContext extends Application {
     public void setContImplemento(int contImplemento) {
         this.contImplemento = contImplemento;
     }
-
-//    public ArrayList<RespItemCheckListTO> getListRespChecklist() {
-//        return listRespChecklist;
-//    }
-//
-//    public void setListRespChecklist(ArrayList<RespItemCheckListTO> listRespChecklist) {
-//        this.listRespChecklist = listRespChecklist;
-//    }
 
     public Long getPosChecklist() {
         return posChecklist;
