@@ -7,8 +7,8 @@ public class UrlsConexaoHttp {
     public static String datahorahttp = "http://www.usinasantafe.com.br/pmm/datahora.php";
     public static String atualizaaplichttp = "http://www.usinasantafe.com.br/pmm/atualizaaplic.php";
 
-    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmmdev/";
-    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmmdev/";
+    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmm/";
+    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmm/";
 
     //public static String localPSTVariavel = "br.com.usinasantafe.pmm.to.tb.variaveis.";
     public static String localPSTEstatica = "br.com.usinasantafe.pmm.to.tb.estaticas.";
@@ -26,7 +26,7 @@ public class UrlsConexaoHttp {
     }
 
     public String getsInsertApontaMM() {
-        return urlPrincEnvio + "inserirapont.php";
+        return urlPrincEnvio + "inserirapontdt.php";
     }
 
     public String getsApontChecklist() {
@@ -34,11 +34,11 @@ public class UrlsConexaoHttp {
     }
 
     public String getsInsertBolAbertoMM() {
-        return urlPrincEnvio + "inserirbolaberto.php";
+        return urlPrincEnvio + "inserirbolabertodt.php";
     }
 
     public String getsInsertBolFechadoMM() {
-        return urlPrincEnvio + "inserirbolfechado.php";
+        return urlPrincEnvio + "inserirbolfechadodt.php";
     }
 
     public String urlVerifica(String classe) {
