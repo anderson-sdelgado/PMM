@@ -157,9 +157,9 @@ public class ManipDadosVerif {
 
             if(this.tipo.equals("Equip")) {
 
-                int pos1 = result.indexOf("_") + 1;
+                int pos1 = result.indexOf("#") + 1;
                 int pos2 = result.indexOf("|") + 1;
-                String objPrinc = result.substring(0, result.indexOf("_"));
+                String objPrinc = result.substring(0, result.indexOf("#"));
                 String objSeg = result.substring(pos1, (pos2 - 1));
                 String objTerc = result.substring(pos2, result.length());
 
@@ -254,8 +254,8 @@ public class ManipDadosVerif {
 
                 if (!result.contains("exceeded")) {
 
-                    int posicao = result.indexOf("_") + 1;
-                    String objPrinc = result.substring(0, result.indexOf("_"));
+                    int posicao = result.indexOf("#") + 1;
+                    String objPrinc = result.substring(0, result.indexOf("#"));
                     String objSeg = result.substring(posicao, result.length());
 
                     JSONObject jObj = new JSONObject(objPrinc);
@@ -335,8 +335,8 @@ public class ManipDadosVerif {
 
                 if (!result.contains("exceeded")) {
 
-                    int posicao = result.indexOf("_") + 1;
-                    String objPrinc = result.substring(0, result.indexOf("_"));
+                    int posicao = result.indexOf("#") + 1;
+                    String objPrinc = result.substring(0, result.indexOf("#"));
                     String objSeg = result.substring(posicao, result.length());
 
                     JSONObject jObj = new JSONObject(objPrinc);

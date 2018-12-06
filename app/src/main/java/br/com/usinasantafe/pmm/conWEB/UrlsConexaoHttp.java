@@ -4,9 +4,6 @@ public class UrlsConexaoHttp {
 
     private int tipoEnvio = 1;
 
-    public static String datahorahttp = "http://www.usinasantafe.com.br/pmm/datahora.php";
-    public static String atualizaaplichttp = "http://www.usinasantafe.com.br/pmm/atualizaaplic.php";
-
     public static String urlPrincipal = "http://www.usinasantafe.com.br/pmm/";
     public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmm/";
 
@@ -44,11 +41,11 @@ public class UrlsConexaoHttp {
     public String urlVerifica(String classe) {
         String retorno = "";
         if (classe.equals("Equip")) {
-            retorno = urlPrincEnvio + "verequip.php";
+            retorno = urlPrincEnvio + "verifequip.php";
         } else if (classe.equals("OS")) {
-            retorno = urlPrincEnvio + "veros.php";
+            retorno = urlPrincEnvio + "verifos.php";
         } else if (classe.equals("OSAtiv")) {
-            retorno = urlPrincEnvio + "veros.php";
+            retorno = urlPrincEnvio + "verifos.php";
         } else if (classe.equals("Parada")) {
             retorno = urlPrincEnvio + "atualativpar.php";
         } else if (classe.equals("Atualiza")) {
