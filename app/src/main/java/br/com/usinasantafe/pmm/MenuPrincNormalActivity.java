@@ -168,8 +168,6 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                                     finish();
                                 }
                             }
-
-
                         }
                     } else if (text.equals("FINALIZAR BOLETIM")) {
                         if (configuracaoTO.getDtUltApontConfig().equals("")) {

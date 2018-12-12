@@ -110,7 +110,10 @@ public class ImplementoActivity extends ActivityGeneric {
                 Long impl = 0L;
                 boolean verif = true;
 
+                List implementoList;
+
                 if (!editTextPadrao.getText().toString().equals("")) {
+
                     impl = Long.parseLong(editTextPadrao.getText().toString());
 
                     ArrayList listaPesq = new ArrayList();
@@ -118,7 +121,7 @@ public class ImplementoActivity extends ActivityGeneric {
 
                     EspecificaPesquisa pesquisa = new EspecificaPesquisa();
                     pesquisa.setCampo("codEquip");
-                    pesquisa.setValor(Long.parseLong(editTextPadrao.getText().toString()));
+                    pesquisa.setValor(impl);
                     listaPesq.add(pesquisa);
 
                     EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
@@ -127,7 +130,7 @@ public class ImplementoActivity extends ActivityGeneric {
                     listaPesq.add(pesquisa2);
 
                     List equipSegList = equipSegTO.get(listaPesq);
-                    if(equipSegList.size() == 0){
+                    if (equipSegList.size() == 0) {
 
                         verif = false;
                         AlertDialog.Builder alerta = new AlertDialog.Builder(ImplementoActivity.this);
@@ -142,42 +145,70 @@ public class ImplementoActivity extends ActivityGeneric {
 
                         alerta.show();
 
+                    } else {
+
+                        EspecificaPesquisa pesq1 = new EspecificaPesquisa();
+                        pesq1.setCampo("codEquipImplemento");
+                        pesq1.setValor(impl);
+                        listaPesq.add(pesq1);
+
+                        EspecificaPesquisa pesq2 = new EspecificaPesquisa();
+                        pesq2.setCampo("idApontImplemento");
+                        pesq2.setValor(0);
+                        listaPesq.add(pesq2);
+
+                        ImplementoTO implementoTO = new ImplementoTO();
+                        implementoList = implementoTO.get(listaPesq);
+                        if (implementoList.size() == 0) {
+                            verif = false;
+                            AlertDialog.Builder alerta = new AlertDialog.Builder(ImplementoActivity.this);
+                            alerta.setTitle("ATENCAO");
+                            alerta.setMessage("NUMERAÇÃO DE IMPLEMENTO REPETIDA! FAVOR, DIGITE A NUMERAÇÃO CORRETA DO 2º IMPLEMENTO.");
+                            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+
+                            alerta.show();
+                        }
+
                     }
 
                 }
 
-                if(verif) {
+                if (verif) {
 
                     Intent it;
-                    ImplementoTO implementoTO = new ImplementoTO();
-                    List implementoList;
                     ArrayList listaPesq = new ArrayList();
                     switch (pmmContext.getContImplemento()) {
                         case 1:
 
-                            EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-                            pesquisa.setCampo("posImplemento");
-                            pesquisa.setValor(1L);
-                            listaPesq.add(pesquisa);
+                            EspecificaPesquisa pesq1 = new EspecificaPesquisa();
+                            pesq1.setCampo("posImplemento");
+                            pesq1.setValor(1L);
+                            listaPesq.add(pesq1);
 
-                            EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-                            pesquisa2.setCampo("idApontImplemento");
-                            pesquisa2.setValor(0);
-                            listaPesq.add(pesquisa2);
+                            EspecificaPesquisa pesq2 = new EspecificaPesquisa();
+                            pesq2.setCampo("idApontImplemento");
+                            pesq2.setValor(0);
+                            listaPesq.add(pesq2);
 
-                            implementoList = implementoTO.get(listaPesq);
+                            ImplementoTO implemento1TO = new ImplementoTO();
+                            implementoList = implemento1TO.get(listaPesq);
 
                             for (int i = 0; i < implementoList.size(); i++) {
-                                implementoTO = (ImplementoTO) implementoList.get(i);
-                                implementoTO.delete();
+                                implemento1TO = (ImplementoTO) implementoList.get(i);
+                                implemento1TO.delete();
                             }
                             implementoList.clear();
                             listaPesq.clear();
 
-                            implementoTO.setPosImplemento(1L);
-                            implementoTO.setCodEquipImplemento(impl);
-                            implementoTO.setIdApontImplemento(0L);
-                            implementoTO.insert();
+                            implemento1TO.setPosImplemento(1L);
+                            implemento1TO.setCodEquipImplemento(impl);
+                            implemento1TO.setIdApontImplemento(0L);
+                            implemento1TO.insert();
 
                             pmmContext.setContImplemento(pmmContext.getContImplemento() + 1);
                             it = new Intent(ImplementoActivity.this, ImplementoActivity.class);
@@ -187,132 +218,101 @@ public class ImplementoActivity extends ActivityGeneric {
 
                         case 2:
 
-                            EspecificaPesquisa pesq = new EspecificaPesquisa();
-                            pesq.setCampo("posImplemento");
-                            pesq.setValor(1L);
-                            listaPesq.add(pesq);
+                            EspecificaPesquisa pesq3 = new EspecificaPesquisa();
+                            pesq3.setCampo("posImplemento");
+                            pesq3.setValor(2L);
+                            listaPesq.add(pesq3);
 
-                            EspecificaPesquisa pesq2 = new EspecificaPesquisa();
-                            pesq2.setCampo("idApontImplemento");
-                            pesq2.setValor(0);
-                            listaPesq.add(pesq2);
+                            EspecificaPesquisa pesq4 = new EspecificaPesquisa();
+                            pesq4.setCampo("idApontImplemento");
+                            pesq4.setValor(0);
+                            listaPesq.add(pesq4);
 
-                            implementoList = implementoTO.get(listaPesq);
-                            implementoTO = (ImplementoTO) implementoList.get(0);
+                            ImplementoTO implemento2TO = new ImplementoTO();
+                            implementoList = implemento2TO.get(listaPesq);
+
+                            for (int i = 0; i < implementoList.size(); i++) {
+                                implemento2TO = (ImplementoTO) implementoList.get(i);
+                                implemento2TO.delete();
+                            }
                             implementoList.clear();
                             listaPesq.clear();
 
-                            if(!impl.equals(implementoTO.getCodEquipImplemento())){
+                            implemento2TO.setPosImplemento(2L);
+                            implemento2TO.setCodEquipImplemento(impl);
+                            implemento2TO.setIdApontImplemento(0L);
+                            implemento2TO.insert();
 
-                                EspecificaPesquisa pesquisa3 = new EspecificaPesquisa();
-                                pesquisa3.setCampo("posImplemento");
-                                pesquisa3.setValor(2L);
-                                listaPesq.add(pesquisa3);
+                            break;
 
-                                EspecificaPesquisa pesquisa4 = new EspecificaPesquisa();
-                                pesquisa4.setCampo("idApontImplemento");
-                                pesquisa4.setValor(0);
-                                listaPesq.add(pesquisa4);
+                    }
 
-                                implementoList = implementoTO.get(listaPesq);
+                    if(pmmContext.getContImplemento() == 2){
 
-                                for (int i = 0; i < implementoList.size(); i++) {
-                                    implementoTO = (ImplementoTO) implementoList.get(i);
-                                    implementoTO.delete();
-                                }
-                                implementoList.clear();
-                                listaPesq.clear();
+                        if (pmmContext.getVerPosTela() == 1) {
 
-                                implementoTO.setPosImplemento(2L);
-                                implementoTO.setCodEquipImplemento(impl);
-                                implementoTO.setIdApontImplemento(0L);
-                                implementoTO.insert();
+                            configTO = new ConfiguracaoTO();
+                            List listConfigTO = configTO.all();
+                            configTO = (ConfiguracaoTO) listConfigTO.get(0);
+                            listConfigTO.clear();
 
-                                if (pmmContext.getVerPosTela() == 1) {
+                            equipTO = new EquipTO();
+                            List listEquipTO = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getCodEquipBoletim());
+                            equipTO = (EquipTO) listEquipTO.get(0);
+                            listEquipTO.clear();
 
-                                    configTO = new ConfiguracaoTO();
-                                    List listConfigTO = configTO.all();
-                                    configTO = (ConfiguracaoTO) listConfigTO.get(0);
-                                    listConfigTO.clear();
+                            TurnoTO turnoTO = new TurnoTO();
+                            List turnoList = turnoTO.get("idTurno", pmmContext.getBoletimMMTO().getCodTurnoBoletim());
+                            turnoTO = (TurnoTO) turnoList.get(0);
 
-                                    equipTO = new EquipTO();
-                                    List listEquipTO = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getCodEquipBoletim());
-                                    equipTO = (EquipTO) listEquipTO.get(0);
-                                    listEquipTO.clear();
+                            if ((equipTO.getIdChecklist() > 0) && (configTO.getUltTurnoCLConfig() != turnoTO.getIdTurno())) {
 
-                                    TurnoTO turnoTO = new TurnoTO();
-                                    List turnoList = turnoTO.get("idTurno", pmmContext.getBoletimMMTO().getCodTurnoBoletim());
-                                    turnoTO = (TurnoTO) turnoList.get(0);
+                                pmmContext.getBoletimMMTO().setStatusBoletim(1L);
+                                ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true);
+                                ManipDadosEnvio.getInstance().envioDadosPrinc();
 
-                                    if ((equipTO.getIdChecklist() > 0) && (configTO.getUltTurnoCLConfig() != turnoTO.getIdTurno())) {
+                                ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
+                                List itemCheckList =  itemCheckListTO.get("idChecklist", equipTO.getIdChecklist());
+                                Long qtde = (long) itemCheckList.size();
+                                itemCheckList.clear();
 
-                                        pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                                        ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true);
-                                        ManipDadosEnvio.getInstance().envioDadosPrinc();
+                                CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
+                                cabecCheckListTO.setDtCabecCheckList(Tempo.getInstance().data());
+                                cabecCheckListTO.setEquipCabecCheckList(configTO.getEquipConfig());
+                                cabecCheckListTO.setFuncCabecCheckList(pmmContext.getBoletimMMTO().getCodMotoBoletim());
+                                cabecCheckListTO.setTurnoCabecCheckList(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
+                                cabecCheckListTO.setQtdeItemCabecCheckList(qtde);
+                                cabecCheckListTO.setStatusCabecCheckList(1L);
+                                cabecCheckListTO.setDtAtualCheckList("0");
+                                cabecCheckListTO.insert();
 
-                                        ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
-                                        List itemCheckList =  itemCheckListTO.get("idChecklist", equipTO.getIdChecklist());
-                                        Long qtde = (long) itemCheckList.size();
-                                        itemCheckList.clear();
-
-                                        CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-                                        cabecCheckListTO.setDtCabecCheckList(Tempo.getInstance().data());
-                                        cabecCheckListTO.setEquipCabecCheckList(configTO.getEquipConfig());
-                                        cabecCheckListTO.setFuncCabecCheckList(pmmContext.getBoletimMMTO().getCodMotoBoletim());
-                                        cabecCheckListTO.setTurnoCabecCheckList(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
-                                        cabecCheckListTO.setQtdeItemCabecCheckList(qtde);
-                                        cabecCheckListTO.setStatusCabecCheckList(1L);
-                                        cabecCheckListTO.setDtAtualCheckList("0");
-                                        cabecCheckListTO.insert();
-
-                                        pmmContext.setPosChecklist(1L);
-                                        it = new Intent(ImplementoActivity.this, ItemChecklistActivity.class);
-                                        startActivity(it);
-                                        finish();
-
-                                    }
-                                    else{
-
-                                        configTO.setHorimetroConfig(pmmContext.getBoletimMMTO().getHodometroInicialBoletim());
-                                        configTO.update();
-                                        configTO.commit();
-                                        pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                                        ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false);
-                                        ManipDadosEnvio.getInstance().envioDadosPrinc();
-                                        it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
-                                        startActivity(it);
-                                        finish();
-
-                                    }
-
-
-                                } else {
-
-                                    it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
-                                    startActivity(it);
-                                    finish();
-
-
-                                }
+                                pmmContext.setPosChecklist(1L);
+                                it = new Intent(ImplementoActivity.this, ItemChecklistActivity.class);
+                                startActivity(it);
+                                finish();
 
                             }
                             else{
 
-                                AlertDialog.Builder alerta = new AlertDialog.Builder(ImplementoActivity.this);
-                                alerta.setTitle("ATENCAO");
-                                alerta.setMessage("NUMERAÇÃO DE IMPLEMENTO REPETIDA! FAVOR, DIGITE A NUMERAÇÃO CORRETA DO 2º IMPLEMENTO.");
-                                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                    }
-                                });
-
-                                alerta.show();
+                                configTO.setHorimetroConfig(pmmContext.getBoletimMMTO().getHodometroInicialBoletim());
+                                configTO.update();
+                                configTO.commit();
+                                pmmContext.getBoletimMMTO().setStatusBoletim(1L);
+                                ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false);
+                                ManipDadosEnvio.getInstance().envioDadosPrinc();
+                                it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
+                                startActivity(it);
+                                finish();
 
                             }
 
-                            break;
+                        } else {
+
+                            it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
+                            startActivity(it);
+                            finish();
+
+                        }
 
                     }
 
@@ -334,19 +334,17 @@ public class ImplementoActivity extends ActivityGeneric {
 
     }
 
-    public void onBackPressed()  {
+    public void onBackPressed() {
         if (pmmContext.getContImplemento() == 1) {
-            if(pmmContext.getVerPosTela() == 1){
+            if (pmmContext.getVerPosTela() == 1) {
                 Intent it = new Intent(ImplementoActivity.this, HorimetroActivity.class);
                 startActivity(it);
                 finish();
-            }
-            else if(pmmContext.getContImplemento() == 3){
-                Intent it = new Intent(ImplementoActivity.this, ListaParadaActivity.class);
+            } else if (pmmContext.getVerPosTela() == 19) {
+                Intent it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
                 startActivity(it);
                 finish();
             }
-
         } else {
             pmmContext.setContImplemento(pmmContext.getContImplemento() - 1);
             Intent it = new Intent(ImplementoActivity.this, ImplementoActivity.class);
