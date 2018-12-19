@@ -79,7 +79,7 @@ public class ListaParadaActivity extends ActivityGeneric {
             itens[i] = paradaTO.getCodParada() + " - " + paradaTO.getDescrParada();
         }
 
-        adapter = new ArrayAdapter<String>(this, R.layout.activity_item_lista, R.id.textViewItemListParada, itens);
+        adapter = new ArrayAdapter<String>(this, R.layout.activity_item_parada, R.id.textViewItemListParada, itens);
         lista = (ListView) findViewById(R.id.listViewMotParada);
         lista.setAdapter(adapter);
 

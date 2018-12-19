@@ -163,10 +163,8 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
             for (int i = 0; i < listAtiv.size(); i++) {
                 atividadeTO = (AtividadeTO) listAtiv.get(i);
-                Log.i("PMM", "ATIVIDADE EQUIP = " + atividadeTO.getCodAtiv());
                 for (int j = 0; j < lroa.size(); j++) {
                     rOSAtivTO = (ROSAtivTO) lroa.get(j);
-                    Log.i("PMM", "ATIVIDADE OS = " + rOSAtivTO.getCodAtiv());
                     if (Objects.equals(atividadeTO.getCodAtiv(), rOSAtivTO.getCodAtiv())) {
                         lAtivExib.add(atividadeTO);
                     }
