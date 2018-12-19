@@ -277,13 +277,13 @@ public class ImplementoActivity extends ActivityGeneric {
                                 itemCheckList.clear();
 
                                 CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-                                cabecCheckListTO.setDtCabecCheckList(Tempo.getInstance().data());
-                                cabecCheckListTO.setEquipCabecCheckList(configTO.getEquipConfig());
-                                cabecCheckListTO.setFuncCabecCheckList(pmmContext.getBoletimMMTO().getCodMotoBoletim());
-                                cabecCheckListTO.setTurnoCabecCheckList(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
-                                cabecCheckListTO.setQtdeItemCabecCheckList(qtde);
-                                cabecCheckListTO.setStatusCabecCheckList(1L);
-                                cabecCheckListTO.setDtAtualCheckList("0");
+                                cabecCheckListTO.setDtCab(Tempo.getInstance().data());
+                                cabecCheckListTO.setEquipCab(configTO.getEquipConfig());
+                                cabecCheckListTO.setFuncCab(pmmContext.getBoletimMMTO().getCodMotoBoletim());
+                                cabecCheckListTO.setTurnoCab(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
+                                cabecCheckListTO.setQtdeItemCab(qtde);
+                                cabecCheckListTO.setStatusCab(1L);
+                                cabecCheckListTO.setDtAtualCab("0");
                                 cabecCheckListTO.insert();
 
                                 pmmContext.setPosChecklist(1L);

@@ -27,7 +27,7 @@ public class UrlsConexaoHttp {
     }
 
     public String getsApontChecklist() {
-        return urlPrincEnvio + "apontchecklist.php";
+        return urlPrincEnvio + "apontchecklistdt.php";
     }
 
     public String getsInsertBolAbertoMM() {

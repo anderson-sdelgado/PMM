@@ -14,86 +14,82 @@ public class CabecCheckListTO extends Entidade {
     private static final long serialVersionUID = 1L;
 
     @DatabaseField(generatedId=true)
-    private Long idCabecCheckList;
+    private Long idCab;
     @DatabaseField
-    private Long equipCabecCheckList;
+    private Long equipCab;
     @DatabaseField
-    private String dtCabecCheckList;
+    private String dtCab;
     @DatabaseField
-    private Long funcCabecCheckList;
+    private Long funcCab;
     @DatabaseField
-    private Long turnoCabecCheckList;
+    private Long turnoCab;
     @DatabaseField
-    private Long statusCabecCheckList;  //1 - Aberto; 2 - Encerrado
+    private Long statusCab;  //1 - Aberto; 2 - Encerrado
     @DatabaseField
-    private Long qtdeItemCabecCheckList;
+    private Long qtdeItemCab;
     @DatabaseField
-    private String dtAtualCheckList;
+    private String dtAtualCab;
 
     public CabecCheckListTO() {
     }
 
-    public Long getIdCabecCheckList() {
-        return idCabecCheckList;
+    public Long getIdCab() {
+        return idCab;
     }
 
-//    public void setIdCabecCheckList(Long idCabecCheckList) {
-//        this.idCabecCheckList = idCabecCheckList;
-//    }
-
-    public Long getEquipCabecCheckList() {
-        return equipCabecCheckList;
+    public Long getEquipCab() {
+        return equipCab;
     }
 
-    public void setEquipCabecCheckList(Long equipCabecCheckList) {
-        this.equipCabecCheckList = equipCabecCheckList;
+    public void setEquipCab(Long equipCab) {
+        this.equipCab = equipCab;
     }
 
-    public String getDtCabecCheckList() {
-        return dtCabecCheckList;
+    public String getDtCab() {
+        return dtCab;
     }
 
-    public void setDtCabecCheckList(String dtCabecCheckList) {
-        this.dtCabecCheckList = dtCabecCheckList;
+    public void setDtCab(String dtCab) {
+        this.dtCab = dtCab;
     }
 
-    public Long getFuncCabecCheckList() {
-        return funcCabecCheckList;
+    public Long getFuncCab() {
+        return funcCab;
     }
 
-    public void setFuncCabecCheckList(Long funcCabecCheckList) {
-        this.funcCabecCheckList = funcCabecCheckList;
+    public void setFuncCab(Long funcCab) {
+        this.funcCab = funcCab;
     }
 
-    public Long getTurnoCabecCheckList() {
-        return turnoCabecCheckList;
+    public Long getTurnoCab() {
+        return turnoCab;
     }
 
-    public void setTurnoCabecCheckList(Long turnoCabecCheckList) {
-        this.turnoCabecCheckList = turnoCabecCheckList;
+    public void setTurnoCab(Long turnoCab) {
+        this.turnoCab = turnoCab;
     }
 
-    public Long getStatusCabecCheckList() {
-        return statusCabecCheckList;
+    public Long getStatusCab() {
+        return statusCab;
     }
 
-    public void setStatusCabecCheckList(Long statusCabecCheckList) {
-        this.statusCabecCheckList = statusCabecCheckList;
+    public void setStatusCab(Long statusCab) {
+        this.statusCab = statusCab;
     }
 
-    public Long getQtdeItemCabecCheckList() {
-        return qtdeItemCabecCheckList;
+    public Long getQtdeItemCab() {
+        return qtdeItemCab;
     }
 
-    public void setQtdeItemCabecCheckList(Long qtdeItemCabecCheckList) {
-        this.qtdeItemCabecCheckList = qtdeItemCabecCheckList;
+    public void setQtdeItemCab(Long qtdeItemCab) {
+        this.qtdeItemCab = qtdeItemCab;
     }
 
-    public String getDtAtualCheckList() {
-        return dtAtualCheckList;
+    public String getDtAtualCab() {
+        return dtAtualCab;
     }
 
-    public void setDtAtualCheckList(String dtAtualCheckList) {
-        this.dtAtualCheckList = dtAtualCheckList;
+    public void setDtAtualCab(String dtAtualCab) {
+        this.dtAtualCab = dtAtualCab;
     }
 }

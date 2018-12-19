@@ -18,9 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.usinasantafe.pmm.ItemChecklistActivity;
 import br.com.usinasantafe.pmm.MenuInicialActivity;
-import br.com.usinasantafe.pmm.PergAtualCheckListActivity;
 import br.com.usinasantafe.pmm.conWEB.ConHttpPostVerGenerico;
 import br.com.usinasantafe.pmm.conWEB.UrlsConexaoHttp;
 import br.com.usinasantafe.pmm.pst.GenericRecordable;
@@ -30,7 +28,7 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.AtualizaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
+
 import android.os.AsyncTask;
 
 /**
@@ -638,13 +636,13 @@ public class ManipDadosVerif {
         itemCheckList.clear();
 
         CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-        cabecCheckListTO.setDtCabecCheckList(Tempo.getInstance().data());
-        cabecCheckListTO.setEquipCabecCheckList(equipTO.getCodEquip());
-        cabecCheckListTO.setFuncCabecCheckList(boletimMMTO.getCodMotoBoletim());
-        cabecCheckListTO.setTurnoCabecCheckList(boletimMMTO.getCodTurnoBoletim());
-        cabecCheckListTO.setQtdeItemCabecCheckList(qtde);
-        cabecCheckListTO.setStatusCabecCheckList(1L);
-        cabecCheckListTO.setDtAtualCheckList(data);
+        cabecCheckListTO.setDtCab(Tempo.getInstance().data());
+        cabecCheckListTO.setEquipCab(equipTO.getCodEquip());
+        cabecCheckListTO.setFuncCab(boletimMMTO.getCodMotoBoletim());
+        cabecCheckListTO.setTurnoCab(boletimMMTO.getCodTurnoBoletim());
+        cabecCheckListTO.setQtdeItemCab(qtde);
+        cabecCheckListTO.setStatusCab(1L);
+        cabecCheckListTO.setDtAtualCab(data);
         cabecCheckListTO.insert();
 
     }

@@ -52,11 +52,11 @@ public class ManipDadosEnvio {
     public void salvaCheckList() {
 
         CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-        List cabecCheckListLista = cabecCheckListTO.get("statusCabecCheckList", 1L);
+        List cabecCheckListLista = cabecCheckListTO.get("statusCab", 1L);
         cabecCheckListTO = (CabecCheckListTO) cabecCheckListLista.get(0);
         cabecCheckListLista.clear();
 
-        cabecCheckListTO.setStatusCabecCheckList(2L);
+        cabecCheckListTO.setStatusCab(2L);
         cabecCheckListTO.update();
 
         enviarChecklist();
@@ -222,7 +222,7 @@ public class ManipDadosEnvio {
             jsonArrayCabec.add(gsonCabec.toJsonTree(cabecCheckListTO, cabecCheckListTO.getClass()));
 
             RespItemCheckListTO respItemCheckListTO = new RespItemCheckListTO();
-            List listaItem = respItemCheckListTO.get("idCabecItemCheckList", cabecCheckListTO.getIdCabecCheckList());
+            List listaItem = respItemCheckListTO.get("idCabIt", cabecCheckListTO.getIdCab());
 
             for (int j = 0; j < listaItem.size(); j++) {
 
@@ -503,16 +503,16 @@ public class ManipDadosEnvio {
     public void delChecklist() {
 
         CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-        List cabecCheckList = cabecCheckListTO.get("statusCabecCheckList", 2L);
+        List cabecCheckList = cabecCheckListTO.get("statusCab", 2L);
         ArrayList<Long> rLista = new ArrayList<Long>();
 
         for (int i = 0; i < cabecCheckList.size(); i++) {
             cabecCheckListTO = (CabecCheckListTO) cabecCheckList.get(i);
-            rLista.add(cabecCheckListTO.getIdCabecCheckList());
+            rLista.add(cabecCheckListTO.getIdCab());
         }
 
         RespItemCheckListTO respItemCheckListTO = new RespItemCheckListTO();
-        List respItemList = respItemCheckListTO.in("idCabecItemCheckList", rLista);
+        List respItemList = respItemCheckListTO.in("idCabIt", rLista);
 
         for (int j = 0; j < respItemList.size(); j++) {
             respItemCheckListTO = (RespItemCheckListTO) respItemList.get(j);
@@ -659,7 +659,7 @@ public class ManipDadosEnvio {
 
     public List boletinsChecklist(){
         CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-        return cabecCheckListTO.get("statusCabecCheckList", 2L);
+        return cabecCheckListTO.get("statusCab", 2L);
     }
 
     public List boletinsFechado() {

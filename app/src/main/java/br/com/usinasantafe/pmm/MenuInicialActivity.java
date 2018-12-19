@@ -6,13 +6,10 @@ import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
@@ -20,11 +17,8 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.j256.ormlite.field.DatabaseField;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,7 +29,6 @@ import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosReceb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.AlocaCarretelTO;
@@ -117,9 +110,13 @@ public class MenuInicialActivity extends ActivityGeneric {
             pmmContext.setBoletimMMTO((BoletimMMTO) boletimList.get(0));
 
             CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-            List cabecList = cabecCheckListTO.get("statusCabecCheckList", 1L);
+            List cabecList = cabecCheckListTO.get("statusCab", 1L);
 
             if(cabecList.size() == 0) {
+
+                if(progressBar.isShowing()){
+                    progressBar.dismiss();
+                }
 
                 Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
                 startActivity(it);
@@ -129,11 +126,18 @@ public class MenuInicialActivity extends ActivityGeneric {
             else{
 
                 RespItemCheckListTO respItemCheckListTO = new RespItemCheckListTO();
-                List respList = respItemCheckListTO.get("idCabecItemCheckList", cabecCheckListTO.getIdCabecCheckList());
 
-                for (int i = 0; i < respList.size(); i++) {
-                    respItemCheckListTO = (RespItemCheckListTO) respList.get(i);
-                    respItemCheckListTO.delete();
+                if(respItemCheckListTO.hasElements()){
+                    cabecCheckListTO = (CabecCheckListTO) cabecList.get(0);
+                    List respList = respItemCheckListTO.get("idCabIt", cabecCheckListTO.getIdCab());
+                    for (int i = 0; i < respList.size(); i++) {
+                        respItemCheckListTO = (RespItemCheckListTO) respList.get(i);
+                        respItemCheckListTO.delete();
+                    }
+                }
+
+                if(progressBar.isShowing()){
+                    progressBar.dismiss();
                 }
 
                 pmmContext.setPosChecklist(1L);
@@ -173,100 +177,100 @@ public class MenuInicialActivity extends ActivityGeneric {
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
                 String text = textView.getText().toString();
 
-                    if (text.equals("BOLETIM")) {
-                        MotoristaTO motoristaTO = new MotoristaTO();
-                        if (motoristaTO.hasElements()) {
-                            pmmContext.setVerPosTela(1);
+                if (text.equals("BOLETIM")) {
+                    MotoristaTO motoristaTO = new MotoristaTO();
+                    if (motoristaTO.hasElements()) {
+                        pmmContext.setVerPosTela(1);
 
-                            TransbordoTO transbordoTO = new TransbordoTO();
-                            transbordoTO.deleteAll();
+                        TransbordoTO transbordoTO = new TransbordoTO();
+                        transbordoTO.deleteAll();
 
-                            ImplementoTO implementoTO = new ImplementoTO();
-                            List implementoList = implementoTO.get("idApontImplemento", 0L);
+                        ImplementoTO implementoTO = new ImplementoTO();
+                        List implementoList = implementoTO.get("idApontImplemento", 0L);
 
-                            for (int i = 0; i < implementoList.size(); i++) {
-                                implementoTO = (ImplementoTO) implementoList.get(i);
-                                implementoTO.delete();
-                            }
-
-                            AlocaCarretelTO alocaCarretelTO = new AlocaCarretelTO();
-                            alocaCarretelTO.deleteAll();
-
-                            OSTO osto = new OSTO();
-                            osto.deleteAll();
-
-                            ROSAtivTO rosAtivTO = new ROSAtivTO();
-                            rosAtivTO.deleteAll();
-
-                            Intent it = new Intent(MenuInicialActivity.this, OperadorActivity.class);
-                            startActivity(it);
-                            finish();
+                        for (int i = 0; i < implementoList.size(); i++) {
+                            implementoTO = (ImplementoTO) implementoList.get(i);
+                            implementoTO.delete();
                         }
-                    } else if (text.equals("CONFIGURAÇÃO")) {
-                        Intent it = new Intent(MenuInicialActivity.this, SenhaActivity.class);
+
+                        AlocaCarretelTO alocaCarretelTO = new AlocaCarretelTO();
+                        alocaCarretelTO.deleteAll();
+
+                        OSTO osto = new OSTO();
+                        osto.deleteAll();
+
+                        ROSAtivTO rosAtivTO = new ROSAtivTO();
+                        rosAtivTO.deleteAll();
+
+                        Intent it = new Intent(MenuInicialActivity.this, OperadorActivity.class);
                         startActivity(it);
                         finish();
-                    } else if (text.equals("SAIR")) {
-                        Intent intent = new Intent(Intent.ACTION_MAIN);
-                        intent.addCategory(Intent.CATEGORY_HOME);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    } else if (text.equals("ATUALIZAR DADOS")) {
+                    }
+                } else if (text.equals("CONFIGURAÇÃO")) {
+                    Intent it = new Intent(MenuInicialActivity.this, SenhaActivity.class);
+                    startActivity(it);
+                    finish();
+                } else if (text.equals("SAIR")) {
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.addCategory(Intent.CATEGORY_HOME);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } else if (text.equals("ATUALIZAR DADOS")) {
 
-                        ConexaoWeb conexaoWeb = new ConexaoWeb();
+                    ConexaoWeb conexaoWeb = new ConexaoWeb();
 
-                        if (conexaoWeb.verificaConexao(MenuInicialActivity.this)) {
+                    if (conexaoWeb.verificaConexao(MenuInicialActivity.this)) {
+                        progressBar = new ProgressDialog(v.getContext());
+                        progressBar.setCancelable(true);
+                        progressBar.setMessage("ATUALIZANDO ...");
+                        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                        progressBar.setProgress(0);
+                        progressBar.setMax(100);
+                        progressBar.show();
+                        ManipDadosReceb.getInstance().atualizarBD(progressBar);
+                        ManipDadosReceb.getInstance().setContext(MenuInicialActivity.this);
+                    } else {
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(MenuInicialActivity.this);
+                        alerta.setTitle("ATENÇÃO");
+                        alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
+                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+
+                        alerta.show();
+                    }
+
+                } else if (text.equals("REENVIO DE DADOS")) {
+
+                    ManipDadosEnvio.getInstance().envioDados(MenuInicialActivity.this);
+
+                } else if (text.equals("ATUALIZAR APLICATIVO")) {
+
+                    ConexaoWeb conexaoWeb = new ConexaoWeb();
+                    configTO = new ConfiguracaoTO();
+                    List configList = configTO.all();
+                    if(conexaoWeb.verificaConexao(v.getContext()))
+                    {
+
+                        if(configList.size() > 0){
+
                             progressBar = new ProgressDialog(v.getContext());
                             progressBar.setCancelable(true);
-                            progressBar.setMessage("ATUALIZANDO ...");
-                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                            progressBar.setProgress(0);
-                            progressBar.setMax(100);
+                            progressBar.setMessage("Buscando Atualização...");
                             progressBar.show();
-                            ManipDadosReceb.getInstance().atualizarBD(progressBar);
-                            ManipDadosReceb.getInstance().setContext(MenuInicialActivity.this);
-                        } else {
-                            AlertDialog.Builder alerta = new AlertDialog.Builder(MenuInicialActivity.this);
-                            alerta.setTitle("ATENÇÃO");
-                            alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
-                            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
 
-                                }
-                            });
-
-                            alerta.show();
+                            configTO = (ConfiguracaoTO) configList.get(0);
+                            AtualizaTO atualizaTO = new AtualizaTO();
+                            atualizaTO.setIdEquipAtualizacao(configTO.getEquipConfig());
+                            atualizaTO.setVersaoAtual(pmmContext.versaoAplic);
+                            ManipDadosVerif.getInstance().verAtualizacao(atualizaTO, MenuInicialActivity.this, progressBar);
                         }
-
-                    } else if (text.equals("REENVIO DE DADOS")) {
-
-                        ManipDadosEnvio.getInstance().envioDados(MenuInicialActivity.this);
-
-                    } else if (text.equals("ATUALIZAR APLICATIVO")) {
-
-                        ConexaoWeb conexaoWeb = new ConexaoWeb();
-                        configTO = new ConfiguracaoTO();
-                        List configList = configTO.all();
-                        if(conexaoWeb.verificaConexao(v.getContext()))
-                        {
-
-                            if(configList.size() > 0){
-
-                                progressBar = new ProgressDialog(v.getContext());
-                                progressBar.setCancelable(true);
-                                progressBar.setMessage("Buscando Atualização...");
-                                progressBar.show();
-
-                                configTO = (ConfiguracaoTO) configList.get(0);
-                                AtualizaTO atualizaTO = new AtualizaTO();
-                                atualizaTO.setIdEquipAtualizacao(configTO.getEquipConfig());
-                                atualizaTO.setVersaoAtual(pmmContext.versaoAplic);
-                                ManipDadosVerif.getInstance().verAtualizacao(atualizaTO, MenuInicialActivity.this, progressBar);
-                            }
-                        }
-
                     }
+
+                }
 
             }
 
@@ -465,6 +469,41 @@ public class MenuInicialActivity extends ActivityGeneric {
             Log.i("PMM", "tipoEquipFert = " + equipTO.getTipoEquipFert());
 
         }
+
+        CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
+        List cabecList = cabecCheckListTO.all();
+
+        for (int j = 0; j < cabecList.size(); j++) {
+
+            cabecCheckListTO = (CabecCheckListTO) cabecList.get(j);
+
+            Log.i("PMM", "CabecCheckList");
+            Log.i("PMM", "IdCabecCheck = " + cabecCheckListTO.getIdCab());
+            Log.i("PMM", "EquipCabecCheckList = " + cabecCheckListTO.getEquipCab());
+            Log.i("PMM", "DtCabecCheckList = " + cabecCheckListTO.getDtCab());
+            Log.i("PMM", "FuncCabecCheckList = " + cabecCheckListTO.getFuncCab());
+            Log.i("PMM", "TurnoCabecCheckList = " + cabecCheckListTO.getTurnoCab());
+            Log.i("PMM", "StatusCabecCheckList = " + cabecCheckListTO.getStatusCab());
+            Log.i("PMM", "QtdeItemCabecCheckList = " + cabecCheckListTO.getQtdeItemCab());
+            Log.i("PMM", "DtAtualCheckList = " + cabecCheckListTO.getDtAtualCab());
+
+        }
+
+        RespItemCheckListTO respItemCheckListTO = new RespItemCheckListTO();
+        List respItemList = respItemCheckListTO.all();
+
+        for (int j = 0; j < respItemList.size(); j++) {
+
+            respItemCheckListTO = (RespItemCheckListTO) respItemList.get(j);
+
+            Log.i("PMM", "RespItemCheckList");
+            Log.i("PMM", "IdItemCheckList = " + respItemCheckListTO.getIdIt());
+            Log.i("PMM", "IdItItemCheckList() = " + respItemCheckListTO.getIdItBDIt());
+            Log.i("PMM", "IdCabecItemCheckList = " + respItemCheckListTO.getIdCabIt());
+            Log.i("PMM", "OpcaoItemCheckList = " + respItemCheckListTO.getOpIt());
+
+        }
+
 
         Log.i("PMM", "versão = " + PMMContext.versaoAplic);
 

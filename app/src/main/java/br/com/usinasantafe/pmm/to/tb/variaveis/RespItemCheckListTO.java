@@ -16,46 +16,46 @@ public class RespItemCheckListTO extends Entidade {
 
 //    @DatabaseField(id=true)
     @DatabaseField(generatedId=true)
-    private Long idItemCheckList;
+    private Long idIt;
     @DatabaseField
-    private Long idItItemCheckList;
+    private Long idItBDIt;
     @DatabaseField
-    private Long idCabecItemCheckList;
+    private Long idCabIt;
     @DatabaseField
-    private Long opcaoItemCheckList;
+    private Long opIt;
 
     public RespItemCheckListTO() {
     }
 
-    public Long getIdItemCheckList() {
-        return idItemCheckList;
+    public Long getIdIt() {
+        return idIt;
     }
 
 //    public void setIdItemCheckList(Long idItemCheckList) {
 //        this.idItemCheckList = idItemCheckList;
 //    }
 
-    public Long getIdItItemCheckList() {
-        return idItItemCheckList;
+    public Long getIdItBDIt() {
+        return idItBDIt;
     }
 
-    public void setIdItItemCheckList(Long idItItemCheckList) {
-        this.idItItemCheckList = idItItemCheckList;
+    public void setIdItBDIt(Long idItBDIt) {
+        this.idItBDIt = idItBDIt;
     }
 
-    public Long getIdCabecItemCheckList() {
-        return idCabecItemCheckList;
+    public Long getIdCabIt() {
+        return idCabIt;
     }
 
-    public void setIdCabecItemCheckList(Long idCabecItemCheckList) {
-        this.idCabecItemCheckList = idCabecItemCheckList;
+    public void setIdCabIt(Long idCabIt) {
+        this.idCabIt = idCabIt;
     }
 
-    public Long getOpcaoItemCheckList() {
-        return opcaoItemCheckList;
+    public Long getOpIt() {
+        return opIt;
     }
 
-    public void setOpcaoItemCheckList(Long opcaoItemCheckList) {
-        this.opcaoItemCheckList = opcaoItemCheckList;
+    public void setOpIt(Long opIt) {
+        this.opIt = opIt;
     }
 }

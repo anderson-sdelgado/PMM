@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +16,6 @@ import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
 
 public class PergAtualCheckListActivity extends ActivityGeneric {
 
@@ -51,13 +49,13 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
                 itemCheckList.clear();
 
                 CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-                cabecCheckListTO.setDtCabecCheckList(Tempo.getInstance().data());
-                cabecCheckListTO.setEquipCabecCheckList(equipTO.getCodEquip());
-                cabecCheckListTO.setFuncCabecCheckList(pmmContext.getBoletimMMTO().getCodMotoBoletim());
-                cabecCheckListTO.setTurnoCabecCheckList(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
-                cabecCheckListTO.setQtdeItemCabecCheckList(qtde);
-                cabecCheckListTO.setStatusCabecCheckList(1L);
-                cabecCheckListTO.setDtAtualCheckList("0");
+                cabecCheckListTO.setDtCab(Tempo.getInstance().data());
+                cabecCheckListTO.setEquipCab(equipTO.getCodEquip());
+                cabecCheckListTO.setFuncCab(pmmContext.getBoletimMMTO().getCodMotoBoletim());
+                cabecCheckListTO.setTurnoCab(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
+                cabecCheckListTO.setQtdeItemCab(qtde);
+                cabecCheckListTO.setStatusCab(1L);
+                cabecCheckListTO.setDtAtualCab("0");
                 cabecCheckListTO.insert();
 
                 Intent it = new Intent(PergAtualCheckListActivity.this, ItemChecklistActivity.class);

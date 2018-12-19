@@ -2,7 +2,6 @@ package br.com.usinasantafe.pmm;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,7 +13,6 @@ import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
@@ -40,7 +38,7 @@ public class ItemChecklistActivity extends ActivityGeneric {
         Button buttonCancChecklist = (Button) findViewById(R.id.buttonCancChecklist);
 
         cabecCheckListTO = new CabecCheckListTO();
-        List cabecCheckListLista = cabecCheckListTO.get("statusCabecCheckList", 1L);
+        List cabecCheckListLista = cabecCheckListTO.get("statusCab", 1L);
         cabecCheckListTO = (CabecCheckListTO) cabecCheckListLista.get(0);
         cabecCheckListLista.clear();
 
@@ -68,13 +66,13 @@ public class ItemChecklistActivity extends ActivityGeneric {
 
         ArrayList respPesq = new ArrayList();
         EspecificaPesquisa pesq1 = new EspecificaPesquisa();
-        pesq1.setCampo("idItItemCheckList");
+        pesq1.setCampo("idItBDIt");
         pesq1.setValor(itemCheckListTO.getIdItemChecklist());
         respPesq.add(pesq1);
 
         EspecificaPesquisa pesq2 = new EspecificaPesquisa();
-        pesq2.setCampo("idCabecItemCheckList");
-        pesq2.setValor(cabecCheckListTO.getIdCabecCheckList());
+        pesq2.setCampo("idCabIt");
+        pesq2.setValor(cabecCheckListTO.getIdCab());
         respPesq.add(pesq2);
 
         respItemCheckListTO = new RespItemCheckListTO();
@@ -131,12 +129,12 @@ public class ItemChecklistActivity extends ActivityGeneric {
 
     public void proximaTela(Long opcao){
 
-        respItemCheckListTO.setIdCabecItemCheckList(cabecCheckListTO.getIdCabecCheckList());
-        respItemCheckListTO.setIdItItemCheckList(itemCheckListTO.getIdItemChecklist());
-        respItemCheckListTO.setOpcaoItemCheckList(opcao);
+        respItemCheckListTO.setIdCabIt(cabecCheckListTO.getIdCab());
+        respItemCheckListTO.setIdItBDIt(itemCheckListTO.getIdItemChecklist());
+        respItemCheckListTO.setOpIt(opcao);
         respItemCheckListTO.insert();
 
-        if(cabecCheckListTO.getQtdeItemCabecCheckList() == pmmContext.getPosChecklist()){
+        if(cabecCheckListTO.getQtdeItemCab() == pmmContext.getPosChecklist()){
 
             ConfiguracaoTO configTO = new ConfiguracaoTO();
             List listConfigTO = configTO.all();
