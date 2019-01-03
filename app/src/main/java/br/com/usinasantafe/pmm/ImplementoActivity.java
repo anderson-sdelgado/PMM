@@ -130,6 +130,8 @@ public class ImplementoActivity extends ActivityGeneric {
                     listaPesq.add(pesquisa2);
 
                     List equipSegList = equipSegTO.get(listaPesq);
+                    listaPesq.clear();
+
                     if (equipSegList.size() == 0) {
 
                         verif = false;
@@ -147,19 +149,23 @@ public class ImplementoActivity extends ActivityGeneric {
 
                     } else {
 
+                        ArrayList listaPesq2 = new ArrayList();
+
                         EspecificaPesquisa pesq1 = new EspecificaPesquisa();
                         pesq1.setCampo("codEquipImplemento");
                         pesq1.setValor(impl);
-                        listaPesq.add(pesq1);
+                        listaPesq2.add(pesq1);
 
                         EspecificaPesquisa pesq2 = new EspecificaPesquisa();
                         pesq2.setCampo("idApontImplemento");
                         pesq2.setValor(0);
-                        listaPesq.add(pesq2);
+                        listaPesq2.add(pesq2);
 
                         ImplementoTO implementoTO = new ImplementoTO();
-                        implementoList = implementoTO.get(listaPesq);
-                        if (implementoList.size() == 0) {
+                        implementoList = implementoTO.get(listaPesq2);
+                        listaPesq2.clear();
+
+                        if (implementoList.size() != 0) {
                             verif = false;
                             AlertDialog.Builder alerta = new AlertDialog.Builder(ImplementoActivity.this);
                             alerta.setTitle("ATENCAO");

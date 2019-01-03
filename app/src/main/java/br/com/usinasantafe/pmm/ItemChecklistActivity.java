@@ -164,7 +164,7 @@ public class ItemChecklistActivity extends ActivityGeneric {
 
     public void retornoTela(){
 
-        if(pmmContext.getPosChecklist() != 0){
+        if(pmmContext.getPosChecklist() > 1){
             pmmContext.setPosChecklist(pmmContext.getPosChecklist() - 1);
             Intent it = new Intent(ItemChecklistActivity.this, ItemChecklistActivity.class);
             startActivity(it);
