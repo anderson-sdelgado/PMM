@@ -20,6 +20,7 @@ import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.bo.Tempo;
+import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
@@ -252,10 +253,25 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                 List listBoletim = boletimMMTO.get("statusBoletim", 1L);
 
                                 if (listBoletim.size() > 0) {
+
+                                    boletimMMTO = (BoletimMMTO) listBoletim.get(0);
+
                                     RendimentoTO rendimentoTO = new RendimentoTO();
-                                    List rendList = rendimentoTO.get("nroOSRendimento", pmmContext.getApontaMMTO().getOsAponta());
+                                    ArrayList listaPesq = new ArrayList();
+
+                                    EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+                                    pesquisa.setCampo("idBolRendimento");
+                                    pesquisa.setValor(boletimMMTO.getIdBoletim());
+                                    listaPesq.add(pesquisa);
+
+                                    EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
+                                    pesquisa2.setCampo("nroOSRendimento");
+                                    pesquisa2.setValor(pmmContext.getApontaMMTO().getOsAponta());
+                                    listaPesq.add(pesquisa2);
+
+                                    List rendList = rendimentoTO.get(listaPesq);
+
                                     if (rendList.size() == 0) {
-                                        boletimMMTO = (BoletimMMTO) listBoletim.get(0);
                                         rendimentoTO.setIdBolRendimento(boletimMMTO.getIdBoletim());
                                         rendimentoTO.setIdExtBolRendimento(boletimMMTO.getIdExtBoletim());
                                         rendimentoTO.setNroOSRendimento(pmmContext.getApontaMMTO().getOsAponta());

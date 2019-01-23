@@ -249,78 +249,75 @@ public class ImplementoActivity extends ActivityGeneric {
                             implemento2TO.setIdApontImplemento(0L);
                             implemento2TO.insert();
 
-                            break;
+                            if (pmmContext.getVerPosTela() == 1) {
 
-                    }
+                                configTO = new ConfiguracaoTO();
+                                List listConfigTO = configTO.all();
+                                configTO = (ConfiguracaoTO) listConfigTO.get(0);
+                                listConfigTO.clear();
 
-                    if(pmmContext.getContImplemento() == 2){
+                                equipTO = new EquipTO();
+                                List listEquipTO = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getCodEquipBoletim());
+                                equipTO = (EquipTO) listEquipTO.get(0);
+                                listEquipTO.clear();
 
-                        if (pmmContext.getVerPosTela() == 1) {
+                                TurnoTO turnoTO = new TurnoTO();
+                                List turnoList = turnoTO.get("idTurno", pmmContext.getBoletimMMTO().getCodTurnoBoletim());
+                                turnoTO = (TurnoTO) turnoList.get(0);
 
-                            configTO = new ConfiguracaoTO();
-                            List listConfigTO = configTO.all();
-                            configTO = (ConfiguracaoTO) listConfigTO.get(0);
-                            listConfigTO.clear();
+                                if ((equipTO.getIdChecklist() > 0) && (configTO.getUltTurnoCLConfig() != turnoTO.getIdTurno())) {
 
-                            equipTO = new EquipTO();
-                            List listEquipTO = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getCodEquipBoletim());
-                            equipTO = (EquipTO) listEquipTO.get(0);
-                            listEquipTO.clear();
+                                    pmmContext.getBoletimMMTO().setStatusBoletim(1L);
+                                    ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true);
+                                    ManipDadosEnvio.getInstance().envioDadosPrinc();
 
-                            TurnoTO turnoTO = new TurnoTO();
-                            List turnoList = turnoTO.get("idTurno", pmmContext.getBoletimMMTO().getCodTurnoBoletim());
-                            turnoTO = (TurnoTO) turnoList.get(0);
+                                    ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
+                                    List itemCheckList =  itemCheckListTO.get("idChecklist", equipTO.getIdChecklist());
+                                    Long qtde = (long) itemCheckList.size();
+                                    itemCheckList.clear();
 
-                            if ((equipTO.getIdChecklist() > 0) && (configTO.getUltTurnoCLConfig() != turnoTO.getIdTurno())) {
+                                    CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
+                                    cabecCheckListTO.setDtCab(Tempo.getInstance().data());
+                                    cabecCheckListTO.setEquipCab(configTO.getEquipConfig());
+                                    cabecCheckListTO.setFuncCab(pmmContext.getBoletimMMTO().getCodMotoBoletim());
+                                    cabecCheckListTO.setTurnoCab(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
+                                    cabecCheckListTO.setQtdeItemCab(qtde);
+                                    cabecCheckListTO.setStatusCab(1L);
+                                    cabecCheckListTO.setDtAtualCab("0");
+                                    cabecCheckListTO.insert();
 
-                                pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                                ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true);
-                                ManipDadosEnvio.getInstance().envioDadosPrinc();
+                                    pmmContext.setPosChecklist(1L);
+                                    it = new Intent(ImplementoActivity.this, ItemChecklistActivity.class);
+                                    startActivity(it);
+                                    finish();
 
-                                ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
-                                List itemCheckList =  itemCheckListTO.get("idChecklist", equipTO.getIdChecklist());
-                                Long qtde = (long) itemCheckList.size();
-                                itemCheckList.clear();
+                                }
+                                else{
 
-                                CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-                                cabecCheckListTO.setDtCab(Tempo.getInstance().data());
-                                cabecCheckListTO.setEquipCab(configTO.getEquipConfig());
-                                cabecCheckListTO.setFuncCab(pmmContext.getBoletimMMTO().getCodMotoBoletim());
-                                cabecCheckListTO.setTurnoCab(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
-                                cabecCheckListTO.setQtdeItemCab(qtde);
-                                cabecCheckListTO.setStatusCab(1L);
-                                cabecCheckListTO.setDtAtualCab("0");
-                                cabecCheckListTO.insert();
+                                    configTO.setHorimetroConfig(pmmContext.getBoletimMMTO().getHodometroInicialBoletim());
+                                    configTO.update();
+                                    configTO.commit();
+                                    pmmContext.getBoletimMMTO().setStatusBoletim(1L);
+                                    ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false);
+                                    ManipDadosEnvio.getInstance().envioDadosPrinc();
+                                    it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
+                                    startActivity(it);
+                                    finish();
 
-                                pmmContext.setPosChecklist(1L);
-                                it = new Intent(ImplementoActivity.this, ItemChecklistActivity.class);
-                                startActivity(it);
-                                finish();
+                                }
 
-                            }
-                            else{
+                            } else {
 
-                                configTO.setHorimetroConfig(pmmContext.getBoletimMMTO().getHodometroInicialBoletim());
-                                configTO.update();
-                                configTO.commit();
-                                pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                                ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false);
-                                ManipDadosEnvio.getInstance().envioDadosPrinc();
                                 it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
                                 startActivity(it);
                                 finish();
 
                             }
 
-                        } else {
-
-                            it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
-                            startActivity(it);
-                            finish();
-
-                        }
+                            break;
 
                     }
+
 
                 }
 

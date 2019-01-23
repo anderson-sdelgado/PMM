@@ -62,7 +62,7 @@ public class MenuInicialActivity extends ActivityGeneric {
         pmmContext = (PMMContext) getApplication();
         textViewProcesso = (TextView) findViewById(R.id.textViewProcesso);
 
-//        teste();
+        teste();
 
         if(!checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
             String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};

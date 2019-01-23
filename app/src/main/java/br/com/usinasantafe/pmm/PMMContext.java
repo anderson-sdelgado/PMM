@@ -22,7 +22,7 @@ public class PMMContext extends Application {
     //1 - Inicio do boletim;
     // 2 - Trabalhando Moto Mec;
     // 3 - Parada Moto Mec;
-    // 4 - Finalisar Boletim Moto Mec;
+    // 4 - Finalizar Boletim Moto Mec;
     // 5 - Trabalhando Fert;
     // 6 - Trocar Transbordo;
     // 7 - Editar Rendimento;
@@ -40,7 +40,7 @@ public class PMMContext extends Application {
     // 19 - Trocar de implemento
     private int contImplemento;
     private String textoHorimetro;
-    public static String versaoAplic = "1.26";
+    public static String versaoAplic = "1.27";
     private int contRendimento;
     private int posRendimento;
     private int contRecolMangFert;
