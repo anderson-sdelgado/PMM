@@ -304,7 +304,9 @@ public class HorimetroActivity extends ActivityGeneric {
                 List turnoList = turnoTO.get("idTurno", pmmContext.getBoletimMMTO().getCodTurnoBoletim());
                 turnoTO = (TurnoTO) turnoList.get(0);
 
-                if ((equipTO.getIdChecklist() > 0) && (configTO.getUltTurnoCLConfig() != turnoTO.getIdTurno())) {
+                if ((equipTO.getIdChecklist() > 0) &&
+                        ((configTO.getUltTurnoCLConfig() != turnoTO.getIdTurno())
+                        || ((configTO.getUltTurnoCLConfig() == turnoTO.getIdTurno()) && (!configTO.getDtUltCLConfig().equals(Tempo.getInstance().dataSHora()))))) {
 
                     pmmContext.getBoletimMMTO().setStatusBoletim(1L);
                     ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true);

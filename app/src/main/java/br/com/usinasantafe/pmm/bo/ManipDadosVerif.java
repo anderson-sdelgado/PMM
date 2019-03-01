@@ -217,6 +217,7 @@ public class ManipDadosVerif {
                     configuracaoTO.setClasseEquipConfig(equipTO.getCodClasseEquip());
                     configuracaoTO.setHorimetroConfig(equipTO.getHorimetroEquip());
                     configuracaoTO.setUltTurnoCLConfig(0L);
+                    configuracaoTO.setDtUltCLConfig("");
                     configuracaoTO.setDtUltApontConfig("");
                     configuracaoTO.setSenhaConfig(this.senha);
                     configuracaoTO.insert();

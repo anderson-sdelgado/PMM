@@ -126,6 +126,7 @@ public class ManipDadosEnvio {
             configTO = (ConfiguracaoTO) listConfigTO.get(0);
             listConfigTO.clear();
             configTO.setUltTurnoCLConfig(boletimMMTO.getCodTurnoBoletim());
+            configTO.setDtUltCLConfig(Tempo.getInstance().dataSHora());
             configTO.setDtUltApontConfig(datahora);
             configTO.update();
 

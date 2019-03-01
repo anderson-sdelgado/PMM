@@ -18,17 +18,10 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.DataTO;
 
 public class Tempo {
 
-	private Timer timerAtual = new Timer();
-    private TimerTask task;
-    private final Handler handler = new Handler();
     private Date dataHora;
-    private final long REFRESH_TIME = 60000;
     
     private static Tempo instance = null;
     private boolean envioDado;
-	private Context context;
-    
-	private int conBoletim;
 	
 	public Tempo() {
 		// TODO Auto-generated constructor stub

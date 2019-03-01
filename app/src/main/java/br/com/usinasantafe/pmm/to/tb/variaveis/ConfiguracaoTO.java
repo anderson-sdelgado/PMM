@@ -10,14 +10,18 @@ public class ConfiguracaoTO extends Entidade {
 	
 	private static final long serialVersionUID = 1L;
 
+    @DatabaseField(generatedId=true)
+    private Long idConfig;
 	@DatabaseField
 	private Long equipConfig;
 	@DatabaseField
 	private Long classeEquipConfig;
-	@DatabaseField(id=true)
+    @DatabaseField
 	private String senhaConfig;
 	@DatabaseField
 	private Long ultTurnoCLConfig;
+    @DatabaseField
+    private String dtUltCLConfig;
 	@DatabaseField
 	private String dtUltApontConfig;
 	@DatabaseField
@@ -85,4 +89,11 @@ public class ConfiguracaoTO extends Entidade {
 		this.horimetroConfig = horimetroConfig;
 	}
 
+    public String getDtUltCLConfig() {
+        return dtUltCLConfig;
+    }
+
+    public void setDtUltCLConfig(String dtUltCLConfig) {
+        this.dtUltCLConfig = dtUltCLConfig;
+    }
 }
