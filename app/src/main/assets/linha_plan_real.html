@@ -1,0 +1,40 @@
+<html>
+<head>
+    <script type="text/javascript" src="./loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['MÊS', 'PLANEJADO', 'REALIZADO'],
+          ['JAN', 411.29, 296.21],
+          ['FEV', 1074.29, 296.21],
+          ['MAR', 1877.54, 296.21],
+          ['ABR', 2719.04, 296.21],
+          ['MAI', 3178.04, 296.21],
+          ['JUN', 3351.44, 296.21],
+          ['JUL', 3351.44, 296.21],
+          ['AGO', 3351.44, 296.21],
+          ['SET', 3499.5, 296.21],
+          ['OUT', 3627, 296.21],
+          ['NOV', 3627, 296.21],
+          ['DEZ', 3627, 296.21]
+        ]);
+
+        var options = {
+          title: '',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+</head>
+<body>
+<div id="curve_chart" style="width: 100%; height: 100%;"></div>
+</body>
+</html>

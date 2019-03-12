@@ -24,6 +24,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,6 +32,7 @@
         <receiver android:name=".ReceberAlarme">
             <intent-filter>
                 <action android:name="EXECUTAR_ALARME" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
@@ -110,7 +112,10 @@
         <activity
             android:name=".VelocidadeFertActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".PergAtualCheckListActivity"></activity>
+        <activity android:name=".PergAtualCheckListActivity" />
+        <activity android:name=".GrafProdActivity" />
+        <activity android:name=".GrafDispActivity" />
+        <activity android:name=".GrafTermQualActivity"></activity>
     </application>
 
 </manifest>

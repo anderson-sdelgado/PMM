@@ -498,7 +498,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
             Log.i("PMM", "RespItemCheckList");
             Log.i("PMM", "IdItemCheckList = " + respItemCheckListTO.getIdIt());
-            Log.i("PMM", "IdItItemCheckList() = " + respItemCheckListTO.getIdItBDIt());
+            Log.i("PMM", "IdItItemCheckList = " + respItemCheckListTO.getIdItBDIt());
             Log.i("PMM", "IdCabecItemCheckList = " + respItemCheckListTO.getIdCabIt());
             Log.i("PMM", "OpcaoItemCheckList = " + respItemCheckListTO.getOpIt());
 
