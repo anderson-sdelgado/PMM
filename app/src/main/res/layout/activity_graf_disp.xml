@@ -1,9 +1,425 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GrafDispActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewTitulo"
+                    style="@style/TextViewTituloLista"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/texto_titulo_gestao_vista" />
+
+                <TextView
+                    android:id="@+id/textViewSubTituloTratPlant"
+                    style="@style/TextViewTituloLista"
+                    android:textAlignment="center"
+                    android:text="@string/texto_subtitulo_trator_plant" />
+
+                <LinearLayout
+                    android:id="@+id/layoutTratorPlantOper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textDispOper1"
+                        android:layout_width="100dp"
+                        android:layout_height="300dp"
+                        android:rotation="-90"
+                        android:text="DISP. OPERAÇÃO" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_trator_plant_oper_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_trator_plant_oper_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_trator_plant_oper_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_trator_plant_oper_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_trator_plant_oper_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_trator_plant_oper_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutTratorPlantCampo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textCampo1"
+                        android:layout_width="100dp"
+                        android:layout_height="300dp"
+                        android:rotation="-90"
+                        android:text="CAMPO" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_trator_plant_campo_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_trator_plant_campo_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_trator_plant_campo_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_trator_plant_campo_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_trator_plant_campo_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_trator_plant_campo_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewSubTituloCaminhaoMuda"
+                    style="@style/TextViewTituloLista"
+                    android:textAlignment="center"
+                    android:text="@string/texto_subtitulo_caminhao_muda" />
+
+                <LinearLayout
+                    android:id="@+id/layoutCaminhaoOper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textDispOper2"
+                        android:layout_width="100dp"
+                        android:layout_height="300dp"
+                        android:rotation="-90"
+                        android:text="DISP. OPERAÇÃO" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_caminhao_oper_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_caminhao_oper_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_caminhao_oper_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_caminhao_oper_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_caminhao_oper_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_caminhao_oper_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutCaminhaoCampo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textCampo2"
+                        android:layout_width="100dp"
+                        android:layout_height="300dp"
+                        android:rotation="-90"
+                        android:text="CAMPO" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_caminhao_campo_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_caminhao_campo_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_caminhao_campo_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_caminhao_campo_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_caminhao_campo_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_caminhao_campo_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewSubTituloColhedora"
+                    style="@style/TextViewTituloLista"
+                    android:textAlignment="center"
+                    android:text="@string/texto_subtitulo_colhedora" />
+
+                <LinearLayout
+                    android:id="@+id/layoutColhedoraOper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textDispOper3"
+                        android:layout_width="100dp"
+                        android:layout_height="300dp"
+                        android:rotation="-90"
+                        android:text="DISP. OPERAÇÃO" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_colhedora_oper_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_colhedora_oper_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_colhedora_oper_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_colhedora_oper_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_colhedora_oper_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_colhedora_oper_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutColhedoraCampo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textCampo3"
+                        android:layout_width="100dp"
+                        android:layout_height="300dp"
+                        android:rotation="-90"
+                        android:text="CAMPO" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_colhedora_campo_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_colhedora_campo_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_colhedora_campo_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_colhedora_campo_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_colhedora_campo_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_colhedora_campo_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewSubTituloTratorTransb"
+                    style="@style/TextViewTituloLista"
+                    android:textAlignment="center"
+                    android:text="@string/texto_subtitulo_trator_tranb" />
+
+                <LinearLayout
+                    android:id="@+id/layoutTratorTransbOper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textDispOper4"
+                        android:layout_width="100dp"
+                        android:layout_height="300dp"
+                        android:rotation="-90"
+                        android:text="DISP. OPERAÇÃO" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_trator_transb_oper_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_trator_transb_oper_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_trator_transb_oper_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_trator_transb_oper_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_trator_transb_oper_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_trator_transb_oper_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutTratorTransbCampo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textCampo4"
+                        android:layout_width="100dp"
+                        android:layout_height="300dp"
+                        android:rotation="-90"
+                        android:text="CAMPO" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_trator_transb_campo_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_trator_transb_campo_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_trator_transb_campo_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_trator_transb_campo_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_trator_transb_campo_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_trator_transb_campo_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </HorizontalScrollView>
+
+</RelativeLayout>

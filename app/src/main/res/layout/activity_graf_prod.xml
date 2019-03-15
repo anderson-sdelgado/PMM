@@ -1,9 +1,275 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GrafProdActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewTitulo"
+                    style="@style/TextViewTituloLista"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/texto_titulo_gestao_vista" />
+
+                <TextView
+                    android:id="@+id/textViewSubTituloProdFrente"
+                    style="@style/TextViewTituloLista"
+                    android:textAlignment="center"
+                    android:text="@string/texto_subtitulo_prod_frente" />
+
+                <LinearLayout
+                    android:id="@+id/layoutTratorTransbCampo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_prod_frente_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_prod_frente_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_prod_frente_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_prod_frente_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_prod_frente_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_prod_frente_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewSubTituloMediaPlant"
+                    style="@style/TextViewTituloLista"
+                    android:textAlignment="center"
+                    android:text="@string/texto_subtitulo_media_plant" />
+
+                <LinearLayout
+                    android:id="@+id/layoutMediaPlant"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_media_plant_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_media_plant_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_media_plant_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_media_plant_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_media_plant_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/graf_media_plant_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:weightSum="3">
+
+                    <TableRow
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/textTitulo"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="7"
+                            android:layout_gravity="center"
+                            android:text="PLANEJADO X REALIZADO" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/textSubTitulo"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="" />
+
+                        <TextView
+                            android:id="@+id/textSubTitulo2"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:layout_gravity="center"
+                            android:text="PLANEJADO" />
+
+
+                        <TextView
+                            android:id="@+id/textSubTitulo3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:layout_gravity="center"
+                            android:text="REALIZADO" />
+
+
+                        <TextView
+                            android:id="@+id/textSubTitulo4"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:layout_gravity="center"
+                            android:text="SALDO" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/textJan"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:text="JAN" />
+
+                        <TextView
+                            android:id="@+id/textJanPlanMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:text="411,29" />
+
+
+                        <TextView
+                            android:id="@+id/textJanPlanAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:text="411,29" />
+
+
+                        <TextView
+                            android:id="@+id/textJanRealMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textJanRealAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textJanSalMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:text="-115,08" />
+
+                        <TextView
+                            android:id="@+id/textJanSalAcumul"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:text="-115,08" />
+
+                    </TableRow>
+
+                </TableLayout>
+
+                <TextView
+                    android:id="@+id/textViewSubTituloPlanReal"
+                    style="@style/TextViewTituloLista"
+                    android:textAlignment="center"
+                    android:text="@string/texto_subtitulo_plan_real" />
+
+                <ProgressBar
+                    android:id="@+id/progress_bar_linha_plan_real"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+
+                <com.anychart.AnyChartView
+                    android:id="@+id/linha_plan_real"
+                    android:layout_width="900dp"
+                    android:layout_height="300dp" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </HorizontalScrollView>
+
+</RelativeLayout>

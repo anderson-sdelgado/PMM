@@ -63,4 +63,19 @@
     <string name="texto_padrao_nao">NÃO</string>
     <string name="texto_padrao_sim">SIM</string>
     <string name="texto_atual_checklist">ATENÇÃO! HÁ NOVAS ATUALIZAÇÕES PARA QUESTÕES DE CHECKLIST. DESEJA ATUALIZÁ-LAS?</string>
+    <string name="texto_titulo_gestao_vista">GESTÃO À VISTA PLANTIO MECANIZADO</string>
+    <string name="texto_subtitulo_prod_frente">PRODUÇÃO FRENTE</string>
+    <string name="texto_subtitulo_plan_real">PLANEJADO X REALIZADO</string>
+    <string name="texto_subtitulo_media_plant">MEDIA PLANTADORA</string>
+    <string name="texto_subtitulo_trator_plant">TRATOR/PLANTADORA</string>
+    <string name="texto_subtitulo_caminhao_muda">CAMINHÃO TRANP MUDA</string>
+    <string name="texto_subtitulo_colhedora">COLHEDORA</string>
+    <string name="texto_subtitulo_trator_tranb">TRATOR TRANSBORDO</string>
+    <string name="texto_subtitulo_calib_adub">VARIAÇÃO DA CALIBRAÇÃO</string>
+    <string name="texto_subtitulo_calib_inset">VARIAÇÃO CALIBRAÇÃO INSETICIDA/FUNGICIDA</string>
+    <string name="texto_subtitulo_gemas">GEMAS VIÁVEIS POR METRO</string>
+    <string name="texto_subtitulo_alt_cobr">ALTURA DE COBRIÇÃO</string>
+    <string name="texto_subtitulo_prof_sulc">PROFUNDIDADE DA SULCAÇÃO</string>
+    <string name="texto_subtitulo_falhas_dep">FALHAS DE DEPOSIÇÃO</string>
+    <string name="texto_subtitulo_qual_geral">QUALIDADE GERAL</string>
 </resources>
