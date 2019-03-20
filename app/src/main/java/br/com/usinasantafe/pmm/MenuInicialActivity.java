@@ -64,10 +64,16 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         teste();
 
-        Intent it = new Intent(MenuInicialActivity.this, GrafTermQualActivity.class);
-        startActivity(it);
-        finish();
+        progressBar = new ProgressDialog(this);
 
+        progressBar.setCancelable(true);
+        progressBar.setMessage("Buscando Atualização...");
+        progressBar.show();
+
+        ManipDadosVerif.getInstance().verDados("", "GrafPlantio"
+                , MenuInicialActivity.this, GrafProdActivity.class, progressBar);
+
+//
 //        if(!checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
 //            String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
 //            ActivityCompat.requestPermissions((Activity) this, PERMISSIONS, 112);

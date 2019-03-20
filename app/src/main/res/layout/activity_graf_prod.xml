@@ -23,18 +23,28 @@
 
                 <TextView
                     android:id="@+id/textViewTitulo"
-                    style="@style/TextViewTituloLista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="30dp"
                     android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textAlignment="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:layout_marginBottom="20dp"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="30dp"
                     android:text="@string/texto_titulo_gestao_vista" />
 
                 <TextView
                     android:id="@+id/textViewSubTituloProdFrente"
-                    style="@style/TextViewTituloLista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="20dp"
                     android:text="@string/texto_subtitulo_prod_frente" />
 
                 <LinearLayout
@@ -77,8 +87,15 @@
 
                 <TextView
                     android:id="@+id/textViewSubTituloMediaPlant"
-                    style="@style/TextViewTituloLista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textAlignment="center"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="20dp"
                     android:text="@string/texto_subtitulo_media_plant" />
 
                 <LinearLayout
@@ -121,9 +138,10 @@
 
                 <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="600dp"
                     android:layout_weight="1"
-                    android:weightSum="3">
+                    android:weightSum="15"
+                    android:layout_marginTop="30dp" >
 
                     <TableRow
                         android:layout_height="0dp"
@@ -137,6 +155,12 @@
                             android:layout_height="match_parent"
                             android:layout_weight="7"
                             android:layout_gravity="center"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
                             android:text="PLANEJADO X REALIZADO" />
 
                     </TableRow>
@@ -160,6 +184,12 @@
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:layout_gravity="center"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:paddingBottom="5dp"
+                            android:paddingTop="5dp"
                             android:text="PLANEJADO" />
 
 
@@ -169,6 +199,12 @@
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:layout_gravity="center"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:paddingBottom="5dp"
+                            android:paddingTop="5dp"
                             android:text="REALIZADO" />
 
 
@@ -178,7 +214,100 @@
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:layout_gravity="center"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:paddingBottom="5dp"
+                            android:paddingTop="5dp"
                             android:text="SALDO" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/textTitMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="DESCR. MÊS" />
+
+                        <TextView
+                            android:id="@+id/textTitPlanMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="MÊS" />
+
+
+                        <TextView
+                            android:id="@+id/textTitPlanAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="ACUMULADO" />
+
+
+                        <TextView
+                            android:id="@+id/textTitRealMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="MÊS" />
+
+                        <TextView
+                            android:id="@+id/textTitRealAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="ACUMULADO" />
+
+                        <TextView
+                            android:id="@+id/textTitSaldMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="MÊS" />
+
+                        <TextView
+                            android:id="@+id/textTitSaldAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="ACUMULADO" />
 
                     </TableRow>
 
@@ -194,6 +323,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
                             android:text="JAN" />
 
                         <TextView
@@ -202,8 +333,9 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
                             android:text="411,29" />
-
 
                         <TextView
                             android:id="@+id/textJanPlanAcum"
@@ -211,8 +343,9 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
                             android:text="411,29" />
-
 
                         <TextView
                             android:id="@+id/textJanRealMes"
@@ -220,6 +353,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
                             android:text="296,21" />
 
                         <TextView
@@ -228,43 +363,920 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
                             android:text="296,21" />
 
                         <TextView
-                            android:id="@+id/textJanSalMes"
+                            android:id="@+id/textJanSaldMes"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
                             android:text="-115,08" />
 
                         <TextView
-                            android:id="@+id/textJanSalAcumul"
+                            android:id="@+id/textJanSaldAcum"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/textFev"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="FEV" />
+
+                        <TextView
+                            android:id="@+id/textFevPlanMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textFevPlanAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textFevRealMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textFevRealAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textFevSaldMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                        <TextView
+                            android:id="@+id/textFevSaldAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/textMar"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="MAR" />
+
+                        <TextView
+                            android:id="@+id/textMarPlanMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+
+                        <TextView
+                            android:id="@+id/textMarPlanAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+
+                        <TextView
+                            android:id="@+id/textMarRealMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textMarRealAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textMarSaldMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                        <TextView
+                            android:id="@+id/textMarSaldAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/textAbr"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="ABR" />
+
+                        <TextView
+                            android:id="@+id/textAbrPlanMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textAbrPlanAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textAbrRealMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textAbrRealAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textAbrSaldMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                        <TextView
+                            android:id="@+id/textAbrSaldAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/textMai"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="MAI" />
+
+                        <TextView
+                            android:id="@+id/textMaiPlanMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textMaiPlanAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textMaiRealMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textMaiRealAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textMaiSaldMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                        <TextView
+                            android:id="@+id/textMaiSaldAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/textJun"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="JUN" />
+
+                        <TextView
+                            android:id="@+id/textJunPlanMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textJunPlanAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textJunRealMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textJunRealAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textJunSaldMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                        <TextView
+                            android:id="@+id/textJunSaldAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/textJul"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="JUL" />
+
+                        <TextView
+                            android:id="@+id/textJulPlanMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textJulPlanAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textJulRealMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textJulRealAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textJulSaldMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                        <TextView
+                            android:id="@+id/textJulSaldAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/textAgo"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="AGO" />
+
+                        <TextView
+                            android:id="@+id/textAgoPlanMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+
+                        <TextView
+                            android:id="@+id/textAgoPlanAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+
+                        <TextView
+                            android:id="@+id/textAgoRealMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textAgoRealAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textAgoSaldMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                        <TextView
+                            android:id="@+id/textAgoSaldAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/textSet"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="SET" />
+
+                        <TextView
+                            android:id="@+id/textSetPlanMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textSetPlanAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textSetRealMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textSetRealAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textSetSaldMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                        <TextView
+                            android:id="@+id/textSetSaldAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/textOut"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="OUT" />
+
+                        <TextView
+                            android:id="@+id/textOutPlanMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textOutPlanAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textOutRealMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textOutRealAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textOutSaldMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                        <TextView
+                            android:id="@+id/textOutSaldAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/textNov"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="NOV" />
+
+                        <TextView
+                            android:id="@+id/textNovPlanMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textNovPlanAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textNovRealMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textNovRealAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textNovSaldMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                        <TextView
+                            android:id="@+id/textNovSaldAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:id="@+id/textDez"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="DEZ" />
+
+                        <TextView
+                            android:id="@+id/textDezPlanMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textDezPlanAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="411,29" />
+
+                        <TextView
+                            android:id="@+id/textDezRealMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textDezRealAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="296,21" />
+
+                        <TextView
+                            android:id="@+id/textDezSaldMes"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:text="-115,08" />
+
+                        <TextView
+                            android:id="@+id/textDezSaldAcum"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
                             android:text="-115,08" />
 
                     </TableRow>
 
                 </TableLayout>
 
-                <TextView
-                    android:id="@+id/textViewSubTituloPlanReal"
-                    style="@style/TextViewTituloLista"
-                    android:textAlignment="center"
-                    android:text="@string/texto_subtitulo_plan_real" />
-
                 <ProgressBar
                     android:id="@+id/progress_bar_linha_plan_real"
                     android:layout_width="100dp"
-                    android:layout_height="100dp" />
+                    android:layout_height="100dp"
+                    android:paddingTop="50dp"
+                    />
 
                 <com.anychart.AnyChartView
                     android:id="@+id/linha_plan_real"
                     android:layout_width="900dp"
-                    android:layout_height="300dp" />
+                    android:layout_height="300dp"
+                    android:paddingTop="50dp"
+                    />
+
+                <Button
+                    android:id="@+id/buttonProxGrafProd"
+                    android:minHeight="60dp"
+                    android:minWidth="100dp"
+                    android:textColor="#000000"
+                    android:textSize="20dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto_prox_tela" />
 
             </LinearLayout>
 

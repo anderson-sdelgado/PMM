@@ -78,4 +78,6 @@
     <string name="texto_subtitulo_prof_sulc">PROFUNDIDADE DA SULCAÇÃO</string>
     <string name="texto_subtitulo_falhas_dep">FALHAS DE DEPOSIÇÃO</string>
     <string name="texto_subtitulo_qual_geral">QUALIDADE GERAL</string>
+    <string name="texto_prox_tela">PRÓXIMA TELA</string>
+    <string name="texto_ant_tela">TELA ANTERIOR</string>
 </resources>

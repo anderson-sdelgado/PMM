@@ -6,6 +6,9 @@ import android.util.Log;
 import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipSegTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafDispEquipPlantioTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafPlanRealPlantioTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafProdPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.MotoristaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
@@ -77,6 +80,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, RAtivParadaTO.class);
 			TableUtils.createTable(cs, ParadaTO.class);
 			TableUtils.createTable(cs, ItemCheckListTO.class);
+			TableUtils.createTable(cs, GrafProdPlantioTO.class);
+			TableUtils.createTable(cs, GrafPlanRealPlantioTO.class);
+			TableUtils.createTable(cs, GrafDispEquipPlantioTO.class);
 
 			TableUtils.createTable(cs, ConfiguracaoTO.class);
 			TableUtils.createTable(cs, BoletimMMTO.class);

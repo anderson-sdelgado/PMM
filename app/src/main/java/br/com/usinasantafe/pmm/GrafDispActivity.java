@@ -14,6 +14,9 @@ import com.anychart.enums.LegendLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafDispEquipPlantioTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafPlanRealPlantioTO;
+
 public class GrafDispActivity extends ActivityGeneric {
 
 
@@ -26,11 +29,28 @@ public class GrafDispActivity extends ActivityGeneric {
         grafTratorPlantOperDia.setProgressBar(findViewById(R.id.progress_bar_trator_plant_oper_dia));
         APIlib.getInstance().setActiveAnyChartView(grafTratorPlantOperDia);
 
+        GrafDispEquipPlantioTO grafDispEquipPlantioTO = new GrafDispEquipPlantioTO();
+        List grafDispEquipPlantList = grafDispEquipPlantioTO.all();
+        grafDispEquipPlantioTO = (GrafDispEquipPlantioTO) grafDispEquipPlantList.get(0);
+
+        int disp = 0;
+        int par = 0;
+
         final Pie pieTratorPlantOperDia = AnyChart.pie();
 
         List<DataEntry> dataTratorPlantOperDia = new ArrayList<>();
-        dataTratorPlantOperDia.add(new ValueDataEntry("DISP", 100));
-        dataTratorPlantOperDia.add(new ValueDataEntry("PAR", 0));
+
+        if(grafDispEquipPlantioTO.getValorOperTratorPlanDia() > 100 ){
+            disp = 100;
+            par = 0;
+        }
+        else{
+            par = grafDispEquipPlantioTO.getValorOperTratorPlanDia().intValue();
+            disp = 100 - par;
+        }
+
+        dataTratorPlantOperDia.add(new CustomDataEntry("DISP", disp, "blue"));
+        dataTratorPlantOperDia.add(new CustomDataEntry("PAR", par, "red"));
 
         pieTratorPlantOperDia.data(dataTratorPlantOperDia);
 
@@ -50,8 +70,18 @@ public class GrafDispActivity extends ActivityGeneric {
         final Pie pieTratorPlantOperMes = AnyChart.pie();
 
         List<DataEntry> dataTratorPlantOperMes = new ArrayList<>();
-        dataTratorPlantOperMes.add(new ValueDataEntry("DISP", 100));
-        dataTratorPlantOperMes.add(new ValueDataEntry("PAR", 0));
+
+        if(grafDispEquipPlantioTO.getValorOperTratorPlanMes() > 100 ){
+            disp = 100;
+            par = 0;
+        }
+        else{
+            par = grafDispEquipPlantioTO.getValorOperTratorPlanMes().intValue();
+            disp = 100 - par;
+        }
+
+        dataTratorPlantOperMes.add(new CustomDataEntry("DISP", disp, "blue"));
+        dataTratorPlantOperMes.add(new CustomDataEntry("PAR", par, "red"));
 
         pieTratorPlantOperMes.data(dataTratorPlantOperMes);
 
@@ -71,8 +101,18 @@ public class GrafDispActivity extends ActivityGeneric {
         final Pie pieTratorPlantOperAno = AnyChart.pie();
 
         List<DataEntry> dataTratorPlantOperAno = new ArrayList<>();
-        dataTratorPlantOperAno.add(new ValueDataEntry("DISP", 100));
-        dataTratorPlantOperAno.add(new ValueDataEntry("PAR", 0));
+
+        if(grafDispEquipPlantioTO.getValorOperTratorPlanAno() > 100 ){
+            disp = 100;
+            par = 0;
+        }
+        else{
+            par = grafDispEquipPlantioTO.getValorOperTratorPlanAno().intValue();
+            disp = 100 - par;
+        }
+
+        dataTratorPlantOperAno.add(new CustomDataEntry("DISP", disp, "blue"));
+        dataTratorPlantOperAno.add(new CustomDataEntry("PAR", par, "red"));
 
         pieTratorPlantOperAno.data(dataTratorPlantOperAno);
 
@@ -92,8 +132,18 @@ public class GrafDispActivity extends ActivityGeneric {
         final Pie pieTratorPlantCampoDia = AnyChart.pie();
 
         List<DataEntry> dataTratorPlantCampoDia = new ArrayList<>();
-        dataTratorPlantCampoDia.add(new ValueDataEntry("DISP", 85));
-        dataTratorPlantCampoDia.add(new ValueDataEntry("PAR", 15));
+
+        if(grafDispEquipPlantioTO.getValorCampoTratorPlanDia() > 100 ){
+            disp = 100;
+            par = 0;
+        }
+        else{
+            par = grafDispEquipPlantioTO.getValorCampoTratorPlanDia().intValue();
+            disp = 100 - par;
+        }
+
+        dataTratorPlantCampoDia.add(new CustomDataEntry("DISP", disp, "blue"));
+        dataTratorPlantCampoDia.add(new CustomDataEntry("PAR", par, "red"));
 
         pieTratorPlantCampoDia.data(dataTratorPlantCampoDia);
 
@@ -113,8 +163,18 @@ public class GrafDispActivity extends ActivityGeneric {
         final Pie pieTratorPlantCampoMes = AnyChart.pie();
 
         List<DataEntry> dataTratorPlantCampoMes = new ArrayList<>();
-        dataTratorPlantCampoMes.add(new ValueDataEntry("DISP", 84));
-        dataTratorPlantCampoMes.add(new ValueDataEntry("PAR", 16));
+
+        if(grafDispEquipPlantioTO.getValorCampoTratorPlanMes() > 100 ){
+            disp = 100;
+            par = 0;
+        }
+        else{
+            par = grafDispEquipPlantioTO.getValorCampoTratorPlanMes().intValue();
+            disp = 100 - par;
+        }
+
+        dataTratorPlantCampoMes.add(new CustomDataEntry("DISP", disp, "blue"));
+        dataTratorPlantCampoMes.add(new CustomDataEntry("PAR", par, "red"));
 
         pieTratorPlantCampoMes.data(dataTratorPlantCampoMes);
 
@@ -134,8 +194,18 @@ public class GrafDispActivity extends ActivityGeneric {
         final Pie pieTratorPlantCampoAno = AnyChart.pie();
 
         List<DataEntry> dataTratorPlantCampoAno = new ArrayList<>();
-        dataTratorPlantCampoAno.add(new ValueDataEntry("DISP", 84));
-        dataTratorPlantCampoAno.add(new ValueDataEntry("PAR", 16));
+
+        if(grafDispEquipPlantioTO.getValorCampoTratorPlanAno() > 100 ){
+            disp = 100;
+            par = 0;
+        }
+        else{
+            par = grafDispEquipPlantioTO.getValorCampoTratorPlanAno().intValue();
+            disp = 100 - par;
+        }
+
+        dataTratorPlantCampoAno.add(new CustomDataEntry("DISP", disp, "blue"));
+        dataTratorPlantCampoAno.add(new CustomDataEntry("PAR", par, "red"));
 
         pieTratorPlantCampoAno.data(dataTratorPlantCampoAno);
 
@@ -150,7 +220,6 @@ public class GrafDispActivity extends ActivityGeneric {
 
 
 
-
         final AnyChartView grafCaminhaoOperDia = findViewById(R.id.graf_caminhao_oper_dia);
         grafCaminhaoOperDia.setProgressBar(findViewById(R.id.progress_bar_caminhao_oper_dia));
         APIlib.getInstance().setActiveAnyChartView(grafCaminhaoOperDia);
@@ -158,8 +227,18 @@ public class GrafDispActivity extends ActivityGeneric {
         final Pie pieCaminhaoOperDia = AnyChart.pie();
 
         List<DataEntry> dataCaminhaoOperDia = new ArrayList<>();
-        dataCaminhaoOperDia.add(new ValueDataEntry("DISP", 78));
-        dataCaminhaoOperDia.add(new ValueDataEntry("PAR", 22));
+
+        if(grafDispEquipPlantioTO.getValorOperCamMudaDia() > 100 ){
+            disp = 100;
+            par = 0;
+        }
+        else{
+            par = grafDispEquipPlantioTO.getValorOperCamMudaDia().intValue();
+            disp = 100 - par;
+        }
+
+        dataCaminhaoOperDia.add(new CustomDataEntry("DISP", disp, "blue"));
+        dataCaminhaoOperDia.add(new CustomDataEntry("PAR", par, "red"));
 
         pieCaminhaoOperDia.data(dataCaminhaoOperDia);
 
@@ -179,8 +258,18 @@ public class GrafDispActivity extends ActivityGeneric {
         final Pie pieCaminhaoOperMes = AnyChart.pie();
 
         List<DataEntry> dataCaminhaoOperMes = new ArrayList<>();
-        dataCaminhaoOperMes.add(new ValueDataEntry("DISP", 85));
-        dataCaminhaoOperMes.add(new ValueDataEntry("PAR", 15));
+
+        if(grafDispEquipPlantioTO.getValorOperCamMudaMes() > 100 ){
+            disp = 100;
+            par = 0;
+        }
+        else{
+            par = grafDispEquipPlantioTO.getValorOperCamMudaMes().intValue();
+            disp = 100 - par;
+        }
+
+        dataCaminhaoOperMes.add(new CustomDataEntry("DISP", disp, "blue"));
+        dataCaminhaoOperMes.add(new CustomDataEntry("PAR", par, "red"));
 
         pieCaminhaoOperMes.data(dataCaminhaoOperMes);
 
@@ -200,8 +289,18 @@ public class GrafDispActivity extends ActivityGeneric {
         final Pie pieCaminhaoOperAno = AnyChart.pie();
 
         List<DataEntry> dataCaminhaoOperAno = new ArrayList<>();
-        dataCaminhaoOperAno.add(new ValueDataEntry("DISP", 85));
-        dataCaminhaoOperAno.add(new ValueDataEntry("PAR", 15));
+
+        if(grafDispEquipPlantioTO.getValorOperCamMudaAno() > 100 ){
+            disp = 100;
+            par = 0;
+        }
+        else{
+            par = grafDispEquipPlantioTO.getValorOperCamMudaAno().intValue();
+            disp = 100 - par;
+        }
+
+        dataCaminhaoOperAno.add(new CustomDataEntry("DISP", disp, "blue"));
+        dataCaminhaoOperAno.add(new CustomDataEntry("PAR", par, "red"));
 
         pieCaminhaoOperAno.data(dataCaminhaoOperAno);
 
@@ -221,6 +320,22 @@ public class GrafDispActivity extends ActivityGeneric {
         final Pie pieCaminhaoCampoDia = AnyChart.pie();
 
         List<DataEntry> dataCaminhaoCampoDia = new ArrayList<>();
+
+        if(grafDispEquipPlantioTO.getValorOperCamMudaMes() > 100 ){
+            disp = 100;
+            par = 0;
+        }
+        else{
+            par = grafDispEquipPlantioTO.getValorOperCamMudaMes().intValue();
+            disp = 100 - par;
+        }
+
+        dataCaminhaoOperMes.add(new CustomDataEntry("DISP", disp, "blue"));
+        dataCaminhaoOperMes.add(new CustomDataEntry("PAR", par, "red"));
+
+        TERMINAR DE JOGA AS INFORMAÇÕES NOS GRAFICOS
+
+
         dataCaminhaoCampoDia.add(new ValueDataEntry("DISP", 90));
         dataCaminhaoCampoDia.add(new ValueDataEntry("PAR", 10));
 
@@ -537,7 +652,13 @@ public class GrafDispActivity extends ActivityGeneric {
 
         grafTratorTransbCampoAno.setChart(pieTratorTransbCampoAno);
 
-
-
     }
+
+    private class CustomDataEntry extends ValueDataEntry {
+        CustomDataEntry(String x, Number value, String fill) {
+            super(x, value);
+            setValue("fill", fill);
+        }
+    }
+
 }

@@ -596,6 +596,81 @@ public class ManipDadosVerif {
 
                 }
 
+            }
+            else if(this.tipo.equals("GrafPlantio")) {
+
+                Log.i("PMM", "CHEGOU AKI");
+
+                if (!result.contains("exceeded")) {
+
+                    int pos1 = result.indexOf("#") + 1;
+                    int pos2 = result.indexOf("|") + 1;
+                    String objPrinc = result.substring(0, result.indexOf("#"));
+                    String objSeg = result.substring(pos1, (pos2 - 1));
+                    String objTerc = result.substring(pos2, result.length());
+
+                    JSONObject jObj = new JSONObject(objPrinc);
+                    JSONArray jsonArray = jObj.getJSONArray("dados");
+                    Class classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "GrafProdPlantioTO");
+
+                    if (jsonArray.length() > 0) {
+
+                        genericRecordable = new GenericRecordable();
+                        genericRecordable.deleteAll(classe);
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject objeto = jsonArray.getJSONObject(i);
+                            Gson gson = new Gson();
+                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
+
+                        }
+
+                    }
+
+                    jObj = new JSONObject(objSeg);
+                    jsonArray = jObj.getJSONArray("dados");
+                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "GrafPlanRealPlantioTO");
+
+                    if (jsonArray.length() > 0) {
+
+                        genericRecordable = new GenericRecordable();
+                        genericRecordable.deleteAll(classe);
+
+                        for (int j = 0; j < jsonArray.length(); j++) {
+
+                            JSONObject objeto = jsonArray.getJSONObject(j);
+                            Gson gson = new Gson();
+                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
+
+                        }
+
+                    }
+
+                    jObj = new JSONObject(objTerc);
+                    jsonArray = jObj.getJSONArray("dados");
+                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "GrafDispEquipPlantioTO");
+
+                    if (jsonArray.length() > 0) {
+
+                        genericRecordable = new GenericRecordable();
+                        genericRecordable.deleteAll(classe);
+
+                        for (int j = 0; j < jsonArray.length(); j++) {
+
+                            JSONObject objeto = jsonArray.getJSONObject(j);
+                            Gson gson = new Gson();
+                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
+
+                        }
+
+                    }
+
+                    Intent it = new Intent(telaAtual, telaProx);
+                    telaAtual.startActivity(it);
+                    this.progressDialog.dismiss();
+
+                }
 
             }
 
