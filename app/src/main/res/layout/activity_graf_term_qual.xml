@@ -23,18 +23,28 @@
 
                 <TextView
                     android:id="@+id/textViewTitulo"
-                    style="@style/TextViewTituloLista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="30dp"
                     android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textAlignment="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:layout_marginBottom="20dp"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="30dp"
                     android:text="@string/texto_titulo_gestao_vista" />
 
                 <TextView
                     android:id="@+id/textViewSubTituloCalibAdub"
-                    style="@style/TextViewTituloLista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="20dp"
                     android:text="@string/texto_subtitulo_calib_adub" />
 
                 <LinearLayout
@@ -77,8 +87,15 @@
 
                 <TextView
                     android:id="@+id/textViewSubTituloCalibInset"
-                    style="@style/TextViewTituloLista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textAlignment="center"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
                     android:text="@string/texto_subtitulo_calib_inset" />
 
                 <LinearLayout
@@ -121,8 +138,15 @@
 
                 <TextView
                     android:id="@+id/textViewSubTituloGemas"
-                    style="@style/TextViewTituloLista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textAlignment="center"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
                     android:text="@string/texto_subtitulo_gemas" />
 
                 <LinearLayout
@@ -165,8 +189,15 @@
 
                 <TextView
                     android:id="@+id/textViewSubTituloAltCobr"
-                    style="@style/TextViewTituloLista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textAlignment="center"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
                     android:text="@string/texto_subtitulo_alt_cobr" />
 
                 <LinearLayout
@@ -209,8 +240,15 @@
 
                 <TextView
                     android:id="@+id/textViewSubTituloProf"
-                    style="@style/TextViewTituloLista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textAlignment="center"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
                     android:text="@string/texto_subtitulo_prof_sulc" />
 
                 <LinearLayout
@@ -253,8 +291,15 @@
 
                 <TextView
                     android:id="@+id/textViewSubTituloFalhasDep"
-                    style="@style/TextViewTituloLista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textAlignment="center"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
                     android:text="@string/texto_subtitulo_falhas_dep" />
 
                 <LinearLayout
@@ -297,8 +342,15 @@
 
                 <TextView
                     android:id="@+id/textViewSubTituloQualGeral"
-                    style="@style/TextViewTituloLista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textAlignment="center"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
                     android:text="@string/texto_subtitulo_qual_geral" />
 
                 <LinearLayout
@@ -338,6 +390,8 @@
                         android:layout_height="300dp" />
 
                 </LinearLayout>
+
+
 
             </LinearLayout>
 

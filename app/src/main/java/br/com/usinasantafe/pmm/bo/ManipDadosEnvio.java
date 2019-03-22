@@ -15,6 +15,7 @@ import android.util.Log;
 import br.com.usinasantafe.pmm.conWEB.ConHttpPostCadGenerico;
 import br.com.usinasantafe.pmm.conWEB.UrlsConexaoHttp;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafProdPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaAplicFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaAplicFertTO;
@@ -711,6 +712,15 @@ public class ManipDadosEnvio {
         }
     }
 
+    public Boolean verifDadosGraf() {
+        if(!(new GrafProdPlantioTO().hasElements())){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     /////////////////////////MECANISMO DE ENVIO//////////////////////////////////
 
     public void envioDados(Context context) {
@@ -726,17 +736,22 @@ public class ManipDadosEnvio {
     }
 
     public void envioDadosPrinc() {
-        if (verifDadosChecklist()) {
-            enviarChecklist();
-        } else{
-            if (verifBolFechado()) {
-                enviarBolFechados();
+
+        if(verifDadosGraf()){
+            ManipDadosVerif.getInstance().verDadosGraf();
+        } else {
+            if (verifDadosChecklist()) {
+                enviarChecklist();
             } else {
-                if (verifBolAbertoSemEnvio()) {
-                    enviarBolAberto();
+                if (verifBolFechado()) {
+                    enviarBolFechados();
                 } else {
-                    if (verifAponta()) {
-                        envioApontaMM();
+                    if (verifBolAbertoSemEnvio()) {
+                        enviarBolAberto();
+                    } else {
+                        if (verifAponta()) {
+                            envioApontaMM();
+                        }
                     }
                 }
             }

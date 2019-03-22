@@ -18,7 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.usinasantafe.pmm.EsperaGrafActivity;
 import br.com.usinasantafe.pmm.MenuInicialActivity;
+import br.com.usinasantafe.pmm.MenuPrincNormalActivity;
 import br.com.usinasantafe.pmm.conWEB.ConHttpPostVerGenerico;
 import br.com.usinasantafe.pmm.conWEB.UrlsConexaoHttp;
 import br.com.usinasantafe.pmm.pst.GenericRecordable;
@@ -49,6 +51,7 @@ public class ManipDadosVerif {
     private ConHttpPostVerGenerico conHttpPostVerGenerico;
     private boolean verTerm;
     private String senha;
+    private int verTelaAtual;
 
     public ManipDadosVerif() {
         //genericRecordable = new GenericRecordable();
@@ -112,6 +115,19 @@ public class ManipDadosVerif {
 
     }
 
+    public void verDados(String dado, String tipo, Context telaAtual, Class telaProx, int verTelaAtual) {
+
+        urlsConexaoHttp = new UrlsConexaoHttp();
+        this.telaAtual = telaAtual;
+        this.telaProx = telaProx;
+        this.dado = dado;
+        this.tipo = tipo;
+        this.verTelaAtual = verTelaAtual;
+
+        envioDados();
+
+    }
+
     public void envioAtualizacao(){
 
         JsonArray jsonArray = new JsonArray();
@@ -145,6 +161,17 @@ public class ManipDadosVerif {
         conHttpPostVerGenerico = new ConHttpPostVerGenerico();
         conHttpPostVerGenerico.setParametrosPost(parametrosPost);
         conHttpPostVerGenerico.execute(url);
+
+    }
+
+
+    public void verDadosGraf() {
+
+        urlsConexaoHttp = new UrlsConexaoHttp();
+        this.dado = dado;
+        this.tipo = "GrafPlantio";
+
+        envioDados();
 
     }
 
@@ -220,6 +247,7 @@ public class ManipDadosVerif {
                     configuracaoTO.setDtUltCLConfig("");
                     configuracaoTO.setDtUltApontConfig("");
                     configuracaoTO.setSenhaConfig(this.senha);
+                    configuracaoTO.setVerVisGrafConfig(0L);
                     configuracaoTO.insert();
                     configuracaoTO.commit();
 
@@ -599,15 +627,15 @@ public class ManipDadosVerif {
             }
             else if(this.tipo.equals("GrafPlantio")) {
 
-                Log.i("PMM", "CHEGOU AKI");
-
                 if (!result.contains("exceeded")) {
 
                     int pos1 = result.indexOf("#") + 1;
                     int pos2 = result.indexOf("|") + 1;
-                    String objPrinc = result.substring(0, result.indexOf("#"));
+                    int pos3 = result.indexOf("?") + 1;
+                    String objPrinc = result.substring(0, (pos1 - 1));
                     String objSeg = result.substring(pos1, (pos2 - 1));
-                    String objTerc = result.substring(pos2, result.length());
+                    String objTerc = result.substring(pos2, (pos3 - 1));
+                    String objQuar = result.substring(pos3, result.length());
 
                     JSONObject jObj = new JSONObject(objPrinc);
                     JSONArray jsonArray = jObj.getJSONArray("dados");
@@ -666,9 +694,24 @@ public class ManipDadosVerif {
 
                     }
 
-                    Intent it = new Intent(telaAtual, telaProx);
-                    telaAtual.startActivity(it);
-                    this.progressDialog.dismiss();
+                    jObj = new JSONObject(objQuar);
+                    jsonArray = jObj.getJSONArray("dados");
+                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "GrafQualPlantioTO");
+
+                    if (jsonArray.length() > 0) {
+
+                        genericRecordable = new GenericRecordable();
+                        genericRecordable.deleteAll(classe);
+
+                        for (int j = 0; j < jsonArray.length(); j++) {
+
+                            JSONObject objeto = jsonArray.getJSONObject(j);
+                            Gson gson = new Gson();
+                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
+
+                        }
+
+                    }
 
                 }
 

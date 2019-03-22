@@ -1,7 +1,10 @@
 package br.com.usinasantafe.pmm;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
@@ -11,6 +14,10 @@ import com.anychart.charts.CircularGauge;
 import com.anychart.enums.Anchor;
 import com.anychart.graphics.vector.text.HAlign;
 
+import java.util.List;
+
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafQualPlantioTO;
+
 public class GrafTermQualActivity extends ActivityGeneric {
 
     @Override
@@ -18,9 +25,15 @@ public class GrafTermQualActivity extends ActivityGeneric {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graf_term_qual);
 
+        GrafQualPlantioTO grafQualPlantioTO = new GrafQualPlantioTO();
+        List grafQualPlantioList = grafQualPlantioTO.all();
+        grafQualPlantioTO = (GrafQualPlantioTO) grafQualPlantioList.get(0);
+
         final AnyChartView termCalibAduboDia = findViewById(R.id.term_calib_adubo_dia);
         termCalibAduboDia.setProgressBar(findViewById(R.id.progress_bar_term_calib_adubo_dia));
         APIlib.getInstance().setActiveAnyChartView(termCalibAduboDia);
+
+        termCalibAduboDia.setAnimationCacheEnabled(false);
 
         final CircularGauge gaugeTermCalibAduboDia = AnyChart.circular();
         gaugeTermCalibAduboDia.padding("10%");
@@ -30,7 +43,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermCalibAduboDia.title("DIA");
 
-        double calibAduboDia = 5;
+        double calibAduboDia = calcNotaCalibAdub(grafQualPlantioTO.getValorCalibAdubDia());
         gaugeTermCalibAduboDia.data(new SingleValueDataSet( new Double[]{calibAduboDia}));
 
         gaugeTermCalibAduboDia.axis(0)
@@ -131,6 +144,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termCalibAduboMes.setProgressBar(findViewById(R.id.progress_bar_term_calib_adubo_mes));
         APIlib.getInstance().setActiveAnyChartView(termCalibAduboMes);
 
+        termCalibAduboMes.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermCalibAduboMes = AnyChart.circular();
         gaugeTermCalibAduboMes.padding("10%");
         gaugeTermCalibAduboMes.startAngle(270);
@@ -139,7 +154,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermCalibAduboMes.title("MÊS");
 
-        double calibAduboMes = 2;
+        double calibAduboMes = calcNotaCalibAdub(grafQualPlantioTO.getValorCalibAdubMes());
         gaugeTermCalibAduboMes.data(new SingleValueDataSet(new Double[]{calibAduboMes}));
 
         gaugeTermCalibAduboMes.axis(0)
@@ -240,6 +255,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termCalibAduboAno.setProgressBar(findViewById(R.id.progress_bar_term_calib_adubo_ano));
         APIlib.getInstance().setActiveAnyChartView(termCalibAduboAno);
 
+        termCalibAduboAno.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermCalibAduboAno = AnyChart.circular();
         gaugeTermCalibAduboAno.padding("10%");
         gaugeTermCalibAduboAno.startAngle(270);
@@ -248,7 +265,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermCalibAduboAno.title("ANO");
 
-        double calibAduboAno = 2;
+        double calibAduboAno = calcNotaCalibAdub(grafQualPlantioTO.getValorCalibAdubAno());
         gaugeTermCalibAduboAno.data(new SingleValueDataSet(new Double[]{calibAduboAno}));
 
         gaugeTermCalibAduboAno.axis(0)
@@ -345,11 +362,11 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         termCalibAduboAno.setChart(gaugeTermCalibAduboAno);
 
-
-
         final AnyChartView termCalibInsetDia = findViewById(R.id.term_calib_inset_dia);
         termCalibInsetDia.setProgressBar(findViewById(R.id.progress_bar_term_calib_inset_dia));
         APIlib.getInstance().setActiveAnyChartView(termCalibInsetDia);
+
+        termCalibInsetDia.setAnimationCacheEnabled(false);
 
         final CircularGauge gaugeTermCalibInsetDia = AnyChart.circular();
         gaugeTermCalibInsetDia.padding("10%");
@@ -359,7 +376,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermCalibInsetDia.title("DIA");
 
-        double calibInsetDia = 1;
+        double calibInsetDia = calcNotaCalibInset(grafQualPlantioTO.getValorCalibInsetDia());
         gaugeTermCalibInsetDia.data(new SingleValueDataSet( new Double[]{calibInsetDia}));
 
         gaugeTermCalibInsetDia.axis(0)
@@ -460,6 +477,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termCalibInsetMes.setProgressBar(findViewById(R.id.progress_bar_term_calib_inset_mes));
         APIlib.getInstance().setActiveAnyChartView(termCalibInsetMes);
 
+        termCalibInsetMes.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermCalibInsetMes = AnyChart.circular();
         gaugeTermCalibInsetMes.padding("10%");
         gaugeTermCalibInsetMes.startAngle(270);
@@ -468,7 +487,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermCalibInsetMes.title("MÊS");
 
-        double calibInsetMes = 1;
+        double calibInsetMes = calcNotaCalibInset(grafQualPlantioTO.getValorCalibInsetMes());
         gaugeTermCalibInsetMes.data(new SingleValueDataSet(new Double[]{calibInsetMes}));
 
         gaugeTermCalibInsetMes.axis(0)
@@ -569,6 +588,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termCalibInsetAno.setProgressBar(findViewById(R.id.progress_bar_term_calib_inset_ano));
         APIlib.getInstance().setActiveAnyChartView(termCalibInsetAno);
 
+        termCalibInsetAno.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermCalibInsetAno = AnyChart.circular();
         gaugeTermCalibInsetAno.padding("10%");
         gaugeTermCalibInsetAno.startAngle(270);
@@ -577,7 +598,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermCalibInsetAno.title("ANO");
 
-        double calibInsetAno = 1;
+        double calibInsetAno = calcNotaCalibInset(grafQualPlantioTO.getValorCalibInsetAno());
         gaugeTermCalibInsetAno.data(new SingleValueDataSet(new Double[]{calibInsetAno}));
 
         gaugeTermCalibInsetAno.axis(0)
@@ -674,10 +695,11 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         termCalibInsetAno.setChart(gaugeTermCalibInsetAno);
 
-
         final AnyChartView termGemasDia = findViewById(R.id.term_gemas_dia);
         termGemasDia.setProgressBar(findViewById(R.id.progress_bar_term_gemas_dia));
         APIlib.getInstance().setActiveAnyChartView(termGemasDia);
+
+        termGemasDia.setAnimationCacheEnabled(false);
 
         final CircularGauge gaugeTermGemasDia = AnyChart.circular();
         gaugeTermGemasDia.padding("10%");
@@ -687,7 +709,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermGemasDia.title("DIA");
 
-        double gemasDia = 2;
+        double gemasDia = calcNotaGemas(grafQualPlantioTO.getValorGemasDia());
         gaugeTermGemasDia.data(new SingleValueDataSet( new Double[]{gemasDia}));
 
         gaugeTermGemasDia.axis(0)
@@ -788,6 +810,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termGemasMes.setProgressBar(findViewById(R.id.progress_bar_term_gemas_mes));
         APIlib.getInstance().setActiveAnyChartView(termGemasMes);
 
+        termGemasMes.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermGemasMes = AnyChart.circular();
         gaugeTermGemasMes.padding("10%");
         gaugeTermGemasMes.startAngle(270);
@@ -796,7 +820,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermGemasMes.title("MÊS");
 
-        double gemasMes = 5;
+        double gemasMes = calcNotaGemas(grafQualPlantioTO.getValorGemasMes());
         gaugeTermGemasMes.data(new SingleValueDataSet(new Double[]{gemasMes}));
 
         gaugeTermGemasMes.axis(0)
@@ -897,6 +921,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termGemasAno.setProgressBar(findViewById(R.id.progress_bar_term_gemas_ano));
         APIlib.getInstance().setActiveAnyChartView(termGemasAno);
 
+        termGemasAno.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermGemasAno = AnyChart.circular();
         gaugeTermGemasAno.padding("10%");
         gaugeTermGemasAno.startAngle(270);
@@ -905,7 +931,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermGemasAno.title("ANO");
 
-        double gemasAno = 5;
+        double gemasAno = calcNotaGemas(grafQualPlantioTO.getValorGemasAno());
         gaugeTermGemasAno.data(new SingleValueDataSet(new Double[]{gemasAno}));
 
         gaugeTermGemasAno.axis(0)
@@ -1002,10 +1028,11 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         termGemasAno.setChart(gaugeTermGemasAno);
 
-
         final AnyChartView termAltCobrDia = findViewById(R.id.term_alt_cobr_dia);
         termAltCobrDia.setProgressBar(findViewById(R.id.progress_bar_term_alt_cobr_dia));
         APIlib.getInstance().setActiveAnyChartView(termAltCobrDia);
+
+        termAltCobrDia.setAnimationCacheEnabled(false);
 
         final CircularGauge gaugeTermAltCobrDia = AnyChart.circular();
         gaugeTermAltCobrDia.padding("10%");
@@ -1015,7 +1042,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermAltCobrDia.title("DIA");
 
-        double altCobrDia = 5;
+        double altCobrDia = calcNotaAltCobr(grafQualPlantioTO.getValorAltCobrDia());
         gaugeTermAltCobrDia.data(new SingleValueDataSet( new Double[]{altCobrDia}));
 
         gaugeTermAltCobrDia.axis(0)
@@ -1116,6 +1143,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termAltCobrMes.setProgressBar(findViewById(R.id.progress_bar_term_alt_cobr_mes));
         APIlib.getInstance().setActiveAnyChartView(termAltCobrMes);
 
+        termAltCobrMes.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermAltCobrMes = AnyChart.circular();
         gaugeTermAltCobrMes.padding("10%");
         gaugeTermAltCobrMes.startAngle(270);
@@ -1124,7 +1153,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermAltCobrMes.title("MÊS");
 
-        double altCobrMes = 5;
+        double altCobrMes = calcNotaAltCobr(grafQualPlantioTO.getValorAltCobrMes());
         gaugeTermAltCobrMes.data(new SingleValueDataSet(new Double[]{altCobrMes}));
 
         gaugeTermAltCobrMes.axis(0)
@@ -1225,6 +1254,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termAltCobrAno.setProgressBar(findViewById(R.id.progress_bar_term_alt_cobr_ano));
         APIlib.getInstance().setActiveAnyChartView(termAltCobrAno);
 
+        termAltCobrAno.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermAltCobrAno = AnyChart.circular();
         gaugeTermAltCobrAno.padding("10%");
         gaugeTermAltCobrAno.startAngle(270);
@@ -1233,7 +1264,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermAltCobrAno.title("ANO");
 
-        double altCobrAno = 5;
+        double altCobrAno = calcNotaAltCobr(grafQualPlantioTO.getValorAltCobrAno());
         gaugeTermAltCobrAno.data(new SingleValueDataSet(new Double[]{altCobrAno}));
 
         gaugeTermAltCobrAno.axis(0)
@@ -1334,6 +1365,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termProfSulcDia.setProgressBar(findViewById(R.id.progress_bar_term_prof_sulc_dia));
         APIlib.getInstance().setActiveAnyChartView(termProfSulcDia);
 
+        termProfSulcDia.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermProfSulcDia = AnyChart.circular();
         gaugeTermProfSulcDia.padding("10%");
         gaugeTermProfSulcDia.startAngle(270);
@@ -1342,7 +1375,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermProfSulcDia.title("DIA");
 
-        double profSulcDia = 4;
+        double profSulcDia = calcNotaProfSulc(grafQualPlantioTO.getValorProfSulcDia());
         gaugeTermProfSulcDia.data(new SingleValueDataSet( new Double[]{profSulcDia}));
 
         gaugeTermProfSulcDia.axis(0)
@@ -1443,6 +1476,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termProfSulcMes.setProgressBar(findViewById(R.id.progress_bar_term_prof_sulc_mes));
         APIlib.getInstance().setActiveAnyChartView(termProfSulcMes);
 
+        termProfSulcMes.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermProfSulcMes = AnyChart.circular();
         gaugeTermProfSulcMes.padding("10%");
         gaugeTermProfSulcMes.startAngle(270);
@@ -1451,7 +1486,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermProfSulcMes.title("MES");
 
-        double profSulcMes = 4;
+        double profSulcMes = calcNotaProfSulc(grafQualPlantioTO.getValorProfSulcMes());
         gaugeTermProfSulcMes.data(new SingleValueDataSet(new Double[]{profSulcMes}));
 
         gaugeTermProfSulcMes.axis(0)
@@ -1552,6 +1587,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termProfSulcAno.setProgressBar(findViewById(R.id.progress_bar_term_prof_sulc_ano));
         APIlib.getInstance().setActiveAnyChartView(termProfSulcAno);
 
+        termProfSulcAno.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermProfSulcAno = AnyChart.circular();
         gaugeTermProfSulcAno.padding("10%");
         gaugeTermProfSulcAno.startAngle(270);
@@ -1560,7 +1597,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermProfSulcAno.title("ANO");
 
-        double profSulcAno = 4;
+        double profSulcAno = calcNotaProfSulc(grafQualPlantioTO.getValorProfSulcAno());
         gaugeTermProfSulcAno.data(new SingleValueDataSet(new Double[]{profSulcAno}));
 
         gaugeTermProfSulcAno.axis(0)
@@ -1661,6 +1698,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termFalhasDeposDia.setProgressBar(findViewById(R.id.progress_bar_term_falhas_depos_dia));
         APIlib.getInstance().setActiveAnyChartView(termFalhasDeposDia);
 
+        termFalhasDeposDia.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermFalhasDeposDia = AnyChart.circular();
         gaugeTermFalhasDeposDia.padding("10%");
         gaugeTermFalhasDeposDia.startAngle(270);
@@ -1669,7 +1708,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermFalhasDeposDia.title("DIA");
 
-        double falhasDeposDia = 1;
+        double falhasDeposDia = calcNotaFalhas(grafQualPlantioTO.getValorFalhasDia());
         gaugeTermFalhasDeposDia.data(new SingleValueDataSet( new Double[]{falhasDeposDia}));
 
         gaugeTermFalhasDeposDia.axis(0)
@@ -1770,6 +1809,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termFalhasDeposMes.setProgressBar(findViewById(R.id.progress_bar_term_falhas_depos_mes));
         APIlib.getInstance().setActiveAnyChartView(termFalhasDeposMes);
 
+        termFalhasDeposMes.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermFalhasDeposMes = AnyChart.circular();
         gaugeTermFalhasDeposMes.padding("10%");
         gaugeTermFalhasDeposMes.startAngle(270);
@@ -1778,7 +1819,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermFalhasDeposMes.title("MÊS");
 
-        double falhasDeposMes = 2;
+        double falhasDeposMes = calcNotaFalhas(grafQualPlantioTO.getValorFalhasMes());
         gaugeTermFalhasDeposMes.data(new SingleValueDataSet(new Double[]{falhasDeposMes}));
 
         gaugeTermFalhasDeposMes.axis(0)
@@ -1879,6 +1920,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termFalhasDeposAno.setProgressBar(findViewById(R.id.progress_bar_term_falhas_depos_ano));
         APIlib.getInstance().setActiveAnyChartView(termFalhasDeposAno);
 
+        termFalhasDeposAno.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermFalhasDeposAno = AnyChart.circular();
         gaugeTermFalhasDeposAno.padding("10%");
         gaugeTermFalhasDeposAno.startAngle(270);
@@ -1887,7 +1930,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermFalhasDeposAno.title("ANO");
 
-        double falhasDeposAno = 2;
+        double falhasDeposAno = calcNotaFalhas(grafQualPlantioTO.getValorFalhasAno());
         gaugeTermFalhasDeposAno.data(new SingleValueDataSet(new Double[]{falhasDeposAno}));
 
         gaugeTermFalhasDeposAno.axis(0)
@@ -1988,6 +2031,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termQualidadeDia.setProgressBar(findViewById(R.id.progress_bar_term_qualidade_dia));
         APIlib.getInstance().setActiveAnyChartView(termQualidadeDia);
 
+        termQualidadeDia.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermQualidadeDia = AnyChart.circular();
         gaugeTermQualidadeDia.padding("10%");
         gaugeTermQualidadeDia.startAngle(270);
@@ -1996,7 +2041,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermQualidadeDia.title("DIA");
 
-        double qualidadeDia = 2;
+        double qualidadeDia = calcQualidade(calibAduboDia, calibInsetDia, gemasDia, altCobrDia, profSulcDia, falhasDeposDia);
+
         gaugeTermQualidadeDia.data(new SingleValueDataSet( new Double[]{qualidadeDia}));
 
         gaugeTermQualidadeDia.axis(0)
@@ -2097,6 +2143,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termQualidadeMes.setProgressBar(findViewById(R.id.progress_bar_term_qualidade_mes));
         APIlib.getInstance().setActiveAnyChartView(termQualidadeMes);
 
+        termQualidadeMes.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermQualidadeMes = AnyChart.circular();
         gaugeTermQualidadeMes.padding("10%");
         gaugeTermQualidadeMes.startAngle(270);
@@ -2105,7 +2153,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermQualidadeMes.title("MÊS");
 
-        double qualidadeMes = 3;
+        double qualidadeMes = calcQualidade(calibAduboMes, calibInsetMes, gemasMes, altCobrMes, profSulcMes, falhasDeposMes);
         gaugeTermQualidadeMes.data(new SingleValueDataSet(new Double[]{qualidadeMes}));
 
         gaugeTermQualidadeMes.axis(0)
@@ -2206,6 +2254,8 @@ public class GrafTermQualActivity extends ActivityGeneric {
         termQualidadeAno.setProgressBar(findViewById(R.id.progress_bar_term_qualidade_ano));
         APIlib.getInstance().setActiveAnyChartView(termQualidadeAno);
 
+        termQualidadeAno.setAnimationCacheEnabled(false);
+
         final CircularGauge gaugeTermQualidadeAno = AnyChart.circular();
         gaugeTermQualidadeAno.padding("10%");
         gaugeTermQualidadeAno.startAngle(270);
@@ -2214,7 +2264,7 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
         gaugeTermQualidadeAno.title("ANO");
 
-        double qualidadeAno = 3;
+        double qualidadeAno = calcQualidade(calibAduboAno, calibInsetAno, gemasAno, altCobrAno, profSulcAno, falhasDeposAno);
         gaugeTermQualidadeAno.data(new SingleValueDataSet(new Double[]{qualidadeAno}));
 
         gaugeTermQualidadeAno.axis(0)
@@ -2313,4 +2363,135 @@ public class GrafTermQualActivity extends ActivityGeneric {
 
 
     }
+
+    public int calcNotaCalibAdub(Long valor){
+        if(valor <= 2){
+            return 5;
+        }
+        else if((valor >= 3) && (valor <= 5)){
+            return 4;
+        }
+        else if((valor >= 6) && (valor <= 8)){
+            return 3;
+        }
+        else if((valor >= 9) && (valor <= 10)){
+            return 2;
+        }
+        else{
+            return 1;
+        }
+    }
+
+    public int calcNotaCalibInset(Long valor){
+        if(valor <= 2){
+            return 5;
+        }
+        else if((valor >= 3) && (valor <= 5)){
+            return 4;
+        }
+        else if((valor >= 6) && (valor <= 8)){
+            return 3;
+        }
+        else if((valor >= 9) && (valor <= 10)){
+            return 2;
+        }
+        else{
+            return 1;
+        }
+    }
+
+    public int calcNotaGemas(Long valor){
+        if((valor >= 18) && (valor <= 20)){
+            return 5;
+        }
+        else if((valor >= 21) && (valor <= 23)){
+            return 4;
+        }
+        else if((valor >= 24) && (valor <= 26)){
+            return 3;
+        }
+        else if((valor >= 26) && (valor <= 28)){
+            return 2;
+        }
+        else if(valor >= 28){
+            return 1;
+        }
+        else{
+            return 5;
+        }
+    }
+
+    public int calcNotaAltCobr(Long valor){
+        if((valor >= 7) && (valor <= 10)){
+            return 5;
+        }
+        else if((valor >= 11) && (valor <= 12)){
+            return 4;
+        }
+        else if((valor >= 13) && (valor <= 14)){
+            return 3;
+        }
+        else if((valor >= 14) && (valor <= 15)){
+            return 2;
+        }
+        else if(valor >= 15){
+            return 1;
+        }
+        else{
+            return 5;
+        }
+    }
+
+    public int calcNotaProfSulc(Long valor){
+        if(valor >= 40){
+            return 5;
+        }
+        else if((valor >= 35) && (valor <= 39)){
+            return 4;
+        }
+        else if((valor >= 30) && (valor <= 34)){
+            return 3;
+        }
+        else if((valor >= 25) && (valor <= 29)){
+            return 2;
+        }
+        else{
+            return 1;
+        }
+    }
+
+    public int calcNotaFalhas(Long valor){
+        if(valor <= 10){
+            return 5;
+        }
+        else if((valor >= 11) && (valor <= 30)){
+            return 4;
+        }
+        else if((valor >= 31) && (valor <= 50)){
+            return 3;
+        }
+        else if((valor >= 51) && (valor <= 70)){
+            return 2;
+        }
+        else{
+            return 1;
+        }
+    }
+
+    public double calcQualidade(double calibAdub, double calibInset, double gema,
+                       double altCobr, double profSulc, double falhas){
+
+        double ca = calibAdub * 15;
+        double ci = calibInset * 15;
+        double g = gema * 30;
+        double ac = altCobr * 10;
+        double ps = profSulc * 10;
+        double f = falhas * 20;
+
+        double qual = ((ca + ci + g + ac + ps + f) / 100);
+
+        return Math.round(qual);
+
+    }
+
 }

@@ -10,7 +10,7 @@ public class GrafDispEquipPlantioTO extends Entidade {
 
     private static final long serialVersionUID = 1L;
 
-    @DatabaseField(generatedId=true)
+    @DatabaseField(id=true)
     private Long idGrafDispEquip;
     @DatabaseField
     private Long valorOperTratorPlanDia;

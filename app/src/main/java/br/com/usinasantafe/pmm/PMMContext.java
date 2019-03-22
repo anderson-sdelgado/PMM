@@ -38,6 +38,7 @@ public class PMMContext extends Application {
     // 17 - Acoplar Carretel Trabalhando
     // 18 - Acoplar Carretel Parado
     // 19 - Trocar de implemento
+    // 20 - Esta na tela de Menu Principal
     private int contImplemento;
     private String textoHorimetro;
     public static String versaoAplic = "1.28";

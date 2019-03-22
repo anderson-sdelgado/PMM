@@ -302,17 +302,28 @@ public class ImplementoActivity extends ActivityGeneric {
                                     pmmContext.getBoletimMMTO().setStatusBoletim(1L);
                                     ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false);
                                     ManipDadosEnvio.getInstance().envioDadosPrinc();
-                                    it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
+
+                                    it = new Intent(ImplementoActivity.this, EsperaGrafActivity.class);
                                     startActivity(it);
                                     finish();
+
+//                                    ANTIGO
+//                                    it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
+//                                    startActivity(it);
+//                                    finish();
 
                                 }
 
                             } else {
 
-                                it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
+                                it = new Intent(ImplementoActivity.this, EsperaGrafActivity.class);
                                 startActivity(it);
                                 finish();
+
+//                                ANTIGO
+//                                it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
+//                                startActivity(it);
+//                                finish();
 
                             }
 

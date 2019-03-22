@@ -28,11 +28,13 @@ import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafProdPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.AlocaCarretelTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.AtualizaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaMMTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
 
 public class MenuPrincNormalActivity extends ActivityGeneric {
@@ -41,6 +43,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
     private ListView lista;
     private ProgressDialog progressBar;
     private EquipTO equipTO;
+    private ConfiguracaoTO configuracaoTO;
 
     private TextView textViewProcessoNormal;
     private Handler customHandler = new Handler();
@@ -52,6 +55,10 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
         textViewProcessoNormal = (TextView) findViewById(R.id.textViewProcessoNormal);
+
+        configuracaoTO = new ConfiguracaoTO();
+        List configList = configuracaoTO.all();
+        configuracaoTO = (ConfiguracaoTO) configList.get(0);
 
         customHandler.postDelayed(updateTimerThread, 0);
 
@@ -66,8 +73,12 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         BackupApontaMMTO backupApontaMMTO = new BackupApontaMMTO();
         List bkpApontaList = backupApontaMMTO.all();
 
+        BoletimMMTO boletimMMTO = new BoletimMMTO();
+        List boletimList =  boletimMMTO.get("statusBoletim", 1);
+        boletimMMTO = (BoletimMMTO) boletimList.get(0);
+
         if(bkpApontaList.size() == 0){
-            lAtiv = atividadeTO.get("idAtiv", pmmContext.getBoletimMMTO().getAtivPrincBoletim());
+            lAtiv = atividadeTO.get("idAtiv", boletimMMTO.getAtivPrincBoletim());
         }
         else{
             backupApontaMMTO = (BackupApontaMMTO) bkpApontaList.get(bkpApontaList.size() - 1);
@@ -94,7 +105,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         itens.add("REENVIO DE DADOS");
 
         equipTO = new EquipTO();
-        List equipList = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getCodEquipBoletim());
+        List equipList = equipTO.get("idEquip", boletimMMTO.getCodEquipBoletim());
         equipTO = (EquipTO) equipList.get(0);
 
         if(equipTO.getTipoEquipFert() > 1){
@@ -117,9 +128,6 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                     TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
                     String text = textView.getText().toString();
 
-                    ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-                    List configList = configuracaoTO.all();
-                    configuracaoTO = (ConfiguracaoTO) configList.get(0);
                     if (text.equals("TRABALHANDO")) {
                         if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().data())) {
                             Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
@@ -341,15 +349,23 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
             if(ManipDadosEnvio.getInstance().getStatusEnvio() == 1){
                 textViewProcessoNormal.setTextColor(Color.YELLOW);
-                textViewProcessoNormal.setText("Enviando Dados...");
+                textViewProcessoNormal.setText("Enviando e recebendo de dados...");
             }
             else if(ManipDadosEnvio.getInstance().getStatusEnvio() == 2){
                 textViewProcessoNormal.setTextColor(Color.RED);
-                textViewProcessoNormal.setText("Existem Dados para serem Enviados");
+                textViewProcessoNormal.setText("Existem dados para serem enviados e recebidos");
             }
             else if(ManipDadosEnvio.getInstance().getStatusEnvio() == 3){
                 textViewProcessoNormal.setTextColor(Color.GREEN);
-                textViewProcessoNormal.setText("Todos os Dados já foram Enviados");
+                textViewProcessoNormal.setText("Todos os Dados já foram enviados e recebidos");
+            }
+
+            if(configuracaoTO.getVerVisGrafConfig() == 0){
+                if(new GrafProdPlantioTO().hasElements()){
+                    Intent it = new Intent( MenuPrincNormalActivity.this, GrafProdActivity.class);
+                    startActivity(it);
+                    finish();
+                }
             }
 
             customHandler.postDelayed(this, 10000);

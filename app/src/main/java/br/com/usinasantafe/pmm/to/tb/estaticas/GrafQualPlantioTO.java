@@ -10,22 +10,46 @@ public class GrafQualPlantioTO extends Entidade {
 
     private static final long serialVersionUID = 1L;
 
-    @DatabaseField(generatedId=true)
+    @DatabaseField(id=true)
     private Long idGrafQual;
     @DatabaseField
-    private Double valorCalibAdub;
+    private String dtGrafQual;
     @DatabaseField
-    private Double valorCalibInset;
+    private Long valorCalibAdubDia;
     @DatabaseField
-    private Double valorGemas;
+    private Long valorCalibAdubMes;
     @DatabaseField
-    private Double valorAltCobr;
+    private Long valorCalibAdubAno;
     @DatabaseField
-    private Double valorProfSulc;
+    private Long valorCalibInsetDia;
     @DatabaseField
-    private Double valorFalhas;
+    private Long valorCalibInsetMes;
     @DatabaseField
-    private Double valorQual;
+    private Long valorCalibInsetAno;
+    @DatabaseField
+    private Long valorGemasDia;
+    @DatabaseField
+    private Long valorGemasMes;
+    @DatabaseField
+    private Long valorGemasAno;
+    @DatabaseField
+    private Long valorAltCobrDia;
+    @DatabaseField
+    private Long valorAltCobrMes;
+    @DatabaseField
+    private Long valorAltCobrAno;
+    @DatabaseField
+    private Long valorProfSulcDia;
+    @DatabaseField
+    private Long valorProfSulcMes;
+    @DatabaseField
+    private Long valorProfSulcAno;
+    @DatabaseField
+    private Long valorFalhasDia;
+    @DatabaseField
+    private Long valorFalhasMes;
+    @DatabaseField
+    private Long valorFalhasAno;
 
     public GrafQualPlantioTO() {
     }
@@ -38,59 +62,155 @@ public class GrafQualPlantioTO extends Entidade {
         this.idGrafQual = idGrafQual;
     }
 
-    public Double getValorCalibAdub() {
-        return valorCalibAdub;
+    public String getDtGrafQual() {
+        return dtGrafQual;
     }
 
-    public void setValorCalibAdub(Double valorCalibAdub) {
-        this.valorCalibAdub = valorCalibAdub;
+    public void setDtGrafQual(String dtGrafQual) {
+        this.dtGrafQual = dtGrafQual;
     }
 
-    public Double getValorCalibInset() {
-        return valorCalibInset;
+    public Long getValorCalibAdubDia() {
+        return valorCalibAdubDia;
     }
 
-    public void setValorCalibInset(Double valorCalibInset) {
-        this.valorCalibInset = valorCalibInset;
+    public void setValorCalibAdubDia(Long valorCalibAdubDia) {
+        this.valorCalibAdubDia = valorCalibAdubDia;
     }
 
-    public Double getValorGemas() {
-        return valorGemas;
+    public Long getValorCalibAdubMes() {
+        return valorCalibAdubMes;
     }
 
-    public void setValorGemas(Double valorGemas) {
-        this.valorGemas = valorGemas;
+    public void setValorCalibAdubMes(Long valorCalibAdubMes) {
+        this.valorCalibAdubMes = valorCalibAdubMes;
     }
 
-    public Double getValorAltCobr() {
-        return valorAltCobr;
+    public Long getValorCalibAdubAno() {
+        return valorCalibAdubAno;
     }
 
-    public void setValorAltCobr(Double valorAltCobr) {
-        this.valorAltCobr = valorAltCobr;
+    public void setValorCalibAdubAno(Long valorCalibAdubAno) {
+        this.valorCalibAdubAno = valorCalibAdubAno;
     }
 
-    public Double getValorProfSulc() {
-        return valorProfSulc;
+    public Long getValorCalibInsetDia() {
+        return valorCalibInsetDia;
     }
 
-    public void setValorProfSulc(Double valorProfSulc) {
-        this.valorProfSulc = valorProfSulc;
+    public void setValorCalibInsetDia(Long valorCalibInsetDia) {
+        this.valorCalibInsetDia = valorCalibInsetDia;
     }
 
-    public Double getValorFalhas() {
-        return valorFalhas;
+    public Long getValorCalibInsetMes() {
+        return valorCalibInsetMes;
     }
 
-    public void setValorFalhas(Double valorFalhas) {
-        this.valorFalhas = valorFalhas;
+    public void setValorCalibInsetMes(Long valorCalibInsetMes) {
+        this.valorCalibInsetMes = valorCalibInsetMes;
     }
 
-    public Double getValorQual() {
-        return valorQual;
+    public Long getValorCalibInsetAno() {
+        return valorCalibInsetAno;
     }
 
-    public void setValorQual(Double valorQual) {
-        this.valorQual = valorQual;
+    public void setValorCalibInsetAno(Long valorCalibInsetAno) {
+        this.valorCalibInsetAno = valorCalibInsetAno;
+    }
+
+    public Long getValorGemasDia() {
+        return valorGemasDia;
+    }
+
+    public void setValorGemasDia(Long valorGemasDia) {
+        this.valorGemasDia = valorGemasDia;
+    }
+
+    public Long getValorGemasMes() {
+        return valorGemasMes;
+    }
+
+    public void setValorGemasMes(Long valorGemasMes) {
+        this.valorGemasMes = valorGemasMes;
+    }
+
+    public Long getValorGemasAno() {
+        return valorGemasAno;
+    }
+
+    public void setValorGemasAno(Long valorGemasAno) {
+        this.valorGemasAno = valorGemasAno;
+    }
+
+    public Long getValorAltCobrDia() {
+        return valorAltCobrDia;
+    }
+
+    public void setValorAltCobrDia(Long valorAltCobrDia) {
+        this.valorAltCobrDia = valorAltCobrDia;
+    }
+
+    public Long getValorAltCobrMes() {
+        return valorAltCobrMes;
+    }
+
+    public void setValorAltCobrMes(Long valorAltCobrMes) {
+        this.valorAltCobrMes = valorAltCobrMes;
+    }
+
+    public Long getValorAltCobrAno() {
+        return valorAltCobrAno;
+    }
+
+    public void setValorAltCobrAno(Long valorAltCobrAno) {
+        this.valorAltCobrAno = valorAltCobrAno;
+    }
+
+    public Long getValorProfSulcDia() {
+        return valorProfSulcDia;
+    }
+
+    public void setValorProfSulcDia(Long valorProfSulcDia) {
+        this.valorProfSulcDia = valorProfSulcDia;
+    }
+
+    public Long getValorProfSulcMes() {
+        return valorProfSulcMes;
+    }
+
+    public void setValorProfSulcMes(Long valorProfSulcMes) {
+        this.valorProfSulcMes = valorProfSulcMes;
+    }
+
+    public Long getValorProfSulcAno() {
+        return valorProfSulcAno;
+    }
+
+    public void setValorProfSulcAno(Long valorProfSulcAno) {
+        this.valorProfSulcAno = valorProfSulcAno;
+    }
+
+    public Long getValorFalhasDia() {
+        return valorFalhasDia;
+    }
+
+    public void setValorFalhasDia(Long valorFalhasDia) {
+        this.valorFalhasDia = valorFalhasDia;
+    }
+
+    public Long getValorFalhasMes() {
+        return valorFalhasMes;
+    }
+
+    public void setValorFalhasMes(Long valorFalhasMes) {
+        this.valorFalhasMes = valorFalhasMes;
+    }
+
+    public Long getValorFalhasAno() {
+        return valorFalhasAno;
+    }
+
+    public void setValorFalhasAno(Long valorFalhasAno) {
+        this.valorFalhasAno = valorFalhasAno;
     }
 }

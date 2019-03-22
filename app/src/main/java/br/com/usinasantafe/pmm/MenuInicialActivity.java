@@ -29,6 +29,10 @@ import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosReceb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafDispEquipPlantioTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafPlanRealPlantioTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafProdPlantioTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafQualPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.AlocaCarretelTO;
@@ -64,102 +68,101 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         teste();
 
-        progressBar = new ProgressDialog(this);
-
-        progressBar.setCancelable(true);
-        progressBar.setMessage("Buscando Atualização...");
-        progressBar.show();
-
-        ManipDadosVerif.getInstance().verDados("", "GrafPlantio"
-                , MenuInicialActivity.this, GrafProdActivity.class, progressBar);
-
-//
-//        if(!checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-//            String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-//            ActivityCompat.requestPermissions((Activity) this, PERMISSIONS, 112);
-//        }
-//
-//        customHandler.postDelayed(updateTimerThread, 0);
-//
-//        ConexaoWeb conexaoWeb = new ConexaoWeb();
-//        configTO = new ConfiguracaoTO();
-//        List configList = configTO.all();
-//
 //        progressBar = new ProgressDialog(this);
 //
-//        if(conexaoWeb.verificaConexao(this))
-//        {
+//        progressBar.setCancelable(true);
+//        progressBar.setMessage("Buscando Atualização...");
+//        progressBar.show();
 //
-//            configTO = new ConfiguracaoTO();
-//            configList = configTO.all();
-//            if(configList.size() > 0){
-//
-//                progressBar.setCancelable(true);
-//                progressBar.setMessage("Buscando Atualização...");
-//                progressBar.show();
-//
-//                configTO = (ConfiguracaoTO) configList.get(0);
-//                AtualizaTO atualizaTO = new AtualizaTO();
-//                atualizaTO.setIdEquipAtualizacao(configTO.getEquipConfig());
-//                atualizaTO.setVersaoAtual(pmmContext.versaoAplic);
-//                ManipDadosVerif.getInstance().verAtualizacao(atualizaTO, this, progressBar);
-//            }
-//
-//        }
-//        else{
-//            startTimer("N_NAC");
-//        }
-//
-//        configList.clear();
-//
-//        BoletimMMTO boletimMMTO = new BoletimMMTO();
-//        List boletimList = boletimMMTO.get("statusBoletim", 1L);
-//
-//        if(boletimList.size() > 0){
-//
-//            pmmContext.setBoletimMMTO((BoletimMMTO) boletimList.get(0));
-//
-//            CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-//            List cabecList = cabecCheckListTO.get("statusCab", 1L);
-//
-//            if(cabecList.size() == 0) {
-//
-//                if(progressBar.isShowing()){
-//                    progressBar.dismiss();
-//                }
-//
-//                Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
-//                startActivity(it);
-//                finish();
-//
-//            }
-//            else{
-//
-//                RespItemCheckListTO respItemCheckListTO = new RespItemCheckListTO();
-//
-//                if(respItemCheckListTO.hasElements()){
-//                    cabecCheckListTO = (CabecCheckListTO) cabecList.get(0);
-//                    List respList = respItemCheckListTO.get("idCabIt", cabecCheckListTO.getIdCab());
-//                    for (int i = 0; i < respList.size(); i++) {
-//                        respItemCheckListTO = (RespItemCheckListTO) respList.get(i);
-//                        respItemCheckListTO.delete();
-//                    }
-//                }
-//
-//                if(progressBar.isShowing()){
-//                    progressBar.dismiss();
-//                }
-//
-//                pmmContext.setPosChecklist(1L);
-//                Intent it = new Intent(MenuInicialActivity.this, ItemChecklistActivity.class);
-//                startActivity(it);
-//                finish();
-//
-//            }
-//
-//        }
-//
-//        listarMenuInicial();
+//        ManipDadosVerif.getInstance().verDados("", "GrafPlantio"
+//                , MenuInicialActivity.this, GrafProdActivity.class, progressBar);
+
+        if(!checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+            String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            ActivityCompat.requestPermissions((Activity) this, PERMISSIONS, 112);
+        }
+
+        customHandler.postDelayed(updateTimerThread, 0);
+
+        ConexaoWeb conexaoWeb = new ConexaoWeb();
+        configTO = new ConfiguracaoTO();
+        List configList = configTO.all();
+
+        progressBar = new ProgressDialog(this);
+
+        if(conexaoWeb.verificaConexao(this))
+        {
+
+            if(configList.size() > 0){
+
+                progressBar.setCancelable(true);
+                progressBar.setMessage("Buscando Atualização...");
+                progressBar.show();
+
+                configTO = (ConfiguracaoTO) configList.get(0);
+                AtualizaTO atualizaTO = new AtualizaTO();
+                atualizaTO.setIdEquipAtualizacao(configTO.getEquipConfig());
+                atualizaTO.setVersaoAtual(pmmContext.versaoAplic);
+                ManipDadosVerif.getInstance().verAtualizacao(atualizaTO, this, progressBar);
+            }
+
+        }
+        else{
+            if(configList.size() > 0) {
+                startTimer("N_NAC");
+            }
+        }
+
+        configList.clear();
+
+        BoletimMMTO boletimMMTO = new BoletimMMTO();
+        List boletimList = boletimMMTO.get("statusBoletim", 1L);
+
+        if(boletimList.size() > 0){
+
+            pmmContext.setBoletimMMTO((BoletimMMTO) boletimList.get(0));
+
+            CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
+            List cabecList = cabecCheckListTO.get("statusCab", 1L);
+
+            if(cabecList.size() == 0) {
+
+                if(progressBar.isShowing()){
+                    progressBar.dismiss();
+                }
+
+                Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
+                startActivity(it);
+                finish();
+
+            }
+            else{
+
+                RespItemCheckListTO respItemCheckListTO = new RespItemCheckListTO();
+
+                if(respItemCheckListTO.hasElements()){
+                    cabecCheckListTO = (CabecCheckListTO) cabecList.get(0);
+                    List respList = respItemCheckListTO.get("idCabIt", cabecCheckListTO.getIdCab());
+                    for (int i = 0; i < respList.size(); i++) {
+                        respItemCheckListTO = (RespItemCheckListTO) respList.get(i);
+                        respItemCheckListTO.delete();
+                    }
+                }
+
+                if(progressBar.isShowing()){
+                    progressBar.dismiss();
+                }
+
+                pmmContext.setPosChecklist(1L);
+                Intent it = new Intent(MenuInicialActivity.this, ItemChecklistActivity.class);
+                startActivity(it);
+                finish();
+
+            }
+
+        }
+
+        listarMenuInicial();
 
     }
 
@@ -189,28 +192,11 @@ public class MenuInicialActivity extends ActivityGeneric {
 
                 if (text.equals("BOLETIM")) {
                     MotoristaTO motoristaTO = new MotoristaTO();
-                    if (motoristaTO.hasElements()) {
+                    if (motoristaTO.hasElements() && configTO.hasElements()) {
+
                         pmmContext.setVerPosTela(1);
 
-                        TransbordoTO transbordoTO = new TransbordoTO();
-                        transbordoTO.deleteAll();
-
-                        ImplementoTO implementoTO = new ImplementoTO();
-                        List implementoList = implementoTO.get("idApontImplemento", 0L);
-
-                        for (int i = 0; i < implementoList.size(); i++) {
-                            implementoTO = (ImplementoTO) implementoList.get(i);
-                            implementoTO.delete();
-                        }
-
-                        AlocaCarretelTO alocaCarretelTO = new AlocaCarretelTO();
-                        alocaCarretelTO.deleteAll();
-
-                        OSTO osto = new OSTO();
-                        osto.deleteAll();
-
-                        ROSAtivTO rosAtivTO = new ROSAtivTO();
-                        rosAtivTO.deleteAll();
+                        clearBD();
 
                         Intent it = new Intent(MenuInicialActivity.this, OperadorActivity.class);
                         startActivity(it);
@@ -516,6 +502,42 @@ public class MenuInicialActivity extends ActivityGeneric {
 
 
         Log.i("PMM", "versão = " + PMMContext.versaoAplic);
+
+    }
+
+    public void clearBD(){
+
+        TransbordoTO transbordoTO = new TransbordoTO();
+        transbordoTO.deleteAll();
+
+        ImplementoTO implementoTO = new ImplementoTO();
+        List implementoList = implementoTO.get("idApontImplemento", 0L);
+
+        for (int i = 0; i < implementoList.size(); i++) {
+            implementoTO = (ImplementoTO) implementoList.get(i);
+            implementoTO.delete();
+        }
+
+        AlocaCarretelTO alocaCarretelTO = new AlocaCarretelTO();
+        alocaCarretelTO.deleteAll();
+
+        OSTO osto = new OSTO();
+        osto.deleteAll();
+
+        ROSAtivTO rosAtivTO = new ROSAtivTO();
+        rosAtivTO.deleteAll();
+
+        GrafProdPlantioTO grafProdPlantioTO = new GrafProdPlantioTO();
+        grafProdPlantioTO.deleteAll();
+
+        GrafDispEquipPlantioTO grafDispEquipPlantioTO = new GrafDispEquipPlantioTO();
+        grafDispEquipPlantioTO.deleteAll();
+
+        GrafPlanRealPlantioTO grafPlanRealPlantioTO = new GrafPlanRealPlantioTO();
+        grafPlanRealPlantioTO.deleteAll();
+
+        GrafQualPlantioTO grafQualPlantioTO = new GrafQualPlantioTO();
+        grafQualPlantioTO.deleteAll();
 
     }
 

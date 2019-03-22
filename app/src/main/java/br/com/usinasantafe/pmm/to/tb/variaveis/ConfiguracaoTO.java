@@ -28,6 +28,8 @@ public class ConfiguracaoTO extends Entidade {
 	private Long osConfig;
 	@DatabaseField
 	private Double horimetroConfig;
+	@DatabaseField
+	private Long verVisGrafConfig;
 
 	public ConfiguracaoTO() {
 		// TODO Auto-generated constructor stub
@@ -96,4 +98,12 @@ public class ConfiguracaoTO extends Entidade {
     public void setDtUltCLConfig(String dtUltCLConfig) {
         this.dtUltCLConfig = dtUltCLConfig;
     }
+
+	public Long getVerVisGrafConfig() {
+		return verVisGrafConfig;
+	}
+
+	public void setVerVisGrafConfig(Long verVisGrafConfig) {
+		this.verVisGrafConfig = verVisGrafConfig;
+	}
 }

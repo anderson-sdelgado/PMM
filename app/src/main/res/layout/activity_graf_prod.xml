@@ -48,7 +48,7 @@
                     android:text="@string/texto_subtitulo_prod_frente" />
 
                 <LinearLayout
-                    android:id="@+id/layoutTratorTransbCampo"
+                    android:id="@+id/layoutTratorTransbCamp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -1267,8 +1267,826 @@
                     android:paddingTop="50dp"
                     />
 
+
+                    <TextView
+                        android:id="@+id/textViewSubTituloTratPlant"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/texto_subtitulo_trator_plant"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="25dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewSubTitDispTratorPlant"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/texto_subtitulo_disp_oper"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutTratorPlantOper"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_trator_plant_oper_dia"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_trator_plant_oper_dia"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_trator_plant_oper_mes"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_trator_plant_oper_mes"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_trator_plant_oper_ano"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_trator_plant_oper_ano"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textViewSubTitCampoTratorPlant"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/texto_subtitulo_campo"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutTratorPlantCampo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_trator_plant_campo_dia"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_trator_plant_campo_dia"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_trator_plant_campo_mes"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_trator_plant_campo_mes"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_trator_plant_campo_ano"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_trator_plant_campo_ano"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textViewSubTituloCaminhaoMuda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="20dp"
+                        android:text="@string/texto_subtitulo_caminhao_muda"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="25dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewSubTitOperCam"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/texto_subtitulo_disp_oper"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutCaminhaoOper"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_caminhao_oper_dia"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_caminhao_oper_dia"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_caminhao_oper_mes"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_caminhao_oper_mes"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_caminhao_oper_ano"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_caminhao_oper_ano"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textViewSubTitCampoCam"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/texto_subtitulo_campo"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutCaminhaoCampo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_caminhao_campo_dia"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_caminhao_campo_dia"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_caminhao_campo_mes"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_caminhao_campo_mes"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_caminhao_campo_ano"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_caminhao_campo_ano"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textViewSubTituloColhedora"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="20dp"
+                        android:text="@string/texto_subtitulo_colhedora"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="25dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewSubTitOperColhed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/texto_subtitulo_disp_oper"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutColhedoraOper"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_colhedora_oper_dia"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_colhedora_oper_dia"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_colhedora_oper_mes"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_colhedora_oper_mes"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_colhedora_oper_ano"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_colhedora_oper_ano"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textViewSubTitCampoColhed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/texto_subtitulo_campo"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutColhedoraCampo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_colhedora_campo_dia"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_colhedora_campo_dia"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_colhedora_campo_mes"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_colhedora_campo_mes"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_colhedora_campo_ano"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_colhedora_campo_ano"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textViewSubTituloTratorTransb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/texto_subtitulo_trator_tranb"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="25dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewSubTitOperTratorTransb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/texto_subtitulo_disp_oper"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutTratorTransbOper"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_trator_transb_oper_dia"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_trator_transb_oper_dia"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_trator_transb_oper_mes"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_trator_transb_oper_mes"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_trator_transb_oper_ano"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_trator_transb_oper_ano"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textViewSubTitCampoTratorTransb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/texto_subtitulo_campo"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutTratorTransbCampo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_trator_transb_campo_dia"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_trator_transb_campo_dia"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_trator_transb_campo_mes"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_trator_transb_campo_mes"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_bar_trator_transb_campo_ano"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+
+                        <com.anychart.AnyChartView
+                            android:id="@+id/graf_trator_transb_campo_ano"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp" />
+
+                    </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewSubTituloCalibAdub"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="20dp"
+                    android:text="@string/texto_subtitulo_calib_adub" />
+
+                <LinearLayout
+                    android:id="@+id/layoutVarCalibAdub"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_calib_adubo_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_calib_adubo_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_calib_adubo_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_calib_adubo_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_calib_adubo_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_calib_adubo_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewSubTituloCalibInset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:textAlignment="center"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="@string/texto_subtitulo_calib_inset" />
+
+                <LinearLayout
+                    android:id="@+id/layoutVarCalibIns"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_calib_inset_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_calib_inset_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_calib_inset_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_calib_inset_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_calib_inset_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_calib_inset_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewSubTituloGemas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:textAlignment="center"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="@string/texto_subtitulo_gemas" />
+
+                <LinearLayout
+                    android:id="@+id/layoutGemas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_gemas_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_gemas_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_gemas_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_gemas_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_gemas_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_gemas_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewSubTituloAltCobr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:textAlignment="center"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="@string/texto_subtitulo_alt_cobr" />
+
+                <LinearLayout
+                    android:id="@+id/layoutAltCobr"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_alt_cobr_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_alt_cobr_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_alt_cobr_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_alt_cobr_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_alt_cobr_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_alt_cobr_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewSubTituloProf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:textAlignment="center"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="@string/texto_subtitulo_prof_sulc" />
+
+                <LinearLayout
+                    android:id="@+id/layoutProfSulc"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_prof_sulc_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_prof_sulc_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_prof_sulc_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_prof_sulc_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_prof_sulc_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_prof_sulc_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewSubTituloFalhasDep"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:textAlignment="center"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="@string/texto_subtitulo_falhas_dep" />
+
+                <LinearLayout
+                    android:id="@+id/layoutFalhasDepos"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_falhas_depos_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_falhas_depos_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_falhas_depos_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_falhas_depos_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_falhas_depos_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_falhas_depos_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewSubTituloQualGeral"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:textAlignment="center"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="@string/texto_subtitulo_qual_geral" />
+
+                <LinearLayout
+                    android:id="@+id/layoutQualidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_qualidade_dia"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_qualidade_dia"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_qualidade_mes"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_qualidade_mes"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_term_qualidade_ano"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
+
+                    <com.anychart.AnyChartView
+                        android:id="@+id/term_qualidade_ano"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
                 <Button
-                    android:id="@+id/buttonProxGrafProd"
+                    android:id="@+id/buttonSairGrafico"
                     android:minHeight="60dp"
                     android:minWidth="100dp"
                     android:textColor="#000000"
@@ -1276,7 +2094,7 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/texto_prox_tela" />
+                    android:text="@string/texto_fechar_graf" />
 
             </LinearLayout>
 
