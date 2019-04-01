@@ -68,14 +68,6 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         teste();
 
-//        progressBar = new ProgressDialog(this);
-//
-//        progressBar.setCancelable(true);
-//        progressBar.setMessage("Buscando Atualização...");
-//        progressBar.show();
-//
-//        ManipDadosVerif.getInstance().verDados("", "GrafPlantio"
-//                , MenuInicialActivity.this, GrafProdActivity.class, progressBar);
 
         if(!checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
             String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -527,17 +519,17 @@ public class MenuInicialActivity extends ActivityGeneric {
         ROSAtivTO rosAtivTO = new ROSAtivTO();
         rosAtivTO.deleteAll();
 
-        GrafProdPlantioTO grafProdPlantioTO = new GrafProdPlantioTO();
-        grafProdPlantioTO.deleteAll();
-
-        GrafDispEquipPlantioTO grafDispEquipPlantioTO = new GrafDispEquipPlantioTO();
-        grafDispEquipPlantioTO.deleteAll();
-
-        GrafPlanRealPlantioTO grafPlanRealPlantioTO = new GrafPlanRealPlantioTO();
-        grafPlanRealPlantioTO.deleteAll();
-
-        GrafQualPlantioTO grafQualPlantioTO = new GrafQualPlantioTO();
-        grafQualPlantioTO.deleteAll();
+//        GrafProdPlantioTO grafProdPlantioTO = new GrafProdPlantioTO();
+//        grafProdPlantioTO.deleteAll();
+//
+//        GrafDispEquipPlantioTO grafDispEquipPlantioTO = new GrafDispEquipPlantioTO();
+//        grafDispEquipPlantioTO.deleteAll();
+//
+//        GrafPlanRealPlantioTO grafPlanRealPlantioTO = new GrafPlanRealPlantioTO();
+//        grafPlanRealPlantioTO.deleteAll();
+//
+//        GrafQualPlantioTO grafQualPlantioTO = new GrafQualPlantioTO();
+//        grafQualPlantioTO.deleteAll();
 
     }
 

@@ -360,13 +360,13 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                 textViewProcessoNormal.setText("Todos os Dados já foram enviados e recebidos");
             }
 
-            if(configuracaoTO.getVerVisGrafConfig() == 0){
-                if(new GrafProdPlantioTO().hasElements()){
-                    Intent it = new Intent( MenuPrincNormalActivity.this, GrafProdActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-            }
+//            if(configuracaoTO.getVerVisGrafConfig() == 0){
+//                if(new GrafProdPlantioTO().hasElements()){
+//                    Intent it = new Intent( MenuPrincNormalActivity.this, GrafProdActivity.class);
+//                    startActivity(it);
+//                    finish();
+//                }
+//            }
 
             customHandler.postDelayed(this, 10000);
         }

@@ -144,14 +144,15 @@ public class ItemChecklistActivity extends ActivityGeneric {
             configTO.update();
             configTO.commit();
 
-            Intent it = new Intent(ItemChecklistActivity.this, EsperaGrafActivity.class);
-            startActivity(it);
-            finish();
-
-//            ANTIGO
-//            Intent it = new Intent(ItemChecklistActivity.this, MenuPrincNormalActivity.class);
+//            GRAFICO
+//            Intent it = new Intent(ItemChecklistActivity.this, EsperaGrafActivity.class);
 //            startActivity(it);
 //            finish();
+
+//            ANTIGO
+            Intent it = new Intent(ItemChecklistActivity.this, MenuPrincNormalActivity.class);
+            startActivity(it);
+            finish();
 
             ManipDadosEnvio.getInstance().salvaCheckList();
 

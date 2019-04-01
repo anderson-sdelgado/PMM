@@ -737,9 +737,9 @@ public class ManipDadosEnvio {
 
     public void envioDadosPrinc() {
 
-        if(verifDadosGraf()){
-            ManipDadosVerif.getInstance().verDadosGraf();
-        } else {
+//        if(verifDadosGraf()){
+//            ManipDadosVerif.getInstance().verDadosGraf();
+//        } else {
             if (verifDadosChecklist()) {
                 enviarChecklist();
             } else {
@@ -755,7 +755,7 @@ public class ManipDadosEnvio {
                     }
                 }
             }
-        }
+//        }
     }
 
     public boolean verifDadosEnvio() {

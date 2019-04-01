@@ -303,27 +303,29 @@ public class ImplementoActivity extends ActivityGeneric {
                                     ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false);
                                     ManipDadosEnvio.getInstance().envioDadosPrinc();
 
-                                    it = new Intent(ImplementoActivity.this, EsperaGrafActivity.class);
-                                    startActivity(it);
-                                    finish();
-
-//                                    ANTIGO
-//                                    it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
+//                                    GRAFICO
+//                                    it = new Intent(ImplementoActivity.this, EsperaGrafActivity.class);
 //                                    startActivity(it);
 //                                    finish();
+
+//                                    ANTIGO
+                                    it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
+                                    startActivity(it);
+                                    finish();
 
                                 }
 
                             } else {
 
-                                it = new Intent(ImplementoActivity.this, EsperaGrafActivity.class);
-                                startActivity(it);
-                                finish();
+//                                    GRAFICO
+//                                    it = new Intent(ImplementoActivity.this, EsperaGrafActivity.class);
+//                                    startActivity(it);
+//                                    finish();
 
 //                                ANTIGO
-//                                it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
-//                                startActivity(it);
-//                                finish();
+                                it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
+                                startActivity(it);
+                                finish();
 
                             }
 

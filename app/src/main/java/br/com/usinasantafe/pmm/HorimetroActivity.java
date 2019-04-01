@@ -354,14 +354,15 @@ public class HorimetroActivity extends ActivityGeneric {
                     ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false);
                     ManipDadosEnvio.getInstance().envioDadosPrinc();
 
-                    Intent it = new Intent(HorimetroActivity.this, EsperaGrafActivity.class);
-                    startActivity(it);
-                    finish();
-
-//                    ANTIGO
-//                    Intent it = new Intent(HorimetroActivity.this, MenuPrincNormalActivity.class);
+//                    GRAFICO
+//                    Intent it = new Intent(HorimetroActivity.this, EsperaGrafActivity.class);
 //                    startActivity(it);
 //                    finish();
+
+//                    ANTIGO
+                    Intent it = new Intent(HorimetroActivity.this, MenuPrincNormalActivity.class);
+                    startActivity(it);
+                    finish();
 
                 }
 
