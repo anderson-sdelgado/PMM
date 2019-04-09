@@ -132,6 +132,8 @@ public class TransbordoActivity extends ActivityGeneric {
 
                             pmmContext.getApontaMMTO().setTransbordoAponta(Long.parseLong(editTextPadrao.getText().toString()));
 
+                            pmmContext.getApontaMMTO().setLatitudeAponta(getLatitude());
+                            pmmContext.getApontaMMTO().setLongitudeAponta(getLongitude());
                             ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO());
 
                             ConfiguracaoTO configTO = new ConfiguracaoTO();

@@ -205,6 +205,8 @@ public class ListaParadaActivity extends ActivityGeneric {
 
                         } else {
 
+                            pmmContext.getApontaMMTO().setLatitudeAponta(getLatitude());
+                            pmmContext.getApontaMMTO().setLongitudeAponta(getLongitude());
                             ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO());
 
                             if (pmmContext.getVerPosTela() == 3) {

@@ -83,7 +83,7 @@ public class ManipDadosEnvio {
 
     }
 
-    public void salvaBoletimAbertoMM(BoletimMMTO boletimMMTO, boolean checklist) {
+    public void salvaBoletimAbertoMM(BoletimMMTO boletimMMTO, boolean checklist, Double latitude, Double longitude) {
 
         boletimMMTO.setDthrInicioBoletim(Tempo.getInstance().data());
         boletimMMTO.insert();
@@ -99,6 +99,8 @@ public class ManipDadosEnvio {
             apontaMMTO.setAtividadeAponta(boletimMMTO.getAtivPrincBoletim());
             apontaMMTO.setParadaAponta(180L);
             apontaMMTO.setTransbordoAponta(0L);
+            apontaMMTO.setLatitudeAponta(latitude);
+            apontaMMTO.setLongitudeAponta(longitude);
             apontaMMTO.insert();
 
             BackupApontaMMTO backupApontaMMTO = new BackupApontaMMTO();

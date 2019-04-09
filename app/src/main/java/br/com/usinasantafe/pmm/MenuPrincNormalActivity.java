@@ -395,6 +395,8 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
         apontaMMTO.setParadaAponta(paradaTO.getIdParada());
         apontaMMTO.setTransbordoAponta(backupApontaMMTO.getTransbordoAponta());
+        apontaMMTO.setLatitudeAponta(getLatitude());
+        apontaMMTO.setLongitudeAponta(getLongitude());
         ManipDadosEnvio.getInstance().salvaApontaMM(apontaMMTO);
 
     }

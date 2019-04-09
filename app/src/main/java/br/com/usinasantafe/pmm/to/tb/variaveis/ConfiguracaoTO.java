@@ -30,6 +30,8 @@ public class ConfiguracaoTO extends Entidade {
 	private Double horimetroConfig;
 	@DatabaseField
 	private Long verVisGrafConfig;
+	@DatabaseField
+	private Long statusConConfig;  //0 - Offline; 1 - Online
 
 	public ConfiguracaoTO() {
 		// TODO Auto-generated constructor stub
@@ -105,5 +107,13 @@ public class ConfiguracaoTO extends Entidade {
 
 	public void setVerVisGrafConfig(Long verVisGrafConfig) {
 		this.verVisGrafConfig = verVisGrafConfig;
+	}
+
+	public Long getStatusConConfig() {
+		return statusConConfig;
+	}
+
+	public void setStatusConConfig(Long statusConConfig) {
+		this.statusConConfig = statusConConfig;
 	}
 }

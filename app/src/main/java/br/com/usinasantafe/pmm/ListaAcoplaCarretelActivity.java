@@ -163,7 +163,7 @@ public class ListaAcoplaCarretelActivity extends ActivityGeneric {
                         }
 
                         pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                        ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false);
+                        ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false, getLatitude(), getLongitude());
                         ManipDadosEnvio.getInstance().envioDadosPrinc();
 
                         Intent it = new Intent(ListaAcoplaCarretelActivity.this, MenuPrincNormalActivity.class);

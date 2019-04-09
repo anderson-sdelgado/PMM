@@ -82,6 +82,14 @@ public class OSActivity extends ActivityGeneric {
                                 List configList = configuracaoTO.all();
                                 configuracaoTO = (ConfiguracaoTO) configList.get(0);
                                 configuracaoTO.setOsConfig(Long.parseLong(editTextPadrao.getText().toString()));
+
+                                if (conexaoWeb.verificaConexao(OSActivity.this)) {
+                                    configuracaoTO.setStatusConConfig(1L);
+                                }
+                                else{
+                                    configuracaoTO.setStatusConConfig(0L);
+                                }
+
                                 configuracaoTO.update();
 
                                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
@@ -108,6 +116,7 @@ public class OSActivity extends ActivityGeneric {
                                     List configList = configuracaoTO.all();
                                     configuracaoTO = (ConfiguracaoTO) configList.get(0);
                                     configuracaoTO.setOsConfig(Long.parseLong(editTextPadrao.getText().toString()));
+                                    configuracaoTO.setStatusConConfig(0L);
                                     configuracaoTO.update();
 
                                     Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
@@ -138,6 +147,7 @@ public class OSActivity extends ActivityGeneric {
                                 List configList = configuracaoTO.all();
                                 configuracaoTO = (ConfiguracaoTO) configList.get(0);
                                 configuracaoTO.setOsConfig(Long.parseLong(editTextPadrao.getText().toString()));
+                                configuracaoTO.setStatusConConfig(0L);
                                 configuracaoTO.update();
 
                                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);

@@ -270,7 +270,7 @@ public class ImplementoActivity extends ActivityGeneric {
                                                 || ((configTO.getUltTurnoCLConfig() == turnoTO.getIdTurno()) && (!configTO.getDtUltCLConfig().equals(Tempo.getInstance().dataSHora()))))) {
 
                                     pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                                    ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true);
+                                    ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true, getLatitude(), getLongitude());
                                     ManipDadosEnvio.getInstance().envioDadosPrinc();
 
                                     ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
@@ -300,7 +300,7 @@ public class ImplementoActivity extends ActivityGeneric {
                                     configTO.update();
                                     configTO.commit();
                                     pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                                    ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false);
+                                    ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false, getLatitude(), getLongitude());
                                     ManipDadosEnvio.getInstance().envioDadosPrinc();
 
 //                                    GRAFICO

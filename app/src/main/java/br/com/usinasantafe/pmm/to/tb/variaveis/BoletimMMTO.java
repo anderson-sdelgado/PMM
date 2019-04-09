@@ -34,6 +34,8 @@ public class BoletimMMTO extends Entidade {
 	private String dthrFimBoletim;
 	@DatabaseField
 	private Long statusBoletim;  //0 - Esta apontando os implementos; 1 - Aberto; 2 - Encerrado
+	@DatabaseField
+	private Long statusConBoletim;  //0 - Offline; 1 - Online
 
     public BoletimMMTO() {
 		// TODO Auto-generated constructor stub
@@ -131,5 +133,11 @@ public class BoletimMMTO extends Entidade {
 		this.dthrFimBoletim = dthrFimBoletim;
 	}
 
+	public Long getStatusConBoletim() {
+		return statusConBoletim;
+	}
 
+	public void setStatusConBoletim(Long statusConBoletim) {
+		this.statusConBoletim = statusConBoletim;
+	}
 }

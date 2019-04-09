@@ -317,6 +317,7 @@ public class ManipDadosVerif {
                         List configList = configuracaoTO.all();
                         configuracaoTO = (ConfiguracaoTO) configList.get(0);
                         configuracaoTO.setOsConfig(Long.parseLong(this.dado));
+                        configuracaoTO.setStatusConConfig(1L);
                         configuracaoTO.update();
 
                         verTerm = true;
@@ -350,6 +351,7 @@ public class ManipDadosVerif {
                     List configList = configuracaoTO.all();
                     configuracaoTO = (ConfiguracaoTO) configList.get(0);
                     configuracaoTO.setOsConfig(Long.parseLong(this.dado));
+                    configuracaoTO.setStatusConConfig(0L);
                     configuracaoTO.update();
 
                     Intent it = new Intent(telaAtual, telaProx);

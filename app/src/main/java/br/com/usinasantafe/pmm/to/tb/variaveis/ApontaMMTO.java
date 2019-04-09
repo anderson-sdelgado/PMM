@@ -26,6 +26,12 @@ public class ApontaMMTO extends Entidade  {
 	private Long transbordoAponta;
 	@DatabaseField
 	private String dthrAponta;
+	@DatabaseField
+	private Double latitudeAponta;
+	@DatabaseField
+	private Double longitudeAponta;
+	@DatabaseField
+	private Long statusConAponta;
 
 	public ApontaMMTO() {
 		// TODO Auto-generated constructor stub
@@ -91,4 +97,27 @@ public class ApontaMMTO extends Entidade  {
 		this.transbordoAponta = transbordoAponta;
 	}
 
+	public Double getLatitudeAponta() {
+		return latitudeAponta;
+	}
+
+	public void setLatitudeAponta(Double latitudeAponta) {
+		this.latitudeAponta = latitudeAponta;
+	}
+
+	public Double getLongitudeAponta() {
+		return longitudeAponta;
+	}
+
+	public void setLongitudeAponta(Double longitudeAponta) {
+		this.longitudeAponta = longitudeAponta;
+	}
+
+	public Long getStatusConAponta() {
+		return statusConAponta;
+	}
+
+	public void setStatusConAponta(Long statusConAponta) {
+		this.statusConAponta = statusConAponta;
+	}
 }

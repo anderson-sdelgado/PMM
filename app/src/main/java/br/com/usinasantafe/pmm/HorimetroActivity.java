@@ -309,7 +309,7 @@ public class HorimetroActivity extends ActivityGeneric {
                         || ((configTO.getUltTurnoCLConfig() == turnoTO.getIdTurno()) && (!configTO.getDtUltCLConfig().equals(Tempo.getInstance().dataSHora()))))) {
 
                     pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                    ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true);
+                    ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true, getLatitude(), getLongitude());
                     ManipDadosEnvio.getInstance().envioDadosPrinc();
 
                     pmmContext.setPosChecklist(1L);
@@ -351,7 +351,7 @@ public class HorimetroActivity extends ActivityGeneric {
                     configTO.update();
                     configTO.commit();
                     pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                    ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false);
+                    ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false, getLatitude(), getLongitude());
                     ManipDadosEnvio.getInstance().envioDadosPrinc();
 
 //                    GRAFICO

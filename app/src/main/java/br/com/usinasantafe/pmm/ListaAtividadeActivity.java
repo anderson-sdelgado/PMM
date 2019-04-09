@@ -203,6 +203,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 if (pmmContext.getVerPosTela() == 1) {
 
                     pmmContext.getBoletimMMTO().setAtivPrincBoletim(atividadeTO.getIdAtiv());
+                    pmmContext.getBoletimMMTO().setStatusConBoletim(configuracaoTO.getStatusConConfig());
                     pmmContext.setTextoHorimetro("HORÍMETRO INICIAL:");
                     Intent it = new Intent(ListaAtividadeActivity.this, HorimetroActivity.class);
                     startActivity(it);
@@ -214,6 +215,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 } else if((pmmContext.getVerPosTela() == 2) || (pmmContext.getVerPosTela() == 8))  {
 
                     pmmContext.getApontaMMTO().setAtividadeAponta(atividadeTO.getIdAtiv());
+                    pmmContext.getApontaMMTO().setStatusConAponta(configuracaoTO.getStatusConConfig());
                     pmmContext.getApontaMMTO().setParadaAponta(0L);
 
                     if(verifBackup()){
@@ -245,6 +247,8 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                 pmmContext.getApontaMMTO().setTransbordoAponta(0L);
                             }
 
+                            pmmContext.getApontaMMTO().setLatitudeAponta(getLatitude());
+                            pmmContext.getApontaMMTO().setLongitudeAponta(getLongitude());
                             ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO());
 
                             if(atividadeTO.getFlagRendimento() == 1) {
@@ -321,6 +325,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 } else if ((pmmContext.getVerPosTela() == 3) || (pmmContext.getVerPosTela() == 12)) {
 
                     pmmContext.getApontaMMTO().setAtividadeAponta(atividadeTO.getIdAtiv());
+                    pmmContext.getApontaMMTO().setStatusConAponta(configuracaoTO.getStatusConConfig());
                     Intent it = new Intent(ListaAtividadeActivity.this, ListaParadaActivity.class);
                     startActivity(it);
                     finish();
