@@ -44,8 +44,8 @@ public class UrlsConexaoHttp {
             retorno = urlPrincEnvio + "verifequip.php";
         } else if (classe.equals("OS")) {
             retorno = urlPrincEnvio + "verifos.php";
-        } else if (classe.equals("OSAtiv")) {
-            retorno = urlPrincEnvio + "verifos.php";
+        } else if (classe.equals("Atividade")) {
+            retorno = urlPrincEnvio + "atualativ.php";
         } else if (classe.equals("Parada")) {
             retorno = urlPrincEnvio + "atualativpar.php";
         } else if (classe.equals("Atualiza")) {
@@ -57,7 +57,7 @@ public class UrlsConexaoHttp {
         } else if (classe.equals("EquipSeg")) {
             retorno = urlPrincEnvio + "equipseg.php";
         } else if (classe.equals("CheckList")) {
-            retorno = urlPrincEnvio + "itemchecklist.php";
+            retorno = urlPrincEnvio + "atualchecklist.php";
         } else if (classe.equals("GrafPlantio")) {
             retorno = urlPrincEnvio + "grafplantio.php";
         }

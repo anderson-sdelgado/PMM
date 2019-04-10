@@ -9,6 +9,7 @@ import com.j256.ormlite.field.DatabaseField;
 public class AtualizaTO {
 
     private Long idEquipAtualizacao;
+    private Long idCheckList;
     private String versaoAtual;
     private String versaoNova;
 
@@ -21,6 +22,14 @@ public class AtualizaTO {
 
     public void setIdEquipAtualizacao(Long idEquipAtualizacao) {
         this.idEquipAtualizacao = idEquipAtualizacao;
+    }
+
+    public Long getIdCheckList() {
+        return idCheckList;
+    }
+
+    public void setIdCheckList(Long idCheckList) {
+        this.idCheckList = idCheckList;
     }
 
     public String getVersaoAtual() {

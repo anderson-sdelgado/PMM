@@ -186,7 +186,7 @@ public class ManipDadosVerif {
                 int pos2 = result.indexOf("|") + 1;
                 String objPrinc = result.substring(0, result.indexOf("#"));
                 String objSeg = result.substring(pos1, (pos2 - 1));
-                String objTerc = result.substring(pos2, result.length());
+                String objTerc = result.substring(pos2);
 
                 JSONObject jObj = new JSONObject(objPrinc);
                 JSONArray jsonArray = jObj.getJSONArray("dados");
@@ -283,7 +283,7 @@ public class ManipDadosVerif {
 
                     int posicao = result.indexOf("#") + 1;
                     String objPrinc = result.substring(0, result.indexOf("#"));
-                    String objSeg = result.substring(posicao, result.length());
+                    String objSeg = result.substring(posicao);
 
                     JSONObject jObj = new JSONObject(objPrinc);
                     JSONArray jsonArray = jObj.getJSONArray("dados");
@@ -360,21 +360,70 @@ public class ManipDadosVerif {
                 }
 
             }
-            else if(this.tipo.equals("OSAtiv")) {
+            else if(this.tipo.equals("Atividade")) {
 
                 if (!result.contains("exceeded")) {
 
-                    int posicao = result.indexOf("#") + 1;
-                    String objPrinc = result.substring(0, result.indexOf("#"));
-                    String objSeg = result.substring(posicao, result.length());
+                    int pos1 = result.indexOf("_") + 1;
+                    int pos2 = result.indexOf("|") + 1;
+                    int pos3 = result.indexOf("#") + 1;
+                    int pos4 = result.indexOf("?") + 1;
+                    String objPrim = result.substring(0, (pos1 - 1));
+                    String objSeg = result.substring(pos1, (pos2 - 1));
+                    String objTerc = result.substring(pos2, (pos3 - 1));
+                    String objQuarto = result.substring(pos3, (pos4 - 1));
+                    String objQuinto = result.substring(pos4);
 
-                    JSONObject jObj = new JSONObject(objPrinc);
+                    JSONObject jObj = new JSONObject(objPrim);
                     JSONArray jsonArray = jObj.getJSONArray("dados");
-                    Class classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "OSTO");
+                    Class classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "EquipTO");
+
+                    genericRecordable = new GenericRecordable();
+                    genericRecordable.deleteAll(classe);
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject objeto = jsonArray.getJSONObject(i);
+                        Gson gson = new Gson();
+                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
+
+                    }
+
+                    jObj = new JSONObject(objSeg);
+                    jsonArray = jObj.getJSONArray("dados");
+                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "REquipAtivTO");
+
+                    genericRecordable.deleteAll(classe);
+
+                    for (int j = 0; j < jsonArray.length(); j++) {
+
+                        JSONObject objeto = jsonArray.getJSONObject(j);
+                        Gson gson = new Gson();
+                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
+
+                    }
+
+                    jObj = new JSONObject(objTerc);
+                    jsonArray = jObj.getJSONArray("dados");
+                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "RAtivParadaTO");
+
+                    genericRecordable.deleteAll(classe);
+
+                    for (int j = 0; j < jsonArray.length(); j++) {
+
+                        JSONObject objeto = jsonArray.getJSONObject(j);
+                        Gson gson = new Gson();
+                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
+
+                    }
+
+                    jObj = new JSONObject(objQuarto);
+                    jsonArray = jObj.getJSONArray("dados");
+                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "OSTO");
 
                     if (jsonArray.length() > 0) {
 
-                        genericRecordable = new GenericRecordable();
+                        genericRecordable.deleteAll(classe);
 
                         for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -384,9 +433,11 @@ public class ManipDadosVerif {
 
                         }
 
-                        jObj = new JSONObject(objSeg);
+                        jObj = new JSONObject(objQuinto);
                         jsonArray = jObj.getJSONArray("dados");
                         classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "ROSAtivTO");
+
+                        genericRecordable.deleteAll(classe);
 
                         for (int j = 0; j < jsonArray.length(); j++) {
 
@@ -396,40 +447,21 @@ public class ManipDadosVerif {
 
                         }
 
-                        this.progressDialog.dismiss();
-
-                        Intent it = new Intent(telaAtual, telaProx);
-                        telaAtual.startActivity(it);
-
-                    } else {
-
-                        this.progressDialog.dismiss();
-
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
-                        alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("OS INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
-
-                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
-
-                            }
-                        });
-                        alerta.show();
-
                     }
 
-                }
-                else{
 
                     this.progressDialog.dismiss();
-
                     Intent it = new Intent(telaAtual, telaProx);
                     telaAtual.startActivity(it);
 
                 }
+                else {
 
+                    this.progressDialog.dismiss();
+                    Intent it = new Intent(telaAtual, telaProx);
+                    telaAtual.startActivity(it);
+
+                }
 
             }
             else if(this.tipo.equals("Parada")) {
@@ -592,22 +624,69 @@ public class ManipDadosVerif {
 
                 if (!result.contains("exceeded")) {
 
-                    JSONObject jObj = new JSONObject(result);
+                    int pos1 = result.indexOf("_") + 1;
+                    int pos2 = result.indexOf("|") + 1;
+                    int pos3 = result.indexOf("#") + 1;
+                    String objPrinc = result.substring(0, (pos1 - 1));
+                    String objSeg = result.substring(pos1, (pos2 - 1));
+                    String objTerc = result.substring(pos2, (pos3 - 1));
+                    String objQuarto = result.substring(pos3);
+
+                    JSONObject jObj = new JSONObject(objPrinc);
                     JSONArray jsonArray = jObj.getJSONArray("dados");
-                    Class classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "ItemCheckListTO");
+                    Class classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "EquipTO");
 
-                    if (jsonArray.length() > 0) {
+                    genericRecordable = new GenericRecordable();
+                    genericRecordable.deleteAll(classe);
 
-                        genericRecordable = new GenericRecordable();
-                        genericRecordable.deleteAll(classe);
+                    for (int i = 0; i < jsonArray.length(); i++) {
 
-                        for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject objeto = jsonArray.getJSONObject(i);
+                        Gson gson = new Gson();
+                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
 
-                            JSONObject objeto = jsonArray.getJSONObject(i);
-                            Gson gson = new Gson();
-                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
+                    }
 
-                        }
+                    jObj = new JSONObject(objSeg);
+                    jsonArray = jObj.getJSONArray("dados");
+                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "REquipAtivTO");
+
+                    genericRecordable.deleteAll(classe);
+
+                    for (int j = 0; j < jsonArray.length(); j++) {
+
+                        JSONObject objeto = jsonArray.getJSONObject(j);
+                        Gson gson = new Gson();
+                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
+
+                    }
+
+                    jObj = new JSONObject(objTerc);
+                    jsonArray = jObj.getJSONArray("dados");
+                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "RAtivParadaTO");
+
+                    genericRecordable.deleteAll(classe);
+
+                    for (int j = 0; j < jsonArray.length(); j++) {
+
+                        JSONObject objeto = jsonArray.getJSONObject(j);
+                        Gson gson = new Gson();
+                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
+
+                    }
+
+
+                    jObj = new JSONObject(objQuarto);
+                    jsonArray = jObj.getJSONArray("dados");
+                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "ItemCheckListTO");
+
+                    genericRecordable.deleteAll(classe);
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject objeto = jsonArray.getJSONObject(i);
+                        Gson gson = new Gson();
+                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
 
                     }
 

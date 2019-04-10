@@ -88,6 +88,11 @@ public class ManipDadosEnvio {
         boletimMMTO.setDthrInicioBoletim(Tempo.getInstance().data());
         boletimMMTO.insert();
 
+        ConfiguracaoTO configTO = new ConfiguracaoTO();
+        List listConfigTO = configTO.all();
+        configTO = (ConfiguracaoTO) listConfigTO.get(0);
+        listConfigTO.clear();
+
         if(checklist){
 
             String datahora = Tempo.getInstance().data();
@@ -101,6 +106,7 @@ public class ManipDadosEnvio {
             apontaMMTO.setTransbordoAponta(0L);
             apontaMMTO.setLatitudeAponta(latitude);
             apontaMMTO.setLongitudeAponta(longitude);
+            apontaMMTO.setStatusConAponta(configTO.getStatusConConfig());
             apontaMMTO.insert();
 
             BackupApontaMMTO backupApontaMMTO = new BackupApontaMMTO();
@@ -124,10 +130,7 @@ public class ManipDadosEnvio {
                 cadImplTO.insert();
             }
 
-            ConfiguracaoTO configTO = new ConfiguracaoTO();
-            List listConfigTO = configTO.all();
-            configTO = (ConfiguracaoTO) listConfigTO.get(0);
-            listConfigTO.clear();
+
             configTO.setUltTurnoCLConfig(boletimMMTO.getCodTurnoBoletim());
             configTO.setDtUltCLConfig(Tempo.getInstance().dataSHora());
             configTO.setDtUltApontConfig(datahora);

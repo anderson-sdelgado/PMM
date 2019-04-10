@@ -41,7 +41,7 @@ public class PMMContext extends Application {
     // 20 - Esta na tela de Menu Principal
     private int contImplemento;
     private String textoHorimetro;
-    public static String versaoAplic = "1.28";
+    public static String versaoAplic = "2";
     private int contRendimento;
     private int posRendimento;
     private int contRecolMangFert;

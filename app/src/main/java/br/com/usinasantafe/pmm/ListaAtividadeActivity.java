@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -24,7 +23,6 @@ import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaAplicFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
@@ -39,7 +37,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
     private ProgressDialog progressBar;
     private ArrayList lAtivExib;
     private Long nroOS = 0L;
-    private ConfiguracaoTO configuracaoTO;
+    private ConfiguracaoTO configTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +49,12 @@ public class ListaAtividadeActivity extends ActivityGeneric {
         Button buttonAtualAtividade = (Button) findViewById(R.id.buttonAtualAtividade);
         Button buttonRetAtividade = (Button) findViewById(R.id.buttonRetAtividade);
         TextView textViewTituloAtividade = (TextView) findViewById(R.id.textViewTituloAtividade);
+
+        configTO = new ConfiguracaoTO();
+        List configList = configTO.all();
+        configTO = (ConfiguracaoTO) configList.get(0);
+
+        nroOS = configTO.getOsConfig();
 
         buttonAtualAtividade.setOnClickListener(new View.OnClickListener() {
 
@@ -67,19 +71,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                     progressBar.setMessage("Atualizando Atividades...");
                     progressBar.show();
 
-                    if (pmmContext.getVerPosTela() == 1) {
-                        nroOS = pmmContext.getBoletimMMTO().getOsBoletim();
-                    }
-                    else if ((pmmContext.getVerPosTela() == 2) || (pmmContext.getVerPosTela() == 3)
-                            || (pmmContext.getVerPosTela() == 8) || (pmmContext.getVerPosTela() == 12)) {
-                        nroOS = pmmContext.getApontaMMTO().getOsAponta();
-                    }
-                    else if ((pmmContext.getVerPosTela() == 9)|| (pmmContext.getVerPosTela() == 13)
-                            || (pmmContext.getVerPosTela() == 15)|| (pmmContext.getVerPosTela() == 16)) {
-                        nroOS = pmmContext.getApontaAplicFertTO().getOsApontaAplicFert();
-                    }
-
-                    ManipDadosVerif.getInstance().verDados(String.valueOf(nroOS), "OSAtiv"
+                    ManipDadosVerif.getInstance().verDados(nroOS + "_" + configTO.getEquipConfig(), "Atividade"
                             , ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
 
                 } else {
@@ -110,24 +102,11 @@ public class ListaAtividadeActivity extends ActivityGeneric {
         });
 
         if (pmmContext.getVerPosTela() == 1) {
-            nroOS = pmmContext.getBoletimMMTO().getOsBoletim();
             textViewTituloAtividade.setText("ATIVIDADE PRINCIPAL");
         }
-        else if ((pmmContext.getVerPosTela() == 2) || (pmmContext.getVerPosTela() == 3)
-                || (pmmContext.getVerPosTela() == 8) || (pmmContext.getVerPosTela() == 12)) {
-            nroOS = pmmContext.getApontaMMTO().getOsAponta();
+        else {
             textViewTituloAtividade.setText("ATIVIDADE");
         }
-        else if ((pmmContext.getVerPosTela() == 9)|| (pmmContext.getVerPosTela() == 13)
-                || (pmmContext.getVerPosTela() == 15)|| (pmmContext.getVerPosTela() == 16)) {
-            nroOS = pmmContext.getApontaAplicFertTO().getOsApontaAplicFert();
-            textViewTituloAtividade.setText("ATIVIDADE");
-        }
-
-
-        configuracaoTO = new ConfiguracaoTO();
-        List configList = configuracaoTO.all();
-        configuracaoTO = (ConfiguracaoTO) configList.get(0);
 
         AtividadeTO atividadeTO = new AtividadeTO();
         ArrayList<String> itens = new ArrayList<String>();
@@ -136,7 +115,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 || (pmmContext.getVerPosTela() == 8) || (pmmContext.getVerPosTela() == 12)) {
 
             REquipAtivTO rEquipAtivTO = new REquipAtivTO();
-            List lrea = rEquipAtivTO.get("codEquip", configuracaoTO.getEquipConfig());
+            List lrea = rEquipAtivTO.get("codEquip", configTO.getEquipConfig());
 
             configList.clear();
 
@@ -203,7 +182,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 if (pmmContext.getVerPosTela() == 1) {
 
                     pmmContext.getBoletimMMTO().setAtivPrincBoletim(atividadeTO.getIdAtiv());
-                    pmmContext.getBoletimMMTO().setStatusConBoletim(configuracaoTO.getStatusConConfig());
+                    pmmContext.getBoletimMMTO().setStatusConBoletim(configTO.getStatusConConfig());
                     pmmContext.setTextoHorimetro("HORÍMETRO INICIAL:");
                     Intent it = new Intent(ListaAtividadeActivity.this, HorimetroActivity.class);
                     startActivity(it);
@@ -215,7 +194,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 } else if((pmmContext.getVerPosTela() == 2) || (pmmContext.getVerPosTela() == 8))  {
 
                     pmmContext.getApontaMMTO().setAtividadeAponta(atividadeTO.getIdAtiv());
-                    pmmContext.getApontaMMTO().setStatusConAponta(configuracaoTO.getStatusConConfig());
+                    pmmContext.getApontaMMTO().setStatusConAponta(configTO.getStatusConConfig());
                     pmmContext.getApontaMMTO().setParadaAponta(0L);
 
                     if(verifBackup()){
@@ -289,8 +268,8 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                             }
 
                             if(pmmContext.getVerPosTela() == 2){
-                                configuracaoTO.setDtUltApontConfig(Tempo.getInstance().data());
-                                configuracaoTO.update();
+                                configTO.setDtUltApontConfig(Tempo.getInstance().data());
+                                configTO.update();
                                 Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
                                 startActivity(it);
                                 finish();
@@ -325,7 +304,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 } else if ((pmmContext.getVerPosTela() == 3) || (pmmContext.getVerPosTela() == 12)) {
 
                     pmmContext.getApontaMMTO().setAtividadeAponta(atividadeTO.getIdAtiv());
-                    pmmContext.getApontaMMTO().setStatusConAponta(configuracaoTO.getStatusConConfig());
+                    pmmContext.getApontaMMTO().setStatusConAponta(configTO.getStatusConConfig());
                     Intent it = new Intent(ListaAtividadeActivity.this, ListaParadaActivity.class);
                     startActivity(it);
                     finish();
