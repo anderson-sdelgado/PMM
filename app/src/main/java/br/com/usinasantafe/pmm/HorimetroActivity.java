@@ -359,7 +359,7 @@ public class HorimetroActivity extends ActivityGeneric {
 //                    startActivity(it);
 //                    finish();
 
-//                    ANTIGO
+//                    ANTIGO SEM GRAFICO
                     Intent it = new Intent(HorimetroActivity.this, MenuPrincNormalActivity.class);
                     startActivity(it);
                     finish();

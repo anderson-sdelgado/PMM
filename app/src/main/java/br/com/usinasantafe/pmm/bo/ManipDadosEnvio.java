@@ -744,16 +744,20 @@ public class ManipDadosEnvio {
 
 //        if(verifDadosGraf()){
 //            ManipDadosVerif.getInstance().verDadosGraf();
-//        } else {
+//        }
+////        else {
             if (verifDadosChecklist()) {
                 enviarChecklist();
-            } else {
+            }
+            else {
                 if (verifBolFechado()) {
                     enviarBolFechados();
-                } else {
+                }
+                else {
                     if (verifBolAbertoSemEnvio()) {
                         enviarBolAberto();
-                    } else {
+                    }
+                    else {
                         if (verifAponta()) {
                             envioApontaMM();
                         }

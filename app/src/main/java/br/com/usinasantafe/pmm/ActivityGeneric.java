@@ -116,7 +116,7 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
         super.onPause();
 
         // stop location updates
-        if (googleApiClient != null  &&  googleApiClient.isConnected()) {
+        if (googleApiClient != null && googleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
             googleApiClient.disconnect();
         }
@@ -133,7 +133,7 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
     public void onConnected(@Nullable Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                &&  ActivityCompat.checkSelfPermission(this,
+                && ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -156,7 +156,7 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
 
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                &&  ActivityCompat.checkSelfPermission(this,
+                && ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "You need to enable permissions to display location !", Toast.LENGTH_SHORT).show();
         }
@@ -176,7 +176,7 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch(requestCode) {
+        switch (requestCode) {
             case ALL_PERMISSIONS_RESULT:
                 for (String perm : permissionsToRequest) {
                     if (!hasPermission(perm)) {
@@ -212,7 +212,7 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
         }
     }
 
-    private class EventoBotao implements View.OnClickListener{
+    private class EventoBotao implements View.OnClickListener {
 
         private String numBotao;
 
@@ -224,12 +224,11 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
         public void onClick(View v) {
 
             String texto = editTextPadrao.getText().toString();
-            if(numBotao.equals(",")){
-                if(!texto.contains(",")){
+            if (numBotao.equals(",")) {
+                if (!texto.contains(",")) {
                     editTextPadrao.setText(editTextPadrao.getText() + "" + numBotao);
                 }
-            }
-            else{
+            } else {
                 editTextPadrao.setText(editTextPadrao.getText() + "" + numBotao);
             }
 
@@ -244,68 +243,68 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
 
         if ((EditText) findViewById(R.id.editTextPadrao) != null) {
             editTextPadrao = (EditText) findViewById(R.id.editTextPadrao);
-            if(!this.getLocalClassName().equals("OSActivity") && (!this.getLocalClassName().equals("RendimentoActivity"))
+            if (!this.getLocalClassName().equals("OSActivity") && (!this.getLocalClassName().equals("RendimentoActivity"))
                     && (!this.getLocalClassName().equals("RecolMangFertActivity"))) {
                 editTextPadrao.setText("");
             }
         }
 
-        if((Button) findViewById(R.id.buttonNum0) != null){
+        if ((Button) findViewById(R.id.buttonNum0) != null) {
             Button buttonNum0 = (Button) findViewById(R.id.buttonNum0);
             buttonNum0.setOnClickListener(new EventoBotao("0"));
         }
 
-        if((Button) findViewById(R.id.buttonNum1) != null){
+        if ((Button) findViewById(R.id.buttonNum1) != null) {
             Button buttonNum1 = (Button) findViewById(R.id.buttonNum1);
             buttonNum1.setOnClickListener(new EventoBotao("1"));
         }
 
-        if((Button) findViewById(R.id.buttonNum2) != null){
+        if ((Button) findViewById(R.id.buttonNum2) != null) {
             Button buttonNum2 = (Button) findViewById(R.id.buttonNum2);
             buttonNum2.setOnClickListener(new EventoBotao("2"));
         }
 
-        if((Button) findViewById(R.id.buttonNum3) != null){
+        if ((Button) findViewById(R.id.buttonNum3) != null) {
             Button buttonNum3 = (Button) findViewById(R.id.buttonNum3);
             buttonNum3.setOnClickListener(new EventoBotao("3"));
         }
 
-        if((Button) findViewById(R.id.buttonNum4) != null){
+        if ((Button) findViewById(R.id.buttonNum4) != null) {
             Button buttonNum4 = (Button) findViewById(R.id.buttonNum4);
             buttonNum4.setOnClickListener(new EventoBotao("4"));
         }
 
-        if((Button) findViewById(R.id.buttonNum5) != null){
+        if ((Button) findViewById(R.id.buttonNum5) != null) {
             Button buttonNum5 = (Button) findViewById(R.id.buttonNum5);
             buttonNum5.setOnClickListener(new EventoBotao("5"));
         }
 
-        if((Button) findViewById(R.id.buttonNum6) != null){
+        if ((Button) findViewById(R.id.buttonNum6) != null) {
             Button buttonNum6 = (Button) findViewById(R.id.buttonNum6);
             buttonNum6.setOnClickListener(new EventoBotao("6"));
         }
 
-        if((Button) findViewById(R.id.buttonNum7) != null){
+        if ((Button) findViewById(R.id.buttonNum7) != null) {
             Button buttonNum7 = (Button) findViewById(R.id.buttonNum7);
             buttonNum7.setOnClickListener(new EventoBotao("7"));
         }
 
-        if((Button) findViewById(R.id.buttonNum8) != null){
+        if ((Button) findViewById(R.id.buttonNum8) != null) {
             Button buttonNum8 = (Button) findViewById(R.id.buttonNum8);
             buttonNum8.setOnClickListener(new EventoBotao("8"));
         }
 
-        if((Button) findViewById(R.id.buttonNum9) != null){
+        if ((Button) findViewById(R.id.buttonNum9) != null) {
             Button buttonNum9 = (Button) findViewById(R.id.buttonNum9);
             buttonNum9.setOnClickListener(new EventoBotao("9"));
         }
 
-        if((Button) findViewById(R.id.buttonNum00) != null){
+        if ((Button) findViewById(R.id.buttonNum00) != null) {
             Button buttonNum00 = (Button) findViewById(R.id.buttonNum00);
             buttonNum00.setOnClickListener(new EventoBotao("00"));
         }
 
-        if((Button) findViewById(R.id.buttonVirg) != null){
+        if ((Button) findViewById(R.id.buttonVirg) != null) {
             Button buttonVirg = (Button) findViewById(R.id.buttonVirg);
             buttonVirg.setOnClickListener(new EventoBotao(","));
         }
@@ -314,12 +313,20 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
 //    public void onBackPressed()  {
 //    }
 
-    public Double getLatitude(){
-        return location.getLatitude();
+    public Double getLatitude() {
+        if (location != null) {
+            return location.getLatitude();
+        } else {
+            return 0D;
+        }
     }
 
-    public Double getLongitude(){
-        return location.getLongitude();
+    public Double getLongitude() {
+        if (location != null) {
+            return location.getLongitude();
+        } else {
+            return 0D;
+        }
     }
 
 }

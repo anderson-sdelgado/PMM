@@ -100,7 +100,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
         listConfigTO.clear();
 
         equipTO = new EquipTO();
-        List listEquipTO = equipTO.get("codEquip", configTO.getEquipConfig());
+        List listEquipTO = equipTO.get("idEquip", configTO.getEquipConfig());
         equipTO = (EquipTO) listEquipTO.get(0);
         listConfigTO.clear();
 

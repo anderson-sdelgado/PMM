@@ -18,7 +18,7 @@ public class ROSAtivTO extends Entidade {
     @DatabaseField
     private Long nroOS;
     @DatabaseField
-    private Long codAtiv;
+    private Long idAtiv;
 
     public ROSAtivTO() {
     }
@@ -39,11 +39,11 @@ public class ROSAtivTO extends Entidade {
         this.nroOS = nroOS;
     }
 
-    public Long getCodAtiv() {
-        return codAtiv;
+    public Long getIdAtiv() {
+        return idAtiv;
     }
 
-    public void setCodAtiv(Long codAtiv) {
-        this.codAtiv = codAtiv;
+    public void setIdAtiv(Long idAtiv) {
+        this.idAtiv = idAtiv;
     }
 }

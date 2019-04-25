@@ -21,7 +21,7 @@ public class ParadaTO extends Entidade {
     @DatabaseField
     private String descrParada;
     @DatabaseField
-    private Long flagImplemento;
+    private Long flagCalibragem;
 
     public ParadaTO() {
     }
@@ -50,12 +50,11 @@ public class ParadaTO extends Entidade {
         this.descrParada = descrParada;
     }
 
-    public Long getFlagImplemento() {
-        return flagImplemento;
+    public Long getFlagCalibragem() {
+        return flagCalibragem;
     }
 
-    public void setFlagImplemento(Long flagImplemento) {
-        this.flagImplemento = flagImplemento;
+    public void setFlagCalibragem(Long flagCalibragem) {
+        this.flagCalibragem = flagCalibragem;
     }
-
 }

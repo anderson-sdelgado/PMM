@@ -308,7 +308,7 @@ public class ImplementoActivity extends ActivityGeneric {
 //                                    startActivity(it);
 //                                    finish();
 
-//                                    ANTIGO
+//                                    ANTIGO SEM GRAFICO
                                     it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
                                     startActivity(it);
                                     finish();
@@ -322,7 +322,7 @@ public class ImplementoActivity extends ActivityGeneric {
 //                                    startActivity(it);
 //                                    finish();
 
-//                                ANTIGO
+//                                ANTIGO SEM GRAFICO
                                 it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
                                 startActivity(it);
                                 finish();

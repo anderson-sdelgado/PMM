@@ -149,7 +149,7 @@ public class ItemChecklistActivity extends ActivityGeneric {
 //            startActivity(it);
 //            finish();
 
-//            ANTIGO
+//            ANTIGO SEM GRAFICO
             Intent it = new Intent(ItemChecklistActivity.this, MenuPrincNormalActivity.class);
             startActivity(it);
             finish();

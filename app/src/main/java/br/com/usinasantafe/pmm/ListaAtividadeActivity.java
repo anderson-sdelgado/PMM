@@ -115,7 +115,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 || (pmmContext.getVerPosTela() == 8) || (pmmContext.getVerPosTela() == 12)) {
 
             REquipAtivTO rEquipAtivTO = new REquipAtivTO();
-            List lrea = rEquipAtivTO.get("codEquip", configTO.getEquipConfig());
+            List lrea = rEquipAtivTO.get("idEquip", configTO.getEquipConfig());
 
             configList.clear();
 
@@ -123,10 +123,10 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
             for (int i = 0; i < lrea.size(); i++) {
                 rEquipAtivTO = (REquipAtivTO) lrea.get(i);
-                rLista.add(rEquipAtivTO.getCodAtiv());
+                rLista.add(rEquipAtivTO.getIdAtiv());
             }
 
-            listAtiv = atividadeTO.in("codAtiv", rLista);
+            listAtiv = atividadeTO.in("idAtiv", rLista);
 
         }
         else if ((pmmContext.getVerPosTela() == 9)|| (pmmContext.getVerPosTela() == 13)
@@ -145,7 +145,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 atividadeTO = (AtividadeTO) listAtiv.get(i);
                 for (int j = 0; j < lroa.size(); j++) {
                     rOSAtivTO = (ROSAtivTO) lroa.get(j);
-                    if (Objects.equals(atividadeTO.getCodAtiv(), rOSAtivTO.getCodAtiv())) {
+                    if (Objects.equals(atividadeTO.getIdAtiv(), rOSAtivTO.getIdAtiv())) {
                         lAtivExib.add(atividadeTO);
                     }
                 }

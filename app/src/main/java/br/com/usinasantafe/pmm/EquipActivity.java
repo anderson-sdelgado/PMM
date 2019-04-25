@@ -35,7 +35,7 @@ public class EquipActivity extends ActivityGeneric {
         listConfigTO.clear();
 
         EquipTO equipTO = new EquipTO();
-        List listEquipTO = equipTO.get("codEquip", configTO.getEquipConfig());
+        List listEquipTO = equipTO.get("idEquip", configTO.getEquipConfig());
         equipTO = (EquipTO) listEquipTO.get(0);
         listEquipTO.clear();
 

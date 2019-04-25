@@ -184,9 +184,11 @@ public class ManipDadosVerif {
 
                 int pos1 = result.indexOf("#") + 1;
                 int pos2 = result.indexOf("|") + 1;
-                String objPrinc = result.substring(0, result.indexOf("#"));
+                int pos3 = result.indexOf("?") + 1;
+                String objPrinc = result.substring(0, (pos1 - 1));
                 String objSeg = result.substring(pos1, (pos2 - 1));
-                String objTerc = result.substring(pos2);
+                String objTerc = result.substring(pos2, (pos3 - 1));
+                String objQuar = result.substring(pos3);
 
                 JSONObject jObj = new JSONObject(objPrinc);
                 JSONArray jsonArray = jObj.getJSONArray("dados");
@@ -233,6 +235,20 @@ public class ManipDadosVerif {
 
                     }
 
+                    jObj = new JSONObject(objQuar);
+                    jsonArray = jObj.getJSONArray("dados");
+                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "REquipPneuTO");
+
+                    genericRecordable.deleteAll(classe);
+
+                    for (int j = 0; j < jsonArray.length(); j++) {
+
+                        JSONObject objeto = jsonArray.getJSONObject(j);
+                        Gson gson = new Gson();
+                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
+
+                    }
+
 
                     EquipTO equipTO = new EquipTO();
                     List equipList = equipTO.all();
@@ -240,7 +256,7 @@ public class ManipDadosVerif {
 
                     ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
                     configuracaoTO.deleteAll();
-                    configuracaoTO.setEquipConfig(equipTO.getCodEquip());
+                    configuracaoTO.setEquipConfig(equipTO.getIdEquip());
                     configuracaoTO.setClasseEquipConfig(equipTO.getCodClasseEquip());
                     configuracaoTO.setHorimetroConfig(equipTO.getHorimetroEquip());
                     configuracaoTO.setUltTurnoCLConfig(0L);
@@ -716,7 +732,7 @@ public class ManipDadosVerif {
                     String objPrinc = result.substring(0, (pos1 - 1));
                     String objSeg = result.substring(pos1, (pos2 - 1));
                     String objTerc = result.substring(pos2, (pos3 - 1));
-                    String objQuar = result.substring(pos3, result.length());
+                    String objQuar = result.substring(pos3);
 
                     JSONObject jObj = new JSONObject(objPrinc);
                     JSONArray jsonArray = jObj.getJSONArray("dados");

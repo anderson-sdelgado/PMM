@@ -84,9 +84,6 @@
             android:name=".MenuPrincNormalActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MenuPrincViagemActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".OperadorActivity"
             android:screenOrientation="portrait" />
         <activity

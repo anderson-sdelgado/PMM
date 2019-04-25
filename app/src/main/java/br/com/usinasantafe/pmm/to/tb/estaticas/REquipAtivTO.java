@@ -17,9 +17,9 @@ public class REquipAtivTO extends Entidade {
     @DatabaseField(id=true)
     private Long idEquipAtiv;
     @DatabaseField
-    private Long codEquip;
+    private Long idEquip;
     @DatabaseField
-    private Long codAtiv;
+    private Long idAtiv;
 
     public REquipAtivTO() {
     }
@@ -32,20 +32,19 @@ public class REquipAtivTO extends Entidade {
         this.idEquipAtiv = idEquipAtiv;
     }
 
-    public Long getCodEquip() {
-        return codEquip;
+    public Long getIdEquip() {
+        return idEquip;
     }
 
-    public void setCodEquip(Long codEquip) {
-        this.codEquip = codEquip;
+    public void setIdEquip(Long idEquip) {
+        this.idEquip = idEquip;
     }
 
-    public Long getCodAtiv() {
-        return codAtiv;
+    public Long getIdAtiv() {
+        return idAtiv;
     }
 
-    public void setCodAtiv(Long codAtiv) {
-        this.codAtiv = codAtiv;
+    public void setIdAtiv(Long idAtiv) {
+        this.idAtiv = idAtiv;
     }
-
 }

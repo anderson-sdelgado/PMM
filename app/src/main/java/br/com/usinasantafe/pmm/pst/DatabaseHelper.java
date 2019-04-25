@@ -16,6 +16,7 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.RAtivParadaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.REquipPneuTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaAplicFertTO;
@@ -81,6 +82,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, RAtivParadaTO.class);
 			TableUtils.createTable(cs, ParadaTO.class);
 			TableUtils.createTable(cs, ItemCheckListTO.class);
+			TableUtils.createTable(cs, REquipPneuTO.class);
 			TableUtils.createTable(cs, GrafProdPlantioTO.class);
 			TableUtils.createTable(cs, GrafPlanRealPlantioTO.class);
 			TableUtils.createTable(cs, GrafDispEquipPlantioTO.class);
