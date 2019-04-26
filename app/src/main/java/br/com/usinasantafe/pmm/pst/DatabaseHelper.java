@@ -14,6 +14,7 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.MotoristaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.PneuTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.RAtivParadaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipPneuTO;
@@ -24,10 +25,12 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaAplicFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.AlocaCarretelTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ImplementoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RecolMangTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
@@ -83,6 +86,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, ParadaTO.class);
 			TableUtils.createTable(cs, ItemCheckListTO.class);
 			TableUtils.createTable(cs, REquipPneuTO.class);
+			TableUtils.createTable(cs, PneuTO.class);
 			TableUtils.createTable(cs, GrafProdPlantioTO.class);
 			TableUtils.createTable(cs, GrafPlanRealPlantioTO.class);
 			TableUtils.createTable(cs, GrafDispEquipPlantioTO.class);
@@ -101,6 +105,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, ApontaAplicFertTO.class);
 			TableUtils.createTable(cs, BackupApontaMMTO.class);
 			TableUtils.createTable(cs, BackupApontaAplicFertTO.class);
+			TableUtils.createTable(cs, BoletimPneuTO.class);
+			TableUtils.createTable(cs, ItemMedPneuTO.class);
 			
 		}
 		catch(Exception e){

@@ -398,101 +398,256 @@ public class GrafProdActivity extends ActivityGeneric {
         GrafPlanRealPlantioTO grafPlanRealPlantioTO = new GrafPlanRealPlantioTO();
         List grafPlanRealPlantioList = grafPlanRealPlantioTO.all();
 
-        grafPlanRealPlantioTO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(0);
-        textJanPlanMes.setText(String.valueOf(grafPlanRealPlantioTO.getValorMesPlan()));
-        textJanPlanAcum.setText(String.valueOf(grafPlanRealPlantioTO.getValorAcumPlan()));
-        textJanRealMes.setText(String.valueOf(grafPlanRealPlantioTO.getValorMesReal()));
-        textJanRealAcum.setText(String.valueOf(grafPlanRealPlantioTO.getValorAcumReal()));
-        textJanSaldMes.setText(String.valueOf(grafPlanRealPlantioTO.getValorMesPlan() - grafPlanRealPlantioTO.getValorMesReal()));
-        textJanSaldAcum.setText(String.valueOf(grafPlanRealPlantioTO.getValorAcumPlan() - grafPlanRealPlantioTO.getValorAcumReal()));
+        if(grafPlanRealPlantioList.size() > 0) {
 
-        grafPlanRealPlantioTO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(1);
-        textFevPlanMes.setText(String.valueOf(grafPlanRealPlantioTO.getValorMesPlan()));
-        textFevPlanAcum.setText(String.valueOf(grafPlanRealPlantioTO.getValorAcumPlan()));
-        textFevRealMes.setText(String.valueOf(grafPlanRealPlantioTO.getValorMesReal()));
-        textFevRealAcum.setText(String.valueOf(grafPlanRealPlantioTO.getValorAcumReal()));
-        textFevSaldMes.setText(String.valueOf(grafPlanRealPlantioTO.getValorMesPlan() - grafPlanRealPlantioTO.getValorMesReal()));
-        textFevSaldAcum.setText(String.valueOf(grafPlanRealPlantioTO.getValorAcumPlan() - grafPlanRealPlantioTO.getValorAcumReal()));
+            GrafPlanRealPlantioTO grafPlanRealPlantio01TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(0);
 
-        grafPlanRealPlantioTO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2);
-        textMarPlanMes.setText(String.valueOf(grafPlanRealPlantioTO.getValorMesPlan()));
-        textMarPlanAcum.setText(String.valueOf(grafPlanRealPlantioTO.getValorAcumPlan()));
-        textMarRealMes.setText(String.valueOf(grafPlanRealPlantioTO.getValorMesReal()));
-        textMarRealAcum.setText(String.valueOf(grafPlanRealPlantioTO.getValorAcumReal()));
-        textMarSaldMes.setText(String.valueOf(grafPlanRealPlantioTO.getValorMesPlan() - grafPlanRealPlantioTO.getValorMesReal()));
-        textMarSaldAcum.setText(String.valueOf(grafPlanRealPlantioTO.getValorAcumPlan() - grafPlanRealPlantioTO.getValorAcumReal()));
+            GrafPlanRealPlantioTO grafPlanRealPlantio02TO;
+            if(grafPlanRealPlantioList.size() < 2){
+                grafPlanRealPlantio02TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(grafPlanRealPlantioList.size() - 1);
+            }
+            else{
+                grafPlanRealPlantio02TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(1);
+            }
 
-        final AnyChartView linePlanReal = findViewById(R.id.linha_plan_real);
-        linePlanReal.setProgressBar(findViewById(R.id.progress_bar_linha_plan_real));
-        APIlib.getInstance().setActiveAnyChartView(linePlanReal);
+            GrafPlanRealPlantioTO grafPlanRealPlantio03TO;
+            if(grafPlanRealPlantioList.size() < 3){
+                grafPlanRealPlantio03TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(grafPlanRealPlantioList.size() - 1);
+            }
+            else{
+                grafPlanRealPlantio03TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2);
+            }
 
-        linePlanReal.setAnimationCacheEnabled(false);
+            GrafPlanRealPlantioTO grafPlanRealPlantio04TO;
+            if(grafPlanRealPlantioList.size() < 4){
+                grafPlanRealPlantio04TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(grafPlanRealPlantioList.size() - 1);
+            }
+            else{
+                grafPlanRealPlantio04TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(3);
+            }
 
-        final Cartesian lPlanReal = AnyChart.line();
+            GrafPlanRealPlantioTO grafPlanRealPlantio05TO;
+            if(grafPlanRealPlantioList.size() < 5){
+                grafPlanRealPlantio05TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(grafPlanRealPlantioList.size() - 1);
+            }
+            else{
+                grafPlanRealPlantio05TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(4);
+            }
 
-        lPlanReal.animation(true);
+            GrafPlanRealPlantioTO grafPlanRealPlantio06TO;
+            if(grafPlanRealPlantioList.size() < 6){
+                grafPlanRealPlantio06TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(grafPlanRealPlantioList.size() - 1);
+            }
+            else{
+                grafPlanRealPlantio06TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(5);
+            }
 
-        lPlanReal.padding(10d, 20d, 5d, 20d);
+            GrafPlanRealPlantioTO grafPlanRealPlantio07TO;
+            if(grafPlanRealPlantioList.size() < 7){
+                grafPlanRealPlantio07TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(grafPlanRealPlantioList.size() - 1);
+            }
+            else{
+                grafPlanRealPlantio07TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(6);
+            }
 
-        lPlanReal.crosshair().enabled(true);
-        lPlanReal.crosshair()
-                .yLabel(true)
-                // TODO ystroke
-                .yStroke((Stroke) null, null, null, (String) null, (String) null);
+            GrafPlanRealPlantioTO grafPlanRealPlantio08TO;
+            if(grafPlanRealPlantioList.size() < 8){
+                grafPlanRealPlantio08TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(grafPlanRealPlantioList.size() - 1);
+            }
+            else{
+                grafPlanRealPlantio08TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(7);
+            }
 
-        lPlanReal.tooltip().positionMode(TooltipPositionMode.POINT);
+            GrafPlanRealPlantioTO grafPlanRealPlantio09TO;
+            if(grafPlanRealPlantioList.size() < 9){
+                grafPlanRealPlantio09TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(grafPlanRealPlantioList.size() - 1);
+            }
+            else{
+                grafPlanRealPlantio09TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(8);
+            }
 
-        List<DataEntry> seriesLinePlanReal = new ArrayList<>();
-        seriesLinePlanReal.add(new CustomDataEntry("JAN", ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(0)).getValorAcumPlan(), ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(0)).getValorAcumReal()));
-        seriesLinePlanReal.add(new CustomDataEntry("FEV", ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(1)).getValorAcumPlan(), ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(1)).getValorAcumReal()));
-        seriesLinePlanReal.add(new CustomDataEntry("MAR", ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumPlan(), ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumReal()));
-        seriesLinePlanReal.add(new CustomDataEntry("ABR", ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumPlan(), ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumReal()));
-        seriesLinePlanReal.add(new CustomDataEntry("MAI", ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumPlan(), ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumReal()));
-        seriesLinePlanReal.add(new CustomDataEntry("JUN", ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumPlan(), ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumReal()));
-        seriesLinePlanReal.add(new CustomDataEntry("JUL", ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumPlan(), ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumReal()));
-        seriesLinePlanReal.add(new CustomDataEntry("AGO", ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumPlan(), ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumReal()));
-        seriesLinePlanReal.add(new CustomDataEntry("SET", ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumPlan(), ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumReal()));
-        seriesLinePlanReal.add(new CustomDataEntry("OUT", ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumPlan(), ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumReal()));
-        seriesLinePlanReal.add(new CustomDataEntry("NOV", ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumPlan(), ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumReal()));
-        seriesLinePlanReal.add(new CustomDataEntry("DEZ", ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumPlan(), ((GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(2)).getValorAcumReal()));
+            GrafPlanRealPlantioTO grafPlanRealPlantio10TO;
+            if(grafPlanRealPlantioList.size() < 10){
+                grafPlanRealPlantio10TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(grafPlanRealPlantioList.size() - 1);
+            }
+            else{
+                grafPlanRealPlantio10TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(9);
+            }
 
-        Set setLinePlanReal = Set.instantiate();
-        setLinePlanReal.data(seriesLinePlanReal);
-        Mapping series1MapLinePlanReal = setLinePlanReal.mapAs("{ x: 'x', value: 'value' }");
-        Mapping series2MapLinePlanReal = setLinePlanReal.mapAs("{ x: 'x', value: 'value2' }");
+            GrafPlanRealPlantioTO grafPlanRealPlantio11TO;
+            if(grafPlanRealPlantioList.size() < 11){
+                grafPlanRealPlantio11TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(grafPlanRealPlantioList.size() - 1);
+            }
+            else{
+                grafPlanRealPlantio11TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(10);
+            }
 
-        Line series1LinePlanReal = lPlanReal.line(series1MapLinePlanReal);
-        series1LinePlanReal.name("PLANEJADO");
-        series1LinePlanReal.color("red");
-        series1LinePlanReal.hovered().markers().enabled(true);
-        series1LinePlanReal.hovered().markers()
-                .type(MarkerType.CIRCLE)
-                .size(4d);
-        series1LinePlanReal.tooltip()
-                .position("right")
-                .anchor(Anchor.LEFT_CENTER)
-                .offsetX(5d)
-                .offsetY(5d);
+            GrafPlanRealPlantioTO grafPlanRealPlantio12TO;
+            if(grafPlanRealPlantioList.size() < 12){
+                grafPlanRealPlantio12TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(grafPlanRealPlantioList.size() - 1);
+            }
+            else{
+                grafPlanRealPlantio12TO = (GrafPlanRealPlantioTO) grafPlanRealPlantioList.get(11);
+            }
 
-        Line series2LinePlanReal = lPlanReal.line(series2MapLinePlanReal);
-        series2LinePlanReal.name("REALIZADO");
-        series2LinePlanReal.color("blue");
-        series2LinePlanReal.hovered().markers().enabled(true);
-        series2LinePlanReal.hovered().markers()
-                .type(MarkerType.CIRCLE)
-                .size(4d);
-        series2LinePlanReal.tooltip()
-                .position("left")
-                .anchor(Anchor.LEFT_CENTER)
-                .offsetX(5d)
-                .offsetY(5d);
+            textJanPlanMes.setText(String.valueOf(grafPlanRealPlantio01TO.getValorMesPlan()));
+            textJanPlanAcum.setText(String.valueOf(grafPlanRealPlantio01TO.getValorAcumPlan()));
+            textJanRealMes.setText(String.valueOf(grafPlanRealPlantio01TO.getValorMesReal()));
+            textJanRealAcum.setText(String.valueOf(grafPlanRealPlantio01TO.getValorAcumReal()));
+            textJanSaldMes.setText(String.valueOf(grafPlanRealPlantio01TO.getValorMesPlan() - grafPlanRealPlantio01TO.getValorMesReal()));
+            textJanSaldAcum.setText(String.valueOf(grafPlanRealPlantio01TO.getValorAcumPlan() - grafPlanRealPlantio01TO.getValorAcumReal()));
 
-        lPlanReal.legend().enabled(true);
-        lPlanReal.legend().fontSize(13d);
-        lPlanReal.legend().padding(0d, 0d, 10d, 0d);
+            textFevPlanMes.setText(String.valueOf(grafPlanRealPlantio02TO.getValorMesPlan()));
+            textFevPlanAcum.setText(String.valueOf(grafPlanRealPlantio02TO.getValorAcumPlan()));
+            textFevRealMes.setText(String.valueOf(grafPlanRealPlantio02TO.getValorMesReal()));
+            textFevRealAcum.setText(String.valueOf(grafPlanRealPlantio02TO.getValorAcumReal()));
+            textFevSaldMes.setText(String.valueOf(grafPlanRealPlantio02TO.getValorMesPlan() - grafPlanRealPlantio02TO.getValorMesReal()));
+            textFevSaldAcum.setText(String.valueOf(grafPlanRealPlantio02TO.getValorAcumPlan() - grafPlanRealPlantio02TO.getValorAcumReal()));
 
-        linePlanReal.setChart(lPlanReal);
+            textMarPlanMes.setText(String.valueOf(grafPlanRealPlantio03TO.getValorMesPlan()));
+            textMarPlanAcum.setText(String.valueOf(grafPlanRealPlantio03TO.getValorAcumPlan()));
+            textMarRealMes.setText(String.valueOf(grafPlanRealPlantio03TO.getValorMesReal()));
+            textMarRealAcum.setText(String.valueOf(grafPlanRealPlantio03TO.getValorAcumReal()));
+            textMarSaldMes.setText(String.valueOf(grafPlanRealPlantio03TO.getValorMesPlan() - grafPlanRealPlantio03TO.getValorMesReal()));
+            textMarSaldAcum.setText(String.valueOf(grafPlanRealPlantio03TO.getValorAcumPlan() - grafPlanRealPlantio03TO.getValorAcumReal()));
 
+            textAbrPlanMes.setText(String.valueOf(grafPlanRealPlantio04TO.getValorMesPlan()));
+            textAbrPlanAcum.setText(String.valueOf(grafPlanRealPlantio04TO.getValorAcumPlan()));
+            textAbrRealMes.setText(String.valueOf(grafPlanRealPlantio04TO.getValorMesReal()));
+            textAbrRealAcum.setText(String.valueOf(grafPlanRealPlantio04TO.getValorAcumReal()));
+            textAbrSaldMes.setText(String.valueOf(grafPlanRealPlantio04TO.getValorMesPlan() - grafPlanRealPlantio04TO.getValorMesReal()));
+            textAbrSaldAcum.setText(String.valueOf(grafPlanRealPlantio04TO.getValorAcumPlan() - grafPlanRealPlantio04TO.getValorAcumReal()));
+
+            textMaiPlanMes.setText(String.valueOf(grafPlanRealPlantio05TO.getValorMesPlan()));
+            textMaiPlanAcum.setText(String.valueOf(grafPlanRealPlantio05TO.getValorAcumPlan()));
+            textMaiRealMes.setText(String.valueOf(grafPlanRealPlantio05TO.getValorMesReal()));
+            textMaiRealAcum.setText(String.valueOf(grafPlanRealPlantio05TO.getValorAcumReal()));
+            textMaiSaldMes.setText(String.valueOf(grafPlanRealPlantio05TO.getValorMesPlan() - grafPlanRealPlantio05TO.getValorMesReal()));
+            textMaiSaldAcum.setText(String.valueOf(grafPlanRealPlantio05TO.getValorAcumPlan() - grafPlanRealPlantio05TO.getValorAcumReal()));
+
+            textJunPlanMes.setText(String.valueOf(grafPlanRealPlantio06TO.getValorMesPlan()));
+            textJunPlanAcum.setText(String.valueOf(grafPlanRealPlantio06TO.getValorAcumPlan()));
+            textJunRealMes.setText(String.valueOf(grafPlanRealPlantio06TO.getValorMesReal()));
+            textJunRealAcum.setText(String.valueOf(grafPlanRealPlantio06TO.getValorAcumReal()));
+            textJunSaldMes.setText(String.valueOf(grafPlanRealPlantio06TO.getValorMesPlan() - grafPlanRealPlantio06TO.getValorMesReal()));
+            textJunSaldAcum.setText(String.valueOf(grafPlanRealPlantio06TO.getValorAcumPlan() - grafPlanRealPlantio06TO.getValorAcumReal()));
+
+            textJulPlanMes.setText(String.valueOf(grafPlanRealPlantio07TO.getValorMesPlan()));
+            textJulPlanAcum.setText(String.valueOf(grafPlanRealPlantio07TO.getValorAcumPlan()));
+            textJulRealMes.setText(String.valueOf(grafPlanRealPlantio07TO.getValorMesReal()));
+            textJulRealAcum.setText(String.valueOf(grafPlanRealPlantio07TO.getValorAcumReal()));
+            textJulSaldMes.setText(String.valueOf(grafPlanRealPlantio07TO.getValorMesPlan() - grafPlanRealPlantio07TO.getValorMesReal()));
+            textJulSaldAcum.setText(String.valueOf(grafPlanRealPlantio07TO.getValorAcumPlan() - grafPlanRealPlantio07TO.getValorAcumReal()));
+
+            textAgoPlanMes.setText(String.valueOf(grafPlanRealPlantio08TO.getValorMesPlan()));
+            textAgoPlanAcum.setText(String.valueOf(grafPlanRealPlantio08TO.getValorAcumPlan()));
+            textAgoRealMes.setText(String.valueOf(grafPlanRealPlantio08TO.getValorMesReal()));
+            textAgoRealAcum.setText(String.valueOf(grafPlanRealPlantio08TO.getValorAcumReal()));
+            textAgoSaldMes.setText(String.valueOf(grafPlanRealPlantio08TO.getValorMesPlan() - grafPlanRealPlantio08TO.getValorMesReal()));
+            textAgoSaldAcum.setText(String.valueOf(grafPlanRealPlantio08TO.getValorAcumPlan() - grafPlanRealPlantio08TO.getValorAcumReal()));
+
+            textSetPlanMes.setText(String.valueOf(grafPlanRealPlantio09TO.getValorMesPlan()));
+            textSetPlanAcum.setText(String.valueOf(grafPlanRealPlantio09TO.getValorAcumPlan()));
+            textSetRealMes.setText(String.valueOf(grafPlanRealPlantio09TO.getValorMesReal()));
+            textSetRealAcum.setText(String.valueOf(grafPlanRealPlantio09TO.getValorAcumReal()));
+            textSetSaldMes.setText(String.valueOf(grafPlanRealPlantio09TO.getValorMesPlan() - grafPlanRealPlantio09TO.getValorMesReal()));
+            textSetSaldAcum.setText(String.valueOf(grafPlanRealPlantio09TO.getValorAcumPlan() - grafPlanRealPlantio09TO.getValorAcumReal()));
+
+            textOutPlanMes.setText(String.valueOf(grafPlanRealPlantio10TO.getValorMesPlan()));
+            textOutPlanAcum.setText(String.valueOf(grafPlanRealPlantio10TO.getValorAcumPlan()));
+            textOutRealMes.setText(String.valueOf(grafPlanRealPlantio10TO.getValorMesReal()));
+            textOutRealAcum.setText(String.valueOf(grafPlanRealPlantio10TO.getValorAcumReal()));
+            textOutSaldMes.setText(String.valueOf(grafPlanRealPlantio10TO.getValorMesPlan() - grafPlanRealPlantio10TO.getValorMesReal()));
+            textOutSaldAcum.setText(String.valueOf(grafPlanRealPlantio10TO.getValorAcumPlan() - grafPlanRealPlantio10TO.getValorAcumReal()));
+
+            textNovPlanMes.setText(String.valueOf(grafPlanRealPlantio11TO.getValorMesPlan()));
+            textNovPlanAcum.setText(String.valueOf(grafPlanRealPlantio11TO.getValorAcumPlan()));
+            textNovRealMes.setText(String.valueOf(grafPlanRealPlantio11TO.getValorMesReal()));
+            textNovRealAcum.setText(String.valueOf(grafPlanRealPlantio11TO.getValorAcumReal()));
+            textNovSaldMes.setText(String.valueOf(grafPlanRealPlantio11TO.getValorMesPlan() - grafPlanRealPlantio11TO.getValorMesReal()));
+            textNovSaldAcum.setText(String.valueOf(grafPlanRealPlantio11TO.getValorAcumPlan() - grafPlanRealPlantio11TO.getValorAcumReal()));
+
+            textDezPlanMes.setText(String.valueOf(grafPlanRealPlantio12TO.getValorMesPlan()));
+            textDezPlanAcum.setText(String.valueOf(grafPlanRealPlantio12TO.getValorAcumPlan()));
+            textDezRealMes.setText(String.valueOf(grafPlanRealPlantio12TO.getValorMesReal()));
+            textDezRealAcum.setText(String.valueOf(grafPlanRealPlantio12TO.getValorAcumReal()));
+            textDezSaldMes.setText(String.valueOf(grafPlanRealPlantio12TO.getValorMesPlan() - grafPlanRealPlantio12TO.getValorMesReal()));
+            textDezSaldAcum.setText(String.valueOf(grafPlanRealPlantio12TO.getValorAcumPlan() - grafPlanRealPlantio12TO.getValorAcumReal()));
+
+            final AnyChartView linePlanReal = findViewById(R.id.linha_plan_real);
+            linePlanReal.setProgressBar(findViewById(R.id.progress_bar_linha_plan_real));
+            APIlib.getInstance().setActiveAnyChartView(linePlanReal);
+
+            linePlanReal.setAnimationCacheEnabled(false);
+
+            final Cartesian lPlanReal = AnyChart.line();
+
+            lPlanReal.animation(true);
+
+            lPlanReal.padding(10d, 20d, 5d, 20d);
+
+            lPlanReal.crosshair().enabled(true);
+            lPlanReal.crosshair()
+                    .yLabel(true)
+                    // TODO ystroke
+                    .yStroke((Stroke) null, null, null, (String) null, (String) null);
+
+            lPlanReal.tooltip().positionMode(TooltipPositionMode.POINT);
+
+            List<DataEntry> seriesLinePlanReal = new ArrayList<>();
+            seriesLinePlanReal.add(new CustomDataEntry("JAN", grafPlanRealPlantio01TO.getValorAcumPlan(), grafPlanRealPlantio01TO.getValorAcumReal()));
+            seriesLinePlanReal.add(new CustomDataEntry("FEV", grafPlanRealPlantio02TO.getValorAcumPlan(), grafPlanRealPlantio02TO.getValorAcumReal()));
+            seriesLinePlanReal.add(new CustomDataEntry("MAR", grafPlanRealPlantio03TO.getValorAcumPlan(), grafPlanRealPlantio03TO.getValorAcumReal()));
+            seriesLinePlanReal.add(new CustomDataEntry("ABR", grafPlanRealPlantio04TO.getValorAcumPlan(), grafPlanRealPlantio04TO.getValorAcumReal()));
+            seriesLinePlanReal.add(new CustomDataEntry("MAI", grafPlanRealPlantio05TO.getValorAcumPlan(), grafPlanRealPlantio05TO.getValorAcumReal()));
+            seriesLinePlanReal.add(new CustomDataEntry("JUN", grafPlanRealPlantio06TO.getValorAcumPlan(), grafPlanRealPlantio06TO.getValorAcumReal()));
+            seriesLinePlanReal.add(new CustomDataEntry("JUL", grafPlanRealPlantio07TO.getValorAcumPlan(), grafPlanRealPlantio07TO.getValorAcumReal()));
+            seriesLinePlanReal.add(new CustomDataEntry("AGO", grafPlanRealPlantio08TO.getValorAcumPlan(), grafPlanRealPlantio08TO.getValorAcumReal()));
+            seriesLinePlanReal.add(new CustomDataEntry("SET", grafPlanRealPlantio09TO.getValorAcumPlan(), grafPlanRealPlantio09TO.getValorAcumReal()));
+            seriesLinePlanReal.add(new CustomDataEntry("OUT", grafPlanRealPlantio10TO.getValorAcumPlan(), grafPlanRealPlantio10TO.getValorAcumReal()));
+            seriesLinePlanReal.add(new CustomDataEntry("NOV", grafPlanRealPlantio11TO.getValorAcumPlan(), grafPlanRealPlantio11TO.getValorAcumReal()));
+            seriesLinePlanReal.add(new CustomDataEntry("DEZ", grafPlanRealPlantio12TO.getValorAcumPlan(), grafPlanRealPlantio12TO.getValorAcumReal()));
+
+            Set setLinePlanReal = Set.instantiate();
+            setLinePlanReal.data(seriesLinePlanReal);
+            Mapping series1MapLinePlanReal = setLinePlanReal.mapAs("{ x: 'x', value: 'value' }");
+            Mapping series2MapLinePlanReal = setLinePlanReal.mapAs("{ x: 'x', value: 'value2' }");
+
+            Line series1LinePlanReal = lPlanReal.line(series1MapLinePlanReal);
+            series1LinePlanReal.name("PLANEJADO");
+            series1LinePlanReal.color("red");
+            series1LinePlanReal.hovered().markers().enabled(true);
+            series1LinePlanReal.hovered().markers()
+                    .type(MarkerType.CIRCLE)
+                    .size(4d);
+            series1LinePlanReal.tooltip()
+                    .position("right")
+                    .anchor(Anchor.LEFT_CENTER)
+                    .offsetX(5d)
+                    .offsetY(5d);
+
+            Line series2LinePlanReal = lPlanReal.line(series2MapLinePlanReal);
+            series2LinePlanReal.name("REALIZADO");
+            series2LinePlanReal.color("blue");
+            series2LinePlanReal.hovered().markers().enabled(true);
+            series2LinePlanReal.hovered().markers()
+                    .type(MarkerType.CIRCLE)
+                    .size(4d);
+            series2LinePlanReal.tooltip()
+                    .position("left")
+                    .anchor(Anchor.LEFT_CENTER)
+                    .offsetX(5d)
+                    .offsetY(5d);
+
+            lPlanReal.legend().enabled(true);
+            lPlanReal.legend().fontSize(13d);
+            lPlanReal.legend().padding(0d, 0d, 10d, 0d);
+
+            linePlanReal.setChart(lPlanReal);
+
+        }
+
+        grafPlanRealPlantioList.clear();
 
         final AnyChartView grafTratorPlantOperDia = findViewById(R.id.graf_trator_plant_oper_dia);
         grafTratorPlantOperDia.setProgressBar(findViewById(R.id.progress_bar_trator_plant_oper_dia));

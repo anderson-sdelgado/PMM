@@ -82,4 +82,6 @@
     <string name="texto_subtitulo_disp_oper">DISP. OPERAÇÃO</string>
     <string name="texto_subtitulo_campo">CAMPO</string>
     <string name="texto_esp_graf">ATUALIZANDO DADOS DOS GRÁFICOS DE PLANTIO...</string>
+    <string name="texto_pos_pneu">POSIÇÃO PNEU</string>
+    <string name="texto_pneu">NUM. DO PNEU:</string>
 </resources>
