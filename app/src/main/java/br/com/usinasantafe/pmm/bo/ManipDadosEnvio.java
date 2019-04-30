@@ -71,7 +71,7 @@ public class ManipDadosEnvio {
         boletimMMTO = (BoletimMMTO) listBoletim.get(0);
         listBoletim.clear();
 
-        boletimMMTO.setDthrFimBoletim(Tempo.getInstance().data());
+        boletimMMTO.setDthrFimBoletim(Tempo.getInstance().datahora());
         boletimMMTO.setStatusBoletim(2L);
         boletimMMTO.update();
 
@@ -85,7 +85,7 @@ public class ManipDadosEnvio {
 
     public void salvaBoletimAbertoMM(BoletimMMTO boletimMMTO, boolean checklist, Double latitude, Double longitude) {
 
-        boletimMMTO.setDthrInicioBoletim(Tempo.getInstance().data());
+        boletimMMTO.setDthrInicioBoletim(Tempo.getInstance().datahora());
         boletimMMTO.insert();
 
         ConfiguracaoTO configTO = new ConfiguracaoTO();
@@ -95,7 +95,7 @@ public class ManipDadosEnvio {
 
         if(checklist){
 
-            String datahora = Tempo.getInstance().data();
+            String datahora = Tempo.getInstance().datahora();
             ApontaMMTO apontaMMTO = new ApontaMMTO();
             apontaMMTO.setDthrAponta(datahora);
             apontaMMTO.setIdBolAponta(boletimMMTO.getIdBoletim());
@@ -142,7 +142,7 @@ public class ManipDadosEnvio {
 
     public void salvaApontaMM(ApontaMMTO apontaMMTO) {
 
-        String datahora = Tempo.getInstance().data();
+        String datahora = Tempo.getInstance().datahora();
         apontaMMTO.setDthrAponta(datahora);
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
@@ -184,7 +184,7 @@ public class ManipDadosEnvio {
 
     public void salvaApontaAplicFert(ApontaAplicFertTO apontaAplicFertTO) {
 
-        String datahora = Tempo.getInstance().data();
+        String datahora = Tempo.getInstance().datahora();
         apontaAplicFertTO.setDthrApontaAplicFert(datahora);
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
@@ -764,7 +764,7 @@ public class ManipDadosEnvio {
                     }
                 }
             }
-//        }
+////        }
     }
 
     public boolean verifDadosEnvio() {

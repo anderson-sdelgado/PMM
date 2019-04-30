@@ -50,7 +50,7 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
                 itemCheckList.clear();
 
                 CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-                cabecCheckListTO.setDtCab(Tempo.getInstance().data());
+                cabecCheckListTO.setDtCab(Tempo.getInstance().datahora());
                 cabecCheckListTO.setEquipCab(equipTO.getCodEquip());
                 cabecCheckListTO.setFuncCab(pmmContext.getBoletimMMTO().getCodMotoBoletim());
                 cabecCheckListTO.setTurnoCab(pmmContext.getBoletimMMTO().getCodTurnoBoletim());

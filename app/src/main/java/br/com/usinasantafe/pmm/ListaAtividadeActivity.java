@@ -268,7 +268,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                             }
 
                             if(pmmContext.getVerPosTela() == 2){
-                                configTO.setDtUltApontConfig(Tempo.getInstance().data());
+                                configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
                                 configTO.update();
                                 Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
                                 startActivity(it);

@@ -4,13 +4,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.SpannableString;
 import android.text.TextWatcher;
-import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,7 +22,6 @@ import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.RAtivParadaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaMMTO;
@@ -211,11 +206,17 @@ public class ListaParadaActivity extends ActivityGeneric {
 
                             if (pmmContext.getVerPosTela() == 3) {
 
-                                configTO.setDtUltApontConfig(Tempo.getInstance().data());
+                                configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
                                 configTO.update();
-                                Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
-                                startActivity(it);
-                                finish();
+
+                                if(paradaTO.getFlagCalibragem() == 0L){
+                                    Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
+                                    startActivity(it);
+                                    finish();
+                                }
+                                else{
+
+                                }
 
                                 listParada.clear();
                                 paradaList.clear();

@@ -84,4 +84,6 @@
     <string name="texto_esp_graf">ATUALIZANDO DADOS DOS GRÁFICOS DE PLANTIO...</string>
     <string name="texto_pos_pneu">POSIÇÃO PNEU</string>
     <string name="texto_pneu">NUM. DO PNEU:</string>
+    <string name="texto_pressao_enc">PRESSÃO ENCONTRADA:</string>
+    <string name="texto_pressao_col">PRESSÃO COLOCADA:</string>
 </resources>

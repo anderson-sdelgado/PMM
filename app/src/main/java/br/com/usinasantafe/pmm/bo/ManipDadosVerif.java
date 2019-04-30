@@ -18,9 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.usinasantafe.pmm.EsperaGrafActivity;
 import br.com.usinasantafe.pmm.MenuInicialActivity;
-import br.com.usinasantafe.pmm.MenuPrincNormalActivity;
 import br.com.usinasantafe.pmm.conWEB.ConHttpPostVerGenerico;
 import br.com.usinasantafe.pmm.conWEB.UrlsConexaoHttp;
 import br.com.usinasantafe.pmm.pst.GenericRecordable;
@@ -184,11 +182,12 @@ public class ManipDadosVerif {
 
                 int pos1 = result.indexOf("#") + 1;
                 int pos2 = result.indexOf("|") + 1;
-                int pos3 = result.indexOf("?") + 1;
+                int pos3 = result.indexOf("_") + 1;
                 String objPrinc = result.substring(0, (pos1 - 1));
                 String objSeg = result.substring(pos1, (pos2 - 1));
                 String objTerc = result.substring(pos2, (pos3 - 1));
                 String objQuar = result.substring(pos3);
+
 
                 JSONObject jObj = new JSONObject(objPrinc);
                 JSONArray jsonArray = jObj.getJSONArray("dados");
@@ -235,19 +234,19 @@ public class ManipDadosVerif {
 
                     }
 
-                    jObj = new JSONObject(objQuar);
-                    jsonArray = jObj.getJSONArray("dados");
-                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "REquipPneuTO");
-
-                    genericRecordable.deleteAll(classe);
-
-                    for (int j = 0; j < jsonArray.length(); j++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(j);
-                        Gson gson = new Gson();
-                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                    }
+//                    jObj = new JSONObject(objQuar);
+//                    jsonArray = jObj.getJSONArray("dados");
+//                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "REquipPneuTO");
+//
+//                    genericRecordable.deleteAll(classe);
+//
+//                    for (int j = 0; j < jsonArray.length(); j++) {
+//
+//                        JSONObject objeto = jsonArray.getJSONObject(j);
+//                        Gson gson = new Gson();
+//                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
+//
+//                    }
 
 
                     EquipTO equipTO = new EquipTO();
@@ -706,7 +705,7 @@ public class ManipDadosVerif {
 
                     }
 
-                    cabecCheckList(Tempo.getInstance().data());
+                    cabecCheckList(Tempo.getInstance().datahora());
                     this.progressDialog.dismiss();
                     Intent it = new Intent(telaAtual, telaProx);
                     telaAtual.startActivity(it);
@@ -852,7 +851,7 @@ public class ManipDadosVerif {
         itemCheckList.clear();
 
         CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-        cabecCheckListTO.setDtCab(Tempo.getInstance().data());
+        cabecCheckListTO.setDtCab(Tempo.getInstance().datahora());
         cabecCheckListTO.setEquipCab(equipTO.getCodEquip());
         cabecCheckListTO.setFuncCab(boletimMMTO.getCodMotoBoletim());
         cabecCheckListTO.setTurnoCab(boletimMMTO.getCodTurnoBoletim());

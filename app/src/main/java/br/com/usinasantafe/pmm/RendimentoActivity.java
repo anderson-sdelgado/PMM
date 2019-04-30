@@ -84,7 +84,7 @@ public class RendimentoActivity extends ActivityGeneric {
                         if (rendNum <= osTO.getAreaProgrOS()) {
 
                             rendimentoTO.setValorRendimento(rendNum);
-                            rendimentoTO.setDthrRendimento(Tempo.getInstance().data());
+                            rendimentoTO.setDthrRendimento(Tempo.getInstance().datahora());
                             rendimentoTO.update();
                             rendimentoTO.commit();
 

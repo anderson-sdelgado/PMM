@@ -14,6 +14,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosReceb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
+import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
 
 public class ConfiguracaoActivity extends ActivityGeneric {
@@ -39,9 +40,16 @@ public class ConfiguracaoActivity extends ActivityGeneric {
 
             List configList = configuracaoTO.all();
             configuracaoTO = (ConfiguracaoTO) configList.get(0);
-            editTextEquipConfig.setText(String.valueOf(configuracaoTO.getEquipConfig()));
-            editTextSenhaConfig.setText(configuracaoTO.getSenhaConfig());
             configList.clear();
+
+            EquipTO equipTO = new EquipTO();
+            List equipList = equipTO.get("idEquip", configuracaoTO.getEquipConfig());
+            equipTO = (EquipTO) equipList.get(0);
+            equipList.clear();
+
+            editTextEquipConfig.setText(String.valueOf(equipTO.getCodEquip()));
+            editTextSenhaConfig.setText(configuracaoTO.getSenhaConfig());
+
         }
 
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaAplicFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
 
 /**
@@ -18,6 +19,7 @@ public class PMMContext extends Application {
     private BoletimMMTO boletimMMTO;
     private ApontaMMTO apontaMMTO;
     private ApontaAplicFertTO apontaAplicFertTO;
+    private ItemMedPneuTO itemMedPneuTO;
     private int verPosTela;
     //1 - Inicio do boletim;
     // 2 - Trabalhando Moto Mec;
@@ -71,6 +73,12 @@ public class PMMContext extends Application {
         if (apontaAplicFertTO == null)
             apontaAplicFertTO = new ApontaAplicFertTO();
         return apontaAplicFertTO;
+    }
+
+    public ItemMedPneuTO getItemMedPneuTO() {
+        if (itemMedPneuTO == null)
+            itemMedPneuTO = new ItemMedPneuTO();
+        return itemMedPneuTO;
     }
 
     public void setBoletimMMTO(BoletimMMTO boletimMMTO){

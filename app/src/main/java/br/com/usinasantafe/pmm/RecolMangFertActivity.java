@@ -1,10 +1,7 @@
 package br.com.usinasantafe.pmm;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,7 +67,7 @@ public class RecolMangFertActivity extends ActivityGeneric {
                         Long valorRecolMang = Long.parseLong(editTextPadrao.getText().toString());
 
                         recolMangTO.setValorRendMangRecol(valorRecolMang);
-                        recolMangTO.setDthrRendMangRecol(Tempo.getInstance().data());
+                        recolMangTO.setDthrRendMangRecol(Tempo.getInstance().datahora());
                         recolMangTO.setStatusRendMangRecol(2L);
                         recolMangTO.update();
                         recolMangTO.commit();

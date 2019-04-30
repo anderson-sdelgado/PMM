@@ -1,6 +1,5 @@
 package br.com.usinasantafe.pmm;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -13,6 +12,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
+import br.com.usinasantafe.pmm.to.tb.estaticas.PneuTO;
 
 public class PneuActivity extends ActivityGeneric {
 
@@ -45,7 +45,7 @@ public class PneuActivity extends ActivityGeneric {
 
                             progressBar = new ProgressDialog(PneuActivity.this);
                             progressBar.setCancelable(true);
-                            progressBar.setMessage("Atualizando Operador...");
+                            progressBar.setMessage("Atualizando Pneu...");
                             progressBar.show();
 
                             ManipDadosVerif.getInstance().verDados("", "Pneu"
@@ -92,33 +92,33 @@ public class PneuActivity extends ActivityGeneric {
 
                 if (!editTextPadrao.getText().toString().equals("")) {
 
-//                    MotoristaTO motoristaBD = new MotoristaTO();
-//                    List listaMotorista = motoristaBD.get("codMotorista", Long.parseLong(editTextPadrao.getText().toString()));
-//
-//                    if (listaMotorista.size() > 0) {
-//
-//                        motoristaBD = (MotoristaTO) listaMotorista.get(0);
-//                        pmmContext.getBoletimMMTO().setCodMotoBoletim(motoristaBD.getCodMotorista());
-//                        listaMotorista.clear();
-//                        Intent it = new Intent(OperadorActivity.this, EquipActivity.class);
-//                        startActivity(it);
-//                        finish();
-//
-//                    } else {
-//
-//                        AlertDialog.Builder alerta = new AlertDialog.Builder(OperadorActivity.this);
-//                        alerta.setTitle("ATENÇÃO");
-//                        alerta.setMessage("NUMERAÇÃO DO OPERADOR INEXISTENTE! FAVOR VERIFICA A MESMA.");
-//                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//
-//                            }
-//                        });
-//
-//                        alerta.show();
-//
-//                    }
+                    PneuTO pneuTO = new PneuTO();
+                    List pneuList = pneuTO.get("codPneu", Long.parseLong(editTextPadrao.getText().toString()));
+
+                    if (pneuList.size() > 0) {
+
+                        pneuTO = (PneuTO) pneuList.get(0);
+                        pmmContext.getItemMedPneuTO().setIdPneuItemMedPneu(pneuTO.getIdPneu());
+                        pneuList.clear();
+                        Intent it = new Intent(PneuActivity.this, PressaoEncPneuActivity.class);
+                        startActivity(it);
+                        finish();
+
+                    } else {
+
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(PneuActivity.this);
+                        alerta.setTitle("ATENÇÃO");
+                        alerta.setMessage("NUMERAÇÃO DO PNEU INEXISTENTE! FAVOR VERIFICA A MESMA.");
+                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+
+                        alerta.show();
+
+                    }
                 }
 
             }

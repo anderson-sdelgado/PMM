@@ -140,7 +140,7 @@ public class TransbordoActivity extends ActivityGeneric {
                             List listConfigTO = configTO.all();
                             configTO = (ConfiguracaoTO) listConfigTO.get(0);
                             listConfigTO.clear();
-                            configTO.setDtUltApontConfig(Tempo.getInstance().data());
+                            configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
                             configTO.update();
 
                             AtividadeTO atividadeTO = new AtividadeTO();
@@ -200,7 +200,7 @@ public class TransbordoActivity extends ActivityGeneric {
                                 List listConfigTO = configTO.all();
                                 configTO = (ConfiguracaoTO) listConfigTO.get(0);
                                 listConfigTO.clear();
-                                configTO.setDtUltApontConfig(Tempo.getInstance().data());
+                                configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
                                 configTO.update();
 
                                 ApontaMMTO apontaMMTO = new ApontaMMTO();

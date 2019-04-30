@@ -2,7 +2,6 @@ package br.com.usinasantafe.pmm;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -45,7 +44,7 @@ public class RaioFertActivity extends ActivityGeneric {
                     ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
                     List configList = configuracaoTO.all();
                     configuracaoTO = (ConfiguracaoTO) configList.get(0);
-                    configuracaoTO.setDtUltApontConfig(Tempo.getInstance().data());
+                    configuracaoTO.setDtUltApontConfig(Tempo.getInstance().datahora());
                     configuracaoTO.update();
 
                     BoletimMMTO boletimMMTO = new BoletimMMTO();

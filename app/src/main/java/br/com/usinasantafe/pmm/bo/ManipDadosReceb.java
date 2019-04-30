@@ -50,43 +50,34 @@ public class ManipDadosReceb {
 
 		if(!result.equals("")){
 
-			if(tipo.equals("datahorahttp")){
+			try{
+
 				Log.i("PMM", "TIPO -> " + tipo);
 				Log.i("PMM", "RESULT -> " + result);
-				Tempo.getInstance().manipDataHora(result);
+
+				JSONObject jObj = new JSONObject(result);
+				JSONArray jsonArray = jObj.getJSONArray("dados");
+				Class classe = Class.forName(manipLocalClasse(tipo));
+				genericRecordable.deleteAll(classe);
+
+				for(int i = 0; i < jsonArray.length(); i++){
+
+					JSONObject objeto = jsonArray.getJSONObject(i);
+					Gson gson = new Gson();
+					genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
+
+				}
+
+				Log.i("PMM", " SALVOU DADOS ");
+
+				if(contAtualizaBD > 0){
+					atualizandoBD();
+				}
+
 			}
-			else{
-
-				try{
-
-					Log.i("PMM", "TIPO -> " + tipo);
-					Log.i("PMM", "RESULT -> " + result);
-
-					JSONObject jObj = new JSONObject(result);
-					JSONArray jsonArray = jObj.getJSONArray("dados");
-					Class classe = Class.forName(manipLocalClasse(tipo));
-					genericRecordable.deleteAll(classe);
-
-					for(int i = 0; i < jsonArray.length(); i++){
-
-						JSONObject objeto = jsonArray.getJSONObject(i);
-						Gson gson = new Gson();
-						genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-					}
-
-					Log.i("PMM", " SALVOU DADOS ");
-
-					if(contAtualizaBD > 0){
-						atualizandoBD();
-					}
-
-				}
-				catch (Exception e) {
-				// TODO Auto-generated catch block
-				Log.i("PMM", "Erro Manip = " + e);
-				}
-
+			catch (Exception e) {
+			// TODO Auto-generated catch block
+			Log.i("PMM", "Erro Manip = " + e);
 			}
 
 		}

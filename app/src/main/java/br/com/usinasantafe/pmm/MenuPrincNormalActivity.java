@@ -5,11 +5,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,21 +15,16 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosReceb;
-import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.GrafProdPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.AlocaCarretelTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.AtualizaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
@@ -129,7 +121,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                     String text = textView.getText().toString();
 
                     if (text.equals("TRABALHANDO")) {
-                        if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().data())) {
+                        if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().datahora())) {
                             Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                     Toast.LENGTH_LONG).show();
                         } else {
@@ -154,7 +146,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
                         }
                     } else if (text.equals("PARADO")) {
-                        if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().data())) {
+                        if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().datahora())) {
                             Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                     Toast.LENGTH_LONG).show();
                         } else {
@@ -255,7 +247,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                                     Toast.LENGTH_LONG).show();
                         } else {
 
-                            if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().data())) {
+                            if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().datahora())) {
                                 Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                         Toast.LENGTH_LONG).show();
                             } else {
@@ -318,7 +310,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
             calBase.add(Calendar.MINUTE, +9);
 
-            dtStr = Tempo.getInstance().data();
+            dtStr = Tempo.getInstance().datahora();
 
             diaStr = dtStr.substring(0, 2);
             mesStr = dtStr.substring(3, 5);
@@ -378,7 +370,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         List listConfigTO = configTO.all();
         configTO = (ConfiguracaoTO) listConfigTO.get(0);
         listConfigTO.clear();
-        configTO.setDtUltApontConfig(Tempo.getInstance().data());
+        configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
         configTO.update();
 
         BackupApontaMMTO backupApontaMMTO = new BackupApontaMMTO();

@@ -13,9 +13,11 @@ public class ItemMedPneuTO extends Entidade {
     @DatabaseField(generatedId=true)
     private Long idItemMedPneu;
     @DatabaseField
+    private Long idBolItemMedPneu;
+    @DatabaseField
     private Long posItemMedPneu;
     @DatabaseField
-    private Long nroItemMedPneu;
+    private Long idPneuItemMedPneu;
     @DatabaseField
     private Long pressaoEncItemMedPneu;
     @DatabaseField
@@ -40,12 +42,12 @@ public class ItemMedPneuTO extends Entidade {
         this.posItemMedPneu = posItemMedPneu;
     }
 
-    public Long getNroItemMedPneu() {
-        return nroItemMedPneu;
+    public Long getIdPneuItemMedPneu() {
+        return idPneuItemMedPneu;
     }
 
-    public void setNroItemMedPneu(Long nroItemMedPneu) {
-        this.nroItemMedPneu = nroItemMedPneu;
+    public void setIdPneuItemMedPneu(Long idPneuItemMedPneu) {
+        this.idPneuItemMedPneu = idPneuItemMedPneu;
     }
 
     public Long getPressaoEncItemMedPneu() {
@@ -64,4 +66,11 @@ public class ItemMedPneuTO extends Entidade {
         this.pressaoColItemMedPneu = pressaoColItemMedPneu;
     }
 
+    public Long getIdBolItemMedPneu() {
+        return idBolItemMedPneu;
+    }
+
+    public void setIdBolItemMedPneu(Long idBolItemMedPneu) {
+        this.idBolItemMedPneu = idBolItemMedPneu;
+    }
 }
