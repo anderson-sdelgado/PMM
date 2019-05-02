@@ -16,6 +16,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.PneuTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
 
@@ -62,6 +63,8 @@ public class OSActivity extends ActivityGeneric {
                             osTO.deleteAll();
                             ROSAtivTO rosAtivTO = new ROSAtivTO();
                             rosAtivTO.deleteAll();
+                            PneuTO pneuTO = new PneuTO();
+                            pneuTO.deleteAll();
                         } else if ((pmmContext.getVerPosTela() == 2) || (pmmContext.getVerPosTela() == 3)
                                 || (pmmContext.getVerPosTela() == 8) || (pmmContext.getVerPosTela() == 12)) {
                             pmmContext.getApontaMMTO().setOsAponta(Long.parseLong(editTextPadrao.getText().toString()));

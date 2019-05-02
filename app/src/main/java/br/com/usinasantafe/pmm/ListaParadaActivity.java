@@ -74,7 +74,7 @@ public class ListaParadaActivity extends ActivityGeneric {
             itens[i] = paradaTO.getCodParada() + " - " + paradaTO.getDescrParada();
         }
 
-        adapter = new ArrayAdapter<String>(this, R.layout.activity_item_parada, R.id.textViewItemListParada, itens);
+        adapter = new ArrayAdapter<String>(this, R.layout.activity_item_lista, R.id.textViewItemList, itens);
         lista = (ListView) findViewById(R.id.listViewMotParada);
         lista.setAdapter(adapter);
 
@@ -160,7 +160,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                                     long id) {
                 // TODO Auto-generated method stub
 
-                TextView textView = (TextView) v.findViewById(R.id.textViewItemListParada);
+                TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
                 textParada = textView.getText().toString();
 
                 AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
@@ -215,7 +215,9 @@ public class ListaParadaActivity extends ActivityGeneric {
                                     finish();
                                 }
                                 else{
-
+                                    Intent it = new Intent(ListaParadaActivity.this, ListaPosPneuActivity.class);
+                                    startActivity(it);
+                                    finish();
                                 }
 
                                 listParada.clear();
@@ -233,38 +235,6 @@ public class ListaParadaActivity extends ActivityGeneric {
                             }
 
                         }
-
-                    } else if (pmmContext.getVerPosTela() == 13) {
-
-                        pmmContext.getApontaAplicFertTO().setParadaApontaAplicFert(paradaTO.getIdParada());
-                        pmmContext.getApontaAplicFertTO().setBocalApontaAplicFert(0L);
-                        pmmContext.getApontaAplicFertTO().setPressaoApontaAplicFert(0D);
-                        pmmContext.getApontaAplicFertTO().setVelocApontaAplicFert(0L);
-                        pmmContext.getApontaAplicFertTO().setRaioApontaAplicFert(0D);
-                        ManipDadosEnvio.getInstance().salvaApontaAplicFert(pmmContext.getApontaAplicFertTO());
-                        Intent it = new Intent(ListaParadaActivity.this, ListaEquipFertActivity.class);
-                        startActivity(it);
-                        finish();
-
-                        listParada.clear();
-                        paradaList.clear();
-
-                    }
-                    else if(pmmContext.getVerPosTela() == 16){
-
-                        pmmContext.getApontaAplicFertTO().setEquipApontaAplicFert(configTO.getEquipConfig());
-                        pmmContext.getApontaAplicFertTO().setParadaApontaAplicFert(pmmContext.getBoletimMMTO().getCodEquipBoletim());
-                        pmmContext.getApontaAplicFertTO().setBocalApontaAplicFert(0L);
-                        pmmContext.getApontaAplicFertTO().setPressaoApontaAplicFert(0D);
-                        pmmContext.getApontaAplicFertTO().setVelocApontaAplicFert(0L);
-                        pmmContext.getApontaAplicFertTO().setRaioApontaAplicFert(0D);
-                        ManipDadosEnvio.getInstance().salvaApontaAplicFert(pmmContext.getApontaAplicFertTO());
-                        Intent it = new Intent(ListaParadaActivity.this, ListaEquipFertActivity.class);
-                        startActivity(it);
-                        finish();
-
-                        listParada.clear();
-                        paradaList.clear();
 
                     }
 

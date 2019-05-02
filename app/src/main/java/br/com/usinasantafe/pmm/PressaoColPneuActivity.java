@@ -10,6 +10,8 @@ import android.widget.Button;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.bo.Tempo;
+import br.com.usinasantafe.pmm.to.tb.estaticas.REquipPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
 
@@ -45,13 +47,38 @@ public class PressaoColPneuActivity extends ActivityGeneric {
                         boletimPneuTO = (BoletimPneuTO) boletimPneuList.get(0);
                         boletimPneuList.clear();
 
-                        ItemMedPneuTO itemMedPneuTO = pmmContext.getItemMedPneuTO();
+                        ItemMedPneuTO itemMedPneuTO = new ItemMedPneuTO();
+                        itemMedPneuTO = pmmContext.getItemMedPneuTO();
                         itemMedPneuTO.setIdBolItemMedPneu(boletimPneuTO.getIdBolPneu());
+                        itemMedPneuTO.setDthrItemMedPneu(Tempo.getInstance().datahora());
                         itemMedPneuTO.insert();
 
-                        Intent it = new Intent(PressaoColPneuActivity.this, ListaPosPneuActivity.class);
-                        startActivity(it);
-                        finish();
+                        REquipPneuTO rEquipPneuTO = new REquipPneuTO();
+                        List rEquipPneuList = rEquipPneuTO.all();
+
+                        boletimPneuTO = (BoletimPneuTO) boletimPneuList.get(0);
+                        List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
+                        int verCad = 0;
+                        for(int i = 0; i < rEquipPneuList.size(); i++){
+                            rEquipPneuTO = (REquipPneuTO) rEquipPneuList.get(i);
+                            for(int j = 0; j < itemMedPneuList.size(); j++) {
+                                itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(j);
+                                if(rEquipPneuTO.getIdPosConfPneu() == itemMedPneuTO.getPosItemMedPneu()){
+                                    verCad++;
+                                }
+                            }
+                        }
+
+                        if(itemMedPneuList.size() == verCad){
+                            Intent it = new Intent(PressaoColPneuActivity.this, MenuPrincNormalActivity.class);
+                            startActivity(it);
+                            finish();
+                        }
+                        else{
+                            Intent it = new Intent(PressaoColPneuActivity.this, ListaPosPneuActivity.class);
+                            startActivity(it);
+                            finish();
+                        }
 
                     } else {
 

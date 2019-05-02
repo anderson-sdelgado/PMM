@@ -13,6 +13,8 @@ public class BoletimPneuTO extends Entidade {
     @DatabaseField(generatedId=true)
     private Long idBolPneu;
     @DatabaseField
+    private Long idApontBolPneu;
+    @DatabaseField
     private Long funcBolPneu;
     @DatabaseField
     private Long equipBolPneu;
@@ -62,5 +64,13 @@ public class BoletimPneuTO extends Entidade {
 
     public void setStatusBolPneu(Long statusBolPneu) {
         this.statusBolPneu = statusBolPneu;
+    }
+
+    public Long getIdApontBolPneu() {
+        return idApontBolPneu;
+    }
+
+    public void setIdApontBolPneu(Long idApontBolPneu) {
+        this.idApontBolPneu = idApontBolPneu;
     }
 }

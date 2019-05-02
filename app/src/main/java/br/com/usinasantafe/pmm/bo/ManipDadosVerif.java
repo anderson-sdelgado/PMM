@@ -23,11 +23,23 @@ import br.com.usinasantafe.pmm.conWEB.ConHttpPostVerGenerico;
 import br.com.usinasantafe.pmm.conWEB.UrlsConexaoHttp;
 import br.com.usinasantafe.pmm.pst.GenericRecordable;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafDispEquipPlantioTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafPlanRealPlantioTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafProdPlantioTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.GrafQualPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.PneuTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.RAtivParadaTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.REquipPneuTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.AtualizaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
 
 import android.os.AsyncTask;
 
@@ -126,7 +138,7 @@ public class ManipDadosVerif {
 
     }
 
-    public void envioAtualizacao(){
+    public void envioAtualizacao() {
 
         JsonArray jsonArray = new JsonArray();
 
@@ -178,20 +190,433 @@ public class ManipDadosVerif {
 
         try {
 
-            if(this.tipo.equals("Equip")) {
+            if (this.tipo.equals("Equip")) {
 
-                int pos1 = result.indexOf("#") + 1;
-                int pos2 = result.indexOf("|") + 1;
-                int pos3 = result.indexOf("_") + 1;
-                String objPrinc = result.substring(0, (pos1 - 1));
-                String objSeg = result.substring(pos1, (pos2 - 1));
-                String objTerc = result.substring(pos2, (pos3 - 1));
-                String objQuar = result.substring(pos3);
+                recDadosEquip(result);
 
+            } else if (this.tipo.equals("OS")) {
+
+                recDadosOS(result);
+
+            } else if (this.tipo.equals("Atividade")) {
+
+                recDadosAtiv(result);
+
+            } else if (this.tipo.equals("Parada")) {
+
+                recDadosGenerico(result, "RAtivParadaTO");
+
+            } else if (this.tipo.equals("Atualiza")) {
+
+                String verAtualizacao = result.trim();
+
+                if (verAtualizacao.equals("S")) {
+                    AtualizarAplicativo atualizarAplicativo = new AtualizarAplicativo();
+                    atualizarAplicativo.setContext(this.menuInicialActivity);
+                    atualizarAplicativo.execute();
+                } else {
+
+                    this.menuInicialActivity.startTimer(verAtualizacao);
+                }
+
+            } else if (this.tipo.equals("Operador")) {
+
+                recDadosGenerico(result, "MotoristaTO");
+
+            } else if (this.tipo.equals("Turno")) {
+
+                recDadosGenerico(result, "TurnoTO");
+
+            } else if (this.tipo.equals("EquipSeg")) {
+
+                recDadosGenerico(result, "EquipSegTO");
+
+            } else if (this.tipo.equals("CheckList")) {
+
+                recDadosCheckList(result);
+
+            } else if (this.tipo.equals("GrafPlantio")) {
+
+                recDadosGrafico(result);
+
+            } else if (this.tipo.equals("Pneu")) {
+
+                recDadosPneu(result);
+
+            }
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            Log.i("PMM", "Erro Manip atualizar = " + e);
+        }
+
+    }
+
+    public void cancelVer() {
+        if (conHttpPostVerGenerico.getStatus() == AsyncTask.Status.RUNNING) {
+            conHttpPostVerGenerico.cancel(true);
+        }
+    }
+
+    public boolean isVerTerm() {
+        return verTerm;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public void cabecCheckList(String data) {
+
+        BoletimMMTO boletimMMTO = new BoletimMMTO();
+        List boletimList = boletimMMTO.get("statusBoletim", 1L);
+        boletimMMTO = (BoletimMMTO) boletimList.get(0);
+
+        EquipTO equipTO = new EquipTO();
+        List equipList = equipTO.get("idEquip", boletimMMTO.getCodEquipBoletim());
+        equipTO = (EquipTO) equipList.get(0);
+        equipList.clear();
+
+        ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
+        List itemCheckList = itemCheckListTO.get("idChecklist", equipTO.getIdChecklist());
+        Long qtde = (long) itemCheckList.size();
+        itemCheckList.clear();
+
+        CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
+        cabecCheckListTO.setDtCab(Tempo.getInstance().datahora());
+        cabecCheckListTO.setEquipCab(equipTO.getCodEquip());
+        cabecCheckListTO.setFuncCab(boletimMMTO.getCodMotoBoletim());
+        cabecCheckListTO.setTurnoCab(boletimMMTO.getCodTurnoBoletim());
+        cabecCheckListTO.setQtdeItemCab(qtde);
+        cabecCheckListTO.setStatusCab(1L);
+        cabecCheckListTO.setDtAtualCab(data);
+        cabecCheckListTO.insert();
+
+    }
+
+    public void recDadosEquip(String result) {
+
+        try {
+
+            int pos1 = result.indexOf("#") + 1;
+            int pos2 = result.indexOf("|") + 1;
+            int pos3 = result.indexOf("_") + 1;
+            String objPrinc = result.substring(0, (pos1 - 1));
+            String objSeg = result.substring(pos1, (pos2 - 1));
+            String objTerc = result.substring(pos2, (pos3 - 1));
+            String objQuar = result.substring(pos3);
+
+            JSONObject jObj = new JSONObject(objPrinc);
+            JSONArray jsonArray = jObj.getJSONArray("dados");
+
+            if (jsonArray.length() > 0) {
+
+                EquipTO equipTO = new EquipTO();
+                equipTO.deleteAll();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject objeto = jsonArray.getJSONObject(i);
+                    Gson gson = new Gson();
+                    equipTO = gson.fromJson(objeto.toString(), EquipTO.class);
+                    equipTO.insert();
+
+                }
+
+                jObj = new JSONObject(objSeg);
+                jsonArray = jObj.getJSONArray("dados");
+
+                REquipAtivTO rEquipAtivTO = new REquipAtivTO();
+                rEquipAtivTO.deleteAll();
+
+                for (int j = 0; j < jsonArray.length(); j++) {
+
+                    JSONObject objeto = jsonArray.getJSONObject(j);
+                    Gson gson = new Gson();
+                    REquipAtivTO rEquipAtiv = gson.fromJson(objeto.toString(), REquipAtivTO.class);
+                    rEquipAtiv.insert();
+
+                }
+
+                jObj = new JSONObject(objTerc);
+                jsonArray = jObj.getJSONArray("dados");
+
+                RAtivParadaTO rAtivParadaTO = new RAtivParadaTO();
+                rAtivParadaTO.deleteAll();
+
+                for (int j = 0; j < jsonArray.length(); j++) {
+
+                    JSONObject objeto = jsonArray.getJSONObject(j);
+                    Gson gson = new Gson();
+                    RAtivParadaTO rAtivParada = gson.fromJson(objeto.toString(), RAtivParadaTO.class);
+                    rAtivParada.insert();
+
+                }
+
+                jObj = new JSONObject(objQuar);
+                jsonArray = jObj.getJSONArray("dados");
+
+                REquipPneuTO rEquipPneuTO = new REquipPneuTO();
+                rEquipPneuTO.deleteAll();
+
+                for (int j = 0; j < jsonArray.length(); j++) {
+
+                    JSONObject objeto = jsonArray.getJSONObject(j);
+                    Gson gson = new Gson();
+                    rEquipPneuTO = gson.fromJson(objeto.toString(), REquipPneuTO.class);
+                    rEquipPneuTO.insert();
+
+                }
+
+                ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
+                configuracaoTO.deleteAll();
+                configuracaoTO.setEquipConfig(equipTO.getIdEquip());
+                configuracaoTO.setClasseEquipConfig(equipTO.getCodClasseEquip());
+                configuracaoTO.setHorimetroConfig(equipTO.getHorimetroEquip());
+                configuracaoTO.setUltTurnoCLConfig(0L);
+                configuracaoTO.setDtUltCLConfig("");
+                configuracaoTO.setDtUltApontConfig("");
+                configuracaoTO.setSenhaConfig(this.senha);
+                configuracaoTO.setVerVisGrafConfig(0L);
+                configuracaoTO.insert();
+                configuracaoTO.commit();
+
+                this.progressDialog.dismiss();
+
+                Intent it = new Intent(telaAtual, telaProx);
+                telaAtual.startActivity(it);
+
+            } else {
+
+                this.progressDialog.dismiss();
+
+                AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
+                alerta.setTitle("ATENÇÃO");
+                alerta.setMessage("EQUIPAMENTO INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
+
+                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // TODO Auto-generated method stub
+                    }
+                });
+                alerta.show();
+
+            }
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            Log.i("PMM", "Erro Manip atualizar = " + e);
+        }
+
+    }
+
+    public void recDadosOS(String result) {
+
+        try {
+
+            if (!result.contains("exceeded")) {
+
+                int posicao = result.indexOf("#") + 1;
+                String objPrinc = result.substring(0, result.indexOf("#"));
+                String objSeg = result.substring(posicao);
 
                 JSONObject jObj = new JSONObject(objPrinc);
                 JSONArray jsonArray = jObj.getJSONArray("dados");
-                Class classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "EquipTO");
+
+                if (jsonArray.length() > 0) {
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject objeto = jsonArray.getJSONObject(i);
+                        Gson gson = new Gson();
+                        OSTO osTO = gson.fromJson(objeto.toString(), OSTO.class);
+                        osTO.insert();
+
+                    }
+
+                    jObj = new JSONObject(objSeg);
+                    jsonArray = jObj.getJSONArray("dados");
+
+                    for (int j = 0; j < jsonArray.length(); j++) {
+
+                        JSONObject objeto = jsonArray.getJSONObject(j);
+                        Gson gson = new Gson();
+                        ROSAtivTO rosAtivTO = gson.fromJson(objeto.toString(), ROSAtivTO.class);
+                        rosAtivTO.insert();
+
+                    }
+
+                    ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
+                    List configList = configuracaoTO.all();
+                    configuracaoTO = (ConfiguracaoTO) configList.get(0);
+                    configuracaoTO.setOsConfig(Long.parseLong(this.dado));
+                    configuracaoTO.setStatusConConfig(1L);
+                    configuracaoTO.update();
+
+                    verTerm = true;
+                    Intent it = new Intent(telaAtual, telaProx);
+                    telaAtual.startActivity(it);
+
+                } else {
+
+                    verTerm = true;
+                    this.progressDialog.dismiss();
+
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
+                    alerta.setTitle("ATENÇÃO");
+                    alerta.setMessage("OS INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
+
+                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // TODO Auto-generated method stub
+
+                        }
+                    });
+                    alerta.show();
+
+                }
+
+            } else {
+
+                ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
+                List configList = configuracaoTO.all();
+                configuracaoTO = (ConfiguracaoTO) configList.get(0);
+                configuracaoTO.setOsConfig(Long.parseLong(this.dado));
+                configuracaoTO.setStatusConConfig(0L);
+                configuracaoTO.update();
+
+                verTerm = true;
+                Intent it = new Intent(telaAtual, telaProx);
+                telaAtual.startActivity(it);
+
+            }
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            Log.i("PMM", "Erro Manip atualizar = " + e);
+        }
+
+    }
+
+    public void recDadosAtiv(String result) {
+
+        try {
+
+            if (!result.contains("exceeded")) {
+
+                int pos1 = result.indexOf("_") + 1;
+                int pos2 = result.indexOf("|") + 1;
+                int pos3 = result.indexOf("#") + 1;
+                int pos4 = result.indexOf("?") + 1;
+                String objPrim = result.substring(0, (pos1 - 1));
+                String objSeg = result.substring(pos1, (pos2 - 1));
+                String objTerc = result.substring(pos2, (pos3 - 1));
+                String objQuarto = result.substring(pos3, (pos4 - 1));
+                String objQuinto = result.substring(pos4);
+
+                JSONObject jObj = new JSONObject(objPrim);
+                JSONArray jsonArray = jObj.getJSONArray("dados");
+
+                EquipTO equipTO = new EquipTO();
+                equipTO.deleteAll();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject objeto = jsonArray.getJSONObject(i);
+                    Gson gson = new Gson();
+                    equipTO = gson.fromJson(objeto.toString(), EquipTO.class);
+                    equipTO.insert();
+
+                }
+
+                jObj = new JSONObject(objSeg);
+                jsonArray = jObj.getJSONArray("dados");
+
+                REquipAtivTO rEquipAtivTO = new REquipAtivTO();
+                rEquipAtivTO.deleteAll();
+
+                for (int j = 0; j < jsonArray.length(); j++) {
+
+                    JSONObject objeto = jsonArray.getJSONObject(j);
+                    Gson gson = new Gson();
+                    REquipAtivTO rEquipAtiv = gson.fromJson(objeto.toString(), REquipAtivTO.class);
+                    rEquipAtiv.insert();
+
+                }
+
+                jObj = new JSONObject(objTerc);
+                jsonArray = jObj.getJSONArray("dados");
+
+                RAtivParadaTO rAtivParadaTO = new RAtivParadaTO();
+                rAtivParadaTO.deleteAll();
+
+                for (int j = 0; j < jsonArray.length(); j++) {
+
+                    JSONObject objeto = jsonArray.getJSONObject(j);
+                    Gson gson = new Gson();
+                    RAtivParadaTO rAtivParada = gson.fromJson(objeto.toString(), RAtivParadaTO.class);
+                    rAtivParada.insert();
+
+                }
+
+                jObj = new JSONObject(objQuarto);
+                jsonArray = jObj.getJSONArray("dados");
+
+                if (jsonArray.length() > 0) {
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject objeto = jsonArray.getJSONObject(i);
+                        Gson gson = new Gson();
+                        OSTO osTO = gson.fromJson(objeto.toString(), OSTO.class);
+                        osTO.insert();
+
+                    }
+
+                    jObj = new JSONObject(objQuinto);
+                    jsonArray = jObj.getJSONArray("dados");
+
+                    for (int j = 0; j < jsonArray.length(); j++) {
+
+                        JSONObject objeto = jsonArray.getJSONObject(j);
+                        Gson gson = new Gson();
+                        ROSAtivTO rosAtivTO = gson.fromJson(objeto.toString(), ROSAtivTO.class);
+                        rosAtivTO.insert();
+
+                    }
+
+                }
+
+                this.progressDialog.dismiss();
+                Intent it = new Intent(telaAtual, telaProx);
+                telaAtual.startActivity(it);
+
+            } else {
+
+                this.progressDialog.dismiss();
+                Intent it = new Intent(telaAtual, telaProx);
+                telaAtual.startActivity(it);
+
+            }
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            Log.i("PMM", "Erro Manip atualizar = " + e);
+        }
+
+    }
+
+    public void recDadosGenerico(String result, String c) {
+
+        try {
+
+            if (!result.contains("exceeded")) {
+
+                JSONObject jObj = new JSONObject(result);
+                JSONArray jsonArray = jObj.getJSONArray("dados");
+                Class classe = Class.forName(urlsConexaoHttp.localPSTEstatica + c);
 
                 if (jsonArray.length() > 0) {
 
@@ -206,606 +631,206 @@ public class ManipDadosVerif {
 
                     }
 
-                    jObj = new JSONObject(objSeg);
-                    jsonArray = jObj.getJSONArray("dados");
-                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "REquipAtivTO");
-
-                    genericRecordable.deleteAll(classe);
-
-                    for (int j = 0; j < jsonArray.length(); j++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(j);
-                        Gson gson = new Gson();
-                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                    }
-
-                    jObj = new JSONObject(objTerc);
-                    jsonArray = jObj.getJSONArray("dados");
-                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "RAtivParadaTO");
-
-                    genericRecordable.deleteAll(classe);
-
-                    for (int j = 0; j < jsonArray.length(); j++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(j);
-                        Gson gson = new Gson();
-                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                    }
-
-//                    jObj = new JSONObject(objQuar);
-//                    jsonArray = jObj.getJSONArray("dados");
-//                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "REquipPneuTO");
-//
-//                    genericRecordable.deleteAll(classe);
-//
-//                    for (int j = 0; j < jsonArray.length(); j++) {
-//
-//                        JSONObject objeto = jsonArray.getJSONObject(j);
-//                        Gson gson = new Gson();
-//                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-//
-//                    }
-
-
-                    EquipTO equipTO = new EquipTO();
-                    List equipList = equipTO.all();
-                    equipTO = (EquipTO) equipList.get(0);
-
-                    ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-                    configuracaoTO.deleteAll();
-                    configuracaoTO.setEquipConfig(equipTO.getIdEquip());
-                    configuracaoTO.setClasseEquipConfig(equipTO.getCodClasseEquip());
-                    configuracaoTO.setHorimetroConfig(equipTO.getHorimetroEquip());
-                    configuracaoTO.setUltTurnoCLConfig(0L);
-                    configuracaoTO.setDtUltCLConfig("");
-                    configuracaoTO.setDtUltApontConfig("");
-                    configuracaoTO.setSenhaConfig(this.senha);
-                    configuracaoTO.setVerVisGrafConfig(0L);
-                    configuracaoTO.insert();
-                    configuracaoTO.commit();
-
-                    equipList.clear();
-
                     this.progressDialog.dismiss();
-
-                    Intent it = new Intent(telaAtual, telaProx);
-                    telaAtual.startActivity(it);
 
                 } else {
 
                     this.progressDialog.dismiss();
 
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
-                    alerta.setTitle("ATENÇÃO");
-                    alerta.setMessage("EQUIPAMENTO INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
-
-                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // TODO Auto-generated method stub
-                        }
-                    });
-                    alerta.show();
-
                 }
 
             }
-            else if(this.tipo.equals("OS")) {
 
-                if (!result.contains("exceeded")) {
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            Log.i("PMM", "Erro Manip atualizar = " + e);
+        }
 
-                    int posicao = result.indexOf("#") + 1;
-                    String objPrinc = result.substring(0, result.indexOf("#"));
-                    String objSeg = result.substring(posicao);
+    }
 
-                    JSONObject jObj = new JSONObject(objPrinc);
-                    JSONArray jsonArray = jObj.getJSONArray("dados");
-                    Class classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "OSTO");
+    public void recDadosCheckList(String result) {
 
-                    if (jsonArray.length() > 0) {
+        try {
 
-                        genericRecordable = new GenericRecordable();
+            if (!result.contains("exceeded")) {
 
-                        for (int i = 0; i < jsonArray.length(); i++) {
+                int pos1 = result.indexOf("_") + 1;
+                int pos2 = result.indexOf("|") + 1;
+                int pos3 = result.indexOf("#") + 1;
+                String objPrinc = result.substring(0, (pos1 - 1));
+                String objSeg = result.substring(pos1, (pos2 - 1));
+                String objTerc = result.substring(pos2, (pos3 - 1));
+                String objQuarto = result.substring(pos3);
 
-                            JSONObject objeto = jsonArray.getJSONObject(i);
-                            Gson gson = new Gson();
-                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
+                JSONObject jObj = new JSONObject(objPrinc);
+                JSONArray jsonArray = jObj.getJSONArray("dados");
 
-                        }
+                EquipTO equipTO = new EquipTO();
+                equipTO.deleteAll();
 
-                        jObj = new JSONObject(objSeg);
-                        jsonArray = jObj.getJSONArray("dados");
-                        classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "ROSAtivTO");
+                for (int i = 0; i < jsonArray.length(); i++) {
 
-                        for (int j = 0; j < jsonArray.length(); j++) {
+                    JSONObject objeto = jsonArray.getJSONObject(i);
+                    Gson gson = new Gson();
+                    equipTO = gson.fromJson(objeto.toString(), EquipTO.class);
+                    equipTO.insert();
 
-                            JSONObject objeto = jsonArray.getJSONObject(j);
-                            Gson gson = new Gson();
-                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
+                }
 
-                        }
+                jObj = new JSONObject(objSeg);
+                jsonArray = jObj.getJSONArray("dados");
 
-                        ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-                        List configList = configuracaoTO.all();
-                        configuracaoTO = (ConfiguracaoTO) configList.get(0);
-                        configuracaoTO.setOsConfig(Long.parseLong(this.dado));
-                        configuracaoTO.setStatusConConfig(1L);
-                        configuracaoTO.update();
+                REquipAtivTO rEquipAtivTO = new REquipAtivTO();
+                rEquipAtivTO.deleteAll();
 
-                        verTerm = true;
+                for (int j = 0; j < jsonArray.length(); j++) {
 
-                        Intent it = new Intent(telaAtual, telaProx);
-                        telaAtual.startActivity(it);
+                    JSONObject objeto = jsonArray.getJSONObject(j);
+                    Gson gson = new Gson();
+                    REquipAtivTO rEquipAtiv = gson.fromJson(objeto.toString(), REquipAtivTO.class);
+                    rEquipAtiv.insert();
 
-                    } else {
+                }
 
-                        verTerm = true;
-                        this.progressDialog.dismiss();
+                jObj = new JSONObject(objTerc);
+                jsonArray = jObj.getJSONArray("dados");
 
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
-                        alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("OS INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
+                RAtivParadaTO rAtivParadaTO = new RAtivParadaTO();
+                rAtivParadaTO.deleteAll();
 
-                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
+                for (int j = 0; j < jsonArray.length(); j++) {
 
-                            }
-                        });
-                        alerta.show();
+                    JSONObject objeto = jsonArray.getJSONObject(j);
+                    Gson gson = new Gson();
+                    RAtivParadaTO rAtivParada = gson.fromJson(objeto.toString(), RAtivParadaTO.class);
+                    rAtivParada.insert();
+
+                }
+
+
+                jObj = new JSONObject(objQuarto);
+                jsonArray = jObj.getJSONArray("dados");
+
+                ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
+                itemCheckListTO.deleteAll();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject objeto = jsonArray.getJSONObject(i);
+                    Gson gson = new Gson();
+                    ItemCheckListTO itemCheckList = gson.fromJson(objeto.toString(), ItemCheckListTO.class);
+                    itemCheckList.insert();
+
+                }
+
+                cabecCheckList(Tempo.getInstance().datahora());
+                this.progressDialog.dismiss();
+                Intent it = new Intent(telaAtual, telaProx);
+                telaAtual.startActivity(it);
+
+            } else {
+
+                cabecCheckList("0");
+                this.progressDialog.dismiss();
+                Intent it = new Intent(telaAtual, telaProx);
+                telaAtual.startActivity(it);
+
+            }
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            Log.i("PMM", "Erro Manip atualizar = " + e);
+        }
+
+    }
+
+    public void recDadosGrafico(String result) {
+
+        try {
+
+            if (!result.contains("exceeded")) {
+
+                int pos1 = result.indexOf("#") + 1;
+                int pos2 = result.indexOf("|") + 1;
+                int pos3 = result.indexOf("?") + 1;
+                String objPrinc = result.substring(0, (pos1 - 1));
+                String objSeg = result.substring(pos1, (pos2 - 1));
+                String objTerc = result.substring(pos2, (pos3 - 1));
+                String objQuar = result.substring(pos3);
+
+                JSONObject jObj = new JSONObject(objPrinc);
+                JSONArray jsonArray = jObj.getJSONArray("dados");
+
+                if (jsonArray.length() > 0) {
+
+                    GrafProdPlantioTO grafProdPlantioTO = new GrafProdPlantioTO();
+                    grafProdPlantioTO.deleteAll();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject objeto = jsonArray.getJSONObject(i);
+                        Gson gson = new Gson();
+                        grafProdPlantioTO = gson.fromJson(objeto.toString(), GrafProdPlantioTO.class);
+                        grafProdPlantioTO.insert();
 
                     }
 
-                } else {
+                }
 
-                    ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-                    List configList = configuracaoTO.all();
-                    configuracaoTO = (ConfiguracaoTO) configList.get(0);
-                    configuracaoTO.setOsConfig(Long.parseLong(this.dado));
-                    configuracaoTO.setStatusConConfig(0L);
-                    configuracaoTO.update();
+                jObj = new JSONObject(objSeg);
+                jsonArray = jObj.getJSONArray("dados");
 
-                    Intent it = new Intent(telaAtual, telaProx);
-                    telaAtual.startActivity(it);
+                if (jsonArray.length() > 0) {
+
+                    GrafPlanRealPlantioTO grafPlanRealPlantioTO = new GrafPlanRealPlantioTO();
+                    grafPlanRealPlantioTO.deleteAll();
+
+                    for (int j = 0; j < jsonArray.length(); j++) {
+
+                        JSONObject objeto = jsonArray.getJSONObject(j);
+                        Gson gson = new Gson();
+                        grafPlanRealPlantioTO = gson.fromJson(objeto.toString(), GrafPlanRealPlantioTO.class);
+                        grafPlanRealPlantioTO.insert();
+
+                    }
 
                 }
 
-            }
-            else if(this.tipo.equals("Atividade")) {
+                jObj = new JSONObject(objTerc);
+                jsonArray = jObj.getJSONArray("dados");
 
-                if (!result.contains("exceeded")) {
-
-                    int pos1 = result.indexOf("_") + 1;
-                    int pos2 = result.indexOf("|") + 1;
-                    int pos3 = result.indexOf("#") + 1;
-                    int pos4 = result.indexOf("?") + 1;
-                    String objPrim = result.substring(0, (pos1 - 1));
-                    String objSeg = result.substring(pos1, (pos2 - 1));
-                    String objTerc = result.substring(pos2, (pos3 - 1));
-                    String objQuarto = result.substring(pos3, (pos4 - 1));
-                    String objQuinto = result.substring(pos4);
-
-                    JSONObject jObj = new JSONObject(objPrim);
-                    JSONArray jsonArray = jObj.getJSONArray("dados");
-                    Class classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "EquipTO");
+                if (jsonArray.length() > 0) {
 
                     genericRecordable = new GenericRecordable();
-                    genericRecordable.deleteAll(classe);
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(i);
-                        Gson gson = new Gson();
-                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                    }
-
-                    jObj = new JSONObject(objSeg);
-                    jsonArray = jObj.getJSONArray("dados");
-                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "REquipAtivTO");
-
-                    genericRecordable.deleteAll(classe);
+                    GrafDispEquipPlantioTO grafDispEquipPlantioTO = new GrafDispEquipPlantioTO();
+                    grafDispEquipPlantioTO.deleteAll();
 
                     for (int j = 0; j < jsonArray.length(); j++) {
 
                         JSONObject objeto = jsonArray.getJSONObject(j);
                         Gson gson = new Gson();
-                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                    }
-
-                    jObj = new JSONObject(objTerc);
-                    jsonArray = jObj.getJSONArray("dados");
-                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "RAtivParadaTO");
-
-                    genericRecordable.deleteAll(classe);
-
-                    for (int j = 0; j < jsonArray.length(); j++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(j);
-                        Gson gson = new Gson();
-                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                    }
-
-                    jObj = new JSONObject(objQuarto);
-                    jsonArray = jObj.getJSONArray("dados");
-                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "OSTO");
-
-                    if (jsonArray.length() > 0) {
-
-                        genericRecordable.deleteAll(classe);
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-
-                            JSONObject objeto = jsonArray.getJSONObject(i);
-                            Gson gson = new Gson();
-                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                        }
-
-                        jObj = new JSONObject(objQuinto);
-                        jsonArray = jObj.getJSONArray("dados");
-                        classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "ROSAtivTO");
-
-                        genericRecordable.deleteAll(classe);
-
-                        for (int j = 0; j < jsonArray.length(); j++) {
-
-                            JSONObject objeto = jsonArray.getJSONObject(j);
-                            Gson gson = new Gson();
-                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                        }
-
-                    }
-
-
-                    this.progressDialog.dismiss();
-                    Intent it = new Intent(telaAtual, telaProx);
-                    telaAtual.startActivity(it);
-
-                }
-                else {
-
-                    this.progressDialog.dismiss();
-                    Intent it = new Intent(telaAtual, telaProx);
-                    telaAtual.startActivity(it);
-
-                }
-
-            }
-            else if(this.tipo.equals("Parada")) {
-
-                if (!result.contains("exceeded")) {
-
-                    JSONObject jObj = new JSONObject(result);
-                    JSONArray jsonArray = jObj.getJSONArray("dados");
-                    Class classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "RAtivParadaTO");
-
-                    if (jsonArray.length() > 0) {
-
-                        genericRecordable = new GenericRecordable();
-                        genericRecordable.deleteAll(classe);
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-
-                            JSONObject objeto = jsonArray.getJSONObject(i);
-                            Gson gson = new Gson();
-                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                        }
-
-                        this.progressDialog.dismiss();
-                        Intent it = new Intent(telaAtual, telaProx);
-                        telaAtual.startActivity(it);
-
-                    }
-                    else{
-
-                        this.progressDialog.dismiss();
-                        Intent it = new Intent(telaAtual, telaProx);
-                        telaAtual.startActivity(it);
+                        grafDispEquipPlantioTO = gson.fromJson(objeto.toString(), GrafDispEquipPlantioTO.class);
+                        grafDispEquipPlantioTO.insert();
 
                     }
 
                 }
 
-            }
-            else if(this.tipo.equals("Atualiza")) {
+                jObj = new JSONObject(objQuar);
+                jsonArray = jObj.getJSONArray("dados");
 
-                String verAtualizacao = result.trim();
-
-                if(verAtualizacao.equals("S")){
-                    AtualizarAplicativo atualizarAplicativo = new AtualizarAplicativo();
-                    atualizarAplicativo.setContext(this.menuInicialActivity);
-                    atualizarAplicativo.execute();
-                }
-                else{
-
-                    this.menuInicialActivity.startTimer(verAtualizacao);
-                }
-
-            }
-            else if(this.tipo.equals("Operador")) {
-
-                if (!result.contains("exceeded")) {
-
-                    JSONObject jObj = new JSONObject(result);
-                    JSONArray jsonArray = jObj.getJSONArray("dados");
-                    Class classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "MotoristaTO");
-
-                    if (jsonArray.length() > 0) {
-
-                        genericRecordable = new GenericRecordable();
-                        genericRecordable.deleteAll(classe);
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-
-                            JSONObject objeto = jsonArray.getJSONObject(i);
-                            Gson gson = new Gson();
-                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                        }
-
-                        this.progressDialog.dismiss();
-
-                    }
-
-                }
-                else{
-
-                    this.progressDialog.dismiss();
-
-                }
-
-
-            }
-            else if(this.tipo.equals("Turno")) {
-
-                if (!result.contains("exceeded")) {
-
-                    JSONObject jObj = new JSONObject(result);
-                    JSONArray jsonArray = jObj.getJSONArray("dados");
-                    Class classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "TurnoTO");
-
-                    if (jsonArray.length() > 0) {
-
-                        genericRecordable = new GenericRecordable();
-                        genericRecordable.deleteAll(classe);
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-
-                            JSONObject objeto = jsonArray.getJSONObject(i);
-                            Gson gson = new Gson();
-                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                        }
-
-                        this.progressDialog.dismiss();
-                        Intent it = new Intent(telaAtual, telaProx);
-                        telaAtual.startActivity(it);
-
-                    }
-
-                }
-                else{
-
-                    this.progressDialog.dismiss();
-                    Intent it = new Intent(telaAtual, telaProx);
-                    telaAtual.startActivity(it);
-
-                }
-
-            }
-            else if(this.tipo.equals("EquipSeg")) {
-
-                if (!result.contains("exceeded")) {
-
-                    JSONObject jObj = new JSONObject(result);
-                    JSONArray jsonArray = jObj.getJSONArray("dados");
-                    Class classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "EquipSegTO");
-
-                    if (jsonArray.length() > 0) {
-
-                        genericRecordable = new GenericRecordable();
-                        genericRecordable.deleteAll(classe);
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-
-                            JSONObject objeto = jsonArray.getJSONObject(i);
-                            Gson gson = new Gson();
-                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                        }
-
-                        this.progressDialog.dismiss();
-
-                    }
-
-                }
-                else{
-
-                    this.progressDialog.dismiss();
-
-                }
-
-            }
-            else if(this.tipo.equals("CheckList")) {
-
-                if (!result.contains("exceeded")) {
-
-                    int pos1 = result.indexOf("_") + 1;
-                    int pos2 = result.indexOf("|") + 1;
-                    int pos3 = result.indexOf("#") + 1;
-                    String objPrinc = result.substring(0, (pos1 - 1));
-                    String objSeg = result.substring(pos1, (pos2 - 1));
-                    String objTerc = result.substring(pos2, (pos3 - 1));
-                    String objQuarto = result.substring(pos3);
-
-                    JSONObject jObj = new JSONObject(objPrinc);
-                    JSONArray jsonArray = jObj.getJSONArray("dados");
-                    Class classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "EquipTO");
+                if (jsonArray.length() > 0) {
 
                     genericRecordable = new GenericRecordable();
-                    genericRecordable.deleteAll(classe);
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(i);
-                        Gson gson = new Gson();
-                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                    }
-
-                    jObj = new JSONObject(objSeg);
-                    jsonArray = jObj.getJSONArray("dados");
-                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "REquipAtivTO");
-
-                    genericRecordable.deleteAll(classe);
+                    GrafQualPlantioTO grafQualPlantioTO = new GrafQualPlantioTO();
+                    grafQualPlantioTO.deleteAll();
 
                     for (int j = 0; j < jsonArray.length(); j++) {
 
                         JSONObject objeto = jsonArray.getJSONObject(j);
                         Gson gson = new Gson();
-                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                    }
-
-                    jObj = new JSONObject(objTerc);
-                    jsonArray = jObj.getJSONArray("dados");
-                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "RAtivParadaTO");
-
-                    genericRecordable.deleteAll(classe);
-
-                    for (int j = 0; j < jsonArray.length(); j++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(j);
-                        Gson gson = new Gson();
-                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                    }
-
-
-                    jObj = new JSONObject(objQuarto);
-                    jsonArray = jObj.getJSONArray("dados");
-                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "ItemCheckListTO");
-
-                    genericRecordable.deleteAll(classe);
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(i);
-                        Gson gson = new Gson();
-                        genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                    }
-
-                    cabecCheckList(Tempo.getInstance().datahora());
-                    this.progressDialog.dismiss();
-                    Intent it = new Intent(telaAtual, telaProx);
-                    telaAtual.startActivity(it);
-
-                }
-                else{
-
-                    cabecCheckList("0");
-                    this.progressDialog.dismiss();
-                    Intent it = new Intent(telaAtual, telaProx);
-                    telaAtual.startActivity(it);
-
-                }
-
-            }
-            else if(this.tipo.equals("GrafPlantio")) {
-
-                if (!result.contains("exceeded")) {
-
-                    int pos1 = result.indexOf("#") + 1;
-                    int pos2 = result.indexOf("|") + 1;
-                    int pos3 = result.indexOf("?") + 1;
-                    String objPrinc = result.substring(0, (pos1 - 1));
-                    String objSeg = result.substring(pos1, (pos2 - 1));
-                    String objTerc = result.substring(pos2, (pos3 - 1));
-                    String objQuar = result.substring(pos3);
-
-                    JSONObject jObj = new JSONObject(objPrinc);
-                    JSONArray jsonArray = jObj.getJSONArray("dados");
-                    Class classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "GrafProdPlantioTO");
-
-                    if (jsonArray.length() > 0) {
-
-                        genericRecordable = new GenericRecordable();
-                        genericRecordable.deleteAll(classe);
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-
-                            JSONObject objeto = jsonArray.getJSONObject(i);
-                            Gson gson = new Gson();
-                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                        }
-
-                    }
-
-                    jObj = new JSONObject(objSeg);
-                    jsonArray = jObj.getJSONArray("dados");
-                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "GrafPlanRealPlantioTO");
-
-                    if (jsonArray.length() > 0) {
-
-                        genericRecordable = new GenericRecordable();
-                        genericRecordable.deleteAll(classe);
-
-                        for (int j = 0; j < jsonArray.length(); j++) {
-
-                            JSONObject objeto = jsonArray.getJSONObject(j);
-                            Gson gson = new Gson();
-                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                        }
-
-                    }
-
-                    jObj = new JSONObject(objTerc);
-                    jsonArray = jObj.getJSONArray("dados");
-                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "GrafDispEquipPlantioTO");
-
-                    if (jsonArray.length() > 0) {
-
-                        genericRecordable = new GenericRecordable();
-                        genericRecordable.deleteAll(classe);
-
-                        for (int j = 0; j < jsonArray.length(); j++) {
-
-                            JSONObject objeto = jsonArray.getJSONObject(j);
-                            Gson gson = new Gson();
-                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                        }
-
-                    }
-
-                    jObj = new JSONObject(objQuar);
-                    jsonArray = jObj.getJSONArray("dados");
-                    classe = Class.forName(urlsConexaoHttp.localPSTEstatica + "GrafQualPlantioTO");
-
-                    if (jsonArray.length() > 0) {
-
-                        genericRecordable = new GenericRecordable();
-                        genericRecordable.deleteAll(classe);
-
-                        for (int j = 0; j < jsonArray.length(); j++) {
-
-                            JSONObject objeto = jsonArray.getJSONObject(j);
-                            Gson gson = new Gson();
-                            genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
-
-                        }
+                        grafQualPlantioTO = gson.fromJson(objeto.toString(), GrafQualPlantioTO.class);
+                        grafQualPlantioTO.insert();
 
                     }
 
@@ -820,45 +845,102 @@ public class ManipDadosVerif {
 
     }
 
-    public void cancelVer(){
-        if(conHttpPostVerGenerico.getStatus() == AsyncTask.Status.RUNNING){
-            conHttpPostVerGenerico.cancel(true);
+    public void recDadosPneu(String result) {
+
+        try {
+
+            if (!result.contains("exceeded")) {
+
+                JSONObject jObj = new JSONObject(result);
+                JSONArray jsonArray = jObj.getJSONArray("dados");
+
+                if (jsonArray.length() > 0) {
+
+                    PneuTO pneuTO = new PneuTO();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject objeto = jsonArray.getJSONObject(i);
+                        Gson gson = new Gson();
+                        pneuTO = gson.fromJson(objeto.toString(), PneuTO.class);
+                        pneuTO.insert();
+
+                    }
+
+                    BoletimPneuTO boletimPneuTO = new BoletimPneuTO();
+                    List boletimPneuList = boletimPneuTO.get("statusBolPneu", 1L);
+                    int verCad = 0;
+                    if(boletimPneuList.size() > 0){
+                        boletimPneuTO = (BoletimPneuTO) boletimPneuList.get(0);
+                        ItemMedPneuTO itemMedPneuTO = new ItemMedPneuTO();
+                        List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
+                        for(int i = 0; i < itemMedPneuList.size(); i++) {
+                            itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(i);
+                            if(pneuTO.getIdPneu() == itemMedPneuTO.getIdPneuItemMedPneu()){
+                                verCad++;
+                            }
+                        }
+                    }
+
+                    if(verCad == 0) {
+
+                        verTerm = true;
+                        Intent it = new Intent(telaAtual, telaProx);
+                        telaAtual.startActivity(it);
+
+                    }
+                    else{
+
+                        verTerm = true;
+                        this.progressDialog.dismiss();
+
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
+                        alerta.setTitle("ATENÇÃO");
+                        alerta.setMessage("PNEU REPETIDO! FAVOR CALIBRAR OUTRO PNEU.");
+
+                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO Auto-generated method stub
+
+                            }
+                        });
+                        alerta.show();
+
+                    }
+
+                } else {
+
+                    verTerm = true;
+                    this.progressDialog.dismiss();
+
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
+                    alerta.setTitle("ATENÇÃO");
+                    alerta.setMessage("PNEU INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
+
+                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // TODO Auto-generated method stub
+
+                        }
+                    });
+                    alerta.show();
+
+                }
+
+            } else {
+
+                verTerm = true;
+                Intent it = new Intent(telaAtual, telaProx);
+                telaAtual.startActivity(it);
+
+            }
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            Log.i("PMM", "Erro Manip atualizar = " + e);
         }
-    }
-
-    public boolean isVerTerm() {
-        return verTerm;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public void cabecCheckList(String data){
-
-        BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List boletimList = boletimMMTO.get("statusBoletim", 1L);
-        boletimMMTO = (BoletimMMTO) boletimList.get(0);
-
-        EquipTO equipTO = new EquipTO();
-        List equipList = equipTO.get("idEquip", boletimMMTO.getCodEquipBoletim());
-        equipTO = (EquipTO) equipList.get(0);
-        equipList.clear();
-
-        ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
-        List itemCheckList =  itemCheckListTO.get("idChecklist", equipTO.getIdChecklist());
-        Long qtde = (long) itemCheckList.size();
-        itemCheckList.clear();
-
-        CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-        cabecCheckListTO.setDtCab(Tempo.getInstance().datahora());
-        cabecCheckListTO.setEquipCab(equipTO.getCodEquip());
-        cabecCheckListTO.setFuncCab(boletimMMTO.getCodMotoBoletim());
-        cabecCheckListTO.setTurnoCab(boletimMMTO.getCodTurnoBoletim());
-        cabecCheckListTO.setQtdeItemCab(qtde);
-        cabecCheckListTO.setStatusCab(1L);
-        cabecCheckListTO.setDtAtualCab(data);
-        cabecCheckListTO.insert();
 
     }
 }

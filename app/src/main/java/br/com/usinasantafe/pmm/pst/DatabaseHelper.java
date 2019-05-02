@@ -104,7 +104,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, AlocaCarretelTO.class);
 			TableUtils.createTable(cs, ApontaAplicFertTO.class);
 			TableUtils.createTable(cs, BackupApontaMMTO.class);
-			TableUtils.createTable(cs, BackupApontaAplicFertTO.class);
 			TableUtils.createTable(cs, BoletimPneuTO.class);
 			TableUtils.createTable(cs, ItemMedPneuTO.class);
 			

@@ -92,7 +92,6 @@ public class MenuInicialActivity extends ActivityGeneric {
 
                 configTO = (ConfiguracaoTO) configList.get(0);
                 AtualizaTO atualizaTO = new AtualizaTO();
-                atualizaTO.setIdEquipAtualizacao(configTO.getEquipConfig());
                 atualizaTO.setVersaoAtual(pmmContext.versaoAplic);
 
                 EquipTO equipTO = new EquipTO();
@@ -100,6 +99,7 @@ public class MenuInicialActivity extends ActivityGeneric {
                 equipTO = (EquipTO) listEquipTO.get(0);
                 listEquipTO.clear();
 
+                atualizaTO.setIdEquipAtualizacao(equipTO.getCodEquip());
                 atualizaTO.setIdCheckList(equipTO.getIdChecklist());
 
                 ManipDadosVerif.getInstance().verAtualizacao(atualizaTO, this, progressBar);

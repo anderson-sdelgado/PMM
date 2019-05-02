@@ -17,7 +17,6 @@ public class UrlsConexaoHttp {
     public static String MotoristaTO = urlPrincipal + "motorista.php";
     public static String ItemCheckListTO = urlPrincipal + "itemchecklist.php";
     public static String EquipSegTO = urlPrincipal + "equipseg.php";
-    public static String PneuTO = urlPrincipal + "pneu.php";
 
     public UrlsConexaoHttp() {
         // TODO Auto-generated constructor stub
@@ -61,6 +60,8 @@ public class UrlsConexaoHttp {
             retorno = urlPrincEnvio + "atualchecklist.php";
         } else if (classe.equals("GrafPlantio")) {
             retorno = urlPrincEnvio + "grafplantio.php";
+        } else if (classe.equals("Pneu")) {
+            retorno = urlPrincEnvio + "verifpneu.php";
         }
         return retorno;
     }

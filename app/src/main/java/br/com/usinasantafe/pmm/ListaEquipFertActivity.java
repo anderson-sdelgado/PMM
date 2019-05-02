@@ -105,46 +105,6 @@ public class ListaEquipFertActivity extends ActivityGeneric {
 
                     }
 
-                } else {
-
-                    if ((pmmContext.getVerPosTela() == 5)|| (pmmContext.getVerPosTela() == 8) || (pmmContext.getVerPosTela() == 9) || (pmmContext.getVerPosTela() == 17)) {
-                        pmmContext.setVerPosTela(9);
-                    } else if ((pmmContext.getVerPosTela() == 11) || (pmmContext.getVerPosTela() == 12) || (pmmContext.getVerPosTela() == 13) || (pmmContext.getVerPosTela() == 18)) {
-                        pmmContext.setVerPosTela(13);
-                    }
-                    AlocaCarretelTO alocaCarretelTO = (AlocaCarretelTO) carretelList.get(position - 1);
-                    pmmContext.getApontaAplicFertTO().setEquipApontaAplicFert(alocaCarretelTO.getIdEquipCarretel());
-
-                    if (verifBackupAplicFert(alocaCarretelTO.getCodEquipCarretel())) {
-
-                        String msg;
-
-                        if (tela == 1) {
-                            msg = "EQUIPAMENTO JÁ ESTA TRABALHANDO. POR FAVOR, APONTE OUTRO EQUIPAMENTO.";
-                        } else {
-                            msg = "EQUIPAMENTO JÁ ESTA PARADO. POR FAVOR, APONTE OUTRO EQUIPAMENTO.";
-                        }
-
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(ListaEquipFertActivity.this);
-                        alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage(msg);
-                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        });
-
-                        alerta.show();
-
-                    } else {
-
-                        Intent it = new Intent(ListaEquipFertActivity.this, OSActivity.class);
-                        startActivity(it);
-                        finish();
-
-                    }
-
                 }
 
             }
@@ -205,31 +165,6 @@ public class ListaEquipFertActivity extends ActivityGeneric {
 
     }
 
-    public boolean verifBackupAplicFert(Long codEquip) {
-
-        boolean v = false;
-
-        AlocaCarretelTO alocaCarretelTO = new AlocaCarretelTO();
-        List carretelList = alocaCarretelTO.get("codEquipCarretel", codEquip);
-        alocaCarretelTO = (AlocaCarretelTO) carretelList.get(0);
-
-        BackupApontaAplicFertTO backupApontaAplicFertTO = new BackupApontaAplicFertTO();
-        List bkpApontaAplicFertList = backupApontaAplicFertTO.getAndOrderBy("equipApontaAplicFert", alocaCarretelTO.getIdEquipCarretel(), "idApontaAplicFert", true);
-
-        if (bkpApontaAplicFertList.size() > 0) {
-            backupApontaAplicFertTO = (BackupApontaAplicFertTO) bkpApontaAplicFertList.get(bkpApontaAplicFertList.size() - 1);
-            if (this.tela == 1) {
-                if (backupApontaAplicFertTO.getParadaApontaAplicFert() == 0L) {
-                    v = true;
-                }
-            } else {
-                if (backupApontaAplicFertTO.getParadaApontaAplicFert() > 0L) {
-                    v = true;
-                }
-            }
-        }
-        return v;
-    }
 
     public void onBackPressed() {
     }

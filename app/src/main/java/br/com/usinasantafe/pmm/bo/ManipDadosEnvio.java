@@ -20,9 +20,11 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaAplicFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaAplicFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaMMTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ImplementoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RecolMangTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
@@ -77,9 +79,6 @@ public class ManipDadosEnvio {
 
         BackupApontaMMTO backupApontaMMTO = new BackupApontaMMTO();
         backupApontaMMTO.deleteAll();
-
-        BackupApontaAplicFertTO backupApontaAplicFertTO = new BackupApontaAplicFertTO();
-        backupApontaAplicFertTO.deleteAll();
 
     }
 
@@ -182,36 +181,6 @@ public class ManipDadosEnvio {
 
     }
 
-    public void salvaApontaAplicFert(ApontaAplicFertTO apontaAplicFertTO) {
-
-        String datahora = Tempo.getInstance().datahora();
-        apontaAplicFertTO.setDthrApontaAplicFert(datahora);
-
-        BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List lBol = boletimMMTO.get("statusBoletim", 1L);
-        boletimMMTO = (BoletimMMTO) lBol.get(0);
-        lBol.clear();
-
-        apontaAplicFertTO.setIdBolApontaAplicFert(boletimMMTO.getIdBoletim());
-        apontaAplicFertTO.setIdExtBolApontaAplicFert(boletimMMTO.getIdExtBoletim());
-        apontaAplicFertTO.insert();
-
-        BackupApontaAplicFertTO backupApontaAplicFertTO = new BackupApontaAplicFertTO();
-        backupApontaAplicFertTO.setEquipApontaAplicFert(apontaAplicFertTO.getEquipApontaAplicFert());
-        backupApontaAplicFertTO.setOsApontaAplicFert(apontaAplicFertTO.getOsApontaAplicFert());
-        backupApontaAplicFertTO.setAtivApontaAplicFert(apontaAplicFertTO.getAtivApontaAplicFert());
-        backupApontaAplicFertTO.setParadaApontaAplicFert(apontaAplicFertTO.getParadaApontaAplicFert());
-        backupApontaAplicFertTO.setDthrApontaAplicFert(apontaAplicFertTO.getDthrApontaAplicFert());
-        backupApontaAplicFertTO.setPressaoApontaAplicFert(apontaAplicFertTO.getPressaoApontaAplicFert());
-        backupApontaAplicFertTO.setVelocApontaAplicFert(apontaAplicFertTO.getVelocApontaAplicFert());
-        backupApontaAplicFertTO.setBocalApontaAplicFert(apontaAplicFertTO.getBocalApontaAplicFert());
-        backupApontaAplicFertTO.setRaioApontaAplicFert(apontaAplicFertTO.getRaioApontaAplicFert());
-        backupApontaAplicFertTO.insert();
-
-        envioDadosPrinc();
-
-    }
-
     //////////////////////// ENVIAR DADOS ////////////////////////////////////////////
 
     public void enviarChecklist() {
@@ -266,27 +235,27 @@ public class ManipDadosEnvio {
     public void enviarBolFechados() {
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List listBoletim = boletinsFechado();
+        List boletimMMList = boletinsFechado();
 
         JsonArray jsonArrayBoletim = new JsonArray();
         JsonArray jsonArrayAponta = new JsonArray();
         JsonArray jsonArrayImplemento = new JsonArray();
         JsonArray jsonArrayRendimento = new JsonArray();
-        JsonArray jsonArrayApontaAplicFert = new JsonArray();
-        JsonArray jsonArrayRecolMang = new JsonArray();
+        JsonArray jsonArrayBolPneu = new JsonArray();
+        JsonArray jsonArrayItemPneu = new JsonArray();
 
-        for (int i = 0; i < listBoletim.size(); i++) {
+        for (int i = 0; i < boletimMMList.size(); i++) {
 
-            boletimMMTO = (BoletimMMTO) listBoletim.get(i);
+            boletimMMTO = (BoletimMMTO) boletimMMList.get(i);
             Gson gsonCabec = new Gson();
             jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimMMTO, boletimMMTO.getClass()));
 
             ApontaMMTO apontaMMTO = new ApontaMMTO();
-            List listaAponta = apontaMMTO.get("idBolAponta", boletimMMTO.getIdBoletim());
+            List apontaMMList = apontaMMTO.get("idBolAponta", boletimMMTO.getIdBoletim());
 
-            for (int j = 0; j < listaAponta.size(); j++) {
+            for (int j = 0; j < apontaMMList.size(); j++) {
 
-                apontaMMTO = (ApontaMMTO) listaAponta.get(j);
+                apontaMMTO = (ApontaMMTO) apontaMMList.get(j);
                 Gson gsonItem = new Gson();
                 jsonArrayAponta.add(gsonItem.toJsonTree(apontaMMTO, apontaMMTO.getClass()));
 
@@ -299,7 +268,35 @@ public class ManipDadosEnvio {
                     jsonArrayImplemento.add(gsonItemImp.toJsonTree(implementoTO, implementoTO.getClass()));
                 }
 
+                BoletimPneuTO boletimPneuTO = new BoletimPneuTO();
+                List boletimPneuList = boletimPneuTO.get("idApontBolPneu", apontaMMTO.getIdAponta());
+
+                for (int l = 0; l < boletimPneuList.size(); l++) {
+
+                    boletimPneuTO = (BoletimPneuTO) boletimPneuList.get(l);
+                    Gson gsonBItem = new Gson();
+                    jsonArrayBolPneu.add(gsonBItem.toJsonTree(boletimPneuTO, boletimPneuTO.getClass()));
+
+                    ItemMedPneuTO itemMedPneuTO = new ItemMedPneuTO();
+                    List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
+
+                    for (int m = 0; m < itemMedPneuList.size(); m++) {
+
+                        itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
+                        Gson gsonItemPneu = new Gson();
+                        jsonArrayItemPneu.add(gsonItemPneu.toJsonTree(itemMedPneuTO, itemMedPneuTO.getClass()));
+
+                    }
+
+                    itemMedPneuList.clear();
+
+                }
+
+                boletimPneuList.clear();
+
             }
+
+            apontaMMList.clear();
 
             RendimentoTO rendimentoTO = new RendimentoTO();
             List rendList = rendimentoTO.get("idBolRendimento", boletimMMTO.getIdBoletim());
@@ -312,27 +309,11 @@ public class ManipDadosEnvio {
 
             }
 
-            ApontaAplicFertTO apontaAplicFertTO = new ApontaAplicFertTO();
-            List apontaAplicFertList = apontaAplicFertTO.get("idBolApontaAplicFert", boletimMMTO.getIdBoletim());
-
-            for (int j = 0; j < apontaAplicFertList.size(); j++) {
-
-                apontaAplicFertTO = (ApontaAplicFertTO) apontaAplicFertList.get(j);
-                Gson gsonItem = new Gson();
-                jsonArrayApontaAplicFert.add(gsonItem.toJsonTree(apontaAplicFertTO, apontaAplicFertTO.getClass()));
-
-            }
-
-            RecolMangTO recolMangTO = new RecolMangTO();
-            List recolMangList = recolMangTO.get("idBolRendMangRecol", boletimMMTO.getIdBoletim());
-
-            for (int j = 0; j < recolMangList.size(); j++) {
-                recolMangTO = (RecolMangTO) recolMangList.get(j);
-                Gson gsonRend = new Gson();
-                jsonArrayRecolMang.add(gsonRend.toJsonTree(recolMangTO, recolMangTO.getClass()));
-            }
+            rendList.clear();
 
         }
+
+        boletimMMList.clear();
 
         JsonObject jsonBoletim = new JsonObject();
         jsonBoletim.add("boletim", jsonArrayBoletim);
@@ -346,13 +327,13 @@ public class ManipDadosEnvio {
         JsonObject jsonRend = new JsonObject();
         jsonRend.add("rendimento", jsonArrayRendimento);
 
-        JsonObject jsonAplicFertTO = new JsonObject();
-        jsonAplicFertTO.add("apontaaplicfert", jsonArrayApontaAplicFert);
+        JsonObject jsonBolPneu = new JsonObject();
+        jsonBolPneu.add("bolpneu", jsonArrayBolPneu);
 
-        JsonObject jsonRecolMang = new JsonObject();
-        jsonRecolMang.add("recolmang", jsonArrayRecolMang);
+        JsonObject jsonItemPneu = new JsonObject();
+        jsonItemPneu.add("itempneu", jsonArrayItemPneu);
 
-        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonRend.toString() + "?" + jsonAplicFertTO.toString() + "@" + jsonRecolMang.toString();
+        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonRend.toString() + "?" + jsonBolPneu.toString() + "@" + jsonItemPneu.toString();
 
         Log.i("PMM", "FECHADO = " + dados);
 
@@ -371,16 +352,15 @@ public class ManipDadosEnvio {
     public void enviarBolAberto() {
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List listBoletim = boletinsAbertoSemEnvio();
+        List boletimMMList = boletinsAbertoSemEnvio();
 
         JsonArray jsonArrayBoletim = new JsonArray();
         JsonArray jsonArrayAponta = new JsonArray();
         JsonArray jsonArrayImplemento = new JsonArray();
-        JsonArray jsonArrayApontaAplicFert = new JsonArray();
 
-        for (int i = 0; i < listBoletim.size(); i++) {
+        for (int i = 0; i < boletimMMList.size(); i++) {
 
-            boletimMMTO = (BoletimMMTO) listBoletim.get(i);
+            boletimMMTO = (BoletimMMTO) boletimMMList.get(i);
             Gson gsonCabec = new Gson();
             jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimMMTO, boletimMMTO.getClass()));
 
@@ -402,20 +382,15 @@ public class ManipDadosEnvio {
                     jsonArrayImplemento.add(gsonItemImp.toJsonTree(implementoTO, implementoTO.getClass()));
                 }
 
-            }
-
-            ApontaAplicFertTO apontaAplicFertTO = new ApontaAplicFertTO();
-            List apontaAplicFertList = apontaAplicFertTO.get("idBolApontaAplicFert", boletimMMTO.getIdBoletim());
-
-            for (int j = 0; j < apontaAplicFertList.size(); j++) {
-
-                apontaAplicFertTO = (ApontaAplicFertTO) apontaAplicFertList.get(j);
-                Gson gsonItem = new Gson();
-                jsonArrayApontaAplicFert.add(gsonItem.toJsonTree(apontaAplicFertTO, apontaAplicFertTO.getClass()));
+                implementoList.clear();
 
             }
+
+            apontaList.clear();
 
         }
+
+        boletimMMList.clear();
 
         JsonObject jsonBoletim = new JsonObject();
         jsonBoletim.add("boletim", jsonArrayBoletim);
@@ -426,10 +401,7 @@ public class ManipDadosEnvio {
         JsonObject jsonImplemento = new JsonObject();
         jsonImplemento.add("implemento", jsonArrayImplemento);
 
-        JsonObject jsonAplicFertTO = new JsonObject();
-        jsonAplicFertTO.add("apontaaplicfert", jsonArrayApontaAplicFert);
-
-        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "?" + jsonAplicFertTO.toString();
+        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString();
 
         Log.i("PMM", "ABERTO = " + dados);
 
@@ -449,12 +421,14 @@ public class ManipDadosEnvio {
 
         JsonArray jsonArrayAponta = new JsonArray();
         JsonArray jsonArrayImplemento = new JsonArray();
-        JsonArray jsonArrayApontaAplicFert = new JsonArray();
+        JsonArray jsonArrayBolPneu = new JsonArray();
+        JsonArray jsonArrayItemPneu = new JsonArray();
 
         ApontaMMTO apontaMMTO = new ApontaMMTO();
         List apontaList = apontaMMTO.all();
 
         for (int i = 0; i < apontaList.size(); i++) {
+
             apontaMMTO = (ApontaMMTO) apontaList.get(i);
             Gson gson = new Gson();
             jsonArrayAponta.add(gson.toJsonTree(apontaMMTO, apontaMMTO.getClass()));
@@ -462,24 +436,43 @@ public class ManipDadosEnvio {
             ImplementoTO implementoTO = new ImplementoTO();
             List implementoList = implementoTO.get("idApontImplemento", apontaMMTO.getIdAponta());
 
-            for (int l = 0; l < implementoList.size(); l++) {
-                implementoTO = (ImplementoTO) implementoList.get(l);
+            for (int j = 0; j < implementoList.size(); j++) {
+                implementoTO = (ImplementoTO) implementoList.get(j);
                 Gson gsonItem = new Gson();
                 jsonArrayImplemento.add(gsonItem.toJsonTree(implementoTO, implementoTO.getClass()));
             }
 
+            implementoList.clear();
+
+            BoletimPneuTO boletimPneuTO = new BoletimPneuTO();
+            List boletimPneuList = boletimPneuTO.get("idApontBolPneu", apontaMMTO.getIdAponta());
+
+            for (int l = 0; l < boletimPneuList.size(); l++) {
+
+                boletimPneuTO = (BoletimPneuTO) boletimPneuList.get(l);
+                Gson gsonBItem = new Gson();
+                jsonArrayBolPneu.add(gsonBItem.toJsonTree(boletimPneuTO, boletimPneuTO.getClass()));
+
+                ItemMedPneuTO itemMedPneuTO = new ItemMedPneuTO();
+                List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
+
+                for (int m = 0; m < itemMedPneuList.size(); m++) {
+
+                    itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
+                    Gson gsonItem = new Gson();
+                    jsonArrayItemPneu.add(gsonItem.toJsonTree(itemMedPneuTO, itemMedPneuTO.getClass()));
+
+                }
+
+                itemMedPneuList.clear();
+
+            }
+
+            boletimPneuList.clear();
+
         }
 
-        ApontaAplicFertTO apontaAplicFertTO = new ApontaAplicFertTO();
-        List apontaAplicFertList = apontaAplicFertTO.all();
-
-        for (int j = 0; j < apontaAplicFertList.size(); j++) {
-
-            apontaAplicFertTO = (ApontaAplicFertTO) apontaAplicFertList.get(j);
-            Gson gsonItem = new Gson();
-            jsonArrayApontaAplicFert.add(gsonItem.toJsonTree(apontaAplicFertTO, apontaAplicFertTO.getClass()));
-
-        }
+        apontaList.clear();
 
         JsonObject jsonAponta = new JsonObject();
         jsonAponta.add("aponta", jsonArrayAponta);
@@ -487,10 +480,13 @@ public class ManipDadosEnvio {
         JsonObject jsonImplemento = new JsonObject();
         jsonImplemento.add("implemento", jsonArrayImplemento);
 
-        JsonObject jsonAplicFertTO = new JsonObject();
-        jsonAplicFertTO.add("apontaaplicfert", jsonArrayApontaAplicFert);
+        JsonObject jsonBolPneu = new JsonObject();
+        jsonBolPneu.add("bolpneu", jsonArrayBolPneu);
 
-        String dados = jsonAponta.toString() + "|" + jsonImplemento.toString() + "?" + jsonAplicFertTO.toString();
+        JsonObject jsonItemPneu = new JsonObject();
+        jsonItemPneu.add("itempneu", jsonArrayItemPneu);
+
+        String dados = jsonAponta.toString() + "_" + jsonImplemento.toString() + "|" + jsonBolPneu.toString() + "#" + jsonItemPneu.toString();
 
         Log.i("PMM", "APONTAMENTO = " + dados);
 
@@ -569,19 +565,6 @@ public class ManipDadosEnvio {
             rendimentoTO.delete();
         }
 
-        ApontaAplicFertTO apontaAplicFertTO = new ApontaAplicFertTO();
-        List apontaAplicFertList = apontaAplicFertTO.in("idBolApontaAplicFert", rLista);
-
-        for (int j = 0; j < apontaAplicFertList.size(); j++) {
-            apontaAplicFertTO = (ApontaAplicFertTO) apontaAplicFertList.get(j);
-            apontaAplicFertTO.delete();
-        }
-
-        for (int i = 0; i < listBoletim.size(); i++) {
-            boletimMMTO = (BoletimMMTO) listBoletim.get(i);
-            boletimMMTO.delete();
-        }
-
     }
 
     public void atualDelBoletimMM(String retorno){
@@ -616,13 +599,6 @@ public class ManipDadosEnvio {
 
             }
 
-            ApontaAplicFertTO apontaAplicFertTO = new ApontaAplicFertTO();
-            List apontaAplicFertList = apontaAplicFertTO.get("idBolApontaAplicFert", boletimMMTO.getIdBoletim());
-
-            for (int j = 0; j < apontaAplicFertList.size(); j++) {
-                apontaAplicFertTO = (ApontaAplicFertTO) apontaAplicFertList.get(j);
-                apontaAplicFertTO.delete();
-            }
 
         }
         catch(Exception e){

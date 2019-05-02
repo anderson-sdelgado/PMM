@@ -3,8 +3,10 @@ package br.com.usinasantafe.pmm;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -14,6 +16,8 @@ import java.util.List;
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipPneuTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
@@ -55,28 +59,54 @@ public class ListaPosPneuActivity extends ActivityGeneric {
         List boletimPneuList = boletimPneuTO.get("statusBolPneu", 1L);
 
         if(boletimPneuList.size() == 0){
+
+            BoletimMMTO boletimMMTO = new BoletimMMTO();
+            List listBoletim = boletimMMTO.get("statusBoletim", 1L);
+            boletimMMTO = (BoletimMMTO) listBoletim.get(0);
+            listBoletim.clear();
+
+            ApontaMMTO apontaMMTO = new ApontaMMTO();
+            List apontaMMList = apontaMMTO.get("idBolAponta", boletimMMTO.getIdBoletim());
+            apontaMMTO = (ApontaMMTO) apontaMMList.get(0);
+            apontaMMList.clear();
+
+            boletimPneuTO.setIdApontBolPneu(apontaMMTO.getIdAponta());
             boletimPneuTO.setEquipBolPneu(configuracaoTO.getEquipConfig());
             boletimPneuTO.setFuncBolPneu(pmmContext.getBoletimMMTO().getCodMotoBoletim());
             boletimPneuTO.setDthrBolPneu(Tempo.getInstance().datahora());
             boletimPneuTO.setStatusBolPneu(1L);
             boletimPneuTO.insert();
+
             for(int i = 0; i < rEquipPneuList.size(); i++){
                 rEquipPneuTO = (REquipPneuTO) rEquipPneuList.get(i);
                 itens.add(rEquipPneuTO.getPosPneu());
             }
+
         }
         else{
             boletimPneuTO = (BoletimPneuTO) boletimPneuList.get(0);
             ItemMedPneuTO itemMedPneuTO = new ItemMedPneuTO();
-            List itemMedPneuList = itemMedPneuTO.get("", "");
+            List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
+            boolean verCad;
+            for(int i = 0; i < rEquipPneuList.size(); i++){
+                rEquipPneuTO = (REquipPneuTO) rEquipPneuList.get(i);
+                verCad = true;
+                for(int j = 0; j < itemMedPneuList.size(); j++) {
+                    itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(j);
+                    if(rEquipPneuTO.getIdPosConfPneu() == itemMedPneuTO.getPosItemMedPneu()){
+                        verCad = false;
+                    }
+                }
+                if(verCad) {
+                    itens.add(rEquipPneuTO.getPosPneu());
+                }
+            }
         }
 
         boletimPneuList.clear();
 
-
-
-        AdapterList adapterList = new AdapterList(this, itens);
-        lista = (ListView) findViewById(R.id.listaTurno);
+        ArrayAdapter<String> adapterList = new ArrayAdapter<String>(this, R.layout.activity_item_lista, R.id.textViewItemList, itens);
+        lista = (ListView) findViewById(R.id.listaPosPneu);
         lista.setAdapter(adapterList);
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
