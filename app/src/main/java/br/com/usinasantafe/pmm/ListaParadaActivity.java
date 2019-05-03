@@ -202,7 +202,6 @@ public class ListaParadaActivity extends ActivityGeneric {
 
                             pmmContext.getApontaMMTO().setLatitudeAponta(getLatitude());
                             pmmContext.getApontaMMTO().setLongitudeAponta(getLongitude());
-                            ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO());
 
                             if (pmmContext.getVerPosTela() == 3) {
 
@@ -210,11 +209,13 @@ public class ListaParadaActivity extends ActivityGeneric {
                                 configTO.update();
 
                                 if(paradaTO.getFlagCalibragem() == 0L){
+                                    ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 2L);
                                     Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
                                     startActivity(it);
                                     finish();
                                 }
                                 else{
+                                    ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 1L);
                                     Intent it = new Intent(ListaParadaActivity.this, ListaPosPneuActivity.class);
                                     startActivity(it);
                                     finish();

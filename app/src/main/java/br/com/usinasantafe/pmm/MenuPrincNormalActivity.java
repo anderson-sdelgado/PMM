@@ -389,7 +389,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         apontaMMTO.setTransbordoAponta(backupApontaMMTO.getTransbordoAponta());
         apontaMMTO.setLatitudeAponta(getLatitude());
         apontaMMTO.setLongitudeAponta(getLongitude());
-        ManipDadosEnvio.getInstance().salvaApontaMM(apontaMMTO);
+        ManipDadosEnvio.getInstance().salvaApontaMM(apontaMMTO, 2L);
 
     }
 

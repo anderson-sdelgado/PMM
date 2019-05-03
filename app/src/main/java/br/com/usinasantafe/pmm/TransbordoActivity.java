@@ -134,7 +134,7 @@ public class TransbordoActivity extends ActivityGeneric {
 
                             pmmContext.getApontaMMTO().setLatitudeAponta(getLatitude());
                             pmmContext.getApontaMMTO().setLongitudeAponta(getLongitude());
-                            ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO());
+                            ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 2L);
 
                             ConfiguracaoTO configTO = new ConfiguracaoTO();
                             List listConfigTO = configTO.all();
@@ -208,7 +208,7 @@ public class TransbordoActivity extends ActivityGeneric {
                                 apontaMMTO.setAtividadeAponta(backupApontaMMTO.getAtividadeAponta());
                                 apontaMMTO.setParadaAponta(backupApontaMMTO.getParadaAponta());
                                 apontaMMTO.setTransbordoAponta(Long.parseLong(editTextPadrao.getText().toString()));
-                                ManipDadosEnvio.getInstance().salvaApontaMM(apontaMMTO);
+                                ManipDadosEnvio.getInstance().salvaApontaMM(apontaMMTO, 2L);
 
                                 Intent it = new Intent(TransbordoActivity.this, MenuPrincNormalActivity.class);
                                 startActivity(it);

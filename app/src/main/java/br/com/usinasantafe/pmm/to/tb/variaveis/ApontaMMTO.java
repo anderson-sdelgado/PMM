@@ -31,7 +31,9 @@ public class ApontaMMTO extends Entidade  {
 	@DatabaseField
 	private Double longitudeAponta;
 	@DatabaseField
-	private Long statusConAponta;
+	private Long statusConAponta;  //0 - OffLine; 1 - OnLine
+	@DatabaseField
+	private Long statusAponta;  //1 - Aberto; 2 - Encerrado
 
 	public ApontaMMTO() {
 		// TODO Auto-generated constructor stub
@@ -119,5 +121,13 @@ public class ApontaMMTO extends Entidade  {
 
 	public void setStatusConAponta(Long statusConAponta) {
 		this.statusConAponta = statusConAponta;
+	}
+
+	public Long getStatusAponta() {
+		return statusAponta;
+	}
+
+	public void setStatusAponta(Long statusAponta) {
+		this.statusAponta = statusAponta;
 	}
 }

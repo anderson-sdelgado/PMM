@@ -23,31 +23,31 @@ public class UrlsConexaoHttp {
     }
 
     public String getsInsertApontaMM() {
-        return urlPrincEnvio + "inserirapontdt.php";
+        return urlPrincEnvio + "inserirapont2.php";
     }
 
     public String getsApontChecklist() {
-        return urlPrincEnvio + "apontchecklistdt.php";
+        return urlPrincEnvio + "apontchecklist2.php";
     }
 
     public String getsInsertBolAbertoMM() {
-        return urlPrincEnvio + "inserirbolabertodt.php";
+        return urlPrincEnvio + "inserirbolaberto2.php";
     }
 
     public String getsInsertBolFechadoMM() {
-        return urlPrincEnvio + "inserirbolfechadodt.php";
+        return urlPrincEnvio + "inserirbolfechado2.php";
     }
 
     public String urlVerifica(String classe) {
         String retorno = "";
         if (classe.equals("Equip")) {
-            retorno = urlPrincEnvio + "verifequip.php";
+            retorno = urlPrincEnvio + "verifequip2.php";
         } else if (classe.equals("OS")) {
-            retorno = urlPrincEnvio + "verifos.php";
+            retorno = urlPrincEnvio + "verifos2.php";
         } else if (classe.equals("Atividade")) {
-            retorno = urlPrincEnvio + "atualativ.php";
+            retorno = urlPrincEnvio + "verifativ2.php";
         } else if (classe.equals("Parada")) {
-            retorno = urlPrincEnvio + "atualativpar.php";
+            retorno = urlPrincEnvio + "verifativpar2.php";
         } else if (classe.equals("Atualiza")) {
             retorno = urlPrincEnvio + "atualizaaplic.php";
         } else if (classe.equals("Operador")) {
@@ -57,11 +57,11 @@ public class UrlsConexaoHttp {
         } else if (classe.equals("EquipSeg")) {
             retorno = urlPrincEnvio + "equipseg.php";
         } else if (classe.equals("CheckList")) {
-            retorno = urlPrincEnvio + "atualchecklist.php";
+            retorno = urlPrincEnvio + "verifchecklist2.php";
         } else if (classe.equals("GrafPlantio")) {
             retorno = urlPrincEnvio + "grafplantio.php";
         } else if (classe.equals("Pneu")) {
-            retorno = urlPrincEnvio + "verifpneu.php";
+            retorno = urlPrincEnvio + "verifpneu2.php";
         }
         return retorno;
     }

@@ -228,7 +228,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                             pmmContext.getApontaMMTO().setLatitudeAponta(getLatitude());
                             pmmContext.getApontaMMTO().setLongitudeAponta(getLongitude());
-                            ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO());
+                            ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 2L);
 
                             if(atividadeTO.getFlagRendimento() == 1) {
 

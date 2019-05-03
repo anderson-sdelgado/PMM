@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipPneuTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
 
@@ -56,7 +58,6 @@ public class PressaoColPneuActivity extends ActivityGeneric {
                         REquipPneuTO rEquipPneuTO = new REquipPneuTO();
                         List rEquipPneuList = rEquipPneuTO.all();
 
-                        boletimPneuTO = (BoletimPneuTO) boletimPneuList.get(0);
                         List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
                         int verCad = 0;
                         for(int i = 0; i < rEquipPneuList.size(); i++){
@@ -69,16 +70,29 @@ public class PressaoColPneuActivity extends ActivityGeneric {
                             }
                         }
 
-                        if(itemMedPneuList.size() == verCad){
+                        if(rEquipPneuList.size() == verCad){
+
+                            ApontaMMTO apontaMMTO = new ApontaMMTO();
+                            List apontaMMList = apontaMMTO.get("statusAponta", 1L);
+                            apontaMMTO = (ApontaMMTO) apontaMMList.get(0);
+                            apontaMMList.clear();
+
+                            apontaMMTO.setStatusAponta(2L);
+                            apontaMMTO.update();
+
                             Intent it = new Intent(PressaoColPneuActivity.this, MenuPrincNormalActivity.class);
                             startActivity(it);
                             finish();
+
                         }
                         else{
                             Intent it = new Intent(PressaoColPneuActivity.this, ListaPosPneuActivity.class);
                             startActivity(it);
                             finish();
                         }
+
+                        itemMedPneuList.clear();
+                        rEquipPneuList.clear();
 
                     } else {
 

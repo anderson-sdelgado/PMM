@@ -16,6 +16,7 @@ import br.com.usinasantafe.pmm.conWEB.ConHttpPostCadGenerico;
 import br.com.usinasantafe.pmm.conWEB.UrlsConexaoHttp;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.tb.estaticas.GrafProdPlantioTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaAplicFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaAplicFertTO;
@@ -101,11 +102,18 @@ public class ManipDadosEnvio {
             apontaMMTO.setIdExtBolAponta(boletimMMTO.getIdExtBoletim());
             apontaMMTO.setOsAponta(boletimMMTO.getOsBoletim());
             apontaMMTO.setAtividadeAponta(boletimMMTO.getAtivPrincBoletim());
-            apontaMMTO.setParadaAponta(180L);
+
+            ParadaTO paradaTO = new ParadaTO();
+            List paradaList = paradaTO.get("flagCheckList",1L);
+            paradaTO = (ParadaTO) paradaList.get(0);
+            paradaList.clear();
+
+            apontaMMTO.setParadaAponta(paradaTO.getIdParada());
             apontaMMTO.setTransbordoAponta(0L);
             apontaMMTO.setLatitudeAponta(latitude);
             apontaMMTO.setLongitudeAponta(longitude);
             apontaMMTO.setStatusConAponta(configTO.getStatusConConfig());
+            apontaMMTO.setStatusAponta(2L);
             apontaMMTO.insert();
 
             BackupApontaMMTO backupApontaMMTO = new BackupApontaMMTO();
@@ -139,7 +147,7 @@ public class ManipDadosEnvio {
 
     }
 
-    public void salvaApontaMM(ApontaMMTO apontaMMTO) {
+    public void salvaApontaMM(ApontaMMTO apontaMMTO, Long status) {
 
         String datahora = Tempo.getInstance().datahora();
         apontaMMTO.setDthrAponta(datahora);
@@ -151,6 +159,7 @@ public class ManipDadosEnvio {
 
         apontaMMTO.setIdBolAponta(boletimMMTO.getIdBoletim());
         apontaMMTO.setIdExtBolAponta(boletimMMTO.getIdExtBoletim());
+        apontaMMTO.setStatusAponta(status);
         apontaMMTO.insert();
 
         BackupApontaMMTO backupApontaMMTO = new BackupApontaMMTO();
@@ -365,7 +374,19 @@ public class ManipDadosEnvio {
             jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimMMTO, boletimMMTO.getClass()));
 
             ApontaMMTO apontaMMTO = new ApontaMMTO();
-            List apontaList = apontaMMTO.get("idBolAponta", boletimMMTO.getIdBoletim());
+
+            ArrayList listaPesq = new ArrayList();
+            EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+            pesquisa.setCampo("statusAponta");
+            pesquisa.setValor(2L);
+            listaPesq.add(pesquisa);
+
+            EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
+            pesquisa2.setCampo("idBolAponta");
+            pesquisa2.setValor(boletimMMTO.getIdBoletim());
+            listaPesq.add(pesquisa2);
+
+            List apontaList = apontaMMTO.get(listaPesq);
 
             for (int j = 0; j < apontaList.size(); j++) {
 
@@ -425,7 +446,7 @@ public class ManipDadosEnvio {
         JsonArray jsonArrayItemPneu = new JsonArray();
 
         ApontaMMTO apontaMMTO = new ApontaMMTO();
-        List apontaList = apontaMMTO.all();
+        List apontaList = apontamentos();
 
         for (int i = 0; i < apontaList.size(); i++) {
 
@@ -544,6 +565,7 @@ public class ManipDadosEnvio {
         List apontaList = apontaMMTO.in("idBolAponta", rLista);
 
         for (int j = 0; j < apontaList.size(); j++) {
+
             apontaMMTO = (ApontaMMTO) apontaList.get(j);
             apontaMMTO.delete();
 
@@ -553,6 +575,28 @@ public class ManipDadosEnvio {
             for (int l = 0; l < implementoList.size(); l++) {
                 implementoTO = (ImplementoTO) implementoList.get(l);
                 implementoTO.delete();
+            }
+
+            BoletimPneuTO boletimPneuTO = new BoletimPneuTO();
+            List boletimPneuList = boletimPneuTO.get("idApontBolPneu", apontaMMTO.getIdAponta());
+
+            for (int l = 0; l < boletimPneuList.size(); l++) {
+
+                boletimPneuTO = (BoletimPneuTO) boletimPneuList.get(l);
+                boletimPneuTO.delete();
+
+                ItemMedPneuTO itemMedPneuTO = new ItemMedPneuTO();
+                List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
+
+                for (int m = 0; m < itemMedPneuList.size(); m++) {
+
+                    itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
+                    itemMedPneuTO.delete();
+
+                }
+
+                itemMedPneuList.clear();
+
             }
 
         }
@@ -595,6 +639,28 @@ public class ManipDadosEnvio {
                 for (int l = 0; l < implementoList.size(); l++) {
                     implementoTO = (ImplementoTO) implementoList.get(l);
                     implementoTO.delete();
+                }
+
+                BoletimPneuTO boletimPneuTO = new BoletimPneuTO();
+                List boletimPneuList = boletimPneuTO.get("idApontBolPneu", apontaMMTO.getIdAponta());
+
+                for (int l = 0; l < boletimPneuList.size(); l++) {
+
+                    boletimPneuTO = (BoletimPneuTO) boletimPneuList.get(l);
+                    boletimPneuTO.delete();
+
+                    ItemMedPneuTO itemMedPneuTO = new ItemMedPneuTO();
+                    List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
+
+                    for (int m = 0; m < itemMedPneuList.size(); m++) {
+
+                        itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
+                        itemMedPneuTO.delete();
+
+                    }
+
+                    itemMedPneuList.clear();
+
                 }
 
             }
@@ -650,7 +716,6 @@ public class ManipDadosEnvio {
         return boletimMMTO.get("statusBoletim", 2L);
     }
 
-
     public List boletinsAbertoSemEnvio() {
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
@@ -670,6 +735,11 @@ public class ManipDadosEnvio {
 
     }
 
+    public List apontamentos() {
+        ApontaMMTO apontaMMTO = new ApontaMMTO();
+        return apontaMMTO.get("statusAponta", 2L);
+    }
+
     //////////////////////VERIFICAÇÃO DE DADOS///////////////////////////
 
     public boolean verifDadosChecklist() {
@@ -684,14 +754,7 @@ public class ManipDadosEnvio {
         return boletinsAbertoSemEnvio().size() > 0;
     }
 
-    public Boolean verifAponta() {
-        if((new ApontaMMTO().hasElements()) || (new ApontaAplicFertTO().hasElements())){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+    public Boolean verifAponta() { return apontamentos().size() > 0; }
 
     public Boolean verifDadosGraf() {
         if(!(new GrafProdPlantioTO().hasElements())){

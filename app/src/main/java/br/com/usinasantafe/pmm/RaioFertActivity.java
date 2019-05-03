@@ -84,7 +84,7 @@ public class RaioFertActivity extends ActivityGeneric {
                         pmmContext.getApontaAplicFertTO().setEquipApontaAplicFert(configuracaoTO.getEquipConfig());
                     }
 
-                    ManipDadosEnvio.getInstance().salvaApontaAplicFert(pmmContext.getApontaAplicFertTO());
+//                    ManipDadosEnvio.getInstance().salvaApontaAplicFert(pmmContext.getApontaAplicFertTO());
                     Intent it = new Intent(RaioFertActivity.this, ListaEquipFertActivity.class);
                     startActivity(it);
                     finish();

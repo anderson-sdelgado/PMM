@@ -60,13 +60,8 @@ public class ListaPosPneuActivity extends ActivityGeneric {
 
         if(boletimPneuList.size() == 0){
 
-            BoletimMMTO boletimMMTO = new BoletimMMTO();
-            List listBoletim = boletimMMTO.get("statusBoletim", 1L);
-            boletimMMTO = (BoletimMMTO) listBoletim.get(0);
-            listBoletim.clear();
-
             ApontaMMTO apontaMMTO = new ApontaMMTO();
-            List apontaMMList = apontaMMTO.get("idBolAponta", boletimMMTO.getIdBoletim());
+            List apontaMMList = apontaMMTO.get("statusAponta", 1L);
             apontaMMTO = (ApontaMMTO) apontaMMList.get(0);
             apontaMMList.clear();
 

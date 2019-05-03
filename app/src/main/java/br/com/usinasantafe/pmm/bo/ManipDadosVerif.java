@@ -655,12 +655,8 @@ public class ManipDadosVerif {
             if (!result.contains("exceeded")) {
 
                 int pos1 = result.indexOf("_") + 1;
-                int pos2 = result.indexOf("|") + 1;
-                int pos3 = result.indexOf("#") + 1;
                 String objPrinc = result.substring(0, (pos1 - 1));
-                String objSeg = result.substring(pos1, (pos2 - 1));
-                String objTerc = result.substring(pos2, (pos3 - 1));
-                String objQuarto = result.substring(pos3);
+                String objSeg = result.substring(pos1);
 
                 JSONObject jObj = new JSONObject(objPrinc);
                 JSONArray jsonArray = jObj.getJSONArray("dados");
@@ -678,37 +674,6 @@ public class ManipDadosVerif {
                 }
 
                 jObj = new JSONObject(objSeg);
-                jsonArray = jObj.getJSONArray("dados");
-
-                REquipAtivTO rEquipAtivTO = new REquipAtivTO();
-                rEquipAtivTO.deleteAll();
-
-                for (int j = 0; j < jsonArray.length(); j++) {
-
-                    JSONObject objeto = jsonArray.getJSONObject(j);
-                    Gson gson = new Gson();
-                    REquipAtivTO rEquipAtiv = gson.fromJson(objeto.toString(), REquipAtivTO.class);
-                    rEquipAtiv.insert();
-
-                }
-
-                jObj = new JSONObject(objTerc);
-                jsonArray = jObj.getJSONArray("dados");
-
-                RAtivParadaTO rAtivParadaTO = new RAtivParadaTO();
-                rAtivParadaTO.deleteAll();
-
-                for (int j = 0; j < jsonArray.length(); j++) {
-
-                    JSONObject objeto = jsonArray.getJSONObject(j);
-                    Gson gson = new Gson();
-                    RAtivParadaTO rAtivParada = gson.fromJson(objeto.toString(), RAtivParadaTO.class);
-                    rAtivParada.insert();
-
-                }
-
-
-                jObj = new JSONObject(objQuarto);
                 jsonArray = jObj.getJSONArray("dados");
 
                 ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
@@ -876,7 +841,7 @@ public class ManipDadosVerif {
                         List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
                         for(int i = 0; i < itemMedPneuList.size(); i++) {
                             itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(i);
-                            if(pneuTO.getIdPneu() == itemMedPneuTO.getIdPneuItemMedPneu()){
+                            if(pneuTO.getIdPneu() == itemMedPneuTO.getNroPneuItemMedPneu()){
                                 verCad++;
                             }
                         }
