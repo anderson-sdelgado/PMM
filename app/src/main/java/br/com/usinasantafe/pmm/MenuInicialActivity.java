@@ -130,9 +130,22 @@ public class MenuInicialActivity extends ActivityGeneric {
                     progressBar.dismiss();
                 }
 
-                Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
-                startActivity(it);
-                finish();
+                ApontaMMTO apontaMMTO = new ApontaMMTO();
+                List apontaMMList = apontaMMTO.get("statusAponta", 1L);
+
+                if(apontaMMList.size() == 0) {
+                    Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else{
+
+                    Intent it = new Intent(MenuInicialActivity.this, ListaPosPneuActivity.class);
+                    startActivity(it);
+                    finish();
+
+                }
+                apontaMMList.clear();
 
             }
             else{
@@ -159,7 +172,11 @@ public class MenuInicialActivity extends ActivityGeneric {
 
             }
 
+            cabecList.clear();
+
         }
+
+        boletimList.clear();
 
         listarMenuInicial();
 

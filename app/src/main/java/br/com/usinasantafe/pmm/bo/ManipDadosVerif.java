@@ -832,47 +832,9 @@ public class ManipDadosVerif {
 
                     }
 
-                    BoletimPneuTO boletimPneuTO = new BoletimPneuTO();
-                    List boletimPneuList = boletimPneuTO.get("statusBolPneu", 1L);
-                    int verCad = 0;
-                    if(boletimPneuList.size() > 0){
-                        boletimPneuTO = (BoletimPneuTO) boletimPneuList.get(0);
-                        ItemMedPneuTO itemMedPneuTO = new ItemMedPneuTO();
-                        List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
-                        for(int i = 0; i < itemMedPneuList.size(); i++) {
-                            itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(i);
-                            if(pneuTO.getIdPneu() == itemMedPneuTO.getNroPneuItemMedPneu()){
-                                verCad++;
-                            }
-                        }
-                    }
-
-                    if(verCad == 0) {
-
-                        verTerm = true;
-                        Intent it = new Intent(telaAtual, telaProx);
-                        telaAtual.startActivity(it);
-
-                    }
-                    else{
-
-                        verTerm = true;
-                        this.progressDialog.dismiss();
-
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
-                        alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("PNEU REPETIDO! FAVOR CALIBRAR OUTRO PNEU.");
-
-                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
-
-                            }
-                        });
-                        alerta.show();
-
-                    }
+                    verTerm = true;
+                    Intent it = new Intent(telaAtual, telaProx);
+                    telaAtual.startActivity(it);
 
                 } else {
 

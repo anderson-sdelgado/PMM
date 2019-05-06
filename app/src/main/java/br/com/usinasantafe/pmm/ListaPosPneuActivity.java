@@ -9,15 +9,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipPneuTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
@@ -26,7 +25,6 @@ public class ListaPosPneuActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private ListView lista;
-    private List rEquipPneuList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +51,7 @@ public class ListaPosPneuActivity extends ActivityGeneric {
         ArrayList<String> itens = new ArrayList<String>();
 
         REquipPneuTO rEquipPneuTO = new REquipPneuTO();
-        rEquipPneuList = rEquipPneuTO.all();
+        List rEquipPneuList = rEquipPneuTO.all();
 
         BoletimPneuTO boletimPneuTO = new BoletimPneuTO();
         List boletimPneuList = boletimPneuTO.get("statusBolPneu", 1L);
@@ -96,8 +94,10 @@ public class ListaPosPneuActivity extends ActivityGeneric {
                     itens.add(rEquipPneuTO.getPosPneu());
                 }
             }
+            itemMedPneuList.clear();
         }
 
+        rEquipPneuList.clear();
         boletimPneuList.clear();
 
         ArrayAdapter<String> adapterList = new ArrayAdapter<String>(this, R.layout.activity_item_lista, R.id.textViewItemList, itens);
@@ -111,8 +111,14 @@ public class ListaPosPneuActivity extends ActivityGeneric {
                                     long id) {
                 // TODO Auto-generated method stub
 
-                REquipPneuTO rEquipPneuTO = (REquipPneuTO) rEquipPneuList.get(position);
+                TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
+                String posPneu = textView.getText().toString();
+
+                REquipPneuTO rEquipPneuTO = new REquipPneuTO();
+                List rEquipPneuList = rEquipPneuTO.get("posPneu", posPneu);
+                rEquipPneuTO = (REquipPneuTO) rEquipPneuList.get(0);
                 pmmContext.getItemMedPneuTO().setPosItemMedPneu(rEquipPneuTO.getIdPosConfPneu());
+                rEquipPneuList.clear();
 
                 Intent it = new Intent(ListaPosPneuActivity.this, PneuActivity.class);
                 startActivity(it);
