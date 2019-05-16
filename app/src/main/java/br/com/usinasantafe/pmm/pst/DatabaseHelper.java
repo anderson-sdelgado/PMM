@@ -20,10 +20,10 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipPneuTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaAplicFertTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaAplicFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaMMTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
@@ -31,7 +31,7 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.AlocaCarretelTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ImplementoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RecolMangTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.TransbordoTO;
@@ -98,14 +98,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, CabecCheckListTO.class);
 			TableUtils.createTable(cs, RespItemCheckListTO.class);
 			TableUtils.createTable(cs, RendimentoTO.class);
-			TableUtils.createTable(cs, RecolMangTO.class);
+			TableUtils.createTable(cs, RecolhimentoTO.class);
 			TableUtils.createTable(cs, TransbordoTO.class);
 			TableUtils.createTable(cs, ImplementoTO.class);
 			TableUtils.createTable(cs, AlocaCarretelTO.class);
-			TableUtils.createTable(cs, ApontaAplicFertTO.class);
 			TableUtils.createTable(cs, BackupApontaMMTO.class);
 			TableUtils.createTable(cs, BoletimPneuTO.class);
 			TableUtils.createTable(cs, ItemMedPneuTO.class);
+			TableUtils.createTable(cs, BoletimFertTO.class);
+			TableUtils.createTable(cs, ApontaFertTO.class);
 			
 		}
 		catch(Exception e){

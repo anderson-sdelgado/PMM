@@ -63,13 +63,7 @@
             android:name=".ItemChecklistActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ListaAcoplaCarretelActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ListaAtividadeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ListaEquipFertActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ListaHistApontaActivity"
@@ -97,9 +91,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".PressaoFertActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".RaioFertActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".RecolMangFertActivity"

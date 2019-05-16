@@ -17,16 +17,13 @@ import br.com.usinasantafe.pmm.conWEB.UrlsConexaoHttp;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.tb.estaticas.GrafProdPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaAplicFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaAplicFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ImplementoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RecolMangTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
@@ -732,14 +729,28 @@ public class ManipDadosEnvio {
                 implementoTO.delete();
             }
 
-        }
+            BoletimPneuTO boletimPneuTO = new BoletimPneuTO();
+            List boletimPneuList = boletimPneuTO.get("idApontBolPneu", apontaMMTO.getIdAponta());
 
-        ApontaAplicFertTO apontaAplicFertTO = new ApontaAplicFertTO();
-        List apontaAplicFertList = apontaAplicFertTO.all();
+            for (int l = 0; l < boletimPneuList.size(); l++) {
 
-        for (int j = 0; j < apontaAplicFertList.size(); j++) {
-            apontaAplicFertTO = (ApontaAplicFertTO) apontaAplicFertList.get(j);
-            apontaAplicFertTO.delete();
+                boletimPneuTO = (BoletimPneuTO) boletimPneuList.get(l);
+                boletimPneuTO.delete();
+
+                ItemMedPneuTO itemMedPneuTO = new ItemMedPneuTO();
+                List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
+
+                for (int m = 0; m < itemMedPneuList.size(); m++) {
+
+                    itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
+                    itemMedPneuTO.delete();
+
+                }
+
+                itemMedPneuList.clear();
+
+            }
+
         }
 
     }

@@ -103,43 +103,33 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
         if (pmmContext.getVerPosTela() == 1) {
             textViewTituloAtividade.setText("ATIVIDADE PRINCIPAL");
-        }
-        else {
+        } else {
             textViewTituloAtividade.setText("ATIVIDADE");
         }
 
         AtividadeTO atividadeTO = new AtividadeTO();
         ArrayList<String> itens = new ArrayList<String>();
 
-        if ((pmmContext.getVerPosTela() == 1) || (pmmContext.getVerPosTela() == 2) || (pmmContext.getVerPosTela() == 3)
-                || (pmmContext.getVerPosTela() == 8) || (pmmContext.getVerPosTela() == 12)) {
+        REquipAtivTO rEquipAtivTO = new REquipAtivTO();
+        List lrea = rEquipAtivTO.get("idEquip", configTO.getEquipConfig());
 
-            REquipAtivTO rEquipAtivTO = new REquipAtivTO();
-            List lrea = rEquipAtivTO.get("idEquip", configTO.getEquipConfig());
+        configList.clear();
 
-            configList.clear();
+        ArrayList<Long> rLista = new ArrayList<Long>();
 
-            ArrayList<Long> rLista = new ArrayList<Long>();
-
-            for (int i = 0; i < lrea.size(); i++) {
-                rEquipAtivTO = (REquipAtivTO) lrea.get(i);
-                rLista.add(rEquipAtivTO.getIdAtiv());
-            }
-
-            listAtiv = atividadeTO.in("idAtiv", rLista);
-
+        for (int i = 0; i < lrea.size(); i++) {
+            rEquipAtivTO = (REquipAtivTO) lrea.get(i);
+            rLista.add(rEquipAtivTO.getIdAtiv());
         }
-        else if ((pmmContext.getVerPosTela() == 9)|| (pmmContext.getVerPosTela() == 13)
-                || (pmmContext.getVerPosTela() == 15)|| (pmmContext.getVerPosTela() == 16)) {
-            listAtiv = atividadeTO.get("flagCarretel", 1L);
-        }
+
+        listAtiv = atividadeTO.in("idAtiv", rLista);
 
         lAtivExib = new ArrayList();
 
         ROSAtivTO rOSAtivTO = new ROSAtivTO();
         List lroa = rOSAtivTO.get("nroOS", nroOS);
 
-        if(lroa.size() > 0){
+        if (lroa.size() > 0) {
 
             for (int i = 0; i < listAtiv.size(); i++) {
                 atividadeTO = (AtividadeTO) listAtiv.get(i);
@@ -191,13 +181,13 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                     listAtiv.clear();
                     lAtivExib.clear();
 
-                } else if((pmmContext.getVerPosTela() == 2) || (pmmContext.getVerPosTela() == 8))  {
+                } else if ((pmmContext.getVerPosTela() == 2)) {
 
                     pmmContext.getApontaMMTO().setAtividadeAponta(atividadeTO.getIdAtiv());
                     pmmContext.getApontaMMTO().setStatusConAponta(configTO.getStatusConConfig());
                     pmmContext.getApontaMMTO().setParadaAponta(0L);
 
-                    if(verifBackup()){
+                    if (verifBackup()) {
 
                         AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
                         alerta.setTitle("ATENÇÃO");
@@ -212,10 +202,9 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                         alerta.show();
 
-                    }
-                    else {
+                    } else {
 
-                        if(atividadeTO.getFlagTransbordo() == 0) {
+                        if (atividadeTO.getFlagTransbordo() == 0) {
 
                             TransbordoTO transbordoTO = new TransbordoTO();
                             if (transbordoTO.hasElements()) {
@@ -230,7 +219,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                             pmmContext.getApontaMMTO().setLongitudeAponta(getLongitude());
                             ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 2L);
 
-                            if(atividadeTO.getFlagRendimento() == 1) {
+                            if (atividadeTO.getFlagRendimento() == 1) {
 
                                 BoletimMMTO boletimMMTO = new BoletimMMTO();
                                 List listBoletim = boletimMMTO.get("statusBoletim", 1L);
@@ -267,28 +256,16 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                             }
 
-                            if(pmmContext.getVerPosTela() == 2){
-                                configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
-                                configTO.update();
-                                Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
-                                startActivity(it);
-                                finish();
+                            configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
+                            configTO.update();
+                            Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
+                            startActivity(it);
+                            finish();
 
-                                listAtiv.clear();
-                                lAtivExib.clear();
+                            listAtiv.clear();
+                            lAtivExib.clear();
 
-                            }
-                            else if(pmmContext.getVerPosTela() == 8) {
-                                Intent it = new Intent(ListaAtividadeActivity.this, ListaEquipFertActivity.class);
-                                startActivity(it);
-                                finish();
-
-                                listAtiv.clear();
-                                lAtivExib.clear();
-
-                            }
-
-                        }else{
+                        } else {
 
                             Intent it = new Intent(ListaAtividadeActivity.this, TransbordoActivity.class);
                             startActivity(it);
@@ -301,34 +278,10 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                     }
 
-                } else if ((pmmContext.getVerPosTela() == 3) || (pmmContext.getVerPosTela() == 12)) {
+                } else if ((pmmContext.getVerPosTela() == 3)) {
 
                     pmmContext.getApontaMMTO().setAtividadeAponta(atividadeTO.getIdAtiv());
                     pmmContext.getApontaMMTO().setStatusConAponta(configTO.getStatusConConfig());
-                    Intent it = new Intent(ListaAtividadeActivity.this, ListaParadaActivity.class);
-                    startActivity(it);
-                    finish();
-
-                    listAtiv.clear();
-                    lAtivExib.clear();
-
-                } else if ((pmmContext.getVerPosTela() == 9)|| (pmmContext.getVerPosTela() == 15)) {
-
-                    pmmContext.getApontaAplicFertTO().setAtivApontaAplicFert(atividadeTO.getIdAtiv());
-                    pmmContext.getApontaAplicFertTO().setParadaApontaAplicFert(0L);
-
-                    Intent it = new Intent(ListaAtividadeActivity.this, BocalFertActivity.class);
-                    startActivity(it);
-                    finish();
-
-                    listAtiv.clear();
-                    lAtivExib.clear();
-
-                }
-
-                else if ((pmmContext.getVerPosTela() == 13)|| (pmmContext.getVerPosTela() == 16)) {
-
-                    pmmContext.getApontaAplicFertTO().setAtivApontaAplicFert(atividadeTO.getIdAtiv());
                     Intent it = new Intent(ListaAtividadeActivity.this, ListaParadaActivity.class);
                     startActivity(it);
                     finish();
@@ -345,19 +298,19 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
     }
 
-    public boolean verifBackup(){
+    public boolean verifBackup() {
 
         boolean v = false;
 
         BackupApontaMMTO backupApontaMMTO = new BackupApontaMMTO();
         List bkpApontaList = backupApontaMMTO.all();
 
-        if(bkpApontaList.size() > 0) {
+        if (bkpApontaList.size() > 0) {
 
             backupApontaMMTO = (BackupApontaMMTO) bkpApontaList.get(bkpApontaList.size() - 1);
-            if((pmmContext.getApontaMMTO().getOsAponta().equals(backupApontaMMTO.getOsAponta()))
+            if ((pmmContext.getApontaMMTO().getOsAponta().equals(backupApontaMMTO.getOsAponta()))
                     && (pmmContext.getApontaMMTO().getAtividadeAponta().equals(backupApontaMMTO.getAtividadeAponta()))
-                    && (pmmContext.getApontaMMTO().getParadaAponta().equals(backupApontaMMTO.getParadaAponta()))){
+                    && (pmmContext.getApontaMMTO().getParadaAponta().equals(backupApontaMMTO.getParadaAponta()))) {
 
                 v = true;
 
@@ -369,7 +322,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
     }
 
-    public void onBackPressed()  {
+    public void onBackPressed() {
     }
 
 }

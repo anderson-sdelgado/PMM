@@ -12,12 +12,12 @@ import java.util.List;
 import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipSegTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RecolMangTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
 
 public class RecolMangFertActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
-    private RecolMangTO recolMangTO;
+    private RecolhimentoTO recolhimentoTO;
     private List recolList;
 
     @Override
@@ -40,17 +40,17 @@ public class RecolMangFertActivity extends ActivityGeneric {
             cont = pmmContext.getPosRecolMangFert();
         }
 
-        recolMangTO = new RecolMangTO();
-        recolList = recolMangTO.orderBy("idRendMangRecol", true);
-        recolMangTO = (RecolMangTO) recolList.get(cont);
+        recolhimentoTO = new RecolhimentoTO();
+        recolList = recolhimentoTO.orderBy("idRendMangRecol", true);
+        recolhimentoTO = (RecolhimentoTO) recolList.get(cont);
 
         EquipSegTO equipSegTO = new EquipSegTO();
-        List equipSegList = equipSegTO.get("idEquip", recolMangTO.getEquipRendMangRecol());
-        equipSegTO = (EquipSegTO) equipSegList.get(0);
+//        List equipSegList = equipSegTO.get("idEquip", recolhimentoTO.getEquipRecol());
+//        equipSegTO = (EquipSegTO) equipSegList.get(0);
 
-        textViewRecolMang.setText("Equipamento: " + equipSegTO.getCodEquip() + " \nOS: " + recolMangTO.getNroOSRendMangRecol() + " \nRecol. Mangueira:");
-        if (recolMangTO.getValorRendMangRecol() > 0) {
-            editText.setText(String.valueOf(recolMangTO.getValorRendMangRecol()));
+        textViewRecolMang.setText("Equipamento: " + equipSegTO.getCodEquip() + " \nOS: " + recolhimentoTO.getNroOSRecol() + " \nRecol. Mangueira:");
+        if (recolhimentoTO.getValorRecol() > 0) {
+            editText.setText(String.valueOf(recolhimentoTO.getValorRecol()));
         } else {
             editText.setText("");
         }
@@ -66,11 +66,11 @@ public class RecolMangFertActivity extends ActivityGeneric {
 
                         Long valorRecolMang = Long.parseLong(editTextPadrao.getText().toString());
 
-                        recolMangTO.setValorRendMangRecol(valorRecolMang);
-                        recolMangTO.setDthrRendMangRecol(Tempo.getInstance().datahora());
-                        recolMangTO.setStatusRendMangRecol(2L);
-                        recolMangTO.update();
-                        recolMangTO.commit();
+                        recolhimentoTO.setValorRecol(valorRecolMang);
+                        recolhimentoTO.setDthrRecol(Tempo.getInstance().datahora());
+                        recolhimentoTO.setStatusRecol(2L);
+                        recolhimentoTO.update();
+                        recolhimentoTO.commit();
 
                         if (recolList.size() == pmmContext.getContRecolMangFert()) {
 
@@ -97,9 +97,9 @@ public class RecolMangFertActivity extends ActivityGeneric {
 
                         Long valorRecolMang = Long.parseLong(editTextPadrao.getText().toString());
 
-                        recolMangTO.setValorRendMangRecol(valorRecolMang);
-                        recolMangTO.update();
-                        recolMangTO.commit();
+                        recolhimentoTO.setValorRecol(valorRecolMang);
+                        recolhimentoTO.update();
+                        recolhimentoTO.commit();
 
                         Intent it = new Intent(RecolMangFertActivity.this, ListaRecMangActivity.class);
                         startActivity(it);

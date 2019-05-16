@@ -2,13 +2,11 @@ package br.com.usinasantafe.pmm;
 
 import android.app.Application;
 
-import java.util.ArrayList;
-
-import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaAplicFertTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
 
 /**
  * Created by anderson on 26/04/2017.
@@ -17,30 +15,20 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
 public class PMMContext extends Application {
 
     private BoletimMMTO boletimMMTO;
+    private BoletimFertTO boletimFertTO;
     private ApontaMMTO apontaMMTO;
-    private ApontaAplicFertTO apontaAplicFertTO;
+    private ApontaFertTO apontaFertTO;
     private ItemMedPneuTO itemMedPneuTO;
     private int verPosTela;
     //1 - Inicio do boletim;
     // 2 - Trabalhando Moto Mec;
     // 3 - Parada Moto Mec;
     // 4 - Finalizar Boletim Moto Mec;
-    // 5 - Trabalhando Fert;
     // 6 - Trocar Transbordo;
     // 7 - Editar Rendimento;
-    // 8 - Apontar Tralhando Motobomba e Canhão de Fertirrigação;
-    // 9 - Apontar Tralhando Carretel e Rolão de Fertirrigação;
     // 10 - Finalizar Turno Fert;
-    // 11 - Parada Fert;
-    // 12 - Apontar Parada Motobomba e Canhão de Fertirrigação;
-    // 13 - Apontar Carretel e Rolão de Fertirrigação;
     // 14 - Recolhimento de Mangueira;
-    // 15 - Trabalhando Rolão;
-    // 16 - Parada Rolão;
-    // 17 - Acoplar Carretel Trabalhando
-    // 18 - Acoplar Carretel Parado
     // 19 - Trocar de implemento
-    // 20 - Esta na tela de Menu Principal
     private int contImplemento;
     private String textoHorimetro;
     public static String versaoAplic = "2";
@@ -50,17 +38,12 @@ public class PMMContext extends Application {
     private int posRecolMangFert;
     private String verAtualCL;
     private Long posChecklist;
+    private int tipoEquip; //1 - Tipo Motomec; 2 - Tipo Fertirrigação
 
     @Override
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
-    }
-
-    public ApontaMMTO getApontaMMTO() {
-        if (apontaMMTO == null)
-            apontaMMTO = new ApontaMMTO();
-        return apontaMMTO;
     }
 
     public BoletimMMTO getBoletimMMTO() {
@@ -69,10 +52,22 @@ public class PMMContext extends Application {
         return boletimMMTO;
     }
 
-    public ApontaAplicFertTO getApontaAplicFertTO() {
-        if (apontaAplicFertTO == null)
-            apontaAplicFertTO = new ApontaAplicFertTO();
-        return apontaAplicFertTO;
+    public BoletimFertTO getBoletimFertTO() {
+        if (boletimFertTO == null)
+            boletimFertTO = new BoletimFertTO();
+        return boletimFertTO;
+    }
+
+    public ApontaMMTO getApontaMMTO() {
+        if (apontaMMTO == null)
+            apontaMMTO = new ApontaMMTO();
+        return apontaMMTO;
+    }
+
+    public ApontaFertTO getApontaFertTO() {
+        if (apontaFertTO == null)
+            apontaFertTO = new ApontaFertTO();
+        return apontaFertTO;
     }
 
     public ItemMedPneuTO getItemMedPneuTO() {
@@ -83,6 +78,10 @@ public class PMMContext extends Application {
 
     public void setBoletimMMTO(BoletimMMTO boletimMMTO){
         this.boletimMMTO = boletimMMTO;
+    }
+
+    public void setBoletimFertTO(BoletimFertTO boletimFertTO) {
+        this.boletimFertTO = boletimFertTO;
     }
 
     public int getVerPosTela() {
@@ -155,5 +154,13 @@ public class PMMContext extends Application {
 
     public void setVerAtualCL(String verAtualCL) {
         this.verAtualCL = verAtualCL;
+    }
+
+    public int getTipoEquip() {
+        return tipoEquip;
+    }
+
+    public void setTipoEquip(int tipoEquip) {
+        this.tipoEquip = tipoEquip;
     }
 }

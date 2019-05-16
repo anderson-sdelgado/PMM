@@ -1,7 +1,6 @@
 package br.com.usinasantafe.pmm;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +26,7 @@ public class VelocidadeFertActivity extends ActivityGeneric {
                 // TODO Auto-generated method stub
 
                 if (!editTextPadrao.getText().toString().equals("")) {
-                    pmmContext.getApontaAplicFertTO().setVelocApontaAplicFert(Long.parseLong(editTextPadrao.getText().toString()));
+                    pmmContext.getApontaFertTO().setVelocApontaFert(Long.parseLong(editTextPadrao.getText().toString()));
                     Intent it = new Intent(VelocidadeFertActivity.this, RaioFertActivity.class);
                     startActivity(it);
                     finish();

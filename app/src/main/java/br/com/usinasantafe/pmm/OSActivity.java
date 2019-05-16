@@ -60,17 +60,8 @@ public class OSActivity extends ActivityGeneric {
 
                         if (pmmContext.getVerPosTela() == 1) {
                             pmmContext.getBoletimMMTO().setOsBoletim(Long.parseLong(editTextPadrao.getText().toString()));
-                            osTO.deleteAll();
-                            ROSAtivTO rosAtivTO = new ROSAtivTO();
-                            rosAtivTO.deleteAll();
-                            PneuTO pneuTO = new PneuTO();
-                            pneuTO.deleteAll();
-                        } else if ((pmmContext.getVerPosTela() == 2) || (pmmContext.getVerPosTela() == 3)
-                                || (pmmContext.getVerPosTela() == 8) || (pmmContext.getVerPosTela() == 12)) {
+                        } else {
                             pmmContext.getApontaMMTO().setOsAponta(Long.parseLong(editTextPadrao.getText().toString()));
-                        } else if ((pmmContext.getVerPosTela() == 9) || (pmmContext.getVerPosTela() == 13)
-                                || (pmmContext.getVerPosTela() == 15) || (pmmContext.getVerPosTela() == 16)) {
-                            pmmContext.getApontaAplicFertTO().setOsApontaAplicFert(Long.parseLong(editTextPadrao.getText().toString()));
                         }
 
                         ConexaoWeb conexaoWeb = new ConexaoWeb();

@@ -174,47 +174,44 @@ public class ListaParadaActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                    ParadaTO paradaTO = new ParadaTO();
-                    List paradaList = paradaTO.get("codParada", textParada.substring(0, textParada.indexOf('-')).trim());
-                    paradaTO = (ParadaTO) paradaList.get(0);
+                        ParadaTO paradaTO = new ParadaTO();
+                        List paradaList = paradaTO.get("codParada", textParada.substring(0, textParada.indexOf('-')).trim());
+                        paradaTO = (ParadaTO) paradaList.get(0);
 
-                    if ((pmmContext.getVerPosTela() == 3) || (pmmContext.getVerPosTela() == 12)) {
+                        if ((pmmContext.getVerPosTela() == 3)) {
 
-                        pmmContext.getApontaMMTO().setTransbordoAponta(0L);
-                        pmmContext.getApontaMMTO().setParadaAponta(paradaTO.getIdParada());
+                            pmmContext.getApontaMMTO().setTransbordoAponta(0L);
+                            pmmContext.getApontaMMTO().setParadaAponta(paradaTO.getIdParada());
 
-                        if (verifBackup()) {
+                            if (verifBackup()) {
 
-                            AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
-                            alerta.setTitle("ATENÇÃO");
-                            alerta.setMessage("PARADA JÁ APONTADA PARA O EQUIPAMENTO!");
-                            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                                AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
+                                alerta.setTitle("ATENÇÃO");
+                                alerta.setMessage("PARADA JÁ APONTADA PARA O EQUIPAMENTO!");
+                                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
 
 
-                                }
-                            });
+                                    }
+                                });
 
-                            alerta.show();
+                                alerta.show();
 
-                        } else {
+                            } else {
 
-                            pmmContext.getApontaMMTO().setLatitudeAponta(getLatitude());
-                            pmmContext.getApontaMMTO().setLongitudeAponta(getLongitude());
-
-                            if (pmmContext.getVerPosTela() == 3) {
+                                pmmContext.getApontaMMTO().setLatitudeAponta(getLatitude());
+                                pmmContext.getApontaMMTO().setLongitudeAponta(getLongitude());
 
                                 configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
                                 configTO.update();
 
-                                if(paradaTO.getFlagCalibragem() == 0L){
+                                if (paradaTO.getFlagCalibragem() == 0L) {
                                     ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 2L);
                                     Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
                                     startActivity(it);
                                     finish();
-                                }
-                                else{
+                                } else {
                                     ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 1L);
                                     Intent it = new Intent(ListaParadaActivity.this, ListaPosPneuActivity.class);
                                     startActivity(it);
@@ -224,20 +221,9 @@ public class ListaParadaActivity extends ActivityGeneric {
                                 listParada.clear();
                                 paradaList.clear();
 
-                            } else if (pmmContext.getVerPosTela() == 12) {
-
-                                Intent it = new Intent(ListaParadaActivity.this, ListaEquipFertActivity.class);
-                                startActivity(it);
-                                finish();
-
-                                listParada.clear();
-                                paradaList.clear();
-
                             }
 
                         }
-
-                    }
 
 
                     }
@@ -261,7 +247,6 @@ public class ListaParadaActivity extends ActivityGeneric {
         });
 
     }
-
 
 
     public boolean verifBackup() {

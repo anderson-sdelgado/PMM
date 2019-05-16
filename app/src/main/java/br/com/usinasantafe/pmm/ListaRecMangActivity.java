@@ -1,14 +1,13 @@
 package br.com.usinasantafe.pmm;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import br.com.usinasantafe.pmm.to.tb.variaveis.RecolMangTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
 
 public class ListaRecMangActivity extends ActivityGeneric {
 
@@ -23,10 +22,10 @@ public class ListaRecMangActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        RecolMangTO recolMangTO = new RecolMangTO();
+        RecolhimentoTO recolhimentoTO = new RecolhimentoTO();
 
         ListView listaRecMang = (ListView) findViewById(R.id.listaRecMang);
-        AdapterListMangRec adapterListMangRec = new AdapterListMangRec(this, recolMangTO.orderBy("idRendMangRecol", true));
+        AdapterListMangRec adapterListMangRec = new AdapterListMangRec(this, recolhimentoTO.orderBy("idRendMangRecol", true));
         listaRecMang.setAdapter(adapterListMangRec);
 
         listaRecMang.setOnItemClickListener(new AdapterView.OnItemClickListener() {

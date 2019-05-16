@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 
@@ -21,6 +22,7 @@ public class PneuActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private ProgressDialog progressBar;
+    private Handler customHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +42,34 @@ public class PneuActivity extends ActivityGeneric {
 
                 if (!editTextPadrao.getText().toString().equals("")) {
 
-                    pmmContext.getItemMedPneuTO().setNroPneuItemMedPneu(Long.parseLong(editTextPadrao.getText().toString()));
+                    pmmContext.getItemMedPneuTO().setNroPneuItemMedPneu(editTextPadrao.getText().toString());
 
                     PneuTO pneuTO = new PneuTO();
-                    List pneuList = pneuTO.get("codPneu", Long.parseLong(editTextPadrao.getText().toString()));
+                    List pneuList = pneuTO.get("codPneu", editTextPadrao.getText().toString());
 
                     if(pneuList.size() == 0){
 
-                        progressBar = new ProgressDialog(PneuActivity.this);
-                        progressBar.setCancelable(true);
-                        progressBar.setMessage("Atualizando Pneu...");
-                        progressBar.show();
+                        ConexaoWeb conexaoWeb = new ConexaoWeb();
 
-                        ManipDadosVerif.getInstance().verDados(editTextPadrao.getText().toString(), "Pneu"
-                                , PneuActivity.this, PressaoEncPneuActivity.class, progressBar);
+                        if (conexaoWeb.verificaConexao(PneuActivity.this)) {
+
+                            progressBar = new ProgressDialog(PneuActivity.this);
+                            progressBar.setCancelable(true);
+                            progressBar.setMessage("Atualizando Pneu...");
+                            progressBar.show();
+
+                            customHandler.postDelayed(updateTimerThread, 10000);
+
+                            ManipDadosVerif.getInstance().verDados(editTextPadrao.getText().toString(), "Pneu"
+                                    , PneuActivity.this, PressaoEncPneuActivity.class, progressBar);
+
+                        }
+                        else{
+
+                            Intent it = new Intent(PneuActivity.this, PressaoEncPneuActivity.class);
+                            startActivity(it);
+
+                        }
 
                     }
                     else{
@@ -67,16 +83,14 @@ public class PneuActivity extends ActivityGeneric {
                         List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
                         for(int i = 0; i < itemMedPneuList.size(); i++) {
                             itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(i);
-                            if(Long.parseLong(editTextPadrao.getText().toString()) == itemMedPneuTO.getNroPneuItemMedPneu()){
+                            if(editTextPadrao.getText().toString().equals(itemMedPneuTO.getNroPneuItemMedPneu())){
                                 verCad = false;
                             }
                         }
 
                         if(verCad){
-
                             Intent it = new Intent(PneuActivity.this, PressaoEncPneuActivity.class);
                             startActivity(it);
-
                         }
                         else{
 
@@ -143,5 +157,6 @@ public class PneuActivity extends ActivityGeneric {
 
         }
     };
+
 
 }

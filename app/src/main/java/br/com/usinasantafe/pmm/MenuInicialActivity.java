@@ -29,17 +29,15 @@ import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosReceb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.GrafDispEquipPlantioTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.GrafPlanRealPlantioTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.GrafProdPlantioTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.GrafQualPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.PneuTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.AlocaCarretelTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaAplicFertTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.AtualizaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.MotoristaTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
@@ -54,6 +52,7 @@ public class MenuInicialActivity extends ActivityGeneric {
     private PMMContext pmmContext;
     private ProgressDialog progressBar;
     private ConfiguracaoTO configTO;
+    private EquipTO equipTO;
 
     private TextView textViewProcesso;
     private Handler customHandler = new Handler();
@@ -68,7 +67,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         teste();
 
-        if(!checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+        if (!checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
             ActivityCompat.requestPermissions((Activity) this, PERMISSIONS, 112);
         }
@@ -78,26 +77,31 @@ public class MenuInicialActivity extends ActivityGeneric {
         ConexaoWeb conexaoWeb = new ConexaoWeb();
         configTO = new ConfiguracaoTO();
         List configList = configTO.all();
+        configTO = (ConfiguracaoTO) configList.get(0);
+
+        equipTO = new EquipTO();
+        List listEquipTO = equipTO.get("idEquip", configTO.getEquipConfig());
+        equipTO = (EquipTO) listEquipTO.get(0);
+        listEquipTO.clear();
+
+        if ((equipTO.getTipoEquipFert() == 1) || (equipTO.getTipoEquipFert() == 2)) {
+            pmmContext.setTipoEquip(2);
+        } else {
+            pmmContext.setTipoEquip(1);
+        }
 
         progressBar = new ProgressDialog(this);
 
-        if(conexaoWeb.verificaConexao(this))
-        {
+        if (conexaoWeb.verificaConexao(this)) {
 
-            if(configList.size() > 0){
+            if (configList.size() > 0) {
 
                 progressBar.setCancelable(true);
                 progressBar.setMessage("Buscando Atualização...");
                 progressBar.show();
 
-                configTO = (ConfiguracaoTO) configList.get(0);
                 AtualizaTO atualizaTO = new AtualizaTO();
                 atualizaTO.setVersaoAtual(pmmContext.versaoAplic);
-
-                EquipTO equipTO = new EquipTO();
-                List listEquipTO = equipTO.get("idEquip", configTO.getEquipConfig());
-                equipTO = (EquipTO) listEquipTO.get(0);
-                listEquipTO.clear();
 
                 atualizaTO.setIdEquipAtualizacao(equipTO.getCodEquip());
                 atualizaTO.setIdCheckList(equipTO.getIdChecklist());
@@ -105,54 +109,66 @@ public class MenuInicialActivity extends ActivityGeneric {
                 ManipDadosVerif.getInstance().verAtualizacao(atualizaTO, this, progressBar);
             }
 
-        }
-        else{
-            if(configList.size() > 0) {
+        } else {
+            if (configList.size() > 0) {
                 startTimer("N_NAC");
             }
         }
 
         configList.clear();
 
-        BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List boletimList = boletimMMTO.get("statusBoletim", 1L);
+        List boletimList;
+        if (pmmContext.getTipoEquip() == 1) {
+            BoletimMMTO boletimMMTO = new BoletimMMTO();
+            boletimList = boletimMMTO.get("statusBoletim", 1L);
+        } else {
+            BoletimFertTO boletimFertTO = new BoletimFertTO();
+            boletimList = boletimFertTO.get("statusBolFert", 1L);
+        }
 
-        if(boletimList.size() > 0){
-
-            pmmContext.setBoletimMMTO((BoletimMMTO) boletimList.get(0));
+        if (boletimList.size() > 0) {
 
             CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
             List cabecList = cabecCheckListTO.get("statusCab", 1L);
 
-            if(cabecList.size() == 0) {
+            if (pmmContext.getTipoEquip() == 1) {
+                pmmContext.setBoletimMMTO((BoletimMMTO) boletimList.get(0));
+            } else {
+                pmmContext.setBoletimFertTO((BoletimFertTO) boletimList.get(0));
+            }
 
-                if(progressBar.isShowing()){
+
+            if (cabecList.size() == 0) {
+
+                if (progressBar.isShowing()) {
                     progressBar.dismiss();
                 }
 
-                ApontaMMTO apontaMMTO = new ApontaMMTO();
-                List apontaMMList = apontaMMTO.get("statusAponta", 1L);
+                if (pmmContext.getTipoEquip() == 1) {
+                    ApontaMMTO apontaMMTO = new ApontaMMTO();
+                    List apontaMMList = apontaMMTO.get("statusAponta", 1L);
+                    if (apontaMMList.size() == 0) {
+                        Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
+                        startActivity(it);
+                        finish();
+                    } else {
+                        Intent it = new Intent(MenuInicialActivity.this, ListaPosPneuActivity.class);
+                        startActivity(it);
+                        finish();
 
-                if(apontaMMList.size() == 0) {
+                    }
+                    apontaMMList.clear();
+                } else {
                     Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else{
 
-                    Intent it = new Intent(MenuInicialActivity.this, ListaPosPneuActivity.class);
-                    startActivity(it);
-                    finish();
-
-                }
-                apontaMMList.clear();
-
-            }
-            else{
+            } else {
 
                 RespItemCheckListTO respItemCheckListTO = new RespItemCheckListTO();
 
-                if(respItemCheckListTO.hasElements()){
+                if (respItemCheckListTO.hasElements()) {
                     cabecCheckListTO = (CabecCheckListTO) cabecList.get(0);
                     List respList = respItemCheckListTO.get("idCabIt", cabecCheckListTO.getIdCab());
                     for (int i = 0; i < respList.size(); i++) {
@@ -161,7 +177,7 @@ public class MenuInicialActivity extends ActivityGeneric {
                     }
                 }
 
-                if(progressBar.isShowing()){
+                if (progressBar.isShowing()) {
                     progressBar.dismiss();
                 }
 
@@ -211,7 +227,6 @@ public class MenuInicialActivity extends ActivityGeneric {
                     if (motoristaTO.hasElements() && configTO.hasElements()) {
 
                         pmmContext.setVerPosTela(1);
-
                         clearBD();
 
                         Intent it = new Intent(MenuInicialActivity.this, OperadorActivity.class);
@@ -262,19 +277,15 @@ public class MenuInicialActivity extends ActivityGeneric {
                 } else if (text.equals("ATUALIZAR APLICATIVO")) {
 
                     ConexaoWeb conexaoWeb = new ConexaoWeb();
-                    configTO = new ConfiguracaoTO();
-                    List configList = configTO.all();
-                    if(conexaoWeb.verificaConexao(v.getContext()))
-                    {
+                    if (conexaoWeb.verificaConexao(v.getContext())) {
 
-                        if(configList.size() > 0){
+                        if (configTO.hasElements()) {
 
                             progressBar = new ProgressDialog(v.getContext());
                             progressBar.setCancelable(true);
                             progressBar.setMessage("Buscando Atualização...");
                             progressBar.show();
 
-                            configTO = (ConfiguracaoTO) configList.get(0);
                             AtualizaTO atualizaTO = new AtualizaTO();
                             atualizaTO.setIdEquipAtualizacao(configTO.getEquipConfig());
                             atualizaTO.setVersaoAtual(pmmContext.versaoAplic);
@@ -296,11 +307,11 @@ public class MenuInicialActivity extends ActivityGeneric {
         pmmContext.setVerAtualCL(verAtualizacao);
         boolean alarmeAtivo = (PendingIntent.getBroadcast(this, 0, new Intent("ALARME_DISPARADO"), PendingIntent.FLAG_NO_CREATE) == null);
 
-        if(progressBar.isShowing()){
+        if (progressBar.isShowing()) {
             progressBar.dismiss();
         }
 
-        if(alarmeAtivo){
+        if (alarmeAtivo) {
 
             Log.i("PMM", "NOVO TIMER");
 
@@ -314,19 +325,18 @@ public class MenuInicialActivity extends ActivityGeneric {
             AlarmManager alarme = (AlarmManager) getSystemService(ALARM_SERVICE);
             alarme.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 60000, p);
 
-        }
-        else{
+        } else {
             Log.i("PMM", "TIMER já ativo");
         }
     }
 
-    public boolean checkPermission(String permission){
+    public boolean checkPermission(String permission) {
         int check = ContextCompat.checkSelfPermission(this, permission);
         return (check == PackageManager.PERMISSION_GRANTED);
     }
 
 
-    public void onBackPressed()  {
+    public void onBackPressed() {
     }
 
 
@@ -336,7 +346,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
             ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
             List configList = configuracaoTO.all();
-            if(configList.size() > 0) {
+            if (configList.size() > 0) {
                 if (ManipDadosEnvio.getInstance().getStatusEnvio() == 1) {
                     textViewProcesso.setTextColor(Color.YELLOW);
                     textViewProcesso.setText("Enviando Dados...");
@@ -347,8 +357,7 @@ public class MenuInicialActivity extends ActivityGeneric {
                     textViewProcesso.setTextColor(Color.GREEN);
                     textViewProcesso.setText("Todos os Dados já foram Enviados");
                 }
-            }
-            else{
+            } else {
                 textViewProcesso.setTextColor(Color.RED);
                 textViewProcesso.setText("Aparelho sem Equipamento");
             }
@@ -357,7 +366,7 @@ public class MenuInicialActivity extends ActivityGeneric {
     };
 
 
-    public void teste(){
+    public void teste() {
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
         List boletimList = boletimMMTO.all();
@@ -427,24 +436,23 @@ public class MenuInicialActivity extends ActivityGeneric {
             Log.i("PMM", "dthrRendimento = " + rendimentoTO.getDthrRendimento());
         }
 
-        ApontaAplicFertTO apontaAplicFertTO = new ApontaAplicFertTO();
-        List apontaAplicFertList = apontaAplicFertTO.all();
+        ApontaFertTO apontaFertTO = new ApontaFertTO();
+        List apontaAplicFertList = apontaFertTO.all();
 
         for (int j = 0; j < apontaAplicFertList.size(); j++) {
-            apontaAplicFertTO = (ApontaAplicFertTO) apontaAplicFertList.get(j);
+            apontaFertTO = (ApontaFertTO) apontaAplicFertList.get(j);
 
             Log.i("PMM", "APONTA FERT");
-            Log.i("PMM", "idApontaAplicFert = " + apontaAplicFertTO.getIdApontaAplicFert());
-            Log.i("PMM", "idBolApontaAplicFert = " + apontaAplicFertTO.getIdBolApontaAplicFert());
-            Log.i("PMM", "idExtBolApontaAplicFert = " + apontaAplicFertTO.getIdExtBolApontaAplicFert());
-            Log.i("PMM", "osApontaAplicFert = " + apontaAplicFertTO.getOsApontaAplicFert());
-            Log.i("PMM", "ativApontaAplicFert = " + apontaAplicFertTO.getAtivApontaAplicFert());
-            Log.i("PMM", "paradaApontaAplicFert = " + apontaAplicFertTO.getParadaApontaAplicFert());
-            Log.i("PMM", "dthrApontaAplicFert = " + apontaAplicFertTO.getDthrApontaAplicFert());
-            Log.i("PMM", "pressaoApontaAplicFert= " + apontaAplicFertTO.getPressaoApontaAplicFert());
-            Log.i("PMM", "velocApontaAplicFert = " + apontaAplicFertTO.getVelocApontaAplicFert());
-            Log.i("PMM", "bocalApontaAplicFert = " + apontaAplicFertTO.getBocalApontaAplicFert());
-            Log.i("PMM", "raioApontaAplicFert = " + apontaAplicFertTO.getRaioApontaAplicFert());
+            Log.i("PMM", "idApontaAplicFert = " + apontaFertTO.getIdApontaFert());
+            Log.i("PMM", "idBolApontaAplicFert = " + apontaFertTO.getIdBolApontaFert());
+            Log.i("PMM", "idExtBolApontaAplicFert = " + apontaFertTO.getIdExtBolApontaFert());
+            Log.i("PMM", "osApontaAplicFert = " + apontaFertTO.getOsApontaFert());
+            Log.i("PMM", "ativApontaAplicFert = " + apontaFertTO.getAtivApontaFert());
+            Log.i("PMM", "paradaApontaAplicFert = " + apontaFertTO.getParadaApontaFert());
+            Log.i("PMM", "dthrApontaAplicFert = " + apontaFertTO.getDthrApontaFert());
+            Log.i("PMM", "pressaoApontaAplicFert= " + apontaFertTO.getPressaoApontaFert());
+            Log.i("PMM", "velocApontaAplicFert = " + apontaFertTO.getVelocApontaFert());
+            Log.i("PMM", "bocalApontaAplicFert = " + apontaFertTO.getBocalApontaFert());
 
         }
 
@@ -521,7 +529,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
     }
 
-    public void clearBD(){
+    public void clearBD() {
 
         TransbordoTO transbordoTO = new TransbordoTO();
         transbordoTO.deleteAll();
@@ -542,6 +550,9 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         ROSAtivTO rosAtivTO = new ROSAtivTO();
         rosAtivTO.deleteAll();
+
+        PneuTO pneuTO = new PneuTO();
+        pneuTO.deleteAll();
 
 //        GrafProdPlantioTO grafProdPlantioTO = new GrafProdPlantioTO();
 //        grafProdPlantioTO.deleteAll();

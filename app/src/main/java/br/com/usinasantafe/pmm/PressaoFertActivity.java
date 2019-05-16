@@ -1,7 +1,6 @@
 package br.com.usinasantafe.pmm;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +28,7 @@ public class PressaoFertActivity extends ActivityGeneric {
                 if (!editTextPadrao.getText().toString().equals("")) {
                     String pressao = editTextPadrao.getText().toString();
                     Double pressaoNum = Double.valueOf(pressao.replace(",", "."));
-                    pmmContext.getApontaAplicFertTO().setPressaoApontaAplicFert(pressaoNum);
+                    pmmContext.getApontaFertTO().setPressaoApontaFert(pressaoNum);
                     Intent it = new Intent(PressaoFertActivity.this, VelocidadeFertActivity.class);
                     startActivity(it);
                     finish();

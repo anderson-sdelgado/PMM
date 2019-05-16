@@ -33,7 +33,6 @@ public class ListaPosPneuActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonRetPosPneu = (Button) findViewById(R.id.buttonRetPosPneu);
         Button buttonAtualPosPneu = (Button) findViewById(R.id.buttonAtualPosPneu);
 
         ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
@@ -127,15 +126,9 @@ public class ListaPosPneuActivity extends ActivityGeneric {
 
         });
 
-        buttonRetPosPneu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent it = new Intent(ListaPosPneuActivity.this, ListaParadaActivity.class);
-                startActivity(it);
-
-            }
-        });
-
     }
+
+    public void onBackPressed() {
+    }
+
 }

@@ -35,6 +35,8 @@ public class EquipTO extends Entidade {
     private Long tipoEquipFert;
     @DatabaseField
     private Double horimetroEquip;
+    @DatabaseField
+    private Double medicaoEquipFert;
 
     public EquipTO() {
     }
@@ -101,5 +103,13 @@ public class EquipTO extends Entidade {
 
     public void setHorimetroEquip(Double horimetroEquip) {
         this.horimetroEquip = horimetroEquip;
+    }
+
+    public Double getMedicaoEquipFert() {
+        return medicaoEquipFert;
+    }
+
+    public void setMedicaoEquipFert(Double medicaoEquipFert) {
+        this.medicaoEquipFert = medicaoEquipFert;
     }
 }

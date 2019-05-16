@@ -101,6 +101,7 @@ public class ManipDadosVerif {
     }
 
     public void verDados(String dado, String tipo, Context telaAtual, Class telaProx, ProgressDialog progressDialog) {
+
         verTerm = false;
         urlsConexaoHttp = new UrlsConexaoHttp();
         this.telaAtual = telaAtual;

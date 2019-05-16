@@ -10,8 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipSegTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RecolMangTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
 
 /**
  * Created by anderson on 19/10/2015.
@@ -51,17 +50,17 @@ public class AdapterListMangRec extends BaseAdapter {
         TextView textViewOSRecMang = (TextView) view.findViewById(R.id.textViewOSRecMang);
         TextView textViewValorRecMang = (TextView) view.findViewById(R.id.textViewValorRecMang);
 
-        RecolMangTO recolMangTO = (RecolMangTO) itens.get(position);
+        RecolhimentoTO recolhimentoTO = (RecolhimentoTO) itens.get(position);
 
         EquipSegTO equipSegTO = new EquipSegTO();
-        List equipSegList = equipSegTO.get("idEquip", recolMangTO.getEquipRendMangRecol());
-        equipSegTO = (EquipSegTO) equipSegList.get(0);
+//        List equipSegList = equipSegTO.get("idEquip", recolhimentoTO.getEquipRecol());
+//        equipSegTO = (EquipSegTO) equipSegList.get(0);
 
         textViewEquipRecMang.setText("EQUIP: " + equipSegTO.getCodEquip());
-        textViewOSRecMang.setText("NRO OS: " + recolMangTO.getNroOSRendMangRecol());
+        textViewOSRecMang.setText("NRO OS: " + recolhimentoTO.getNroOSRecol());
 
-        if(recolMangTO.getValorRendMangRecol() > 0){
-            textViewValorRecMang.setText("QTDE REC.: " + recolMangTO.getValorRendMangRecol());
+        if(recolhimentoTO.getValorRecol() > 0){
+            textViewValorRecMang.setText("QTDE REC.: " + recolhimentoTO.getValorRecol());
         }
         else{
             textViewValorRecMang.setText("QTDE REC.: ");

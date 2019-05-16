@@ -66,13 +66,12 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         List bkpApontaList = backupApontaMMTO.all();
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List boletimList =  boletimMMTO.get("statusBoletim", 1);
+        List boletimList = boletimMMTO.get("statusBoletim", 1);
         boletimMMTO = (BoletimMMTO) boletimList.get(0);
 
-        if(bkpApontaList.size() == 0){
+        if (bkpApontaList.size() == 0) {
             lAtiv = atividadeTO.get("idAtiv", boletimMMTO.getAtivPrincBoletim());
-        }
-        else{
+        } else {
             backupApontaMMTO = (BackupApontaMMTO) bkpApontaList.get(bkpApontaList.size() - 1);
             lAtiv = atividadeTO.get("idAtiv", backupApontaMMTO.getAtividadeAponta());
         }
@@ -80,7 +79,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         atividadeTO = (AtividadeTO) lAtiv.get(0);
         lAtiv.clear();
 
-        if(atividadeTO.getFlagTransbordo() == 1){
+        if (atividadeTO.getFlagTransbordo() == 1) {
             itens.add("NOVO TRANSBORDO");
         }
 
@@ -100,7 +99,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         List equipList = equipTO.get("idEquip", boletimMMTO.getCodEquipBoletim());
         equipTO = (EquipTO) equipList.get(0);
 
-        if(equipTO.getTipoEquipFert() > 1){
+        if (equipTO.getTipoEquipFert() > 1) {
             itens.add("RECOLHIMENTO MANGUEIRA");
         }
 
@@ -117,152 +116,123 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
 //                if(verDataHora) {
 
-                    TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
-                    String text = textView.getText().toString();
+                TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
+                String text = textView.getText().toString();
 
-                    if (text.equals("TRABALHANDO")) {
-                        if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().datahora())) {
-                            Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
-                                    Toast.LENGTH_LONG).show();
-                        } else {
-                            if (equipTO.getTipoEquipFert() == 0) {
-                                pmmContext.setVerPosTela(2);
-                                Intent it = new Intent(MenuPrincNormalActivity.this, OSActivity.class);
-                                startActivity(it);
-                                finish();
-                            } else {
-                                if (equipTO.getTipoEquipFert() == 2) {
-                                    pmmContext.setVerPosTela(15);
-                                    Intent it = new Intent(MenuPrincNormalActivity.this, OSActivity.class);
-                                    startActivity(it);
-                                    finish();
-                                } else {
-                                    pmmContext.setVerPosTela(5);
-                                    Intent it = new Intent(MenuPrincNormalActivity.this, ListaEquipFertActivity.class);
-                                    startActivity(it);
-                                    finish();
-                                }
-                            }
-
-                        }
-                    } else if (text.equals("PARADO")) {
-                        if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().datahora())) {
-                            Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
-                                    Toast.LENGTH_LONG).show();
-                        } else {
-                            if (equipTO.getTipoEquipFert() == 0) {
-                                pmmContext.setVerPosTela(3);
-                                Intent it = new Intent(MenuPrincNormalActivity.this, OSActivity.class);
-                                startActivity(it);
-                                finish();
-                            } else {
-                                if (equipTO.getTipoEquipFert() == 2) {
-                                    pmmContext.setVerPosTela(16);
-                                    Intent it = new Intent(MenuPrincNormalActivity.this, OSActivity.class);
-                                    startActivity(it);
-                                    finish();
-                                } else {
-                                    pmmContext.setVerPosTela(11);
-                                    Intent it = new Intent(MenuPrincNormalActivity.this, ListaEquipFertActivity.class);
-                                    startActivity(it);
-                                    finish();
-                                }
-                            }
-                        }
-                    } else if (text.equals("FINALIZAR BOLETIM")) {
-                        if (configuracaoTO.getDtUltApontConfig().equals("")) {
-                            Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! INSIRA OS APONTAMENTOS AO BOLETIM!",
-                                    Toast.LENGTH_LONG).show();
-                        } else {
-                            if (equipTO.getTipoEquipFert() == 0) {
-                                pmmContext.setVerPosTela(4);
-                            } else {
-                                pmmContext.setVerPosTela(10);
-                            }
-                            pmmContext.setTextoHorimetro("HORÍMETRO FINAL:");
-                            Intent it = new Intent(MenuPrincNormalActivity.this, HorimetroActivity.class);
-                            startActivity(it);
-                            finish();
-                        }
-                    } else if (text.equals("HISTORICO")) {
-                        Intent it = new Intent(MenuPrincNormalActivity.this, ListaHistApontaActivity.class);
+                if (text.equals("TRABALHANDO")) {
+                    if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().datahora())) {
+                        Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        pmmContext.setVerPosTela(2);
+                        Intent it = new Intent(MenuPrincNormalActivity.this, OSActivity.class);
                         startActivity(it);
                         finish();
-                    } else if (text.equals("NOVO TRANSBORDO")) {
-                        int ver = verTransbordo(configuracaoTO.getDtUltApontConfig());
-                        if (ver == 1) {
-                            Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! APONTE UMA ATIVIDADE ANTES DE TROCAR DE TRANSBORDO.",
-                                    Toast.LENGTH_LONG).show();
-                        } else if (ver == 2) {
-                            Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 10 MINUTO PARA TROCAR DE TRANSBORDO.",
-                                    Toast.LENGTH_LONG).show();
-                        } else {
-                            pmmContext.setVerPosTela(6);
-                            Intent it = new Intent(MenuPrincNormalActivity.this, TransbordoActivity.class);
-                            startActivity(it);
-                            finish();
-                        }
-                    } else if (text.equals("RENDIMENTO")) {
-                        pmmContext.setVerPosTela(7);
-                        Intent it = new Intent(MenuPrincNormalActivity.this, ListaOSRendActivity.class);
-                        startActivity(it);
-                        finish();
-                    } else if (text.equals("ATUALIZAR DADOS")) {
-
-                        ConexaoWeb conexaoWeb = new ConexaoWeb();
-                        if (conexaoWeb.verificaConexao(MenuPrincNormalActivity.this)) {
-                            progressBar = new ProgressDialog(v.getContext());
-                            progressBar.setCancelable(true);
-                            progressBar.setMessage("ATUALIZANDO ...");
-                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                            progressBar.setProgress(0);
-                            progressBar.setMax(100);
-                            progressBar.show();
-                            ManipDadosReceb.getInstance().atualizarBD(progressBar);
-                            ManipDadosReceb.getInstance().setContext(MenuPrincNormalActivity.this);
-                        } else {
-                            AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincNormalActivity.this);
-                            alerta.setTitle("ATENÇÃO");
-                            alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
-                            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            });
-
-                            alerta.show();
-                        }
-
-                    } else if (text.equals("RECOLHIMENTO MANGUEIRA")) {
-                        pmmContext.setVerPosTela(14);
-                        Intent it = new Intent(MenuPrincNormalActivity.this, ListaRecMangActivity.class);
-                        startActivity(it);
-                        finish();
-                    } else if (text.equals("REENVIO DE DADOS")) {
-                        ManipDadosEnvio.getInstance().envioDados(MenuPrincNormalActivity.this);
-                    } else if (text.equals("TROCAR IMPLEMENTO")) {
-                        if (configuracaoTO.getDtUltApontConfig().equals("")) {
-                            Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! FAÇA ALGUM APONTAMENTO ANTES DE REALIZAR A TROCA DO(S) IMPLEMENTO(S)!",
-                                    Toast.LENGTH_LONG).show();
-                        } else {
-
-                            if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().datahora())) {
-                                Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
-                                        Toast.LENGTH_LONG).show();
-                            } else {
-
-                                apontaParadaTrocaImpl();
-
-                                pmmContext.setVerPosTela(19);
-                                pmmContext.setContImplemento(1);
-                                Intent it = new Intent(MenuPrincNormalActivity.this, ImplementoActivity.class);
-                                startActivity(it);
-                                finish();
-                            }
-
-                        }
                     }
+                } else if (text.equals("PARADO")) {
+                    if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().datahora())) {
+                        Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        pmmContext.setVerPosTela(3);
+                        Intent it = new Intent(MenuPrincNormalActivity.this, OSActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                } else if (text.equals("FINALIZAR BOLETIM")) {
+                    if (configuracaoTO.getDtUltApontConfig().equals("")) {
+                        Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! INSIRA OS APONTAMENTOS AO BOLETIM!",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        if (equipTO.getTipoEquipFert() == 0) {
+                            pmmContext.setVerPosTela(4);
+                        } else {
+                            pmmContext.setVerPosTela(10);
+                        }
+                        pmmContext.setTextoHorimetro("HORÍMETRO FINAL:");
+                        Intent it = new Intent(MenuPrincNormalActivity.this, HorimetroActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                } else if (text.equals("HISTORICO")) {
+                    Intent it = new Intent(MenuPrincNormalActivity.this, ListaHistApontaActivity.class);
+                    startActivity(it);
+                    finish();
+                } else if (text.equals("NOVO TRANSBORDO")) {
+                    int ver = verTransbordo(configuracaoTO.getDtUltApontConfig());
+                    if (ver == 1) {
+                        Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! APONTE UMA ATIVIDADE ANTES DE TROCAR DE TRANSBORDO.",
+                                Toast.LENGTH_LONG).show();
+                    } else if (ver == 2) {
+                        Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 10 MINUTO PARA TROCAR DE TRANSBORDO.",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        pmmContext.setVerPosTela(6);
+                        Intent it = new Intent(MenuPrincNormalActivity.this, TransbordoActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                } else if (text.equals("RENDIMENTO")) {
+                    pmmContext.setVerPosTela(7);
+                    Intent it = new Intent(MenuPrincNormalActivity.this, ListaOSRendActivity.class);
+                    startActivity(it);
+                    finish();
+                } else if (text.equals("ATUALIZAR DADOS")) {
+
+                    ConexaoWeb conexaoWeb = new ConexaoWeb();
+                    if (conexaoWeb.verificaConexao(MenuPrincNormalActivity.this)) {
+                        progressBar = new ProgressDialog(v.getContext());
+                        progressBar.setCancelable(true);
+                        progressBar.setMessage("ATUALIZANDO ...");
+                        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                        progressBar.setProgress(0);
+                        progressBar.setMax(100);
+                        progressBar.show();
+                        ManipDadosReceb.getInstance().atualizarBD(progressBar);
+                        ManipDadosReceb.getInstance().setContext(MenuPrincNormalActivity.this);
+                    } else {
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincNormalActivity.this);
+                        alerta.setTitle("ATENÇÃO");
+                        alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
+                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+
+                        alerta.show();
+                    }
+
+                } else if (text.equals("RECOLHIMENTO MANGUEIRA")) {
+                    pmmContext.setVerPosTela(14);
+                    Intent it = new Intent(MenuPrincNormalActivity.this, ListaRecMangActivity.class);
+                    startActivity(it);
+                    finish();
+                } else if (text.equals("REENVIO DE DADOS")) {
+                    ManipDadosEnvio.getInstance().envioDados(MenuPrincNormalActivity.this);
+                } else if (text.equals("TROCAR IMPLEMENTO")) {
+                    if (configuracaoTO.getDtUltApontConfig().equals("")) {
+                        Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! FAÇA ALGUM APONTAMENTO ANTES DE REALIZAR A TROCA DO(S) IMPLEMENTO(S)!",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+
+                        if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().datahora())) {
+                            Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
+                                    Toast.LENGTH_LONG).show();
+                        } else {
+
+                            apontaParadaTrocaImpl();
+
+                            pmmContext.setVerPosTela(19);
+                            pmmContext.setContImplemento(1);
+                            Intent it = new Intent(MenuPrincNormalActivity.this, ImplementoActivity.class);
+                            startActivity(it);
+                            finish();
+                        }
+
+                    }
+                }
 
             }
 
@@ -270,10 +240,10 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
     }
 
-    public void onBackPressed()  {
+    public void onBackPressed() {
     }
 
-    public int verTransbordo(String data){
+    public int verTransbordo(String data) {
 
         int retorno = 0;
 
@@ -287,11 +257,11 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
             }
         }
 
-        if(data.isEmpty()){
+        if (data.isEmpty()) {
             retorno = 1;
         }
 
-        if(retorno == 0) {
+        if (retorno == 0) {
 
             String dtStr = data;
 
@@ -339,15 +309,13 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
         public void run() {
 
-            if(ManipDadosEnvio.getInstance().getStatusEnvio() == 1){
+            if (ManipDadosEnvio.getInstance().getStatusEnvio() == 1) {
                 textViewProcessoNormal.setTextColor(Color.YELLOW);
                 textViewProcessoNormal.setText("Enviando e recebendo de dados...");
-            }
-            else if(ManipDadosEnvio.getInstance().getStatusEnvio() == 2){
+            } else if (ManipDadosEnvio.getInstance().getStatusEnvio() == 2) {
                 textViewProcessoNormal.setTextColor(Color.RED);
                 textViewProcessoNormal.setText("Existem dados para serem enviados e recebidos");
-            }
-            else if(ManipDadosEnvio.getInstance().getStatusEnvio() == 3){
+            } else if (ManipDadosEnvio.getInstance().getStatusEnvio() == 3) {
                 textViewProcessoNormal.setTextColor(Color.GREEN);
                 textViewProcessoNormal.setText("Todos os Dados já foram enviados e recebidos");
             }
@@ -364,7 +332,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         }
     };
 
-    public void apontaParadaTrocaImpl(){
+    public void apontaParadaTrocaImpl() {
 
         ConfiguracaoTO configTO = new ConfiguracaoTO();
         List listConfigTO = configTO.all();

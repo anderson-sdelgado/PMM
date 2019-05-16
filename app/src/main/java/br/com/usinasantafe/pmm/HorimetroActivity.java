@@ -19,7 +19,7 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RecolMangTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
 
 public class HorimetroActivity extends ActivityGeneric {
@@ -47,7 +47,7 @@ public class HorimetroActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                if(!editTextPadrao.getText().toString().equals("")){
+                if (!editTextPadrao.getText().toString().equals("")) {
 
                     String horimetro = editTextPadrao.getText().toString();
                     horimetroNum = Double.valueOf(horimetro.replace(",", "."));
@@ -64,7 +64,7 @@ public class HorimetroActivity extends ActivityGeneric {
                     configTO = (ConfiguracaoTO) listConfigTO.get(0);
                     listConfigTO.clear();
 
-                    if(pmmContext.getVerPosTela() == 1) {
+                    if (pmmContext.getVerPosTela() == 1) {
 
                         if (horimetroNum >= configTO.getHorimetroConfig()) {
 
@@ -97,8 +97,7 @@ public class HorimetroActivity extends ActivityGeneric {
 
                         }
 
-                    }
-                    else if(pmmContext.getVerPosTela() == 4) {
+                    } else if (pmmContext.getVerPosTela() == 4) {
 
                         if (horimetroNum >= configTO.getHorimetroConfig()) {
 
@@ -135,8 +134,7 @@ public class HorimetroActivity extends ActivityGeneric {
 
                             }
 
-                        }
-                        else{
+                        } else {
 
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(HorimetroActivity.this);
@@ -197,8 +195,7 @@ public class HorimetroActivity extends ActivityGeneric {
 
                         }
 
-                    }
-                    else  if(pmmContext.getVerPosTela() == 10) {
+                    } else if (pmmContext.getVerPosTela() == 10) {
 
                         BoletimMMTO boletimMMTO = new BoletimMMTO();
                         List listBoletim = boletimMMTO.get("statusBoletim", 1L);
@@ -215,8 +212,8 @@ public class HorimetroActivity extends ActivityGeneric {
                             configTO.update();
                             configTO.commit();
 
-                            RecolMangTO recolMangTO = new RecolMangTO();
-                            List rendMangRecolList = recolMangTO.get("statusRendMangRecol", 1L);
+                            RecolhimentoTO recolhimentoTO = new RecolhimentoTO();
+                            List rendMangRecolList = recolhimentoTO.get("statusRendMangRecol", 1L);
 
                             if (rendMangRecolList.size() > 0) {
 
@@ -235,8 +232,7 @@ public class HorimetroActivity extends ActivityGeneric {
 
                             }
 
-                        }
-                        else{
+                        } else {
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(HorimetroActivity.this);
                             alerta.setTitle("ATENÇÃO");
@@ -264,7 +260,7 @@ public class HorimetroActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                if(editTextPadrao.getText().toString().length() > 0){
+                if (editTextPadrao.getText().toString().length() > 0) {
                     editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
                 }
             }
@@ -272,7 +268,7 @@ public class HorimetroActivity extends ActivityGeneric {
 
     }
 
-    public void salvarBoletim(){
+    public void salvarBoletim() {
 
         pmmContext.getBoletimMMTO().setHodometroInicialBoletim(horimetroNum);
         pmmContext.getBoletimMMTO().setHodometroFinalBoletim(0D);
@@ -292,67 +288,58 @@ public class HorimetroActivity extends ActivityGeneric {
             equipTO = (EquipTO) equipList.get(0);
             equipList.clear();
 
-            if (equipTO.getTipoEquipFert() > 2) {
+            TurnoTO turnoTO = new TurnoTO();
+            List turnoList = turnoTO.get("idTurno", pmmContext.getBoletimMMTO().getCodTurnoBoletim());
+            turnoTO = (TurnoTO) turnoList.get(0);
 
-                Intent it = new Intent(HorimetroActivity.this, ListaAcoplaCarretelActivity.class);
-                startActivity(it);
-                finish();
+            if ((equipTO.getIdChecklist() > 0) &&
+                    ((configTO.getUltTurnoCLConfig() != turnoTO.getIdTurno())
+                            || ((configTO.getUltTurnoCLConfig() == turnoTO.getIdTurno())
+                            && (!configTO.getDtUltCLConfig().equals(Tempo.getInstance().dataSHora()))))) {
+
+                pmmContext.getBoletimMMTO().setStatusBoletim(1L);
+                ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true, getLatitude(), getLongitude());
+                ManipDadosEnvio.getInstance().envioDadosPrinc();
+
+                pmmContext.setPosChecklist(1L);
+
+                if (pmmContext.getVerAtualCL().equals("N_AC")) {
+
+                    Intent it = new Intent(HorimetroActivity.this, PergAtualCheckListActivity.class);
+                    startActivity(it);
+                    finish();
+
+                } else {
+
+                    ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
+                    List itemCheckList = itemCheckListTO.get("idChecklist", equipTO.getIdChecklist());
+                    Long qtde = (long) itemCheckList.size();
+                    itemCheckList.clear();
+
+                    CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
+                    cabecCheckListTO.setDtCab(Tempo.getInstance().datahora());
+                    cabecCheckListTO.setEquipCab(equipTO.getCodEquip());
+                    cabecCheckListTO.setFuncCab(pmmContext.getBoletimMMTO().getCodMotoBoletim());
+                    cabecCheckListTO.setTurnoCab(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
+                    cabecCheckListTO.setQtdeItemCab(qtde);
+                    cabecCheckListTO.setStatusCab(1L);
+                    cabecCheckListTO.setDtAtualCab("0");
+                    cabecCheckListTO.insert();
+
+                    Intent it = new Intent(HorimetroActivity.this, ItemChecklistActivity.class);
+                    startActivity(it);
+                    finish();
+
+                }
 
             } else {
 
-                TurnoTO turnoTO = new TurnoTO();
-                List turnoList = turnoTO.get("idTurno", pmmContext.getBoletimMMTO().getCodTurnoBoletim());
-                turnoTO = (TurnoTO) turnoList.get(0);
-
-                if ((equipTO.getIdChecklist() > 0) &&
-                        ((configTO.getUltTurnoCLConfig() != turnoTO.getIdTurno())
-                        || ((configTO.getUltTurnoCLConfig() == turnoTO.getIdTurno()) && (!configTO.getDtUltCLConfig().equals(Tempo.getInstance().dataSHora()))))) {
-
-                    pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                    ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true, getLatitude(), getLongitude());
-                    ManipDadosEnvio.getInstance().envioDadosPrinc();
-
-                    pmmContext.setPosChecklist(1L);
-
-                    if(pmmContext.getVerAtualCL().equals("N_AC")) {
-
-                        Intent it = new Intent(HorimetroActivity.this, PergAtualCheckListActivity.class);
-                        startActivity(it);
-                        finish();
-
-                    }
-                    else{
-
-                        ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
-                        List itemCheckList =  itemCheckListTO.get("idChecklist", equipTO.getIdChecklist());
-                        Long qtde = (long) itemCheckList.size();
-                        itemCheckList.clear();
-
-                        CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-                        cabecCheckListTO.setDtCab(Tempo.getInstance().datahora());
-                        cabecCheckListTO.setEquipCab(configTO.getEquipConfig());
-                        cabecCheckListTO.setFuncCab(pmmContext.getBoletimMMTO().getCodMotoBoletim());
-                        cabecCheckListTO.setTurnoCab(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
-                        cabecCheckListTO.setQtdeItemCab(qtde);
-                        cabecCheckListTO.setStatusCab(1L);
-                        cabecCheckListTO.setDtAtualCab("0");
-                        cabecCheckListTO.insert();
-
-                        Intent it = new Intent(HorimetroActivity.this, ItemChecklistActivity.class);
-                        startActivity(it);
-                        finish();
-
-                    }
-
-                }
-                else{
-
-                    configTO.setHorimetroConfig(horimetroNum);
-                    configTO.update();
-                    configTO.commit();
-                    pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                    ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false, getLatitude(), getLongitude());
-                    ManipDadosEnvio.getInstance().envioDadosPrinc();
+                configTO.setHorimetroConfig(horimetroNum);
+                configTO.update();
+                configTO.commit();
+                pmmContext.getBoletimMMTO().setStatusBoletim(1L);
+                ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false, getLatitude(), getLongitude());
+                ManipDadosEnvio.getInstance().envioDadosPrinc();
 
 //                    GRAFICO
 //                    Intent it = new Intent(HorimetroActivity.this, EsperaGrafActivity.class);
@@ -360,13 +347,9 @@ public class HorimetroActivity extends ActivityGeneric {
 //                    finish();
 
 //                    ANTIGO SEM GRAFICO
-                    Intent it = new Intent(HorimetroActivity.this, MenuPrincNormalActivity.class);
-                    startActivity(it);
-                    finish();
-
-                }
-
-
+                Intent it = new Intent(HorimetroActivity.this, MenuPrincNormalActivity.class);
+                startActivity(it);
+                finish();
 
             }
 
@@ -374,13 +357,12 @@ public class HorimetroActivity extends ActivityGeneric {
 
     }
 
-    public void onBackPressed()  {
-        if(pmmContext.getVerPosTela() == 1){
+    public void onBackPressed() {
+        if (pmmContext.getVerPosTela() == 1) {
             Intent it = new Intent(HorimetroActivity.this, ListaAtividadeActivity.class);
             startActivity(it);
             finish();
-        }
-        else{
+        } else {
             Intent it = new Intent(HorimetroActivity.this, MenuPrincNormalActivity.class);
             startActivity(it);
             finish();
