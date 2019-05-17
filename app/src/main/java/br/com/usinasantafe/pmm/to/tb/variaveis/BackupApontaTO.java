@@ -5,8 +5,8 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import br.com.usinasantafe.pmm.pst.Entidade;
 
-@DatabaseTable(tableName="tbbackupapontammvar")
-public class BackupApontaMMTO extends Entidade  {
+@DatabaseTable(tableName="tbbackupapontavar")
+public class BackupApontaTO extends Entidade  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -19,11 +19,17 @@ public class BackupApontaMMTO extends Entidade  {
 	@DatabaseField
 	private Long paradaAponta;
 	@DatabaseField
-	private Long transbordoAponta;
+	private Long transbAponta;
+	@DatabaseField
+	private Double pressaoAponta;
+	@DatabaseField
+	private Long velocAponta;
+	@DatabaseField
+	private Long bocalAponta;
 	@DatabaseField
 	private String dthrAponta;
 
-	public BackupApontaMMTO() {
+	public BackupApontaTO() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -67,11 +73,35 @@ public class BackupApontaMMTO extends Entidade  {
 		this.dthrAponta = dthrAponta;
 	}
 
-	public Long getTransbordoAponta() {
-		return transbordoAponta;
+	public Long getTransbAponta() {
+		return transbAponta;
 	}
 
-	public void setTransbordoAponta(Long transbordoAponta) {
-		this.transbordoAponta = transbordoAponta;
+	public void setTransbAponta(Long transbAponta) {
+		this.transbAponta = transbAponta;
+	}
+
+	public Double getPressaoAponta() {
+		return pressaoAponta;
+	}
+
+	public void setPressaoAponta(Double pressaoAponta) {
+		this.pressaoAponta = pressaoAponta;
+	}
+
+	public Long getVelocAponta() {
+		return velocAponta;
+	}
+
+	public void setVelocAponta(Long velocAponta) {
+		this.velocAponta = velocAponta;
+	}
+
+	public Long getBocalAponta() {
+		return bocalAponta;
+	}
+
+	public void setBocalAponta(Long bocalAponta) {
+		this.bocalAponta = bocalAponta;
 	}
 }

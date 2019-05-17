@@ -20,7 +20,7 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipSegTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaMMTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
@@ -175,11 +175,11 @@ public class TransbordoActivity extends ActivityGeneric {
                         }
                         else {
 
-                            BackupApontaMMTO backupApontaMMTO = new BackupApontaMMTO();
-                            List bkpApontaList = backupApontaMMTO.all();
-                            backupApontaMMTO = (BackupApontaMMTO) bkpApontaList.get(bkpApontaList.size() - 1);
+                            BackupApontaTO backupApontaTO = new BackupApontaTO();
+                            List bkpApontaList = backupApontaTO.all();
+                            backupApontaTO = (BackupApontaTO) bkpApontaList.get(bkpApontaList.size() - 1);
 
-                            if(backupApontaMMTO.getTransbordoAponta().equals(Long.parseLong(editTextPadrao.getText().toString()))){
+                            if(backupApontaTO.getTransbAponta().equals(Long.parseLong(editTextPadrao.getText().toString()))){
 
                                 AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);
                                 alerta.setTitle("ATENÇÃO");
@@ -204,9 +204,9 @@ public class TransbordoActivity extends ActivityGeneric {
                                 configTO.update();
 
                                 ApontaMMTO apontaMMTO = new ApontaMMTO();
-                                apontaMMTO.setOsAponta(backupApontaMMTO.getOsAponta());
-                                apontaMMTO.setAtividadeAponta(backupApontaMMTO.getAtividadeAponta());
-                                apontaMMTO.setParadaAponta(backupApontaMMTO.getParadaAponta());
+                                apontaMMTO.setOsAponta(backupApontaTO.getOsAponta());
+                                apontaMMTO.setAtividadeAponta(backupApontaTO.getAtividadeAponta());
+                                apontaMMTO.setParadaAponta(backupApontaTO.getParadaAponta());
                                 apontaMMTO.setTransbordoAponta(Long.parseLong(editTextPadrao.getText().toString()));
                                 ManipDadosEnvio.getInstance().salvaApontaMM(apontaMMTO, 2L);
 

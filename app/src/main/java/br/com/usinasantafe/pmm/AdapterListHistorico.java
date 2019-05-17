@@ -12,7 +12,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaMMTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
 
 /**
  * Created by anderson on 08/03/2018.
@@ -52,26 +52,26 @@ public class AdapterListHistorico extends BaseAdapter {
         TextView textViewHistHorario = (TextView) view.findViewById(R.id.textViewHistHorario);
         TextView textViewHistImplTransb = (TextView) view.findViewById(R.id.textViewHistImplTransb);
 
-        BackupApontaMMTO backupApontaMMTO = (BackupApontaMMTO) itens.get(position);
-        if(backupApontaMMTO.getParadaAponta() == 0) {
+        BackupApontaTO backupApontaTO = (BackupApontaTO) itens.get(position);
+        if(backupApontaTO.getParadaAponta() == 0) {
             AtividadeTO atividadeTO = new AtividadeTO();
-            List atividadeList = atividadeTO.get("idAtiv", backupApontaMMTO.getAtividadeAponta());
+            List atividadeList = atividadeTO.get("idAtiv", backupApontaTO.getAtividadeAponta());
             atividadeTO = (AtividadeTO) atividadeList.get(0);
             textViewHistApont.setText("ATIVIDADE: " + atividadeTO.getCodAtiv() + " - " + atividadeTO.getDescrAtiv());
             textViewHistApont.setTextColor(Color.BLUE);
         }
         else{
             ParadaTO paradaTO = new ParadaTO();
-            List paradaList = paradaTO.get("idParada", backupApontaMMTO.getParadaAponta());
+            List paradaList = paradaTO.get("idParada", backupApontaTO.getParadaAponta());
             paradaTO = (ParadaTO) paradaList.get(0);
             textViewHistApont.setText("PARADA: " + paradaTO.getCodParada() + " - " + paradaTO.getDescrParada());
             textViewHistApont.setTextColor(Color.RED);
         }
 
-        textViewHistHorario.setText("HORÁRIO: " + backupApontaMMTO.getDthrAponta().substring(11));
+        textViewHistHorario.setText("HORÁRIO: " + backupApontaTO.getDthrAponta().substring(11));
 
-        if(backupApontaMMTO.getTransbordoAponta() > 0){
-            textViewHistImplTransb.setText("TRANSBORDO: " + backupApontaMMTO.getTransbordoAponta());
+        if(backupApontaTO.getTransbAponta() > 0){
+            textViewHistImplTransb.setText("TRANSBORDO: " + backupApontaTO.getTransbAponta());
         }
         else{
             textViewHistImplTransb.setText("");

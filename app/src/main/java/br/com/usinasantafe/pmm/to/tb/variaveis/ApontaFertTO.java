@@ -34,6 +34,12 @@ public class ApontaFertTO extends Entidade {
     private Long velocApontaFert;
     @DatabaseField
     private Long bocalApontaFert;
+    @DatabaseField
+    private Double latitudeApontaFert;
+    @DatabaseField
+    private Double longitudeApontaFert;
+    @DatabaseField
+    private Long statusConApontaFert;  //0 - OffLine; 1 - OnLine
 
     public ApontaFertTO() {
     }
@@ -114,4 +120,27 @@ public class ApontaFertTO extends Entidade {
         this.bocalApontaFert = bocalApontaFert;
     }
 
+    public Long getStatusConApontaFert() {
+        return statusConApontaFert;
+    }
+
+    public void setStatusConApontaFert(Long statusConApontaFert) {
+        this.statusConApontaFert = statusConApontaFert;
+    }
+
+    public Double getLatitudeApontaFert() {
+        return latitudeApontaFert;
+    }
+
+    public void setLatitudeApontaFert(Double latitudeApontaFert) {
+        this.latitudeApontaFert = latitudeApontaFert;
+    }
+
+    public Double getLongitudeApontaFert() {
+        return longitudeApontaFert;
+    }
+
+    public void setLongitudeApontaFert(Double longitudeApontaFert) {
+        this.longitudeApontaFert = longitudeApontaFert;
+    }
 }

@@ -15,12 +15,12 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
 /**
  * Created by anderson on 19/10/2015.
  */
-public class AdapterListMangRec extends BaseAdapter {
+public class AdapterListRecol extends BaseAdapter {
 
     private List itens;
     private LayoutInflater layoutInflater;
 
-    public AdapterListMangRec(Context context, List itens) {
+    public AdapterListRecol(Context context, List itens) {
         // TODO Auto-generated constructor stub
         this.itens = itens;
         layoutInflater = LayoutInflater.from(context);
@@ -44,7 +44,7 @@ public class AdapterListMangRec extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
 
-        view = layoutInflater.inflate(R.layout.activity_item_rec_mang, null);
+        view = layoutInflater.inflate(R.layout.activity_item_os_recol, null);
 
         TextView textViewEquipRecMang = (TextView) view.findViewById(R.id.textViewEquipRecMang);
         TextView textViewOSRecMang = (TextView) view.findViewById(R.id.textViewOSRecMang);

@@ -59,9 +59,21 @@ public class OSActivity extends ActivityGeneric {
                         OSTO osTO = new OSTO();
 
                         if (pmmContext.getVerPosTela() == 1) {
-                            pmmContext.getBoletimMMTO().setOsBoletim(Long.parseLong(editTextPadrao.getText().toString()));
-                        } else {
-                            pmmContext.getApontaMMTO().setOsAponta(Long.parseLong(editTextPadrao.getText().toString()));
+                            if(pmmContext.getTipoEquip() == 1) {
+                                pmmContext.getBoletimMMTO().setOsBoletim(Long.parseLong(editTextPadrao.getText().toString()));
+                            }
+                            else {
+                                pmmContext.getBoletimFertTO().setOsBolFert(Long.parseLong(editTextPadrao.getText().toString()));
+                            }
+                        }
+                        else {
+                            if(pmmContext.getTipoEquip() == 1) {
+                                pmmContext.getApontaMMTO().setOsAponta(Long.parseLong(editTextPadrao.getText().toString()));
+                            }
+                            else {
+                                pmmContext.getApontaFertTO().setOsApontaFert(Long.parseLong(editTextPadrao.getText().toString()));
+                            }
+
                         }
 
                         ConexaoWeb conexaoWeb = new ConexaoWeb();

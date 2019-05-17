@@ -1,14 +1,12 @@
 package br.com.usinasantafe.pmm;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaMMTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
 
 public class ListaHistApontaActivity extends ActivityGeneric {
 
@@ -19,10 +17,10 @@ public class ListaHistApontaActivity extends ActivityGeneric {
 
         Button buttonRetHistorico = (Button) findViewById(R.id.buttonRetHistorico);
 
-        BackupApontaMMTO backupApontaMMTO = new BackupApontaMMTO();
+        BackupApontaTO backupApontaTO = new BackupApontaTO();
 
         ListView listaHistorico = (ListView) findViewById(R.id.listaHistorico);
-        AdapterListHistorico adapterListHistorico = new AdapterListHistorico(this, backupApontaMMTO.all());
+        AdapterListHistorico adapterListHistorico = new AdapterListHistorico(this, backupApontaTO.all());
         listaHistorico.setAdapter(adapterListHistorico);
 
         buttonRetHistorico.setOnClickListener(new View.OnClickListener() {

@@ -55,8 +55,7 @@
     <string name="texto_pressao">PRESSÃO:</string>
     <string name="texto_velocidade">VELOCIDADE (M):</string>
     <string name="texto_raio">RAIO:</string>
-    <string name="texto_titulo_rec_mag">MANGUEIRA RECOLHIDA (M)</string>
-    <string name="texto_rec_mang_equip">EQUIP: 745</string>
+    <string name="texto_titulo_recolhimento">OS X RECOLHIMENTO</string>
     <string name="texto_rec_mang_nro_os">NRO OS: 101946</string>
     <string name="texto_rec_mang_valor">RECOL. DE MANG.: 100</string>
     <string name="texto_acopla_carretel">ACOPLA CARRETEL</string>

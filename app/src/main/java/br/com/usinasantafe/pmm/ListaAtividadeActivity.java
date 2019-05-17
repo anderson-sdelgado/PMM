@@ -23,9 +23,11 @@ import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaMMTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.TransbordoTO;
 
@@ -171,8 +173,15 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                 if (pmmContext.getVerPosTela() == 1) {
 
-                    pmmContext.getBoletimMMTO().setAtivPrincBoletim(atividadeTO.getIdAtiv());
-                    pmmContext.getBoletimMMTO().setStatusConBoletim(configTO.getStatusConConfig());
+                    if(pmmContext.getTipoEquip() == 1) {
+                        pmmContext.getBoletimMMTO().setAtivPrincBoletim(atividadeTO.getIdAtiv());
+                        pmmContext.getBoletimMMTO().setStatusConBoletim(configTO.getStatusConConfig());
+                    }
+                    else {
+                        pmmContext.getBoletimFertTO().setAtivPrincBolFert(atividadeTO.getIdAtiv());
+                        pmmContext.getBoletimFertTO().setStatusConBolFert(configTO.getStatusConConfig());
+                    }
+
                     pmmContext.setTextoHorimetro("HORÍMETRO INICIAL:");
                     Intent it = new Intent(ListaAtividadeActivity.this, HorimetroActivity.class);
                     startActivity(it);
@@ -183,9 +192,16 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                 } else if ((pmmContext.getVerPosTela() == 2)) {
 
-                    pmmContext.getApontaMMTO().setAtividadeAponta(atividadeTO.getIdAtiv());
-                    pmmContext.getApontaMMTO().setStatusConAponta(configTO.getStatusConConfig());
-                    pmmContext.getApontaMMTO().setParadaAponta(0L);
+                    if(pmmContext.getTipoEquip() == 1) {
+                        pmmContext.getApontaMMTO().setAtividadeAponta(atividadeTO.getIdAtiv());
+                        pmmContext.getApontaMMTO().setStatusConAponta(configTO.getStatusConConfig());
+                        pmmContext.getApontaMMTO().setParadaAponta(0L);
+                    }
+                    else{
+                        pmmContext.getApontaFertTO().setAtivApontaFert(atividadeTO.getIdAtiv());
+                        pmmContext.getApontaFertTO().setStatusConApontaFert(configTO.getStatusConConfig());
+                        pmmContext.getApontaFertTO().setParadaApontaFert(0L);
+                    }
 
                     if (verifBackup()) {
 
@@ -215,44 +231,91 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                 pmmContext.getApontaMMTO().setTransbordoAponta(0L);
                             }
 
-                            pmmContext.getApontaMMTO().setLatitudeAponta(getLatitude());
-                            pmmContext.getApontaMMTO().setLongitudeAponta(getLongitude());
-                            ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 2L);
+                            if(pmmContext.getTipoEquip() == 1) {
 
-                            if (atividadeTO.getFlagRendimento() == 1) {
+                                pmmContext.getApontaMMTO().setLatitudeAponta(getLatitude());
+                                pmmContext.getApontaMMTO().setLongitudeAponta(getLongitude());
+                                ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 2L);
 
-                                BoletimMMTO boletimMMTO = new BoletimMMTO();
-                                List listBoletim = boletimMMTO.get("statusBoletim", 1L);
+                                if (atividadeTO.getFlagRendimento() == 1) {
 
-                                if (listBoletim.size() > 0) {
+                                    BoletimMMTO boletimMMTO = new BoletimMMTO();
+                                    List boletimList = boletimMMTO.get("statusBoletim", 1L);
 
-                                    boletimMMTO = (BoletimMMTO) listBoletim.get(0);
+                                    if (boletimList.size() > 0) {
 
-                                    RendimentoTO rendimentoTO = new RendimentoTO();
-                                    ArrayList listaPesq = new ArrayList();
+                                        boletimMMTO = (BoletimMMTO) boletimList.get(0);
+
+                                        RendimentoTO rendimentoTO = new RendimentoTO();
+                                        ArrayList listaPesq = new ArrayList();
+
+                                        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+                                        pesquisa.setCampo("idBolRendimento");
+                                        pesquisa.setValor(boletimMMTO.getIdBoletim());
+                                        listaPesq.add(pesquisa);
+
+                                        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
+                                        pesquisa2.setCampo("nroOSRendimento");
+                                        pesquisa2.setValor(pmmContext.getApontaMMTO().getOsAponta());
+                                        listaPesq.add(pesquisa2);
+
+                                        List rendList = rendimentoTO.get(listaPesq);
+
+                                        if (rendList.size() == 0) {
+                                            rendimentoTO.setIdBolRendimento(boletimMMTO.getIdBoletim());
+                                            rendimentoTO.setIdExtBolRendimento(boletimMMTO.getIdExtBoletim());
+                                            rendimentoTO.setNroOSRendimento(pmmContext.getApontaMMTO().getOsAponta());
+                                            rendimentoTO.setValorRendimento(0D);
+                                            rendimentoTO.insert();
+                                            rendimentoTO.commit();
+                                        }
+
+                                    }
+
+                                    boletimList.clear();
+
+                                }
+
+                            }
+                            else{
+                                pmmContext.getApontaFertTO().setLatitudeApontaFert(getLatitude());
+                                pmmContext.getApontaFertTO().setLongitudeApontaFert(getLongitude());
+                                ManipDadosEnvio.getInstance().salvaApontaFert(pmmContext.getApontaMMTO(), 2L);
+
+                                BoletimFertTO boletimFertTO = new BoletimFertTO();
+                                List boletimList = boletimFertTO.get("statusBolFert", 1L);
+
+                                if (boletimList.size() > 0) {
+
+                                    boletimFertTO = (BoletimFertTO) boletimList.get(0);
+
+                                    RecolhimentoTO recolhimentoTO = new RecolhimentoTO();
+                                    ArrayList pesqList = new ArrayList();
 
                                     EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-                                    pesquisa.setCampo("idBolRendimento");
-                                    pesquisa.setValor(boletimMMTO.getIdBoletim());
-                                    listaPesq.add(pesquisa);
+                                    pesquisa.setCampo("idBolRecol");
+                                    pesquisa.setValor(boletimFertTO.getIdBolFert());
+                                    pesqList.add(pesquisa);
 
                                     EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-                                    pesquisa2.setCampo("nroOSRendimento");
-                                    pesquisa2.setValor(pmmContext.getApontaMMTO().getOsAponta());
-                                    listaPesq.add(pesquisa2);
+                                    pesquisa2.setCampo("nroOSRecol");
+                                    pesquisa2.setValor(pmmContext.getApontaFertTO().getOsApontaFert());
+                                    pesqList.add(pesquisa2);
 
-                                    List rendList = rendimentoTO.get(listaPesq);
+                                    List rendList = recolhimentoTO.get(pesqList);
 
                                     if (rendList.size() == 0) {
-                                        rendimentoTO.setIdBolRendimento(boletimMMTO.getIdBoletim());
-                                        rendimentoTO.setIdExtBolRendimento(boletimMMTO.getIdExtBoletim());
-                                        rendimentoTO.setNroOSRendimento(pmmContext.getApontaMMTO().getOsAponta());
-                                        rendimentoTO.setValorRendimento(0D);
-                                        rendimentoTO.insert();
-                                        rendimentoTO.commit();
+                                        recolhimentoTO.setIdBolRecol(boletimFertTO.getIdBolFert());
+                                        recolhimentoTO.setIdExtBolRecol(boletimFertTO.getIdExtBolFert());
+                                        recolhimentoTO.setNroOSRecol(pmmContext.getApontaFertTO().getOsApontaFert());
+                                        recolhimentoTO.setValorRecol(0L);
+                                        recolhimentoTO.insert();
+                                        recolhimentoTO.commit();
                                     }
 
                                 }
+
+                                boletimList.clear();
 
                             }
 
@@ -280,8 +343,14 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                 } else if ((pmmContext.getVerPosTela() == 3)) {
 
-                    pmmContext.getApontaMMTO().setAtividadeAponta(atividadeTO.getIdAtiv());
-                    pmmContext.getApontaMMTO().setStatusConAponta(configTO.getStatusConConfig());
+                    if(pmmContext.getTipoEquip() == 1) {
+                        pmmContext.getApontaMMTO().setAtividadeAponta(atividadeTO.getIdAtiv());
+                        pmmContext.getApontaMMTO().setStatusConAponta(configTO.getStatusConConfig());
+                    }
+                    else{
+                        pmmContext.getApontaFertTO().setAtivApontaFert(atividadeTO.getIdAtiv());
+                        pmmContext.getApontaFertTO().setStatusConApontaFert(configTO.getStatusConConfig());
+                    }
                     Intent it = new Intent(ListaAtividadeActivity.this, ListaParadaActivity.class);
                     startActivity(it);
                     finish();
@@ -302,20 +371,25 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
         boolean v = false;
 
-        BackupApontaMMTO backupApontaMMTO = new BackupApontaMMTO();
-        List bkpApontaList = backupApontaMMTO.all();
+        BackupApontaTO backupApontaTO = new BackupApontaTO();
+        List bkpApontaList = backupApontaTO.all();
 
         if (bkpApontaList.size() > 0) {
-
-            backupApontaMMTO = (BackupApontaMMTO) bkpApontaList.get(bkpApontaList.size() - 1);
-            if ((pmmContext.getApontaMMTO().getOsAponta().equals(backupApontaMMTO.getOsAponta()))
-                    && (pmmContext.getApontaMMTO().getAtividadeAponta().equals(backupApontaMMTO.getAtividadeAponta()))
-                    && (pmmContext.getApontaMMTO().getParadaAponta().equals(backupApontaMMTO.getParadaAponta()))) {
-
-                v = true;
-
+            backupApontaTO = (BackupApontaTO) bkpApontaList.get(bkpApontaList.size() - 1);
+            if(pmmContext.getTipoEquip() == 1) {
+                if ((pmmContext.getApontaMMTO().getOsAponta().equals(backupApontaTO.getOsAponta()))
+                        && (pmmContext.getApontaMMTO().getAtividadeAponta().equals(backupApontaTO.getAtividadeAponta()))
+                        && (pmmContext.getApontaMMTO().getParadaAponta().equals(backupApontaTO.getParadaAponta()))) {
+                    v = true;
+                }
             }
-
+            else{
+                if ((pmmContext.getApontaFertTO().getOsApontaFert().equals(backupApontaTO.getOsAponta()))
+                        && (pmmContext.getApontaFertTO().getAtivApontaFert().equals(backupApontaTO.getAtividadeAponta()))
+                        && (pmmContext.getApontaFertTO().getParadaApontaFert().equals(backupApontaTO.getParadaAponta()))) {
+                    v = true;
+                }
+            }
         }
 
         return v;

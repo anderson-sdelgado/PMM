@@ -22,7 +22,7 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaMMTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
@@ -102,7 +102,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, TransbordoTO.class);
 			TableUtils.createTable(cs, ImplementoTO.class);
 			TableUtils.createTable(cs, AlocaCarretelTO.class);
-			TableUtils.createTable(cs, BackupApontaMMTO.class);
+			TableUtils.createTable(cs, BackupApontaTO.class);
 			TableUtils.createTable(cs, BoletimPneuTO.class);
 			TableUtils.createTable(cs, ItemMedPneuTO.class);
 			TableUtils.createTable(cs, BoletimFertTO.class);

@@ -9,33 +9,25 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="br.com.usinasantafe.pmm.ListaAcoplaCarretelActivity">
+    tools:context="br.com.usinasantafe.pmm.ListaOSRecolActivity">
 
     <TextView
-        android:id="@+id/textViewTituloListaCarretel"
+        android:id="@+id/textViewRecMang"
         style="@style/TextViewTituloLista"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/texto_carretel" />
+        android:text="@string/texto_titulo_recolhimento" />
 
     <ListView
-        android:id="@+id/listaCarretel"
+        android:id="@+id/listaRecMang"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        />
 
     <Button
-        android:id="@+id/buttonRetListaCarretel"
+        android:id="@+id/buttonRetRecMang"
         style="@style/BotaoAvulso"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/texto_padrao_retorna" />
-
-    <Button
-        android:id="@+id/buttonSalvarListaCarretel"
-        style="@style/BotaoAvulso"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/texto_padrao_ok" />
 
 </LinearLayout>

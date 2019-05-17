@@ -26,7 +26,6 @@ public class PMMContext extends Application {
     // 4 - Finalizar Boletim Moto Mec;
     // 6 - Trocar Transbordo;
     // 7 - Editar Rendimento;
-    // 10 - Finalizar Turno Fert;
     // 14 - Recolhimento de Mangueira;
     // 19 - Trocar de implemento
     private int contImplemento;
@@ -34,8 +33,8 @@ public class PMMContext extends Application {
     public static String versaoAplic = "2";
     private int contRendimento;
     private int posRendimento;
-    private int contRecolMangFert;
-    private int posRecolMangFert;
+    private int contRecolhimento;
+    private int posRecolhimento;
     private String verAtualCL;
     private Long posChecklist;
     private int tipoEquip; //1 - Tipo Motomec; 2 - Tipo Fertirrigação
@@ -132,20 +131,20 @@ public class PMMContext extends Application {
         this.posRendimento = posRendimento;
     }
 
-    public int getContRecolMangFert() {
-        return contRecolMangFert;
+    public int getContRecolhimento() {
+        return contRecolhimento;
     }
 
-    public void setContRecolMangFert(int contRecolMangFert) {
-        this.contRecolMangFert = contRecolMangFert;
+    public void setContRecolhimento(int contRecolhimento) {
+        this.contRecolhimento = contRecolhimento;
     }
 
-    public int getPosRecolMangFert() {
-        return posRecolMangFert;
+    public int getPosRecolhimento() {
+        return posRecolhimento;
     }
 
-    public void setPosRecolMangFert(int posRecolMangFert) {
-        this.posRecolMangFert = posRecolMangFert;
+    public void setPosRecolhimento(int posRecolhimento) {
+        this.posRecolhimento = posRecolhimento;
     }
 
     public String getVerAtualCL() {

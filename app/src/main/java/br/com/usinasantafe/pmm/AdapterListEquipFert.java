@@ -2,7 +2,6 @@ package br.com.usinasantafe.pmm;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.AlocaCarretelTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaAplicFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaMMTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
 
 /**
  * Created by anderson on 19/10/2015.
@@ -77,17 +74,17 @@ public class AdapterListEquipFert extends BaseAdapter {
 
         boolean v = false;
 
-        BackupApontaMMTO backupApontaMMTO = new BackupApontaMMTO();
-        List bkpApontaList = backupApontaMMTO.all();
+        BackupApontaTO backupApontaTO = new BackupApontaTO();
+        List bkpApontaList = backupApontaTO.all();
 
         if (bkpApontaList.size() > 0) {
-            backupApontaMMTO = (BackupApontaMMTO) bkpApontaList.get(bkpApontaList.size() - 1);
+            backupApontaTO = (BackupApontaTO) bkpApontaList.get(bkpApontaList.size() - 1);
             if (this.tela == 1) {
-                if (backupApontaMMTO.getParadaAponta() == 0L){
+                if (backupApontaTO.getParadaAponta() == 0L){
                     v = true;
                 }
             } else {
-                if (backupApontaMMTO.getParadaAponta() > 0L){
+                if (backupApontaTO.getParadaAponta() > 0L){
                     v = true;
                 }
             }

@@ -11,10 +11,9 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipSegTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
 
-public class RecolMangFertActivity extends ActivityGeneric {
+public class RecolhimentoActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private RecolhimentoTO recolhimentoTO;
@@ -23,7 +22,7 @@ public class RecolMangFertActivity extends ActivityGeneric {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recol_mang_fert);
+        setContentView(R.layout.activity_recolhimento);
 
         pmmContext = (PMMContext) getApplication();
 
@@ -34,21 +33,17 @@ public class RecolMangFertActivity extends ActivityGeneric {
 
         int cont = 0;
 
-        if (pmmContext.getVerPosTela() == 10) {
-            cont = pmmContext.getContRecolMangFert() - 1;
+        if (pmmContext.getVerPosTela() == 4) {
+            cont = pmmContext.getContRecolhimento() - 1;
         } else if (pmmContext.getVerPosTela() == 14) {
-            cont = pmmContext.getPosRecolMangFert();
+            cont = pmmContext.getPosRecolhimento();
         }
 
         recolhimentoTO = new RecolhimentoTO();
-        recolList = recolhimentoTO.orderBy("idRendMangRecol", true);
+        recolList = recolhimentoTO.orderBy("idRecol", true);
         recolhimentoTO = (RecolhimentoTO) recolList.get(cont);
 
-        EquipSegTO equipSegTO = new EquipSegTO();
-//        List equipSegList = equipSegTO.get("idEquip", recolhimentoTO.getEquipRecol());
-//        equipSegTO = (EquipSegTO) equipSegList.get(0);
-
-        textViewRecolMang.setText("Equipamento: " + equipSegTO.getCodEquip() + " \nOS: " + recolhimentoTO.getNroOSRecol() + " \nRecol. Mangueira:");
+        textViewRecolMang.setText("OS: " + recolhimentoTO.getNroOSRecol() + " \nRECOL. MANGUEIRA:");
         if (recolhimentoTO.getValorRecol() > 0) {
             editText.setText(String.valueOf(recolhimentoTO.getValorRecol()));
         } else {
@@ -60,7 +55,7 @@ public class RecolMangFertActivity extends ActivityGeneric {
             public void onClick(View v) {
 
                 // TODO Auto-generated method stub
-                if (pmmContext.getVerPosTela() == 10) {
+                if (pmmContext.getVerPosTela() == 4) {
 
                     if (!editTextPadrao.getText().toString().equals("")) {
 
@@ -72,18 +67,18 @@ public class RecolMangFertActivity extends ActivityGeneric {
                         recolhimentoTO.update();
                         recolhimentoTO.commit();
 
-                        if (recolList.size() == pmmContext.getContRecolMangFert()) {
+                        if (recolList.size() == pmmContext.getContRecolhimento()) {
 
-                            ManipDadosEnvio.getInstance().salvaBoletimFechado();
+                            ManipDadosEnvio.getInstance().salvaBoletimFechadoFert();
                             ManipDadosEnvio.getInstance().envioDadosPrinc();
-                            Intent it = new Intent(RecolMangFertActivity.this, MenuInicialActivity.class);
+                            Intent it = new Intent(RecolhimentoActivity.this, MenuInicialActivity.class);
                             startActivity(it);
                             finish();
 
                         } else {
 
-                            pmmContext.setContRecolMangFert(pmmContext.getContRecolMangFert() + 1);
-                            Intent it = new Intent(RecolMangFertActivity.this, RecolMangFertActivity.class);
+                            pmmContext.setContRecolhimento(pmmContext.getContRecolhimento() + 1);
+                            Intent it = new Intent(RecolhimentoActivity.this, RecolhimentoActivity.class);
                             startActivity(it);
                             finish();
 
@@ -101,16 +96,12 @@ public class RecolMangFertActivity extends ActivityGeneric {
                         recolhimentoTO.update();
                         recolhimentoTO.commit();
 
-                        Intent it = new Intent(RecolMangFertActivity.this, ListaRecMangActivity.class);
-                        startActivity(it);
-                        finish();
-
-
-                    } else {
-                        Intent it = new Intent(RecolMangFertActivity.this, MenuPrincNormalActivity.class);
-                        startActivity(it);
-                        finish();
                     }
+
+                    Intent it = new Intent(RecolhimentoActivity.this, ListaOSRecolActivity.class);
+                    startActivity(it);
+                    finish();
+
                 }
 
             }
@@ -131,12 +122,12 @@ public class RecolMangFertActivity extends ActivityGeneric {
     }
 
     public void onBackPressed() {
-        if (pmmContext.getVerPosTela() == 11) {
-            Intent it = new Intent(RecolMangFertActivity.this, HorimetroActivity.class);
+        if (pmmContext.getVerPosTela() == 4) {
+            Intent it = new Intent(RecolhimentoActivity.this, HorimetroActivity.class);
             startActivity(it);
             finish();
         } else if (pmmContext.getVerPosTela() == 14) {
-            Intent it = new Intent(RecolMangFertActivity.this, ListaOSRendActivity.class);
+            Intent it = new Intent(RecolhimentoActivity.this, ListaOSRendActivity.class);
             startActivity(it);
             finish();
         }

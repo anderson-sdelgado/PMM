@@ -7,26 +7,34 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.List;
+
+import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
 
-public class ListaRecMangActivity extends ActivityGeneric {
+public class ListaOSRecolActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_rec_mang);
+        setContentView(R.layout.activity_lista_os_recolh);
 
         Button buttonRetRecMang = (Button) findViewById(R.id.buttonRetRecMang);
 
         pmmContext = (PMMContext) getApplication();
 
+        BoletimFertTO boletimFertTO = new BoletimFertTO();
+        List boletimList = boletimFertTO.get("statusBoletim", 1L);
+        boletimFertTO = (BoletimFertTO) boletimList.get(0);
+        boletimList.clear();
+
         RecolhimentoTO recolhimentoTO = new RecolhimentoTO();
 
         ListView listaRecMang = (ListView) findViewById(R.id.listaRecMang);
-        AdapterListMangRec adapterListMangRec = new AdapterListMangRec(this, recolhimentoTO.orderBy("idRendMangRecol", true));
-        listaRecMang.setAdapter(adapterListMangRec);
+        AdapterListRecol adapterListRecol = new AdapterListRecol(this, recolhimentoTO.getAndOrderBy("idBolRecol", boletimFertTO.getIdBolFert(), "idRecol", true));
+        listaRecMang.setAdapter(adapterListRecol);
 
         listaRecMang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -35,8 +43,8 @@ public class ListaRecMangActivity extends ActivityGeneric {
                                     long id) {
                 // TODO Auto-generated method stub
 
-                pmmContext.setPosRendimento(position);
-                Intent it = new Intent(ListaRecMangActivity.this, RecolMangFertActivity.class);
+                pmmContext.setContRecolhimento(position);
+                Intent it = new Intent(ListaOSRecolActivity.this, RecolhimentoActivity.class);
                 startActivity(it);
                 finish();
 
@@ -49,7 +57,7 @@ public class ListaRecMangActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent it = new Intent(ListaRecMangActivity.this, MenuPrincNormalActivity.class);
+                Intent it = new Intent(ListaOSRecolActivity.this, MenuPrincNormalActivity.class);
                 startActivity(it);
                 finish();
             }

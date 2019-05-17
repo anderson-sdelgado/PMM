@@ -16,6 +16,7 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
@@ -27,7 +28,6 @@ public class HorimetroActivity extends ActivityGeneric {
     private PMMContext pmmContext;
     private ConfiguracaoTO configTO;
     private Double horimetroNum;
-    private AtividadeTO atividadeTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +52,7 @@ public class HorimetroActivity extends ActivityGeneric {
                     String horimetro = editTextPadrao.getText().toString();
                     horimetroNum = Double.valueOf(horimetro.replace(",", "."));
 
-                    Long ativPrinc = pmmContext.getBoletimMMTO().getAtivPrincBoletim();
 
-                    atividadeTO = new AtividadeTO();
-                    List lAtiv = atividadeTO.get("idAtiv", ativPrinc);
-                    atividadeTO = (AtividadeTO) lAtiv.get(0);
-                    lAtiv.clear();
 
                     configTO = new ConfiguracaoTO();
                     List listConfigTO = configTO.all();
@@ -68,7 +63,7 @@ public class HorimetroActivity extends ActivityGeneric {
 
                         if (horimetroNum >= configTO.getHorimetroConfig()) {
 
-                            salvarBoletim();
+                            salvarBoletimAberto();
 
                         } else {
 
@@ -79,7 +74,7 @@ public class HorimetroActivity extends ActivityGeneric {
                             alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    salvarBoletim();
+                                    salvarBoletimAberto();
                                 }
 
                             });
@@ -101,38 +96,7 @@ public class HorimetroActivity extends ActivityGeneric {
 
                         if (horimetroNum >= configTO.getHorimetroConfig()) {
 
-                            BoletimMMTO boletimMMTO = new BoletimMMTO();
-                            List listBoletim = boletimMMTO.get("statusBoletim", 1L);
-                            boletimMMTO = (BoletimMMTO) listBoletim.get(0);
-                            listBoletim.clear();
-
-                            boletimMMTO.setHodometroFinalBoletim(horimetroNum);
-                            boletimMMTO.update();
-
-                            configTO.setHorimetroConfig(horimetroNum);
-                            configTO.setDtUltApontConfig("");
-                            configTO.update();
-                            configTO.commit();
-
-                            RendimentoTO rendimentoTO = new RendimentoTO();
-                            List rendimentoList = rendimentoTO.get("idBolRendimento", boletimMMTO.getIdBoletim());
-
-                            if (rendimentoList.size() > 0) {
-
-                                pmmContext.setContRendimento(1);
-                                Intent it = new Intent(HorimetroActivity.this, RendimentoActivity.class);
-                                startActivity(it);
-                                finish();
-
-                            } else {
-
-                                ManipDadosEnvio.getInstance().salvaBoletimFechado();
-                                ManipDadosEnvio.getInstance().envioDadosPrinc();
-                                Intent it = new Intent(HorimetroActivity.this, MenuInicialActivity.class);
-                                startActivity(it);
-                                finish();
-
-                            }
+                            salvarBoletimFechado();
 
                         } else {
 
@@ -145,38 +109,7 @@ public class HorimetroActivity extends ActivityGeneric {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
-                                    BoletimMMTO boletimMMTO = new BoletimMMTO();
-                                    List listBoletim = boletimMMTO.get("statusBoletim", 1L);
-                                    boletimMMTO = (BoletimMMTO) listBoletim.get(0);
-                                    listBoletim.clear();
-
-                                    boletimMMTO.setHodometroFinalBoletim(horimetroNum);
-                                    boletimMMTO.update();
-
-                                    configTO.setHorimetroConfig(horimetroNum);
-                                    configTO.setDtUltApontConfig("");
-                                    configTO.update();
-                                    configTO.commit();
-
-                                    RendimentoTO rendimentoTO = new RendimentoTO();
-                                    List rendimentoList = rendimentoTO.get("idBolRendimento", boletimMMTO.getIdBoletim());
-
-                                    if (rendimentoList.size() > 0) {
-
-                                        pmmContext.setContRendimento(1);
-                                        Intent it = new Intent(HorimetroActivity.this, RendimentoActivity.class);
-                                        startActivity(it);
-                                        finish();
-
-                                    } else {
-
-                                        ManipDadosEnvio.getInstance().salvaBoletimFechado();
-                                        ManipDadosEnvio.getInstance().envioDadosPrinc();
-                                        Intent it = new Intent(HorimetroActivity.this, MenuInicialActivity.class);
-                                        startActivity(it);
-                                        finish();
-
-                                    }
+                                    salvarBoletimFechado();
 
                                 }
 
@@ -189,59 +122,6 @@ public class HorimetroActivity extends ActivityGeneric {
 
                                 }
 
-                            });
-
-                            alerta.show();
-
-                        }
-
-                    } else if (pmmContext.getVerPosTela() == 10) {
-
-                        BoletimMMTO boletimMMTO = new BoletimMMTO();
-                        List listBoletim = boletimMMTO.get("statusBoletim", 1L);
-                        boletimMMTO = (BoletimMMTO) listBoletim.get(0);
-                        listBoletim.clear();
-
-                        if (horimetroNum >= configTO.getHorimetroConfig()) {
-
-                            boletimMMTO.setHodometroFinalBoletim(horimetroNum);
-                            boletimMMTO.update();
-
-                            configTO.setHorimetroConfig(horimetroNum);
-                            configTO.setDtUltApontConfig("");
-                            configTO.update();
-                            configTO.commit();
-
-                            RecolhimentoTO recolhimentoTO = new RecolhimentoTO();
-                            List rendMangRecolList = recolhimentoTO.get("statusRendMangRecol", 1L);
-
-                            if (rendMangRecolList.size() > 0) {
-
-                                pmmContext.setContRecolMangFert(1);
-                                Intent it = new Intent(HorimetroActivity.this, RecolMangFertActivity.class);
-                                startActivity(it);
-                                finish();
-
-                            } else {
-
-                                ManipDadosEnvio.getInstance().salvaBoletimFechado();
-                                ManipDadosEnvio.getInstance().envioDadosPrinc();
-                                Intent it = new Intent(HorimetroActivity.this, MenuInicialActivity.class);
-                                startActivity(it);
-                                finish();
-
-                            }
-
-                        } else {
-
-                            AlertDialog.Builder alerta = new AlertDialog.Builder(HorimetroActivity.this);
-                            alerta.setTitle("ATENÇÃO");
-                            alerta.setMessage("O VALOR DO HORIMETRO DIGITADO " + horimetroNum + " É MENOR DO QUE O INICIAL " + configTO.getHorimetroConfig() + "! POR FAVOR, CORRIJA O VALOR DIGITADO.");
-                            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
                             });
 
                             alerta.show();
@@ -268,11 +148,26 @@ public class HorimetroActivity extends ActivityGeneric {
 
     }
 
-    public void salvarBoletim() {
+    public void salvarBoletimAberto() {
 
-        pmmContext.getBoletimMMTO().setHodometroInicialBoletim(horimetroNum);
-        pmmContext.getBoletimMMTO().setHodometroFinalBoletim(0D);
-        pmmContext.getBoletimMMTO().setIdExtBoletim(0L);
+        Long ativPrinc;
+        if(pmmContext.getTipoEquip() == 1) {
+            ativPrinc = pmmContext.getBoletimMMTO().getAtivPrincBoletim();
+            pmmContext.getBoletimMMTO().setHodometroInicialBoletim(horimetroNum);
+            pmmContext.getBoletimMMTO().setHodometroFinalBoletim(0D);
+            pmmContext.getBoletimMMTO().setIdExtBoletim(0L);
+        }
+        else{
+            ativPrinc = pmmContext.getBoletimFertTO().getAtivPrincBolFert();
+            pmmContext.getBoletimFertTO().setHodometroInicialBolFert(horimetroNum);
+            pmmContext.getBoletimFertTO().setHodometroFinalBolFert(0D);
+            pmmContext.getBoletimFertTO().setIdExtBolFert(0L);
+        }
+
+        AtividadeTO atividadeTO = new AtividadeTO();
+        List lAtiv = atividadeTO.get("idAtiv", ativPrinc);
+        atividadeTO = (AtividadeTO) lAtiv.get(0);
+        lAtiv.clear();
 
         if (atividadeTO.getFlagImplemento() == 1) {
 
@@ -283,23 +178,45 @@ public class HorimetroActivity extends ActivityGeneric {
 
         } else {
 
+            configTO.setHorimetroConfig(horimetroNum);
+            configTO.update();
+            configTO.commit();
+
+            if(pmmContext.getTipoEquip() == 1) {
+                pmmContext.getBoletimMMTO().setStatusBoletim(1L);
+                ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true, getLatitude(), getLongitude());
+            }
+            else{
+                pmmContext.getBoletimFertTO().setStatusBolFert(1L);
+                ManipDadosEnvio.getInstance().salvaBoletimAbertoFert(pmmContext.getBoletimMMTO(), true, getLatitude(), getLongitude());
+            }
+
+            ManipDadosEnvio.getInstance().envioDadosPrinc();
+
+            Long equip;
+            Long turno;
+            if(pmmContext.getTipoEquip() == 1) {
+                equip = pmmContext.getBoletimMMTO().getCodEquipBoletim();
+                turno = pmmContext.getBoletimMMTO().getCodTurnoBoletim();
+            }
+            else{
+                equip = pmmContext.getBoletimFertTO().getCodEquipBolFert();
+                turno = pmmContext.getBoletimFertTO().getCodTurnoBolFert();
+            }
+
             EquipTO equipTO = new EquipTO();
-            List equipList = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getCodEquipBoletim());
+            List equipList = equipTO.get("idEquip", equip);
             equipTO = (EquipTO) equipList.get(0);
             equipList.clear();
 
             TurnoTO turnoTO = new TurnoTO();
-            List turnoList = turnoTO.get("idTurno", pmmContext.getBoletimMMTO().getCodTurnoBoletim());
+            List turnoList = turnoTO.get("idTurno", turno);
             turnoTO = (TurnoTO) turnoList.get(0);
 
             if ((equipTO.getIdChecklist() > 0) &&
                     ((configTO.getUltTurnoCLConfig() != turnoTO.getIdTurno())
                             || ((configTO.getUltTurnoCLConfig() == turnoTO.getIdTurno())
                             && (!configTO.getDtUltCLConfig().equals(Tempo.getInstance().dataSHora()))))) {
-
-                pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true, getLatitude(), getLongitude());
-                ManipDadosEnvio.getInstance().envioDadosPrinc();
 
                 pmmContext.setPosChecklist(1L);
 
@@ -334,13 +251,6 @@ public class HorimetroActivity extends ActivityGeneric {
 
             } else {
 
-                configTO.setHorimetroConfig(horimetroNum);
-                configTO.update();
-                configTO.commit();
-                pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false, getLatitude(), getLongitude());
-                ManipDadosEnvio.getInstance().envioDadosPrinc();
-
 //                    GRAFICO
 //                    Intent it = new Intent(HorimetroActivity.this, EsperaGrafActivity.class);
 //                    startActivity(it);
@@ -352,6 +262,74 @@ public class HorimetroActivity extends ActivityGeneric {
                 finish();
 
             }
+
+        }
+
+    }
+
+    public void salvarBoletimFechado() {
+
+        configTO.setHorimetroConfig(horimetroNum);
+        configTO.setDtUltApontConfig("");
+        configTO.update();
+        configTO.commit();
+
+        if(pmmContext.getTipoEquip() == 1) {
+
+            BoletimMMTO boletimMMTO = new BoletimMMTO();
+            List boletimList = boletimMMTO.get("statusBoletim", 1L);
+            boletimMMTO = (BoletimMMTO) boletimList.get(0);
+            boletimList.clear();
+
+            boletimMMTO.setHodometroFinalBoletim(horimetroNum);
+            boletimMMTO.update();
+
+            RendimentoTO rendimentoTO = new RendimentoTO();
+            List rendimentoList = rendimentoTO.get("idBolRendimento", boletimMMTO.getIdBoletim());
+
+            if (rendimentoList.size() > 0) {
+                pmmContext.setContRendimento(1);
+                Intent it = new Intent(HorimetroActivity.this, RendimentoActivity.class);
+                startActivity(it);
+                finish();
+            } else {
+                ManipDadosEnvio.getInstance().salvaBoletimFechadoMM();
+                ManipDadosEnvio.getInstance().envioDadosPrinc();
+                Intent it = new Intent(HorimetroActivity.this, MenuInicialActivity.class);
+                startActivity(it);
+                finish();
+            }
+
+            rendimentoList.clear();
+
+        }
+        else{
+
+            BoletimFertTO boletimFertTO = new BoletimFertTO();
+            List boletimList = boletimFertTO.get("statusBolFert", 1L);
+            boletimFertTO = (BoletimFertTO) boletimList.get(0);
+            boletimList.clear();
+
+            boletimFertTO.setHodometroFinalBolFert(horimetroNum);
+            boletimFertTO.update();
+
+            RecolhimentoTO recolhimentoTO = new RecolhimentoTO();
+            List recolhimentoList = recolhimentoTO.get("idBolRecol", boletimFertTO.getIdBolFert());
+
+            if (recolhimentoList.size() > 0) {
+                pmmContext.setContRecolhimento(1);
+                Intent it = new Intent(HorimetroActivity.this, RecolhimentoActivity.class);
+                startActivity(it);
+                finish();
+            } else {
+                ManipDadosEnvio.getInstance().salvaBoletimFechadoFert();
+                ManipDadosEnvio.getInstance().envioDadosPrinc();
+                Intent it = new Intent(HorimetroActivity.this, MenuInicialActivity.class);
+                startActivity(it);
+                finish();
+            }
+
+            recolhimentoList.clear();
 
         }
 

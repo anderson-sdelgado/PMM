@@ -126,7 +126,12 @@ public class ListaTurnoActivity extends ActivityGeneric {
                 // TODO Auto-generated method stub
 
                 TurnoTO turnoTO = (TurnoTO) listTurno.get(position);
-                pmmContext.getBoletimMMTO().setCodTurnoBoletim(turnoTO.getIdTurno());
+                if(pmmContext.getTipoEquip() == 1) {
+                    pmmContext.getBoletimMMTO().setCodTurnoBoletim(turnoTO.getIdTurno());
+                }
+                else{
+                    pmmContext.getBoletimFertTO().setCodTurnoBolFert(turnoTO.getIdTurno());
+                }
                 listTurno.clear();
 
                 Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);

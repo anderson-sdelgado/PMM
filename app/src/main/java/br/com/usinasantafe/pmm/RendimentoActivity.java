@@ -90,7 +90,7 @@ public class RendimentoActivity extends ActivityGeneric {
 
                             if (rendList.size() == pmmContext.getContRendimento()) {
 
-                                ManipDadosEnvio.getInstance().salvaBoletimFechado();
+                                ManipDadosEnvio.getInstance().salvaBoletimFechadoMM();
                                 ManipDadosEnvio.getInstance().envioDadosPrinc();
                                 Intent it = new Intent(RendimentoActivity.this, MenuInicialActivity.class);
                                 startActivity(it);

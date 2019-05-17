@@ -18,7 +18,7 @@ import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.tb.estaticas.GrafProdPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaMMTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
@@ -64,7 +64,7 @@ public class ManipDadosEnvio {
 
     }
 
-    public void salvaBoletimFechado() {
+    public void salvaBoletimFechadoMM() {
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
         List listBoletim = boletimMMTO.get("statusBoletim", 1L);
@@ -75,8 +75,8 @@ public class ManipDadosEnvio {
         boletimMMTO.setStatusBoletim(2L);
         boletimMMTO.update();
 
-        BackupApontaMMTO backupApontaMMTO = new BackupApontaMMTO();
-        backupApontaMMTO.deleteAll();
+        BackupApontaTO backupApontaTO = new BackupApontaTO();
+        backupApontaTO.deleteAll();
 
     }
 
@@ -113,13 +113,13 @@ public class ManipDadosEnvio {
             apontaMMTO.setStatusAponta(2L);
             apontaMMTO.insert();
 
-            BackupApontaMMTO backupApontaMMTO = new BackupApontaMMTO();
-            backupApontaMMTO.setDthrAponta(datahora);
-            backupApontaMMTO.setOsAponta(boletimMMTO.getOsBoletim());
-            backupApontaMMTO.setAtividadeAponta(boletimMMTO.getAtivPrincBoletim());
-            backupApontaMMTO.setParadaAponta(180L);
-            backupApontaMMTO.setTransbordoAponta(0L);
-            backupApontaMMTO.insert();
+            BackupApontaTO backupApontaTO = new BackupApontaTO();
+            backupApontaTO.setDthrAponta(datahora);
+            backupApontaTO.setOsAponta(boletimMMTO.getOsBoletim());
+            backupApontaTO.setAtividadeAponta(boletimMMTO.getAtivPrincBoletim());
+            backupApontaTO.setParadaAponta(180L);
+            backupApontaTO.setTransbAponta(0L);
+            backupApontaTO.insert();
 
             ImplementoTO implementoTO = new ImplementoTO();
             List implementoList = implementoTO.get("idApontImplemento", 0L);
@@ -159,13 +159,13 @@ public class ManipDadosEnvio {
         apontaMMTO.setStatusAponta(status);
         apontaMMTO.insert();
 
-        BackupApontaMMTO backupApontaMMTO = new BackupApontaMMTO();
-        backupApontaMMTO.setDthrAponta(apontaMMTO.getDthrAponta());
-        backupApontaMMTO.setOsAponta(apontaMMTO.getOsAponta());
-        backupApontaMMTO.setAtividadeAponta(apontaMMTO.getAtividadeAponta());
-        backupApontaMMTO.setParadaAponta(apontaMMTO.getParadaAponta());
-        backupApontaMMTO.setTransbordoAponta(apontaMMTO.getTransbordoAponta());
-        backupApontaMMTO.insert();
+        BackupApontaTO backupApontaTO = new BackupApontaTO();
+        backupApontaTO.setDthrAponta(apontaMMTO.getDthrAponta());
+        backupApontaTO.setOsAponta(apontaMMTO.getOsAponta());
+        backupApontaTO.setAtividadeAponta(apontaMMTO.getAtividadeAponta());
+        backupApontaTO.setParadaAponta(apontaMMTO.getParadaAponta());
+        backupApontaTO.setTransbAponta(apontaMMTO.getTransbordoAponta());
+        backupApontaTO.insert();
 
         ImplementoTO implementoTO = new ImplementoTO();
         List implementoList = implementoTO.get("idApontImplemento", 0L);

@@ -100,7 +100,12 @@ public class OperadorActivity extends ActivityGeneric {
                     if (listaMotorista.size() > 0) {
 
                         motoristaBD = (MotoristaTO) listaMotorista.get(0);
-                        pmmContext.getBoletimMMTO().setCodMotoBoletim(motoristaBD.getCodMotorista());
+                        if(pmmContext.getTipoEquip() == 1) {
+                            pmmContext.getBoletimMMTO().setCodMotoBoletim(motoristaBD.getCodMotorista());
+                        }
+                        else{
+                            pmmContext.getBoletimFertTO().setCodMotoBolFert(motoristaBD.getCodMotorista());
+                        }
                         listaMotorista.clear();
                         Intent it = new Intent(OperadorActivity.this, EquipActivity.class);
                         startActivity(it);

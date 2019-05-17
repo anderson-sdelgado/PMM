@@ -42,7 +42,12 @@ public class EquipActivity extends ActivityGeneric {
         textViewCodEquip.setText(String.valueOf(equipTO.getCodEquip()));
         textViewDescEquip.setText(String.valueOf(equipTO.getDescrClasseEquip()));
 
-        pmmContext.getBoletimMMTO().setCodEquipBoletim(equipTO.getIdEquip());
+        if(pmmContext.getTipoEquip() == 1) {
+            pmmContext.getBoletimMMTO().setCodEquipBoletim(equipTO.getIdEquip());
+        }
+        else{
+            pmmContext.getBoletimFertTO().setCodEquipBolFert(equipTO.getIdEquip());
+        }
 
         buttonOkEquip.setOnClickListener(new View.OnClickListener() {
 

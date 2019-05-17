@@ -9,25 +9,20 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="br.com.usinasantafe.pmm.ListaRecMangActivity">
+    tools:context="br.com.usinasantafe.pmm.RecolhimentoActivity">
 
     <TextView
-        android:id="@+id/textViewRecMang"
-        style="@style/TextViewTituloLista"
-        android:text="@string/texto_titulo_rec_mag" />
+        android:id="@+id/textViewPadrao"
+        style="@style/TextView"
+        android:text="@string/texto_redimento" />
 
-    <ListView
-        android:id="@+id/listaRecMang"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+    <EditText
+        android:id="@+id/editTextPadrao"
+        style="@style/EditView"
         />
 
-    <Button
-        android:id="@+id/buttonRetRecMang"
-        style="@style/BotaoAvulso"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/texto_padrao_retorna" />
+    <include
+        android:id="@+id/layout_novo_botoes"
+        layout="@layout/layout_botoes" />
 
 </LinearLayout>

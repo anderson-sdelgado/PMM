@@ -136,13 +136,6 @@ public class ItemChecklistActivity extends ActivityGeneric {
 
         if(cabecCheckListTO.getQtdeItemCab() == pmmContext.getPosChecklist()){
 
-            ConfiguracaoTO configTO = new ConfiguracaoTO();
-            List listConfigTO = configTO.all();
-            configTO = (ConfiguracaoTO) listConfigTO.get(0);
-            listConfigTO.clear();
-            configTO.setHorimetroConfig(pmmContext.getBoletimMMTO().getHodometroInicialBoletim());
-            configTO.update();
-            configTO.commit();
 
 //            GRAFICO
 //            Intent it = new Intent(ItemChecklistActivity.this, EsperaGrafActivity.class);

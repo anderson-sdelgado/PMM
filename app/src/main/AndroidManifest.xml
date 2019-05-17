@@ -75,7 +75,7 @@
             android:name=".ListaParadaActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ListaRecMangActivity"
+            android:name=".ListaOSRecolActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ListaTurnoActivity"
@@ -93,7 +93,7 @@
             android:name=".PressaoFertActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RecolMangFertActivity"
+            android:name=".RecolhimentoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".RendimentoActivity"
