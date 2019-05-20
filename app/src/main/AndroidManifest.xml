@@ -45,7 +45,7 @@
         </receiver>
 
         <activity
-            android:name=".BocalFertActivity"
+            android:name=".ListaBocalFertActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ConfiguracaoActivity"
@@ -90,7 +90,7 @@
             android:name=".OSActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PressaoFertActivity"
+            android:name=".ListaPressaoFertActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".RecolhimentoActivity"
@@ -105,7 +105,7 @@
             android:name=".TransbordoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".VelocidadeFertActivity"
+            android:name=".ListaVelocFertActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".PergAtualCheckListActivity" />
         <activity android:name=".GrafProdActivity" />

@@ -15,34 +15,30 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.PressaoBocalTO;
 
-public class ListaTurnoActivity extends ActivityGeneric {
+public class ListaPressaoFertActivity extends ActivityGeneric {
 
-    private ListView turnoListView;
-    private List turnoList;
     private PMMContext pmmContext;
-    private EquipTO equipTO;
-    private ConfiguracaoTO configTO;
+    private ListView pressaoBocalListView;
+    private List pressaoBocalList;
     private ProgressDialog progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_turno);
+        setContentView(R.layout.activity_lista_pressao_fert);
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonRetTurno = (Button) findViewById(R.id.buttonRetTurno);
-        Button buttonAtualTurno = (Button) findViewById(R.id.buttonAtualTurno);
+        Button buttonRetPressao = (Button) findViewById(R.id.buttonRetPressao);
+        Button buttonAtualPressao = (Button) findViewById(R.id.buttonAtualPressao);
 
-        buttonAtualTurno.setOnClickListener(new View.OnClickListener() {
+        buttonAtualPressao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder alerta = new AlertDialog.Builder(  ListaTurnoActivity.this);
+                AlertDialog.Builder alerta = new AlertDialog.Builder(  ListaPressaoFertActivity.this);
                 alerta.setTitle("ATENÇÃO");
                 alerta.setMessage("DESEJA REALMENTE ATUALIZAR BASE DE DADOS?");
                 alerta.setNegativeButton("SIM", new DialogInterface.OnClickListener() {
@@ -51,19 +47,19 @@ public class ListaTurnoActivity extends ActivityGeneric {
 
                         ConexaoWeb conexaoWeb = new ConexaoWeb();
 
-                        if (conexaoWeb.verificaConexao(ListaTurnoActivity.this)) {
+                        if (conexaoWeb.verificaConexao(ListaPressaoFertActivity.this)) {
 
-                            progressBar = new ProgressDialog(ListaTurnoActivity.this);
+                            progressBar = new ProgressDialog(ListaPressaoFertActivity.this);
                             progressBar.setCancelable(true);
-                            progressBar.setMessage("Atualizando Turno...");
+                            progressBar.setMessage("Atualizando Pressao...");
                             progressBar.show();
 
-                            ManipDadosVerif.getInstance().verDados("", "Turno"
-                                    , ListaTurnoActivity.this, ListaTurnoActivity.class, progressBar);
+                            ManipDadosVerif.getInstance().verDados("", "pressaobocal"
+                                    , ListaPressaoFertActivity.this, ListaPressaoFertActivity.class, progressBar);
 
                         } else {
 
-                            AlertDialog.Builder alerta = new AlertDialog.Builder( ListaTurnoActivity.this);
+                            AlertDialog.Builder alerta = new AlertDialog.Builder( ListaPressaoFertActivity.this);
                             alerta.setTitle("ATENÇÃO");
                             alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -94,64 +90,49 @@ public class ListaTurnoActivity extends ActivityGeneric {
 
         });
 
-        configTO = new ConfiguracaoTO();
-        List listConfigTO = configTO.all();
-        configTO = (ConfiguracaoTO) listConfigTO.get(0);
-        listConfigTO.clear();
-
-        equipTO = new EquipTO();
-        List listEquipTO = equipTO.get("idEquip", configTO.getEquipConfig());
-        equipTO = (EquipTO) listEquipTO.get(0);
-        listConfigTO.clear();
-
-        TurnoTO turnoTO = new TurnoTO();
-        turnoList = turnoTO.get("codTurno", equipTO.getCodTurno());
+        PressaoBocalTO pressaoBocalTO = new PressaoBocalTO();
+        pressaoBocalList = pressaoBocalTO.getAndOrderBy("idBocal", pmmContext.getApontaFertTO().getBocalApontaFert(), "valorPressao", true);
 
         ArrayList<String> itens = new ArrayList<String>();
 
-        for(int i = 0; i < turnoList.size(); i++){
-            turnoTO = (TurnoTO) turnoList.get(i);
-            itens.add(turnoTO.getDescTurno());
+        for(int i = 0; i < pressaoBocalList.size(); i++){
+            pressaoBocalTO = (PressaoBocalTO) pressaoBocalList.get(i);
+            itens.add("" + pressaoBocalTO.getValorPressao());
         }
 
         AdapterList adapterList = new AdapterList(this, itens);
-        turnoListView = (ListView) findViewById(R.id.listaTurno);
-        turnoListView.setAdapter(adapterList);
+        pressaoBocalListView = (ListView) findViewById(R.id.listPressao);
+        pressaoBocalListView.setAdapter(adapterList);
 
-        turnoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        pressaoBocalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
                 // TODO Auto-generated method stub
 
-                TurnoTO turnoTO = (TurnoTO) turnoList.get(position);
-                if(pmmContext.getTipoEquip() == 1) {
-                    pmmContext.getBoletimMMTO().setCodTurnoBoletim(turnoTO.getIdTurno());
-                }
-                else{
-                    pmmContext.getBoletimFertTO().setCodTurnoBolFert(turnoTO.getIdTurno());
-                }
-                turnoList.clear();
+                PressaoBocalTO pressaoBocalTO = (PressaoBocalTO)  pressaoBocalList.get(position);
+                pmmContext.getApontaFertTO().setPressaoApontaFert(pressaoBocalTO.getValorPressao());
+                pressaoBocalList.clear();
 
-                Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
+                Intent it = new Intent(ListaPressaoFertActivity.this, ListaVelocFertActivity.class);
                 startActivity(it);
 
             }
 
         });
 
-        buttonRetTurno.setOnClickListener(new View.OnClickListener() {
+        buttonRetPressao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(ListaTurnoActivity.this, EquipActivity.class);
+                Intent it = new Intent(ListaPressaoFertActivity.this, ListaBocalFertActivity.class);
                 startActivity(it);
             }
         });
 
     }
 
-    public void onBackPressed()  {
+    public void onBackPressed() {
     }
 
 }

@@ -24,10 +24,8 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.TransbordoTO;
 
@@ -276,54 +274,24 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                                 }
 
+                                configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
+                                configTO.update();
+
+                                Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
+                                startActivity(it);
+                                finish();
+
                             }
                             else{
+
                                 pmmContext.getApontaFertTO().setLatitudeApontaFert(getLatitude());
                                 pmmContext.getApontaFertTO().setLongitudeApontaFert(getLongitude());
-                                ManipDadosEnvio.getInstance().salvaApontaFert(pmmContext.getApontaMMTO(), 2L);
 
-                                BoletimFertTO boletimFertTO = new BoletimFertTO();
-                                List boletimList = boletimFertTO.get("statusBolFert", 1L);
-
-                                if (boletimList.size() > 0) {
-
-                                    boletimFertTO = (BoletimFertTO) boletimList.get(0);
-
-                                    RecolhimentoTO recolhimentoTO = new RecolhimentoTO();
-                                    ArrayList pesqList = new ArrayList();
-
-                                    EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-                                    pesquisa.setCampo("idBolRecol");
-                                    pesquisa.setValor(boletimFertTO.getIdBolFert());
-                                    pesqList.add(pesquisa);
-
-                                    EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-                                    pesquisa2.setCampo("nroOSRecol");
-                                    pesquisa2.setValor(pmmContext.getApontaFertTO().getOsApontaFert());
-                                    pesqList.add(pesquisa2);
-
-                                    List rendList = recolhimentoTO.get(pesqList);
-
-                                    if (rendList.size() == 0) {
-                                        recolhimentoTO.setIdBolRecol(boletimFertTO.getIdBolFert());
-                                        recolhimentoTO.setIdExtBolRecol(boletimFertTO.getIdExtBolFert());
-                                        recolhimentoTO.setNroOSRecol(pmmContext.getApontaFertTO().getOsApontaFert());
-                                        recolhimentoTO.setValorRecol(0L);
-                                        recolhimentoTO.insert();
-                                        recolhimentoTO.commit();
-                                    }
-
-                                }
-
-                                boletimList.clear();
+                                Intent it = new Intent(ListaAtividadeActivity.this, ListaBocalFertActivity.class);
+                                startActivity(it);
+                                finish();
 
                             }
-
-                            configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
-                            configTO.update();
-                            Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
-                            startActivity(it);
-                            finish();
 
                             listAtiv.clear();
                             lAtivExib.clear();

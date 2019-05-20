@@ -183,6 +183,9 @@ public class ListaParadaActivity extends ActivityGeneric {
                             pmmContext.getApontaMMTO().setParadaAponta(paradaTO.getIdParada());
                         }
                         else{
+                            pmmContext.getApontaFertTO().setBocalApontaFert(0L);
+                            pmmContext.getApontaFertTO().setPressaoApontaFert(0D);
+                            pmmContext.getApontaFertTO().setVelocApontaFert(0L);
                             pmmContext.getApontaFertTO().setParadaApontaFert(paradaTO.getIdParada());
                         }
 

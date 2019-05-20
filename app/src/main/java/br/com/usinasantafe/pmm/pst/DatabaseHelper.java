@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.BocalTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipSegTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.GrafDispEquipPlantioTO;
@@ -15,6 +16,7 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.MotoristaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.PneuTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.PressaoBocalTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.RAtivParadaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipPneuTO;
@@ -91,6 +93,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, GrafPlanRealPlantioTO.class);
 			TableUtils.createTable(cs, GrafDispEquipPlantioTO.class);
 			TableUtils.createTable(cs, GrafQualPlantioTO.class);
+			TableUtils.createTable(cs, BocalTO.class);
+			TableUtils.createTable(cs, PressaoBocalTO.class);
 
 			TableUtils.createTable(cs, ConfiguracaoTO.class);
 			TableUtils.createTable(cs, BoletimMMTO.class);

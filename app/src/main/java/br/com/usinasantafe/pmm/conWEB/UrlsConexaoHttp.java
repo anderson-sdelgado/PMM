@@ -4,8 +4,8 @@ public class UrlsConexaoHttp {
 
     private int tipoEnvio = 1;
 
-    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmmqa/";
-    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmmqa/";
+    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmmdev/";
+    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmmdev/";
 
     //public static String localPSTVariavel = "br.com.usinasantafe.pmm.to.tb.variaveis.";
     public static String localPSTEstatica = "br.com.usinasantafe.pmm.to.tb.estaticas.";
@@ -17,6 +17,8 @@ public class UrlsConexaoHttp {
     public static String MotoristaTO = urlPrincipal + "motorista2.php";
     public static String ItemCheckListTO = urlPrincipal + "itemchecklist2.php";
     public static String EquipSegTO = urlPrincipal + "equipseg2.php";
+    public static String BocalTO = urlPrincipal + "bocal2.php";
+    public static String PressaoBocalTO = urlPrincipal + "pressaobocal2.php";
 
     public UrlsConexaoHttp() {
         // TODO Auto-generated constructor stub

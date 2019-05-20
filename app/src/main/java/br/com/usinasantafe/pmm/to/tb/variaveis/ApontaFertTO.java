@@ -40,6 +40,8 @@ public class ApontaFertTO extends Entidade {
     private Double longitudeApontaFert;
     @DatabaseField
     private Long statusConApontaFert;  //0 - OffLine; 1 - OnLine
+    @DatabaseField
+    private Long statusApontaFert;  //1 - Aberto; 2 - Encerrado
 
     public ApontaFertTO() {
     }
@@ -142,5 +144,13 @@ public class ApontaFertTO extends Entidade {
 
     public void setLongitudeApontaFert(Double longitudeApontaFert) {
         this.longitudeApontaFert = longitudeApontaFert;
+    }
+
+    public Long getStatusApontaFert() {
+        return statusApontaFert;
+    }
+
+    public void setStatusApontaFert(Long statusApontaFert) {
+        this.statusApontaFert = statusApontaFert;
     }
 }

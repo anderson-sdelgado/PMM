@@ -37,6 +37,7 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.AtualizaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.MotoristaTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
@@ -553,6 +554,9 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         PneuTO pneuTO = new PneuTO();
         pneuTO.deleteAll();
+
+        BackupApontaTO backupApontaTO = new BackupApontaTO();
+        backupApontaTO.deleteAll();
 
 //        GrafProdPlantioTO grafProdPlantioTO = new GrafProdPlantioTO();
 //        grafProdPlantioTO.deleteAll();

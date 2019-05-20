@@ -13,6 +13,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipPneuTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
@@ -72,13 +73,28 @@ public class PressaoColPneuActivity extends ActivityGeneric {
 
                         if(rEquipPneuList.size() == verCad){
 
-                            ApontaMMTO apontaMMTO = new ApontaMMTO();
-                            List apontaMMList = apontaMMTO.get("statusAponta", 1L);
-                            apontaMMTO = (ApontaMMTO) apontaMMList.get(0);
-                            apontaMMList.clear();
+                            if(pmmContext.getTipoEquip() == 1) {
 
-                            apontaMMTO.setStatusAponta(2L);
-                            apontaMMTO.update();
+                                ApontaMMTO apontaMMTO = new ApontaMMTO();
+                                List apontaMMList = apontaMMTO.get("statusAponta", 1L);
+                                apontaMMTO = (ApontaMMTO) apontaMMList.get(0);
+                                apontaMMList.clear();
+
+                                apontaMMTO.setStatusAponta(2L);
+                                apontaMMTO.update();
+
+                            }
+                            else{
+
+                                ApontaFertTO apontaFertTO = new ApontaFertTO();
+                                List apontaFertList = apontaFertTO.get("statusApontaFert", 1L);
+                                apontaFertTO = (ApontaFertTO) apontaFertList.get(0);
+                                apontaFertList.clear();
+
+                                apontaFertTO.setStatusApontaFert(2L);
+                                apontaFertTO.update();
+
+                            }
 
                             Intent it = new Intent(PressaoColPneuActivity.this, MenuPrincNormalActivity.class);
                             startActivity(it);

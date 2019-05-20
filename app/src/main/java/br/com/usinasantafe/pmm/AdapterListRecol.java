@@ -46,17 +46,11 @@ public class AdapterListRecol extends BaseAdapter {
 
         view = layoutInflater.inflate(R.layout.activity_item_os_recol, null);
 
-        TextView textViewEquipRecMang = (TextView) view.findViewById(R.id.textViewEquipRecMang);
         TextView textViewOSRecMang = (TextView) view.findViewById(R.id.textViewOSRecMang);
         TextView textViewValorRecMang = (TextView) view.findViewById(R.id.textViewValorRecMang);
 
         RecolhimentoTO recolhimentoTO = (RecolhimentoTO) itens.get(position);
 
-        EquipSegTO equipSegTO = new EquipSegTO();
-//        List equipSegList = equipSegTO.get("idEquip", recolhimentoTO.getEquipRecol());
-//        equipSegTO = (EquipSegTO) equipSegList.get(0);
-
-        textViewEquipRecMang.setText("EQUIP: " + equipSegTO.getCodEquip());
         textViewOSRecMang.setText("NRO OS: " + recolhimentoTO.getNroOSRecol());
 
         if(recolhimentoTO.getValorRecol() > 0){

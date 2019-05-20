@@ -188,7 +188,7 @@ public class HorimetroActivity extends ActivityGeneric {
             }
             else{
                 pmmContext.getBoletimFertTO().setStatusBolFert(1L);
-                ManipDadosEnvio.getInstance().salvaBoletimAbertoFert(pmmContext.getBoletimMMTO(), true, getLatitude(), getLongitude());
+                ManipDadosEnvio.getInstance().salvaBoletimAbertoFert(pmmContext.getBoletimFertTO(), true, getLatitude(), getLongitude());
             }
 
             ManipDadosEnvio.getInstance().envioDadosPrinc();
