@@ -284,9 +284,6 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                             }
                             else{
 
-                                pmmContext.getApontaFertTO().setLatitudeApontaFert(getLatitude());
-                                pmmContext.getApontaFertTO().setLongitudeApontaFert(getLongitude());
-
                                 Intent it = new Intent(ListaAtividadeActivity.this, ListaBocalFertActivity.class);
                                 startActivity(it);
                                 finish();

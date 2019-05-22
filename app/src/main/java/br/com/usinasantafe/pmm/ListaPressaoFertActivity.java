@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
@@ -99,6 +101,10 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
             pressaoBocalTO = (PressaoBocalTO) pressaoBocalList.get(i);
             itens.add("" + pressaoBocalTO.getValorPressao());
         }
+
+        HashSet<String> hashSet = new HashSet<String>(itens);
+        itens.clear();
+        itens.addAll(hashSet);
 
         AdapterList adapterList = new AdapterList(this, itens);
         pressaoBocalListView = (ListView) findViewById(R.id.listPressao);

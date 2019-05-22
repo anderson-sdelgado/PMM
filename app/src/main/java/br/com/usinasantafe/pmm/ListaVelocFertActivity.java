@@ -11,14 +11,17 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
+import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.tb.estaticas.PressaoBocalTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
 
 public class ListaVelocFertActivity extends ActivityGeneric {
@@ -105,7 +108,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
         EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
         pesquisa2.setCampo("valorPressao");
-        pesquisa2.setValor(pmmContext.getApontaFertTO().getVelocApontaFert());
+        pesquisa2.setValor(pmmContext.getApontaFertTO().getPressaoApontaFert());
         listaPesq.add(pesquisa2);
 
         velocList = pressaoBocalTO.getAndOrderBy(listaPesq, "valorVeloc", true);
@@ -117,8 +120,12 @@ public class ListaVelocFertActivity extends ActivityGeneric {
             itens.add("" + pressaoBocalTO.getValorVeloc());
         }
 
+        HashSet<String> hashSet = new HashSet<String>(itens);
+        itens.clear();
+        itens.addAll(hashSet);
+
         AdapterList adapterList = new AdapterList(this, itens);
-        velocListView = (ListView) findViewById(R.id.listPressao);
+        velocListView = (ListView) findViewById(R.id.listVelocidade);
         velocListView.setAdapter(adapterList);
 
         velocListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -165,6 +172,16 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                 }
 
                 boletimList.clear();
+
+                pmmContext.getApontaFertTO().setLatitudeApontaFert(getLatitude());
+                pmmContext.getApontaFertTO().setLongitudeApontaFert(getLongitude());
+
+                ConfiguracaoTO configTO = new ConfiguracaoTO();
+                List configList = configTO.all();
+                configTO = (ConfiguracaoTO) configList.get(0);
+                configList.clear();
+                configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
+                configTO.update();
 
                 ManipDadosEnvio.getInstance().salvaApontaFert(pmmContext.getApontaFertTO(), 2L);
                 Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincNormalActivity.class);

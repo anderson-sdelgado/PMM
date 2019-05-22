@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.BocalTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
 
@@ -22,11 +23,13 @@ public class AdapterListHistorico extends BaseAdapter {
 
     private List itens;
     private LayoutInflater layoutInflater;
+    private int tipoEquip;
 
-    public AdapterListHistorico(Context context, List itens) {
+    public AdapterListHistorico(Context context, List itens, int tipoEquip) {
         // TODO Auto-generated constructor stub
         this.itens = itens;
         layoutInflater = LayoutInflater.from(context);
+        this.tipoEquip = tipoEquip;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class AdapterListHistorico extends BaseAdapter {
         view = layoutInflater.inflate(R.layout.activity_item_historico, null);
         TextView textViewHistApont = (TextView) view.findViewById(R.id.textViewHistApont);
         TextView textViewHistHorario = (TextView) view.findViewById(R.id.textViewHistHorario);
-        TextView textViewHistImplTransb = (TextView) view.findViewById(R.id.textViewHistImplTransb);
+        TextView textViewHistDetalhes = (TextView) view.findViewById(R.id.textViewHistDetalhes);
 
         BackupApontaTO backupApontaTO = (BackupApontaTO) itens.get(position);
         if(backupApontaTO.getParadaAponta() == 0) {
@@ -70,11 +73,27 @@ public class AdapterListHistorico extends BaseAdapter {
 
         textViewHistHorario.setText("HORÁRIO: " + backupApontaTO.getDthrAponta().substring(11));
 
-        if(backupApontaTO.getTransbAponta() > 0){
-            textViewHistImplTransb.setText("TRANSBORDO: " + backupApontaTO.getTransbAponta());
+        if (tipoEquip == 1) {
+            if(backupApontaTO.getTransbAponta() > 0){
+                textViewHistDetalhes.setText("TRANSBORDO: " + backupApontaTO.getTransbAponta());
+            }
+            else{
+                textViewHistDetalhes.setText("");
+            }
         }
         else{
-            textViewHistImplTransb.setText("");
+            if(backupApontaTO.getParadaAponta() != 0) {
+                textViewHistDetalhes.setText("");
+            }
+            else{
+                BocalTO bocalTO = new BocalTO();
+                List bocalList = bocalTO.get("idBocal", backupApontaTO.getBocalAponta());
+                bocalTO = (BocalTO) bocalList.get(0);
+                bocalList.clear();
+                textViewHistDetalhes.setText("BOCAL: " + bocalTO.getDescrBocal() + "\n" +
+                        "PRESSÃO: " + backupApontaTO.getPressaoAponta() + "\n" +
+                        "VELOCIDADE: " + backupApontaTO.getVelocAponta());
+            }
         }
 
         return view;

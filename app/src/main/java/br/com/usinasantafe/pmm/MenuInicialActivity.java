@@ -75,125 +75,130 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         customHandler.postDelayed(updateTimerThread, 0);
 
-        ConexaoWeb conexaoWeb = new ConexaoWeb();
         configTO = new ConfiguracaoTO();
         List configList = configTO.all();
-        configTO = (ConfiguracaoTO) configList.get(0);
 
-        equipTO = new EquipTO();
-        List listEquipTO = equipTO.get("idEquip", configTO.getEquipConfig());
-        equipTO = (EquipTO) listEquipTO.get(0);
-        listEquipTO.clear();
+        if (configList.size() > 0) {
 
-        if ((equipTO.getTipoEquipFert() == 1) || (equipTO.getTipoEquipFert() == 2)) {
-            pmmContext.setTipoEquip(2);
-        } else {
-            pmmContext.setTipoEquip(1);
-        }
+            configTO = (ConfiguracaoTO) configList.get(0);
 
-        progressBar = new ProgressDialog(this);
+            equipTO = new EquipTO();
+            List listEquipTO = equipTO.get("idEquip", configTO.getEquipConfig());
+            equipTO = (EquipTO) listEquipTO.get(0);
+            listEquipTO.clear();
 
-        if (conexaoWeb.verificaConexao(this)) {
-
-            if (configList.size() > 0) {
-
-                progressBar.setCancelable(true);
-                progressBar.setMessage("Buscando Atualização...");
-                progressBar.show();
-
-                AtualizaTO atualizaTO = new AtualizaTO();
-                atualizaTO.setVersaoAtual(pmmContext.versaoAplic);
-
-                atualizaTO.setIdEquipAtualizacao(equipTO.getCodEquip());
-                atualizaTO.setIdCheckList(equipTO.getIdChecklist());
-
-                ManipDadosVerif.getInstance().verAtualizacao(atualizaTO, this, progressBar);
-            }
-
-        } else {
-            if (configList.size() > 0) {
-                startTimer("N_NAC");
-            }
-        }
-
-        configList.clear();
-
-        List boletimList;
-        if (pmmContext.getTipoEquip() == 1) {
-            BoletimMMTO boletimMMTO = new BoletimMMTO();
-            boletimList = boletimMMTO.get("statusBoletim", 1L);
-        } else {
-            BoletimFertTO boletimFertTO = new BoletimFertTO();
-            boletimList = boletimFertTO.get("statusBolFert", 1L);
-        }
-
-        if (boletimList.size() > 0) {
-
-            CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-            List cabecList = cabecCheckListTO.get("statusCab", 1L);
-
-            if (pmmContext.getTipoEquip() == 1) {
-                pmmContext.setBoletimMMTO((BoletimMMTO) boletimList.get(0));
+            if ((equipTO.getTipoEquipFert() == 1) || (equipTO.getTipoEquipFert() == 2)) {
+                pmmContext.setTipoEquip(2);
             } else {
-                pmmContext.setBoletimFertTO((BoletimFertTO) boletimList.get(0));
+                pmmContext.setTipoEquip(1);
             }
 
+            progressBar = new ProgressDialog(this);
 
-            if (cabecList.size() == 0) {
+            ConexaoWeb conexaoWeb = new ConexaoWeb();
+            if (conexaoWeb.verificaConexao(this)) {
 
-                if (progressBar.isShowing()) {
-                    progressBar.dismiss();
+                if (configList.size() > 0) {
+
+                    progressBar.setCancelable(true);
+                    progressBar.setMessage("Buscando Atualização...");
+                    progressBar.show();
+
+                    AtualizaTO atualizaTO = new AtualizaTO();
+                    atualizaTO.setVersaoAtual(pmmContext.versaoAplic);
+
+                    atualizaTO.setIdEquipAtualizacao(equipTO.getCodEquip());
+                    atualizaTO.setIdCheckList(equipTO.getIdChecklist());
+
+                    ManipDadosVerif.getInstance().verAtualizacao(atualizaTO, this, progressBar);
                 }
 
+            } else {
+                if (configList.size() > 0) {
+                    startTimer("N_NAC");
+                }
+            }
+
+            configList.clear();
+
+            List boletimList;
+            if (pmmContext.getTipoEquip() == 1) {
+                BoletimMMTO boletimMMTO = new BoletimMMTO();
+                boletimList = boletimMMTO.get("statusBoletim", 1L);
+            } else {
+                BoletimFertTO boletimFertTO = new BoletimFertTO();
+                boletimList = boletimFertTO.get("statusBolFert", 1L);
+            }
+
+            if (boletimList.size() > 0) {
+
+                CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
+                List cabecList = cabecCheckListTO.get("statusCab", 1L);
+
                 if (pmmContext.getTipoEquip() == 1) {
-                    ApontaMMTO apontaMMTO = new ApontaMMTO();
-                    List apontaMMList = apontaMMTO.get("statusAponta", 1L);
-                    if (apontaMMList.size() == 0) {
+                    pmmContext.setBoletimMMTO((BoletimMMTO) boletimList.get(0));
+                } else {
+                    pmmContext.setBoletimFertTO((BoletimFertTO) boletimList.get(0));
+                }
+
+
+                if (cabecList.size() == 0) {
+
+                    if (progressBar.isShowing()) {
+                        progressBar.dismiss();
+                    }
+
+                    if (pmmContext.getTipoEquip() == 1) {
+                        ApontaMMTO apontaMMTO = new ApontaMMTO();
+                        List apontaMMList = apontaMMTO.get("statusAponta", 1L);
+                        if (apontaMMList.size() == 0) {
+                            Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
+                            startActivity(it);
+                            finish();
+                        } else {
+                            Intent it = new Intent(MenuInicialActivity.this, ListaPosPneuActivity.class);
+                            startActivity(it);
+                            finish();
+
+                        }
+                        apontaMMList.clear();
+                    } else {
                         Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
                         startActivity(it);
                         finish();
-                    } else {
-                        Intent it = new Intent(MenuInicialActivity.this, ListaPosPneuActivity.class);
-                        startActivity(it);
-                        finish();
-
                     }
-                    apontaMMList.clear();
+
                 } else {
-                    Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
+
+                    RespItemCheckListTO respItemCheckListTO = new RespItemCheckListTO();
+
+                    if (respItemCheckListTO.hasElements()) {
+                        cabecCheckListTO = (CabecCheckListTO) cabecList.get(0);
+                        List respList = respItemCheckListTO.get("idCabIt", cabecCheckListTO.getIdCab());
+                        for (int i = 0; i < respList.size(); i++) {
+                            respItemCheckListTO = (RespItemCheckListTO) respList.get(i);
+                            respItemCheckListTO.delete();
+                        }
+                    }
+
+                    if (progressBar.isShowing()) {
+                        progressBar.dismiss();
+                    }
+
+                    pmmContext.setPosChecklist(1L);
+                    Intent it = new Intent(MenuInicialActivity.this, ItemChecklistActivity.class);
                     startActivity(it);
                     finish();
+
                 }
 
-            } else {
-
-                RespItemCheckListTO respItemCheckListTO = new RespItemCheckListTO();
-
-                if (respItemCheckListTO.hasElements()) {
-                    cabecCheckListTO = (CabecCheckListTO) cabecList.get(0);
-                    List respList = respItemCheckListTO.get("idCabIt", cabecCheckListTO.getIdCab());
-                    for (int i = 0; i < respList.size(); i++) {
-                        respItemCheckListTO = (RespItemCheckListTO) respList.get(i);
-                        respItemCheckListTO.delete();
-                    }
-                }
-
-                if (progressBar.isShowing()) {
-                    progressBar.dismiss();
-                }
-
-                pmmContext.setPosChecklist(1L);
-                Intent it = new Intent(MenuInicialActivity.this, ItemChecklistActivity.class);
-                startActivity(it);
-                finish();
+                cabecList.clear();
 
             }
 
-            cabecList.clear();
+            boletimList.clear();
 
         }
-
-        boletimList.clear();
 
         listarMenuInicial();
 
@@ -226,10 +231,8 @@ public class MenuInicialActivity extends ActivityGeneric {
                 if (text.equals("BOLETIM")) {
                     MotoristaTO motoristaTO = new MotoristaTO();
                     if (motoristaTO.hasElements() && configTO.hasElements()) {
-
                         pmmContext.setVerPosTela(1);
                         clearBD();
-
                         Intent it = new Intent(MenuInicialActivity.this, OperadorActivity.class);
                         startActivity(it);
                         finish();

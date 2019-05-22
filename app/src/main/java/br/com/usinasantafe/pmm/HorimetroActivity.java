@@ -52,8 +52,6 @@ public class HorimetroActivity extends ActivityGeneric {
                     String horimetro = editTextPadrao.getText().toString();
                     horimetroNum = Double.valueOf(horimetro.replace(",", "."));
 
-
-
                     configTO = new ConfiguracaoTO();
                     List listConfigTO = configTO.all();
                     configTO = (ConfiguracaoTO) listConfigTO.get(0);
@@ -178,78 +176,76 @@ public class HorimetroActivity extends ActivityGeneric {
 
         } else {
 
-            configTO.setHorimetroConfig(horimetroNum);
-            configTO.update();
-            configTO.commit();
-
             if(pmmContext.getTipoEquip() == 1) {
+
+                configTO.setHorimetroConfig(horimetroNum);
+                configTO.update();
+                configTO.commit();
+
                 pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true, getLatitude(), getLongitude());
-            }
-            else{
-                pmmContext.getBoletimFertTO().setStatusBolFert(1L);
-                ManipDadosEnvio.getInstance().salvaBoletimAbertoFert(pmmContext.getBoletimFertTO(), true, getLatitude(), getLongitude());
-            }
 
-            ManipDadosEnvio.getInstance().envioDadosPrinc();
+                Long equip;
+                Long turno;
+                if (pmmContext.getTipoEquip() == 1) {
+                    equip = pmmContext.getBoletimMMTO().getCodEquipBoletim();
+                    turno = pmmContext.getBoletimMMTO().getCodTurnoBoletim();
+                } else {
+                    equip = pmmContext.getBoletimFertTO().getCodEquipBolFert();
+                    turno = pmmContext.getBoletimFertTO().getCodTurnoBolFert();
+                }
 
-            Long equip;
-            Long turno;
-            if(pmmContext.getTipoEquip() == 1) {
-                equip = pmmContext.getBoletimMMTO().getCodEquipBoletim();
-                turno = pmmContext.getBoletimMMTO().getCodTurnoBoletim();
-            }
-            else{
-                equip = pmmContext.getBoletimFertTO().getCodEquipBolFert();
-                turno = pmmContext.getBoletimFertTO().getCodTurnoBolFert();
-            }
+                EquipTO equipTO = new EquipTO();
+                List equipList = equipTO.get("idEquip", equip);
+                equipTO = (EquipTO) equipList.get(0);
+                equipList.clear();
 
-            EquipTO equipTO = new EquipTO();
-            List equipList = equipTO.get("idEquip", equip);
-            equipTO = (EquipTO) equipList.get(0);
-            equipList.clear();
+                TurnoTO turnoTO = new TurnoTO();
+                List turnoList = turnoTO.get("idTurno", turno);
+                turnoTO = (TurnoTO) turnoList.get(0);
 
-            TurnoTO turnoTO = new TurnoTO();
-            List turnoList = turnoTO.get("idTurno", turno);
-            turnoTO = (TurnoTO) turnoList.get(0);
+                if ((equipTO.getIdChecklist() > 0) &&
+                        ((configTO.getUltTurnoCLConfig() != turnoTO.getIdTurno())
+                                || ((configTO.getUltTurnoCLConfig() == turnoTO.getIdTurno())
+                                && (!configTO.getDtUltCLConfig().equals(Tempo.getInstance().dataSHora()))))) {
 
-            if ((equipTO.getIdChecklist() > 0) &&
-                    ((configTO.getUltTurnoCLConfig() != turnoTO.getIdTurno())
-                            || ((configTO.getUltTurnoCLConfig() == turnoTO.getIdTurno())
-                            && (!configTO.getDtUltCLConfig().equals(Tempo.getInstance().dataSHora()))))) {
+                    ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true, getLatitude(), getLongitude());
+                    ManipDadosEnvio.getInstance().envioDadosPrinc();
 
-                pmmContext.setPosChecklist(1L);
+                    pmmContext.setPosChecklist(1L);
 
-                if (pmmContext.getVerAtualCL().equals("N_AC")) {
+                    if (pmmContext.getVerAtualCL().equals("N_AC")) {
 
-                    Intent it = new Intent(HorimetroActivity.this, PergAtualCheckListActivity.class);
-                    startActivity(it);
-                    finish();
+                        Intent it = new Intent(HorimetroActivity.this, PergAtualCheckListActivity.class);
+                        startActivity(it);
+                        finish();
+
+                    } else {
+
+                        ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
+                        List itemCheckList = itemCheckListTO.get("idChecklist", equipTO.getIdChecklist());
+                        Long qtde = (long) itemCheckList.size();
+                        itemCheckList.clear();
+
+                        CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
+                        cabecCheckListTO.setDtCab(Tempo.getInstance().datahora());
+                        cabecCheckListTO.setEquipCab(equipTO.getCodEquip());
+                        cabecCheckListTO.setFuncCab(pmmContext.getBoletimMMTO().getCodMotoBoletim());
+                        cabecCheckListTO.setTurnoCab(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
+                        cabecCheckListTO.setQtdeItemCab(qtde);
+                        cabecCheckListTO.setStatusCab(1L);
+                        cabecCheckListTO.setDtAtualCab("0");
+                        cabecCheckListTO.insert();
+
+                        Intent it = new Intent(HorimetroActivity.this, ItemChecklistActivity.class);
+                        startActivity(it);
+                        finish();
+
+                    }
 
                 } else {
 
-                    ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
-                    List itemCheckList = itemCheckListTO.get("idChecklist", equipTO.getIdChecklist());
-                    Long qtde = (long) itemCheckList.size();
-                    itemCheckList.clear();
-
-                    CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-                    cabecCheckListTO.setDtCab(Tempo.getInstance().datahora());
-                    cabecCheckListTO.setEquipCab(equipTO.getCodEquip());
-                    cabecCheckListTO.setFuncCab(pmmContext.getBoletimMMTO().getCodMotoBoletim());
-                    cabecCheckListTO.setTurnoCab(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
-                    cabecCheckListTO.setQtdeItemCab(qtde);
-                    cabecCheckListTO.setStatusCab(1L);
-                    cabecCheckListTO.setDtAtualCab("0");
-                    cabecCheckListTO.insert();
-
-                    Intent it = new Intent(HorimetroActivity.this, ItemChecklistActivity.class);
-                    startActivity(it);
-                    finish();
-
-                }
-
-            } else {
+                    ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false, getLatitude(), getLongitude());
+                    ManipDadosEnvio.getInstance().envioDadosPrinc();
 
 //                    GRAFICO
 //                    Intent it = new Intent(HorimetroActivity.this, EsperaGrafActivity.class);
@@ -257,7 +253,16 @@ public class HorimetroActivity extends ActivityGeneric {
 //                    finish();
 
 //                    ANTIGO SEM GRAFICO
-                Intent it = new Intent(HorimetroActivity.this, MenuPrincNormalActivity.class);
+                    Intent it = new Intent(HorimetroActivity.this, MenuPrincNormalActivity.class);
+                    startActivity(it);
+                    finish();
+
+                }
+
+            }
+            else {
+
+                Intent it = new Intent(HorimetroActivity.this, EquipMBActivity.class);
                 startActivity(it);
                 finish();
 

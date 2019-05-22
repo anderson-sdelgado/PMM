@@ -269,7 +269,6 @@ public class ManipDadosEnvio {
         apontaFertTO.setStatusApontaFert(status);
         apontaFertTO.insert();
 
-
         BackupApontaTO backupApontaTO = new BackupApontaTO();
         backupApontaTO.setDthrAponta(apontaFertTO.getDthrApontaFert());
         backupApontaTO.setOsAponta(apontaFertTO.getOsApontaFert());
@@ -669,7 +668,7 @@ public class ManipDadosEnvio {
             jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimFertTO, boletimFertTO.getClass()));
 
             ApontaFertTO apontaFertTO = new ApontaFertTO();
-            List apontaFertList = apontaFertTO.get("idBolFert", boletimFertTO.getIdBolFert());
+            List apontaFertList = apontaFertTO.get("idBolApontaFert", boletimFertTO.getIdBolFert());
 
             for (int j = 0; j < apontaFertList.size(); j++) {
 
@@ -743,7 +742,7 @@ public class ManipDadosEnvio {
 
         UrlsConexaoHttp urlsConexaoHttp = new UrlsConexaoHttp();
 
-        String[] url = {urlsConexaoHttp.getsInsertBolFechadoMM()};
+        String[] url = {urlsConexaoHttp.getsInsertBolFechadoFert()};
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
@@ -842,7 +841,7 @@ public class ManipDadosEnvio {
 
         UrlsConexaoHttp urlsConexaoHttp = new UrlsConexaoHttp();
 
-        String[] url = {urlsConexaoHttp.getsInsertBolAbertoMM()};
+        String[] url = {urlsConexaoHttp.getsInsertBolAbertoFert()};
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
@@ -855,7 +854,6 @@ public class ManipDadosEnvio {
     public void envioApontaFert() {
 
         JsonArray jsonArrayAponta = new JsonArray();
-        JsonArray jsonArrayImplemento = new JsonArray();
         JsonArray jsonArrayBolPneu = new JsonArray();
         JsonArray jsonArrayItemPneu = new JsonArray();
 
@@ -901,8 +899,6 @@ public class ManipDadosEnvio {
         JsonObject jsonAponta = new JsonObject();
         jsonAponta.add("aponta", jsonArrayAponta);
 
-        JsonObject jsonImplemento = new JsonObject();
-        jsonImplemento.add("implemento", jsonArrayImplemento);
 
         JsonObject jsonBolPneu = new JsonObject();
         jsonBolPneu.add("bolpneu", jsonArrayBolPneu);
@@ -910,11 +906,11 @@ public class ManipDadosEnvio {
         JsonObject jsonItemPneu = new JsonObject();
         jsonItemPneu.add("itempneu", jsonArrayItemPneu);
 
-        String dados = jsonAponta.toString() + "_" + jsonImplemento.toString() + "|" + jsonBolPneu.toString() + "#" + jsonItemPneu.toString();
+        String dados = jsonAponta.toString() + "_" + jsonBolPneu.toString() + "|" + jsonItemPneu.toString();
 
         Log.i("PMM", "APONTAMENTO = " + dados);
 
-        String[] url = {urlsConexaoHttp.getsInsertApontaMM()};
+        String[] url = {urlsConexaoHttp.getsInsertApontaFert()};
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
@@ -1191,7 +1187,7 @@ public class ManipDadosEnvio {
             String id = retorno.substring(pos1, (pos2 - 1));
 
             BoletimFertTO boletimFertTO = new BoletimFertTO();
-            List boletimFertList = boletimFertTO.get("statusBoletim", 1L);
+            List boletimFertList = boletimFertTO.get("statusBolFert", 1L);
             boletimFertTO = (BoletimFertTO) boletimFertList.get(0);
             boletimFertTO.setIdExtBolFert(Long.parseLong(id.trim()));
             boletimFertTO.update();
@@ -1433,7 +1429,10 @@ public class ManipDadosEnvio {
         if ((!verifBolFechadoMM())
                 && (!verifBolAbertoSemEnvioMM())
                 && (!verifApontaMM())
-                && (!verifDadosChecklist())){
+                && (!verifDadosChecklist())
+                && (!verifBolFechadoFert())
+                && (!verifBolAbertoSemEnvioFert())
+                && (!verifApontaFert())){
             enviando = false;
             return false;
         } else {

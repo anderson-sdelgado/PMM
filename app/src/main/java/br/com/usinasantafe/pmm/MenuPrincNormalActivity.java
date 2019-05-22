@@ -36,7 +36,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
     private ListView listViewAtiv;
     private ProgressDialog progressBar;
     private EquipTO equipTO;
-    private ConfiguracaoTO configuracaoTO;
+    private ConfiguracaoTO configTO;
 
     private TextView textViewProcessoNormal;
     private Handler customHandler = new Handler();
@@ -49,9 +49,20 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         pmmContext = (PMMContext) getApplication();
         textViewProcessoNormal = (TextView) findViewById(R.id.textViewProcessoNormal);
 
-        configuracaoTO = new ConfiguracaoTO();
-        List configList = configuracaoTO.all();
-        configuracaoTO = (ConfiguracaoTO) configList.get(0);
+        configTO = new ConfiguracaoTO();
+        List configList = configTO.all();
+        configTO = (ConfiguracaoTO) configList.get(0);
+
+        equipTO = new EquipTO();
+        List listEquipTO = equipTO.get("idEquip", configTO.getEquipConfig());
+        equipTO = (EquipTO) listEquipTO.get(0);
+        listEquipTO.clear();
+
+        if ((equipTO.getTipoEquipFert() == 1) || (equipTO.getTipoEquipFert() == 2)) {
+            pmmContext.setTipoEquip(2);
+        } else {
+            pmmContext.setTipoEquip(1);
+        }
 
         customHandler.postDelayed(updateTimerThread, 0);
 
@@ -135,7 +146,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                 String text = textView.getText().toString();
 
                 if (text.equals("TRABALHANDO")) {
-                    if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().datahora())) {
+                    if (configTO.getDtUltApontConfig().equals(Tempo.getInstance().datahora())) {
                         Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
@@ -145,7 +156,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                         finish();
                     }
                 } else if (text.equals("PARADO")) {
-                    if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().datahora())) {
+                    if (configTO.getDtUltApontConfig().equals(Tempo.getInstance().datahora())) {
                         Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
@@ -155,7 +166,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                         finish();
                     }
                 } else if (text.equals("FINALIZAR BOLETIM")) {
-                    if (configuracaoTO.getDtUltApontConfig().equals("")) {
+                    if (configTO.getDtUltApontConfig().equals("")) {
                         Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! INSIRA OS APONTAMENTOS AO BOLETIM!",
                                 Toast.LENGTH_LONG).show();
                     } else {
@@ -170,7 +181,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                     startActivity(it);
                     finish();
                 } else if (text.equals("NOVO TRANSBORDO")) {
-                    int ver = verTransbordo(configuracaoTO.getDtUltApontConfig());
+                    int ver = verTransbordo(configTO.getDtUltApontConfig());
                     if (ver == 1) {
                         Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! APONTE UMA ATIVIDADE ANTES DE TROCAR DE TRANSBORDO.",
                                 Toast.LENGTH_LONG).show();
@@ -223,12 +234,12 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                 } else if (text.equals("REENVIO DE DADOS")) {
                     ManipDadosEnvio.getInstance().envioDados(MenuPrincNormalActivity.this);
                 } else if (text.equals("TROCAR IMPLEMENTO")) {
-                    if (configuracaoTO.getDtUltApontConfig().equals("")) {
+                    if (configTO.getDtUltApontConfig().equals("")) {
                         Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! FAÇA ALGUM APONTAMENTO ANTES DE REALIZAR A TROCA DO(S) IMPLEMENTO(S)!",
                                 Toast.LENGTH_LONG).show();
                     } else {
 
-                        if (configuracaoTO.getDtUltApontConfig().equals(Tempo.getInstance().datahora())) {
+                        if (configTO.getDtUltApontConfig().equals(Tempo.getInstance().datahora())) {
                             Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                     Toast.LENGTH_LONG).show();
                         } else {
@@ -329,7 +340,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                 textViewProcessoNormal.setText("Todos os Dados já foram enviados e recebidos");
             }
 
-//            if(configuracaoTO.getVerVisGrafConfig() == 0){
+//            if(configTO.getVerVisGrafConfig() == 0){
 //                if(new GrafProdPlantioTO().hasElements()){
 //                    Intent it = new Intent( MenuPrincNormalActivity.this, GrafProdActivity.class);
 //                    startActivity(it);

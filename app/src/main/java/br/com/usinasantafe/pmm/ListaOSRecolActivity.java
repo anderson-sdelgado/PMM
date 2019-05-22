@@ -26,7 +26,7 @@ public class ListaOSRecolActivity extends ActivityGeneric {
         pmmContext = (PMMContext) getApplication();
 
         BoletimFertTO boletimFertTO = new BoletimFertTO();
-        List boletimList = boletimFertTO.get("statusBoletim", 1L);
+        List boletimList = boletimFertTO.get("statusBolFert", 1L);
         boletimFertTO = (BoletimFertTO) boletimList.get(0);
         boletimList.clear();
 

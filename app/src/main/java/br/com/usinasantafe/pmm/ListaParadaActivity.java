@@ -52,17 +52,24 @@ public class ListaParadaActivity extends ActivityGeneric {
         List listConfigTO = configTO.all();
         configTO = (ConfiguracaoTO) listConfigTO.get(0);
 
+        Long ativ;
+        if(pmmContext.getTipoEquip() == 1){
+            ativ = pmmContext.getApontaMMTO().getAtividadeAponta();
+        } else {
+            ativ = pmmContext.getApontaFertTO().getAtivApontaFert();
+        }
+
         RAtivParadaTO rAtivParadaTO = new RAtivParadaTO();
-        List lrcp = rAtivParadaTO.get("idAtiv", pmmContext.getApontaMMTO().getAtividadeAponta());
+        List rAtivParadaList = rAtivParadaTO.get("idAtiv", ativ);
 
         ArrayList<Long> rLista = new ArrayList<Long>();
 
-        for (int i = 0; i < lrcp.size(); i++) {
-            rAtivParadaTO = (RAtivParadaTO) lrcp.get(i);
+        for (int i = 0; i < rAtivParadaList.size(); i++) {
+            rAtivParadaTO = (RAtivParadaTO) rAtivParadaList.get(i);
             rLista.add(rAtivParadaTO.getIdParada());
         }
 
-        lrcp.clear();
+        rAtivParadaList.clear();
 
         ParadaTO paradaTO = new ParadaTO();
         listParada = paradaTO.inAndOrderBy("idParada", rLista, "codParada", true);

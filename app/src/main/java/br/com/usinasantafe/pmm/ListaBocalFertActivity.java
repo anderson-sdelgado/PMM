@@ -101,7 +101,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
         }
 
         AdapterList adapterList = new AdapterList(this, itens);
-        bocalListView = (ListView) findViewById(R.id.listaTurno);
+        bocalListView = (ListView) findViewById(R.id.listBocal);
         bocalListView.setAdapter(adapterList);
 
         bocalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
