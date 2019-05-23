@@ -34,6 +34,7 @@ public class PneuActivity extends ActivityGeneric {
         Button buttonOkPneu = (Button) findViewById(R.id.buttonOkPadrao);
         Button buttonCancPneu = (Button) findViewById(R.id.buttonCancPadrao);
 
+
         buttonOkPneu.setOnClickListener(new View.OnClickListener() {
             @SuppressWarnings("rawtypes")
             @Override
