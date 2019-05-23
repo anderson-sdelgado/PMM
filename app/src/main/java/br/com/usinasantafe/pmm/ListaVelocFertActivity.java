@@ -61,7 +61,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                             progressBar.setMessage("Atualizando Velocidade...");
                             progressBar.show();
 
-                            ManipDadosVerif.getInstance().verDados("", "pressaobocal"
+                            ManipDadosVerif.getInstance().verDados("", "PressaoBocal"
                                     , ListaVelocFertActivity.this, ListaVelocFertActivity.class, progressBar);
 
                         } else {

@@ -4,8 +4,8 @@ public class UrlsConexaoHttp {
 
     private int tipoEnvio = 1;
 
-    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmmdev/";
-    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmmdev/";
+    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmmqa/";
+    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmmqa/";
 
     //public static String localPSTVariavel = "br.com.usinasantafe.pmm.to.tb.variaveis.";
     public static String localPSTEstatica = "br.com.usinasantafe.pmm.to.tb.estaticas.";
@@ -76,6 +76,10 @@ public class UrlsConexaoHttp {
             retorno = urlPrincEnvio + "grafplantio2.php";
         } else if (classe.equals("Pneu")) {
             retorno = urlPrincEnvio + "verifpneu2.php";
+        } else if (classe.equals("Bocal")) {
+            retorno = urlPrincEnvio + "bocal2.php";
+        } else if (classe.equals("PressaoBocal")) {
+            retorno = urlPrincEnvio + "pressaobocal2.php";
         }
         return retorno;
     }

@@ -56,7 +56,7 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
                             progressBar.setMessage("Atualizando Pressao...");
                             progressBar.show();
 
-                            ManipDadosVerif.getInstance().verDados("", "pressaobocal"
+                            ManipDadosVerif.getInstance().verDados("", "PressaoBocal"
                                     , ListaPressaoFertActivity.this, ListaPressaoFertActivity.class, progressBar);
 
                         } else {

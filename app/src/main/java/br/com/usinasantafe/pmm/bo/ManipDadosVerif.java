@@ -244,6 +244,14 @@ public class ManipDadosVerif {
 
                 recDadosPneu(result);
 
+            } else if (this.tipo.equals("Bocal")) {
+
+                recDadosGenerico(result, "BocalTO");
+
+            } else if (this.tipo.equals("PressaoBocal")) {
+
+                recDadosGenerico(result, "PressaoBocalTO");
+
             }
 
         } catch (Exception e) {
@@ -254,6 +262,7 @@ public class ManipDadosVerif {
     }
 
     public void cancelVer() {
+        verTerm = true;
         if (conHttpPostVerGenerico.getStatus() == AsyncTask.Status.RUNNING) {
             conHttpPostVerGenerico.cancel(true);
         }
@@ -455,27 +464,35 @@ public class ManipDadosVerif {
                     configuracaoTO.setStatusConConfig(1L);
                     configuracaoTO.update();
 
-                    verTerm = true;
-                    Intent it = new Intent(telaAtual, telaProx);
-                    telaAtual.startActivity(it);
+                    if(!verTerm){
+
+                        verTerm = true;
+                        Intent it = new Intent(telaAtual, telaProx);
+                        telaAtual.startActivity(it);
+
+                    }
 
                 } else {
 
-                    verTerm = true;
-                    this.progressDialog.dismiss();
+                    if(!verTerm) {
 
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
-                    alerta.setTitle("ATENÇÃO");
-                    alerta.setMessage("OS INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
+                        verTerm = true;
+                        this.progressDialog.dismiss();
 
-                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // TODO Auto-generated method stub
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
+                        alerta.setTitle("ATENÇÃO");
+                        alerta.setMessage("OS INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
 
-                        }
-                    });
-                    alerta.show();
+                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO Auto-generated method stub
+
+                            }
+                        });
+                        alerta.show();
+
+                    }
 
                 }
 
@@ -488,9 +505,22 @@ public class ManipDadosVerif {
                 configuracaoTO.setStatusConConfig(0L);
                 configuracaoTO.update();
 
-                verTerm = true;
-                Intent it = new Intent(telaAtual, telaProx);
-                telaAtual.startActivity(it);
+                if(!verTerm) {
+                    this.progressDialog.dismiss();
+
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
+                    alerta.setTitle("ATENÇÃO");
+                    alerta.setMessage("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
+
+                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // TODO Auto-generated method stub
+
+                        }
+                    });
+                    alerta.show();
+                }
 
             }
 
@@ -833,18 +863,42 @@ public class ManipDadosVerif {
 
                     }
 
-                    verTerm = true;
-                    Intent it = new Intent(telaAtual, telaProx);
-                    telaAtual.startActivity(it);
+                    if(!verTerm) {
+                        verTerm = true;
+                        Intent it = new Intent(telaAtual, telaProx);
+                        telaAtual.startActivity(it);
+                    }
 
                 } else {
 
-                    verTerm = true;
+                    if(!verTerm) {
+                        verTerm = true;
+                        this.progressDialog.dismiss();
+
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
+                        alerta.setTitle("ATENÇÃO");
+                        alerta.setMessage("PNEU INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
+
+                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO Auto-generated method stub
+
+                            }
+                        });
+                        alerta.show();
+                    }
+
+                }
+
+            } else {
+
+                if(!verTerm) {
                     this.progressDialog.dismiss();
 
                     AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
                     alerta.setTitle("ATENÇÃO");
-                    alerta.setMessage("PNEU INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
+                    alerta.setMessage("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
 
                     alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
@@ -854,14 +908,7 @@ public class ManipDadosVerif {
                         }
                     });
                     alerta.show();
-
                 }
-
-            } else {
-
-                verTerm = true;
-                Intent it = new Intent(telaAtual, telaProx);
-                telaAtual.startActivity(it);
 
             }
 

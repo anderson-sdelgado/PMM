@@ -24,7 +24,6 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
 public class ListaPosPneuActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
-    private ListView lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,10 +99,10 @@ public class ListaPosPneuActivity extends ActivityGeneric {
         boletimPneuList.clear();
 
         ArrayAdapter<String> adapterList = new ArrayAdapter<String>(this, R.layout.activity_item_lista, R.id.textViewItemList, itens);
-        lista = (ListView) findViewById(R.id.listaPosPneu);
-        lista.setAdapter(adapterList);
+        ListView listaPosPneu = (ListView) findViewById(R.id.listaPosPneu);
+        listaPosPneu.setAdapter(adapterList);
 
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listaPosPneu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> l, View v, int position,

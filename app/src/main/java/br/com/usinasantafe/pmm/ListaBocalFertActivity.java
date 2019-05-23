@@ -54,7 +54,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
                             progressBar.setMessage("Atualizando Bocal...");
                             progressBar.show();
 
-                            ManipDadosVerif.getInstance().verDados("", "bocal"
+                            ManipDadosVerif.getInstance().verDados("", "Bocal"
                                     , ListaBocalFertActivity.this, ListaBocalFertActivity.class, progressBar);
 
                         } else {
