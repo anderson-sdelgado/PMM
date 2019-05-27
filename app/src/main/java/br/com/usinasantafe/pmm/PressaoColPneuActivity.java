@@ -96,6 +96,9 @@ public class PressaoColPneuActivity extends ActivityGeneric {
 
                             }
 
+                            boletimPneuTO.setStatusBolPneu(2L);
+                            boletimPneuTO.update();
+
                             Intent it = new Intent(PressaoColPneuActivity.this, MenuPrincNormalActivity.class);
                             startActivity(it);
                             finish();

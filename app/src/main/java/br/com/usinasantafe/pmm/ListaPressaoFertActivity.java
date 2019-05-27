@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -105,6 +106,7 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
         HashSet<String> hashSet = new HashSet<String>(itens);
         itens.clear();
         itens.addAll(hashSet);
+        Collections.sort(itens);
 
         AdapterList adapterList = new AdapterList(this, itens);
         pressaoBocalListView = (ListView) findViewById(R.id.listPressao);

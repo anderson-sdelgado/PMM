@@ -141,7 +141,6 @@ public class MenuInicialActivity extends ActivityGeneric {
                     pmmContext.setBoletimFertTO((BoletimFertTO) boletimList.get(0));
                 }
 
-
                 if (cabecList.size() == 0) {
 
                     if (progressBar.isShowing()) {
@@ -163,6 +162,19 @@ public class MenuInicialActivity extends ActivityGeneric {
                         }
                         apontaMMList.clear();
                     } else {
+                        ApontaMMTO apontaMMTO = new ApontaMMTO();
+                        List apontaMMList = apontaMMTO.get("statusAponta", 1L);
+                        if (apontaMMList.size() == 0) {
+                            Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
+                            startActivity(it);
+                            finish();
+                        } else {
+                            Intent it = new Intent(MenuInicialActivity.this, ListaPosPneuActivity.class);
+                            startActivity(it);
+                            finish();
+
+                        }
+                        apontaMMList.clear();
                         Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
                         startActivity(it);
                         finish();

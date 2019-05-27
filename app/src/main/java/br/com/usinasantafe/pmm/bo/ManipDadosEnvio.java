@@ -899,7 +899,6 @@ public class ManipDadosEnvio {
         JsonObject jsonAponta = new JsonObject();
         jsonAponta.add("aponta", jsonArrayAponta);
 
-
         JsonObject jsonBolPneu = new JsonObject();
         jsonBolPneu.add("bolpneu", jsonArrayBolPneu);
 

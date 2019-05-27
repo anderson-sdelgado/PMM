@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -123,6 +124,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
         HashSet<String> hashSet = new HashSet<String>(itens);
         itens.clear();
         itens.addAll(hashSet);
+        Collections.sort(itens);
 
         AdapterList adapterList = new AdapterList(this, itens);
         velocListView = (ListView) findViewById(R.id.listVelocidade);

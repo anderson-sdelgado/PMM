@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.BocalTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
@@ -71,7 +72,8 @@ public class AdapterListHistorico extends BaseAdapter {
             textViewHistApont.setTextColor(Color.RED);
         }
 
-        textViewHistHorario.setText("HORÁRIO: " + backupApontaTO.getDthrAponta().substring(11));
+
+        textViewHistHorario.setText("HORÁRIO: " + Tempo.getInstance().dataHoraCTZ(backupApontaTO.getDthrAponta()).substring(11));
 
         if (tipoEquip == 1) {
             if(backupApontaTO.getTransbAponta() > 0){
