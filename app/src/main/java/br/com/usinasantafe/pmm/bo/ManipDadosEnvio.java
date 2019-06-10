@@ -324,7 +324,7 @@ public class ManipDadosEnvio {
 
         UrlsConexaoHttp urlsConexaoHttp = new UrlsConexaoHttp();
 
-        String[] url = {urlsConexaoHttp.getsApontChecklist()};
+        String[] url = {urlsConexaoHttp.getsInserirCheckList()};
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
@@ -476,11 +476,13 @@ public class ManipDadosEnvio {
             EspecificaPesquisa pesquisa = new EspecificaPesquisa();
             pesquisa.setCampo("statusAponta");
             pesquisa.setValor(2L);
+            pesquisa.setTipo(1);
             listaPesq.add(pesquisa);
 
             EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
             pesquisa2.setCampo("idBolAponta");
             pesquisa2.setValor(boletimMMTO.getIdBoletim());
+            pesquisa2.setTipo(1);
             listaPesq.add(pesquisa2);
 
             List apontaList = apontaMMTO.get(listaPesq);
@@ -774,11 +776,13 @@ public class ManipDadosEnvio {
             EspecificaPesquisa pesquisa = new EspecificaPesquisa();
             pesquisa.setCampo("statusApontaFert");
             pesquisa.setValor(2L);
+            pesquisa.setTipo(1);
             listaPesq.add(pesquisa);
 
             EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
             pesquisa2.setCampo("idBolApontaFert");
             pesquisa2.setValor(boletimFertTO.getIdBolFert());
+            pesquisa2.setTipo(1);
             listaPesq.add(pesquisa2);
 
             List apontaList = apontaFertTO.get(listaPesq);
@@ -1078,7 +1082,7 @@ public class ManipDadosEnvio {
     public void delApontaMM() {
 
         ApontaMMTO apontaMMTO = new ApontaMMTO();
-        List apontaList = apontaMMTO.all();
+        List apontaList = apontamentosMM();
 
         for (int j = 0; j < apontaList.size(); j++) {
 
@@ -1287,11 +1291,13 @@ public class ManipDadosEnvio {
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("statusBoletim");
         pesquisa.setValor(1L);
+        pesquisa.setTipo(1);
         listaPesq.add(pesquisa);
 
         EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
         pesquisa2.setCampo("idExtBoletim");
         pesquisa2.setValor(0);
+        pesquisa2.setTipo(1);
         listaPesq.add(pesquisa2);
 
         return boletimMMTO.get(listaPesq);
@@ -1299,6 +1305,7 @@ public class ManipDadosEnvio {
     }
 
     public List apontamentosMM() {
+
         ApontaMMTO apontaMMTO = new ApontaMMTO();
         return apontaMMTO.get("statusAponta", 2L);
     }
@@ -1317,11 +1324,13 @@ public class ManipDadosEnvio {
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("statusBolFert");
         pesquisa.setValor(1L);
+        pesquisa.setTipo(1);
         pesqList.add(pesquisa);
 
         EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
         pesquisa2.setCampo("idExtBolFert");
         pesquisa2.setValor(0);
+        pesquisa2.setTipo(1);
         pesqList.add(pesquisa2);
 
         return boletimFertTO.get(pesqList);

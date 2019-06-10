@@ -107,14 +107,16 @@ public class EquipMBActivity extends ActivityGeneric {
                     ArrayList listaPesq = new ArrayList();
                     EquipSegTO equipSegTO = new EquipSegTO();
 
-                    EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-                    pesquisa.setCampo("codEquip");
-                    pesquisa.setValor(motoBomba);
-                    listaPesq.add(pesquisa);
+                    EspecificaPesquisa pesquisa1 = new EspecificaPesquisa();
+                    pesquisa1.setCampo("nroEquip");
+                    pesquisa1.setValor(motoBomba);
+                    pesquisa1.setTipo(1);
+                    listaPesq.add(pesquisa1);
 
                     EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
                     pesquisa2.setCampo("tipoEquip");
                     pesquisa2.setValor(4L);
+                    pesquisa2.setTipo(1);
                     listaPesq.add(pesquisa2);
 
                     List equipSegList = equipSegTO.get(listaPesq);
@@ -171,7 +173,7 @@ public class EquipMBActivity extends ActivityGeneric {
                             List equipList = equipTO.get("idEquip", configTO.getEquipConfig());
                             equipTO = (EquipTO) equipList.get(0);
                             equipList.clear();
-                            cabecCheckListTO.setEquipCab(equipTO.getCodEquip());
+                            cabecCheckListTO.setEquipCab(equipTO.getNroEquip());
                             cabecCheckListTO.setFuncCab(pmmContext.getBoletimMMTO().getCodMotoBoletim());
                             cabecCheckListTO.setTurnoCab(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
                             cabecCheckListTO.setQtdeItemCab(qtde);

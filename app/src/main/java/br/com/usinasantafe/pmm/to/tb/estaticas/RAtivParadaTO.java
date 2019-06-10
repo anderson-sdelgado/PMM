@@ -11,7 +11,7 @@ import br.com.usinasantafe.pmm.pst.Entidade;
 @DatabaseTable(tableName="tbrativparest")
 public class RAtivParadaTO extends Entidade {
 
-    @DatabaseField(id=true)
+    @DatabaseField(generatedId=true)
     private Long idRAtivParada;
     @DatabaseField
     private Long idAtiv;

@@ -22,6 +22,7 @@ import br.com.usinasantafe.pmm.MenuInicialActivity;
 import br.com.usinasantafe.pmm.conWEB.ConHttpPostVerGenerico;
 import br.com.usinasantafe.pmm.conWEB.UrlsConexaoHttp;
 import br.com.usinasantafe.pmm.pst.GenericRecordable;
+import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.GrafDispEquipPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.GrafPlanRealPlantioTO;
@@ -29,6 +30,7 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.GrafProdPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.GrafQualPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.PneuTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.RAtivParadaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
@@ -36,10 +38,8 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.REquipPneuTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.AtualizaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
 
 import android.os.AsyncTask;
 
@@ -192,21 +192,13 @@ public class ManipDadosVerif {
         try {
 
             if (this.tipo.equals("Equip")) {
-
                 recDadosEquip(result);
-
             } else if (this.tipo.equals("OS")) {
-
                 recDadosOS(result);
-
             } else if (this.tipo.equals("Atividade")) {
-
                 recDadosAtiv(result);
-
-            } else if (this.tipo.equals("Parada")) {
-
-                recDadosGenerico(result, "RAtivParadaTO");
-
+            } else if (this.tipo.equals("AtualParada")) {
+                recDadosParada(result);
             } else if (this.tipo.equals("Atualiza")) {
 
                 String verAtualizacao = result.trim();
@@ -221,37 +213,21 @@ public class ManipDadosVerif {
                 }
 
             } else if (this.tipo.equals("Operador")) {
-
                 recDadosGenerico(result, "MotoristaTO");
-
             } else if (this.tipo.equals("Turno")) {
-
                 recDadosGenerico(result, "TurnoTO");
-
             } else if (this.tipo.equals("EquipSeg")) {
-
                 recDadosGenerico(result, "EquipSegTO");
-
             } else if (this.tipo.equals("CheckList")) {
-
                 recDadosCheckList(result);
-
             } else if (this.tipo.equals("GrafPlantio")) {
-
                 recDadosGrafico(result);
-
             } else if (this.tipo.equals("Pneu")) {
-
                 recDadosPneu(result);
-
             } else if (this.tipo.equals("Bocal")) {
-
                 recDadosGenerico(result, "BocalTO");
-
             } else if (this.tipo.equals("PressaoBocal")) {
-
                 recDadosGenerico(result, "PressaoBocalTO");
-
             }
 
         } catch (Exception e) {
@@ -294,7 +270,7 @@ public class ManipDadosVerif {
 
         CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
         cabecCheckListTO.setDtCab(Tempo.getInstance().datahora());
-        cabecCheckListTO.setEquipCab(equipTO.getCodEquip());
+        cabecCheckListTO.setEquipCab(equipTO.getNroEquip());
         cabecCheckListTO.setFuncCab(boletimMMTO.getCodMotoBoletim());
         cabecCheckListTO.setTurnoCab(boletimMMTO.getCodTurnoBoletim());
         cabecCheckListTO.setQtdeItemCab(qtde);
@@ -310,11 +286,9 @@ public class ManipDadosVerif {
 
             int pos1 = result.indexOf("#") + 1;
             int pos2 = result.indexOf("|") + 1;
-            int pos3 = result.indexOf("_") + 1;
             String objPrinc = result.substring(0, (pos1 - 1));
             String objSeg = result.substring(pos1, (pos2 - 1));
-            String objTerc = result.substring(pos2, (pos3 - 1));
-            String objQuar = result.substring(pos3);
+            String objTerc = result.substring(pos2);
 
             JSONObject jObj = new JSONObject(objPrinc);
             JSONArray jsonArray = jObj.getJSONArray("dados");
@@ -349,21 +323,6 @@ public class ManipDadosVerif {
                 }
 
                 jObj = new JSONObject(objTerc);
-                jsonArray = jObj.getJSONArray("dados");
-
-                RAtivParadaTO rAtivParadaTO = new RAtivParadaTO();
-                rAtivParadaTO.deleteAll();
-
-                for (int j = 0; j < jsonArray.length(); j++) {
-
-                    JSONObject objeto = jsonArray.getJSONObject(j);
-                    Gson gson = new Gson();
-                    RAtivParadaTO rAtivParada = gson.fromJson(objeto.toString(), RAtivParadaTO.class);
-                    rAtivParada.insert();
-
-                }
-
-                jObj = new JSONObject(objQuar);
                 jsonArray = jObj.getJSONArray("dados");
 
                 REquipPneuTO rEquipPneuTO = new REquipPneuTO();
@@ -539,31 +498,12 @@ public class ManipDadosVerif {
 
                 int pos1 = result.indexOf("_") + 1;
                 int pos2 = result.indexOf("|") + 1;
-                int pos3 = result.indexOf("#") + 1;
-                int pos4 = result.indexOf("?") + 1;
                 String objPrim = result.substring(0, (pos1 - 1));
                 String objSeg = result.substring(pos1, (pos2 - 1));
-                String objTerc = result.substring(pos2, (pos3 - 1));
-                String objQuarto = result.substring(pos3, (pos4 - 1));
-                String objQuinto = result.substring(pos4);
+                String objTerc = result.substring(pos2);
 
                 JSONObject jObj = new JSONObject(objPrim);
                 JSONArray jsonArray = jObj.getJSONArray("dados");
-
-                EquipTO equipTO = new EquipTO();
-                equipTO.deleteAll();
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-
-                    JSONObject objeto = jsonArray.getJSONObject(i);
-                    Gson gson = new Gson();
-                    equipTO = gson.fromJson(objeto.toString(), EquipTO.class);
-                    equipTO.insert();
-
-                }
-
-                jObj = new JSONObject(objSeg);
-                jsonArray = jObj.getJSONArray("dados");
 
                 REquipAtivTO rEquipAtivTO = new REquipAtivTO();
                 rEquipAtivTO.deleteAll();
@@ -577,46 +517,37 @@ public class ManipDadosVerif {
 
                 }
 
-                jObj = new JSONObject(objTerc);
-                jsonArray = jObj.getJSONArray("dados");
-
-                RAtivParadaTO rAtivParadaTO = new RAtivParadaTO();
-                rAtivParadaTO.deleteAll();
-
-                for (int j = 0; j < jsonArray.length(); j++) {
-
-                    JSONObject objeto = jsonArray.getJSONObject(j);
-                    Gson gson = new Gson();
-                    RAtivParadaTO rAtivParada = gson.fromJson(objeto.toString(), RAtivParadaTO.class);
-                    rAtivParada.insert();
-
-                }
-
-                jObj = new JSONObject(objQuarto);
+                jObj = new JSONObject(objSeg);
                 jsonArray = jObj.getJSONArray("dados");
 
                 if (jsonArray.length() > 0) {
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(i);
-                        Gson gson = new Gson();
-                        OSTO osTO = gson.fromJson(objeto.toString(), OSTO.class);
-                        osTO.insert();
-
-                    }
-
-                    jObj = new JSONObject(objQuinto);
-                    jsonArray = jObj.getJSONArray("dados");
+                    ROSAtivTO rosAtivTO = new ROSAtivTO();
+                    rosAtivTO.deleteAll();
 
                     for (int j = 0; j < jsonArray.length(); j++) {
 
                         JSONObject objeto = jsonArray.getJSONObject(j);
                         Gson gson = new Gson();
-                        ROSAtivTO rosAtivTO = gson.fromJson(objeto.toString(), ROSAtivTO.class);
-                        rosAtivTO.insert();
+                        ROSAtivTO rosAtiv = gson.fromJson(objeto.toString(), ROSAtivTO.class);
+                        rosAtiv.insert();
 
                     }
+
+                }
+
+                jObj = new JSONObject(objTerc);
+                jsonArray = jObj.getJSONArray("dados");
+
+                AtividadeTO atividadeTO = new AtividadeTO();
+                atividadeTO.deleteAll();
+
+                for (int j = 0; j < jsonArray.length(); j++) {
+
+                    JSONObject objeto = jsonArray.getJSONObject(j);
+                    Gson gson = new Gson();
+                    AtividadeTO atividade = gson.fromJson(objeto.toString(), AtividadeTO.class);
+                    atividade.insert();
 
                 }
 
@@ -669,6 +600,65 @@ public class ManipDadosVerif {
                     this.progressDialog.dismiss();
 
                 }
+
+            }
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            Log.i("PMM", "Erro Manip atualizar = " + e);
+        }
+
+    }
+
+    public void recDadosParada(String result) {
+
+        try {
+
+            if (!result.contains("exceeded")) {
+
+                int pos1 = result.indexOf("_") + 1;
+                String objPrinc = result.substring(0, (pos1 - 1));
+                String objSeg = result.substring(pos1);
+
+                JSONObject jObj = new JSONObject(objPrinc);
+                JSONArray jsonArray = jObj.getJSONArray("dados");
+
+                RAtivParadaTO rAtivParadaTO = new RAtivParadaTO();
+                rAtivParadaTO.deleteAll();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject objeto = jsonArray.getJSONObject(i);
+                    Gson gson = new Gson();
+                    RAtivParadaTO rAtivParada = gson.fromJson(objeto.toString(), RAtivParadaTO.class);
+                    rAtivParada.insert();
+
+                }
+
+                jObj = new JSONObject(objSeg);
+                jsonArray = jObj.getJSONArray("dados");
+
+                ParadaTO paradaTO = new ParadaTO();
+                paradaTO.deleteAll();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject objeto = jsonArray.getJSONObject(i);
+                    Gson gson = new Gson();
+                    ParadaTO parada = gson.fromJson(objeto.toString(), ParadaTO.class);
+                    parada.insert();
+
+                }
+
+                this.progressDialog.dismiss();
+                Intent it = new Intent(telaAtual, telaProx);
+                telaAtual.startActivity(it);
+
+            } else {
+
+                this.progressDialog.dismiss();
+                Intent it = new Intent(telaAtual, telaProx);
+                telaAtual.startActivity(it);
 
             }
 

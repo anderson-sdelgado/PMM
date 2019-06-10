@@ -4,6 +4,7 @@ public class EspecificaPesquisa {
 
 	private String campo;
 	private Object valor;
+	private int tipo;
 	
 	public EspecificaPesquisa() {
 		// TODO Auto-generated constructor stub
@@ -24,5 +25,12 @@ public class EspecificaPesquisa {
 	public void setValor(Object valor) {
 		this.valor = valor;
 	}
-	
+
+	public int getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
 }

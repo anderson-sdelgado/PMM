@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -61,7 +62,7 @@ public class ImplementoActivity extends ActivityGeneric {
 
                             progressBar = new ProgressDialog(ImplementoActivity.this);
                             progressBar.setCancelable(true);
-                            progressBar.setMessage("Atualizando Operador...");
+                            progressBar.setMessage("Atualizando Implemento...");
                             progressBar.show();
 
                             ManipDadosVerif.getInstance().verDados("", "EquipSeg"
@@ -119,14 +120,18 @@ public class ImplementoActivity extends ActivityGeneric {
                     ArrayList listaPesq = new ArrayList();
                     EquipSegTO equipSegTO = new EquipSegTO();
 
+                    Log.i("PMM", "impl = " + impl);
+
                     EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-                    pesquisa.setCampo("codEquip");
+                    pesquisa.setCampo("nroEquip");
                     pesquisa.setValor(impl);
+                    pesquisa.setTipo(1);
                     listaPesq.add(pesquisa);
 
                     EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
                     pesquisa2.setCampo("tipoEquip");
                     pesquisa2.setValor(3L);
+                    pesquisa2.setTipo(1);
                     listaPesq.add(pesquisa2);
 
                     List equipSegList = equipSegTO.get(listaPesq);
@@ -154,11 +159,13 @@ public class ImplementoActivity extends ActivityGeneric {
                         EspecificaPesquisa pesq1 = new EspecificaPesquisa();
                         pesq1.setCampo("codEquipImplemento");
                         pesq1.setValor(impl);
+                        pesq1.setTipo(1);
                         listaPesq2.add(pesq1);
 
                         EspecificaPesquisa pesq2 = new EspecificaPesquisa();
                         pesq2.setCampo("idApontImplemento");
                         pesq2.setValor(0);
+                        pesq2.setTipo(1);
                         listaPesq2.add(pesq2);
 
                         ImplementoTO implementoTO = new ImplementoTO();
@@ -194,11 +201,13 @@ public class ImplementoActivity extends ActivityGeneric {
                             EspecificaPesquisa pesq1 = new EspecificaPesquisa();
                             pesq1.setCampo("posImplemento");
                             pesq1.setValor(1L);
+                            pesq1.setTipo(1);
                             listaPesq.add(pesq1);
 
                             EspecificaPesquisa pesq2 = new EspecificaPesquisa();
                             pesq2.setCampo("idApontImplemento");
                             pesq2.setValor(0);
+                            pesq2.setTipo(1);
                             listaPesq.add(pesq2);
 
                             ImplementoTO implemento1TO = new ImplementoTO();
@@ -227,11 +236,13 @@ public class ImplementoActivity extends ActivityGeneric {
                             EspecificaPesquisa pesq3 = new EspecificaPesquisa();
                             pesq3.setCampo("posImplemento");
                             pesq3.setValor(2L);
+                            pesq3.setTipo(1);
                             listaPesq.add(pesq3);
 
                             EspecificaPesquisa pesq4 = new EspecificaPesquisa();
                             pesq4.setCampo("idApontImplemento");
                             pesq4.setValor(0);
+                            pesq4.setTipo(1);
                             listaPesq.add(pesq4);
 
                             ImplementoTO implemento2TO = new ImplementoTO();
@@ -284,7 +295,7 @@ public class ImplementoActivity extends ActivityGeneric {
                                     List equipList = equipTO.get("idEquip", configTO.getEquipConfig());
                                     equipTO = (EquipTO) equipList.get(0);
                                     equipList.clear();
-                                    cabecCheckListTO.setEquipCab(equipTO.getCodEquip());
+                                    cabecCheckListTO.setEquipCab(equipTO.getNroEquip());
                                     cabecCheckListTO.setFuncCab(pmmContext.getBoletimMMTO().getCodMotoBoletim());
                                     cabecCheckListTO.setTurnoCab(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
                                     cabecCheckListTO.setQtdeItemCab(qtde);

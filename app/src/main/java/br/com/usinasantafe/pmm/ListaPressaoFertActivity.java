@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -119,8 +120,12 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
                                     long id) {
                 // TODO Auto-generated method stub
 
-                PressaoBocalTO pressaoBocalTO = (PressaoBocalTO)  pressaoBocalList.get(position);
-                pmmContext.getApontaFertTO().setPressaoApontaFert(pressaoBocalTO.getValorPressao());
+//                PressaoBocalTO pressaoBocalTO = (PressaoBocalTO)  pressaoBocalList.get(position);
+//                pmmContext.getApontaFertTO().setPressaoApontaFert(pressaoBocalTO.getValorPressao());
+//                pressaoBocalList.clear();
+
+                TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
+                pmmContext.getApontaFertTO().setPressaoApontaFert(Double.parseDouble(textView.getText().toString()));
                 pressaoBocalList.clear();
 
                 Intent it = new Intent(ListaPressaoFertActivity.this, ListaVelocFertActivity.class);

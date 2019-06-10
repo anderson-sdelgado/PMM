@@ -107,7 +107,7 @@ public class MenuInicialActivity extends ActivityGeneric {
                     AtualizaTO atualizaTO = new AtualizaTO();
                     atualizaTO.setVersaoAtual(pmmContext.versaoAplic);
 
-                    atualizaTO.setIdEquipAtualizacao(equipTO.getCodEquip());
+                    atualizaTO.setIdEquipAtualizacao(equipTO.getNroEquip());
                     atualizaTO.setIdCheckList(equipTO.getIdChecklist());
 
                     ManipDadosVerif.getInstance().verAtualizacao(atualizaTO, this, progressBar);
@@ -499,7 +499,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
             Log.i("PMM", "Equipamento");
             Log.i("PMM", "idEquip = " + equipTO.getIdEquip());
-            Log.i("PMM", "codEquip = " + equipTO.getCodEquip());
+            Log.i("PMM", "codEquip = " + equipTO.getNroEquip());
             Log.i("PMM", "codTurno = " + equipTO.getCodTurno());
             Log.i("PMM", "idChecklist = " + equipTO.getIdChecklist());
             Log.i("PMM", "tipoEquipFert = " + equipTO.getTipoEquipFert());

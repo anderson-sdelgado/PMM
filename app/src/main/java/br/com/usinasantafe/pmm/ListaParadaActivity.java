@@ -125,7 +125,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                     List configList = configuracaoTO.all();
                     configuracaoTO = (ConfiguracaoTO) configList.get(0);
 
-                    ManipDadosVerif.getInstance().verDados(String.valueOf(configuracaoTO.getEquipConfig()), "Parada"
+                    ManipDadosVerif.getInstance().verDados("", "AtualParada"
                             , ListaParadaActivity.this, ListaParadaActivity.class, progressBar);
 
                 } else {
@@ -306,7 +306,6 @@ public class ListaParadaActivity extends ActivityGeneric {
         return v;
 
     }
-
 
     public void onBackPressed() {
     }

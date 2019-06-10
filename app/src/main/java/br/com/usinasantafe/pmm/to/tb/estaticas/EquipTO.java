@@ -22,7 +22,7 @@ public class EquipTO extends Entidade {
 	@DatabaseField(id=true)
     private Long idEquip;
     @DatabaseField
-    private Long codEquip;
+    private Long nroEquip;
     @DatabaseField
     private Long codClasseEquip;
     @DatabaseField
@@ -49,12 +49,12 @@ public class EquipTO extends Entidade {
         this.idEquip = idEquip;
     }
 
-    public Long getCodEquip() {
-        return codEquip;
+    public Long getNroEquip() {
+        return nroEquip;
     }
 
-    public void setCodEquip(Long codEquip) {
-        this.codEquip = codEquip;
+    public void setNroEquip(Long nroEquip) {
+        this.nroEquip = nroEquip;
     }
 
     public Long getCodClasseEquip() {

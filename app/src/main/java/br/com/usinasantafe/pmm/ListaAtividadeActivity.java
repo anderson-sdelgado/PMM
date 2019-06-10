@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
@@ -71,7 +73,12 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                     progressBar.setMessage("Atualizando Atividades...");
                     progressBar.show();
 
-                    ManipDadosVerif.getInstance().verDados(nroOS + "_" + configTO.getEquipConfig(), "Atividade"
+                    EquipTO equipTO = new EquipTO();
+                    List equipList = equipTO.get("idEquip", configTO.getEquipConfig());
+                    equipTO = (EquipTO) equipList.get(0);
+                    equipList.clear();
+
+                    ManipDadosVerif.getInstance().verDados(nroOS + "_" + equipTO.getNroEquip(), "Atividade"
                             , ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
 
                 } else {
@@ -111,6 +118,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
         ArrayList<String> itens = new ArrayList<String>();
 
         REquipAtivTO rEquipAtivTO = new REquipAtivTO();
+        Log.i("PMM", "configTO.getEquipConfig() = " + configTO.getEquipConfig());
         List lrea = rEquipAtivTO.get("idEquip", configTO.getEquipConfig());
 
         configList.clear();
@@ -119,6 +127,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
         for (int i = 0; i < lrea.size(); i++) {
             rEquipAtivTO = (REquipAtivTO) lrea.get(i);
+            Log.i("PMM", "rEquipAtivTO.getIdAtiv() = " + rEquipAtivTO.getIdAtiv());
             rLista.add(rEquipAtivTO.getIdAtiv());
         }
 
@@ -133,8 +142,10 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
             for (int i = 0; i < listAtiv.size(); i++) {
                 atividadeTO = (AtividadeTO) listAtiv.get(i);
+                Log.i("PMM", "1 - atividadeTO.getIdAtiv() = " + atividadeTO.getIdAtiv());
                 for (int j = 0; j < lroa.size(); j++) {
                     rOSAtivTO = (ROSAtivTO) lroa.get(j);
+                    Log.i("PMM", "rOSAtivTO.getIdAtiv() = " + rOSAtivTO.getIdAtiv());
                     if (Objects.equals(atividadeTO.getIdAtiv(), rOSAtivTO.getIdAtiv())) {
                         lAtivExib.add(atividadeTO);
                     }
@@ -145,6 +156,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
             for (int i = 0; i < listAtiv.size(); i++) {
                 atividadeTO = (AtividadeTO) listAtiv.get(i);
+                Log.i("PMM", "2 - atividadeTO.getIdAtiv() = " + atividadeTO.getIdAtiv());
                 lAtivExib.add(atividadeTO);
             }
 
@@ -250,11 +262,13 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
                                         pesquisa.setCampo("idBolRendimento");
                                         pesquisa.setValor(boletimMMTO.getIdBoletim());
+                                        pesquisa.setTipo(1);
                                         listaPesq.add(pesquisa);
 
                                         EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
                                         pesquisa2.setCampo("nroOSRendimento");
                                         pesquisa2.setValor(pmmContext.getApontaMMTO().getOsAponta());
+                                        pesquisa2.setTipo(1);
                                         listaPesq.add(pesquisa2);
 
                                         List rendList = rendimentoTO.get(listaPesq);

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -105,11 +106,13 @@ public class ListaVelocFertActivity extends ActivityGeneric {
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("idBocal");
         pesquisa.setValor(pmmContext.getApontaFertTO().getBocalApontaFert());
+        pesquisa.setTipo(1);
         listaPesq.add(pesquisa);
 
         EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
         pesquisa2.setCampo("valorPressao");
         pesquisa2.setValor(pmmContext.getApontaFertTO().getPressaoApontaFert());
+        pesquisa2.setTipo(1);
         listaPesq.add(pesquisa2);
 
         velocList = pressaoBocalTO.getAndOrderBy(listaPesq, "valorVeloc", true);
@@ -137,8 +140,12 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                                     long id) {
                 // TODO Auto-generated method stub
 
-                PressaoBocalTO pressaoBocalTO = (PressaoBocalTO)  velocList.get(position);
-                pmmContext.getApontaFertTO().setVelocApontaFert(pressaoBocalTO.getValorVeloc());
+//                PressaoBocalTO pressaoBocalTO = (PressaoBocalTO)  velocList.get(position);
+//                pmmContext.getApontaFertTO().setVelocApontaFert(pressaoBocalTO.getValorVeloc());
+
+                TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
+                pmmContext.getApontaFertTO().setVelocApontaFert(Long.parseLong(textView.getText().toString()));
+                velocList.clear();
 
                 BoletimFertTO boletimFertTO = new BoletimFertTO();
                 List boletimList = boletimFertTO.get("statusBolFert", 1L);
@@ -153,11 +160,13 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                     EspecificaPesquisa pesquisa = new EspecificaPesquisa();
                     pesquisa.setCampo("idBolRecol");
                     pesquisa.setValor(boletimFertTO.getIdBolFert());
+                    pesquisa.setTipo(1);
                     pesqList.add(pesquisa);
 
                     EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
                     pesquisa2.setCampo("nroOSRecol");
                     pesquisa2.setValor(pmmContext.getApontaFertTO().getOsApontaFert());
+                    pesquisa2.setTipo(1);
                     pesqList.add(pesquisa2);
 
                     List rendList = recolhimentoTO.get(pesqList);

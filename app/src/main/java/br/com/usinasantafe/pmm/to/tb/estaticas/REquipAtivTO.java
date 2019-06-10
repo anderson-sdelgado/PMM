@@ -14,7 +14,7 @@ public class REquipAtivTO extends Entidade {
 
     private static final long serialVersionUID = 1L;
 
-    @DatabaseField(id=true)
+    @DatabaseField(generatedId=true)
     private Long idEquipAtiv;
     @DatabaseField
     private Long idEquip;

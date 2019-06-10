@@ -60,7 +60,7 @@ public class TransbordoActivity extends ActivityGeneric {
 
                             progressBar = new ProgressDialog(TransbordoActivity.this);
                             progressBar.setCancelable(true);
-                            progressBar.setMessage("Atualizando Operador...");
+                            progressBar.setMessage("Atualizando Transbordo...");
                             progressBar.show();
 
                             ManipDadosVerif.getInstance().verDados("", "EquipSeg"
@@ -110,13 +110,15 @@ public class TransbordoActivity extends ActivityGeneric {
                     EquipSegTO equipSegTO = new EquipSegTO();
 
                     EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-                    pesquisa.setCampo("codEquip");
+                    pesquisa.setCampo("nroEquip");
                     pesquisa.setValor(Long.parseLong(editTextPadrao.getText().toString()));
+                    pesquisa.setTipo(1);
                     listaPesq.add(pesquisa);
 
                     EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
                     pesquisa2.setCampo("tipoEquip");
                     pesquisa2.setValor(2L);
+                    pesquisa2.setTipo(1);
                     listaPesq.add(pesquisa2);
 
                     List equipSegList = equipSegTO.get(listaPesq);

@@ -39,7 +39,7 @@ public class EquipActivity extends ActivityGeneric {
         equipTO = (EquipTO) listEquipTO.get(0);
         listEquipTO.clear();
 
-        textViewCodEquip.setText(String.valueOf(equipTO.getCodEquip()));
+        textViewCodEquip.setText(String.valueOf(equipTO.getNroEquip()));
         textViewDescEquip.setText(String.valueOf(equipTO.getDescrClasseEquip()));
 
         if(pmmContext.getTipoEquip() == 1) {

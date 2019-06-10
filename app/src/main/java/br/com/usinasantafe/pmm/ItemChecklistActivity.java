@@ -53,11 +53,13 @@ public class ItemChecklistActivity extends ActivityGeneric {
         EspecificaPesquisa pesq3 = new EspecificaPesquisa();
         pesq3.setCampo("seqItemChecklist");
         pesq3.setValor(pmmContext.getPosChecklist());
+        pesq3.setTipo(1);
         itemListPesq.add(pesq3);
 
         EspecificaPesquisa pesq4 = new EspecificaPesquisa();
         pesq4.setCampo("idChecklist");
         pesq4.setValor(equipTO.getIdChecklist());
+        pesq4.setTipo(1);
         itemListPesq.add(pesq4);
 
         List itemCheckListLista = itemCheckListTO.get(itemListPesq);
@@ -68,11 +70,13 @@ public class ItemChecklistActivity extends ActivityGeneric {
         EspecificaPesquisa pesq1 = new EspecificaPesquisa();
         pesq1.setCampo("idItBDIt");
         pesq1.setValor(itemCheckListTO.getIdItemChecklist());
+        pesq1.setTipo(1);
         respPesq.add(pesq1);
 
         EspecificaPesquisa pesq2 = new EspecificaPesquisa();
         pesq2.setCampo("idCabIt");
         pesq2.setValor(cabecCheckListTO.getIdCab());
+        pesq2.setTipo(1);
         respPesq.add(pesq2);
 
         respItemCheckListTO = new RespItemCheckListTO();
