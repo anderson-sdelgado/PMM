@@ -23,7 +23,7 @@ import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.tb.estaticas.PressaoBocalTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
 
 public class ListaVelocFertActivity extends ActivityGeneric {
@@ -187,9 +187,9 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                 pmmContext.getApontaFertTO().setLatitudeApontaFert(getLatitude());
                 pmmContext.getApontaFertTO().setLongitudeApontaFert(getLongitude());
 
-                ConfiguracaoTO configTO = new ConfiguracaoTO();
+                ConfigTO configTO = new ConfigTO();
                 List configList = configTO.all();
-                configTO = (ConfiguracaoTO) configList.get(0);
+                configTO = (ConfigTO) configList.get(0);
                 configList.clear();
                 configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
                 configTO.update();

@@ -10,7 +10,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 
 public class ListaHistApontaActivity extends ActivityGeneric {
 
@@ -23,9 +23,9 @@ public class ListaHistApontaActivity extends ActivityGeneric {
 
         BackupApontaTO backupApontaTO = new BackupApontaTO();
 
-        ConfiguracaoTO configTO = new ConfiguracaoTO();
+        ConfigTO configTO = new ConfigTO();
         List configList = configTO.all();
-        configTO = (ConfiguracaoTO) configList.get(0);
+        configTO = (ConfigTO) configList.get(0);
         configList.clear();
 
         EquipTO equipTO = new EquipTO();

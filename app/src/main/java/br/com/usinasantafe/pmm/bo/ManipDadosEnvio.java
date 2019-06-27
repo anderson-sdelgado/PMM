@@ -23,7 +23,7 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ImplementoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
@@ -85,9 +85,9 @@ public class ManipDadosEnvio {
         boletimMMTO.setDthrInicioBoletim(Tempo.getInstance().datahora());
         boletimMMTO.insert();
 
-        ConfiguracaoTO configTO = new ConfiguracaoTO();
+        ConfigTO configTO = new ConfigTO();
         List listConfigTO = configTO.all();
-        configTO = (ConfiguracaoTO) listConfigTO.get(0);
+        configTO = (ConfigTO) listConfigTO.get(0);
         listConfigTO.clear();
 
         if(checklist){
@@ -205,9 +205,9 @@ public class ManipDadosEnvio {
         boletimFertTO.setDthrInicioBolFert(Tempo.getInstance().datahora());
         boletimFertTO.insert();
 
-        ConfiguracaoTO configTO = new ConfiguracaoTO();
+        ConfigTO configTO = new ConfigTO();
         List listConfigTO = configTO.all();
-        configTO = (ConfiguracaoTO) listConfigTO.get(0);
+        configTO = (ConfigTO) listConfigTO.get(0);
         listConfigTO.clear();
 
         if(checklist){
@@ -437,7 +437,8 @@ public class ManipDadosEnvio {
         JsonObject jsonItemPneu = new JsonObject();
         jsonItemPneu.add("itempneu", jsonArrayItemPneu);
 
-        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonRend.toString() + "?" + jsonBolPneu.toString() + "@" + jsonItemPneu.toString();
+//        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonRend.toString() + "?" + jsonBolPneu.toString() + "@" + jsonItemPneu.toString();
+        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonRend.toString() + "?";
 
         Log.i("PMM", "FECHADO = " + dados);
 
@@ -553,7 +554,8 @@ public class ManipDadosEnvio {
         JsonObject jsonItemPneu = new JsonObject();
         jsonItemPneu.add("itempneu", jsonArrayItemPneu);
 
-        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonBolPneu.toString() + "?" + jsonItemPneu.toString();
+//        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonBolPneu.toString() + "?" + jsonItemPneu.toString();
+        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "?";
 
         Log.i("PMM", "ABERTO = " + dados);
 
@@ -638,7 +640,8 @@ public class ManipDadosEnvio {
         JsonObject jsonItemPneu = new JsonObject();
         jsonItemPneu.add("itempneu", jsonArrayItemPneu);
 
-        String dados = jsonAponta.toString() + "_" + jsonImplemento.toString() + "|" + jsonBolPneu.toString() + "#" + jsonItemPneu.toString();
+//        String dados = jsonAponta.toString() + "_" + jsonImplemento.toString() + "|" + jsonBolPneu.toString() + "#" + jsonItemPneu.toString();
+        String dados = jsonAponta.toString() + "|" + jsonImplemento.toString() + "?";
 
         Log.i("PMM", "APONTAMENTO = " + dados);
 

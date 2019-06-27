@@ -186,9 +186,17 @@ public class RendimentoActivity extends ActivityGeneric {
 
     public void onBackPressed()  {
         if(pmmContext.getVerPosTela() == 4){
-            Intent it = new Intent(RendimentoActivity.this, HorimetroActivity.class);
-            startActivity(it);
-            finish();
+            if(pmmContext.getPosRendimento() > 1){
+                pmmContext.setPosRendimento(pmmContext.getPosRendimento() - 1);
+                Intent it = new Intent(RendimentoActivity.this, RendimentoActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else{
+                Intent it = new Intent(RendimentoActivity.this, HorimetroActivity.class);
+                startActivity(it);
+                finish();
+            }
         }
         else if(pmmContext.getVerPosTela() == 7){
             Intent it = new Intent(RendimentoActivity.this, ListaOSRendActivity.class);

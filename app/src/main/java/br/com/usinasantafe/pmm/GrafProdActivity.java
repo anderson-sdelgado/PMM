@@ -1,16 +1,10 @@
 package br.com.usinasantafe.pmm;
 
 import android.content.Intent;
-import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
@@ -40,7 +34,7 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.GrafDispEquipPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.GrafPlanRealPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.GrafProdPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.GrafQualPlantioTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 
 public class GrafProdActivity extends ActivityGeneric {
 
@@ -50,11 +44,11 @@ public class GrafProdActivity extends ActivityGeneric {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graf_prod);
 
-        ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-        List configList = configuracaoTO.all();
-        configuracaoTO = (ConfiguracaoTO) configList.get(0);
-        configuracaoTO.setVerVisGrafConfig(1L);
-        configuracaoTO.update();
+        ConfigTO configTO = new ConfigTO();
+        List configList = configTO.all();
+        configTO = (ConfigTO) configList.get(0);
+        configTO.setVerVisGrafConfig(1L);
+        configTO.update();
 
         GrafProdPlantioTO grafProdPlantioTO = new GrafProdPlantioTO();
         List grafProdPlantioList = grafProdPlantioTO.all();

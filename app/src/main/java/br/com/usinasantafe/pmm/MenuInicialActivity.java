@@ -28,7 +28,9 @@ import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosReceb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
+import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.tb.estaticas.MotoristaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.PneuTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
@@ -36,12 +38,11 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.AlocaCarretelTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.AtualizaTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.MotoristaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ImplementoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
@@ -52,7 +53,7 @@ public class MenuInicialActivity extends ActivityGeneric {
     private ListView lista;
     private PMMContext pmmContext;
     private ProgressDialog progressBar;
-    private ConfiguracaoTO configTO;
+    private ConfigTO configTO;
     private EquipTO equipTO;
 
     private TextView textViewProcesso;
@@ -75,12 +76,12 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         customHandler.postDelayed(updateTimerThread, 0);
 
-        configTO = new ConfiguracaoTO();
+        configTO = new ConfigTO();
         List configList = configTO.all();
 
         if (configList.size() > 0) {
 
-            configTO = (ConfiguracaoTO) configList.get(0);
+            configTO = (ConfigTO) configList.get(0);
 
             equipTO = new EquipTO();
             List listEquipTO = equipTO.get("idEquip", configTO.getEquipConfig());
@@ -245,6 +246,7 @@ public class MenuInicialActivity extends ActivityGeneric {
                     if (motoristaTO.hasElements() && configTO.hasElements()) {
                         pmmContext.setVerPosTela(1);
                         clearBD();
+                        customHandler.removeCallbacks(updateTimerThread);
                         Intent it = new Intent(MenuInicialActivity.this, OperadorActivity.class);
                         startActivity(it);
                         finish();
@@ -320,7 +322,18 @@ public class MenuInicialActivity extends ActivityGeneric {
     public void startTimer(String verAtualizacao) {
 
         Log.i("PMM", "VERATUAL = " + verAtualizacao);
-        pmmContext.setVerAtualCL(verAtualizacao);
+        int pos1 = verAtualizacao.indexOf("#") + 1;
+        String verAtualCL = verAtualizacao.substring(0, (pos1 - 1));
+        String dthr = verAtualizacao.substring(pos1);
+        configTO = new ConfigTO();
+        List configList = configTO.all();
+        configTO = (ConfigTO) configList.get(0);
+        configList.clear();
+        configTO.setDtServConfig(dthr);
+        configTO.update();
+
+        pmmContext.setVerAtualCL(verAtualCL);
+
         boolean alarmeAtivo = (PendingIntent.getBroadcast(this, 0, new Intent("ALARME_DISPARADO"), PendingIntent.FLAG_NO_CREATE) == null);
 
         if (progressBar.isShowing()) {
@@ -360,8 +373,8 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         public void run() {
 
-            ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-            List configList = configuracaoTO.all();
+            ConfigTO configTO = new ConfigTO();
+            List configList = configTO.all();
             if (configList.size() > 0) {
                 if (ManipDadosEnvio.getInstance().getStatusEnvio() == 1) {
                     textViewProcesso.setTextColor(Color.YELLOW);
@@ -472,12 +485,12 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         }
 
-        ConfiguracaoTO configTO = new ConfiguracaoTO();
+        ConfigTO configTO = new ConfigTO();
         List configList = configTO.all();
 
         for (int j = 0; j < configList.size(); j++) {
 
-            configTO = (ConfiguracaoTO) configList.get(j);
+            configTO = (ConfigTO) configList.get(j);
 
             Log.i("PMM", "Config");
             Log.i("PMM", "equipConfig = " + configTO.getEquipConfig());

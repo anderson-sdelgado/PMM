@@ -1,9 +1,7 @@
 package br.com.usinasantafe.pmm;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,7 +16,7 @@ import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
 
 public class ListaPosPneuActivity extends ActivityGeneric {
@@ -34,9 +32,9 @@ public class ListaPosPneuActivity extends ActivityGeneric {
 
         Button buttonAtualPosPneu = (Button) findViewById(R.id.buttonAtualPosPneu);
 
-        ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-        List configList = configuracaoTO.all();
-        configuracaoTO = (ConfiguracaoTO) configList.get(0);
+        ConfigTO configTO = new ConfigTO();
+        List configList = configTO.all();
+        configTO = (ConfigTO) configList.get(0);
         configList.clear();
 
         buttonAtualPosPneu.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +60,7 @@ public class ListaPosPneuActivity extends ActivityGeneric {
             apontaMMList.clear();
 
             boletimPneuTO.setIdApontBolPneu(apontaMMTO.getIdAponta());
-            boletimPneuTO.setEquipBolPneu(configuracaoTO.getEquipConfig());
+            boletimPneuTO.setEquipBolPneu(configTO.getEquipConfig());
             boletimPneuTO.setFuncBolPneu(pmmContext.getBoletimMMTO().getCodMotoBoletim());
             boletimPneuTO.setDthrBolPneu(Tempo.getInstance().datahora());
             boletimPneuTO.setStatusBolPneu(1L);

@@ -21,13 +21,13 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 
 public class EquipMBActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private ProgressDialog progressBar;
-    private ConfiguracaoTO configTO;
+    private ConfigTO configTO;
     private EquipTO equipTO;
 
     @Override
@@ -138,12 +138,15 @@ public class EquipMBActivity extends ActivityGeneric {
 
                     } else {
 
-                        pmmContext.getBoletimFertTO().setCodEquipBombaBolFert(motoBomba);
+                        equipSegTO = (EquipSegTO) equipSegList.get(0);
+                        equipSegList.clear();
+
+                        pmmContext.getBoletimFertTO().setCodEquipBombaBolFert(equipSegTO.getIdEquip());
                         pmmContext.getBoletimFertTO().setStatusBolFert(1L);
 
-                        configTO = new ConfiguracaoTO();
+                        configTO = new ConfigTO();
                         List listConfigTO = configTO.all();
-                        configTO = (ConfiguracaoTO) listConfigTO.get(0);
+                        configTO = (ConfigTO) listConfigTO.get(0);
                         listConfigTO.clear();
 
                         equipTO = new EquipTO();
@@ -174,8 +177,8 @@ public class EquipMBActivity extends ActivityGeneric {
                             equipTO = (EquipTO) equipList.get(0);
                             equipList.clear();
                             cabecCheckListTO.setEquipCab(equipTO.getNroEquip());
-                            cabecCheckListTO.setFuncCab(pmmContext.getBoletimMMTO().getCodMotoBoletim());
-                            cabecCheckListTO.setTurnoCab(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
+                            cabecCheckListTO.setFuncCab(pmmContext.getBoletimFertTO().getCodMotoBolFert());
+                            cabecCheckListTO.setTurnoCab(pmmContext.getBoletimFertTO().getCodTurnoBolFert());
                             cabecCheckListTO.setQtdeItemCab(qtde);
                             cabecCheckListTO.setStatusCab(1L);
                             cabecCheckListTO.setDtAtualCab("0");
@@ -196,12 +199,12 @@ public class EquipMBActivity extends ActivityGeneric {
                             ManipDadosEnvio.getInstance().salvaBoletimAbertoFert(pmmContext.getBoletimFertTO(), false, getLatitude(), getLongitude());
                             ManipDadosEnvio.getInstance().envioDadosPrinc();
 
-//                                    GRAFICO
-//                                    it = new Intent(ImplementoActivity.this, EsperaGrafActivity.class);
-//                                    startActivity(it);
-//                                    finish();
-
-//                                    ANTIGO SEM GRAFICO
+//                            GRAFICO
+//                            Intent it = new Intent(EquipMBActivity.this, EsperaGrafActivity.class);
+//                            startActivity(it);
+//                            finish();
+//
+//                            ANTIGO SEM GRAFICO
                             Intent it = new Intent(EquipMBActivity.this, MenuPrincNormalActivity.class);
                             startActivity(it);
                             finish();

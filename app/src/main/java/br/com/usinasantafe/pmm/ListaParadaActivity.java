@@ -25,12 +25,12 @@ import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.RAtivParadaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 
 public class ListaParadaActivity extends ActivityGeneric {
 
     private ListView lista;
-    private ConfiguracaoTO configTO;
+    private ConfigTO configTO;
     private PMMContext pmmContext;
     private List listParada;
     private ProgressDialog progressBar;
@@ -48,9 +48,9 @@ public class ListaParadaActivity extends ActivityGeneric {
         Button buttonRetMenuParada = (Button) findViewById(R.id.buttonRetMenuParada);
         EditText editPesqListParada = (EditText) findViewById(R.id.editPesqListParada);
 
-        configTO = new ConfiguracaoTO();
+        configTO = new ConfigTO();
         List listConfigTO = configTO.all();
-        configTO = (ConfiguracaoTO) listConfigTO.get(0);
+        configTO = (ConfigTO) listConfigTO.get(0);
 
         Long ativ;
         if(pmmContext.getTipoEquip() == 1){
@@ -121,9 +121,9 @@ public class ListaParadaActivity extends ActivityGeneric {
                     progressBar.setMessage("Atualizando Paradas...");
                     progressBar.show();
 
-                    ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-                    List configList = configuracaoTO.all();
-                    configuracaoTO = (ConfiguracaoTO) configList.get(0);
+                    ConfigTO configTO = new ConfigTO();
+                    List configList = configTO.all();
+                    configTO = (ConfigTO) configList.get(0);
 
                     ManipDadosVerif.getInstance().verDados("", "AtualParada"
                             , ListaParadaActivity.this, ListaParadaActivity.class, progressBar);

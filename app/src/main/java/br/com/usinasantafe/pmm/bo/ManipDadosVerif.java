@@ -39,7 +39,7 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.AtualizaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 
 import android.os.AsyncTask;
 
@@ -74,11 +74,9 @@ public class ManipDadosVerif {
     }
 
     public void manipularDadosHttp(String result) {
-
         if (!result.equals("")) {
             retornoVerifNormal(result);
         }
-
     }
 
     public String manipLocalClasse(String classe) {
@@ -208,7 +206,6 @@ public class ManipDadosVerif {
                     atualizarAplicativo.setContext(this.menuInicialActivity);
                     atualizarAplicativo.execute();
                 } else {
-
                     this.menuInicialActivity.startTimer(verAtualizacao);
                 }
 
@@ -337,18 +334,20 @@ public class ManipDadosVerif {
 
                 }
 
-                ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-                configuracaoTO.deleteAll();
-                configuracaoTO.setEquipConfig(equipTO.getIdEquip());
-                configuracaoTO.setClasseEquipConfig(equipTO.getCodClasseEquip());
-                configuracaoTO.setHorimetroConfig(equipTO.getHorimetroEquip());
-                configuracaoTO.setUltTurnoCLConfig(0L);
-                configuracaoTO.setDtUltCLConfig("");
-                configuracaoTO.setDtUltApontConfig("");
-                configuracaoTO.setSenhaConfig(this.senha);
-                configuracaoTO.setVerVisGrafConfig(0L);
-                configuracaoTO.insert();
-                configuracaoTO.commit();
+                ConfigTO configTO = new ConfigTO();
+                configTO.deleteAll();
+                configTO.setEquipConfig(equipTO.getIdEquip());
+                configTO.setClasseEquipConfig(equipTO.getCodClasseEquip());
+                configTO.setHorimetroConfig(equipTO.getHorimetroEquip());
+                configTO.setUltTurnoCLConfig(0L);
+                configTO.setDtUltCLConfig("");
+                configTO.setDtUltApontConfig("");
+                configTO.setDtServConfig("");
+                configTO.setDifDthrConfig(0L);
+                configTO.setSenhaConfig(this.senha);
+                configTO.setVerVisGrafConfig(0L);
+                configTO.insert();
+                configTO.commit();
 
                 this.progressDialog.dismiss();
 
@@ -416,12 +415,12 @@ public class ManipDadosVerif {
 
                     }
 
-                    ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-                    List configList = configuracaoTO.all();
-                    configuracaoTO = (ConfiguracaoTO) configList.get(0);
-                    configuracaoTO.setOsConfig(Long.parseLong(this.dado));
-                    configuracaoTO.setStatusConConfig(1L);
-                    configuracaoTO.update();
+                    ConfigTO configTO = new ConfigTO();
+                    List configList = configTO.all();
+                    configTO = (ConfigTO) configList.get(0);
+                    configTO.setOsConfig(Long.parseLong(this.dado));
+                    configTO.setStatusConConfig(1L);
+                    configTO.update();
 
                     if(!verTerm){
 
@@ -457,12 +456,12 @@ public class ManipDadosVerif {
 
             } else {
 
-                ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-                List configList = configuracaoTO.all();
-                configuracaoTO = (ConfiguracaoTO) configList.get(0);
-                configuracaoTO.setOsConfig(Long.parseLong(this.dado));
-                configuracaoTO.setStatusConConfig(0L);
-                configuracaoTO.update();
+                ConfigTO configTO = new ConfigTO();
+                List configList = configTO.all();
+                configTO = (ConfigTO) configList.get(0);
+                configTO.setOsConfig(Long.parseLong(this.dado));
+                configTO.setStatusConConfig(0L);
+                configTO.update();
 
                 if(!verTerm) {
                     this.progressDialog.dismiss();

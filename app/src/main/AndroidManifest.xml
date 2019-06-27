@@ -22,16 +22,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EquipMBActivity"></activity>
-        <activity android:name=".PressaoColPneuActivity" />
-        <activity android:name=".PressaoEncPneuActivity" />
-        <activity android:name=".PneuActivity" />
-        <activity android:name=".ListaPosPneuActivity" />
+        <activity android:name=".MsgDataHoraActivity"></activity>
+        <activity android:name=".DataHoraActivity" />
+        <activity
+            android:name=".EquipMBActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PressaoColPneuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PressaoEncPneuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PneuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListaPosPneuActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MenuInicialActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -39,6 +52,7 @@
         <receiver android:name=".ReceberAlarme">
             <intent-filter>
                 <action android:name="EXECUTAR_ALARME" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
@@ -106,11 +120,21 @@
         <activity
             android:name=".ListaVelocFertActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".PergAtualCheckListActivity" />
-        <activity android:name=".GrafProdActivity" />
-        <activity android:name=".GrafDispActivity" />
-        <activity android:name=".GrafTermQualActivity" />
-        <activity android:name=".EsperaGrafActivity" />
+        <activity
+            android:name=".PergAtualCheckListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GrafProdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GrafDispActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GrafTermQualActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EsperaGrafActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

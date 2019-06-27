@@ -23,13 +23,13 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ImplementoTO;
 
 public class ImplementoActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
-    private ConfiguracaoTO configTO;
+    private ConfigTO configTO;
     private EquipTO equipTO;
     private ProgressDialog progressBar;
 
@@ -262,9 +262,9 @@ public class ImplementoActivity extends ActivityGeneric {
 
                             if (pmmContext.getVerPosTela() == 1) {
 
-                                configTO = new ConfiguracaoTO();
+                                configTO = new ConfigTO();
                                 List listConfigTO = configTO.all();
-                                configTO = (ConfiguracaoTO) listConfigTO.get(0);
+                                configTO = (ConfigTO) listConfigTO.get(0);
                                 listConfigTO.clear();
 
                                 equipTO = new EquipTO();

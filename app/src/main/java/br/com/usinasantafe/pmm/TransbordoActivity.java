@@ -22,7 +22,7 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.TransbordoTO;
 
@@ -138,9 +138,9 @@ public class TransbordoActivity extends ActivityGeneric {
                             pmmContext.getApontaMMTO().setLongitudeAponta(getLongitude());
                             ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 2L);
 
-                            ConfiguracaoTO configTO = new ConfiguracaoTO();
+                            ConfigTO configTO = new ConfigTO();
                             List listConfigTO = configTO.all();
-                            configTO = (ConfiguracaoTO) listConfigTO.get(0);
+                            configTO = (ConfigTO) listConfigTO.get(0);
                             listConfigTO.clear();
                             configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
                             configTO.update();
@@ -198,9 +198,9 @@ public class TransbordoActivity extends ActivityGeneric {
                             }
                             else{
 
-                                ConfiguracaoTO configTO = new ConfiguracaoTO();
+                                ConfigTO configTO = new ConfigTO();
                                 List listConfigTO = configTO.all();
-                                configTO = (ConfiguracaoTO) listConfigTO.get(0);
+                                configTO = (ConfigTO) listConfigTO.get(0);
                                 listConfigTO.clear();
                                 configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
                                 configTO.update();

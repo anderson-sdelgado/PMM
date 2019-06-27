@@ -35,9 +35,16 @@ public class PMMContext extends Application {
     private int posRendimento;
     private int contRecolhimento;
     private int posRecolhimento;
+    private int contDTHR;
     private String verAtualCL;
     private Long posChecklist;
     private int tipoEquip; //1 - Tipo Motomec; 2 - Tipo Fertirrigação
+
+    private int dia;
+    private int mes;
+    private int ano;
+    private int hora;
+    private int minuto;
 
     @Override
     public void onCreate() {
@@ -161,5 +168,53 @@ public class PMMContext extends Application {
 
     public void setTipoEquip(int tipoEquip) {
         this.tipoEquip = tipoEquip;
+    }
+
+    public int getContDTHR() {
+        return contDTHR;
+    }
+
+    public void setContDTHR(int contDTHR) {
+        this.contDTHR = contDTHR;
+    }
+
+    public int getDia() {
+        return dia;
+    }
+
+    public void setDia(int dia) {
+        this.dia = dia;
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public int getHora() {
+        return hora;
+    }
+
+    public void setHora(int hora) {
+        this.hora = hora;
+    }
+
+    public int getMinuto() {
+        return minuto;
+    }
+
+    public void setMinuto(int minuto) {
+        this.minuto = minuto;
     }
 }

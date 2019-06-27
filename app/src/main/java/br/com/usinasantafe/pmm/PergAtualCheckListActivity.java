@@ -16,7 +16,7 @@ import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 
 public class PergAtualCheckListActivity extends ActivityGeneric {
 
@@ -81,12 +81,12 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
                     progressBar.setMessage("Atualizando CheckList...");
                     progressBar.show();
 
-                    ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-                    List configList = configuracaoTO.all();
-                    configuracaoTO = (ConfiguracaoTO) configList.get(0);
+                    ConfigTO configTO = new ConfigTO();
+                    List configList = configTO.all();
+                    configTO = (ConfigTO) configList.get(0);
                     configList.clear();
 
-                    ManipDadosVerif.getInstance().verDados(String.valueOf(configuracaoTO.getEquipConfig()), "CheckList"
+                    ManipDadosVerif.getInstance().verDados(String.valueOf(configTO.getEquipConfig()), "CheckList"
                             , PergAtualCheckListActivity.this, ItemChecklistActivity.class, progressBar);
 
                 } else {

@@ -14,7 +14,6 @@ import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
 
 public class ItemChecklistActivity extends ActivityGeneric {
@@ -43,7 +42,13 @@ public class ItemChecklistActivity extends ActivityGeneric {
         cabecCheckListLista.clear();
 
         EquipTO equipTO = new EquipTO();
-        List equipList = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getCodEquipBoletim());
+        List equipList;
+        if(pmmContext.getTipoEquip() == 1) {
+            equipList = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getCodEquipBoletim());
+        }
+        else{
+            equipList = equipTO.get("idEquip", pmmContext.getBoletimFertTO().getCodEquipBolFert());
+        }
         equipTO = (EquipTO) equipList.get(0);
         equipList.clear();
 
@@ -139,7 +144,6 @@ public class ItemChecklistActivity extends ActivityGeneric {
         respItemCheckListTO.insert();
 
         if(cabecCheckListTO.getQtdeItemCab() == pmmContext.getPosChecklist()){
-
 
 //            GRAFICO
 //            Intent it = new Intent(ItemChecklistActivity.this, EsperaGrafActivity.class);

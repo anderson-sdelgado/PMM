@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 
 public class EquipActivity extends ActivityGeneric {
 
@@ -29,9 +29,9 @@ public class EquipActivity extends ActivityGeneric {
         Button buttonOkEquip = (Button) findViewById(R.id.buttonOkEquip);
         Button buttonCancEquip = (Button) findViewById(R.id.buttonCancEquip);
 
-        ConfiguracaoTO configTO = new ConfiguracaoTO();
+        ConfigTO configTO = new ConfigTO();
         List listConfigTO = configTO.all();
-        configTO = (ConfiguracaoTO) listConfigTO.get(0);
+        configTO = (ConfigTO) listConfigTO.get(0);
         listConfigTO.clear();
 
         EquipTO equipTO = new EquipTO();

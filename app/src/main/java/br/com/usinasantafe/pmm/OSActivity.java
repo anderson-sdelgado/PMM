@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,9 +15,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.PneuTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 
 public class OSActivity extends ActivityGeneric {
 
@@ -41,11 +38,11 @@ public class OSActivity extends ActivityGeneric {
             EditText editText = (EditText) findViewById(R.id.editTextPadrao);
             editText.setText("");
         } else {
-            ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-            List configList = configuracaoTO.all();
-            configuracaoTO = (ConfiguracaoTO) configList.get(0);
+            ConfigTO configTO = new ConfigTO();
+            List configList = configTO.all();
+            configTO = (ConfigTO) configList.get(0);
             EditText editText = (EditText) findViewById(R.id.editTextPadrao);
-            editText.setText(String.valueOf(configuracaoTO.getOsConfig()));
+            editText.setText(String.valueOf(configTO.getOsConfig()));
         }
 
         buttonOkOS.setOnClickListener(new View.OnClickListener() {
@@ -84,19 +81,19 @@ public class OSActivity extends ActivityGeneric {
 
                             if (osList.size() > 0) {
 
-                                ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-                                List configList = configuracaoTO.all();
-                                configuracaoTO = (ConfiguracaoTO) configList.get(0);
-                                configuracaoTO.setOsConfig(Long.parseLong(editTextPadrao.getText().toString()));
+                                ConfigTO configTO = new ConfigTO();
+                                List configList = configTO.all();
+                                configTO = (ConfigTO) configList.get(0);
+                                configTO.setOsConfig(Long.parseLong(editTextPadrao.getText().toString()));
 
                                 if (conexaoWeb.verificaConexao(OSActivity.this)) {
-                                    configuracaoTO.setStatusConConfig(1L);
+                                    configTO.setStatusConConfig(1L);
                                 }
                                 else{
-                                    configuracaoTO.setStatusConConfig(0L);
+                                    configTO.setStatusConConfig(0L);
                                 }
 
-                                configuracaoTO.update();
+                                configTO.update();
 
                                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                                 startActivity(it);
@@ -118,12 +115,12 @@ public class OSActivity extends ActivityGeneric {
 
                                 } else {
 
-                                    ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-                                    List configList = configuracaoTO.all();
-                                    configuracaoTO = (ConfiguracaoTO) configList.get(0);
-                                    configuracaoTO.setOsConfig(Long.parseLong(editTextPadrao.getText().toString()));
-                                    configuracaoTO.setStatusConConfig(0L);
-                                    configuracaoTO.update();
+                                    ConfigTO configTO = new ConfigTO();
+                                    List configList = configTO.all();
+                                    configTO = (ConfigTO) configList.get(0);
+                                    configTO.setOsConfig(Long.parseLong(editTextPadrao.getText().toString()));
+                                    configTO.setStatusConConfig(0L);
+                                    configTO.update();
 
                                     Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                                     startActivity(it);
@@ -149,12 +146,12 @@ public class OSActivity extends ActivityGeneric {
 
                             } else {
 
-                                ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-                                List configList = configuracaoTO.all();
-                                configuracaoTO = (ConfiguracaoTO) configList.get(0);
-                                configuracaoTO.setOsConfig(Long.parseLong(editTextPadrao.getText().toString()));
-                                configuracaoTO.setStatusConConfig(0L);
-                                configuracaoTO.update();
+                                ConfigTO configTO = new ConfigTO();
+                                List configList = configTO.all();
+                                configTO = (ConfigTO) configList.get(0);
+                                configTO.setOsConfig(Long.parseLong(editTextPadrao.getText().toString()));
+                                configTO.setStatusConConfig(0L);
+                                configTO.update();
 
                                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                                 startActivity(it);
@@ -219,12 +216,12 @@ public class OSActivity extends ActivityGeneric {
                 if (progressBar.isShowing()) {
                     progressBar.dismiss();
                 }
-                ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
-                List configList = configuracaoTO.all();
-                configuracaoTO = (ConfiguracaoTO) configList.get(0);
-                configuracaoTO.setOsConfig(Long.parseLong(editTextPadrao.getText().toString()));
-                configuracaoTO.setStatusConConfig(0L);
-                configuracaoTO.update();
+                ConfigTO configTO = new ConfigTO();
+                List configList = configTO.all();
+                configTO = (ConfigTO) configList.get(0);
+                configTO.setOsConfig(Long.parseLong(editTextPadrao.getText().toString()));
+                configTO.setStatusConConfig(0L);
+                configTO.update();
 
                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                 startActivity(it);

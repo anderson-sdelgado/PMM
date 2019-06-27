@@ -15,7 +15,7 @@ import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosReceb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 
 public class ConfiguracaoActivity extends ActivityGeneric {
 
@@ -34,21 +34,21 @@ public class ConfiguracaoActivity extends ActivityGeneric {
         editTextEquipConfig = (EditText)  findViewById(R.id.editTextEquipConfig);
         editTextSenhaConfig = (EditText)  findViewById(R.id.editTextSenhaConfig);
 
-        ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
+        ConfigTO configTO = new ConfigTO();
 
-        if (configuracaoTO.hasElements()) {
+        if (configTO.hasElements()) {
 
-            List configList = configuracaoTO.all();
-            configuracaoTO = (ConfiguracaoTO) configList.get(0);
+            List configList = configTO.all();
+            configTO = (ConfigTO) configList.get(0);
             configList.clear();
 
             EquipTO equipTO = new EquipTO();
-            List equipList = equipTO.get("idEquip", configuracaoTO.getEquipConfig());
+            List equipList = equipTO.get("idEquip", configTO.getEquipConfig());
             equipTO = (EquipTO) equipList.get(0);
             equipList.clear();
 
             editTextEquipConfig.setText(String.valueOf(equipTO.getNroEquip()));
-            editTextSenhaConfig.setText(configuracaoTO.getSenhaConfig());
+            editTextSenhaConfig.setText(configTO.getSenhaConfig());
 
         }
 
@@ -69,7 +69,6 @@ public class ConfiguracaoActivity extends ActivityGeneric {
                         ManipDadosVerif.getInstance().setSenha(editTextSenhaConfig.getText().toString());
                         ManipDadosVerif.getInstance().verDados(editTextEquipConfig.getText().toString(), "Equip"
                                 ,ConfiguracaoActivity.this ,MenuInicialActivity.class, progressBar);
-
 
                 }
 

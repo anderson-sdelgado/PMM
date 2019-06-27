@@ -64,7 +64,7 @@ public class UrlsConexaoHttp {
         } else if (classe.equals("AtualParada")) {
             retorno = urlPrincEnvio + "atualparada2.php";
         } else if (classe.equals("Atualiza")) {
-            retorno = urlPrincEnvio + "atualizaaplic2.php";
+            retorno = urlPrincEnvio + "atualaplic2.php";
         } else if (classe.equals("Operador")) {
             retorno = urlPrincEnvio + "motorista2.php";
         } else if (classe.equals("Turno")) {

@@ -27,7 +27,7 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.TransbordoTO;
 
@@ -39,7 +39,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
     private ProgressDialog progressBar;
     private ArrayList lAtivExib;
     private Long nroOS = 0L;
-    private ConfiguracaoTO configTO;
+    private ConfigTO configTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +52,9 @@ public class ListaAtividadeActivity extends ActivityGeneric {
         Button buttonRetAtividade = (Button) findViewById(R.id.buttonRetAtividade);
         TextView textViewTituloAtividade = (TextView) findViewById(R.id.textViewTituloAtividade);
 
-        configTO = new ConfiguracaoTO();
+        configTO = new ConfigTO();
         List configList = configTO.all();
-        configTO = (ConfiguracaoTO) configList.get(0);
+        configTO = (ConfigTO) configList.get(0);
 
         nroOS = configTO.getOsConfig();
 

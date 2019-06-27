@@ -6,7 +6,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName="tbconfigvar")
-public class ConfiguracaoTO extends Entidade {
+public class ConfigTO extends Entidade {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -25,6 +25,10 @@ public class ConfiguracaoTO extends Entidade {
 	@DatabaseField
 	private String dtUltApontConfig;
 	@DatabaseField
+	private String dtServConfig;
+	@DatabaseField
+	private Long difDthrConfig;
+	@DatabaseField
 	private Long osConfig;
 	@DatabaseField
 	private Double horimetroConfig;
@@ -33,7 +37,7 @@ public class ConfiguracaoTO extends Entidade {
 	@DatabaseField
 	private Long statusConConfig;  //0 - Offline; 1 - Online
 
-	public ConfiguracaoTO() {
+	public ConfigTO() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -115,5 +119,21 @@ public class ConfiguracaoTO extends Entidade {
 
 	public void setStatusConConfig(Long statusConConfig) {
 		this.statusConConfig = statusConConfig;
+	}
+
+	public String getDtServConfig() {
+		return dtServConfig;
+	}
+
+	public void setDtServConfig(String dtServConfig) {
+		this.dtServConfig = dtServConfig;
+	}
+
+	public Long getDifDthrConfig() {
+		return difDthrConfig;
+	}
+
+	public void setDifDthrConfig(Long difDthrConfig) {
+		this.difDthrConfig = difDthrConfig;
 	}
 }

@@ -14,7 +14,6 @@ public class RespItemCheckListTO extends Entidade {
 
     private static final long serialVersionUID = 1L;
 
-//    @DatabaseField(id=true)
     @DatabaseField(generatedId=true)
     private Long idIt;
     @DatabaseField
@@ -30,10 +29,6 @@ public class RespItemCheckListTO extends Entidade {
     public Long getIdIt() {
         return idIt;
     }
-
-//    public void setIdItemCheckList(Long idItemCheckList) {
-//        this.idItemCheckList = idItemCheckList;
-//    }
 
     public Long getIdItBDIt() {
         return idItBDIt;

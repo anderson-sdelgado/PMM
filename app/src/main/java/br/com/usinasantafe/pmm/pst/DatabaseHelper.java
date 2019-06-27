@@ -30,7 +30,7 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.AlocaCarretelTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ImplementoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
@@ -96,7 +96,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, BocalTO.class);
 			TableUtils.createTable(cs, PressaoBocalTO.class);
 
-			TableUtils.createTable(cs, ConfiguracaoTO.class);
+			TableUtils.createTable(cs, ConfigTO.class);
 			TableUtils.createTable(cs, BoletimMMTO.class);
 			TableUtils.createTable(cs, ApontaMMTO.class);
 			TableUtils.createTable(cs, CabecCheckListTO.class);
@@ -130,7 +130,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		try {
 			
 			if(oldVersion == 1 && newVersion == 2){
-//				TableUtils.createTable(cs, ConfiguracaoTO.class);
+//				TableUtils.createTable(cs, ConfigTO.class);
 				oldVersion = 2;
 			}
 			

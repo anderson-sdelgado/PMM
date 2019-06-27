@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 
 public class SenhaActivity extends ActivityGeneric {
 
@@ -30,9 +30,9 @@ public class SenhaActivity extends ActivityGeneric {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
 
-                ConfiguracaoTO configuracaoTO = new ConfiguracaoTO();
+                ConfigTO configTO = new ConfigTO();
 
-                if (!configuracaoTO.hasElements()) {
+                if (!configTO.hasElements()) {
 
                     Intent it = new Intent(SenhaActivity.this, ConfiguracaoActivity.class);
                     startActivity(it);
@@ -40,11 +40,11 @@ public class SenhaActivity extends ActivityGeneric {
 
                 } else {
 
-                    List<ConfiguracaoTO> lista = configuracaoTO.get("senhaConfig", editTextSenha.getText().toString());
+                    List<ConfigTO> lista = configTO.get("senhaConfig", editTextSenha.getText().toString());
 
                     if (lista.size() > 0) {
 
-                        configuracaoTO.setEquipConfig(((ConfiguracaoTO) lista.get(0)).getEquipConfig());
+                        configTO.setEquipConfig(((ConfigTO) lista.get(0)).getEquipConfig());
 
                         Intent it = new Intent(SenhaActivity.this, ConfiguracaoActivity.class);
                         startActivity(it);

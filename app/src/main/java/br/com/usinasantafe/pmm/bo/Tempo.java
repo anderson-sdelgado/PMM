@@ -2,6 +2,7 @@ package br.com.usinasantafe.pmm.bo;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -16,11 +17,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import br.com.usinasantafe.pmm.to.tb.estaticas.DataTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 
 public class Tempo {
 
-    private Date dataHora;
-    
     private static Tempo instance = null;
     private boolean envioDado;
 	
@@ -42,7 +42,7 @@ public class Tempo {
         Date dataHora = new Date();
         Date d = new Date();
         Calendar cal = Calendar.getInstance();
-        Long dt =  dataHora.getTime() - tz.getOffset(d.getTime());
+        Long dt =  dataHora.getTime() - tz.getOffset(d.getTime()) + dif();
         cal.setTimeInMillis(dt);
 
         int mes = cal.get(Calendar.MONTH);
@@ -98,14 +98,12 @@ public class Tempo {
         Date dataHora = new Date();
         Date d = new Date();
         Calendar cal = Calendar.getInstance();
-        Long dt =  dataHora.getTime() - tz.getOffset(d.getTime());
+        Long dt =  dataHora.getTime() - tz.getOffset(d.getTime()) + dif();
         cal.setTimeInMillis(dt);
 
         int mes = cal.get(Calendar.MONTH);
         int dia = cal.get(Calendar.DAY_OF_MONTH);
         int ano = cal.get(Calendar.YEAR);
-        int horas = cal.get(Calendar.HOUR_OF_DAY);
-        int minutos = cal.get(Calendar.MINUTE);
         mes = mes + 1;
 
         String mesStr = "";
@@ -149,12 +147,6 @@ public class Tempo {
             String horaStr = dtStr.substring(11, 13);
             String minutoStr = dtStr.substring(14, 16);
 
-            Log.i("PMM", "Dia: "+ diaStr);
-            Log.i("PMM", "Mes: "+ mesStr);
-            Log.i("PMM", "Ano: "+ anoStr);
-            Log.i("PMM", "Hora: "+ horaStr);
-            Log.i("PMM", "Minuto: "+ minutoStr);
-
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(diaStr));
             cal.set(Calendar.MONTH, Integer.parseInt(mesStr) - 1);
@@ -166,7 +158,7 @@ public class Tempo {
 
             TimeZone tz = TimeZone.getDefault();
             Date d = new Date();
-            Long dt =  date.getTime() + tz.getOffset(d.getTime());
+            Long dt =  date.getTime() + tz.getOffset(d.getTime()) + dif();
             cal.setTimeInMillis(dt);
 
             int mes = cal.get(Calendar.MONTH);
@@ -176,7 +168,6 @@ public class Tempo {
             int minutos = cal.get(Calendar.MINUTE);
             mes = mes + 1;
 
-            mesStr = "";
             if(mes < 10){
                 mesStr = "0" + mes;
             }
@@ -184,7 +175,6 @@ public class Tempo {
                 mesStr = String.valueOf(mes);
             }
 
-            diaStr = "";
             if(dia < 10){
                 diaStr = "0" + dia;
             }
@@ -228,58 +218,94 @@ public class Tempo {
 		this.envioDado = envioDado;
 	}
 
-    public Date getDataHora() {
-        return dataHora;
+    public boolean verDthrServ(String dthrServ){
+
+        StringBuffer dtServ = new StringBuffer(dthrServ);
+
+        Log.i("PMM", "DATA HORA SERVIDOR: " + dtServ);
+
+        dtServ.delete(10, 11);
+        dtServ.insert(10, " ");
+
+        String dtStr = String.valueOf(dtServ);
+
+        String diaStr = dtStr.substring(0, 2);
+        String mesStr = dtStr.substring(3, 5);
+        String anoStr = dtStr.substring(6, 10);
+        String horaStr = dtStr.substring(11, 13);
+        String minutoStr = dtStr.substring(14, 16);
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(diaStr));
+        cal.set(Calendar.MONTH, Integer.parseInt(mesStr) - 1);
+        cal.set(Calendar.YEAR, Integer.parseInt(anoStr));
+        cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(horaStr));
+        cal.set(Calendar.MINUTE, Integer.parseInt(minutoStr));
+
+        TimeZone tz = TimeZone.getDefault();
+        Date dataHoraServ = cal.getTime();
+        Date d = new Date();
+        Long longDtServ =  dataHoraServ.getTime() - tz.getOffset(d.getTime());
+
+        Date dataHoraCel = new Date();
+        Long longDtCel =  dataHoraCel.getTime() - tz.getOffset(d.getTime());
+
+        Long dthrDif = longDtServ - longDtCel;
+        Long diaDif = dthrDif/24/60/60/1000;
+
+        if(diaDif == 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 
-    public void setDataHora(Date dataHora) {
-        this.dataHora = dataHora;
-    }
+    public Long difDthr(String dthrDig){
 
-    public String verData(Calendar cal){
+        StringBuffer dtDig = new StringBuffer(dthrDig);
 
-        int mes = cal.get(Calendar.MONTH);
-        int dia = cal.get(Calendar.DAY_OF_MONTH);
-        int ano = cal.get(Calendar.YEAR);
-        int horas = cal.get(Calendar.HOUR_OF_DAY);
-        int minutos = cal.get(Calendar.MINUTE);
-        mes = mes + 1;
+        Log.i("PMM", "DATA HORA DIGITADA: " + dtDig);
 
-        String mesStr = "";
-        if(mes < 10){
-            mesStr = "0" + mes;
-        }
-        else{
-            mesStr = String.valueOf(mes);
-        }
+        dtDig.delete(10, 11);
+        dtDig.insert(10, " ");
 
-        String diaStr = "";
-        if(dia < 10){
-            diaStr = "0" + dia;
-        }
-        else{
-            diaStr = String.valueOf(dia);
-        }
+        String dtStr = String.valueOf(dtDig);
 
-        String horasStr = "";
-        if(horas < 10){
-            horasStr = "0" + horas;
-        }
-        else{
-            horasStr = String.valueOf(horas);
-        }
+        String diaStr = dtStr.substring(0, 2);
+        String mesStr = dtStr.substring(3, 5);
+        String anoStr = dtStr.substring(6, 10);
+        String horaStr = dtStr.substring(11, 13);
+        String minutoStr = dtStr.substring(14, 16);
 
-        String minutosStr = "";
-        if(minutos < 10){
-            minutosStr = "0" + minutos;
-        }
-        else{
-            minutosStr = String.valueOf(minutos);
-        }
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(diaStr));
+        cal.set(Calendar.MONTH, Integer.parseInt(mesStr) - 1);
+        cal.set(Calendar.YEAR, Integer.parseInt(anoStr));
+        cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(horaStr));
+        cal.set(Calendar.MINUTE, Integer.parseInt(minutoStr));
 
-        String dataCerta = ""+diaStr+"/"+mesStr+"/"+ano+" "+horasStr+":"+minutosStr;
+        TimeZone tz = TimeZone.getDefault();
+        Date dataHoraDig = cal.getTime();
+        Date d = new Date();
+        Long longDtDig =  dataHoraDig.getTime() - tz.getOffset(d.getTime());
 
-        return dataCerta;
+        Date dataHoraCel = new Date();
+        Long longDtCel =  dataHoraCel.getTime() - tz.getOffset(d.getTime());
+
+        Long dif = longDtCel - longDtDig;
+
+        return dif;
 
     }
+
+    public Long dif(){
+        ConfigTO configTO = new ConfigTO();
+        List configList = configTO.all();
+        configTO = (ConfigTO) configList.get(0);
+        configList.clear();
+        return configTO.getDifDthrConfig();
+    }
+
 }

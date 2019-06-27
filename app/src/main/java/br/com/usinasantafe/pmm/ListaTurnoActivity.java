@@ -15,9 +15,10 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
+import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 
 public class ListaTurnoActivity extends ActivityGeneric {
 
@@ -25,7 +26,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
     private List turnoList;
     private PMMContext pmmContext;
     private EquipTO equipTO;
-    private ConfiguracaoTO configTO;
+    private ConfigTO configTO;
     private ProgressDialog progressBar;
 
     @Override
@@ -94,9 +95,9 @@ public class ListaTurnoActivity extends ActivityGeneric {
 
         });
 
-        configTO = new ConfiguracaoTO();
+        configTO = new ConfigTO();
         List listConfigTO = configTO.all();
-        configTO = (ConfiguracaoTO) listConfigTO.get(0);
+        configTO = (ConfigTO) listConfigTO.get(0);
         listConfigTO.clear();
 
         equipTO = new EquipTO();
@@ -134,8 +135,26 @@ public class ListaTurnoActivity extends ActivityGeneric {
                 }
                 turnoList.clear();
 
-                Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
-                startActivity(it);
+                if(Tempo.getInstance().verDthrServ(configTO.getDtServConfig())){
+                    configTO.setDifDthrConfig(0L);
+                    configTO.update();
+                    Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else{
+                    if(configTO.getDifDthrConfig() != 0L){
+                        pmmContext.setContDTHR(1);
+                        Intent it = new Intent(ListaTurnoActivity.this, DataHoraActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                    else{
+                        Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                }
 
             }
 
@@ -146,6 +165,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
             public void onClick(View v) {
                 Intent it = new Intent(ListaTurnoActivity.this, EquipActivity.class);
                 startActivity(it);
+                finish();
             }
         });
 

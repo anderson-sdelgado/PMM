@@ -79,10 +79,12 @@
     <string name="texto_fechar_graf">FECHAR</string>
     <string name="texto_subtitulo_disp_oper">DISP. OPERAÇÃO</string>
     <string name="texto_subtitulo_campo">CAMPO</string>
-    <string name="texto_esp_graf">ATUALIZANDO DADOS DOS GRÁFICOS DE PLANTIO...</string>
+    <string name="texto_esp_graf">ATUALIZANDO DADOS...</string>
     <string name="texto_pos_pneu">POSIÇÃO PNEU</string>
     <string name="texto_pneu">NUM. DO PNEU:</string>
     <string name="texto_pressao_enc">PRESSÃO ENCONTRADA:</string>
     <string name="texto_pressao_col">PRESSÃO COLOCADA:</string>
     <string name="texto_moto_bomba">MOTO BOMBA:</string>
+    <string name="texto_msg_data_hora">POR FAVOR, DIGITE O DIA, MÊS, ANO, HORA E MINUTO ATUAL NAS PRÓXIMAS TELAS.</string>
+    <string name="texto_data_hora">DIA:</string>
 </resources>

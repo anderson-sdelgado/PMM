@@ -123,9 +123,17 @@ public class RecolhimentoActivity extends ActivityGeneric {
 
     public void onBackPressed() {
         if (pmmContext.getVerPosTela() == 4) {
-            Intent it = new Intent(RecolhimentoActivity.this, HorimetroActivity.class);
-            startActivity(it);
-            finish();
+            if(pmmContext.getPosRecolhimento() > 1){
+                pmmContext.setPosRecolhimento(pmmContext.getPosRecolhimento() - 1);
+                Intent it = new Intent(RecolhimentoActivity.this, RecolhimentoActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else{
+                Intent it = new Intent(RecolhimentoActivity.this, HorimetroActivity.class);
+                startActivity(it);
+                finish();
+            }
         } else if (pmmContext.getVerPosTela() == 14) {
             Intent it = new Intent(RecolhimentoActivity.this, ListaOSRendActivity.class);
             startActivity(it);

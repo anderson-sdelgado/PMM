@@ -19,14 +19,14 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfiguracaoTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
 
 public class HorimetroActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
-    private ConfiguracaoTO configTO;
+    private ConfigTO configTO;
     private Double horimetroNum;
 
     @Override
@@ -52,9 +52,9 @@ public class HorimetroActivity extends ActivityGeneric {
                     String horimetro = editTextPadrao.getText().toString();
                     horimetroNum = Double.valueOf(horimetro.replace(",", "."));
 
-                    configTO = new ConfiguracaoTO();
+                    configTO = new ConfigTO();
                     List listConfigTO = configTO.all();
-                    configTO = (ConfiguracaoTO) listConfigTO.get(0);
+                    configTO = (ConfigTO) listConfigTO.get(0);
                     listConfigTO.clear();
 
                     if (pmmContext.getVerPosTela() == 1) {
