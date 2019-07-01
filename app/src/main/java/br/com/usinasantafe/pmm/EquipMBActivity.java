@@ -200,14 +200,14 @@ public class EquipMBActivity extends ActivityGeneric {
                             ManipDadosEnvio.getInstance().envioDadosPrinc();
 
 //                            GRAFICO
-//                            Intent it = new Intent(EquipMBActivity.this, EsperaGrafActivity.class);
-//                            startActivity(it);
-//                            finish();
-//
-//                            ANTIGO SEM GRAFICO
-                            Intent it = new Intent(EquipMBActivity.this, MenuPrincNormalActivity.class);
+                            Intent it = new Intent(EquipMBActivity.this, EsperaDadosOperActivity.class);
                             startActivity(it);
                             finish();
+
+//                            ANTIGO SEM GRAFICO
+//                            Intent it = new Intent(EquipMBActivity.this, MenuPrincNormalActivity.class);
+//                            startActivity(it);
+//                            finish();
 
                         }
 

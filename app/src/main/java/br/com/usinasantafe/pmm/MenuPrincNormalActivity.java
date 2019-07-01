@@ -369,7 +369,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
 //            if(configTO.getVerVisGrafConfig() == 0){
 //                if(new GrafProdPlantioTO().hasElements()){
-//                    Intent it = new Intent( MenuPrincNormalActivity.this, GrafProdActivity.class);
+//                    Intent it = new Intent( MenuPrincNormalActivity.this, GraficoPlantioActivity.class);
 //                    startActivity(it);
 //                    finish();
 //                }

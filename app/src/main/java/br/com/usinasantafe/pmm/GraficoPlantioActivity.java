@@ -36,13 +36,13 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.GrafProdPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.GrafQualPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 
-public class GrafProdActivity extends ActivityGeneric {
+public class GraficoPlantioActivity extends ActivityGeneric {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_graf_prod);
+        setContentView(R.layout.activity_grafico_plantio);
 
         ConfigTO configTO = new ConfigTO();
         List configList = configTO.all();
@@ -669,8 +669,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataTratorPlantOperDia.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataTratorPlantOperDia.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataTratorPlantOperDia.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataTratorPlantOperDia.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieTratorPlantOperDia.data(dataTratorPlantOperDia);
 
@@ -702,8 +702,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataTratorPlantOperMes.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataTratorPlantOperMes.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataTratorPlantOperMes.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataTratorPlantOperMes.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieTratorPlantOperMes.data(dataTratorPlantOperMes);
 
@@ -735,8 +735,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataTratorPlantOperAno.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataTratorPlantOperAno.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataTratorPlantOperAno.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataTratorPlantOperAno.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieTratorPlantOperAno.data(dataTratorPlantOperAno);
 
@@ -768,8 +768,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataTratorPlantCampoDia.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataTratorPlantCampoDia.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataTratorPlantCampoDia.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataTratorPlantCampoDia.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieTratorPlantCampoDia.data(dataTratorPlantCampoDia);
 
@@ -801,8 +801,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataTratorPlantCampoMes.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataTratorPlantCampoMes.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataTratorPlantCampoMes.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataTratorPlantCampoMes.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieTratorPlantCampoMes.data(dataTratorPlantCampoMes);
 
@@ -834,8 +834,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataTratorPlantCampoAno.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataTratorPlantCampoAno.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataTratorPlantCampoAno.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataTratorPlantCampoAno.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieTratorPlantCampoAno.data(dataTratorPlantCampoAno);
 
@@ -867,8 +867,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataCaminhaoOperDia.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataCaminhaoOperDia.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataCaminhaoOperDia.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataCaminhaoOperDia.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieCaminhaoOperDia.data(dataCaminhaoOperDia);
 
@@ -900,8 +900,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataCaminhaoOperMes.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataCaminhaoOperMes.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataCaminhaoOperMes.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataCaminhaoOperMes.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieCaminhaoOperMes.data(dataCaminhaoOperMes);
 
@@ -933,8 +933,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataCaminhaoOperAno.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataCaminhaoOperAno.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataCaminhaoOperAno.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataCaminhaoOperAno.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieCaminhaoOperAno.data(dataCaminhaoOperAno);
 
@@ -966,8 +966,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataCaminhaoCampoDia.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataCaminhaoCampoDia.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataCaminhaoCampoDia.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataCaminhaoCampoDia.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieCaminhaoCampoDia.data(dataCaminhaoCampoDia);
 
@@ -999,8 +999,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataCaminhaoCampoMes.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataCaminhaoCampoMes.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataCaminhaoCampoMes.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataCaminhaoCampoMes.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieCaminhaoCampoMes.data(dataCaminhaoCampoMes);
 
@@ -1032,8 +1032,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataCaminhaoCampoAno.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataCaminhaoCampoAno.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataCaminhaoCampoAno.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataCaminhaoCampoAno.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieCaminhaoCampoAno.data(dataCaminhaoCampoAno);
 
@@ -1065,8 +1065,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataColhedoraOperDia.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataColhedoraOperDia.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataColhedoraOperDia.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataColhedoraOperDia.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieColhedoraOperDia.data(dataColhedoraOperDia);
 
@@ -1098,8 +1098,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataColhedoraOperMes.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataColhedoraOperMes.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataColhedoraOperMes.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataColhedoraOperMes.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieColhedoraOperMes.data(dataColhedoraOperMes);
 
@@ -1131,8 +1131,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataColhedoraOperAno.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataColhedoraOperAno.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataColhedoraOperAno.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataColhedoraOperAno.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieColhedoraOperAno.data(dataColhedoraOperAno);
 
@@ -1164,8 +1164,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataColhedoraCampoDia.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataColhedoraCampoDia.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataColhedoraCampoDia.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataColhedoraCampoDia.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieColhedoraCampoDia.data(dataColhedoraCampoDia);
 
@@ -1197,8 +1197,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataColhedoraCampoDia.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataColhedoraCampoDia.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataColhedoraCampoDia.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataColhedoraCampoDia.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieColhedoraCampoMes.data(dataColhedoraCampoMes);
 
@@ -1230,8 +1230,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataColhedoraCampoAno.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataColhedoraCampoAno.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataColhedoraCampoAno.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataColhedoraCampoAno.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieColhedoraCampoAno.data(dataColhedoraCampoAno);
 
@@ -1263,8 +1263,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataTratorTransbOperDia.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataTratorTransbOperDia.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataTratorTransbOperDia.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataTratorTransbOperDia.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieTratorTransbOperDia.data(dataTratorTransbOperDia);
 
@@ -1296,8 +1296,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataTratorTransbOperMes.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataTratorTransbOperMes.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataTratorTransbOperMes.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataTratorTransbOperMes.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieTratorTransbOperMes.data(dataTratorTransbOperMes);
 
@@ -1329,8 +1329,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataTratorTransbOperAno.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataTratorTransbOperAno.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataTratorTransbOperAno.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataTratorTransbOperAno.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieTratorTransbOperAno.data(dataTratorTransbOperAno);
 
@@ -1362,8 +1362,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataTratorTransbCampoDia.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataTratorTransbCampoDia.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataTratorTransbCampoDia.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataTratorTransbCampoDia.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieTratorTransbCampoDia.data(dataTratorTransbCampoDia);
 
@@ -1395,8 +1395,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataTratorTransbCampoMes.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataTratorTransbCampoMes.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataTratorTransbCampoMes.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataTratorTransbCampoMes.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieTratorTransbCampoMes.data(dataTratorTransbCampoMes);
 
@@ -1428,8 +1428,8 @@ public class GrafProdActivity extends ActivityGeneric {
             disp = 100 - par;
         }
 
-        dataTratorTransbCampoAno.add(new GrafProdActivity.PersonDataEntry("DISP", disp, "blue"));
-        dataTratorTransbCampoAno.add(new GrafProdActivity.PersonDataEntry("PAR", par, "red"));
+        dataTratorTransbCampoAno.add(new GraficoPlantioActivity.PersonDataEntry("DISP", disp, "blue"));
+        dataTratorTransbCampoAno.add(new GraficoPlantioActivity.PersonDataEntry("PAR", par, "red"));
 
         pieTratorTransbCampoAno.data(dataTratorTransbCampoAno);
 
@@ -3784,7 +3784,7 @@ public class GrafProdActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                Intent it = new Intent(GrafProdActivity.this, MenuPrincNormalActivity.class);
+                Intent it = new Intent(GraficoPlantioActivity.this, MenuPrincNormalActivity.class);
                 startActivity(it);
                 finish();
 

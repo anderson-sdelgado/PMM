@@ -248,14 +248,14 @@ public class HorimetroActivity extends ActivityGeneric {
                     ManipDadosEnvio.getInstance().envioDadosPrinc();
 
 //                    GRAFICO
-//                    Intent it = new Intent(HorimetroActivity.this, EsperaGrafActivity.class);
-//                    startActivity(it);
-//                    finish();
-
-//                    ANTIGO SEM GRAFICO
-                    Intent it = new Intent(HorimetroActivity.this, MenuPrincNormalActivity.class);
+                    Intent it = new Intent(HorimetroActivity.this, EsperaDadosOperActivity.class);
                     startActivity(it);
                     finish();
+
+//                    ANTIGO SEM GRAFICO
+//                    Intent it = new Intent(HorimetroActivity.this, MenuPrincNormalActivity.class);
+//                    startActivity(it);
+//                    finish();
 
                 }
 

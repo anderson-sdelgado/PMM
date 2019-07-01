@@ -40,6 +40,7 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.AtualizaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.PerdaTO;
 
 import android.os.AsyncTask;
 
@@ -52,7 +53,8 @@ public class ManipDadosVerif {
     private GenericRecordable genericRecordable;
     private UrlsConexaoHttp urlsConexaoHttp;
     private Context telaAtual;
-    private Class telaProx;
+    private Class telaProx1;
+    private Class telaProx2;
     private ProgressDialog progressDialog;
     private String dado;
     private String tipo;
@@ -103,7 +105,7 @@ public class ManipDadosVerif {
         verTerm = false;
         urlsConexaoHttp = new UrlsConexaoHttp();
         this.telaAtual = telaAtual;
-        this.telaProx = telaProx;
+        this.telaProx1 = telaProx;
         this.progressDialog = progressDialog;
         this.dado = dado;
         this.tipo = tipo;
@@ -116,7 +118,20 @@ public class ManipDadosVerif {
 
         urlsConexaoHttp = new UrlsConexaoHttp();
         this.telaAtual = telaAtual;
-        this.telaProx = telaProx;
+        this.telaProx1 = telaProx;
+        this.dado = dado;
+        this.tipo = tipo;
+
+        envioDados();
+
+    }
+
+    public void verDados(String dado, String tipo, Context telaAtual, Class telaProx, Class telaProx2) {
+
+        urlsConexaoHttp = new UrlsConexaoHttp();
+        this.telaAtual = telaAtual;
+        this.telaProx1 = telaProx;
+        this.telaProx2 = telaProx2;
         this.dado = dado;
         this.tipo = tipo;
 
@@ -128,7 +143,7 @@ public class ManipDadosVerif {
 
         urlsConexaoHttp = new UrlsConexaoHttp();
         this.telaAtual = telaAtual;
-        this.telaProx = telaProx;
+        this.telaProx1 = telaProx;
         this.dado = dado;
         this.tipo = tipo;
         this.verTelaAtual = verTelaAtual;
@@ -225,6 +240,8 @@ public class ManipDadosVerif {
                 recDadosGenerico(result, "BocalTO");
             } else if (this.tipo.equals("PressaoBocal")) {
                 recDadosGenerico(result, "PressaoBocalTO");
+            } else if (this.tipo.equals("Perda")) {
+                recPerda(result);
             }
 
         } catch (Exception e) {
@@ -351,7 +368,7 @@ public class ManipDadosVerif {
 
                 this.progressDialog.dismiss();
 
-                Intent it = new Intent(telaAtual, telaProx);
+                Intent it = new Intent(telaAtual, telaProx1);
                 telaAtual.startActivity(it);
 
             } else {
@@ -425,7 +442,7 @@ public class ManipDadosVerif {
                     if(!verTerm){
 
                         verTerm = true;
-                        Intent it = new Intent(telaAtual, telaProx);
+                        Intent it = new Intent(telaAtual, telaProx1);
                         telaAtual.startActivity(it);
 
                     }
@@ -551,13 +568,13 @@ public class ManipDadosVerif {
                 }
 
                 this.progressDialog.dismiss();
-                Intent it = new Intent(telaAtual, telaProx);
+                Intent it = new Intent(telaAtual, telaProx1);
                 telaAtual.startActivity(it);
 
             } else {
 
                 this.progressDialog.dismiss();
-                Intent it = new Intent(telaAtual, telaProx);
+                Intent it = new Intent(telaAtual, telaProx1);
                 telaAtual.startActivity(it);
 
             }
@@ -650,13 +667,13 @@ public class ManipDadosVerif {
                 }
 
                 this.progressDialog.dismiss();
-                Intent it = new Intent(telaAtual, telaProx);
+                Intent it = new Intent(telaAtual, telaProx1);
                 telaAtual.startActivity(it);
 
             } else {
 
                 this.progressDialog.dismiss();
-                Intent it = new Intent(telaAtual, telaProx);
+                Intent it = new Intent(telaAtual, telaProx1);
                 telaAtual.startActivity(it);
 
             }
@@ -710,14 +727,14 @@ public class ManipDadosVerif {
 
                 cabecCheckList(Tempo.getInstance().datahora());
                 this.progressDialog.dismiss();
-                Intent it = new Intent(telaAtual, telaProx);
+                Intent it = new Intent(telaAtual, telaProx1);
                 telaAtual.startActivity(it);
 
             } else {
 
                 cabecCheckList("0");
                 this.progressDialog.dismiss();
-                Intent it = new Intent(telaAtual, telaProx);
+                Intent it = new Intent(telaAtual, telaProx1);
                 telaAtual.startActivity(it);
 
             }
@@ -854,7 +871,7 @@ public class ManipDadosVerif {
 
                     if(!verTerm) {
                         verTerm = true;
-                        Intent it = new Intent(telaAtual, telaProx);
+                        Intent it = new Intent(telaAtual, telaProx1);
                         telaAtual.startActivity(it);
                     }
 
@@ -907,4 +924,76 @@ public class ManipDadosVerif {
         }
 
     }
+
+    public void recPerda(String result) {
+
+        try {
+
+            if (!result.contains("exceeded")) {
+
+                JSONObject jObj = new JSONObject(result);
+                JSONArray jsonArray = jObj.getJSONArray("dados");
+
+                if (jsonArray.length() > 0) {
+
+                    PerdaTO perdaTO = new PerdaTO();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject objeto = jsonArray.getJSONObject(i);
+                        Gson gson = new Gson();
+                        perdaTO = gson.fromJson(objeto.toString(), PerdaTO.class);
+                        perdaTO.insert();
+
+                    }
+
+                    Intent it = new Intent(telaAtual, telaProx1);
+                    telaAtual.startActivity(it);
+
+                } else {
+
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
+                    alerta.setTitle("ATENÇÃO");
+                    alerta.setMessage("MATRICULA NÃO CONTEM DADOS OPERACIONAIS.");
+
+                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // TODO Auto-generated method stub
+                            Intent it = new Intent(telaAtual, telaProx2);
+                            telaAtual.startActivity(it);
+                        }
+                    });
+                    alerta.show();
+
+                }
+
+            } else {
+
+                if(!verTerm) {
+                    this.progressDialog.dismiss();
+
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
+                    alerta.setTitle("ATENÇÃO");
+                    alerta.setMessage("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
+
+                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // TODO Auto-generated method stub
+
+                        }
+                    });
+                    alerta.show();
+                }
+
+            }
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            Log.i("PMM", "Erro Manip atualizar = " + e);
+        }
+
+    }
+
 }

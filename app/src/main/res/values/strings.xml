@@ -76,7 +76,7 @@
     <string name="texto_subtitulo_prof_sulc">PROFUNDIDADE DA SULCAÇÃO</string>
     <string name="texto_subtitulo_falhas_dep">FALHAS DE DEPOSIÇÃO</string>
     <string name="texto_subtitulo_qual_geral">QUALIDADE GERAL</string>
-    <string name="texto_fechar_graf">FECHAR</string>
+    <string name="texto_fechar">FECHAR</string>
     <string name="texto_subtitulo_disp_oper">DISP. OPERAÇÃO</string>
     <string name="texto_subtitulo_campo">CAMPO</string>
     <string name="texto_esp_graf">ATUALIZANDO DADOS...</string>
@@ -87,4 +87,25 @@
     <string name="texto_moto_bomba">MOTO BOMBA:</string>
     <string name="texto_msg_data_hora">POR FAVOR, DIGITE O DIA, MÊS, ANO, HORA E MINUTO ATUAL NAS PRÓXIMAS TELAS.</string>
     <string name="texto_data_hora">DIA:</string>
+    <string name="texto_tolete">TOLETE</string>
+    <string name="texto_valor_tolete">0,182</string>
+    <string name="texto_lasca">LASCA</string>
+    <string name="texto_valor_lasca">0,182</string>
+    <string name="texto_toco">TOCO</string>
+    <string name="texto_valor_toco">0,182</string>
+    <string name="texto_ponteiro">PONTEIRO</string>
+    <string name="texto_valor_ponteiro">0,182</string>
+    <string name="texto_cana_inteira">CANA INTEIRA</string>
+    <string name="texto_valor_cana_inteira">0,182</string>
+    <string name="texto_pedaco">PEDAÇO</string>
+    <string name="texto_valor_pedaco">0,182</string>
+    <string name="texto_repique">REPIQUE</string>
+    <string name="texto_valor_repique">0,182</string>
+    <string name="texto_soqueira">SOQUEIRA</string>
+    <string name="texto_valor_soqueira">0,182</string>
+    <string name="texto_nro_soqueira">NRO SOQUEIRA</string>
+    <string name="texto_valor_nro_soqueira">0,182</string>
+    <string name="texto_total">TOTAL</string>
+    <string name="texto_valor_total">0,182</string>
+    <string name="texto_titulo_perda">DADOS DE PERDAS\n01/07/2019</string>
 </resources>

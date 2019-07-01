@@ -145,17 +145,17 @@ public class ItemChecklistActivity extends ActivityGeneric {
 
         if(cabecCheckListTO.getQtdeItemCab() == pmmContext.getPosChecklist()){
 
-//            GRAFICO
-//            Intent it = new Intent(ItemChecklistActivity.this, EsperaGrafActivity.class);
-//            startActivity(it);
-//            finish();
+            ManipDadosEnvio.getInstance().salvaCheckList();
 
-//            ANTIGO SEM GRAFICO
-            Intent it = new Intent(ItemChecklistActivity.this, MenuPrincNormalActivity.class);
+//            GRAFICO
+            Intent it = new Intent(ItemChecklistActivity.this, EsperaDadosOperActivity.class);
             startActivity(it);
             finish();
 
-            ManipDadosEnvio.getInstance().salvaCheckList();
+//            ANTIGO SEM GRAFICO
+//            Intent it = new Intent(ItemChecklistActivity.this, MenuPrincNormalActivity.class);
+//            startActivity(it);
+//            finish();
 
         }
         else{

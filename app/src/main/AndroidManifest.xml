@@ -22,7 +22,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MsgDataHoraActivity"></activity>
+        <activity android:name=".DadosColheitaActivity"></activity>
+        <activity android:name=".MsgDataHoraActivity" />
         <activity android:name=".DataHoraActivity" />
         <activity
             android:name=".EquipMBActivity"
@@ -124,16 +125,10 @@
             android:name=".PergAtualCheckListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".GrafProdActivity"
+            android:name=".GraficoPlantioActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".GrafDispActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".GrafTermQualActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".EsperaGrafActivity"
+            android:name=".EsperaDadosOperActivity"
             android:screenOrientation="portrait" />
     </application>
 

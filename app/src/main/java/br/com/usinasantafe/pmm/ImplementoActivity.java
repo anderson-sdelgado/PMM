@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -317,28 +316,28 @@ public class ImplementoActivity extends ActivityGeneric {
                                     ManipDadosEnvio.getInstance().envioDadosPrinc();
 
 //                                    GRAFICO
-//                                    it = new Intent(ImplementoActivity.this, EsperaGrafActivity.class);
-//                                    startActivity(it);
-//                                    finish();
-
-//                                    ANTIGO SEM GRAFICO
-                                    it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
+                                    it = new Intent(ImplementoActivity.this, EsperaDadosOperActivity.class);
                                     startActivity(it);
                                     finish();
+
+//                                    ANTIGO SEM GRAFICO
+//                                    it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
+//                                    startActivity(it);
+//                                    finish();
 
                                 }
 
                             } else {
 
 //                                    GRAFICO
-//                                    it = new Intent(ImplementoActivity.this, EsperaGrafActivity.class);
-//                                    startActivity(it);
-//                                    finish();
+                                    it = new Intent(ImplementoActivity.this, EsperaDadosOperActivity.class);
+                                    startActivity(it);
+                                    finish();
 
 //                                ANTIGO SEM GRAFICO
-                                it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
-                                startActivity(it);
-                                finish();
+//                                it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
+//                                startActivity(it);
+//                                finish();
 
                             }
 
