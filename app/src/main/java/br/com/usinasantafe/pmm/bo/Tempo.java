@@ -158,7 +158,7 @@ public class Tempo {
 
             TimeZone tz = TimeZone.getDefault();
             Date d = new Date();
-            Long dt =  date.getTime() + tz.getOffset(d.getTime()) + dif();
+            Long dt =  date.getTime() + tz.getOffset(d.getTime());
             cal.setTimeInMillis(dt);
 
             int mes = cal.get(Calendar.MONTH);
@@ -242,18 +242,18 @@ public class Tempo {
         cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(horaStr));
         cal.set(Calendar.MINUTE, Integer.parseInt(minutoStr));
 
-        TimeZone tz = TimeZone.getDefault();
         Date dataHoraServ = cal.getTime();
-        Date d = new Date();
-        Long longDtServ =  dataHoraServ.getTime() - tz.getOffset(d.getTime());
+        Long longDtServ =  dataHoraServ.getTime();
 
         Date dataHoraCel = new Date();
-        Long longDtCel =  dataHoraCel.getTime() - tz.getOffset(d.getTime());
+        Long longDtCel =  dataHoraCel.getTime();
 
-        Long dthrDif = longDtServ - longDtCel;
+        Long dthrDif =  longDtServ - longDtCel;
         Long diaDif = dthrDif/24/60/60/1000;
 
-        if(diaDif == 0){
+        Log.i("PMM", "DIAS DIFERENCA = " + diaDif);
+
+        if((diaDif >= 0) && (diaDif <= 15)){
             return true;
         }
         else{
@@ -262,22 +262,41 @@ public class Tempo {
 
     }
 
-    public Long difDthr(String dthrDig){
+    public Long difDthr(int dia, int mes, int ano, int hora, int minuto){
 
-        StringBuffer dtDig = new StringBuffer(dthrDig);
+        String diaStr;
+        if(dia < 10){
+            diaStr = "0" + dia;
+        }
+        else{
+            diaStr = String.valueOf(dia);
+        }
 
-        Log.i("PMM", "DATA HORA DIGITADA: " + dtDig);
+        String mesStr;
+        if(mes < 10){
+            mesStr = "0" + mes;
+        }
+        else{
+            mesStr = String.valueOf(mes);
+        }
 
-        dtDig.delete(10, 11);
-        dtDig.insert(10, " ");
+        String anoStr = String.valueOf(ano);
 
-        String dtStr = String.valueOf(dtDig);
+        String horaStr = "";
+        if(hora < 10){
+            horaStr = "0" + hora;
+        }
+        else{
+            horaStr = String.valueOf(hora);
+        }
 
-        String diaStr = dtStr.substring(0, 2);
-        String mesStr = dtStr.substring(3, 5);
-        String anoStr = dtStr.substring(6, 10);
-        String horaStr = dtStr.substring(11, 13);
-        String minutoStr = dtStr.substring(14, 16);
+        String minutoStr = "";
+        if(minuto < 10){
+            minutoStr = "0" + minuto;
+        }
+        else{
+            minutoStr = String.valueOf(minuto);
+        }
 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(diaStr));
@@ -286,15 +305,13 @@ public class Tempo {
         cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(horaStr));
         cal.set(Calendar.MINUTE, Integer.parseInt(minutoStr));
 
-        TimeZone tz = TimeZone.getDefault();
         Date dataHoraDig = cal.getTime();
-        Date d = new Date();
-        Long longDtDig =  dataHoraDig.getTime() - tz.getOffset(d.getTime());
+        Long longDtDig =  dataHoraDig.getTime();
 
         Date dataHoraCel = new Date();
-        Long longDtCel =  dataHoraCel.getTime() - tz.getOffset(d.getTime());
+        Long longDtCel =  dataHoraCel.getTime();
 
-        Long dif = longDtCel - longDtDig;
+        Long dif = longDtDig - longDtCel;
 
         return dif;
 

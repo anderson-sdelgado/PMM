@@ -24,6 +24,7 @@ public class PMMContext extends Application {
     // 2 - Trabalhando Moto Mec;
     // 3 - Parada Moto Mec;
     // 4 - Finalizar Boletim Moto Mec;
+    // 5 - Digitar Data e Hora
     // 6 - Trocar Transbordo;
     // 7 - Editar Rendimento;
     // 14 - Recolhimento de Mangueira;

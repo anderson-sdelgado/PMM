@@ -120,8 +120,6 @@ public class ImplementoActivity extends ActivityGeneric {
                     ArrayList listaPesq = new ArrayList();
                     EquipSegTO equipSegTO = new EquipSegTO();
 
-                    Log.i("PMM", "impl = " + impl);
-
                     EspecificaPesquisa pesquisa = new EspecificaPesquisa();
                     pesquisa.setCampo("nroEquip");
                     pesquisa.setValor(impl);

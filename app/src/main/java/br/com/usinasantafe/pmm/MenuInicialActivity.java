@@ -319,18 +319,25 @@ public class MenuInicialActivity extends ActivityGeneric {
 
     }
 
-    public void startTimer(String verAtualizacao) {
+    public void startTimer(String verAtual) {
 
-        Log.i("PMM", "VERATUAL = " + verAtualizacao);
-        int pos1 = verAtualizacao.indexOf("#") + 1;
-        String verAtualCL = verAtualizacao.substring(0, (pos1 - 1));
-        String dthr = verAtualizacao.substring(pos1);
-        configTO = new ConfigTO();
-        List configList = configTO.all();
-        configTO = (ConfigTO) configList.get(0);
-        configList.clear();
-        configTO.setDtServConfig(dthr);
-        configTO.update();
+        Log.i("PMM", "VERATUAL = " + verAtual);
+
+        String verAtualCL;
+        if(verAtual.equals("N_NAC")){
+            verAtualCL = verAtual;
+        }
+        else{
+            int pos1 = verAtual.indexOf("#") + 1;
+            verAtualCL = verAtual.substring(0, (pos1 - 1));
+            String dthr = verAtual.substring(pos1);
+            configTO = new ConfigTO();
+            List configList = configTO.all();
+            configTO = (ConfigTO) configList.get(0);
+            configList.clear();
+            configTO.setDtServConfig(dthr);
+            configTO.update();
+        }
 
         pmmContext.setVerAtualCL(verAtualCL);
 

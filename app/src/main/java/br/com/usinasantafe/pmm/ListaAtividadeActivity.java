@@ -127,7 +127,6 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
         for (int i = 0; i < lrea.size(); i++) {
             rEquipAtivTO = (REquipAtivTO) lrea.get(i);
-            Log.i("PMM", "rEquipAtivTO.getIdAtiv() = " + rEquipAtivTO.getIdAtiv());
             rLista.add(rEquipAtivTO.getIdAtiv());
         }
 
@@ -142,10 +141,8 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
             for (int i = 0; i < listAtiv.size(); i++) {
                 atividadeTO = (AtividadeTO) listAtiv.get(i);
-                Log.i("PMM", "1 - atividadeTO.getIdAtiv() = " + atividadeTO.getIdAtiv());
                 for (int j = 0; j < lroa.size(); j++) {
                     rOSAtivTO = (ROSAtivTO) lroa.get(j);
-                    Log.i("PMM", "rOSAtivTO.getIdAtiv() = " + rOSAtivTO.getIdAtiv());
                     if (Objects.equals(atividadeTO.getIdAtiv(), rOSAtivTO.getIdAtiv())) {
                         lAtivExib.add(atividadeTO);
                     }
@@ -153,13 +150,10 @@ public class ListaAtividadeActivity extends ActivityGeneric {
             }
 
         } else {
-
             for (int i = 0; i < listAtiv.size(); i++) {
                 atividadeTO = (AtividadeTO) listAtiv.get(i);
-                Log.i("PMM", "2 - atividadeTO.getIdAtiv() = " + atividadeTO.getIdAtiv());
                 lAtivExib.add(atividadeTO);
             }
-
         }
 
         for (int i = 0; i < lAtivExib.size(); i++) {

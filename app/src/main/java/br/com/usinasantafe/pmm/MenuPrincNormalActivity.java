@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -151,9 +152,10 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                     configTO.update();
                     verDthr = true;
                 } else {
-                    if (configTO.getDifDthrConfig() != 0L) {
+                    if (configTO.getDifDthrConfig() == 0) {
                         pmmContext.setContDTHR(1);
-                        Intent it = new Intent(MenuPrincNormalActivity.this, DataHoraActivity.class);
+                        pmmContext.setVerPosTela(5);
+                        Intent it = new Intent(MenuPrincNormalActivity.this, MsgDataHoraActivity.class);
                         startActivity(it);
                         finish();
                     } else {

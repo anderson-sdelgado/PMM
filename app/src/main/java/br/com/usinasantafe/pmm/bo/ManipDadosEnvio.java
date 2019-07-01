@@ -134,7 +134,6 @@ public class ManipDadosEnvio {
                 cadImplTO.insert();
             }
 
-
             configTO.setUltTurnoCLConfig(boletimMMTO.getCodTurnoBoletim());
             configTO.setDtUltCLConfig(Tempo.getInstance().dataSHora());
             configTO.setDtUltApontConfig(datahora);
@@ -303,11 +302,9 @@ public class ManipDadosEnvio {
             List listaItem = respItemCheckListTO.get("idCabIt", cabecCheckListTO.getIdCab());
 
             for (int j = 0; j < listaItem.size(); j++) {
-
                 respItemCheckListTO = (RespItemCheckListTO) listaItem.get(j);
                 Gson gsonItem = new Gson();
                 jsonArrayItem.add(gsonItem.toJsonTree(respItemCheckListTO, respItemCheckListTO.getClass()));
-
             }
 
         }
@@ -385,11 +382,9 @@ public class ManipDadosEnvio {
                     List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
 
                     for (int m = 0; m < itemMedPneuList.size(); m++) {
-
                         itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
                         Gson gsonItemPneu = new Gson();
                         jsonArrayItemPneu.add(gsonItemPneu.toJsonTree(itemMedPneuTO, itemMedPneuTO.getClass()));
-
                     }
 
                     itemMedPneuList.clear();
@@ -406,11 +401,9 @@ public class ManipDadosEnvio {
             List rendList = rendimentoTO.get("idBolRendimento", boletimMMTO.getIdBoletim());
 
             for (int j = 0; j < rendList.size(); j++) {
-
                 rendimentoTO = (RendimentoTO) rendList.get(j);
                 Gson gsonRend = new Gson();
                 jsonArrayRendimento.add(gsonRend.toJsonTree(rendimentoTO, rendimentoTO.getClass()));
-
             }
 
             rendList.clear();
@@ -437,8 +430,8 @@ public class ManipDadosEnvio {
         JsonObject jsonItemPneu = new JsonObject();
         jsonItemPneu.add("itempneu", jsonArrayItemPneu);
 
-//        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonRend.toString() + "?" + jsonBolPneu.toString() + "@" + jsonItemPneu.toString();
-        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonRend.toString() + "?";
+        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonRend.toString() + "?" + jsonBolPneu.toString() + "@" + jsonItemPneu.toString();
+//        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonRend.toString() + "?";
 
         Log.i("PMM", "FECHADO = " + dados);
 
@@ -518,11 +511,9 @@ public class ManipDadosEnvio {
                     List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
 
                     for (int m = 0; m < itemMedPneuList.size(); m++) {
-
                         itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
                         Gson gsonItemPneu = new Gson();
                         jsonArrayItemPneu.add(gsonItemPneu.toJsonTree(itemMedPneuTO, itemMedPneuTO.getClass()));
-
                     }
 
                     itemMedPneuList.clear();
@@ -554,8 +545,8 @@ public class ManipDadosEnvio {
         JsonObject jsonItemPneu = new JsonObject();
         jsonItemPneu.add("itempneu", jsonArrayItemPneu);
 
-//        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonBolPneu.toString() + "?" + jsonItemPneu.toString();
-        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "?";
+        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonBolPneu.toString() + "?" + jsonItemPneu.toString();
+//        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "?";
 
         Log.i("PMM", "ABERTO = " + dados);
 
@@ -611,11 +602,9 @@ public class ManipDadosEnvio {
                 List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
 
                 for (int m = 0; m < itemMedPneuList.size(); m++) {
-
                     itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
                     Gson gsonItem = new Gson();
                     jsonArrayItemPneu.add(gsonItem.toJsonTree(itemMedPneuTO, itemMedPneuTO.getClass()));
-
                 }
 
                 itemMedPneuList.clear();
@@ -640,8 +629,8 @@ public class ManipDadosEnvio {
         JsonObject jsonItemPneu = new JsonObject();
         jsonItemPneu.add("itempneu", jsonArrayItemPneu);
 
-//        String dados = jsonAponta.toString() + "_" + jsonImplemento.toString() + "|" + jsonBolPneu.toString() + "#" + jsonItemPneu.toString();
-        String dados = jsonAponta.toString() + "|" + jsonImplemento.toString() + "?";
+        String dados = jsonAponta.toString() + "_" + jsonImplemento.toString() + "|" + jsonBolPneu.toString() + "#" + jsonItemPneu.toString();
+//        String dados = jsonAponta.toString() + "|" + jsonImplemento.toString() + "?";
 
         Log.i("PMM", "APONTAMENTO = " + dados);
 
@@ -694,11 +683,9 @@ public class ManipDadosEnvio {
                     List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
 
                     for (int m = 0; m < itemMedPneuList.size(); m++) {
-
                         itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
                         Gson gsonItemPneu = new Gson();
                         jsonArrayItemPneu.add(gsonItemPneu.toJsonTree(itemMedPneuTO, itemMedPneuTO.getClass()));
-
                     }
 
                     itemMedPneuList.clear();
@@ -809,11 +796,9 @@ public class ManipDadosEnvio {
                     List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
 
                     for (int m = 0; m < itemMedPneuList.size(); m++) {
-
                         itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
                         Gson gsonItemPneu = new Gson();
                         jsonArrayItemPneu.add(gsonItemPneu.toJsonTree(itemMedPneuTO, itemMedPneuTO.getClass()));
-
                     }
 
                     itemMedPneuList.clear();
@@ -886,11 +871,9 @@ public class ManipDadosEnvio {
                 List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
 
                 for (int m = 0; m < itemMedPneuList.size(); m++) {
-
                     itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
                     Gson gsonItem = new Gson();
                     jsonArrayItemPneu.add(gsonItem.toJsonTree(itemMedPneuTO, itemMedPneuTO.getClass()));
-
                 }
 
                 itemMedPneuList.clear();
@@ -993,10 +976,8 @@ public class ManipDadosEnvio {
                 List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
 
                 for (int m = 0; m < itemMedPneuList.size(); m++) {
-
                     itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
                     itemMedPneuTO.delete();
-
                 }
 
                 itemMedPneuList.clear();
@@ -1062,10 +1043,8 @@ public class ManipDadosEnvio {
                     List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
 
                     for (int m = 0; m < itemMedPneuList.size(); m++) {
-
                         itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
                         itemMedPneuTO.delete();
-
                     }
 
                     itemMedPneuList.clear();
@@ -1112,10 +1091,8 @@ public class ManipDadosEnvio {
                 List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
 
                 for (int m = 0; m < itemMedPneuList.size(); m++) {
-
                     itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
                     itemMedPneuTO.delete();
-
                 }
 
                 itemMedPneuList.clear();
@@ -1157,10 +1134,8 @@ public class ManipDadosEnvio {
                 List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
 
                 for (int m = 0; m < itemMedPneuList.size(); m++) {
-
                     itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
                     itemMedPneuTO.delete();
-
                 }
 
                 itemMedPneuList.clear();
@@ -1218,10 +1193,8 @@ public class ManipDadosEnvio {
                     List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
 
                     for (int m = 0; m < itemMedPneuList.size(); m++) {
-
                         itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
                         itemMedPneuTO.delete();
-
                     }
 
                     itemMedPneuList.clear();
@@ -1260,10 +1233,8 @@ public class ManipDadosEnvio {
                 List itemMedPneuList = itemMedPneuTO.get("idBolItemMedPneu", boletimPneuTO.getIdBolPneu());
 
                 for (int m = 0; m < itemMedPneuList.size(); m++) {
-
                     itemMedPneuTO = (ItemMedPneuTO) itemMedPneuList.get(m);
                     itemMedPneuTO.delete();
-
                 }
 
                 itemMedPneuList.clear();

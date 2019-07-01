@@ -143,9 +143,9 @@ public class ListaTurnoActivity extends ActivityGeneric {
                     finish();
                 }
                 else{
-                    if(configTO.getDifDthrConfig() != 0L){
+                    if(configTO.getDifDthrConfig() == 0){
                         pmmContext.setContDTHR(1);
-                        Intent it = new Intent(ListaTurnoActivity.this, DataHoraActivity.class);
+                        Intent it = new Intent(ListaTurnoActivity.this, MsgDataHoraActivity.class);
                         startActivity(it);
                         finish();
                     }
