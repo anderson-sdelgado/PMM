@@ -56,7 +56,6 @@ public class ConfiguracaoActivity extends ActivityGeneric {
         btOkConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
 
                 if(!editTextEquipConfig.getText().toString().equals("") &&
                         !editTextSenhaConfig.getText().toString().equals("")){
@@ -78,7 +77,6 @@ public class ConfiguracaoActivity extends ActivityGeneric {
         btCancConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
 
                 Intent it = new Intent(ConfiguracaoActivity.this, MenuInicialActivity.class);
                 startActivity(it);
@@ -90,7 +88,6 @@ public class ConfiguracaoActivity extends ActivityGeneric {
         btAtualBDConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
 
                 ConexaoWeb conexaoWeb = new ConexaoWeb();
 

@@ -48,7 +48,7 @@ public class ListaHistApontaActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
+
                 Intent it = new Intent(ListaHistApontaActivity.this, MenuPrincNormalActivity.class);
                 startActivity(it);
                 finish();

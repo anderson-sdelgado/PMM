@@ -583,7 +583,6 @@ public class GraficoPlantioActivity extends ActivityGeneric {
             lPlanReal.crosshair().enabled(true);
             lPlanReal.crosshair()
                     .yLabel(true)
-                    // TODO ystroke
                     .yStroke((Stroke) null, null, null, (String) null, (String) null);
 
             lPlanReal.tooltip().positionMode(TooltipPositionMode.POINT);

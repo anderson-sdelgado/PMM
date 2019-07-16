@@ -191,7 +191,6 @@ public abstract class Entidade implements Serializable {
 				return true;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
@@ -204,7 +203,6 @@ public abstract class Entidade implements Serializable {
 	}
 
 	public int count() {
-		// TODO Auto-generated method stub
 		return all().size();
 	}
 

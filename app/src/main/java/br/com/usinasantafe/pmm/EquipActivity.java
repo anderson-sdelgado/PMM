@@ -53,7 +53,6 @@ public class EquipActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
 
                 Intent it = new Intent(EquipActivity.this, ListaTurnoActivity.class);
                 startActivity(it);

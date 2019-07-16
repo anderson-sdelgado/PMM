@@ -53,7 +53,7 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
+
         super.onCreate(savedInstanceState);
         getHelper();
 
@@ -238,7 +238,7 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
 
     @Override
     protected void onResume() {
-        // TODO Auto-generated method stub
+
         super.onResume();
 
         if ((EditText) findViewById(R.id.editTextPadrao) != null) {

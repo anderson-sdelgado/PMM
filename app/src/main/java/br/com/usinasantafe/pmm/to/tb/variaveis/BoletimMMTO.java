@@ -38,7 +38,6 @@ public class BoletimMMTO extends Entidade {
 	private Long statusConBoletim;  //0 - OffLine; 1 - OnLine
 
     public BoletimMMTO() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getIdBoletim() {

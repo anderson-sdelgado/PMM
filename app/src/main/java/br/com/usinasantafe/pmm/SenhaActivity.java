@@ -28,7 +28,6 @@ public class SenhaActivity extends ActivityGeneric {
             @SuppressWarnings("unchecked")
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
 
                 ConfigTO configTO = new ConfigTO();
 

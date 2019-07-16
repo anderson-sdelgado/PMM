@@ -19,7 +19,7 @@ public class ConHttpGetBDGenerico extends AsyncTask<String, Void, String> {
 	private UrlsConexaoHttp urlsConexaoHttp;
 
 	public ConHttpGetBDGenerico() {
-		// TODO Auto-generated constructor stub
+
 	}
 
     public static ConHttpGetBDGenerico getInstance() {
@@ -96,11 +96,8 @@ public class ConHttpGetBDGenerico extends AsyncTask<String, Void, String> {
 	protected void onPostExecute(String result) {
 
 		try {
-			
 			ManipDadosReceb.getInstance().manipularDadosHttp(tipo, result);
-			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			Log.i("PMM", "Erro2 = " + e);
 		}
 

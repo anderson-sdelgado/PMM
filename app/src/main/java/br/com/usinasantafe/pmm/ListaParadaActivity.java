@@ -96,13 +96,12 @@ public class ListaParadaActivity extends ActivityGeneric {
             @Override
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
                                           int arg3) {
-                // TODO Auto-generated method stub
 
             }
 
             @Override
             public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
+
             }
         });
 
@@ -110,7 +109,6 @@ public class ListaParadaActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
 
                 ConexaoWeb conexaoWeb = new ConexaoWeb();
 
@@ -165,7 +163,6 @@ public class ListaParadaActivity extends ActivityGeneric {
             @Override
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
-                // TODO Auto-generated method stub
 
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
                 textParada = textView.getText().toString();

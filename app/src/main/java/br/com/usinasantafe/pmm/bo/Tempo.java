@@ -25,7 +25,7 @@ public class Tempo {
     private boolean envioDado;
 	
 	public Tempo() {
-		// TODO Auto-generated constructor stub
+
 	}
 	
     public static Tempo getInstance() {

@@ -37,7 +37,6 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
 
                 EquipTO equipTO = new EquipTO();
                 List equipList = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getCodEquipBoletim());

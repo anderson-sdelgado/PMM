@@ -22,7 +22,6 @@ public class UrlsConexaoHttp {
     public static String TurnoTO = urlPrincipal + "turno2.php";
 
     public UrlsConexaoHttp() {
-        // TODO Auto-generated constructor stub
     }
 
     public String getsInserirCheckList() {

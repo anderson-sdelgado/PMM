@@ -30,7 +30,6 @@ public class BackupApontaTO extends Entidade  {
 	private String dthrAponta;
 
 	public BackupApontaTO() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getIdAponta() {

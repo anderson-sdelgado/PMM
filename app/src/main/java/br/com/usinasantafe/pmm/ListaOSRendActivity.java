@@ -40,7 +40,6 @@ public class ListaOSRendActivity extends ActivityGeneric {
             @Override
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
-                // TODO Auto-generated method stub
 
                 pmmContext.setPosRendimento(position);
                 Intent it = new Intent(ListaOSRendActivity.this, RendimentoActivity.class);

@@ -35,7 +35,7 @@ public class ManipDadosReceb {
 	private MenuInicialActivity menuInicialActivity;
 	
 	public ManipDadosReceb() {
-		// TODO Auto-generated constructor stub
+
 		genericRecordable = new GenericRecordable();
 	}
 	
@@ -116,7 +116,6 @@ public class ManipDadosReceb {
 	        conHttpGetBDGenerico.execute(url);
 	        
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			Log.i("PMM", "ERRO Manip2 = " + e);
 		}
         
@@ -259,7 +258,6 @@ public class ManipDadosReceb {
 			conHttpGetBDGenerico.execute(url);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			Log.i("PMM", "Erro Manip2 = " + e);
 		}
 

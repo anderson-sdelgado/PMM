@@ -92,7 +92,6 @@ public class ConHttpPostVerGenerico extends AsyncTask<String, Void, String> {
             Log.i("ECM", "VALOR RECEBIDO --> " + result);
             ManipDadosVerif.getInstance().manipularDadosHttp(result);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             Log.i("PMM", "Erro2 = " + e);
         }
 

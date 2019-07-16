@@ -36,7 +36,6 @@ public class ApontaMMTO extends Entidade  {
 	private Long statusAponta;  //1 - Aberto; 2 - Encerrado
 
 	public ApontaMMTO() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getIdAponta() {

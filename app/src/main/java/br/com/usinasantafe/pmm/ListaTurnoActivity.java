@@ -124,7 +124,6 @@ public class ListaTurnoActivity extends ActivityGeneric {
             @Override
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
-                // TODO Auto-generated method stub
 
                 TurnoTO turnoTO = (TurnoTO) turnoList.get(position);
                 if(pmmContext.getTipoEquip() == 1) {

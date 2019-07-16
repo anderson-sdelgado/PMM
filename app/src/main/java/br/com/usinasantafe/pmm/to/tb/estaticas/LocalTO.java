@@ -16,7 +16,6 @@ public class LocalTO extends Entidade {
 	private String descLocal;
 
 	public LocalTO() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getIdLocal() {

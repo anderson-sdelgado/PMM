@@ -118,11 +118,6 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
             @Override
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
-                // TODO Auto-generated method stub
-
-//                PressaoBocalTO pressaoBocalTO = (PressaoBocalTO)  pressaoBocalList.get(position);
-//                pmmContext.getApontaFertTO().setPressaoApontaFert(pressaoBocalTO.getValorPressao());
-//                pressaoBocalList.clear();
 
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
                 pmmContext.getApontaFertTO().setPressaoApontaFert(Double.parseDouble(textView.getText().toString()));

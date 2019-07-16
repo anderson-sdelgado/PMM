@@ -105,7 +105,6 @@ public class ImplementoActivity extends ActivityGeneric {
         buttonOkImplemento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
 
                 Long impl = 0L;
                 boolean verif = true;

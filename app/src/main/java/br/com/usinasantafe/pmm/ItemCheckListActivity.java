@@ -97,7 +97,6 @@ public class ItemCheckListActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 proximaTela(1L);
 
             }
@@ -108,7 +107,6 @@ public class ItemCheckListActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 proximaTela(2L);
             }
 
@@ -118,7 +116,6 @@ public class ItemCheckListActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 proximaTela(3L);
             }
 

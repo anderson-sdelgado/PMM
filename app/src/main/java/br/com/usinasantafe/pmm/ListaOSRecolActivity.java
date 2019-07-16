@@ -41,7 +41,6 @@ public class ListaOSRecolActivity extends ActivityGeneric {
             @Override
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
-                // TODO Auto-generated method stub
 
                 pmmContext.setContRecolhimento(position);
                 Intent it = new Intent(ListaOSRecolActivity.this, RecolhimentoActivity.class);

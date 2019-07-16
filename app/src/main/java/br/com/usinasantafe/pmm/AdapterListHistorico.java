@@ -27,7 +27,7 @@ public class AdapterListHistorico extends BaseAdapter {
     private int tipoEquip;
 
     public AdapterListHistorico(Context context, List itens, int tipoEquip) {
-        // TODO Auto-generated constructor stub
+
         this.itens = itens;
         layoutInflater = LayoutInflater.from(context);
         this.tipoEquip = tipoEquip;

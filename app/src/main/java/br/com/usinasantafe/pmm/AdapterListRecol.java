@@ -21,7 +21,7 @@ public class AdapterListRecol extends BaseAdapter {
     private LayoutInflater layoutInflater;
 
     public AdapterListRecol(Context context, List itens) {
-        // TODO Auto-generated constructor stub
+
         this.itens = itens;
         layoutInflater = LayoutInflater.from(context);
     }

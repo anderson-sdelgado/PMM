@@ -20,7 +20,7 @@ public class AdapterListRend extends BaseAdapter {
     private LayoutInflater layoutInflater;
 
     public AdapterListRend(Context context, List itens) {
-        // TODO Auto-generated constructor stub
+
         this.itens = itens;
         layoutInflater = LayoutInflater.from(context);
     }

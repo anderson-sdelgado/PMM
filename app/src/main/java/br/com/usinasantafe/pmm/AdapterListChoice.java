@@ -18,7 +18,7 @@ public class AdapterListChoice extends BaseAdapter {
     private Context context;
 
     public AdapterListChoice(Context context, ArrayList<ViewHolderChoice> itens) {
-        // TODO Auto-generated constructor stub
+
         this.itens = itens;
         this.context = context;
     }

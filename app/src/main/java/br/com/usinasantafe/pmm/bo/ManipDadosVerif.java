@@ -240,7 +240,6 @@ public class ManipDadosVerif {
             }
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             Log.i("PMM", "Erro Manip atualizar = " + e);
         }
 
@@ -377,7 +376,6 @@ public class ManipDadosVerif {
             }
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             Log.i("PMM", "Erro Manip atualizar = " + e);
         }
 
@@ -477,7 +475,6 @@ public class ManipDadosVerif {
                     alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            // TODO Auto-generated method stub
 
                         }
                     });
@@ -567,7 +564,6 @@ public class ManipDadosVerif {
             }
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             Log.i("PMM", "Erro Manip atualizar = " + e);
         }
 
@@ -666,7 +662,6 @@ public class ManipDadosVerif {
             }
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             Log.i("PMM", "Erro Manip atualizar = " + e);
         }
 
@@ -828,7 +823,6 @@ public class ManipDadosVerif {
             }
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             Log.i("PMM", "Erro Manip atualizar = " + e);
         }
 
@@ -896,7 +890,6 @@ public class ManipDadosVerif {
                     alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            // TODO Auto-generated method stub
 
                         }
                     });
@@ -992,7 +985,6 @@ public class ManipDadosVerif {
             }
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             Log.i("PMM", "Erro Manip atualizar = " + e);
         }
 

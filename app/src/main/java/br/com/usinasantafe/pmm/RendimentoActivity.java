@@ -65,7 +65,6 @@ public class RendimentoActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                // TODO Auto-generated method stub
                 if(pmmContext.getVerPosTela() == 4){
 
                     if (!editTextPadrao.getText().toString().equals("")) {

@@ -138,10 +138,6 @@ public class ListaVelocFertActivity extends ActivityGeneric {
             @Override
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
-                // TODO Auto-generated method stub
-
-//                PressaoBocalTO pressaoBocalTO = (PressaoBocalTO)  velocList.get(position);
-//                pmmContext.getApontaFertTO().setVelocApontaFert(pressaoBocalTO.getValorVeloc());
 
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
                 pmmContext.getApontaFertTO().setVelocApontaFert(Long.parseLong(textView.getText().toString()));

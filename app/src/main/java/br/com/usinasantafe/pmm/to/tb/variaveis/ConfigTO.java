@@ -38,7 +38,6 @@ public class ConfigTO extends Entidade {
 	private Long statusConConfig;  //0 - Offline; 1 - Online
 
 	public ConfigTO() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getEquipConfig() {

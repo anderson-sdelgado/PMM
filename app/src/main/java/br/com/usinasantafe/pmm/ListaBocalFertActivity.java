@@ -109,7 +109,6 @@ public class ListaBocalFertActivity extends ActivityGeneric {
             @Override
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
-                // TODO Auto-generated method stub
 
                 BocalTO bocalTO = (BocalTO)  bocalList.get(position);
                 pmmContext.getApontaFertTO().setBocalApontaFert(bocalTO.getIdBocal());

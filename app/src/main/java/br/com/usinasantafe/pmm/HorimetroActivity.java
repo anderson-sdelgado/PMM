@@ -46,7 +46,7 @@ public class HorimetroActivity extends ActivityGeneric {
         buttonOkHorimetro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
+
                 if (!editTextPadrao.getText().toString().equals("")) {
 
                     String horimetro = editTextPadrao.getText().toString();
@@ -137,7 +137,7 @@ public class HorimetroActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
+
                 if (editTextPadrao.getText().toString().length() > 0) {
                     editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
                 }

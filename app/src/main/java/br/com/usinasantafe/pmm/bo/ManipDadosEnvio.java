@@ -39,7 +39,7 @@ public class ManipDadosEnvio {
     private boolean enviando = false;
 
     public ManipDadosEnvio() {
-        // TODO Auto-generated constructor stub
+
         urlsConexaoHttp = new UrlsConexaoHttp();
     }
 

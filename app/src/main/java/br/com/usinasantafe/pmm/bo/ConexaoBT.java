@@ -17,7 +17,6 @@ public class ConexaoBT {
 	private BluetoothAdapter btfAdapter;
 	
 	public ConexaoBT() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void conBT(){
