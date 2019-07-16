@@ -74,7 +74,7 @@
             android:name=".ImplementoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ItemChecklistActivity"
+            android:name=".ItemCheckListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ListaAtividadeActivity"

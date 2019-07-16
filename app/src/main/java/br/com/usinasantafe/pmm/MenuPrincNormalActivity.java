@@ -21,6 +21,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosReceb;
+import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
@@ -53,6 +54,10 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         configTO = new ConfigTO();
         List configList = configTO.all();
         configTO = (ConfigTO) configList.get(0);
+
+        if(configTO.getVisDadosConfig() == 1L){
+            ManipDadosVerif.getInstance().setVerTelaAtualPerda(0);
+        }
 
         equipTO = new EquipTO();
         List listEquipTO = equipTO.get("idEquip", configTO.getEquipConfig());
@@ -367,13 +372,11 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                 textViewProcessoNormal.setText("Todos os Dados já foram enviados e recebidos");
             }
 
-//            if(configTO.getVerVisGrafConfig() == 0){
-//                if(new GrafProdPlantioTO().hasElements()){
-//                    Intent it = new Intent( MenuPrincNormalActivity.this, GraficoPlantioActivity.class);
-//                    startActivity(it);
-//                    finish();
-//                }
-//            }
+            if(ManipDadosVerif.getInstance().getVerTelaAtualPerda() == 3){
+                Intent it = new Intent( MenuPrincNormalActivity.this, DadosColheitaActivity.class);
+                startActivity(it);
+                finish();
+            }
 
             customHandler.postDelayed(this, 10000);
         }

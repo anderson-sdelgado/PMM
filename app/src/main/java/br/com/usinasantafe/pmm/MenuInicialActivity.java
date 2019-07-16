@@ -28,16 +28,14 @@ import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosReceb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
-import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.MotoristaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.PneuTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.AlocaCarretelTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.AtualizaTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.AtualAplicTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
@@ -105,13 +103,13 @@ public class MenuInicialActivity extends ActivityGeneric {
                     progressBar.setMessage("Buscando Atualização...");
                     progressBar.show();
 
-                    AtualizaTO atualizaTO = new AtualizaTO();
-                    atualizaTO.setVersaoAtual(pmmContext.versaoAplic);
+                    AtualAplicTO atualAplicTO = new AtualAplicTO();
+                    atualAplicTO.setVersaoAtual(pmmContext.versaoAplic);
 
-                    atualizaTO.setIdEquipAtualizacao(equipTO.getNroEquip());
-                    atualizaTO.setIdCheckList(equipTO.getIdChecklist());
+                    atualAplicTO.setIdEquipAtualizacao(equipTO.getNroEquip());
+                    atualAplicTO.setIdCheckList(equipTO.getIdChecklist());
 
-                    ManipDadosVerif.getInstance().verAtualizacao(atualizaTO, this, progressBar);
+                    ManipDadosVerif.getInstance().verAtualizacao(atualAplicTO, this, progressBar);
                 }
 
             } else {
@@ -152,6 +150,7 @@ public class MenuInicialActivity extends ActivityGeneric {
                         ApontaMMTO apontaMMTO = new ApontaMMTO();
                         List apontaMMList = apontaMMTO.get("statusAponta", 1L);
                         if (apontaMMList.size() == 0) {
+
                             Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
                             startActivity(it);
                             finish();
@@ -176,9 +175,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
                         }
                         apontaMMList.clear();
-                        Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
-                        startActivity(it);
-                        finish();
+
                     }
 
                 } else {
@@ -199,7 +196,7 @@ public class MenuInicialActivity extends ActivityGeneric {
                     }
 
                     pmmContext.setPosChecklist(1L);
-                    Intent it = new Intent(MenuInicialActivity.this, ItemChecklistActivity.class);
+                    Intent it = new Intent(MenuInicialActivity.this, ItemCheckListActivity.class);
                     startActivity(it);
                     finish();
 
@@ -304,10 +301,10 @@ public class MenuInicialActivity extends ActivityGeneric {
                             progressBar.setMessage("Buscando Atualização...");
                             progressBar.show();
 
-                            AtualizaTO atualizaTO = new AtualizaTO();
-                            atualizaTO.setIdEquipAtualizacao(configTO.getEquipConfig());
-                            atualizaTO.setVersaoAtual(pmmContext.versaoAplic);
-                            ManipDadosVerif.getInstance().verAtualizacao(atualizaTO, MenuInicialActivity.this, progressBar);
+                            AtualAplicTO atualAplicTO = new AtualAplicTO();
+                            atualAplicTO.setIdEquipAtualizacao(configTO.getEquipConfig());
+                            atualAplicTO.setVersaoAtual(pmmContext.versaoAplic);
+                            ManipDadosVerif.getInstance().verAtualizacao(atualAplicTO, MenuInicialActivity.this, progressBar);
                         }
                     }
 
@@ -577,9 +574,6 @@ public class MenuInicialActivity extends ActivityGeneric {
             implementoTO = (ImplementoTO) implementoList.get(i);
             implementoTO.delete();
         }
-
-        AlocaCarretelTO alocaCarretelTO = new AlocaCarretelTO();
-        alocaCarretelTO.deleteAll();
 
         OSTO osto = new OSTO();
         osto.deleteAll();

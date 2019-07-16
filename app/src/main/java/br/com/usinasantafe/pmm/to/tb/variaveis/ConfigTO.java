@@ -33,7 +33,7 @@ public class ConfigTO extends Entidade {
 	@DatabaseField
 	private Double horimetroConfig;
 	@DatabaseField
-	private Long verVisGrafConfig;
+	private Long visDadosConfig; //0 - Verificar Dados; 1- Dados Recebidos; 2 - Dados Visualizados
 	@DatabaseField
 	private Long statusConConfig;  //0 - Offline; 1 - Online
 
@@ -105,12 +105,12 @@ public class ConfigTO extends Entidade {
         this.dtUltCLConfig = dtUltCLConfig;
     }
 
-	public Long getVerVisGrafConfig() {
-		return verVisGrafConfig;
+	public Long getVisDadosConfig() {
+		return visDadosConfig;
 	}
 
-	public void setVerVisGrafConfig(Long verVisGrafConfig) {
-		this.verVisGrafConfig = verVisGrafConfig;
+	public void setVisDadosConfig(Long visDadosConfig) {
+		this.visDadosConfig = visDadosConfig;
 	}
 
 	public Long getStatusConConfig() {

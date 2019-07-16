@@ -36,7 +36,7 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.RAtivParadaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipPneuTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.AtualizaTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.AtualAplicTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
@@ -58,12 +58,12 @@ public class ManipDadosVerif {
     private ProgressDialog progressDialog;
     private String dado;
     private String tipo;
-    private AtualizaTO atualizaTO;
+    private AtualAplicTO atualAplicTO;
     private MenuInicialActivity menuInicialActivity;
     private ConHttpPostVerGenerico conHttpPostVerGenerico;
     private boolean verTerm;
     private String senha;
-    private int verTelaAtual;
+    private int verTelaAtualPerda = 0;
 
     public ManipDadosVerif() {
         //genericRecordable = new GenericRecordable();
@@ -88,15 +88,15 @@ public class ManipDadosVerif {
         return classe;
     }
 
-    public void verAtualizacao(AtualizaTO atualizaTO, MenuInicialActivity menuInicialActivity, ProgressDialog progressDialog) {
+    public void verAtualizacao(AtualAplicTO atualAplicTO, MenuInicialActivity menuInicialActivity, ProgressDialog progressDialog) {
 
         urlsConexaoHttp = new UrlsConexaoHttp();
-        this.atualizaTO = atualizaTO;
+        this.atualAplicTO = atualAplicTO;
         this.progressDialog = progressDialog;
         this.tipo = "Atualiza";
         this.menuInicialActivity = menuInicialActivity;
 
-        envioAtualizacao();
+        envioAtualAplic();
 
     }
 
@@ -126,11 +126,13 @@ public class ManipDadosVerif {
 
     }
 
-    public void verDados(String dado, String tipo, Context telaAtual, Class telaProx, Class telaProx2) {
+    public void verDados(String dado, String tipo, Context telaAtual, Class telaProx1, Class telaProx2) {
 
+        verTerm = false;
+        verTelaAtualPerda = 1;
         urlsConexaoHttp = new UrlsConexaoHttp();
         this.telaAtual = telaAtual;
-        this.telaProx1 = telaProx;
+        this.telaProx1 = telaProx1;
         this.telaProx2 = telaProx2;
         this.dado = dado;
         this.tipo = tipo;
@@ -139,25 +141,30 @@ public class ManipDadosVerif {
 
     }
 
-    public void verDados(String dado, String tipo, Context telaAtual, Class telaProx, int verTelaAtual) {
+    public void verDadosPerda() {
 
+        verTerm = true;
+        verTelaAtualPerda = 2;
         urlsConexaoHttp = new UrlsConexaoHttp();
-        this.telaAtual = telaAtual;
-        this.telaProx1 = telaProx;
-        this.dado = dado;
-        this.tipo = tipo;
-        this.verTelaAtual = verTelaAtual;
+        this.tipo = "Perda";
+
+        BoletimMMTO boletimMMTO = new BoletimMMTO();
+        List boletimList = boletimMMTO.get("statusBoletim", 1L);
+        boletimMMTO = (BoletimMMTO) boletimList.get(0);
+        boletimList.clear();
+
+        this.dado = String.valueOf(boletimMMTO.getCodMotoBoletim());
 
         envioDados();
 
     }
 
-    public void envioAtualizacao() {
+    public void envioAtualAplic() {
 
         JsonArray jsonArray = new JsonArray();
 
         Gson gson = new Gson();
-        jsonArray.add(gson.toJsonTree(atualizaTO, atualizaTO.getClass()));
+        jsonArray.add(gson.toJsonTree(atualAplicTO, atualAplicTO.getClass()));
 
         JsonObject json = new JsonObject();
         json.add("dados", jsonArray);
@@ -187,18 +194,6 @@ public class ManipDadosVerif {
         conHttpPostVerGenerico.execute(url);
 
     }
-
-
-    public void verDadosGraf() {
-
-        urlsConexaoHttp = new UrlsConexaoHttp();
-        this.dado = dado;
-        this.tipo = "GrafPlantio";
-
-        envioDados();
-
-    }
-
 
     public void retornoVerifNormal(String result) {
 
@@ -256,14 +251,6 @@ public class ManipDadosVerif {
         if (conHttpPostVerGenerico.getStatus() == AsyncTask.Status.RUNNING) {
             conHttpPostVerGenerico.cancel(true);
         }
-    }
-
-    public boolean isVerTerm() {
-        return verTerm;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public void cabecCheckList(String data) {
@@ -362,7 +349,7 @@ public class ManipDadosVerif {
                 configTO.setDtServConfig("");
                 configTO.setDifDthrConfig(0L);
                 configTO.setSenhaConfig(this.senha);
-                configTO.setVerVisGrafConfig(0L);
+                configTO.setVisDadosConfig(0L);
                 configTO.insert();
                 configTO.commit();
 
@@ -937,6 +924,7 @@ public class ManipDadosVerif {
                 if (jsonArray.length() > 0) {
 
                     PerdaTO perdaTO = new PerdaTO();
+                    perdaTO.deleteAll();
 
                     for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -947,45 +935,59 @@ public class ManipDadosVerif {
 
                     }
 
-                    Intent it = new Intent(telaAtual, telaProx1);
-                    telaAtual.startActivity(it);
+                    ConfigTO configTO = new ConfigTO();
+                    List configList = configTO.all();
+                    configTO = (ConfigTO) configList.get(0);
+                    configList.clear();
+                    configTO.setVisDadosConfig(1L);
+                    configTO.update();
+
+                    if((!verTerm) && (verTelaAtualPerda == 1)){
+                        verTerm = true;
+                        verTelaAtualPerda = 3;
+                        Intent it = new Intent(telaAtual, telaProx1);
+                        telaAtual.startActivity(it);
+                    }
+
+                    verTelaAtualPerda = 3;
 
                 } else {
 
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
-                    alerta.setTitle("ATENÇÃO");
-                    alerta.setMessage("MATRICULA NÃO CONTEM DADOS OPERACIONAIS.");
+                    ConfigTO configTO = new ConfigTO();
+                    List configList = configTO.all();
+                    configTO = (ConfigTO) configList.get(0);
+                    configList.clear();
+                    configTO.setVisDadosConfig(2L);
+                    configTO.update();
 
-                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // TODO Auto-generated method stub
-                            Intent it = new Intent(telaAtual, telaProx2);
-                            telaAtual.startActivity(it);
-                        }
-                    });
-                    alerta.show();
+                    if((!verTerm) && (verTelaAtualPerda == 1)){
+                        verTerm = true;
+                        verTelaAtualPerda = 4;
+                        Intent it = new Intent(telaAtual, telaProx2);
+                        telaAtual.startActivity(it);
+                    }
+
+                    verTelaAtualPerda = 4;
 
                 }
 
             } else {
 
-                if(!verTerm) {
-                    this.progressDialog.dismiss();
+                ConfigTO configTO = new ConfigTO();
+                List configList = configTO.all();
+                configTO = (ConfigTO) configList.get(0);
+                configList.clear();
+                configTO.setVisDadosConfig(0L);
+                configTO.update();
 
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
-                    alerta.setTitle("ATENÇÃO");
-                    alerta.setMessage("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
-
-                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // TODO Auto-generated method stub
-
-                        }
-                    });
-                    alerta.show();
+                if((!verTerm) && (verTelaAtualPerda == 1)){
+                    verTerm = true;
+                    verTelaAtualPerda = 2;
+                    Intent it = new Intent(telaAtual, telaProx2);
+                    telaAtual.startActivity(it);
                 }
+
+                verTelaAtualPerda = 2;
 
             }
 
@@ -996,4 +998,19 @@ public class ManipDadosVerif {
 
     }
 
+    public boolean isVerTerm() {
+        return verTerm;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public int getVerTelaAtualPerda() {
+        return verTelaAtualPerda;
+    }
+
+    public void setVerTelaAtualPerda(int verTelaAtualPerda) {
+        this.verTelaAtualPerda = verTelaAtualPerda;
+    }
 }

@@ -16,7 +16,7 @@ import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
 
-public class ItemChecklistActivity extends ActivityGeneric {
+public class ItemCheckListActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private RespItemCheckListTO respItemCheckListTO;
@@ -148,12 +148,12 @@ public class ItemChecklistActivity extends ActivityGeneric {
             ManipDadosEnvio.getInstance().salvaCheckList();
 
 //            GRAFICO
-            Intent it = new Intent(ItemChecklistActivity.this, EsperaDadosOperActivity.class);
+            Intent it = new Intent(ItemCheckListActivity.this, EsperaDadosOperActivity.class);
             startActivity(it);
             finish();
 
 //            ANTIGO SEM GRAFICO
-//            Intent it = new Intent(ItemChecklistActivity.this, MenuPrincNormalActivity.class);
+//            Intent it = new Intent(ItemCheckListActivity.this, MenuPrincNormalActivity.class);
 //            startActivity(it);
 //            finish();
 
@@ -161,7 +161,7 @@ public class ItemChecklistActivity extends ActivityGeneric {
         else{
 
             pmmContext.setPosChecklist(pmmContext.getPosChecklist() + 1);
-            Intent it = new Intent(ItemChecklistActivity.this, ItemChecklistActivity.class);
+            Intent it = new Intent(ItemCheckListActivity.this, ItemCheckListActivity.class);
             startActivity(it);
             finish();
 
@@ -173,7 +173,7 @@ public class ItemChecklistActivity extends ActivityGeneric {
 
         if(pmmContext.getPosChecklist() > 1){
             pmmContext.setPosChecklist(pmmContext.getPosChecklist() - 1);
-            Intent it = new Intent(ItemChecklistActivity.this, ItemChecklistActivity.class);
+            Intent it = new Intent(ItemCheckListActivity.this, ItemCheckListActivity.class);
             startActivity(it);
             finish();
         }

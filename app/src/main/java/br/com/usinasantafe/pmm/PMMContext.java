@@ -41,6 +41,8 @@ public class PMMContext extends Application {
     private Long posChecklist;
     private int tipoEquip; //1 - Tipo Motomec; 2 - Tipo Fertirrigação
 
+    private boolean verVisDados;
+
     private int dia;
     private int mes;
     private int ano;
@@ -217,5 +219,13 @@ public class PMMContext extends Application {
 
     public void setMinuto(int minuto) {
         this.minuto = minuto;
+    }
+
+    public boolean isVerVisDados() {
+        return verVisDados;
+    }
+
+    public void setVerVisDados(boolean verVisDados) {
+        this.verVisDados = verVisDados;
     }
 }

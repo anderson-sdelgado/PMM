@@ -29,10 +29,10 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.AlocaCarretelTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ImplementoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.PerdaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
@@ -105,12 +105,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, RecolhimentoTO.class);
 			TableUtils.createTable(cs, TransbordoTO.class);
 			TableUtils.createTable(cs, ImplementoTO.class);
-			TableUtils.createTable(cs, AlocaCarretelTO.class);
 			TableUtils.createTable(cs, BackupApontaTO.class);
 			TableUtils.createTable(cs, BoletimPneuTO.class);
 			TableUtils.createTable(cs, ItemMedPneuTO.class);
 			TableUtils.createTable(cs, BoletimFertTO.class);
 			TableUtils.createTable(cs, ApontaFertTO.class);
+			TableUtils.createTable(cs, PerdaTO.class);
 			
 		}
 		catch(Exception e){

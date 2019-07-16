@@ -59,7 +59,7 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
                 cabecCheckListTO.setDtAtualCab("0");
                 cabecCheckListTO.insert();
 
-                Intent it = new Intent(PergAtualCheckListActivity.this, ItemChecklistActivity.class);
+                Intent it = new Intent(PergAtualCheckListActivity.this, ItemCheckListActivity.class);
                 startActivity(it);
                 finish();
 
@@ -87,7 +87,7 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
                     configList.clear();
 
                     ManipDadosVerif.getInstance().verDados(String.valueOf(configTO.getEquipConfig()), "CheckList"
-                            , PergAtualCheckListActivity.this, ItemChecklistActivity.class, progressBar);
+                            , PergAtualCheckListActivity.this, ItemCheckListActivity.class, progressBar);
 
                 } else {
 

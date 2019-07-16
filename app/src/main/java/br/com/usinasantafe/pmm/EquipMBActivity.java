@@ -185,7 +185,7 @@ public class EquipMBActivity extends ActivityGeneric {
                             cabecCheckListTO.insert();
 
                             pmmContext.setPosChecklist(1L);
-                            Intent it = new Intent(EquipMBActivity.this, ItemChecklistActivity.class);
+                            Intent it = new Intent(EquipMBActivity.this, ItemCheckListActivity.class);
                             startActivity(it);
                             finish();
 

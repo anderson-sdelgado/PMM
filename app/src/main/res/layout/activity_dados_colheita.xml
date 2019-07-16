@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".DadosColheitaActivity">
 
     <TableLayout
@@ -18,9 +22,9 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/TextViewTituloPerda"
+                android:id="@+id/textViewTituloPerda"
                 style="@style/TextViewTituloTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/texto_titulo_perda" />
@@ -31,22 +35,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:weightSum="2">
+            android:weightSum="5">
 
             <TextView
                 android:id="@+id/textViewToletePerda"
                 style="@style/TextViewVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:text="@string/texto_tolete" />
 
             <TextView
                 android:id="@+id/textViewToleteDadoPerda"
                 style="@style/TextViewValorVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:text="@string/texto_valor_tolete" />
 
         </TableRow>
@@ -55,22 +59,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:weightSum="2">
+            android:weightSum="5">
 
             <TextView
                 android:id="@+id/textViewLascaPerda"
                 style="@style/TextViewVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:text="@string/texto_lasca" />
 
             <TextView
                 android:id="@+id/textViewLascaDadoPerda"
                 style="@style/TextViewValorVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:text="@string/texto_valor_lasca" />
 
         </TableRow>
@@ -79,22 +83,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:weightSum="2">
+            android:weightSum="5">
 
             <TextView
                 android:id="@+id/textViewTocoPerda"
                 style="@style/TextViewVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:text="@string/texto_toco" />
 
             <TextView
                 android:id="@+id/textViewTocoDadoPerda"
                 style="@style/TextViewValorVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:text="@string/texto_valor_toco" />
 
         </TableRow>
@@ -103,22 +107,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:weightSum="2">
+            android:weightSum="5">
 
             <TextView
                 android:id="@+id/textViewPonteiroPerda"
                 style="@style/TextViewVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:text="@string/texto_ponteiro" />
 
             <TextView
                 android:id="@+id/textViewPonteiroDadoPerda"
                 style="@style/TextViewValorVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:text="@string/texto_valor_ponteiro" />
 
         </TableRow>
@@ -127,22 +131,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:weightSum="2">
+            android:weightSum="5">
 
             <TextView
                 android:id="@+id/textViewCanaInteiraPerda"
                 style="@style/TextViewVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:text="@string/texto_cana_inteira" />
 
             <TextView
                 android:id="@+id/textViewCanaInteiraDadoPerda"
                 style="@style/TextViewValorVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:text="@string/texto_valor_cana_inteira" />
 
         </TableRow>
@@ -151,22 +155,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:weightSum="2">
+            android:weightSum="5">
 
             <TextView
                 android:id="@+id/textViewPedacoPerda"
                 style="@style/TextViewVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:text="@string/texto_pedaco" />
 
             <TextView
                 android:id="@+id/textViewPedacoDadoPerda"
                 style="@style/TextViewValorVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:text="@string/texto_valor_pedaco" />
 
         </TableRow>
@@ -175,22 +179,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:weightSum="2">
+            android:weightSum="5">
 
             <TextView
                 android:id="@+id/textViewRepiquePerda"
                 style="@style/TextViewVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:text="@string/texto_repique" />
 
             <TextView
                 android:id="@+id/textViewRepiqueDadoPerda"
                 style="@style/TextViewValorVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:text="@string/texto_valor_repique" />
 
         </TableRow>
@@ -199,22 +203,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:weightSum="2">
+            android:weightSum="5">
 
             <TextView
                 android:id="@+id/textViewSoqueiraPerda"
                 style="@style/TextViewVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:text="@string/texto_soqueira" />
 
             <TextView
                 android:id="@+id/textViewSoqueiraDadoPerda"
                 style="@style/TextViewValorVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:text="@string/texto_valor_soqueira" />
 
         </TableRow>
@@ -223,22 +227,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:weightSum="2">
+            android:weightSum="5">
 
             <TextView
                 android:id="@+id/textViewNroSoqueiraPerda"
                 style="@style/TextViewVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:text="@string/texto_nro_soqueira" />
 
             <TextView
                 android:id="@+id/textViewNroSoqueiraDadoPerda"
                 style="@style/TextViewValorVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:text="@string/texto_valor_nro_soqueira" />
 
         </TableRow>
@@ -247,22 +251,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:weightSum="2">
+            android:weightSum="5">
 
             <TextView
                 android:id="@+id/textViewTotalPerda"
                 style="@style/TextViewVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:text="@string/texto_total" />
 
             <TextView
                 android:id="@+id/textViewTotalDadoPerda"
                 style="@style/TextViewValorVariavelTab"
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:text="@string/texto_valor_total" />
 
         </TableRow>
@@ -274,7 +278,7 @@
 
             <Button
                 android:id="@+id/buttonSair"
-                style="@style/TextViewVariavelTab"
+                style="@style/TextViewButtonTab"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

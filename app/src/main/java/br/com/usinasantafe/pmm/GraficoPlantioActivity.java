@@ -47,7 +47,7 @@ public class GraficoPlantioActivity extends ActivityGeneric {
         ConfigTO configTO = new ConfigTO();
         List configList = configTO.all();
         configTO = (ConfigTO) configList.get(0);
-        configTO.setVerVisGrafConfig(1L);
+        configTO.setVisDadosConfig(1L);
         configTO.update();
 
         GrafProdPlantioTO grafProdPlantioTO = new GrafProdPlantioTO();

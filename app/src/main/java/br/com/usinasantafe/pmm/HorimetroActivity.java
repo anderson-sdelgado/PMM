@@ -236,7 +236,7 @@ public class HorimetroActivity extends ActivityGeneric {
                         cabecCheckListTO.setDtAtualCab("0");
                         cabecCheckListTO.insert();
 
-                        Intent it = new Intent(HorimetroActivity.this, ItemChecklistActivity.class);
+                        Intent it = new Intent(HorimetroActivity.this, ItemCheckListActivity.class);
                         startActivity(it);
                         finish();
 

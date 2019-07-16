@@ -19,6 +19,8 @@ public class PerdaTO extends Entidade {
     @DatabaseField
     private Double tocoPerda;
     @DatabaseField
+    private Double ponteiroPerda;
+    @DatabaseField
     private Double canaInteiraPerda;
     @DatabaseField
     private Double pedacoPerda;
@@ -120,5 +122,13 @@ public class PerdaTO extends Entidade {
 
     public void setTotalPerda(Double totalPerda) {
         this.totalPerda = totalPerda;
+    }
+
+    public Double getPonteiroPerda() {
+        return ponteiroPerda;
+    }
+
+    public void setPonteiroPerda(Double ponteiroPerda) {
+        this.ponteiroPerda = ponteiroPerda;
     }
 }

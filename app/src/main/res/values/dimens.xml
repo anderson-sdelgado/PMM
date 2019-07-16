@@ -9,6 +9,6 @@
     <dimen name="fonte_menu_atividade">10dp</dimen>
     <dimen name="fonte_num">22dp</dimen>
     <dimen name="fonte_num_ok_canc">18dp</dimen>
-    <dimen name="fonte_valor_tab">24dp</dimen>
-    <dimen name="fonte_titulo_tab">28dp</dimen>
+    <dimen name="fonte_valor_tab">20dp</dimen>
+    <dimen name="fonte_titulo_tab">25dp</dimen>
 </resources>

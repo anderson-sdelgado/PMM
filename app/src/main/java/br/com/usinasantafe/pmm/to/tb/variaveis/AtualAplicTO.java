@@ -6,14 +6,14 @@ import com.j256.ormlite.field.DatabaseField;
  * Created by anderson on 24/07/2017.
  */
 
-public class AtualizaTO {
+public class AtualAplicTO {
 
     private Long idEquipAtualizacao;
     private Long idCheckList;
     private String versaoAtual;
     private String versaoNova;
 
-    public AtualizaTO() {
+    public AtualAplicTO() {
     }
 
     public Long getIdEquipAtualizacao() {
