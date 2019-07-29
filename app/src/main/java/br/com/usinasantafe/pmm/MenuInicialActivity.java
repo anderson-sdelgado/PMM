@@ -146,37 +146,9 @@ public class MenuInicialActivity extends ActivityGeneric {
                         progressBar.dismiss();
                     }
 
-                    if (pmmContext.getTipoEquip() == 1) {
-                        ApontaMMTO apontaMMTO = new ApontaMMTO();
-                        List apontaMMList = apontaMMTO.get("statusAponta", 1L);
-                        if (apontaMMList.size() == 0) {
-
-                            Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
-                            startActivity(it);
-                            finish();
-                        } else {
-                            Intent it = new Intent(MenuInicialActivity.this, ListaPosPneuActivity.class);
-                            startActivity(it);
-                            finish();
-
-                        }
-                        apontaMMList.clear();
-                    } else {
-                        ApontaMMTO apontaMMTO = new ApontaMMTO();
-                        List apontaMMList = apontaMMTO.get("statusAponta", 1L);
-                        if (apontaMMList.size() == 0) {
-                            Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
-                            startActivity(it);
-                            finish();
-                        } else {
-                            Intent it = new Intent(MenuInicialActivity.this, ListaPosPneuActivity.class);
-                            startActivity(it);
-                            finish();
-
-                        }
-                        apontaMMList.clear();
-
-                    }
+                    Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
+                    startActivity(it);
+                    finish();
 
                 } else {
 
@@ -580,23 +552,8 @@ public class MenuInicialActivity extends ActivityGeneric {
         ROSAtivTO rosAtivTO = new ROSAtivTO();
         rosAtivTO.deleteAll();
 
-        PneuTO pneuTO = new PneuTO();
-        pneuTO.deleteAll();
-
         BackupApontaTO backupApontaTO = new BackupApontaTO();
         backupApontaTO.deleteAll();
-
-//        GrafProdPlantioTO grafProdPlantioTO = new GrafProdPlantioTO();
-//        grafProdPlantioTO.deleteAll();
-//
-//        GrafDispEquipPlantioTO grafDispEquipPlantioTO = new GrafDispEquipPlantioTO();
-//        grafDispEquipPlantioTO.deleteAll();
-//
-//        GrafPlanRealPlantioTO grafPlanRealPlantioTO = new GrafPlanRealPlantioTO();
-//        grafPlanRealPlantioTO.deleteAll();
-//
-//        GrafQualPlantioTO grafQualPlantioTO = new GrafQualPlantioTO();
-//        grafQualPlantioTO.deleteAll();
 
     }
 

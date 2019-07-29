@@ -310,7 +310,7 @@ public class ImplementoActivity extends ActivityGeneric {
                             && (!configTO.getDtUltCLConfig().equals(Tempo.getInstance().dataSHora()))))) {
 
                 pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true, getLatitude(), getLongitude());
+                ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true, 0D, 0D);
                 ManipDadosEnvio.getInstance().envioDadosPrinc();
 
                 ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
@@ -343,32 +343,21 @@ public class ImplementoActivity extends ActivityGeneric {
                 configTO.update();
                 configTO.commit();
                 pmmContext.getBoletimMMTO().setStatusBoletim(1L);
-                ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false, getLatitude(), getLongitude());
+                ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false, 0D, 0D);
                 ManipDadosEnvio.getInstance().envioDadosPrinc();
 
-//              GRAFICO
                 Intent it = new Intent(ImplementoActivity.this, EsperaDadosOperActivity.class);
                 startActivity(it);
                 finish();
 
-//                ANTIGO SEM GRAFICO
-//                Intent it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
-//                startActivity(it);
-//                finish();
 
             }
 
         } else {
 
-//          GRAFICO
             Intent it = new Intent(ImplementoActivity.this, EsperaDadosOperActivity.class);
             startActivity(it);
             finish();
-
-//            ANTIGO SEM GRAFICO
-//            Intent it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
-//            startActivity(it);
-//            finish();
 
         }
 

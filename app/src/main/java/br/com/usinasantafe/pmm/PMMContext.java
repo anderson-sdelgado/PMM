@@ -31,12 +31,12 @@ public class PMMContext extends Application {
     // 19 - Trocar de implemento
     private int contImplemento;
     private String textoHorimetro;
-    public static String versaoAplic = "2";
+    public static String versaoAplic = "2.00";
     private int contRendimento;
     private int posRendimento;
     private int contRecolhimento;
     private int posRecolhimento;
-    private int contDTHR;
+    private int contDataHora;
     private String verAtualCL;
     private Long posChecklist;
     private int tipoEquip; //1 - Tipo Motomec; 2 - Tipo Fertirrigação
@@ -172,12 +172,12 @@ public class PMMContext extends Application {
         this.tipoEquip = tipoEquip;
     }
 
-    public int getContDTHR() {
-        return contDTHR;
+    public int getContDataHora() {
+        return contDataHora;
     }
 
-    public void setContDTHR(int contDTHR) {
-        this.contDTHR = contDTHR;
+    public void setContDataHora(int contDataHora) {
+        this.contDataHora = contDataHora;
     }
 
     public int getDia() {

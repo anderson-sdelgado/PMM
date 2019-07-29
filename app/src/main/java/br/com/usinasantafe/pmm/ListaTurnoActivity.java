@@ -134,26 +134,26 @@ public class ListaTurnoActivity extends ActivityGeneric {
                 }
                 turnoList.clear();
 
-                if(Tempo.getInstance().verDthrServ(configTO.getDtServConfig())){
-                    configTO.setDifDthrConfig(0L);
-                    configTO.update();
+//                if(Tempo.getInstance().verDthrServ(configTO.getDtServConfig())){
+//                    configTO.setDifDthrConfig(0L);
+//                    configTO.update();
                     Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
                     startActivity(it);
                     finish();
-                }
-                else{
-                    if(configTO.getDifDthrConfig() == 0){
-                        pmmContext.setContDTHR(1);
-                        Intent it = new Intent(ListaTurnoActivity.this, MsgDataHoraActivity.class);
-                        startActivity(it);
-                        finish();
-                    }
-                    else{
-                        Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
-                        startActivity(it);
-                        finish();
-                    }
-                }
+//                }
+//                else{
+//                    if(configTO.getDifDthrConfig() == 0){
+//                        pmmContext.setContDataHora(1);
+//                        Intent it = new Intent(ListaTurnoActivity.this, MsgDataHoraActivity.class);
+//                        startActivity(it);
+//                        finish();
+//                    }
+//                    else{
+//                        Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
+//                        startActivity(it);
+//                        finish();
+//                    }
+//                }
 
             }
 

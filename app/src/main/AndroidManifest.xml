@@ -29,18 +29,6 @@
             android:name=".EquipMBActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PressaoColPneuActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".PressaoEncPneuActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".PneuActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ListaPosPneuActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".MenuInicialActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -123,9 +111,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".PergAtualCheckListActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".GraficoPlantioActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".EsperaDadosOperActivity"

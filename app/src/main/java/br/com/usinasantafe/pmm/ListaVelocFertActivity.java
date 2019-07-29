@@ -180,8 +180,8 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
                 boletimList.clear();
 
-                pmmContext.getApontaFertTO().setLatitudeApontaFert(getLatitude());
-                pmmContext.getApontaFertTO().setLongitudeApontaFert(getLongitude());
+                pmmContext.getApontaFertTO().setLatitudeApontaFert(0D);
+                pmmContext.getApontaFertTO().setLongitudeApontaFert(0D);
 
                 ConfigTO configTO = new ConfigTO();
                 List configList = configTO.all();

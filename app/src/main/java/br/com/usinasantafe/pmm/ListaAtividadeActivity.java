@@ -33,11 +33,11 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.TransbordoTO;
 
 public class ListaAtividadeActivity extends ActivityGeneric {
 
-    private ListView lista;
+    private ListView atividadeListView;
     private PMMContext pmmContext;
-    private List listAtiv;
+    private List atividadeList;
     private ProgressDialog progressBar;
-    private ArrayList lAtivExib;
+    private ArrayList atividadeArrayList;
     private Long nroOS = 0L;
     private ConfigTO configTO;
 
@@ -118,53 +118,53 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
         REquipAtivTO rEquipAtivTO = new REquipAtivTO();
         Log.i("PMM", "configTO.getEquipConfig() = " + configTO.getEquipConfig());
-        List lrea = rEquipAtivTO.get("idEquip", configTO.getEquipConfig());
+        List rEquipAtivList = rEquipAtivTO.get("idEquip", configTO.getEquipConfig());
 
         configList.clear();
 
         ArrayList<Long> rLista = new ArrayList<Long>();
 
-        for (int i = 0; i < lrea.size(); i++) {
-            rEquipAtivTO = (REquipAtivTO) lrea.get(i);
+        for (int i = 0; i < rEquipAtivList.size(); i++) {
+            rEquipAtivTO = (REquipAtivTO) rEquipAtivList.get(i);
             rLista.add(rEquipAtivTO.getIdAtiv());
         }
 
-        listAtiv = atividadeTO.in("idAtiv", rLista);
+        atividadeList = atividadeTO.in("idAtiv", rLista);
 
-        lAtivExib = new ArrayList();
+        atividadeArrayList = new ArrayList();
 
         ROSAtivTO rOSAtivTO = new ROSAtivTO();
         List lroa = rOSAtivTO.get("nroOS", nroOS);
 
         if (lroa.size() > 0) {
 
-            for (int i = 0; i < listAtiv.size(); i++) {
-                atividadeTO = (AtividadeTO) listAtiv.get(i);
+            for (int i = 0; i < atividadeList.size(); i++) {
+                atividadeTO = (AtividadeTO) atividadeList.get(i);
                 for (int j = 0; j < lroa.size(); j++) {
                     rOSAtivTO = (ROSAtivTO) lroa.get(j);
                     if (Objects.equals(atividadeTO.getIdAtiv(), rOSAtivTO.getIdAtiv())) {
-                        lAtivExib.add(atividadeTO);
+                        atividadeArrayList.add(atividadeTO);
                     }
                 }
             }
 
         } else {
-            for (int i = 0; i < listAtiv.size(); i++) {
-                atividadeTO = (AtividadeTO) listAtiv.get(i);
-                lAtivExib.add(atividadeTO);
+            for (int i = 0; i < atividadeList.size(); i++) {
+                atividadeTO = (AtividadeTO) atividadeList.get(i);
+                atividadeArrayList.add(atividadeTO);
             }
         }
 
-        for (int i = 0; i < lAtivExib.size(); i++) {
-            atividadeTO = (AtividadeTO) lAtivExib.get(i);
+        for (int i = 0; i < atividadeArrayList.size(); i++) {
+            atividadeTO = (AtividadeTO) atividadeArrayList.get(i);
             itens.add(atividadeTO.getCodAtiv() + " - " + atividadeTO.getDescrAtiv());
         }
 
         AdapterList adapterList = new AdapterList(this, itens);
-        lista = (ListView) findViewById(R.id.listAtividade);
-        lista.setAdapter(adapterList);
+        atividadeListView = (ListView) findViewById(R.id.listAtividade);
+        atividadeListView.setAdapter(adapterList);
 
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        atividadeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> l, View v, int position,
@@ -172,7 +172,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 // TODO Auto-generated method stub
 
                 AtividadeTO atividadeTO = new AtividadeTO();
-                atividadeTO = (AtividadeTO) lAtivExib.get(position);
+                atividadeTO = (AtividadeTO) atividadeArrayList.get(position);
 
                 if (pmmContext.getVerPosTela() == 1) {
 
@@ -190,8 +190,8 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                     startActivity(it);
                     finish();
 
-                    listAtiv.clear();
-                    lAtivExib.clear();
+                    atividadeList.clear();
+                    atividadeArrayList.clear();
 
                 } else if ((pmmContext.getVerPosTela() == 2)) {
 
@@ -236,8 +236,8 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                             if(pmmContext.getTipoEquip() == 1) {
 
-                                pmmContext.getApontaMMTO().setLatitudeAponta(getLatitude());
-                                pmmContext.getApontaMMTO().setLongitudeAponta(getLongitude());
+                                pmmContext.getApontaMMTO().setLatitudeAponta(0D);
+                                pmmContext.getApontaMMTO().setLongitudeAponta(0D);
                                 ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 2L);
 
                                 if (atividadeTO.getFlagRendimento() == 1) {
@@ -297,8 +297,8 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                             }
 
-                            listAtiv.clear();
-                            lAtivExib.clear();
+                            atividadeList.clear();
+                            atividadeArrayList.clear();
 
                         } else {
 
@@ -306,8 +306,8 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                             startActivity(it);
                             finish();
 
-                            listAtiv.clear();
-                            lAtivExib.clear();
+                            atividadeList.clear();
+                            atividadeArrayList.clear();
 
                         }
 
@@ -327,8 +327,8 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                     startActivity(it);
                     finish();
 
-                    listAtiv.clear();
-                    lAtivExib.clear();
+                    atividadeList.clear();
+                    atividadeArrayList.clear();
 
                 }
 

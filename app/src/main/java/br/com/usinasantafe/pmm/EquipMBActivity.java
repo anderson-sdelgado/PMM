@@ -161,7 +161,7 @@ public class EquipMBActivity extends ActivityGeneric {
                                 ((configTO.getUltTurnoCLConfig() != turnoTO.getIdTurno())
                                         || ((configTO.getUltTurnoCLConfig() == turnoTO.getIdTurno()) && (!configTO.getDtUltCLConfig().equals(Tempo.getInstance().dataSHora()))))) {
 
-                            ManipDadosEnvio.getInstance().salvaBoletimAbertoFert(pmmContext.getBoletimFertTO(), true, getLatitude(), getLongitude());
+                            ManipDadosEnvio.getInstance().salvaBoletimAbertoFert(pmmContext.getBoletimFertTO(), true, 0D, 0D);
                             ManipDadosEnvio.getInstance().envioDadosPrinc();
 
                             ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
@@ -195,7 +195,7 @@ public class EquipMBActivity extends ActivityGeneric {
                             configTO.update();
                             configTO.commit();
 
-                            ManipDadosEnvio.getInstance().salvaBoletimAbertoFert(pmmContext.getBoletimFertTO(), false, getLatitude(), getLongitude());
+                            ManipDadosEnvio.getInstance().salvaBoletimAbertoFert(pmmContext.getBoletimFertTO(), false, 0D, 0D);
                             ManipDadosEnvio.getInstance().envioDadosPrinc();
 
 //                            GRAFICO

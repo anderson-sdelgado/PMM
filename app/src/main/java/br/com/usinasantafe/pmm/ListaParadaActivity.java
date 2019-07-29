@@ -29,13 +29,13 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 
 public class ListaParadaActivity extends ActivityGeneric {
 
-    private ListView lista;
+    private ListView paradaListView;
     private ConfigTO configTO;
     private PMMContext pmmContext;
-    private List listParada;
+    private List paradaList;
     private ProgressDialog progressBar;
     private ArrayAdapter<String> adapter;
-    private String textParada;
+    private String paradaString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,18 +72,18 @@ public class ListaParadaActivity extends ActivityGeneric {
         rAtivParadaList.clear();
 
         ParadaTO paradaTO = new ParadaTO();
-        listParada = paradaTO.inAndOrderBy("idParada", rLista, "codParada", true);
+        paradaList = paradaTO.inAndOrderBy("idParada", rLista, "codParada", true);
 
-        String itens[] = new String[listParada.size()];
+        String itens[] = new String[paradaList.size()];
 
-        for (int i = 0; i < listParada.size(); i++) {
-            paradaTO = (ParadaTO) listParada.get(i);
+        for (int i = 0; i < paradaList.size(); i++) {
+            paradaTO = (ParadaTO) paradaList.get(i);
             itens[i] = paradaTO.getCodParada() + " - " + paradaTO.getDescrParada();
         }
 
         adapter = new ArrayAdapter<String>(this, R.layout.activity_item_lista, R.id.textViewItemList, itens);
-        lista = (ListView) findViewById(R.id.listViewMotParada);
-        lista.setAdapter(adapter);
+        paradaListView = (ListView) findViewById(R.id.listViewMotParada);
+        paradaListView.setAdapter(adapter);
 
         editPesqListParada.addTextChangedListener(new TextWatcher() {
 
@@ -158,19 +158,19 @@ public class ListaParadaActivity extends ActivityGeneric {
             }
         });
 
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        paradaListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
-                textParada = textView.getText().toString();
+                paradaString = textView.getText().toString();
 
                 AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
                 alerta.setTitle("ATENÇÃO");
 
-                String label = "DESEJA REALMENTE REALIZAR A PARADA '" + textParada + "' ?";
+                String label = "DESEJA REALMENTE REALIZAR A PARADA '" + paradaString + "' ?";
 
                 alerta.setMessage(label);
 
@@ -179,7 +179,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                     public void onClick(DialogInterface dialog, int which) {
 
                         ParadaTO paradaTO = new ParadaTO();
-                        List paradaList = paradaTO.get("codParada", textParada.substring(0, textParada.indexOf('-')).trim());
+                        List paradaList = paradaTO.get("codParada", paradaString.substring(0, paradaString.indexOf('-')).trim());
                         paradaTO = (ParadaTO) paradaList.get(0);
 
                         if(pmmContext.getTipoEquip() == 1) {
@@ -211,40 +211,28 @@ public class ListaParadaActivity extends ActivityGeneric {
                         } else {
 
                             if(pmmContext.getTipoEquip() == 1) {
-                                pmmContext.getApontaMMTO().setLatitudeAponta(getLatitude());
-                                pmmContext.getApontaMMTO().setLongitudeAponta(getLongitude());
+                                pmmContext.getApontaMMTO().setLatitudeAponta(0D);
+                                pmmContext.getApontaMMTO().setLongitudeAponta(0D);
                             }
                             else{
-                                pmmContext.getApontaFertTO().setLatitudeApontaFert(getLatitude());
-                                pmmContext.getApontaFertTO().setLongitudeApontaFert(getLongitude());
+                                pmmContext.getApontaFertTO().setLatitudeApontaFert(0D);
+                                pmmContext.getApontaFertTO().setLongitudeApontaFert(0D);
                             }
 
                             configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
                             configTO.update();
 
-                            if (paradaTO.getFlagCalibragem() == 0L) {
-                                if(pmmContext.getTipoEquip() == 1) {
-                                    ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 2L);
-                                }
-                                else{
-                                    ManipDadosEnvio.getInstance().salvaApontaFert(pmmContext.getApontaFertTO(), 2L);
-                                }
-                                Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
-                                startActivity(it);
-                                finish();
-                            } else {
-                                if(pmmContext.getTipoEquip() == 1) {
-                                    ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 1L);
-                                }
-                                else{
-                                    ManipDadosEnvio.getInstance().salvaApontaFert(pmmContext.getApontaFertTO(), 1L);
-                                }
-                                Intent it = new Intent(ListaParadaActivity.this, ListaPosPneuActivity.class);
-                                startActivity(it);
-                                finish();
+                            if(pmmContext.getTipoEquip() == 1) {
+                                ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 2L);
+                            }
+                            else{
+                                ManipDadosEnvio.getInstance().salvaApontaFert(pmmContext.getApontaFertTO(), 2L);
                             }
 
-                            listParada.clear();
+                            Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
+                            startActivity(it);
+                            finish();
+
                             paradaList.clear();
 
                         }

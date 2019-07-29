@@ -25,29 +25,29 @@ public class DataHoraActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonOkDTHR = (Button) findViewById(R.id.buttonOkPadrao);
-        Button buttonCancDTHR = (Button) findViewById(R.id.buttonCancPadrao);
-        TextView textViewDTHR = (TextView) findViewById(R.id.textViewPadrao);
+        Button buttonOkDataHora = (Button) findViewById(R.id.buttonOkPadrao);
+        Button buttonCancDataHora = (Button) findViewById(R.id.buttonCancPadrao);
+        TextView textViewDataHora = (TextView) findViewById(R.id.textViewPadrao);
 
-        switch (pmmContext.getContDTHR()) {
+        switch (pmmContext.getContDataHora()) {
             case 1:
-                textViewDTHR.setText("DIA:");
+                textViewDataHora.setText("DIA:");
                 break;
             case 2:
-                textViewDTHR.setText("MÊS:");
+                textViewDataHora.setText("MÊS:");
                 break;
             case 3:
-                textViewDTHR.setText("ANO:");
+                textViewDataHora.setText("ANO:");
                 break;
             case 4:
-                textViewDTHR.setText("HORA:");
+                textViewDataHora.setText("HORA:");
                 break;
             case 5:
-                textViewDTHR.setText("MINUTOS:");
+                textViewDataHora.setText("MINUTOS:");
                 break;
         }
 
-        buttonOkDTHR.setOnClickListener(new View.OnClickListener() {
+        buttonOkDataHora.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -57,11 +57,11 @@ public class DataHoraActivity extends ActivityGeneric {
                     int valor = Integer.parseInt(editTextPadrao.getText().toString());
 
                     Intent it;
-                    switch (pmmContext.getContDTHR()) {
+                    switch (pmmContext.getContDataHora()) {
                         case 1:
                             if((valor <= 31)){
                                 pmmContext.setDia(valor);
-                                pmmContext.setContDTHR(pmmContext.getContDTHR() + 1);
+                                pmmContext.setContDataHora(pmmContext.getContDataHora() + 1);
                                 it = new Intent(DataHoraActivity.this, DataHoraActivity.class);
                                 startActivity(it);
                                 finish();
@@ -82,7 +82,7 @@ public class DataHoraActivity extends ActivityGeneric {
                         case 2:
                             if((valor <= 12)){
                                 pmmContext.setMes(valor);
-                                pmmContext.setContDTHR(pmmContext.getContDTHR() + 1);
+                                pmmContext.setContDataHora(pmmContext.getContDataHora() + 1);
                                 it = new Intent(DataHoraActivity.this, DataHoraActivity.class);
                                 startActivity(it);
                                 finish();
@@ -103,7 +103,7 @@ public class DataHoraActivity extends ActivityGeneric {
                         case 3:
                             if((valor >= 2019) && (valor <= 3000)){
                                 pmmContext.setAno(valor);
-                                pmmContext.setContDTHR(pmmContext.getContDTHR() + 1);
+                                pmmContext.setContDataHora(pmmContext.getContDataHora() + 1);
                                 it = new Intent(DataHoraActivity.this, DataHoraActivity.class);
                                 startActivity(it);
                                 finish();
@@ -145,7 +145,7 @@ public class DataHoraActivity extends ActivityGeneric {
 
                             if((valor >= horaInicial) && (valor <= horaFinal)){
                                 pmmContext.setHora(valor);
-                                pmmContext.setContDTHR(pmmContext.getContDTHR() + 1);
+                                pmmContext.setContDataHora(pmmContext.getContDataHora() + 1);
                                 it = new Intent(DataHoraActivity.this, DataHoraActivity.class);
                                 startActivity(it);
                                 finish();
@@ -208,7 +208,7 @@ public class DataHoraActivity extends ActivityGeneric {
             }
         });
 
-        buttonCancDTHR.setOnClickListener(new View.OnClickListener() {
+        buttonCancDataHora.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -222,8 +222,8 @@ public class DataHoraActivity extends ActivityGeneric {
     }
 
     public void onBackPressed()  {
-        if(pmmContext.getContDTHR() > 1){
-            pmmContext.setContDTHR(pmmContext.getContDTHR() - 1);
+        if(pmmContext.getContDataHora() > 1){
+            pmmContext.setContDataHora(pmmContext.getContDataHora() - 1);
             Intent it = new Intent(DataHoraActivity.this, DataHoraActivity.class);
             startActivity(it);
             finish();

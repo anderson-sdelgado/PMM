@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -150,22 +149,24 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
                 String text = textView.getText().toString();
 
-                boolean verDthr = false;
-                if (Tempo.getInstance().verDthrServ(configTO.getDtServConfig())) {
-                    configTO.setDifDthrConfig(0L);
-                    configTO.update();
-                    verDthr = true;
-                } else {
-                    if (configTO.getDifDthrConfig() == 0) {
-                        pmmContext.setContDTHR(1);
-                        pmmContext.setVerPosTela(5);
-                        Intent it = new Intent(MenuPrincNormalActivity.this, MsgDataHoraActivity.class);
-                        startActivity(it);
-                        finish();
-                    } else {
-                        verDthr = true;
-                    }
-                }
+                boolean verDthr = true;
+
+//                boolean verDthr = false;
+//                if (Tempo.getInstance().verDthrServ(configTO.getDtServConfig())) {
+//                    configTO.setDifDthrConfig(0L);
+//                    configTO.update();
+//                    verDthr = true;
+//                } else {
+//                    if (configTO.getDifDthrConfig() == 0) {
+//                        pmmContext.setContDataHora(1);
+//                        pmmContext.setVerPosTela(5);
+//                        Intent it = new Intent(MenuPrincNormalActivity.this, MsgDataHoraActivity.class);
+//                        startActivity(it);
+//                        finish();
+//                    } else {
+//                        verDthr = true;
+//                    }
+//                }
 
                 if (verDthr){
                     if (text.equals("TRABALHANDO")) {
@@ -404,8 +405,8 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
         apontaMMTO.setParadaAponta(paradaTO.getIdParada());
         apontaMMTO.setTransbordoAponta(backupApontaTO.getTransbAponta());
-        apontaMMTO.setLatitudeAponta(getLatitude());
-        apontaMMTO.setLongitudeAponta(getLongitude());
+        apontaMMTO.setLatitudeAponta(0D);
+        apontaMMTO.setLongitudeAponta(0D);
         ManipDadosEnvio.getInstance().salvaApontaMM(apontaMMTO, 2L);
 
     }
