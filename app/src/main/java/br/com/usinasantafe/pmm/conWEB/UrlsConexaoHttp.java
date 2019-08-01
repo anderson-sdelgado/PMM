@@ -4,8 +4,8 @@ public class UrlsConexaoHttp {
 
     private int tipoEnvio = 1;
 
-    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmmdev/";
-    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmmdev/";
+    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmm/";
+    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmm/";
 
     //public static String localPSTVariavel = "br.com.usinasantafe.pmm.to.tb.variaveis.";
     public static String localPSTEstatica = "br.com.usinasantafe.pmm.to.tb.estaticas.";

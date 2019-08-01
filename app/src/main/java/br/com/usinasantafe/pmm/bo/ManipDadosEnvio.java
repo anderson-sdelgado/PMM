@@ -20,11 +20,9 @@ import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ImplementoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ItemMedPneuTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
@@ -1007,9 +1005,19 @@ public class ManipDadosEnvio {
         return  configTO.get("visDadosConfig", 0L);
     }
 
-    public List boletinsAberto(){
+    public boolean boletinsAberto(){
+
+        boolean ver = false;
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        return boletimMMTO.get("statusBoletim", 1L);
+        if(boletimMMTO.get("statusBoletim", 1L).size() > 0){
+            ver = true;
+        }
+        BoletimFertTO boletimFertTO = new BoletimFertTO();
+        if(boletimFertTO.get("statusBolFert", 1L).size() > 0){
+            ver = true;
+        }
+        return ver;
+
     }
 
     //////////////////////VERIFICAÇÃO DE DADOS///////////////////////////
@@ -1039,7 +1047,7 @@ public class ManipDadosEnvio {
     public Boolean verifApontaFert() { return apontamentosFert().size() > 0; }
 
     public Boolean verifDadosPerda() {
-        if((dadosPerda().size() > 0) && (boletinsAberto().size() > 0)){
+        if((dadosPerda().size() > 0) && (boletinsAberto())){
             return true;
         }
         else{

@@ -77,7 +77,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         itens.add("PARADO");
 
         AtividadeTO atividadeTO = new AtividadeTO();
-        List lAtiv;
+        List ativList;
 
         BackupApontaTO backupApontaTO = new BackupApontaTO();
         List bkpApontaList = backupApontaTO.all();
@@ -92,14 +92,14 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
             equip = boletimMMTO.getCodEquipBoletim();
 
             if (bkpApontaList.size() == 0) {
-                lAtiv = atividadeTO.get("idAtiv", boletimMMTO.getAtivPrincBoletim());
+                ativList = atividadeTO.get("idAtiv", boletimMMTO.getAtivPrincBoletim());
             } else {
                 backupApontaTO = (BackupApontaTO) bkpApontaList.get(bkpApontaList.size() - 1);
-                lAtiv = atividadeTO.get("idAtiv", backupApontaTO.getAtividadeAponta());
+                ativList = atividadeTO.get("idAtiv", backupApontaTO.getAtividadeAponta());
             }
 
-            atividadeTO = (AtividadeTO) lAtiv.get(0);
-            lAtiv.clear();
+            atividadeTO = (AtividadeTO) ativList.get(0);
+            ativList.clear();
 
             if (atividadeTO.getFlagTransbordo() == 1) {
                 itens.add("NOVO TRANSBORDO");

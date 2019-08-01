@@ -198,15 +198,9 @@ public class EquipMBActivity extends ActivityGeneric {
                             ManipDadosEnvio.getInstance().salvaBoletimAbertoFert(pmmContext.getBoletimFertTO(), false, 0D, 0D);
                             ManipDadosEnvio.getInstance().envioDadosPrinc();
 
-//                            GRAFICO
                             Intent it = new Intent(EquipMBActivity.this, EsperaDadosOperActivity.class);
                             startActivity(it);
                             finish();
-
-//                            ANTIGO SEM GRAFICO
-//                            Intent it = new Intent(EquipMBActivity.this, MenuPrincNormalActivity.class);
-//                            startActivity(it);
-//                            finish();
 
                         }
 

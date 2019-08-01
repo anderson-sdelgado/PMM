@@ -24,19 +24,14 @@ import br.com.usinasantafe.pmm.conWEB.UrlsConexaoHttp;
 import br.com.usinasantafe.pmm.pst.GenericRecordable;
 import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.GrafDispEquipPlantioTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.GrafPlanRealPlantioTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.GrafProdPlantioTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.GrafQualPlantioTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.PneuTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.RAtivParadaTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.REquipPneuTO;
 import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.AtualAplicTO;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
@@ -148,12 +143,25 @@ public class ManipDadosVerif {
         urlsConexaoHttp = new UrlsConexaoHttp();
         this.tipo = "Perda";
 
-        BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List boletimList = boletimMMTO.get("statusBoletim", 1L);
-        boletimMMTO = (BoletimMMTO) boletimList.get(0);
-        boletimList.clear();
+        Long equip = 0L;
 
-        this.dado = String.valueOf(boletimMMTO.getCodMotoBoletim());
+        BoletimMMTO boletimMMTO = new BoletimMMTO();
+        List boletimMMList = boletimMMTO.get("statusBoletim", 1L);
+        if(boletimMMList.size() > 0){
+            boletimMMTO = (BoletimMMTO) boletimMMList.get(0);
+            equip = boletimMMTO.getCodEquipBoletim();
+            boletimMMList.clear();
+        }
+
+        BoletimFertTO boletimFertTO = new BoletimFertTO();
+        List boletimFertList = boletimFertTO.get("statusBolFert", 1L);
+        if(boletimFertList.size() > 0){
+            boletimFertTO = (BoletimFertTO) boletimFertList.get(0);
+            equip = boletimFertTO.getCodEquipBolFert();
+            boletimFertList.clear();
+        }
+
+        this.dado = String.valueOf(equip);
 
         envioDados();
 
@@ -208,9 +216,7 @@ public class ManipDadosVerif {
             } else if (this.tipo.equals("AtualParada")) {
                 recDadosParada(result);
             } else if (this.tipo.equals("Atualiza")) {
-
                 String verAtualizacao = result.trim();
-
                 if (verAtualizacao.equals("S")) {
                     AtualizarAplicativo atualizarAplicativo = new AtualizarAplicativo();
                     atualizarAplicativo.setContext(this.menuInicialActivity);
@@ -218,7 +224,6 @@ public class ManipDadosVerif {
                 } else {
                     this.menuInicialActivity.startTimer(verAtualizacao);
                 }
-
             } else if (this.tipo.equals("Operador")) {
                 recDadosGenerico(result, "MotoristaTO");
             } else if (this.tipo.equals("Turno")) {
@@ -227,11 +232,7 @@ public class ManipDadosVerif {
                 recDadosGenerico(result, "EquipSegTO");
             } else if (this.tipo.equals("CheckList")) {
                 recDadosCheckList(result);
-            } else if (this.tipo.equals("GrafPlantio")) {
-                recDadosGrafico(result);
-            } else if (this.tipo.equals("Pneu")) {
-                recDadosPneu(result);
-            } else if (this.tipo.equals("Bocal")) {
+            }else if (this.tipo.equals("Bocal")) {
                 recDadosGenerico(result, "BocalTO");
             } else if (this.tipo.equals("PressaoBocal")) {
                 recDadosGenerico(result, "PressaoBocalTO");
@@ -254,12 +255,32 @@ public class ManipDadosVerif {
 
     public void cabecCheckList(String data) {
 
+        Long moto = 0L;
+        Long turno = 0L;
+        Long equip = 0L;
+
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List boletimList = boletimMMTO.get("statusBoletim", 1L);
-        boletimMMTO = (BoletimMMTO) boletimList.get(0);
+        List boletimMMList = boletimMMTO.get("statusBoletim", 1L);
+        if(boletimMMList.size() > 0){
+            boletimMMTO = (BoletimMMTO) boletimMMList.get(0);
+            equip = boletimMMTO.getCodEquipBoletim();
+            moto = boletimMMTO.getCodMotoBoletim();
+            turno = boletimMMTO.getCodTurnoBoletim();
+            boletimMMList.clear();
+        }
+
+        BoletimFertTO boletimFertTO = new BoletimFertTO();
+        List boletimFertList = boletimFertTO.get("statusBolFert", 1L);
+        if(boletimFertList.size() > 0){
+            boletimFertTO = (BoletimFertTO) boletimFertList.get(0);
+            equip = boletimFertTO.getCodEquipBolFert();
+            moto = boletimFertTO.getCodMotoBolFert();
+            turno = boletimFertTO.getCodTurnoBolFert();
+            boletimFertList.clear();
+        }
 
         EquipTO equipTO = new EquipTO();
-        List equipList = equipTO.get("idEquip", boletimMMTO.getCodEquipBoletim());
+        List equipList = equipTO.get("idEquip", equip);
         equipTO = (EquipTO) equipList.get(0);
         equipList.clear();
 
@@ -271,8 +292,8 @@ public class ManipDadosVerif {
         CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
         cabecCheckListTO.setDtCab(Tempo.getInstance().datahora());
         cabecCheckListTO.setEquipCab(equipTO.getNroEquip());
-        cabecCheckListTO.setFuncCab(boletimMMTO.getCodMotoBoletim());
-        cabecCheckListTO.setTurnoCab(boletimMMTO.getCodTurnoBoletim());
+        cabecCheckListTO.setFuncCab(moto);
+        cabecCheckListTO.setTurnoCab(turno);
         cabecCheckListTO.setQtdeItemCab(qtde);
         cabecCheckListTO.setStatusCab(1L);
         cabecCheckListTO.setDtAtualCab(data);
@@ -285,10 +306,8 @@ public class ManipDadosVerif {
         try {
 
             int pos1 = result.indexOf("#") + 1;
-            int pos2 = result.indexOf("|") + 1;
             String objPrinc = result.substring(0, (pos1 - 1));
-            String objSeg = result.substring(pos1, (pos2 - 1));
-            String objTerc = result.substring(pos2);
+            String objSeg = result.substring(pos1);
 
             JSONObject jObj = new JSONObject(objPrinc);
             JSONArray jsonArray = jObj.getJSONArray("dados");
@@ -319,21 +338,6 @@ public class ManipDadosVerif {
                     Gson gson = new Gson();
                     REquipAtivTO rEquipAtiv = gson.fromJson(objeto.toString(), REquipAtivTO.class);
                     rEquipAtiv.insert();
-
-                }
-
-                jObj = new JSONObject(objTerc);
-                jsonArray = jObj.getJSONArray("dados");
-
-                REquipPneuTO rEquipPneuTO = new REquipPneuTO();
-                rEquipPneuTO.deleteAll();
-
-                for (int j = 0; j < jsonArray.length(); j++) {
-
-                    JSONObject objeto = jsonArray.getJSONObject(j);
-                    Gson gson = new Gson();
-                    rEquipPneuTO = gson.fromJson(objeto.toString(), REquipPneuTO.class);
-                    rEquipPneuTO.insert();
 
                 }
 
@@ -728,186 +732,15 @@ public class ManipDadosVerif {
 
     }
 
-    public void recDadosGrafico(String result) {
-
-        try {
-
-            if (!result.contains("exceeded")) {
-
-                int pos1 = result.indexOf("#") + 1;
-                int pos2 = result.indexOf("|") + 1;
-                int pos3 = result.indexOf("?") + 1;
-                String objPrinc = result.substring(0, (pos1 - 1));
-                String objSeg = result.substring(pos1, (pos2 - 1));
-                String objTerc = result.substring(pos2, (pos3 - 1));
-                String objQuar = result.substring(pos3);
-
-                JSONObject jObj = new JSONObject(objPrinc);
-                JSONArray jsonArray = jObj.getJSONArray("dados");
-
-                if (jsonArray.length() > 0) {
-
-                    GrafProdPlantioTO grafProdPlantioTO = new GrafProdPlantioTO();
-                    grafProdPlantioTO.deleteAll();
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(i);
-                        Gson gson = new Gson();
-                        grafProdPlantioTO = gson.fromJson(objeto.toString(), GrafProdPlantioTO.class);
-                        grafProdPlantioTO.insert();
-
-                    }
-
-                }
-
-                jObj = new JSONObject(objSeg);
-                jsonArray = jObj.getJSONArray("dados");
-
-                if (jsonArray.length() > 0) {
-
-                    GrafPlanRealPlantioTO grafPlanRealPlantioTO = new GrafPlanRealPlantioTO();
-                    grafPlanRealPlantioTO.deleteAll();
-
-                    for (int j = 0; j < jsonArray.length(); j++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(j);
-                        Gson gson = new Gson();
-                        grafPlanRealPlantioTO = gson.fromJson(objeto.toString(), GrafPlanRealPlantioTO.class);
-                        grafPlanRealPlantioTO.insert();
-
-                    }
-
-                }
-
-                jObj = new JSONObject(objTerc);
-                jsonArray = jObj.getJSONArray("dados");
-
-                if (jsonArray.length() > 0) {
-
-                    genericRecordable = new GenericRecordable();
-                    GrafDispEquipPlantioTO grafDispEquipPlantioTO = new GrafDispEquipPlantioTO();
-                    grafDispEquipPlantioTO.deleteAll();
-
-                    for (int j = 0; j < jsonArray.length(); j++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(j);
-                        Gson gson = new Gson();
-                        grafDispEquipPlantioTO = gson.fromJson(objeto.toString(), GrafDispEquipPlantioTO.class);
-                        grafDispEquipPlantioTO.insert();
-
-                    }
-
-                }
-
-                jObj = new JSONObject(objQuar);
-                jsonArray = jObj.getJSONArray("dados");
-
-                if (jsonArray.length() > 0) {
-
-                    genericRecordable = new GenericRecordable();
-                    GrafQualPlantioTO grafQualPlantioTO = new GrafQualPlantioTO();
-                    grafQualPlantioTO.deleteAll();
-
-                    for (int j = 0; j < jsonArray.length(); j++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(j);
-                        Gson gson = new Gson();
-                        grafQualPlantioTO = gson.fromJson(objeto.toString(), GrafQualPlantioTO.class);
-                        grafQualPlantioTO.insert();
-
-                    }
-
-                }
-
-            }
-
-        } catch (Exception e) {
-            Log.i("PMM", "Erro Manip atualizar = " + e);
-        }
-
-    }
-
-    public void recDadosPneu(String result) {
-
-        try {
-
-            if (!result.contains("exceeded")) {
-
-                JSONObject jObj = new JSONObject(result);
-                JSONArray jsonArray = jObj.getJSONArray("dados");
-
-                if (jsonArray.length() > 0) {
-
-                    PneuTO pneuTO = new PneuTO();
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(i);
-                        Gson gson = new Gson();
-                        pneuTO = gson.fromJson(objeto.toString(), PneuTO.class);
-                        pneuTO.insert();
-
-                    }
-
-                    if(!verTerm) {
-                        verTerm = true;
-                        Intent it = new Intent(telaAtual, telaProx1);
-                        telaAtual.startActivity(it);
-                    }
-
-                } else {
-
-                    if(!verTerm) {
-                        verTerm = true;
-                        this.progressDialog.dismiss();
-
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
-                        alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("PNEU INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
-
-                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
-
-                            }
-                        });
-                        alerta.show();
-                    }
-
-                }
-
-            } else {
-
-                if(!verTerm) {
-                    this.progressDialog.dismiss();
-
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
-                    alerta.setTitle("ATENÇÃO");
-                    alerta.setMessage("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
-
-                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    });
-                    alerta.show();
-                }
-
-            }
-
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            Log.i("PMM", "Erro Manip atualizar = " + e);
-        }
-
-    }
 
     public void recPerda(String result) {
 
         try {
+
+            ConfigTO configTO = new ConfigTO();
+            List configList = configTO.all();
+            configTO = (ConfigTO) configList.get(0);
+            configList.clear();
 
             if (!result.contains("exceeded")) {
 
@@ -928,10 +761,6 @@ public class ManipDadosVerif {
 
                     }
 
-                    ConfigTO configTO = new ConfigTO();
-                    List configList = configTO.all();
-                    configTO = (ConfigTO) configList.get(0);
-                    configList.clear();
                     configTO.setVisDadosConfig(1L);
                     configTO.update();
 
@@ -946,10 +775,6 @@ public class ManipDadosVerif {
 
                 } else {
 
-                    ConfigTO configTO = new ConfigTO();
-                    List configList = configTO.all();
-                    configTO = (ConfigTO) configList.get(0);
-                    configList.clear();
                     configTO.setVisDadosConfig(2L);
                     configTO.update();
 
@@ -966,10 +791,6 @@ public class ManipDadosVerif {
 
             } else {
 
-                ConfigTO configTO = new ConfigTO();
-                List configList = configTO.all();
-                configTO = (ConfigTO) configList.get(0);
-                configList.clear();
                 configTO.setVisDadosConfig(0L);
                 configTO.update();
 

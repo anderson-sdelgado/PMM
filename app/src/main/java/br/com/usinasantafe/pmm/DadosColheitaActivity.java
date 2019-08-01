@@ -14,16 +14,12 @@ import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.PerdaTO;
 
-public class DadosColheitaActivity extends Activity {
-
-    private PMMContext pmmContext;
+public class DadosColheitaActivity extends ActivityGeneric {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dados_colheita);
-
-        pmmContext = (PMMContext) getApplication();
 
         TextView textViewTituloPerda = (TextView) findViewById(R.id.textViewTituloPerda);
         TextView textViewToleteDadoPerda = (TextView) findViewById(R.id.textViewToleteDadoPerda);

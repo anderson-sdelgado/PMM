@@ -8,6 +8,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
+import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
 
@@ -23,10 +24,28 @@ public class EsperaDadosOperActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List boletimList = boletimMMTO.get("statusBoletim", 1L);
-        boletimMMTO = (BoletimMMTO) boletimList.get(0);
-        boletimList.clear();
+        Long equip;
+
+        if(pmmContext.getTipoEquip() == 1) {
+
+            BoletimMMTO boletimMMTO = new BoletimMMTO();
+            List boletimMMList = boletimMMTO.get("statusBoletim", 1L);
+            boletimMMTO = (BoletimMMTO) boletimMMList.get(0);
+            boletimMMList.clear();
+
+            equip = boletimMMTO.getCodEquipBoletim();
+
+        }
+        else {
+
+            BoletimFertTO boletimFertTO = new BoletimFertTO();
+            List boletimFertList = boletimFertTO.get("statusBolFert", 1L);
+            boletimFertTO = (BoletimFertTO) boletimFertList.get(0);
+            boletimFertList.clear();
+
+            equip = boletimFertTO.getCodEquipBolFert();
+
+        }
 
         ConfigTO configTO = new ConfigTO();
         List configList = configTO.all();
@@ -39,7 +58,7 @@ public class EsperaDadosOperActivity extends ActivityGeneric {
 
         ConexaoWeb conexaoWeb = new ConexaoWeb();
         if (conexaoWeb.verificaConexao(this)) {
-            ManipDadosVerif.getInstance().verDados(String.valueOf(boletimMMTO.getCodMotoBoletim()), "Perda", EsperaDadosOperActivity.this, DadosColheitaActivity.class,  MenuPrincNormalActivity.class);
+            ManipDadosVerif.getInstance().verDados(String.valueOf(equip), "Perda", EsperaDadosOperActivity.this, DadosColheitaActivity.class,  MenuPrincNormalActivity.class);
             customHandler.postDelayed(runnable, 10000);
         }
         else{

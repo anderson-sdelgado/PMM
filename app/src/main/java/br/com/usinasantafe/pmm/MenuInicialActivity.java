@@ -373,14 +373,14 @@ public class MenuInicialActivity extends ActivityGeneric {
     public void teste() {
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List boletimList = boletimMMTO.all();
+        List boletimMMList = boletimMMTO.all();
 
         Log.i("PMM", "AKI");
 
-        for (int i = 0; i < boletimList.size(); i++) {
+        for (int i = 0; i < boletimMMList.size(); i++) {
 
-            boletimMMTO = (BoletimMMTO) boletimList.get(i);
-            Log.i("PMM", "BOLETIM");
+            boletimMMTO = (BoletimMMTO) boletimMMList.get(i);
+            Log.i("PMM", "BOLETIM MM");
             Log.i("PMM", "idBoletim = " + boletimMMTO.getIdBoletim());
             Log.i("PMM", "idExtBoletim = " + boletimMMTO.getIdExtBoletim());
             Log.i("PMM", "codMotoBoletim = " + boletimMMTO.getCodMotoBoletim());
@@ -397,12 +397,12 @@ public class MenuInicialActivity extends ActivityGeneric {
         }
 
         ApontaMMTO apontaMMTO = new ApontaMMTO();
-        List apontaList = apontaMMTO.all();
+        List apontaMMList = apontaMMTO.all();
 
-        for (int i = 0; i < apontaList.size(); i++) {
+        for (int i = 0; i < apontaMMList.size(); i++) {
 
-            apontaMMTO = (ApontaMMTO) apontaList.get(i);
-            Log.i("PMM", "APONTAMENTO");
+            apontaMMTO = (ApontaMMTO) apontaMMList.get(i);
+            Log.i("PMM", "APONTAMENTO MM");
             Log.i("PMM", "idAponta = " + apontaMMTO.getIdAponta());
             Log.i("PMM", "idBolAponta = " + apontaMMTO.getIdBolAponta());
             Log.i("PMM", "idExtBolAponta = " + apontaMMTO.getIdExtBolAponta());
@@ -438,6 +438,30 @@ public class MenuInicialActivity extends ActivityGeneric {
             Log.i("PMM", "nroOSRendimento = " + rendimentoTO.getNroOSRendimento());
             Log.i("PMM", "valorRendimento = " + rendimentoTO.getValorRendimento());
             Log.i("PMM", "dthrRendimento = " + rendimentoTO.getDthrRendimento());
+        }
+
+        BoletimFertTO boletimFertTO = new BoletimFertTO();
+        List boletimFertList = boletimFertTO.all();
+
+        Log.i("PMM", "AKI");
+
+        for (int i = 0; i < boletimFertList.size(); i++) {
+
+            boletimFertTO = (BoletimFertTO) boletimFertList.get(i);
+            Log.i("PMM", "BOLETIM FERT");
+            Log.i("PMM", "idBoletim = " + boletimFertTO.getIdBolFert());
+            Log.i("PMM", "idExtBoletim = " + boletimFertTO.getIdExtBolFert());
+            Log.i("PMM", "codMotoBoletim = " + boletimFertTO.getCodMotoBolFert());
+            Log.i("PMM", "codEquipBoletim = " + boletimFertTO.getCodEquipBolFert());
+            Log.i("PMM", "codTurnoBoletim = " + boletimFertTO.getCodTurnoBolFert());
+            Log.i("PMM", "hodometroInicialBoletim = " + boletimFertTO.getHodometroInicialBolFert());
+            Log.i("PMM", "hodometroFinalBoletim = " + boletimFertTO.getHodometroFinalBolFert());
+            Log.i("PMM", "osBoletim = " + boletimFertTO.getOsBolFert());
+            Log.i("PMM", "ativPrincBoletim = " + boletimFertTO.getAtivPrincBolFert());
+            Log.i("PMM", "dthrInicioBoletim = " + boletimFertTO.getDthrInicioBolFert());
+            Log.i("PMM", "dthrFimBoletim = " + boletimFertTO.getDthrFimBolFert());
+            Log.i("PMM", "statusBoletim = " + boletimFertTO.getStatusBolFert());
+
         }
 
         ApontaFertTO apontaFertTO = new ApontaFertTO();
