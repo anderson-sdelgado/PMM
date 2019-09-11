@@ -3,32 +3,33 @@ package br.com.usinasantafe.pmm.pst;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.BocalTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipSegTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.MotoristaTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.PressaoBocalTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.RAtivParadaTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ImplementoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.PerdaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.TransbordoTO;
+import br.com.usinasantafe.pmm.to.estaticas.AtividadeTO;
+import br.com.usinasantafe.pmm.to.estaticas.BocalTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipSegTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.estaticas.ItemCheckListTO;
+import br.com.usinasantafe.pmm.to.estaticas.FuncionarioTO;
+import br.com.usinasantafe.pmm.to.estaticas.OSTO;
+import br.com.usinasantafe.pmm.to.estaticas.ParadaTO;
+import br.com.usinasantafe.pmm.to.estaticas.PressaoBocalTO;
+import br.com.usinasantafe.pmm.to.estaticas.RAtivParadaTO;
+import br.com.usinasantafe.pmm.to.estaticas.REquipAtivTO;
+import br.com.usinasantafe.pmm.to.estaticas.RFuncaoAtivParTO;
+import br.com.usinasantafe.pmm.to.estaticas.ROSAtivTO;
+import br.com.usinasantafe.pmm.to.estaticas.TurnoTO;
+import br.com.usinasantafe.pmm.to.variaveis.ApontFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.BackupApontaTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.PerdaTO;
+import br.com.usinasantafe.pmm.to.variaveis.RecolhFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.RespItemCLTO;
+import br.com.usinasantafe.pmm.to.variaveis.TransbMMTO;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -70,7 +71,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, AtividadeTO.class);
 			TableUtils.createTable(cs, REquipAtivTO.class);
 			TableUtils.createTable(cs, TurnoTO.class);
-			TableUtils.createTable(cs, MotoristaTO.class);
+			TableUtils.createTable(cs, FuncionarioTO.class);
 			TableUtils.createTable(cs, OSTO.class);
 			TableUtils.createTable(cs, ROSAtivTO.class);
 			TableUtils.createTable(cs, RAtivParadaTO.class);
@@ -78,19 +79,20 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, ItemCheckListTO.class);
 			TableUtils.createTable(cs, BocalTO.class);
 			TableUtils.createTable(cs, PressaoBocalTO.class);
+			TableUtils.createTable(cs, RFuncaoAtivParTO.class);
 
 			TableUtils.createTable(cs, ConfigTO.class);
 			TableUtils.createTable(cs, BoletimMMTO.class);
-			TableUtils.createTable(cs, ApontaMMTO.class);
-			TableUtils.createTable(cs, CabecCheckListTO.class);
-			TableUtils.createTable(cs, RespItemCheckListTO.class);
-			TableUtils.createTable(cs, RendimentoTO.class);
-			TableUtils.createTable(cs, RecolhimentoTO.class);
-			TableUtils.createTable(cs, TransbordoTO.class);
-			TableUtils.createTable(cs, ImplementoTO.class);
+			TableUtils.createTable(cs, ApontMMTO.class);
+			TableUtils.createTable(cs, CabecCLTO.class);
+			TableUtils.createTable(cs, RespItemCLTO.class);
+			TableUtils.createTable(cs, RendMMTO.class);
+			TableUtils.createTable(cs, RecolhFertTO.class);
+			TableUtils.createTable(cs, TransbMMTO.class);
+			TableUtils.createTable(cs, ImpleMMTO.class);
 			TableUtils.createTable(cs, BackupApontaTO.class);
 			TableUtils.createTable(cs, BoletimFertTO.class);
-			TableUtils.createTable(cs, ApontaFertTO.class);
+			TableUtils.createTable(cs, ApontFertTO.class);
 			TableUtils.createTable(cs, PerdaTO.class);
 			
 		}
@@ -111,7 +113,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		try {
 			
 			if(oldVersion == 1 && newVersion == 2){
-//				TableUtils.createTable(cs, ConfigTO.class);
 				oldVersion = 2;
 			}
 			

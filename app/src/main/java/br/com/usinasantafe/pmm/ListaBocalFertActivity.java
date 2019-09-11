@@ -15,7 +15,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
-import br.com.usinasantafe.pmm.to.tb.estaticas.BocalTO;
+import br.com.usinasantafe.pmm.to.estaticas.BocalTO;
 
 public class ListaBocalFertActivity extends ActivityGeneric {
 
@@ -51,7 +51,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
 
                             progressBar = new ProgressDialog(ListaBocalFertActivity.this);
                             progressBar.setCancelable(true);
-                            progressBar.setMessage("Atualizando Bocal...");
+                            progressBar.setMessage("ATUALIZANDO BOCAL...");
                             progressBar.show();
 
                             ManipDadosVerif.getInstance().verDados("", "Bocal"
@@ -111,7 +111,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
                                     long id) {
 
                 BocalTO bocalTO = (BocalTO)  bocalList.get(position);
-                pmmContext.getApontaFertTO().setBocalApontaFert(bocalTO.getIdBocal());
+                pmmContext.getApontFertTO().setBocalApontFert(bocalTO.getIdBocal());
                 bocalList.clear();
 
                 Intent it = new Intent(ListaBocalFertActivity.this, ListaPressaoFertActivity.class);

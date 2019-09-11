@@ -13,10 +13,10 @@ import java.util.List;
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.estaticas.ItemCheckListTO;
+import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class PergAtualCheckListActivity extends ActivityGeneric {
 
@@ -39,24 +39,24 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
             public void onClick(View v) {
 
                 EquipTO equipTO = new EquipTO();
-                List equipList = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getCodEquipBoletim());
+                List equipList = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getIdEquipBolMM());
                 equipTO = (EquipTO) equipList.get(0);
                 equipList.clear();
 
                 ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
-                List itemCheckList =  itemCheckListTO.get("idChecklist", equipTO.getIdChecklist());
+                List itemCheckList =  itemCheckListTO.get("idCheckList", equipTO.getIdCheckList());
                 Long qtde = (long) itemCheckList.size();
                 itemCheckList.clear();
 
-                CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-                cabecCheckListTO.setDtCab(Tempo.getInstance().datahora());
-                cabecCheckListTO.setEquipCab(equipTO.getNroEquip());
-                cabecCheckListTO.setFuncCab(pmmContext.getBoletimMMTO().getCodMotoBoletim());
-                cabecCheckListTO.setTurnoCab(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
-                cabecCheckListTO.setQtdeItemCab(qtde);
-                cabecCheckListTO.setStatusCab(1L);
-                cabecCheckListTO.setDtAtualCab("0");
-                cabecCheckListTO.insert();
+                CabecCLTO cabecCLTO = new CabecCLTO();
+                cabecCLTO.setDtCabCL(Tempo.getInstance().datahora());
+                cabecCLTO.setEquipCabCL(equipTO.getNroEquip());
+                cabecCLTO.setFuncCabCL(pmmContext.getBoletimMMTO().getMatricFuncBolMM());
+                cabecCLTO.setTurnoCabCL(pmmContext.getBoletimMMTO().getIdTurnoBolMM());
+                cabecCLTO.setQtdeItemCabCL(qtde);
+                cabecCLTO.setStatusCabCL(1L);
+                cabecCLTO.setDtAtualCabCL("0");
+                cabecCLTO.insert();
 
                 Intent it = new Intent(PergAtualCheckListActivity.this, ItemCheckListActivity.class);
                 startActivity(it);
@@ -77,7 +77,7 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
 
                     progressBar = new ProgressDialog(PergAtualCheckListActivity.this);
                     progressBar.setCancelable(true);
-                    progressBar.setMessage("Atualizando CheckList...");
+                    progressBar.setMessage("ATUALIZANDO CHECKLIST...");
                     progressBar.show();
 
                     ConfigTO configTO = new ConfigTO();

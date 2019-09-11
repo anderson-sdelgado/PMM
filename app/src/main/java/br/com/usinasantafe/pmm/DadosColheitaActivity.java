@@ -11,8 +11,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.PerdaTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.variaveis.PerdaTO;
 
 public class DadosColheitaActivity extends ActivityGeneric {
 

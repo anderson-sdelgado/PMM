@@ -16,8 +16,8 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import br.com.usinasantafe.pmm.to.tb.estaticas.DataTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.estaticas.DataTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class Tempo {
 

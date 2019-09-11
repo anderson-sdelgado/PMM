@@ -12,7 +12,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
-import br.com.usinasantafe.pmm.to.tb.estaticas.MotoristaTO;
+import br.com.usinasantafe.pmm.to.estaticas.FuncionarioTO;
 
 public class OperadorActivity extends ActivityGeneric {
 
@@ -47,7 +47,7 @@ public class OperadorActivity extends ActivityGeneric {
 
                             progressBar = new ProgressDialog(OperadorActivity.this);
                             progressBar.setCancelable(true);
-                            progressBar.setMessage("Atualizando Operador...");
+                            progressBar.setMessage("ATUALIZANDO OPERADOR...");
                             progressBar.show();
 
                             ManipDadosVerif.getInstance().verDados("", "Operador"
@@ -93,17 +93,17 @@ public class OperadorActivity extends ActivityGeneric {
 
                 if (!editTextPadrao.getText().toString().equals("")) {
 
-                    MotoristaTO motoristaBD = new MotoristaTO();
-                    List listaMotorista = motoristaBD.get("codMotorista", Long.parseLong(editTextPadrao.getText().toString()));
+                    FuncionarioTO motoristaBD = new FuncionarioTO();
+                    List listaMotorista = motoristaBD.get("matricFunc", Long.parseLong(editTextPadrao.getText().toString()));
 
                     if (listaMotorista.size() > 0) {
 
-                        motoristaBD = (MotoristaTO) listaMotorista.get(0);
+                        motoristaBD = (FuncionarioTO) listaMotorista.get(0);
                         if(pmmContext.getTipoEquip() == 1) {
-                            pmmContext.getBoletimMMTO().setCodMotoBoletim(motoristaBD.getCodMotorista());
+                            pmmContext.getBoletimMMTO().setMatricFuncBolMM(motoristaBD.getMatricFunc());
                         }
                         else{
-                            pmmContext.getBoletimFertTO().setCodMotoBolFert(motoristaBD.getCodMotorista());
+                            pmmContext.getBoletimFertTO().setMatricFuncBolFert(motoristaBD.getMatricFunc());
                         }
                         listaMotorista.clear();
                         Intent it = new Intent(OperadorActivity.this, EquipActivity.class);

@@ -11,8 +11,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.estaticas.TurnoTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class DataHoraActivity extends ActivityGeneric {
 
@@ -124,10 +124,10 @@ public class DataHoraActivity extends ActivityGeneric {
                         case 4:
                             Long codTurno;
                             if(pmmContext.getTipoEquip() == 1) {
-                                codTurno = pmmContext.getBoletimMMTO().getCodTurnoBoletim();
+                                codTurno = pmmContext.getBoletimMMTO().getIdTurnoBolMM();
                             }
                             else {
-                                codTurno = pmmContext.getBoletimFertTO().getCodTurnoBolFert();
+                                codTurno = pmmContext.getBoletimFertTO().getIdTurnoBolFert();
                             }
                             TurnoTO turnoTO = new TurnoTO();
                             List turnoList = turnoTO.get("idTurno", codTurno);

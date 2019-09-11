@@ -12,14 +12,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
-import br.com.usinasantafe.pmm.to.tb.estaticas.PressaoBocalTO;
+import br.com.usinasantafe.pmm.to.estaticas.PressaoBocalTO;
 
 public class ListaPressaoFertActivity extends ActivityGeneric {
 
@@ -55,7 +54,7 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
 
                             progressBar = new ProgressDialog(ListaPressaoFertActivity.this);
                             progressBar.setCancelable(true);
-                            progressBar.setMessage("Atualizando Pressao...");
+                            progressBar.setMessage("ATUALIZANDO PRESSÃO...");
                             progressBar.show();
 
                             ManipDadosVerif.getInstance().verDados("", "PressaoBocal"
@@ -95,7 +94,7 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
         });
 
         PressaoBocalTO pressaoBocalTO = new PressaoBocalTO();
-        pressaoBocalList = pressaoBocalTO.getAndOrderBy("idBocal", pmmContext.getApontaFertTO().getBocalApontaFert(), "valorPressao", true);
+        pressaoBocalList = pressaoBocalTO.getAndOrderBy("idBocal", pmmContext.getApontFertTO().getBocalApontFert(), "valorPressao", true);
 
         ArrayList<String> itens = new ArrayList<String>();
 
@@ -120,7 +119,7 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
                                     long id) {
 
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
-                pmmContext.getApontaFertTO().setPressaoApontaFert(Double.parseDouble(textView.getText().toString()));
+                pmmContext.getApontFertTO().setPressaoApontFert(Double.parseDouble(textView.getText().toString()));
                 pressaoBocalList.clear();
 
                 Intent it = new Intent(ListaPressaoFertActivity.this, ListaVelocFertActivity.class);

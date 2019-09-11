@@ -11,12 +11,12 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
+import br.com.usinasantafe.pmm.to.variaveis.RecolhFertTO;
 
 public class RecolhimentoActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
-    private RecolhimentoTO recolhimentoTO;
+    private RecolhFertTO recolhFertTO;
     private List recolList;
 
     @Override
@@ -34,18 +34,18 @@ public class RecolhimentoActivity extends ActivityGeneric {
         int cont = 0;
 
         if (pmmContext.getVerPosTela() == 4) {
-            cont = pmmContext.getContRecolhimento() - 1;
+            cont = pmmContext.getContRecolh() - 1;
         } else if (pmmContext.getVerPosTela() == 14) {
-            cont = pmmContext.getPosRecolhimento();
+            cont = pmmContext.getPosRecolh();
         }
 
-        recolhimentoTO = new RecolhimentoTO();
-        recolList = recolhimentoTO.orderBy("idRecol", true);
-        recolhimentoTO = (RecolhimentoTO) recolList.get(cont);
+        recolhFertTO = new RecolhFertTO();
+        recolList = recolhFertTO.orderBy("idRecolhFert", true);
+        recolhFertTO = (RecolhFertTO) recolList.get(cont);
 
-        textViewRecolMang.setText("OS: " + recolhimentoTO.getNroOSRecol() + " \nRECOL. MANGUEIRA:");
-        if (recolhimentoTO.getValorRecol() > 0) {
-            editText.setText(String.valueOf(recolhimentoTO.getValorRecol()));
+        textViewRecolMang.setText("OS: " + recolhFertTO.getNroOSRecolhFert() + " \nRECOL. MANGUEIRA:");
+        if (recolhFertTO.getValorRecolhFert() > 0) {
+            editText.setText(String.valueOf(recolhFertTO.getValorRecolhFert()));
         } else {
             editText.setText("");
         }
@@ -60,13 +60,13 @@ public class RecolhimentoActivity extends ActivityGeneric {
 
                         Long valorRecolMang = Long.parseLong(editTextPadrao.getText().toString());
 
-                        recolhimentoTO.setValorRecol(valorRecolMang);
-                        recolhimentoTO.setDthrRecol(Tempo.getInstance().datahora());
-                        recolhimentoTO.setStatusRecol(2L);
-                        recolhimentoTO.update();
-                        recolhimentoTO.commit();
+                        recolhFertTO.setValorRecolhFert(valorRecolMang);
+                        recolhFertTO.setDthrRecolhFert(Tempo.getInstance().datahora());
+                        recolhFertTO.setStatusRecolhFert(2L);
+                        recolhFertTO.update();
+                        recolhFertTO.commit();
 
-                        if (recolList.size() == pmmContext.getContRecolhimento()) {
+                        if (recolList.size() == pmmContext.getContRecolh()) {
 
                             ManipDadosEnvio.getInstance().salvaBoletimFechadoFert();
                             ManipDadosEnvio.getInstance().envioDadosPrinc();
@@ -76,7 +76,7 @@ public class RecolhimentoActivity extends ActivityGeneric {
 
                         } else {
 
-                            pmmContext.setContRecolhimento(pmmContext.getContRecolhimento() + 1);
+                            pmmContext.setContRecolh(pmmContext.getContRecolh() + 1);
                             Intent it = new Intent(RecolhimentoActivity.this, RecolhimentoActivity.class);
                             startActivity(it);
                             finish();
@@ -91,9 +91,9 @@ public class RecolhimentoActivity extends ActivityGeneric {
 
                         Long valorRecolMang = Long.parseLong(editTextPadrao.getText().toString());
 
-                        recolhimentoTO.setValorRecol(valorRecolMang);
-                        recolhimentoTO.update();
-                        recolhimentoTO.commit();
+                        recolhFertTO.setValorRecolhFert(valorRecolMang);
+                        recolhFertTO.update();
+                        recolhFertTO.commit();
 
                     }
 
@@ -122,8 +122,8 @@ public class RecolhimentoActivity extends ActivityGeneric {
 
     public void onBackPressed() {
         if (pmmContext.getVerPosTela() == 4) {
-            if(pmmContext.getPosRecolhimento() > 1){
-                pmmContext.setPosRecolhimento(pmmContext.getPosRecolhimento() - 1);
+            if(pmmContext.getPosRecolh() > 1){
+                pmmContext.setPosRecolh(pmmContext.getPosRecolh() - 1);
                 Intent it = new Intent(RecolhimentoActivity.this, RecolhimentoActivity.class);
                 startActivity(it);
                 finish();

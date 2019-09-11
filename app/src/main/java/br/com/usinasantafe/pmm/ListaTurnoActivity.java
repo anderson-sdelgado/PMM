@@ -15,10 +15,9 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
-import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.estaticas.TurnoTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class ListaTurnoActivity extends ActivityGeneric {
 
@@ -56,7 +55,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
 
                             progressBar = new ProgressDialog(ListaTurnoActivity.this);
                             progressBar.setCancelable(true);
-                            progressBar.setMessage("Atualizando Turno...");
+                            progressBar.setMessage("ATUALIZANDO TURNO...");
                             progressBar.show();
 
                             ManipDadosVerif.getInstance().verDados("", "Turno"
@@ -127,10 +126,10 @@ public class ListaTurnoActivity extends ActivityGeneric {
 
                 TurnoTO turnoTO = (TurnoTO) turnoList.get(position);
                 if(pmmContext.getTipoEquip() == 1) {
-                    pmmContext.getBoletimMMTO().setCodTurnoBoletim(turnoTO.getIdTurno());
+                    pmmContext.getBoletimMMTO().setIdTurnoBolMM(turnoTO.getIdTurno());
                 }
                 else{
-                    pmmContext.getBoletimFertTO().setCodTurnoBolFert(turnoTO.getIdTurno());
+                    pmmContext.getBoletimFertTO().setIdTurnoBolFert(turnoTO.getIdTurno());
                 }
                 turnoList.clear();
 

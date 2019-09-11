@@ -22,20 +22,20 @@ import br.com.usinasantafe.pmm.MenuInicialActivity;
 import br.com.usinasantafe.pmm.conWEB.ConHttpPostVerGenerico;
 import br.com.usinasantafe.pmm.conWEB.UrlsConexaoHttp;
 import br.com.usinasantafe.pmm.pst.GenericRecordable;
-import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.RAtivParadaTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.AtualAplicTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.PerdaTO;
+import br.com.usinasantafe.pmm.to.estaticas.AtividadeTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.estaticas.ItemCheckListTO;
+import br.com.usinasantafe.pmm.to.estaticas.OSTO;
+import br.com.usinasantafe.pmm.to.estaticas.ParadaTO;
+import br.com.usinasantafe.pmm.to.estaticas.RAtivParadaTO;
+import br.com.usinasantafe.pmm.to.estaticas.REquipAtivTO;
+import br.com.usinasantafe.pmm.to.estaticas.ROSAtivTO;
+import br.com.usinasantafe.pmm.to.variaveis.AtualAplicTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.variaveis.PerdaTO;
 
 import android.os.AsyncTask;
 
@@ -146,10 +146,10 @@ public class ManipDadosVerif {
         Long equip = 0L;
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List boletimMMList = boletimMMTO.get("statusBoletim", 1L);
+        List boletimMMList = boletimMMTO.get("statusBolMM", 1L);
         if(boletimMMList.size() > 0){
             boletimMMTO = (BoletimMMTO) boletimMMList.get(0);
-            equip = boletimMMTO.getCodEquipBoletim();
+            equip = boletimMMTO.getIdEquipBolMM();
             boletimMMList.clear();
         }
 
@@ -157,7 +157,7 @@ public class ManipDadosVerif {
         List boletimFertList = boletimFertTO.get("statusBolFert", 1L);
         if(boletimFertList.size() > 0){
             boletimFertTO = (BoletimFertTO) boletimFertList.get(0);
-            equip = boletimFertTO.getCodEquipBolFert();
+            equip = boletimFertTO.getIdEquipBolFert();
             boletimFertList.clear();
         }
 
@@ -225,7 +225,7 @@ public class ManipDadosVerif {
                     this.menuInicialActivity.startTimer(verAtualizacao);
                 }
             } else if (this.tipo.equals("Operador")) {
-                recDadosGenerico(result, "MotoristaTO");
+                recDadosGenerico(result, "FuncionarioTO");
             } else if (this.tipo.equals("Turno")) {
                 recDadosGenerico(result, "TurnoTO");
             } else if (this.tipo.equals("EquipSeg")) {
@@ -260,12 +260,12 @@ public class ManipDadosVerif {
         Long equip = 0L;
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List boletimMMList = boletimMMTO.get("statusBoletim", 1L);
+        List boletimMMList = boletimMMTO.get("statusBolMM", 1L);
         if(boletimMMList.size() > 0){
             boletimMMTO = (BoletimMMTO) boletimMMList.get(0);
-            equip = boletimMMTO.getCodEquipBoletim();
-            moto = boletimMMTO.getCodMotoBoletim();
-            turno = boletimMMTO.getCodTurnoBoletim();
+            equip = boletimMMTO.getIdEquipBolMM();
+            moto = boletimMMTO.getMatricFuncBolMM();
+            turno = boletimMMTO.getIdTurnoBolMM();
             boletimMMList.clear();
         }
 
@@ -273,9 +273,9 @@ public class ManipDadosVerif {
         List boletimFertList = boletimFertTO.get("statusBolFert", 1L);
         if(boletimFertList.size() > 0){
             boletimFertTO = (BoletimFertTO) boletimFertList.get(0);
-            equip = boletimFertTO.getCodEquipBolFert();
-            moto = boletimFertTO.getCodMotoBolFert();
-            turno = boletimFertTO.getCodTurnoBolFert();
+            equip = boletimFertTO.getIdEquipBolFert();
+            moto = boletimFertTO.getMatricFuncBolFert();
+            turno = boletimFertTO.getIdTurnoBolFert();
             boletimFertList.clear();
         }
 
@@ -285,19 +285,19 @@ public class ManipDadosVerif {
         equipList.clear();
 
         ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
-        List itemCheckList = itemCheckListTO.get("idChecklist", equipTO.getIdChecklist());
+        List itemCheckList = itemCheckListTO.get("idCheckList", equipTO.getIdCheckList());
         Long qtde = (long) itemCheckList.size();
         itemCheckList.clear();
 
-        CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-        cabecCheckListTO.setDtCab(Tempo.getInstance().datahora());
-        cabecCheckListTO.setEquipCab(equipTO.getNroEquip());
-        cabecCheckListTO.setFuncCab(moto);
-        cabecCheckListTO.setTurnoCab(turno);
-        cabecCheckListTO.setQtdeItemCab(qtde);
-        cabecCheckListTO.setStatusCab(1L);
-        cabecCheckListTO.setDtAtualCab(data);
-        cabecCheckListTO.insert();
+        CabecCLTO cabecCLTO = new CabecCLTO();
+        cabecCLTO.setDtCabCL(Tempo.getInstance().datahora());
+        cabecCLTO.setEquipCabCL(equipTO.getNroEquip());
+        cabecCLTO.setFuncCabCL(moto);
+        cabecCLTO.setTurnoCabCL(turno);
+        cabecCLTO.setQtdeItemCabCL(qtde);
+        cabecCLTO.setStatusCabCL(1L);
+        cabecCLTO.setDtAtualCabCL(data);
+        cabecCLTO.insert();
 
     }
 

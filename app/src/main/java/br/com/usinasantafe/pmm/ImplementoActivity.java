@@ -17,13 +17,13 @@ import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipSegTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ImplementoTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipSegTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.estaticas.ItemCheckListTO;
+import br.com.usinasantafe.pmm.to.estaticas.TurnoTO;
+import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
 
 public class ImplementoActivity extends ActivityGeneric {
 
@@ -118,11 +118,11 @@ public class ImplementoActivity extends ActivityGeneric {
                     ArrayList listaPesq = new ArrayList();
                     EquipSegTO equipSegTO = new EquipSegTO();
 
-                    EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-                    pesquisa.setCampo("nroEquip");
-                    pesquisa.setValor(impl);
-                    pesquisa.setTipo(1);
-                    listaPesq.add(pesquisa);
+                    EspecificaPesquisa pesquisa1 = new EspecificaPesquisa();
+                    pesquisa1.setCampo("nroEquip");
+                    pesquisa1.setValor(impl);
+                    pesquisa1.setTipo(1);
+                    listaPesq.add(pesquisa1);
 
                     EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
                     pesquisa2.setCampo("tipoEquip");
@@ -153,19 +153,19 @@ public class ImplementoActivity extends ActivityGeneric {
                         ArrayList listaPesq2 = new ArrayList();
 
                         EspecificaPesquisa pesq1 = new EspecificaPesquisa();
-                        pesq1.setCampo("codEquipImplemento");
+                        pesq1.setCampo("codEquipImpleMM");
                         pesq1.setValor(impl);
                         pesq1.setTipo(1);
                         listaPesq2.add(pesq1);
 
                         EspecificaPesquisa pesq2 = new EspecificaPesquisa();
-                        pesq2.setCampo("idApontImplemento");
+                        pesq2.setCampo("idApontImpleMM");
                         pesq2.setValor(0);
                         pesq2.setTipo(1);
                         listaPesq2.add(pesq2);
 
-                        ImplementoTO implementoTO = new ImplementoTO();
-                        implementoList = implementoTO.get(listaPesq2);
+                        ImpleMMTO impleMMTO = new ImpleMMTO();
+                        implementoList = impleMMTO.get(listaPesq2);
                         listaPesq2.clear();
 
                         if (implementoList.size() != 0) {
@@ -195,30 +195,30 @@ public class ImplementoActivity extends ActivityGeneric {
                         case 1:
 
                             EspecificaPesquisa pesq1 = new EspecificaPesquisa();
-                            pesq1.setCampo("posImplemento");
+                            pesq1.setCampo("posImpleMM");
                             pesq1.setValor(1L);
                             pesq1.setTipo(1);
                             listaPesq.add(pesq1);
 
                             EspecificaPesquisa pesq2 = new EspecificaPesquisa();
-                            pesq2.setCampo("idApontImplemento");
+                            pesq2.setCampo("idApontImpleMM");
                             pesq2.setValor(0);
                             pesq2.setTipo(1);
                             listaPesq.add(pesq2);
 
-                            ImplementoTO implemento1TO = new ImplementoTO();
+                            ImpleMMTO implemento1TO = new ImpleMMTO();
                             implementoList = implemento1TO.get(listaPesq);
 
                             for (int i = 0; i < implementoList.size(); i++) {
-                                implemento1TO = (ImplementoTO) implementoList.get(i);
+                                implemento1TO = (ImpleMMTO) implementoList.get(i);
                                 implemento1TO.delete();
                             }
                             implementoList.clear();
                             listaPesq.clear();
 
-                            implemento1TO.setPosImplemento(1L);
-                            implemento1TO.setCodEquipImplemento(impl);
-                            implemento1TO.setIdApontImplemento(0L);
+                            implemento1TO.setPosImpleMM(1L);
+                            implemento1TO.setCodEquipImpleMM(impl);
+                            implemento1TO.setIdApontImpleMM(0L);
                             implemento1TO.insert();
 
                             if (impl > 0) {
@@ -235,30 +235,30 @@ public class ImplementoActivity extends ActivityGeneric {
                         case 2:
 
                             EspecificaPesquisa pesq3 = new EspecificaPesquisa();
-                            pesq3.setCampo("posImplemento");
+                            pesq3.setCampo("posImpleMM");
                             pesq3.setValor(2L);
                             pesq3.setTipo(1);
                             listaPesq.add(pesq3);
 
                             EspecificaPesquisa pesq4 = new EspecificaPesquisa();
-                            pesq4.setCampo("idApontImplemento");
+                            pesq4.setCampo("idApontImpleMM");
                             pesq4.setValor(0);
                             pesq4.setTipo(1);
                             listaPesq.add(pesq4);
 
-                            ImplementoTO implemento2TO = new ImplementoTO();
+                            ImpleMMTO implemento2TO = new ImpleMMTO();
                             implementoList = implemento2TO.get(listaPesq);
 
                             for (int i = 0; i < implementoList.size(); i++) {
-                                implemento2TO = (ImplementoTO) implementoList.get(i);
+                                implemento2TO = (ImpleMMTO) implementoList.get(i);
                                 implemento2TO.delete();
                             }
                             implementoList.clear();
                             listaPesq.clear();
 
-                            implemento2TO.setPosImplemento(2L);
-                            implemento2TO.setCodEquipImplemento(impl);
-                            implemento2TO.setIdApontImplemento(0L);
+                            implemento2TO.setPosImpleMM(2L);
+                            implemento2TO.setCodEquipImpleMM(impl);
+                            implemento2TO.setIdApontImpleMM(0L);
                             implemento2TO.insert();
 
                             finalImpl();
@@ -296,53 +296,53 @@ public class ImplementoActivity extends ActivityGeneric {
             listConfigTO.clear();
 
             equipTO = new EquipTO();
-            List listEquipTO = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getCodEquipBoletim());
+            List listEquipTO = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getIdEquipBolMM());
             equipTO = (EquipTO) listEquipTO.get(0);
             listEquipTO.clear();
 
             TurnoTO turnoTO = new TurnoTO();
-            List turnoList = turnoTO.get("idTurno", pmmContext.getBoletimMMTO().getCodTurnoBoletim());
+            List turnoList = turnoTO.get("idTurno", pmmContext.getBoletimMMTO().getIdTurnoBolMM());
             turnoTO = (TurnoTO) turnoList.get(0);
 
-            if ((equipTO.getIdChecklist() > 0) &&
+            if ((equipTO.getIdCheckList() > 0) &&
                     ((configTO.getUltTurnoCLConfig() != turnoTO.getIdTurno())
                             || ((configTO.getUltTurnoCLConfig() == turnoTO.getIdTurno())
                             && (!configTO.getDtUltCLConfig().equals(Tempo.getInstance().dataSHora()))))) {
 
-                pmmContext.getBoletimMMTO().setStatusBoletim(1L);
+                pmmContext.getBoletimMMTO().setStatusBolMM(1L);
                 ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true, 0D, 0D);
                 ManipDadosEnvio.getInstance().envioDadosPrinc();
 
                 ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
-                List itemCheckList = itemCheckListTO.get("idChecklist", equipTO.getIdChecklist());
+                List itemCheckList = itemCheckListTO.get("idCheckList", equipTO.getIdCheckList());
                 Long qtde = (long) itemCheckList.size();
                 itemCheckList.clear();
 
-                CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-                cabecCheckListTO.setDtCab(Tempo.getInstance().datahora());
+                CabecCLTO cabecCLTO = new CabecCLTO();
+                cabecCLTO.setDtCabCL(Tempo.getInstance().datahora());
                 EquipTO equipTO = new EquipTO();
                 List equipList = equipTO.get("idEquip", configTO.getEquipConfig());
                 equipTO = (EquipTO) equipList.get(0);
                 equipList.clear();
-                cabecCheckListTO.setEquipCab(equipTO.getNroEquip());
-                cabecCheckListTO.setFuncCab(pmmContext.getBoletimMMTO().getCodMotoBoletim());
-                cabecCheckListTO.setTurnoCab(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
-                cabecCheckListTO.setQtdeItemCab(qtde);
-                cabecCheckListTO.setStatusCab(1L);
-                cabecCheckListTO.setDtAtualCab("0");
-                cabecCheckListTO.insert();
+                cabecCLTO.setEquipCabCL(equipTO.getNroEquip());
+                cabecCLTO.setFuncCabCL(pmmContext.getBoletimMMTO().getMatricFuncBolMM());
+                cabecCLTO.setTurnoCabCL(pmmContext.getBoletimMMTO().getIdTurnoBolMM());
+                cabecCLTO.setQtdeItemCabCL(qtde);
+                cabecCLTO.setStatusCabCL(1L);
+                cabecCLTO.setDtAtualCabCL("0");
+                cabecCLTO.insert();
 
-                pmmContext.setPosChecklist(1L);
+                pmmContext.setPosCheckList(1L);
                 Intent it = new Intent(ImplementoActivity.this, ItemCheckListActivity.class);
                 startActivity(it);
                 finish();
 
             } else {
 
-                configTO.setHorimetroConfig(pmmContext.getBoletimMMTO().getHodometroInicialBoletim());
+                configTO.setHorimetroConfig(pmmContext.getBoletimMMTO().getHodometroInicialBolMM());
                 configTO.update();
                 configTO.commit();
-                pmmContext.getBoletimMMTO().setStatusBoletim(1L);
+                pmmContext.getBoletimMMTO().setStatusBolMM(1L);
                 ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), false, 0D, 0D);
                 ManipDadosEnvio.getInstance().envioDadosPrinc();
 

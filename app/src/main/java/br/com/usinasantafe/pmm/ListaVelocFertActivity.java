@@ -21,10 +21,10 @@ import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.tb.estaticas.PressaoBocalTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
+import br.com.usinasantafe.pmm.to.estaticas.PressaoBocalTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.variaveis.RecolhFertTO;
 
 public class ListaVelocFertActivity extends ActivityGeneric {
 
@@ -60,7 +60,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
                             progressBar = new ProgressDialog(ListaVelocFertActivity.this);
                             progressBar.setCancelable(true);
-                            progressBar.setMessage("Atualizando Velocidade...");
+                            progressBar.setMessage("ATUALIZANDO VELOCIDADE...");
                             progressBar.show();
 
                             ManipDadosVerif.getInstance().verDados("", "PressaoBocal"
@@ -105,13 +105,13 @@ public class ListaVelocFertActivity extends ActivityGeneric {
         ArrayList listaPesq = new ArrayList();
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("idBocal");
-        pesquisa.setValor(pmmContext.getApontaFertTO().getBocalApontaFert());
+        pesquisa.setValor(pmmContext.getApontFertTO().getBocalApontFert());
         pesquisa.setTipo(1);
         listaPesq.add(pesquisa);
 
         EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
         pesquisa2.setCampo("valorPressao");
-        pesquisa2.setValor(pmmContext.getApontaFertTO().getPressaoApontaFert());
+        pesquisa2.setValor(pmmContext.getApontFertTO().getPressaoApontFert());
         pesquisa2.setTipo(1);
         listaPesq.add(pesquisa2);
 
@@ -140,7 +140,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                                     long id) {
 
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
-                pmmContext.getApontaFertTO().setVelocApontaFert(Long.parseLong(textView.getText().toString()));
+                pmmContext.getApontFertTO().setVelocApontFert(Long.parseLong(textView.getText().toString()));
                 velocList.clear();
 
                 BoletimFertTO boletimFertTO = new BoletimFertTO();
@@ -150,38 +150,38 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
                     boletimFertTO = (BoletimFertTO) boletimList.get(0);
 
-                    RecolhimentoTO recolhimentoTO = new RecolhimentoTO();
+                    RecolhFertTO recolhFertTO = new RecolhFertTO();
                     ArrayList pesqList = new ArrayList();
 
                     EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-                    pesquisa.setCampo("idBolRecol");
+                    pesquisa.setCampo("idBolRecolhFert");
                     pesquisa.setValor(boletimFertTO.getIdBolFert());
                     pesquisa.setTipo(1);
                     pesqList.add(pesquisa);
 
                     EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-                    pesquisa2.setCampo("nroOSRecol");
-                    pesquisa2.setValor(pmmContext.getApontaFertTO().getOsApontaFert());
+                    pesquisa2.setCampo("nroOSRecolhFert");
+                    pesquisa2.setValor(pmmContext.getApontFertTO().getOsApontFert());
                     pesquisa2.setTipo(1);
                     pesqList.add(pesquisa2);
 
-                    List rendList = recolhimentoTO.get(pesqList);
+                    List rendList = recolhFertTO.get(pesqList);
 
                     if (rendList.size() == 0) {
-                        recolhimentoTO.setIdBolRecol(boletimFertTO.getIdBolFert());
-                        recolhimentoTO.setIdExtBolRecol(boletimFertTO.getIdExtBolFert());
-                        recolhimentoTO.setNroOSRecol(pmmContext.getApontaFertTO().getOsApontaFert());
-                        recolhimentoTO.setValorRecol(0L);
-                        recolhimentoTO.insert();
-                        recolhimentoTO.commit();
+                        recolhFertTO.setIdBolRecolhFert(boletimFertTO.getIdBolFert());
+                        recolhFertTO.setIdExtBolRecolhFert(boletimFertTO.getIdExtBolFert());
+                        recolhFertTO.setNroOSRecolhFert(pmmContext.getApontFertTO().getOsApontFert());
+                        recolhFertTO.setValorRecolhFert(0L);
+                        recolhFertTO.insert();
+                        recolhFertTO.commit();
                     }
 
                 }
 
                 boletimList.clear();
 
-                pmmContext.getApontaFertTO().setLatitudeApontaFert(0D);
-                pmmContext.getApontaFertTO().setLongitudeApontaFert(0D);
+                pmmContext.getApontFertTO().setLatitudeApontFert(0D);
+                pmmContext.getApontFertTO().setLongitudeApontFert(0D);
 
                 ConfigTO configTO = new ConfigTO();
                 List configList = configTO.all();
@@ -190,7 +190,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                 configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
                 configTO.update();
 
-                ManipDadosEnvio.getInstance().salvaApontaFert(pmmContext.getApontaFertTO(), 2L);
+                ManipDadosEnvio.getInstance().salvaApontaFert(pmmContext.getApontFertTO());
                 Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincNormalActivity.class);
                 startActivity(it);
                 finish();

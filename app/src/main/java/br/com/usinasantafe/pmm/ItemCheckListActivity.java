@@ -11,17 +11,17 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.estaticas.ItemCheckListTO;
+import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
+import br.com.usinasantafe.pmm.to.variaveis.RespItemCLTO;
 
 public class ItemCheckListActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
-    private RespItemCheckListTO respItemCheckListTO;
+    private RespItemCLTO respItemCLTO;
     private ItemCheckListTO itemCheckListTO;
-    private CabecCheckListTO cabecCheckListTO;
+    private CabecCLTO cabecCLTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +36,18 @@ public class ItemCheckListActivity extends ActivityGeneric {
         Button buttonReparo = (Button) findViewById(R.id.buttonReparo);
         Button buttonCancChecklist = (Button) findViewById(R.id.buttonCancChecklist);
 
-        cabecCheckListTO = new CabecCheckListTO();
-        List cabecCheckListLista = cabecCheckListTO.get("statusCab", 1L);
-        cabecCheckListTO = (CabecCheckListTO) cabecCheckListLista.get(0);
+        cabecCLTO = new CabecCLTO();
+        List cabecCheckListLista = cabecCLTO.get("statusCabCL", 1L);
+        cabecCLTO = (CabecCLTO) cabecCheckListLista.get(0);
         cabecCheckListLista.clear();
 
         EquipTO equipTO = new EquipTO();
         List equipList;
         if(pmmContext.getTipoEquip() == 1) {
-            equipList = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getCodEquipBoletim());
+            equipList = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getIdEquipBolMM());
         }
         else{
-            equipList = equipTO.get("idEquip", pmmContext.getBoletimFertTO().getCodEquipBolFert());
+            equipList = equipTO.get("idEquip", pmmContext.getBoletimFertTO().getIdEquipBolFert());
         }
         equipTO = (EquipTO) equipList.get(0);
         equipList.clear();
@@ -56,14 +56,14 @@ public class ItemCheckListActivity extends ActivityGeneric {
         ArrayList itemListPesq = new ArrayList();
 
         EspecificaPesquisa pesq3 = new EspecificaPesquisa();
-        pesq3.setCampo("seqItemChecklist");
-        pesq3.setValor(pmmContext.getPosChecklist());
+        pesq3.setCampo("seqItemCheckList");
+        pesq3.setValor(pmmContext.getPosCheckList());
         pesq3.setTipo(1);
         itemListPesq.add(pesq3);
 
         EspecificaPesquisa pesq4 = new EspecificaPesquisa();
-        pesq4.setCampo("idChecklist");
-        pesq4.setValor(equipTO.getIdChecklist());
+        pesq4.setCampo("idCheckList");
+        pesq4.setValor(equipTO.getIdCheckList());
         pesq4.setTipo(1);
         itemListPesq.add(pesq4);
 
@@ -73,25 +73,25 @@ public class ItemCheckListActivity extends ActivityGeneric {
 
         ArrayList respPesq = new ArrayList();
         EspecificaPesquisa pesq1 = new EspecificaPesquisa();
-        pesq1.setCampo("idItBDIt");
-        pesq1.setValor(itemCheckListTO.getIdItemChecklist());
+        pesq1.setCampo("idItBDItCL");
+        pesq1.setValor(itemCheckListTO.getIdItemCheckList());
         pesq1.setTipo(1);
         respPesq.add(pesq1);
 
         EspecificaPesquisa pesq2 = new EspecificaPesquisa();
-        pesq2.setCampo("idCabIt");
-        pesq2.setValor(cabecCheckListTO.getIdCab());
+        pesq2.setCampo("idCabItCL");
+        pesq2.setValor(cabecCLTO.getIdCabCL());
         pesq2.setTipo(1);
         respPesq.add(pesq2);
 
-        respItemCheckListTO = new RespItemCheckListTO();
-        List respList = respItemCheckListTO.get(respPesq);
+        respItemCLTO = new RespItemCLTO();
+        List respList = respItemCLTO.get(respPesq);
         if(respList.size() > 0){
-            respItemCheckListTO = (RespItemCheckListTO) respList.get(0);
-            respItemCheckListTO.delete();
+            respItemCLTO = (RespItemCLTO) respList.get(0);
+            respItemCLTO.delete();
         }
 
-        textViewItemChecklist.setText(itemCheckListTO.getSeqItemChecklist() + " - " + itemCheckListTO.getDescrItemChecklist());
+        textViewItemChecklist.setText(itemCheckListTO.getSeqItemCheckList() + " - " + itemCheckListTO.getDescrItemCheckList());
 
         buttonConforme.setOnClickListener(new View.OnClickListener() {
 
@@ -135,12 +135,12 @@ public class ItemCheckListActivity extends ActivityGeneric {
 
     public void proximaTela(Long opcao){
 
-        respItemCheckListTO.setIdCabIt(cabecCheckListTO.getIdCab());
-        respItemCheckListTO.setIdItBDIt(itemCheckListTO.getIdItemChecklist());
-        respItemCheckListTO.setOpIt(opcao);
-        respItemCheckListTO.insert();
+        respItemCLTO.setIdCabItCL(cabecCLTO.getIdCabCL());
+        respItemCLTO.setIdItBDItCL(itemCheckListTO.getIdItemCheckList());
+        respItemCLTO.setOpItCL(opcao);
+        respItemCLTO.insert();
 
-        if(cabecCheckListTO.getQtdeItemCab() == pmmContext.getPosChecklist()){
+        if(cabecCLTO.getQtdeItemCabCL() == pmmContext.getPosCheckList()){
 
             ManipDadosEnvio.getInstance().salvaCheckList();
 
@@ -157,7 +157,7 @@ public class ItemCheckListActivity extends ActivityGeneric {
         }
         else{
 
-            pmmContext.setPosChecklist(pmmContext.getPosChecklist() + 1);
+            pmmContext.setPosCheckList(pmmContext.getPosCheckList() + 1);
             Intent it = new Intent(ItemCheckListActivity.this, ItemCheckListActivity.class);
             startActivity(it);
             finish();
@@ -168,8 +168,8 @@ public class ItemCheckListActivity extends ActivityGeneric {
 
     public void retornoTela(){
 
-        if(pmmContext.getPosChecklist() > 1){
-            pmmContext.setPosChecklist(pmmContext.getPosChecklist() - 1);
+        if(pmmContext.getPosCheckList() > 1){
+            pmmContext.setPosCheckList(pmmContext.getPosCheckList() - 1);
             Intent it = new Intent(ItemCheckListActivity.this, ItemCheckListActivity.class);
             startActivity(it);
             finish();

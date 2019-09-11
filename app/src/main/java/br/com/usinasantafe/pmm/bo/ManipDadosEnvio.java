@@ -12,27 +12,29 @@ import com.google.gson.JsonObject;
 import android.content.Context;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import br.com.usinasantafe.pmm.conWEB.ConHttpPostCadGenerico;
 import br.com.usinasantafe.pmm.conWEB.UrlsConexaoHttp;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ImplementoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.estaticas.RFuncaoAtivParTO;
+import br.com.usinasantafe.pmm.to.variaveis.ApontFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.BackupApontaTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.RecolhFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.RespItemCLTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
 
 public class ManipDadosEnvio {
 
     private static ManipDadosEnvio instance = null;
     private UrlsConexaoHttp urlsConexaoHttp;
-    private List listDatasFrenteTO;
     private int statusEnvio; //1 - Enviando; 2 - Existe Dados para Enviar; 3 - Todos os Dados Enviados
     private boolean enviando = false;
 
@@ -52,13 +54,13 @@ public class ManipDadosEnvio {
 
     public void salvaCheckList() {
 
-        CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-        List cabecCheckListLista = cabecCheckListTO.get("statusCab", 1L);
-        cabecCheckListTO = (CabecCheckListTO) cabecCheckListLista.get(0);
-        cabecCheckListLista.clear();
+        CabecCLTO cabecCLTO = new CabecCLTO();
+        List cabecCheckListList = cabecCLTO.get("statusCabCL", 1L);
+        cabecCLTO = (CabecCLTO) cabecCheckListList.get(0);
+        cabecCheckListList.clear();
 
-        cabecCheckListTO.setStatusCab(2L);
-        cabecCheckListTO.update();
+        cabecCLTO.setStatusCabCL(2L);
+        cabecCLTO.update();
 
         enviarChecklist();
 
@@ -67,71 +69,93 @@ public class ManipDadosEnvio {
     public void salvaBoletimFechadoMM() {
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List listBoletim = boletimMMTO.get("statusBoletim", 1L);
+        List listBoletim = boletimMMTO.get("statusBolMM", 1L);
         boletimMMTO = (BoletimMMTO) listBoletim.get(0);
         listBoletim.clear();
 
-        boletimMMTO.setDthrFimBoletim(Tempo.getInstance().datahora());
-        boletimMMTO.setStatusBoletim(2L);
+        boletimMMTO.setDthrFinalBolMM(Tempo.getInstance().datahora());
+        boletimMMTO.setStatusBolMM(2L);
         boletimMMTO.update();
 
     }
 
     public void salvaBoletimAbertoMM(BoletimMMTO boletimMMTO, boolean checklist, Double latitude, Double longitude) {
 
-        boletimMMTO.setDthrInicioBoletim(Tempo.getInstance().datahora());
-        boletimMMTO.insert();
+        boletimMMTO.setDthrInicialBolMM(Tempo.getInstance().datahora());
+
 
         ConfigTO configTO = new ConfigTO();
         List listConfigTO = configTO.all();
         configTO = (ConfigTO) listConfigTO.get(0);
         listConfigTO.clear();
 
-        if(checklist){
+        if(!checklist) {
+
+            boletimMMTO.setQtdeApontBolMM(0L);
+            boletimMMTO.insert();
+
+        }else{
+
+            boletimMMTO.setQtdeApontBolMM(1L);
+            boletimMMTO.insert();
 
             String datahora = Tempo.getInstance().datahora();
-            ApontaMMTO apontaMMTO = new ApontaMMTO();
-            apontaMMTO.setDthrAponta(datahora);
-            apontaMMTO.setIdBolAponta(boletimMMTO.getIdBoletim());
-            apontaMMTO.setIdExtBolAponta(boletimMMTO.getIdExtBoletim());
-            apontaMMTO.setOsAponta(boletimMMTO.getOsBoletim());
-            apontaMMTO.setAtividadeAponta(boletimMMTO.getAtivPrincBoletim());
+            ApontMMTO apontMMTO = new ApontMMTO();
+            apontMMTO.setDthrApontMM(datahora);
+            apontMMTO.setIdBolApontMM(boletimMMTO.getIdBolMM());
+            apontMMTO.setIdExtBolApontMM(boletimMMTO.getIdExtBolMM());
+            apontMMTO.setOsApontMM(boletimMMTO.getOsBolMM());
+            apontMMTO.setAtivApontMM(boletimMMTO.getAtivPrincBolMM());
 
-            ParadaTO paradaTO = new ParadaTO();
-            List paradaList = paradaTO.get("flagCheckList",1L);
-            paradaTO = (ParadaTO) paradaList.get(0);
-            paradaList.clear();
+            RFuncaoAtivParTO rFuncaoAtivParTO = new RFuncaoAtivParTO();
+            ArrayList pesqList = new ArrayList();
 
-            apontaMMTO.setParadaAponta(paradaTO.getIdParada());
-            apontaMMTO.setTransbordoAponta(0L);
-            apontaMMTO.setLatitudeAponta(latitude);
-            apontaMMTO.setLongitudeAponta(longitude);
-            apontaMMTO.setStatusConAponta(configTO.getStatusConConfig());
-            apontaMMTO.setStatusAponta(2L);
-            apontaMMTO.insert();
+            EspecificaPesquisa pesq1 = new EspecificaPesquisa();
+            pesq1.setCampo("codFuncao");
+            pesq1.setValor(1L);
+            pesq1.setTipo(1);
+            pesqList.add(pesq1);
+
+            EspecificaPesquisa pesq2 = new EspecificaPesquisa();
+            pesq2.setCampo("tipoFuncao");
+            pesq2.setValor(2L);
+            pesq2.setTipo(1);
+            pesqList.add(pesq2);
+
+            List rFuncaoAtivParList = rFuncaoAtivParTO.get(pesqList);
+            rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtivParList.get(0);
+            rFuncaoAtivParList.clear();
+
+            apontMMTO.setParadaApontMM(rFuncaoAtivParTO.getIdAtivPar());
+            apontMMTO.setTransbApontMM(0L);
+            apontMMTO.setLatitudeApontMM(latitude);
+            apontMMTO.setLongitudeApontMM(longitude);
+            apontMMTO.setStatusConApontMM(configTO.getStatusConConfig());
+            apontMMTO.setStatusApontMM(1L);
+            apontMMTO.insert();
 
             BackupApontaTO backupApontaTO = new BackupApontaTO();
             backupApontaTO.setDthrAponta(datahora);
-            backupApontaTO.setOsAponta(boletimMMTO.getOsBoletim());
-            backupApontaTO.setAtividadeAponta(boletimMMTO.getAtivPrincBoletim());
-            backupApontaTO.setParadaAponta(paradaTO.getIdParada());
+            backupApontaTO.setOsAponta(boletimMMTO.getOsBolMM());
+            backupApontaTO.setAtividadeAponta(boletimMMTO.getAtivPrincBolMM());
+            backupApontaTO.setParadaAponta(rFuncaoAtivParTO.getIdAtivPar());
             backupApontaTO.setTransbAponta(0L);
             backupApontaTO.insert();
 
-            ImplementoTO implementoTO = new ImplementoTO();
-            List implementoList = implementoTO.get("idApontImplemento", 0L);
+            ImpleMMTO impleMMTO = new ImpleMMTO();
+            List implementoList = impleMMTO.get("idApontImpleMM", 0L);
 
             for (int i = 0; i < implementoList.size(); i++) {
-                implementoTO = (ImplementoTO) implementoList.get(i);
-                ImplementoTO cadImplTO = new ImplementoTO();
-                cadImplTO.setIdApontImplemento(apontaMMTO.getIdAponta());
-                cadImplTO.setCodEquipImplemento(implementoTO.getCodEquipImplemento());
-                cadImplTO.setPosImplemento(implementoTO.getPosImplemento());
-                cadImplTO.setDthrImplemento(datahora);
+                impleMMTO = (ImpleMMTO) implementoList.get(i);
+                ImpleMMTO cadImplTO = new ImpleMMTO();
+                cadImplTO.setIdApontImpleMM(apontMMTO.getIdApontMM());
+                cadImplTO.setCodEquipImpleMM(impleMMTO.getCodEquipImpleMM());
+                cadImplTO.setPosImpleMM(impleMMTO.getPosImpleMM());
+                cadImplTO.setDthrImpleMM(datahora);
                 cadImplTO.insert();
             }
 
-            configTO.setUltTurnoCLConfig(boletimMMTO.getCodTurnoBoletim());
+            configTO.setUltTurnoCLConfig(boletimMMTO.getIdTurnoBolMM());
             configTO.setDtUltCLConfig(Tempo.getInstance().dataSHora());
             configTO.setDtUltApontConfig(datahora);
             configTO.update();
@@ -140,42 +164,44 @@ public class ManipDadosEnvio {
 
     }
 
-    public void salvaApontaMM(ApontaMMTO apontaMMTO, Long status) {
+    public void salvaApontaMM(ApontMMTO apontMMTO) {
 
         String datahora = Tempo.getInstance().datahora();
-        apontaMMTO.setDthrAponta(datahora);
+        apontMMTO.setDthrApontMM(datahora);
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List lBol = boletimMMTO.get("statusBoletim", 1L);
-        boletimMMTO = (BoletimMMTO) lBol.get(0);
-        lBol.clear();
+        List bolList = boletimMMTO.get("statusBolMM", 1L);
+        boletimMMTO = (BoletimMMTO) bolList.get(0);
+        boletimMMTO.setQtdeApontBolMM(boletimMMTO.getQtdeApontBolMM() + 1L);
+        boletimMMTO.update();
+        bolList.clear();
 
-        apontaMMTO.setIdBolAponta(boletimMMTO.getIdBoletim());
-        apontaMMTO.setIdExtBolAponta(boletimMMTO.getIdExtBoletim());
-        apontaMMTO.setStatusAponta(status);
-        apontaMMTO.insert();
+        apontMMTO.setIdBolApontMM(boletimMMTO.getIdBolMM());
+        apontMMTO.setIdExtBolApontMM(boletimMMTO.getIdExtBolMM());
+        apontMMTO.setStatusApontMM(1L);
+        apontMMTO.insert();
 
         BackupApontaTO backupApontaTO = new BackupApontaTO();
-        backupApontaTO.setDthrAponta(apontaMMTO.getDthrAponta());
-        backupApontaTO.setOsAponta(apontaMMTO.getOsAponta());
-        backupApontaTO.setAtividadeAponta(apontaMMTO.getAtividadeAponta());
-        backupApontaTO.setParadaAponta(apontaMMTO.getParadaAponta());
-        backupApontaTO.setTransbAponta(apontaMMTO.getTransbordoAponta());
+        backupApontaTO.setDthrAponta(apontMMTO.getDthrApontMM());
+        backupApontaTO.setOsAponta(apontMMTO.getOsApontMM());
+        backupApontaTO.setAtividadeAponta(apontMMTO.getAtivApontMM());
+        backupApontaTO.setParadaAponta(apontMMTO.getParadaApontMM());
+        backupApontaTO.setTransbAponta(apontMMTO.getTransbApontMM());
         backupApontaTO.insert();
 
-        ImplementoTO implementoTO = new ImplementoTO();
-        List implementoList = implementoTO.get("idApontImplemento", 0L);
+        ImpleMMTO impleMMTO = new ImpleMMTO();
+        List implementoList = impleMMTO.get("idApontImpleMM", 0L);
 
-        List apontaList = apontaMMTO.get("dthrAponta", datahora);
-        apontaMMTO = (ApontaMMTO) apontaList.get(0);
+        List apontaList = apontMMTO.get("dthrApontMM", datahora);
+        apontMMTO = (ApontMMTO) apontaList.get(0);
 
         for (int i = 0; i < implementoList.size(); i++) {
-            implementoTO = (ImplementoTO) implementoList.get(i);
-            ImplementoTO cadImplTO = new ImplementoTO();
-            cadImplTO.setIdApontImplemento(apontaMMTO.getIdAponta());
-            cadImplTO.setCodEquipImplemento(implementoTO.getCodEquipImplemento());
-            cadImplTO.setPosImplemento(implementoTO.getPosImplemento());
-            cadImplTO.setDthrImplemento(datahora);
+            impleMMTO = (ImpleMMTO) implementoList.get(i);
+            ImpleMMTO cadImplTO = new ImpleMMTO();
+            cadImplTO.setIdApontImpleMM(apontMMTO.getIdApontMM());
+            cadImplTO.setCodEquipImpleMM(impleMMTO.getCodEquipImpleMM());
+            cadImplTO.setPosImpleMM(impleMMTO.getPosImpleMM());
+            cadImplTO.setDthrImpleMM(datahora);
             cadImplTO.insert();
         }
 
@@ -190,7 +216,7 @@ public class ManipDadosEnvio {
         boletimFertTO = (BoletimFertTO) boletimFertList.get(0);
         boletimFertList.clear();
 
-        boletimFertTO.setDthrFimBolFert(Tempo.getInstance().datahora());
+        boletimFertTO.setDthrFinalBolFert(Tempo.getInstance().datahora());
         boletimFertTO.setStatusBolFert(2L);
         boletimFertTO.update();
 
@@ -198,7 +224,7 @@ public class ManipDadosEnvio {
 
     public void salvaBoletimAbertoFert(BoletimFertTO boletimFertTO, boolean checklist, Double latitude, Double longitude) {
 
-        boletimFertTO.setDthrInicioBolFert(Tempo.getInstance().datahora());
+        boletimFertTO.setDthrInicialBolFert(Tempo.getInstance().datahora());
         boletimFertTO.insert();
 
         ConfigTO configTO = new ConfigTO();
@@ -209,39 +235,53 @@ public class ManipDadosEnvio {
         if(checklist){
 
             String datahora = Tempo.getInstance().datahora();
-            ApontaFertTO apontaFertTO = new ApontaFertTO();
-            apontaFertTO.setDthrApontaFert(datahora);
-            apontaFertTO.setIdBolApontaFert(boletimFertTO.getIdBolFert());
-            apontaFertTO.setIdExtBolApontaFert(boletimFertTO.getIdExtBolFert());
-            apontaFertTO.setOsApontaFert(boletimFertTO.getOsBolFert());
-            apontaFertTO.setAtivApontaFert(boletimFertTO.getAtivPrincBolFert());
+            ApontFertTO apontFertTO = new ApontFertTO();
+            apontFertTO.setDthrApontFert(datahora);
+            apontFertTO.setIdBolApontFert(boletimFertTO.getIdBolFert());
+            apontFertTO.setIdExtBolApontFert(boletimFertTO.getIdExtBolFert());
+            apontFertTO.setOsApontFert(boletimFertTO.getOsBolFert());
+            apontFertTO.setAtivApontFert(boletimFertTO.getAtivPrincBolFert());
 
-            ParadaTO paradaTO = new ParadaTO();
-            List paradaList = paradaTO.get("flagCheckList",1L);
-            paradaTO = (ParadaTO) paradaList.get(0);
-            paradaList.clear();
+            RFuncaoAtivParTO rFuncaoAtivParTO = new RFuncaoAtivParTO();
+            ArrayList pesqList = new ArrayList();
 
-            apontaFertTO.setParadaApontaFert(paradaTO.getIdParada());
-            apontaFertTO.setBocalApontaFert(0L);
-            apontaFertTO.setPressaoApontaFert(0D);
-            apontaFertTO.setVelocApontaFert(0L);
-            apontaFertTO.setLatitudeApontaFert(latitude);
-            apontaFertTO.setLongitudeApontaFert(longitude);
-            apontaFertTO.setStatusConApontaFert(configTO.getStatusConConfig());
-            apontaFertTO.setStatusApontaFert(2L);
-            apontaFertTO.insert();
+            EspecificaPesquisa pesq1 = new EspecificaPesquisa();
+            pesq1.setCampo("codFuncao");
+            pesq1.setValor(1L);
+            pesq1.setTipo(1);
+            pesqList.add(pesq1);
+
+            EspecificaPesquisa pesq2 = new EspecificaPesquisa();
+            pesq2.setCampo("tipoFuncao");
+            pesq2.setValor(2L);
+            pesq2.setTipo(1);
+            pesqList.add(pesq2);
+
+            List rFuncaoAtivParList = rFuncaoAtivParTO.get(pesqList);
+            rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtivParList.get(0);
+            rFuncaoAtivParList.clear();
+
+            apontFertTO.setParadaApontFert(rFuncaoAtivParTO.getIdAtivPar());
+            apontFertTO.setBocalApontFert(0L);
+            apontFertTO.setPressaoApontFert(0D);
+            apontFertTO.setVelocApontFert(0L);
+            apontFertTO.setLatitudeApontFert(latitude);
+            apontFertTO.setLongitudeApontFert(longitude);
+            apontFertTO.setStatusConApontFert(configTO.getStatusConConfig());
+            apontFertTO.setStatusApontFert(1L);
+            apontFertTO.insert();
 
             BackupApontaTO backupApontaTO = new BackupApontaTO();
             backupApontaTO.setDthrAponta(datahora);
             backupApontaTO.setOsAponta(boletimFertTO.getOsBolFert());
             backupApontaTO.setAtividadeAponta(boletimFertTO.getAtivPrincBolFert());
-            backupApontaTO.setParadaAponta(paradaTO.getIdParada());
+            backupApontaTO.setParadaAponta(rFuncaoAtivParTO.getIdAtivPar());
             backupApontaTO.setPressaoAponta(0D);
             backupApontaTO.setVelocAponta(0L);
             backupApontaTO.setBocalAponta(0L);
             backupApontaTO.insert();
 
-            configTO.setUltTurnoCLConfig(boletimFertTO.getCodTurnoBolFert());
+            configTO.setUltTurnoCLConfig(boletimFertTO.getIdTurnoBolFert());
             configTO.setDtUltCLConfig(Tempo.getInstance().dataSHora());
             configTO.setDtUltApontConfig(datahora);
             configTO.update();
@@ -250,29 +290,29 @@ public class ManipDadosEnvio {
 
     }
 
-    public void salvaApontaFert(ApontaFertTO apontaFertTO, Long status) {
+    public void salvaApontaFert(ApontFertTO apontFertTO) {
 
         String datahora = Tempo.getInstance().datahora();
-        apontaFertTO.setDthrApontaFert(datahora);
+        apontFertTO.setDthrApontFert(datahora);
 
         BoletimFertTO boletimFertTO = new BoletimFertTO();
         List boletimFertList = boletimFertTO.get("statusBolFert", 1L);
         boletimFertTO = (BoletimFertTO) boletimFertList.get(0);
         boletimFertList.clear();
 
-        apontaFertTO.setIdBolApontaFert(boletimFertTO.getIdBolFert());
-        apontaFertTO.setIdExtBolApontaFert(boletimFertTO.getIdExtBolFert());
-        apontaFertTO.setStatusApontaFert(status);
-        apontaFertTO.insert();
+        apontFertTO.setIdBolApontFert(boletimFertTO.getIdBolFert());
+        apontFertTO.setIdExtBolApontFert(boletimFertTO.getIdExtBolFert());
+        apontFertTO.setStatusApontFert(1L);
+        apontFertTO.insert();
 
         BackupApontaTO backupApontaTO = new BackupApontaTO();
-        backupApontaTO.setDthrAponta(apontaFertTO.getDthrApontaFert());
-        backupApontaTO.setOsAponta(apontaFertTO.getOsApontaFert());
-        backupApontaTO.setAtividadeAponta(apontaFertTO.getAtivApontaFert());
-        backupApontaTO.setParadaAponta(apontaFertTO.getParadaApontaFert());
-        backupApontaTO.setBocalAponta(apontaFertTO.getBocalApontaFert());
-        backupApontaTO.setPressaoAponta(apontaFertTO.getPressaoApontaFert());
-        backupApontaTO.setVelocAponta(apontaFertTO.getVelocApontaFert());
+        backupApontaTO.setDthrAponta(apontFertTO.getDthrApontFert());
+        backupApontaTO.setOsAponta(apontFertTO.getOsApontFert());
+        backupApontaTO.setAtividadeAponta(apontFertTO.getAtivApontFert());
+        backupApontaTO.setParadaAponta(apontFertTO.getParadaApontFert());
+        backupApontaTO.setBocalAponta(apontFertTO.getBocalApontFert());
+        backupApontaTO.setPressaoAponta(apontFertTO.getPressaoApontFert());
+        backupApontaTO.setVelocAponta(apontFertTO.getVelocApontFert());
         backupApontaTO.insert();
 
         envioDadosPrinc();
@@ -283,25 +323,25 @@ public class ManipDadosEnvio {
 
     public void enviarChecklist() {
 
-        CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-        List cabecCheckListLista = boletinsChecklist();
+        CabecCLTO cabecCLTO = new CabecCLTO();
+        List cabecCheckListLista = bolChecklist();
 
         JsonArray jsonArrayCabec = new JsonArray();
         JsonArray jsonArrayItem = new JsonArray();
 
         for (int i = 0; i < cabecCheckListLista.size(); i++) {
 
-            cabecCheckListTO = (CabecCheckListTO) cabecCheckListLista.get(i);
+            cabecCLTO = (CabecCLTO) cabecCheckListLista.get(i);
             Gson gsonCabec = new Gson();
-            jsonArrayCabec.add(gsonCabec.toJsonTree(cabecCheckListTO, cabecCheckListTO.getClass()));
+            jsonArrayCabec.add(gsonCabec.toJsonTree(cabecCLTO, cabecCLTO.getClass()));
 
-            RespItemCheckListTO respItemCheckListTO = new RespItemCheckListTO();
-            List listaItem = respItemCheckListTO.get("idCabIt", cabecCheckListTO.getIdCab());
+            RespItemCLTO respItemCLTO = new RespItemCLTO();
+            List listaItem = respItemCLTO.get("idCabItCL", cabecCLTO.getIdCabCL());
 
             for (int j = 0; j < listaItem.size(); j++) {
-                respItemCheckListTO = (RespItemCheckListTO) listaItem.get(j);
+                respItemCLTO = (RespItemCLTO) listaItem.get(j);
                 Gson gsonItem = new Gson();
-                jsonArrayItem.add(gsonItem.toJsonTree(respItemCheckListTO, respItemCheckListTO.getClass()));
+                jsonArrayItem.add(gsonItem.toJsonTree(respItemCLTO, respItemCLTO.getClass()));
             }
 
         }
@@ -331,7 +371,7 @@ public class ManipDadosEnvio {
     public void enviarBolFechadosMM() {
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List boletimMMList = boletinsFechadoMM();
+        List boletimMMList = bolFechadoMM();
 
         JsonArray jsonArrayBoletim = new JsonArray();
         JsonArray jsonArrayAponta = new JsonArray();
@@ -344,22 +384,36 @@ public class ManipDadosEnvio {
             Gson gsonCabec = new Gson();
             jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimMMTO, boletimMMTO.getClass()));
 
-            ApontaMMTO apontaMMTO = new ApontaMMTO();
-            List apontaMMList = apontaMMTO.get("idBolAponta", boletimMMTO.getIdBoletim());
+            ApontMMTO apontMMTO = new ApontMMTO();
+
+            ArrayList listaPesq = new ArrayList();
+            EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+            pesquisa.setCampo("statusApontMM");
+            pesquisa.setValor(1L);
+            pesquisa.setTipo(1);
+            listaPesq.add(pesquisa);
+
+            EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
+            pesquisa2.setCampo("idBolApontMM");
+            pesquisa2.setValor(boletimMMTO.getIdBolMM());
+            pesquisa2.setTipo(1);
+            listaPesq.add(pesquisa2);
+
+            List apontaMMList = apontMMTO.get(listaPesq);
 
             for (int j = 0; j < apontaMMList.size(); j++) {
 
-                apontaMMTO = (ApontaMMTO) apontaMMList.get(j);
+                apontMMTO = (ApontMMTO) apontaMMList.get(j);
                 Gson gsonItem = new Gson();
-                jsonArrayAponta.add(gsonItem.toJsonTree(apontaMMTO, apontaMMTO.getClass()));
+                jsonArrayAponta.add(gsonItem.toJsonTree(apontMMTO, apontMMTO.getClass()));
 
-                ImplementoTO implementoTO = new ImplementoTO();
-                List implementoList = implementoTO.get("idApontImplemento", apontaMMTO.getIdAponta());
+                ImpleMMTO impleMMTO = new ImpleMMTO();
+                List implementoList = impleMMTO.get("idApontImpleMM", apontMMTO.getIdApontMM());
 
                 for (int l = 0; l < implementoList.size(); l++) {
-                    implementoTO = (ImplementoTO) implementoList.get(l);
+                    impleMMTO = (ImpleMMTO) implementoList.get(l);
                     Gson gsonItemImp = new Gson();
-                    jsonArrayImplemento.add(gsonItemImp.toJsonTree(implementoTO, implementoTO.getClass()));
+                    jsonArrayImplemento.add(gsonItemImp.toJsonTree(impleMMTO, impleMMTO.getClass()));
                 }
 
                 implementoList.clear();
@@ -368,13 +422,13 @@ public class ManipDadosEnvio {
 
             apontaMMList.clear();
 
-            RendimentoTO rendimentoTO = new RendimentoTO();
-            List rendList = rendimentoTO.get("idBolRendimento", boletimMMTO.getIdBoletim());
+            RendMMTO rendMMTO = new RendMMTO();
+            List rendList = rendMMTO.get("idBolRendMM", boletimMMTO.getIdBolMM());
 
             for (int j = 0; j < rendList.size(); j++) {
-                rendimentoTO = (RendimentoTO) rendList.get(j);
+                rendMMTO = (RendMMTO) rendList.get(j);
                 Gson gsonRend = new Gson();
-                jsonArrayRendimento.add(gsonRend.toJsonTree(rendimentoTO, rendimentoTO.getClass()));
+                jsonArrayRendimento.add(gsonRend.toJsonTree(rendMMTO, rendMMTO.getClass()));
             }
 
             rendList.clear();
@@ -396,7 +450,6 @@ public class ManipDadosEnvio {
         jsonRend.add("rendimento", jsonArrayRendimento);
 
         String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonRend.toString();
-//        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonRend.toString() + "?";
 
         Log.i("PMM", "FECHADO = " + dados);
 
@@ -415,7 +468,7 @@ public class ManipDadosEnvio {
     public void enviarBolAbertosMM() {
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List boletimMMList = boletinsAbertoSemEnvioMM();
+        List boletimMMList = bolAbertoSemEnvioMM();
 
         JsonArray jsonArrayBoletim = new JsonArray();
         JsonArray jsonArrayAponta = new JsonArray();
@@ -427,36 +480,22 @@ public class ManipDadosEnvio {
             Gson gsonCabec = new Gson();
             jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimMMTO, boletimMMTO.getClass()));
 
-            ApontaMMTO apontaMMTO = new ApontaMMTO();
-
-            ArrayList listaPesq = new ArrayList();
-            EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-            pesquisa.setCampo("statusAponta");
-            pesquisa.setValor(2L);
-            pesquisa.setTipo(1);
-            listaPesq.add(pesquisa);
-
-            EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-            pesquisa2.setCampo("idBolAponta");
-            pesquisa2.setValor(boletimMMTO.getIdBoletim());
-            pesquisa2.setTipo(1);
-            listaPesq.add(pesquisa2);
-
-            List apontaList = apontaMMTO.get(listaPesq);
+            ApontMMTO apontMMTO = new ApontMMTO();
+            List apontaList = apontMMTO.get("idBolApontMM", boletimMMTO.getIdBolMM());
 
             for (int j = 0; j < apontaList.size(); j++) {
 
-                apontaMMTO = (ApontaMMTO) apontaList.get(j);
+                apontMMTO = (ApontMMTO) apontaList.get(j);
                 Gson gsonItem = new Gson();
-                jsonArrayAponta.add(gsonItem.toJsonTree(apontaMMTO, apontaMMTO.getClass()));
+                jsonArrayAponta.add(gsonItem.toJsonTree(apontMMTO, apontMMTO.getClass()));
 
-                ImplementoTO implementoTO = new ImplementoTO();
-                List implementoList = implementoTO.get("idApontImplemento", apontaMMTO.getIdAponta());
+                ImpleMMTO impleMMTO = new ImpleMMTO();
+                List implementoList = impleMMTO.get("idApontImpleMM", apontMMTO.getIdApontMM());
 
                 for (int l = 0; l < implementoList.size(); l++) {
-                    implementoTO = (ImplementoTO) implementoList.get(l);
+                    impleMMTO = (ImpleMMTO) implementoList.get(l);
                     Gson gsonItemImp = new Gson();
-                    jsonArrayImplemento.add(gsonItemImp.toJsonTree(implementoTO, implementoTO.getClass()));
+                    jsonArrayImplemento.add(gsonItemImp.toJsonTree(impleMMTO, impleMMTO.getClass()));
                 }
 
                 implementoList.clear();
@@ -480,7 +519,6 @@ public class ManipDadosEnvio {
 
 
         String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString();
-//        String dados = jsonBoletim.toString() + "_" + jsonAponta.toString() + "|" + jsonImplemento.toString() + "?";
 
         Log.i("PMM", "ABERTO = " + dados);
 
@@ -496,27 +534,27 @@ public class ManipDadosEnvio {
 
     }
 
-    public void envioApontaMM() {
+    public void envioApontMM() {
 
         JsonArray jsonArrayAponta = new JsonArray();
         JsonArray jsonArrayImplemento = new JsonArray();
 
-        ApontaMMTO apontaMMTO = new ApontaMMTO();
-        List apontaList = apontamentosMM();
+        ApontMMTO apontMMTO = new ApontMMTO();
+        List apontaList = apontMM();
 
         for (int i = 0; i < apontaList.size(); i++) {
 
-            apontaMMTO = (ApontaMMTO) apontaList.get(i);
+            apontMMTO = (ApontMMTO) apontaList.get(i);
             Gson gson = new Gson();
-            jsonArrayAponta.add(gson.toJsonTree(apontaMMTO, apontaMMTO.getClass()));
+            jsonArrayAponta.add(gson.toJsonTree(apontMMTO, apontMMTO.getClass()));
 
-            ImplementoTO implementoTO = new ImplementoTO();
-            List implementoList = implementoTO.get("idApontImplemento", apontaMMTO.getIdAponta());
+            ImpleMMTO impleMMTO = new ImpleMMTO();
+            List implementoList = impleMMTO.get("idApontImpleMM", apontMMTO.getIdApontMM());
 
             for (int j = 0; j < implementoList.size(); j++) {
-                implementoTO = (ImplementoTO) implementoList.get(j);
+                impleMMTO = (ImpleMMTO) implementoList.get(j);
                 Gson gsonItem = new Gson();
-                jsonArrayImplemento.add(gsonItem.toJsonTree(implementoTO, implementoTO.getClass()));
+                jsonArrayImplemento.add(gsonItem.toJsonTree(impleMMTO, impleMMTO.getClass()));
             }
 
             implementoList.clear();
@@ -532,7 +570,6 @@ public class ManipDadosEnvio {
         jsonImplemento.add("implemento", jsonArrayImplemento);
 
         String dados = jsonAponta.toString() + "_" + jsonImplemento.toString();
-//        String dados = jsonAponta.toString() + "|" + jsonImplemento.toString() + "?";
 
         Log.i("PMM", "APONTAMENTO = " + dados);
 
@@ -549,7 +586,7 @@ public class ManipDadosEnvio {
     public void enviarBolFechadosFert() {
 
         BoletimFertTO boletimFertTO = new BoletimFertTO();
-        List boletimFertList = boletinsFechadoFert();
+        List boletimFertList = bolFechadoFert();
 
         JsonArray jsonArrayBoletim = new JsonArray();
         JsonArray jsonArrayAponta = new JsonArray();
@@ -561,26 +598,26 @@ public class ManipDadosEnvio {
             Gson gsonCabec = new Gson();
             jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimFertTO, boletimFertTO.getClass()));
 
-            ApontaFertTO apontaFertTO = new ApontaFertTO();
-            List apontaFertList = apontaFertTO.get("idBolApontaFert", boletimFertTO.getIdBolFert());
+            ApontFertTO apontFertTO = new ApontFertTO();
+            List apontaFertList = apontFertTO.get("idBolApontFert", boletimFertTO.getIdBolFert());
 
             for (int j = 0; j < apontaFertList.size(); j++) {
 
-                apontaFertTO = (ApontaFertTO) apontaFertList.get(j);
+                apontFertTO = (ApontFertTO) apontaFertList.get(j);
                 Gson gsonItem = new Gson();
-                jsonArrayAponta.add(gsonItem.toJsonTree(apontaFertTO, apontaFertTO.getClass()));
+                jsonArrayAponta.add(gsonItem.toJsonTree(apontFertTO, apontFertTO.getClass()));
 
             }
 
             apontaFertList.clear();
 
-            RecolhimentoTO recolhimentoTO = new RecolhimentoTO();
-            List recolhimentoList = recolhimentoTO.get("idBolRecol", boletimFertTO.getIdBolFert());
+            RecolhFertTO recolhFertTO = new RecolhFertTO();
+            List recolhimentoList = recolhFertTO.get("idBolRecolhFert", boletimFertTO.getIdBolFert());
 
             for (int j = 0; j < recolhimentoList.size(); j++) {
-                recolhimentoTO = (RecolhimentoTO) recolhimentoList.get(j);
+                recolhFertTO = (RecolhFertTO) recolhimentoList.get(j);
                 Gson gsonRecol = new Gson();
-                jsonArrayRecolhimento.add(gsonRecol.toJsonTree(recolhimentoTO, recolhimentoTO.getClass()));
+                jsonArrayRecolhimento.add(gsonRecol.toJsonTree(recolhFertTO, recolhFertTO.getClass()));
             }
 
             recolhimentoList.clear();
@@ -617,7 +654,7 @@ public class ManipDadosEnvio {
     public void enviarBolAbertosFert() {
 
         BoletimFertTO boletimFertTO = new BoletimFertTO();
-        List boletimFertList = boletinsAbertoSemEnvioFert();
+        List boletimFertList = bolAbertoSemEnvioFert();
 
         JsonArray jsonArrayBoletim = new JsonArray();
         JsonArray jsonArrayAponta = new JsonArray();
@@ -628,28 +665,28 @@ public class ManipDadosEnvio {
             Gson gsonCabec = new Gson();
             jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimFertTO, boletimFertTO.getClass()));
 
-            ApontaFertTO apontaFertTO = new ApontaFertTO();
+            ApontFertTO apontFertTO = new ApontFertTO();
 
             ArrayList listaPesq = new ArrayList();
             EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-            pesquisa.setCampo("statusApontaFert");
+            pesquisa.setCampo("statusApontFert");
             pesquisa.setValor(2L);
             pesquisa.setTipo(1);
             listaPesq.add(pesquisa);
 
             EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-            pesquisa2.setCampo("idBolApontaFert");
+            pesquisa2.setCampo("idBolApontFert");
             pesquisa2.setValor(boletimFertTO.getIdBolFert());
             pesquisa2.setTipo(1);
             listaPesq.add(pesquisa2);
 
-            List apontaList = apontaFertTO.get(listaPesq);
+            List apontaList = apontFertTO.get(listaPesq);
 
             for (int j = 0; j < apontaList.size(); j++) {
 
-                apontaFertTO = (ApontaFertTO) apontaList.get(j);
+                apontFertTO = (ApontFertTO) apontaList.get(j);
                 Gson gsonItem = new Gson();
-                jsonArrayAponta.add(gsonItem.toJsonTree(apontaFertTO, apontaFertTO.getClass()));
+                jsonArrayAponta.add(gsonItem.toJsonTree(apontFertTO, apontFertTO.getClass()));
 
             }
 
@@ -685,14 +722,14 @@ public class ManipDadosEnvio {
 
         JsonArray jsonArrayAponta = new JsonArray();
 
-        ApontaFertTO apontaFertTO = new ApontaFertTO();
-        List apontaList = apontamentosFert();
+        ApontFertTO apontFertTO = new ApontFertTO();
+        List apontaList = apontFert();
 
         for (int i = 0; i < apontaList.size(); i++) {
 
-            apontaFertTO = (ApontaFertTO) apontaList.get(i);
+            apontFertTO = (ApontFertTO) apontaList.get(i);
             Gson gson = new Gson();
-            jsonArrayAponta.add(gson.toJsonTree(apontaFertTO, apontaFertTO.getClass()));
+            jsonArrayAponta.add(gson.toJsonTree(apontFertTO, apontFertTO.getClass()));
 
         }
 
@@ -719,102 +756,86 @@ public class ManipDadosEnvio {
 
     public void delChecklist() {
 
-        CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-        List cabecCheckList = cabecCheckListTO.get("statusCab", 2L);
+        CabecCLTO cabecCLTO = new CabecCLTO();
+        List cabecCheckList = cabecCLTO.get("statusCabCL", 2L);
         ArrayList<Long> rLista = new ArrayList<Long>();
 
         for (int i = 0; i < cabecCheckList.size(); i++) {
-            cabecCheckListTO = (CabecCheckListTO) cabecCheckList.get(i);
-            rLista.add(cabecCheckListTO.getIdCab());
+            cabecCLTO = (CabecCLTO) cabecCheckList.get(i);
+            rLista.add(cabecCLTO.getIdCabCL());
         }
 
-        RespItemCheckListTO respItemCheckListTO = new RespItemCheckListTO();
-        List respItemList = respItemCheckListTO.in("idCabIt", rLista);
+        RespItemCLTO respItemCLTO = new RespItemCLTO();
+        List respItemList = respItemCLTO.in("idCabItCL", rLista);
 
         for (int j = 0; j < respItemList.size(); j++) {
-            respItemCheckListTO = (RespItemCheckListTO) respItemList.get(j);
-            respItemCheckListTO.delete();
+            respItemCLTO = (RespItemCLTO) respItemList.get(j);
+            respItemCLTO.delete();
         }
 
         for (int i = 0; i < cabecCheckList.size(); i++) {
-            cabecCheckListTO = (CabecCheckListTO) cabecCheckList.get(i);
-            cabecCheckListTO.delete();
+            cabecCLTO = (CabecCLTO) cabecCheckList.get(i);
+            cabecCLTO.delete();
         }
 
     }
 
-    public void delBolFechadoMM() {
-
-        BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List boletimMMList = boletimMMTO.get("statusBoletim", 2L);
-        ArrayList<Long> rLista = new ArrayList<Long>();
-
-        for (int i = 0; i < boletimMMList.size(); i++) {
-            boletimMMTO = (BoletimMMTO) boletimMMList.get(i);
-            rLista.add(boletimMMTO.getIdBoletim());
-        }
-
-        ApontaMMTO apontaMMTO = new ApontaMMTO();
-        List apontaList = apontaMMTO.in("idBolAponta", rLista);
-
-        for (int j = 0; j < apontaList.size(); j++) {
-
-            apontaMMTO = (ApontaMMTO) apontaList.get(j);
-            apontaMMTO.delete();
-
-            ImplementoTO implementoTO = new ImplementoTO();
-            List implementoList = implementoTO.get("idApontImplemento", apontaMMTO.getIdAponta());
-
-            for (int l = 0; l < implementoList.size(); l++) {
-                implementoTO = (ImplementoTO) implementoList.get(l);
-                implementoTO.delete();
-            }
-
-        }
-
-        RendimentoTO rendimentoTO = new RendimentoTO();
-        List rendimentoList = rendimentoTO.in("idBolRendimento", rLista);
-
-        for (int j = 0; j < rendimentoList.size(); j++) {
-            rendimentoTO = (RendimentoTO) rendimentoList.get(j);
-            rendimentoTO.delete();
-        }
-
-        for (int i = 0; i < boletimMMList.size(); i++) {
-            boletimMMTO = (BoletimMMTO) boletimMMList.get(i);
-            boletimMMTO.delete();
-        }
-
-    }
-
-    public void atualDelBoletimMM(String retorno){
+    public void updBolFechadoMM(String retorno) {
 
         try{
 
-            int pos1 = retorno.indexOf("=") + 1;
-            int pos2 = retorno.indexOf("_") + 1;
-            String id = retorno.substring(pos1, (pos2 - 1));
+            int pos1 = retorno.indexOf("_") + 1;
+            String objPrinc = retorno.substring(pos1);
 
-            BoletimMMTO boletimMMTO = new BoletimMMTO();
-            List listBoletim = boletimMMTO.get("statusBoletim", 1L);
-            boletimMMTO = (BoletimMMTO) listBoletim.get(0);
-            boletimMMTO.setIdExtBoletim(Long.parseLong(id.trim()));
-            boletimMMTO.update();
+            JSONObject jObjBolMM = new JSONObject(objPrinc);
+            JSONArray jsonArrayBolMM = jObjBolMM.getJSONArray("boletim");
 
-            ApontaMMTO apontaMMTO = new ApontaMMTO();
-            List apontaList = apontaMMTO.get("idBolAponta", boletimMMTO.getIdBoletim());
+            if (jsonArrayBolMM.length() > 0) {
 
-            for (int j = 0; j < apontaList.size(); j++) {
+                for (int i = 0; i < jsonArrayBolMM.length(); i++) {
 
-                apontaMMTO = (ApontaMMTO) apontaList.get(j);
-                apontaMMTO.delete();
+                    JSONObject objBol = jsonArrayBolMM.getJSONObject(i);
+                    Gson gsonBol = new Gson();
+                    BoletimMMTO boletimMMTO = gsonBol.fromJson(objBol.toString(), BoletimMMTO.class);
 
-                ImplementoTO implementoTO = new ImplementoTO();
-                List implementoList = implementoTO.get("idApontImplemento", apontaMMTO.getIdAponta());
+                    List bolMMList = boletimMMTO.get("idBolMM", boletimMMTO.getIdBolMM());
+                    BoletimMMTO boletimMMTOBD = (BoletimMMTO) bolMMList.get(0);
+                    bolMMList.clear();
 
-                for (int l = 0; l < implementoList.size(); l++) {
-                    implementoTO = (ImplementoTO) implementoList.get(l);
-                    implementoTO.delete();
+                    if(boletimMMTOBD.getQtdeApontBolMM() == boletimMMTO.getQtdeApontBolMM()){
+
+                        ApontMMTO apontMMTO = new ApontMMTO();
+                        List apontaList = apontMMTO.get("idBolApontMM", boletimMMTOBD.getIdBolMM());
+
+                        for (int j = 0; j < apontaList.size(); j++) {
+
+                            apontMMTO = (ApontMMTO) apontaList.get(j);
+                            apontMMTO.delete();
+
+                            ImpleMMTO impleMMTO = new ImpleMMTO();
+                            List impleList = impleMMTO.get("idApontImpleMM", apontMMTO.getIdApontMM());
+
+                            for (int l = 0; l < impleList.size(); l++) {
+                                impleMMTO = (ImpleMMTO) impleList.get(l);
+                                impleMMTO.delete();
+                            }
+
+                        }
+
+                        apontaList.clear();
+
+                        RendMMTO rendMMTO = new RendMMTO();
+                        List rendList = rendMMTO.get("idBolRendMM", boletimMMTOBD.getIdBolMM());
+
+                        for (int j = 0; j < rendList.size(); j++) {
+                            rendMMTO = (RendMMTO) rendList.get(j);
+                            rendMMTO.delete();
+                        }
+
+                        boletimMMTOBD.delete();
+
+                    }
+
                 }
 
             }
@@ -826,24 +847,128 @@ public class ManipDadosEnvio {
 
     }
 
-    public void delApontaMM() {
+    public void updBolAbertoMM(String retorno){
 
-        ApontaMMTO apontaMMTO = new ApontaMMTO();
-        List apontaList = apontamentosMM();
+        try{
 
-        for (int j = 0; j < apontaList.size(); j++) {
+            int pos1 = retorno.indexOf("_") + 1;
+            int pos2 = retorno.indexOf("|") + 1;
+            String objPrinc = retorno.substring(pos1, pos2);
+            String objSeg = retorno.substring(pos2);
 
-            apontaMMTO = (ApontaMMTO) apontaList.get(j);
-            apontaMMTO.delete();
+            JSONObject jObjBolMM = new JSONObject(objPrinc);
+            JSONArray jsonArrayBolMM = jObjBolMM.getJSONArray("boletim");
 
-            ImplementoTO implementoTO = new ImplementoTO();
-            List implementoList = implementoTO.get("idApontImplemento", apontaMMTO.getIdAponta());
+            JSONObject objBol = jsonArrayBolMM.getJSONObject(0);
+            Gson gsonBol = new Gson();
+            BoletimMMTO boletimMMTO = gsonBol.fromJson(objBol.toString(), BoletimMMTO.class);
 
-            for (int l = 0; l < implementoList.size(); l++) {
-                implementoTO = (ImplementoTO) implementoList.get(l);
-                implementoTO.delete();
+            List bolMMList = boletimMMTO.get("idBolMM", boletimMMTO.getIdBolMM());
+            BoletimMMTO boletimMMTOBD = (BoletimMMTO) bolMMList.get(0);
+            bolMMList.clear();
+
+            boletimMMTOBD.setIdExtBolMM(boletimMMTO.getIdExtBolMM());
+            boletimMMTOBD.update();
+
+            JSONObject jObjApontMM = new JSONObject(objSeg);
+            JSONArray jsonArrayApontMM = jObjApontMM.getJSONArray("apont");
+
+            if (jsonArrayApontMM.length() > 0) {
+
+                ArrayList<Long> rLista = new ArrayList<Long>();
+                ApontMMTO apontMMTO = new ApontMMTO();
+
+                for (int i = 0; i < jsonArrayApontMM.length(); i++) {
+
+                    JSONObject objApont = jsonArrayApontMM.getJSONObject(i);
+                    Gson gsonApont = new Gson();
+                    apontMMTO = gsonApont.fromJson(objApont.toString(), ApontMMTO.class);
+
+                    rLista.add(apontMMTO.getIdApontMM());
+
+                }
+
+                List apontMMList = apontMMTO.in("idApontMM", rLista);
+
+                for (int i = 0; i < apontMMList.size(); i++) {
+
+                    apontMMTO = (ApontMMTO) apontMMList.get(0);
+                    apontMMTO.setIdExtBolApontMM(boletimMMTO.getIdExtBolMM());
+                    apontMMTO.setStatusApontMM(2L);
+                    apontMMTO.update();
+
+                }
+
+                ImpleMMTO impleMMTO = new ImpleMMTO();
+                List implementoList = impleMMTO.in("idApontImpleMM", rLista);
+
+                for (int l = 0; l < implementoList.size(); l++) {
+                    impleMMTO = (ImpleMMTO) implementoList.get(l);
+                    impleMMTO.delete();
+                }
+
+                rLista.clear();
+
             }
 
+        }
+        catch(Exception e){
+            Tempo.getInstance().setEnvioDado(true);
+        }
+
+    }
+
+    public void updApontMM(String retorno) {
+
+        try{
+
+            int pos1 = retorno.indexOf("_") + 1;
+            String objPrinc = retorno.substring(pos1);
+
+            JSONObject jObjApontMM = new JSONObject(objPrinc);
+            JSONArray jsonArrayApontMM = jObjApontMM.getJSONArray("apont");
+
+            if (jsonArrayApontMM.length() > 0) {
+
+                ArrayList<Long> rLista = new ArrayList<Long>();
+                ApontMMTO apontMMTO = new ApontMMTO();
+
+                for (int i = 0; i < jsonArrayApontMM.length(); i++) {
+
+                    JSONObject objApont = jsonArrayApontMM.getJSONObject(i);
+                    Gson gsonApont = new Gson();
+                    apontMMTO = gsonApont.fromJson(objApont.toString(), ApontMMTO.class);
+
+                    rLista.add(apontMMTO.getIdApontMM());
+
+                }
+
+                List apontMMList = apontMMTO.in("idApontMM", rLista);
+
+                for (int i = 0; i < apontMMList.size(); i++) {
+
+                    apontMMTO = (ApontMMTO) apontMMList.get(0);
+                    apontMMTO.setStatusApontMM(2L);
+                    apontMMTO.update();
+
+                }
+
+                ImpleMMTO impleMMTO = new ImpleMMTO();
+                List implementoList = impleMMTO.in("idApontImpleMM", rLista);
+
+                for (int l = 0; l < implementoList.size(); l++) {
+                    impleMMTO = (ImpleMMTO) implementoList.get(l);
+                    impleMMTO.delete();
+                }
+
+                rLista.clear();
+
+            }
+
+        }
+        catch(Exception e){
+            Log.i("PMM", "FALHA = " + e.toString());
+            Tempo.getInstance().setEnvioDado(true);
         }
 
     }
@@ -859,22 +984,22 @@ public class ManipDadosEnvio {
             rLista.add(boletimFertTO.getIdBolFert());
         }
 
-        ApontaFertTO apontaFertTO = new ApontaFertTO();
-        List apontaList = apontaFertTO.in("idBolApontaFert", rLista);
+        ApontFertTO apontFertTO = new ApontFertTO();
+        List apontaList = apontFertTO.in("idBolApontFert", rLista);
 
         for (int j = 0; j < apontaList.size(); j++) {
 
-            apontaFertTO = (ApontaFertTO) apontaList.get(j);
-            apontaFertTO.delete();
+            apontFertTO = (ApontFertTO) apontaList.get(j);
+            apontFertTO.delete();
 
         }
 
-        RecolhimentoTO recolhimentoTO = new RecolhimentoTO();
-        List recolhimentoList = recolhimentoTO.in("idBolRecol", rLista);
+        RecolhFertTO recolhFertTO = new RecolhFertTO();
+        List recolhimentoList = recolhFertTO.in("idBolRecolhFert", rLista);
 
         for (int j = 0; j < recolhimentoList.size(); j++) {
-            recolhimentoTO = (RecolhimentoTO) recolhimentoList.get(j);
-            recolhimentoTO.delete();
+            recolhFertTO = (RecolhFertTO) recolhimentoList.get(j);
+            recolhFertTO.delete();
         }
 
         for (int i = 0; i < boletimFertList.size(); i++) {
@@ -898,13 +1023,13 @@ public class ManipDadosEnvio {
             boletimFertTO.setIdExtBolFert(Long.parseLong(id.trim()));
             boletimFertTO.update();
 
-            ApontaFertTO apontaFertTO = new ApontaFertTO();
-            List apontaList = apontaFertTO.get("idBolApontaFert", boletimFertTO.getIdBolFert());
+            ApontFertTO apontFertTO = new ApontFertTO();
+            List apontaList = apontFertTO.get("idBolApontFert", boletimFertTO.getIdBolFert());
 
             for (int j = 0; j < apontaList.size(); j++) {
 
-                apontaFertTO = (ApontaFertTO) apontaList.get(j);
-                apontaFertTO.delete();
+                apontFertTO = (ApontFertTO) apontaList.get(j);
+                apontFertTO.delete();
 
             }
 
@@ -918,13 +1043,13 @@ public class ManipDadosEnvio {
 
     public void delApontaFert() {
 
-        ApontaFertTO apontaFertTO = new ApontaFertTO();
-        List apontaList = apontaFertTO.all();
+        ApontFertTO apontFertTO = new ApontFertTO();
+        List apontaList = apontFertTO.all();
 
         for (int j = 0; j < apontaList.size(); j++) {
 
-            apontaFertTO = (ApontaFertTO) apontaList.get(j);
-            apontaFertTO.delete();
+            apontFertTO = (ApontFertTO) apontaList.get(j);
+            apontFertTO.delete();
 
         }
 
@@ -932,29 +1057,29 @@ public class ManipDadosEnvio {
 
     //////////////////////////TRAZER DADOS////////////////////////////
 
-    public List boletinsChecklist(){
-        CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-        return cabecCheckListTO.get("statusCab", 2L);
+    public List bolChecklist(){
+        CabecCLTO cabecCLTO = new CabecCLTO();
+        return cabecCLTO.get("statusCabCL", 2L);
     }
 
-    public List boletinsFechadoMM() {
+    public List bolFechadoMM() {
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        return boletimMMTO.get("statusBoletim", 2L);
+        return boletimMMTO.get("statusBolMM", 2L);
     }
 
-    public List boletinsAbertoSemEnvioMM() {
+    public List bolAbertoSemEnvioMM() {
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
         ArrayList listaPesq = new ArrayList();
 
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-        pesquisa.setCampo("statusBoletim");
+        pesquisa.setCampo("statusBolMM");
         pesquisa.setValor(1L);
         pesquisa.setTipo(1);
         listaPesq.add(pesquisa);
 
         EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-        pesquisa2.setCampo("idExtBoletim");
+        pesquisa2.setCampo("idExtBolMM");
         pesquisa2.setValor(0);
         pesquisa2.setTipo(1);
         listaPesq.add(pesquisa2);
@@ -963,17 +1088,17 @@ public class ManipDadosEnvio {
 
     }
 
-    public List apontamentosMM() {
-        ApontaMMTO apontaMMTO = new ApontaMMTO();
-        return apontaMMTO.get("statusAponta", 2L);
+    public List apontMM() {
+        ApontMMTO apontMMTO = new ApontMMTO();
+        return apontMMTO.get("statusApontMM", 1L);
     }
 
-    public List boletinsFechadoFert() {
+    public List bolFechadoFert() {
         BoletimFertTO boletimFertTO = new BoletimFertTO();
         return boletimFertTO.get("statusBolFert", 2L);
     }
 
-    public List boletinsAbertoSemEnvioFert() {
+    public List bolAbertoSemEnvioFert() {
 
         BoletimFertTO boletimFertTO = new BoletimFertTO();
 
@@ -995,9 +1120,9 @@ public class ManipDadosEnvio {
 
     }
 
-    public List apontamentosFert() {
-        ApontaFertTO apontaFertTO = new ApontaFertTO();
-        return apontaFertTO.get("statusApontaFert", 2L);
+    public List apontFert() {
+        ApontFertTO apontFertTO = new ApontFertTO();
+        return apontFertTO.get("statusApontFert", 1L);
     }
 
     public List dadosPerda(){
@@ -1005,11 +1130,11 @@ public class ManipDadosEnvio {
         return  configTO.get("visDadosConfig", 0L);
     }
 
-    public boolean boletinsAberto(){
+    public boolean bolAberto(){
 
         boolean ver = false;
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        if(boletimMMTO.get("statusBoletim", 1L).size() > 0){
+        if(boletimMMTO.get("statusBolMM", 1L).size() > 0){
             ver = true;
         }
         BoletimFertTO boletimFertTO = new BoletimFertTO();
@@ -1022,32 +1147,32 @@ public class ManipDadosEnvio {
 
     //////////////////////VERIFICAÇÃO DE DADOS///////////////////////////
 
-    public boolean verifDadosChecklist() {
-        return boletinsChecklist().size() > 0;
+    public boolean verifChecklist() {
+        return bolChecklist().size() > 0;
     }
 
     public Boolean verifBolFechadoMM() {
-        return boletinsFechadoMM().size() > 0;
+        return bolFechadoMM().size() > 0;
     }
 
     public Boolean verifBolAbertoSemEnvioMM() {
-        return boletinsAbertoSemEnvioMM().size() > 0;
+        return bolAbertoSemEnvioMM().size() > 0;
     }
 
-    public Boolean verifApontaMM() { return apontamentosMM().size() > 0; }
+    public Boolean verifApontMM() { return apontMM().size() > 0; }
 
     public Boolean verifBolFechadoFert() {
-        return boletinsFechadoFert().size() > 0;
+        return bolFechadoFert().size() > 0;
     }
 
     public Boolean verifBolAbertoSemEnvioFert() {
-        return boletinsAbertoSemEnvioFert().size() > 0;
+        return bolAbertoSemEnvioFert().size() > 0;
     }
 
-    public Boolean verifApontaFert() { return apontamentosFert().size() > 0; }
+    public Boolean verifApontaFert() { return apontFert().size() > 0; }
 
-    public Boolean verifDadosPerda() {
-        if((dadosPerda().size() > 0) && (boletinsAberto())){
+    public Boolean verifPerda() {
+        if((dadosPerda().size() > 0) && (bolAberto())){
             return true;
         }
         else{
@@ -1071,11 +1196,11 @@ public class ManipDadosEnvio {
 
     public void envioDadosPrinc() {
 
-        if(verifDadosPerda()){
+        if(verifPerda()){
             ManipDadosVerif.getInstance().verDadosPerda();
         }
         else {
-            if (verifDadosChecklist()) {
+            if (verifChecklist()) {
                 enviarChecklist();
             }
             else {
@@ -1087,8 +1212,8 @@ public class ManipDadosEnvio {
                         enviarBolAbertosMM();
                     }
                     else {
-                        if (verifApontaMM()) {
-                            envioApontaMM();
+                        if (verifApontMM()) {
+                            envioApontMM();
                         }
                         else{
                             if (verifBolFechadoFert()) {
@@ -1112,11 +1237,11 @@ public class ManipDadosEnvio {
     }
 
     public boolean verifDadosEnvio() {
-        if ((!verifDadosPerda())
-                &&(!verifBolFechadoMM())
+        if ((!verifPerda())
+                && (!verifBolFechadoMM())
                 && (!verifBolAbertoSemEnvioMM())
-                && (!verifApontaMM())
-                && (!verifDadosChecklist())
+                && (!verifApontMM())
+                && (!verifChecklist())
                 && (!verifBolFechadoFert())
                 && (!verifBolAbertoSemEnvioFert())
                 && (!verifApontaFert())){

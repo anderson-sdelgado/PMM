@@ -22,14 +22,16 @@ import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosReceb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
+import br.com.usinasantafe.pmm.to.estaticas.AtividadeTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.estaticas.ParadaTO;
+import br.com.usinasantafe.pmm.to.estaticas.RFuncaoAtivParTO;
+import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.BackupApontaTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class MenuPrincNormalActivity extends ActivityGeneric {
 
@@ -86,13 +88,13 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         if(pmmContext.getTipoEquip() == 1){
 
             BoletimMMTO boletimMMTO = new BoletimMMTO();
-            List boletimList = boletimMMTO.get("statusBoletim", 1);
+            List boletimList = boletimMMTO.get("statusBolMM", 1);
             boletimMMTO = (BoletimMMTO) boletimList.get(0);
 
-            equip = boletimMMTO.getCodEquipBoletim();
+            equip = boletimMMTO.getIdEquipBolMM();
 
             if (bkpApontaList.size() == 0) {
-                ativList = atividadeTO.get("idAtiv", boletimMMTO.getAtivPrincBoletim());
+                ativList = atividadeTO.get("idAtiv", boletimMMTO.getAtivPrincBolMM());
             } else {
                 backupApontaTO = (BackupApontaTO) bkpApontaList.get(bkpApontaList.size() - 1);
                 ativList = atividadeTO.get("idAtiv", backupApontaTO.getAtividadeAponta());
@@ -101,15 +103,50 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
             atividadeTO = (AtividadeTO) ativList.get(0);
             ativList.clear();
 
-            if (atividadeTO.getFlagTransbordo() == 1) {
+            RFuncaoAtivParTO rFuncaoAtivParTO = new RFuncaoAtivParTO();
+            ArrayList pesqList = new ArrayList();
+
+            EspecificaPesquisa pesquisa1 = new EspecificaPesquisa();
+            pesquisa1.setCampo("idAtivPar");
+            pesquisa1.setValor(atividadeTO.getIdAtiv());
+            pesquisa1.setTipo(1);
+            pesqList.add(pesquisa1);
+
+            EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
+            pesquisa2.setCampo("tipoFuncao");
+            pesquisa2.setValor(1L);
+            pesquisa2.setTipo(1);
+            pesqList.add(pesquisa2);
+
+            List rFuncaoAtivParList = rFuncaoAtivParTO.get(pesqList);
+
+            boolean transbordo = false;
+            boolean rendimento = false;
+            boolean implemento = false;
+
+            for (int i = 0; i < rFuncaoAtivParList.size(); i++) {
+                rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtivParList.get(i);
+                if(rFuncaoAtivParTO.getCodFuncao() == 2){
+                    transbordo = true;
+                }
+                if(rFuncaoAtivParTO.getCodFuncao() == 1){
+                    rendimento = true;
+                }
+                if(rFuncaoAtivParTO.getCodFuncao() == 3){
+                    implemento = true;
+                }
+            }
+            rFuncaoAtivParList.clear();
+
+            if (transbordo) {
                 itens.add("NOVO TRANSBORDO");
             }
 
-            if (atividadeTO.getFlagRendimento() == 1) {
+            if (rendimento) {
                 itens.add("RENDIMENTO");
             }
 
-            if (atividadeTO.getFlagRendimento() == 1) {
+            if (implemento) {
                 itens.add("TROCAR IMPLEMENTO");
             }
 
@@ -122,7 +159,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
             List boletimList = boletimFertTO.get("statusBolFert", 1);
             boletimFertTO = (BoletimFertTO) boletimList.get(0);
 
-            equip = boletimFertTO.getCodEquipBolFert();
+            equip = boletimFertTO.getIdEquipBolFert();
 
             itens.add("RECOLHIMENTO MANGUEIRA");
 
@@ -150,23 +187,6 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                 String text = textView.getText().toString();
 
                 boolean verDthr = true;
-
-//                boolean verDthr = false;
-//                if (Tempo.getInstance().verDthrServ(configTO.getDtServConfig())) {
-//                    configTO.setDifDthrConfig(0L);
-//                    configTO.update();
-//                    verDthr = true;
-//                } else {
-//                    if (configTO.getDifDthrConfig() == 0) {
-//                        pmmContext.setContDataHora(1);
-//                        pmmContext.setVerPosTela(5);
-//                        Intent it = new Intent(MenuPrincNormalActivity.this, MsgDataHoraActivity.class);
-//                        startActivity(it);
-//                        finish();
-//                    } else {
-//                        verDthr = true;
-//                    }
-//                }
 
                 if (verDthr){
                     if (text.equals("TRABALHANDO")) {
@@ -395,19 +415,34 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         List bkpApontaList = backupApontaTO.all();
         backupApontaTO = (BackupApontaTO) bkpApontaList.get(bkpApontaList.size() - 1);
 
-        ApontaMMTO apontaMMTO = new ApontaMMTO();
-        apontaMMTO.setOsAponta(backupApontaTO.getOsAponta());
-        apontaMMTO.setAtividadeAponta(backupApontaTO.getAtividadeAponta());
+        ApontMMTO apontMMTO = new ApontMMTO();
+        apontMMTO.setOsApontMM(backupApontaTO.getOsAponta());
+        apontMMTO.setAtivApontMM(backupApontaTO.getAtividadeAponta());
 
-        ParadaTO paradaTO = new ParadaTO();
-        List paradaList = paradaTO.get("flagImplemento", 1L);
-        paradaTO = (ParadaTO) paradaList.get(0);
+        RFuncaoAtivParTO rFuncaoAtivParTO = new RFuncaoAtivParTO();
+        ArrayList pesqList = new ArrayList();
 
-        apontaMMTO.setParadaAponta(paradaTO.getIdParada());
-        apontaMMTO.setTransbordoAponta(backupApontaTO.getTransbAponta());
-        apontaMMTO.setLatitudeAponta(0D);
-        apontaMMTO.setLongitudeAponta(0D);
-        ManipDadosEnvio.getInstance().salvaApontaMM(apontaMMTO, 2L);
+        EspecificaPesquisa pesq1 = new EspecificaPesquisa();
+        pesq1.setCampo("codFuncao");
+        pesq1.setValor(2L);
+        pesq1.setTipo(1);
+        pesqList.add(pesq1);
+
+        EspecificaPesquisa pesq2 = new EspecificaPesquisa();
+        pesq2.setCampo("tipoFuncao");
+        pesq2.setValor(2L);
+        pesq2.setTipo(1);
+        pesqList.add(pesq2);
+
+        List rFuncaoAtivParList = rFuncaoAtivParTO.get(pesqList);
+        rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtivParList.get(0);
+        rFuncaoAtivParList.clear();
+
+        apontMMTO.setParadaApontMM(rFuncaoAtivParTO.getIdAtivPar());
+        apontMMTO.setTransbApontMM(backupApontaTO.getTransbAponta());
+        apontMMTO.setLatitudeApontMM(0D);
+        apontMMTO.setLongitudeApontMM(0D);
+        ManipDadosEnvio.getInstance().salvaApontaMM(apontMMTO);
 
     }
 

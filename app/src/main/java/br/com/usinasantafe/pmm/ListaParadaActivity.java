@@ -22,10 +22,10 @@ import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.RAtivParadaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.estaticas.ParadaTO;
+import br.com.usinasantafe.pmm.to.estaticas.RAtivParadaTO;
+import br.com.usinasantafe.pmm.to.variaveis.BackupApontaTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class ListaParadaActivity extends ActivityGeneric {
 
@@ -54,9 +54,9 @@ public class ListaParadaActivity extends ActivityGeneric {
 
         Long ativ;
         if(pmmContext.getTipoEquip() == 1){
-            ativ = pmmContext.getApontaMMTO().getAtividadeAponta();
+            ativ = pmmContext.getApontMMTO().getAtivApontMM();
         } else {
-            ativ = pmmContext.getApontaFertTO().getAtivApontaFert();
+            ativ = pmmContext.getApontFertTO().getAtivApontFert();
         }
 
         RAtivParadaTO rAtivParadaTO = new RAtivParadaTO();
@@ -116,7 +116,7 @@ public class ListaParadaActivity extends ActivityGeneric {
 
                     progressBar = new ProgressDialog(v.getContext());
                     progressBar.setCancelable(true);
-                    progressBar.setMessage("Atualizando Paradas...");
+                    progressBar.setMessage("ATUALIZANDO PARADAS...");
                     progressBar.show();
 
                     ConfigTO configTO = new ConfigTO();
@@ -183,14 +183,14 @@ public class ListaParadaActivity extends ActivityGeneric {
                         paradaTO = (ParadaTO) paradaList.get(0);
 
                         if(pmmContext.getTipoEquip() == 1) {
-                            pmmContext.getApontaMMTO().setTransbordoAponta(0L);
-                            pmmContext.getApontaMMTO().setParadaAponta(paradaTO.getIdParada());
+                            pmmContext.getApontMMTO().setTransbApontMM(0L);
+                            pmmContext.getApontMMTO().setParadaApontMM(paradaTO.getIdParada());
                         }
                         else{
-                            pmmContext.getApontaFertTO().setBocalApontaFert(0L);
-                            pmmContext.getApontaFertTO().setPressaoApontaFert(0D);
-                            pmmContext.getApontaFertTO().setVelocApontaFert(0L);
-                            pmmContext.getApontaFertTO().setParadaApontaFert(paradaTO.getIdParada());
+                            pmmContext.getApontFertTO().setBocalApontFert(0L);
+                            pmmContext.getApontFertTO().setPressaoApontFert(0D);
+                            pmmContext.getApontFertTO().setVelocApontFert(0L);
+                            pmmContext.getApontFertTO().setParadaApontFert(paradaTO.getIdParada());
                         }
 
                         if (verifBackup()) {
@@ -211,22 +211,22 @@ public class ListaParadaActivity extends ActivityGeneric {
                         } else {
 
                             if(pmmContext.getTipoEquip() == 1) {
-                                pmmContext.getApontaMMTO().setLatitudeAponta(0D);
-                                pmmContext.getApontaMMTO().setLongitudeAponta(0D);
+                                pmmContext.getApontMMTO().setLatitudeApontMM(0D);
+                                pmmContext.getApontMMTO().setLongitudeApontMM(0D);
                             }
                             else{
-                                pmmContext.getApontaFertTO().setLatitudeApontaFert(0D);
-                                pmmContext.getApontaFertTO().setLongitudeApontaFert(0D);
+                                pmmContext.getApontFertTO().setLatitudeApontFert(0D);
+                                pmmContext.getApontFertTO().setLongitudeApontFert(0D);
                             }
 
                             configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
                             configTO.update();
 
                             if(pmmContext.getTipoEquip() == 1) {
-                                ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 2L);
+                                ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontMMTO());
                             }
                             else{
-                                ManipDadosEnvio.getInstance().salvaApontaFert(pmmContext.getApontaFertTO(), 2L);
+                                ManipDadosEnvio.getInstance().salvaApontaFert(pmmContext.getApontFertTO());
                             }
 
                             Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
@@ -272,16 +272,16 @@ public class ListaParadaActivity extends ActivityGeneric {
 
             backupApontaTO = (BackupApontaTO) bkpApontaList.get(bkpApontaList.size() - 1);
             if(pmmContext.getTipoEquip() == 1) {
-                if ((pmmContext.getApontaMMTO().getOsAponta().equals(backupApontaTO.getOsAponta()))
-                        && (pmmContext.getApontaMMTO().getAtividadeAponta().equals(backupApontaTO.getAtividadeAponta()))
-                        && (pmmContext.getApontaMMTO().getParadaAponta().equals(backupApontaTO.getParadaAponta()))) {
+                if ((pmmContext.getApontMMTO().getOsApontMM().equals(backupApontaTO.getOsAponta()))
+                        && (pmmContext.getApontMMTO().getAtivApontMM().equals(backupApontaTO.getAtividadeAponta()))
+                        && (pmmContext.getApontMMTO().getParadaApontMM().equals(backupApontaTO.getParadaAponta()))) {
                     v = true;
                 }
             }
             else{
-                if ((pmmContext.getApontaFertTO().getOsApontaFert().equals(backupApontaTO.getOsAponta()))
-                        && (pmmContext.getApontaFertTO().getAtivApontaFert().equals(backupApontaTO.getAtividadeAponta()))
-                        && (pmmContext.getApontaFertTO().getParadaApontaFert().equals(backupApontaTO.getParadaAponta()))) {
+                if ((pmmContext.getApontFertTO().getOsApontFert().equals(backupApontaTO.getOsAponta()))
+                        && (pmmContext.getApontFertTO().getAtivApontFert().equals(backupApontaTO.getAtividadeAponta()))
+                        && (pmmContext.getApontFertTO().getParadaApontFert().equals(backupApontaTO.getParadaAponta()))) {
                     v = true;
                 }
             }

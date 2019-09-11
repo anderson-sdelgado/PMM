@@ -105,22 +105,22 @@ public class ConHttpPostCadGenerico extends AsyncTask<String, Void, String> {
 			if(result.trim().equals("GRAVOU-CHECKLIST")){
 				ManipDadosEnvio.getInstance().delChecklist();
 			}
-			else if(result.trim().equals("GRAVOU-BOLFECHADO")){
-				ManipDadosEnvio.getInstance().delBolFechadoMM();
-			}
 			else if(result.trim().equals("GRAVOU-BOLFECHADOFERT")){
 				ManipDadosEnvio.getInstance().delBolFechadoFert();
-			}
-			else if(result.trim().equals("GRAVOU-APONTAMM")){
-				ManipDadosEnvio.getInstance().delApontaMM();
 			}
 			else if(result.trim().equals("GRAVOU-APONTAFERT")){
 				ManipDadosEnvio.getInstance().delApontaFert();
 			}
 			else{
-                if(result.trim().contains("GRAVOU")){
-                    ManipDadosEnvio.getInstance().atualDelBoletimMM(result);
+                if(result.trim().contains("BOLABERTOMM")){
+                    ManipDadosEnvio.getInstance().updBolAbertoMM(result);
                 }
+				else if(result.trim().contains("BOLFECHADOMM")){
+					ManipDadosEnvio.getInstance().updBolFechadoMM(result);
+				}
+				else if(result.trim().contains("APONTMM")){
+					ManipDadosEnvio.getInstance().updApontMM(result);
+				}
                 else if(result.trim().contains("FERT")){
 					ManipDadosEnvio.getInstance().atualDelBoletimFert(result);
 				}

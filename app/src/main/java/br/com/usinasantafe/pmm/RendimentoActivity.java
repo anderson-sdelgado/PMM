@@ -13,14 +13,14 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
+import br.com.usinasantafe.pmm.to.estaticas.OSTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
 
 public class RendimentoActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
-    private RendimentoTO rendimentoTO;
+    private RendMMTO rendMMTO;
     private List rendList;
 
     @Override
@@ -38,24 +38,24 @@ public class RendimentoActivity extends ActivityGeneric {
         int cont = 0;
 
         if(pmmContext.getVerPosTela() == 4){
-            cont = pmmContext.getContRendimento() - 1;
+            cont = pmmContext.getContRend() - 1;
         }
         else if(pmmContext.getVerPosTela() == 7){
-            cont = pmmContext.getPosRendimento();
+            cont = pmmContext.getPosRend();
         }
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List listBoletim = boletimMMTO.get("statusBoletim", 1L);
+        List listBoletim = boletimMMTO.get("statusBolMM", 1L);
         boletimMMTO = (BoletimMMTO) listBoletim.get(0);
         listBoletim.clear();
 
-        rendimentoTO = new RendimentoTO();
-        rendList = rendimentoTO.getAndOrderBy("idBolRendimento", boletimMMTO.getIdBoletim(), "idRendimento", true);
-        rendimentoTO = (RendimentoTO) rendList.get(cont);
+        rendMMTO = new RendMMTO();
+        rendList = rendMMTO.getAndOrderBy("idBolRendMM", boletimMMTO.getIdBolMM(), "idRendMM", true);
+        rendMMTO = (RendMMTO) rendList.get(cont);
 
-        textViewRendimento.setText("OS " + rendimentoTO.getNroOSRendimento() +" \nRendimento :");
-        if(rendimentoTO.getValorRendimento() > 0){
-            editText.setText(String.valueOf(rendimentoTO.getValorRendimento()).replace(".", ","));
+        textViewRendimento.setText("OS " + rendMMTO.getNroOSRendMM() +" \nRENDIMENTO :");
+        if(rendMMTO.getValorRendMM() > 0){
+            editText.setText(String.valueOf(rendMMTO.getValorRendMM()).replace(".", ","));
         }
         else{
             editText.setText("");
@@ -73,7 +73,7 @@ public class RendimentoActivity extends ActivityGeneric {
                         Double rendNum = Double.valueOf(rend.replace(",", "."));
 
                         OSTO osTO = new OSTO();
-                        List osList = osTO.get("nroOS", rendimentoTO.getNroOSRendimento());
+                        List osList = osTO.get("nroOS", rendMMTO.getNroOSRendMM());
                         if (osList.size() > 0) {
                             osTO = (OSTO) osList.get(0);
                         } else {
@@ -82,12 +82,12 @@ public class RendimentoActivity extends ActivityGeneric {
 
                         if (rendNum <= osTO.getAreaProgrOS()) {
 
-                            rendimentoTO.setValorRendimento(rendNum);
-                            rendimentoTO.setDthrRendimento(Tempo.getInstance().datahora());
-                            rendimentoTO.update();
-                            rendimentoTO.commit();
+                            rendMMTO.setValorRendMM(rendNum);
+                            rendMMTO.setDthrRendMM(Tempo.getInstance().datahora());
+                            rendMMTO.update();
+                            rendMMTO.commit();
 
-                            if (rendList.size() == pmmContext.getContRendimento()) {
+                            if (rendList.size() == pmmContext.getContRend()) {
 
                                 ManipDadosEnvio.getInstance().salvaBoletimFechadoMM();
                                 ManipDadosEnvio.getInstance().envioDadosPrinc();
@@ -97,7 +97,7 @@ public class RendimentoActivity extends ActivityGeneric {
 
                             } else {
 
-                                pmmContext.setContRendimento(pmmContext.getContRendimento() + 1);
+                                pmmContext.setContRend(pmmContext.getContRend() + 1);
                                 Intent it = new Intent(RendimentoActivity.this, RendimentoActivity.class);
                                 startActivity(it);
                                 finish();
@@ -128,7 +128,7 @@ public class RendimentoActivity extends ActivityGeneric {
                         Double rendNum = Double.valueOf(rend.replace(",", "."));
 
                         OSTO osTO = new OSTO();
-                        List osList = osTO.get("nroOS", rendimentoTO.getNroOSRendimento());
+                        List osList = osTO.get("nroOS", rendMMTO.getNroOSRendMM());
                         if (osList.size() > 0) {
                             osTO = (OSTO) osList.get(0);
                         } else {
@@ -137,9 +137,9 @@ public class RendimentoActivity extends ActivityGeneric {
 
                         if (rendNum <= osTO.getAreaProgrOS()) {
 
-                            rendimentoTO.setValorRendimento(rendNum);
-                            rendimentoTO.update();
-                            rendimentoTO.commit();
+                            rendMMTO.setValorRendMM(rendNum);
+                            rendMMTO.update();
+                            rendMMTO.commit();
 
                             Intent it = new Intent(RendimentoActivity.this, ListaOSRendActivity.class);
                             startActivity(it);
@@ -185,8 +185,8 @@ public class RendimentoActivity extends ActivityGeneric {
 
     public void onBackPressed()  {
         if(pmmContext.getVerPosTela() == 4){
-            if(pmmContext.getPosRendimento() > 1){
-                pmmContext.setPosRendimento(pmmContext.getPosRendimento() - 1);
+            if(pmmContext.getPosRend() > 1){
+                pmmContext.setPosRend(pmmContext.getPosRend() - 1);
                 Intent it = new Intent(RendimentoActivity.this, RendimentoActivity.class);
                 startActivity(it);
                 finish();

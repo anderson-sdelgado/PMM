@@ -14,8 +14,8 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
-import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.estaticas.OSTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class OSActivity extends ActivityGeneric {
 
@@ -57,7 +57,7 @@ public class OSActivity extends ActivityGeneric {
 
                         if (pmmContext.getVerPosTela() == 1) {
                             if(pmmContext.getTipoEquip() == 1) {
-                                pmmContext.getBoletimMMTO().setOsBoletim(Long.parseLong(editTextPadrao.getText().toString()));
+                                pmmContext.getBoletimMMTO().setOsBolMM(Long.parseLong(editTextPadrao.getText().toString()));
                             }
                             else {
                                 pmmContext.getBoletimFertTO().setOsBolFert(Long.parseLong(editTextPadrao.getText().toString()));
@@ -65,10 +65,10 @@ public class OSActivity extends ActivityGeneric {
                         }
                         else {
                             if(pmmContext.getTipoEquip() == 1) {
-                                pmmContext.getApontaMMTO().setOsAponta(Long.parseLong(editTextPadrao.getText().toString()));
+                                pmmContext.getApontMMTO().setOsApontMM(Long.parseLong(editTextPadrao.getText().toString()));
                             }
                             else {
-                                pmmContext.getApontaFertTO().setOsApontaFert(Long.parseLong(editTextPadrao.getText().toString()));
+                                pmmContext.getApontFertTO().setOsApontFert(Long.parseLong(editTextPadrao.getText().toString()));
                             }
 
                         }
@@ -105,7 +105,7 @@ public class OSActivity extends ActivityGeneric {
 
                                     progressBar = new ProgressDialog(v.getContext());
                                     progressBar.setCancelable(true);
-                                    progressBar.setMessage("Pequisando a OS...");
+                                    progressBar.setMessage("PESQUISANDO OS...");
                                     progressBar.show();
 
                                     customHandler.postDelayed(updateTimerThread, 10000);
@@ -136,7 +136,7 @@ public class OSActivity extends ActivityGeneric {
 
                                 progressBar = new ProgressDialog(v.getContext());
                                 progressBar.setCancelable(true);
-                                progressBar.setMessage("Pequisando a OS...");
+                                progressBar.setMessage("PESQUISANDO OS...");
                                 progressBar.show();
 
                                 customHandler.postDelayed(updateTimerThread, 10000);

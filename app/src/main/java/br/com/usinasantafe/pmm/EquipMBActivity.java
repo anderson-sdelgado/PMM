@@ -16,12 +16,12 @@ import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipSegTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipSegTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.estaticas.ItemCheckListTO;
+import br.com.usinasantafe.pmm.to.estaticas.TurnoTO;
+import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class EquipMBActivity extends ActivityGeneric {
 
@@ -140,7 +140,7 @@ public class EquipMBActivity extends ActivityGeneric {
                         equipSegTO = (EquipSegTO) equipSegList.get(0);
                         equipSegList.clear();
 
-                        pmmContext.getBoletimFertTO().setCodEquipBombaBolFert(equipSegTO.getIdEquip());
+                        pmmContext.getBoletimFertTO().setIdEquipBombaBolFert(equipSegTO.getIdEquip());
                         pmmContext.getBoletimFertTO().setStatusBolFert(1L);
 
                         configTO = new ConfigTO();
@@ -149,15 +149,15 @@ public class EquipMBActivity extends ActivityGeneric {
                         listConfigTO.clear();
 
                         equipTO = new EquipTO();
-                        List listEquipTO = equipTO.get("idEquip", pmmContext.getBoletimFertTO().getCodEquipBolFert());
+                        List listEquipTO = equipTO.get("idEquip", pmmContext.getBoletimFertTO().getIdEquipBolFert());
                         equipTO = (EquipTO) listEquipTO.get(0);
                         listEquipTO.clear();
 
                         TurnoTO turnoTO = new TurnoTO();
-                        List turnoList = turnoTO.get("idTurno", pmmContext.getBoletimFertTO().getCodTurnoBolFert());
+                        List turnoList = turnoTO.get("idTurno", pmmContext.getBoletimFertTO().getIdTurnoBolFert());
                         turnoTO = (TurnoTO) turnoList.get(0);
 
-                        if ((equipTO.getIdChecklist() > 0) &&
+                        if ((equipTO.getIdCheckList() > 0) &&
                                 ((configTO.getUltTurnoCLConfig() != turnoTO.getIdTurno())
                                         || ((configTO.getUltTurnoCLConfig() == turnoTO.getIdTurno()) && (!configTO.getDtUltCLConfig().equals(Tempo.getInstance().dataSHora()))))) {
 
@@ -165,25 +165,25 @@ public class EquipMBActivity extends ActivityGeneric {
                             ManipDadosEnvio.getInstance().envioDadosPrinc();
 
                             ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
-                            List itemCheckList =  itemCheckListTO.get("idChecklist", equipTO.getIdChecklist());
+                            List itemCheckList =  itemCheckListTO.get("idCheckList", equipTO.getIdCheckList());
                             Long qtde = (long) itemCheckList.size();
                             itemCheckList.clear();
 
-                            CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-                            cabecCheckListTO.setDtCab(Tempo.getInstance().datahora());
+                            CabecCLTO cabecCLTO = new CabecCLTO();
+                            cabecCLTO.setDtCabCL(Tempo.getInstance().datahora());
                             EquipTO equipTO = new EquipTO();
                             List equipList = equipTO.get("idEquip", configTO.getEquipConfig());
                             equipTO = (EquipTO) equipList.get(0);
                             equipList.clear();
-                            cabecCheckListTO.setEquipCab(equipTO.getNroEquip());
-                            cabecCheckListTO.setFuncCab(pmmContext.getBoletimFertTO().getCodMotoBolFert());
-                            cabecCheckListTO.setTurnoCab(pmmContext.getBoletimFertTO().getCodTurnoBolFert());
-                            cabecCheckListTO.setQtdeItemCab(qtde);
-                            cabecCheckListTO.setStatusCab(1L);
-                            cabecCheckListTO.setDtAtualCab("0");
-                            cabecCheckListTO.insert();
+                            cabecCLTO.setEquipCabCL(equipTO.getNroEquip());
+                            cabecCLTO.setFuncCabCL(pmmContext.getBoletimFertTO().getMatricFuncBolFert());
+                            cabecCLTO.setTurnoCabCL(pmmContext.getBoletimFertTO().getIdTurnoBolFert());
+                            cabecCLTO.setQtdeItemCabCL(qtde);
+                            cabecCLTO.setStatusCabCL(1L);
+                            cabecCLTO.setDtAtualCabCL("0");
+                            cabecCLTO.insert();
 
-                            pmmContext.setPosChecklist(1L);
+                            pmmContext.setPosCheckList(1L);
                             Intent it = new Intent(EquipMBActivity.this, ItemCheckListActivity.class);
                             startActivity(it);
                             finish();

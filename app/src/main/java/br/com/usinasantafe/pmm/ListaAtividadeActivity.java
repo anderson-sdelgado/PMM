@@ -21,15 +21,16 @@ import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.REquipAtivTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.TransbordoTO;
+import br.com.usinasantafe.pmm.to.estaticas.AtividadeTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.estaticas.REquipAtivTO;
+import br.com.usinasantafe.pmm.to.estaticas.RFuncaoAtivParTO;
+import br.com.usinasantafe.pmm.to.estaticas.ROSAtivTO;
+import br.com.usinasantafe.pmm.to.variaveis.BackupApontaTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.TransbMMTO;
 
 public class ListaAtividadeActivity extends ActivityGeneric {
 
@@ -117,7 +118,6 @@ public class ListaAtividadeActivity extends ActivityGeneric {
         ArrayList<String> itens = new ArrayList<String>();
 
         REquipAtivTO rEquipAtivTO = new REquipAtivTO();
-        Log.i("PMM", "configTO.getEquipConfig() = " + configTO.getEquipConfig());
         List rEquipAtivList = rEquipAtivTO.get("idEquip", configTO.getEquipConfig());
 
         configList.clear();
@@ -177,8 +177,8 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 if (pmmContext.getVerPosTela() == 1) {
 
                     if(pmmContext.getTipoEquip() == 1) {
-                        pmmContext.getBoletimMMTO().setAtivPrincBoletim(atividadeTO.getIdAtiv());
-                        pmmContext.getBoletimMMTO().setStatusConBoletim(configTO.getStatusConConfig());
+                        pmmContext.getBoletimMMTO().setAtivPrincBolMM(atividadeTO.getIdAtiv());
+                        pmmContext.getBoletimMMTO().setStatusConBolMM(configTO.getStatusConConfig());
                     }
                     else {
                         pmmContext.getBoletimFertTO().setAtivPrincBolFert(atividadeTO.getIdAtiv());
@@ -196,14 +196,14 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 } else if ((pmmContext.getVerPosTela() == 2)) {
 
                     if(pmmContext.getTipoEquip() == 1) {
-                        pmmContext.getApontaMMTO().setAtividadeAponta(atividadeTO.getIdAtiv());
-                        pmmContext.getApontaMMTO().setStatusConAponta(configTO.getStatusConConfig());
-                        pmmContext.getApontaMMTO().setParadaAponta(0L);
+                        pmmContext.getApontMMTO().setAtivApontMM(atividadeTO.getIdAtiv());
+                        pmmContext.getApontMMTO().setStatusConApontMM(configTO.getStatusConConfig());
+                        pmmContext.getApontMMTO().setParadaApontMM(0L);
                     }
                     else{
-                        pmmContext.getApontaFertTO().setAtivApontaFert(atividadeTO.getIdAtiv());
-                        pmmContext.getApontaFertTO().setStatusConApontaFert(configTO.getStatusConConfig());
-                        pmmContext.getApontaFertTO().setParadaApontaFert(0L);
+                        pmmContext.getApontFertTO().setAtivApontFert(atividadeTO.getIdAtiv());
+                        pmmContext.getApontFertTO().setStatusConApontFert(configTO.getStatusConConfig());
+                        pmmContext.getApontFertTO().setParadaApontFert(0L);
                     }
 
                     if (verifBackup()) {
@@ -215,7 +215,6 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-
                             }
                         });
 
@@ -223,56 +222,86 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                     } else {
 
-                        if (atividadeTO.getFlagTransbordo() == 0) {
+                        RFuncaoAtivParTO rFuncaoAtivParTO = new RFuncaoAtivParTO();
+                        ArrayList pesqList = new ArrayList();
 
-                            TransbordoTO transbordoTO = new TransbordoTO();
-                            if (transbordoTO.hasElements()) {
-                                List transbList = transbordoTO.all();
-                                transbordoTO = (TransbordoTO) transbList.get(0);
-                                pmmContext.getApontaMMTO().setTransbordoAponta(transbordoTO.getCodEquipTransbordo());
+                        EspecificaPesquisa pesquisa1 = new EspecificaPesquisa();
+                        pesquisa1.setCampo("idAtivPar");
+                        pesquisa1.setValor(atividadeTO.getIdAtiv());
+                        pesquisa1.setTipo(1);
+                        pesqList.add(pesquisa1);
+
+                        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
+                        pesquisa2.setCampo("tipoFuncao");
+                        pesquisa2.setValor(1L);
+                        pesquisa2.setTipo(1);
+                        pesqList.add(pesquisa2);
+
+                        List rFuncaoAtivParList = rFuncaoAtivParTO.get(pesqList);
+
+                        boolean transbordo = false;
+                        boolean rendimento = false;
+
+                        for (int i = 0; i < rFuncaoAtivParList.size(); i++) {
+                            rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtivParList.get(i);
+                            if(rFuncaoAtivParTO.getCodFuncao() == 2){
+                                transbordo = true;
+                            }
+                            if(rFuncaoAtivParTO.getCodFuncao() == 1){
+                                rendimento = true;
+                            }
+                        }
+
+                        if (transbordo) {
+
+                            TransbMMTO transbMMTO = new TransbMMTO();
+                            if (transbMMTO.hasElements()) {
+                                List transbList = transbMMTO.all();
+                                transbMMTO = (TransbMMTO) transbList.get(0);
+                                pmmContext.getApontMMTO().setTransbApontMM(transbMMTO.getCodEquipTransbMM());
                             } else {
-                                pmmContext.getApontaMMTO().setTransbordoAponta(0L);
+                                pmmContext.getApontMMTO().setTransbApontMM(0L);
                             }
 
                             if(pmmContext.getTipoEquip() == 1) {
 
-                                pmmContext.getApontaMMTO().setLatitudeAponta(0D);
-                                pmmContext.getApontaMMTO().setLongitudeAponta(0D);
-                                ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 2L);
+                                pmmContext.getApontMMTO().setLatitudeApontMM(0D);
+                                pmmContext.getApontMMTO().setLongitudeApontMM(0D);
+                                ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontMMTO());
 
-                                if (atividadeTO.getFlagRendimento() == 1) {
+                                if (rendimento) {
 
                                     BoletimMMTO boletimMMTO = new BoletimMMTO();
-                                    List boletimList = boletimMMTO.get("statusBoletim", 1L);
+                                    List boletimList = boletimMMTO.get("statusBolMM", 1L);
 
                                     if (boletimList.size() > 0) {
 
                                         boletimMMTO = (BoletimMMTO) boletimList.get(0);
 
-                                        RendimentoTO rendimentoTO = new RendimentoTO();
+                                        RendMMTO rendMMTO = new RendMMTO();
                                         ArrayList listaPesq = new ArrayList();
 
-                                        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-                                        pesquisa.setCampo("idBolRendimento");
-                                        pesquisa.setValor(boletimMMTO.getIdBoletim());
-                                        pesquisa.setTipo(1);
-                                        listaPesq.add(pesquisa);
+                                        EspecificaPesquisa pesq1 = new EspecificaPesquisa();
+                                        pesq1.setCampo("idBolRendMM");
+                                        pesq1.setValor(boletimMMTO.getIdBolMM());
+                                        pesq1.setTipo(1);
+                                        listaPesq.add(pesq1);
 
-                                        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-                                        pesquisa2.setCampo("nroOSRendimento");
-                                        pesquisa2.setValor(pmmContext.getApontaMMTO().getOsAponta());
-                                        pesquisa2.setTipo(1);
-                                        listaPesq.add(pesquisa2);
+                                        EspecificaPesquisa pesq2 = new EspecificaPesquisa();
+                                        pesq2.setCampo("nroOSRendMM");
+                                        pesq2.setValor(pmmContext.getApontMMTO().getOsApontMM());
+                                        pesq2.setTipo(1);
+                                        listaPesq.add(pesq2);
 
-                                        List rendList = rendimentoTO.get(listaPesq);
+                                        List rendList = rendMMTO.get(listaPesq);
 
                                         if (rendList.size() == 0) {
-                                            rendimentoTO.setIdBolRendimento(boletimMMTO.getIdBoletim());
-                                            rendimentoTO.setIdExtBolRendimento(boletimMMTO.getIdExtBoletim());
-                                            rendimentoTO.setNroOSRendimento(pmmContext.getApontaMMTO().getOsAponta());
-                                            rendimentoTO.setValorRendimento(0D);
-                                            rendimentoTO.insert();
-                                            rendimentoTO.commit();
+                                            rendMMTO.setIdBolRendMM(boletimMMTO.getIdBolMM());
+                                            rendMMTO.setIdExtBolRendMM(boletimMMTO.getIdExtBolMM());
+                                            rendMMTO.setNroOSRendMM(pmmContext.getApontMMTO().getOsApontMM());
+                                            rendMMTO.setValorRendMM(0D);
+                                            rendMMTO.insert();
+                                            rendMMTO.commit();
                                         }
 
                                     }
@@ -316,12 +345,12 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 } else if ((pmmContext.getVerPosTela() == 3)) {
 
                     if(pmmContext.getTipoEquip() == 1) {
-                        pmmContext.getApontaMMTO().setAtividadeAponta(atividadeTO.getIdAtiv());
-                        pmmContext.getApontaMMTO().setStatusConAponta(configTO.getStatusConConfig());
+                        pmmContext.getApontMMTO().setAtivApontMM(atividadeTO.getIdAtiv());
+                        pmmContext.getApontMMTO().setStatusConApontMM(configTO.getStatusConConfig());
                     }
                     else{
-                        pmmContext.getApontaFertTO().setAtivApontaFert(atividadeTO.getIdAtiv());
-                        pmmContext.getApontaFertTO().setStatusConApontaFert(configTO.getStatusConConfig());
+                        pmmContext.getApontFertTO().setAtivApontFert(atividadeTO.getIdAtiv());
+                        pmmContext.getApontFertTO().setStatusConApontFert(configTO.getStatusConConfig());
                     }
                     Intent it = new Intent(ListaAtividadeActivity.this, ListaParadaActivity.class);
                     startActivity(it);
@@ -349,16 +378,16 @@ public class ListaAtividadeActivity extends ActivityGeneric {
         if (bkpApontaList.size() > 0) {
             backupApontaTO = (BackupApontaTO) bkpApontaList.get(bkpApontaList.size() - 1);
             if(pmmContext.getTipoEquip() == 1) {
-                if ((pmmContext.getApontaMMTO().getOsAponta().equals(backupApontaTO.getOsAponta()))
-                        && (pmmContext.getApontaMMTO().getAtividadeAponta().equals(backupApontaTO.getAtividadeAponta()))
-                        && (pmmContext.getApontaMMTO().getParadaAponta().equals(backupApontaTO.getParadaAponta()))) {
+                if ((pmmContext.getApontMMTO().getOsApontMM().equals(backupApontaTO.getOsAponta()))
+                        && (pmmContext.getApontMMTO().getAtivApontMM().equals(backupApontaTO.getAtividadeAponta()))
+                        && (pmmContext.getApontMMTO().getParadaApontMM().equals(backupApontaTO.getParadaAponta()))) {
                     v = true;
                 }
             }
             else{
-                if ((pmmContext.getApontaFertTO().getOsApontaFert().equals(backupApontaTO.getOsAponta()))
-                        && (pmmContext.getApontaFertTO().getAtivApontaFert().equals(backupApontaTO.getAtividadeAponta()))
-                        && (pmmContext.getApontaFertTO().getParadaApontaFert().equals(backupApontaTO.getParadaAponta()))) {
+                if ((pmmContext.getApontFertTO().getOsApontFert().equals(backupApontaTO.getOsAponta()))
+                        && (pmmContext.getApontFertTO().getAtivApontFert().equals(backupApontaTO.getAtividadeAponta()))
+                        && (pmmContext.getApontFertTO().getParadaApontFert().equals(backupApontaTO.getParadaAponta()))) {
                     v = true;
                 }
             }

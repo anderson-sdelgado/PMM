@@ -28,23 +28,22 @@ import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosReceb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.MotoristaTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.OSTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.PneuTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ROSAtivTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.AtualAplicTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ImplementoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RespItemCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.TransbordoTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.estaticas.FuncionarioTO;
+import br.com.usinasantafe.pmm.to.estaticas.OSTO;
+import br.com.usinasantafe.pmm.to.estaticas.ROSAtivTO;
+import br.com.usinasantafe.pmm.to.variaveis.ApontFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.AtualAplicTO;
+import br.com.usinasantafe.pmm.to.variaveis.BackupApontaTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.RespItemCLTO;
+import br.com.usinasantafe.pmm.to.variaveis.TransbMMTO;
 
 public class MenuInicialActivity extends ActivityGeneric {
 
@@ -100,14 +99,14 @@ public class MenuInicialActivity extends ActivityGeneric {
                 if (configList.size() > 0) {
 
                     progressBar.setCancelable(true);
-                    progressBar.setMessage("Buscando Atualização...");
+                    progressBar.setMessage("BUSCANDO ATUALIZAÇÃO...");
                     progressBar.show();
 
                     AtualAplicTO atualAplicTO = new AtualAplicTO();
                     atualAplicTO.setVersaoAtual(pmmContext.versaoAplic);
 
                     atualAplicTO.setIdEquipAtualizacao(equipTO.getNroEquip());
-                    atualAplicTO.setIdCheckList(equipTO.getIdChecklist());
+                    atualAplicTO.setIdCheckList(equipTO.getIdCheckList());
 
                     ManipDadosVerif.getInstance().verAtualizacao(atualAplicTO, this, progressBar);
                 }
@@ -123,7 +122,7 @@ public class MenuInicialActivity extends ActivityGeneric {
             List boletimList;
             if (pmmContext.getTipoEquip() == 1) {
                 BoletimMMTO boletimMMTO = new BoletimMMTO();
-                boletimList = boletimMMTO.get("statusBoletim", 1L);
+                boletimList = boletimMMTO.get("statusBolMM", 1L);
             } else {
                 BoletimFertTO boletimFertTO = new BoletimFertTO();
                 boletimList = boletimFertTO.get("statusBolFert", 1L);
@@ -131,8 +130,8 @@ public class MenuInicialActivity extends ActivityGeneric {
 
             if (boletimList.size() > 0) {
 
-                CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-                List cabecList = cabecCheckListTO.get("statusCab", 1L);
+                CabecCLTO cabecCLTO = new CabecCLTO();
+                List cabecList = cabecCLTO.get("statusCabCL", 1L);
 
                 if (pmmContext.getTipoEquip() == 1) {
                     pmmContext.setBoletimMMTO((BoletimMMTO) boletimList.get(0));
@@ -152,14 +151,14 @@ public class MenuInicialActivity extends ActivityGeneric {
 
                 } else {
 
-                    RespItemCheckListTO respItemCheckListTO = new RespItemCheckListTO();
+                    RespItemCLTO respItemCLTO = new RespItemCLTO();
 
-                    if (respItemCheckListTO.hasElements()) {
-                        cabecCheckListTO = (CabecCheckListTO) cabecList.get(0);
-                        List respList = respItemCheckListTO.get("idCabIt", cabecCheckListTO.getIdCab());
+                    if (respItemCLTO.hasElements()) {
+                        cabecCLTO = (CabecCLTO) cabecList.get(0);
+                        List respList = respItemCLTO.get("idCabItCL", cabecCLTO.getIdCabCL());
                         for (int i = 0; i < respList.size(); i++) {
-                            respItemCheckListTO = (RespItemCheckListTO) respList.get(i);
-                            respItemCheckListTO.delete();
+                            respItemCLTO = (RespItemCLTO) respList.get(i);
+                            respItemCLTO.delete();
                         }
                     }
 
@@ -167,7 +166,7 @@ public class MenuInicialActivity extends ActivityGeneric {
                         progressBar.dismiss();
                     }
 
-                    pmmContext.setPosChecklist(1L);
+                    pmmContext.setPosCheckList(1L);
                     Intent it = new Intent(MenuInicialActivity.this, ItemCheckListActivity.class);
                     startActivity(it);
                     finish();
@@ -210,8 +209,8 @@ public class MenuInicialActivity extends ActivityGeneric {
                 String text = textView.getText().toString();
 
                 if (text.equals("BOLETIM")) {
-                    MotoristaTO motoristaTO = new MotoristaTO();
-                    if (motoristaTO.hasElements() && configTO.hasElements()) {
+                    FuncionarioTO funcionarioTO = new FuncionarioTO();
+                    if (funcionarioTO.hasElements() && configTO.hasElements()) {
                         pmmContext.setVerPosTela(1);
                         clearBD();
                         customHandler.removeCallbacks(updateTimerThread);
@@ -369,7 +368,6 @@ public class MenuInicialActivity extends ActivityGeneric {
         }
     };
 
-
     public void teste() {
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
@@ -381,63 +379,63 @@ public class MenuInicialActivity extends ActivityGeneric {
 
             boletimMMTO = (BoletimMMTO) boletimMMList.get(i);
             Log.i("PMM", "BOLETIM MM");
-            Log.i("PMM", "idBoletim = " + boletimMMTO.getIdBoletim());
-            Log.i("PMM", "idExtBoletim = " + boletimMMTO.getIdExtBoletim());
-            Log.i("PMM", "codMotoBoletim = " + boletimMMTO.getCodMotoBoletim());
-            Log.i("PMM", "codEquipBoletim = " + boletimMMTO.getCodEquipBoletim());
-            Log.i("PMM", "codTurnoBoletim = " + boletimMMTO.getCodTurnoBoletim());
-            Log.i("PMM", "hodometroInicialBoletim = " + boletimMMTO.getHodometroInicialBoletim());
-            Log.i("PMM", "hodometroFinalBoletim = " + boletimMMTO.getHodometroFinalBoletim());
-            Log.i("PMM", "osBoletim = " + boletimMMTO.getOsBoletim());
-            Log.i("PMM", "ativPrincBoletim = " + boletimMMTO.getAtivPrincBoletim());
-            Log.i("PMM", "dthrInicioBoletim = " + boletimMMTO.getDthrInicioBoletim());
-            Log.i("PMM", "dthrFimBoletim = " + boletimMMTO.getDthrFimBoletim());
-            Log.i("PMM", "statusBoletim = " + boletimMMTO.getStatusBoletim());
+            Log.i("PMM", "idBoletim = " + boletimMMTO.getIdBolMM());
+            Log.i("PMM", "idExtBoletim = " + boletimMMTO.getIdExtBolMM());
+            Log.i("PMM", "codMotoBoletim = " + boletimMMTO.getMatricFuncBolMM());
+            Log.i("PMM", "codEquipBoletim = " + boletimMMTO.getIdEquipBolMM());
+            Log.i("PMM", "codTurnoBoletim = " + boletimMMTO.getIdTurnoBolMM());
+            Log.i("PMM", "hodometroInicialBoletim = " + boletimMMTO.getHodometroInicialBolMM());
+            Log.i("PMM", "hodometroFinalBoletim = " + boletimMMTO.getHodometroFinalBolMM());
+            Log.i("PMM", "osBoletim = " + boletimMMTO.getOsBolMM());
+            Log.i("PMM", "ativPrincBoletim = " + boletimMMTO.getAtivPrincBolMM());
+            Log.i("PMM", "dthrInicioBoletim = " + boletimMMTO.getDthrInicialBolMM());
+            Log.i("PMM", "dthrFimBoletim = " + boletimMMTO.getDthrFinalBolMM());
+            Log.i("PMM", "statusBoletim = " + boletimMMTO.getStatusBolMM());
 
         }
 
-        ApontaMMTO apontaMMTO = new ApontaMMTO();
-        List apontaMMList = apontaMMTO.all();
+        ApontMMTO apontMMTO = new ApontMMTO();
+        List apontaMMList = apontMMTO.all();
 
         for (int i = 0; i < apontaMMList.size(); i++) {
 
-            apontaMMTO = (ApontaMMTO) apontaMMList.get(i);
+            apontMMTO = (ApontMMTO) apontaMMList.get(i);
             Log.i("PMM", "APONTAMENTO MM");
-            Log.i("PMM", "idAponta = " + apontaMMTO.getIdAponta());
-            Log.i("PMM", "idBolAponta = " + apontaMMTO.getIdBolAponta());
-            Log.i("PMM", "idExtBolAponta = " + apontaMMTO.getIdExtBolAponta());
-            Log.i("PMM", "osAponta = " + apontaMMTO.getOsAponta());
-            Log.i("PMM", "atividadeAponta = " + apontaMMTO.getAtividadeAponta());
-            Log.i("PMM", "paradaAponta = " + apontaMMTO.getParadaAponta());
-            Log.i("PMM", "transbordoAponta = " + apontaMMTO.getTransbordoAponta());
-            Log.i("PMM", "dthrAponta = " + apontaMMTO.getDthrAponta());
+            Log.i("PMM", "idAponta = " + apontMMTO.getIdApontMM());
+            Log.i("PMM", "idBolAponta = " + apontMMTO.getIdBolApontMM());
+            Log.i("PMM", "idExtBolAponta = " + apontMMTO.getIdExtBolApontMM());
+            Log.i("PMM", "osAponta = " + apontMMTO.getOsApontMM());
+            Log.i("PMM", "atividadeAponta = " + apontMMTO.getAtivApontMM());
+            Log.i("PMM", "paradaAponta = " + apontMMTO.getParadaApontMM());
+            Log.i("PMM", "transbordoAponta = " + apontMMTO.getTransbApontMM());
+            Log.i("PMM", "dthrAponta = " + apontMMTO.getDthrApontMM());
 
         }
 
-        ImplementoTO implementoTO = new ImplementoTO();
-        List implementoList = implementoTO.all();
+        ImpleMMTO impleMMTO = new ImpleMMTO();
+        List implementoList = impleMMTO.all();
 
         for (int l = 0; l < implementoList.size(); l++) {
-            implementoTO = (ImplementoTO) implementoList.get(l);
+            impleMMTO = (ImpleMMTO) implementoList.get(l);
             Log.i("PMM", "IMPLEMENTO");
-            Log.i("PMM", "idImplemento = " + implementoTO.getIdImplemento());
-            Log.i("PMM", "idApontImplemento = " + implementoTO.getIdApontImplemento());
-            Log.i("PMM", "posImplemento = " + implementoTO.getPosImplemento());
-            Log.i("PMM", "codEquipImplemento = " + implementoTO.getCodEquipImplemento());
+            Log.i("PMM", "idImplemento = " + impleMMTO.getIdImpleMM());
+            Log.i("PMM", "idApontImplemento = " + impleMMTO.getIdApontImpleMM());
+            Log.i("PMM", "posImplemento = " + impleMMTO.getPosImpleMM());
+            Log.i("PMM", "codEquipImplemento = " + impleMMTO.getCodEquipImpleMM());
         }
 
-        RendimentoTO rendimentoTO = new RendimentoTO();
-        List rendimentoList = rendimentoTO.all();
+        RendMMTO rendMMTO = new RendMMTO();
+        List rendimentoList = rendMMTO.all();
 
         for (int j = 0; j < rendimentoList.size(); j++) {
-            rendimentoTO = (RendimentoTO) rendimentoList.get(j);
+            rendMMTO = (RendMMTO) rendimentoList.get(j);
             Log.i("PMM", "RENDIMENTO");
-            Log.i("PMM", "idRendimento = " + rendimentoTO.getIdRendimento());
-            Log.i("PMM", "idBolRendimento = " + rendimentoTO.getIdBolRendimento());
-            Log.i("PMM", "idExtBolRendimento = " + rendimentoTO.getIdExtBolRendimento());
-            Log.i("PMM", "nroOSRendimento = " + rendimentoTO.getNroOSRendimento());
-            Log.i("PMM", "valorRendimento = " + rendimentoTO.getValorRendimento());
-            Log.i("PMM", "dthrRendimento = " + rendimentoTO.getDthrRendimento());
+            Log.i("PMM", "idRendimento = " + rendMMTO.getIdRendMM());
+            Log.i("PMM", "idBolRendimento = " + rendMMTO.getIdBolRendMM());
+            Log.i("PMM", "idExtBolRendimento = " + rendMMTO.getIdExtBolRendMM());
+            Log.i("PMM", "nroOSRendimento = " + rendMMTO.getNroOSRendMM());
+            Log.i("PMM", "valorRendimento = " + rendMMTO.getValorRendMM());
+            Log.i("PMM", "dthrRendimento = " + rendMMTO.getDthrRendMM());
         }
 
         BoletimFertTO boletimFertTO = new BoletimFertTO();
@@ -451,36 +449,36 @@ public class MenuInicialActivity extends ActivityGeneric {
             Log.i("PMM", "BOLETIM FERT");
             Log.i("PMM", "idBoletim = " + boletimFertTO.getIdBolFert());
             Log.i("PMM", "idExtBoletim = " + boletimFertTO.getIdExtBolFert());
-            Log.i("PMM", "codMotoBoletim = " + boletimFertTO.getCodMotoBolFert());
-            Log.i("PMM", "codEquipBoletim = " + boletimFertTO.getCodEquipBolFert());
-            Log.i("PMM", "codTurnoBoletim = " + boletimFertTO.getCodTurnoBolFert());
+            Log.i("PMM", "codMotoBoletim = " + boletimFertTO.getMatricFuncBolFert());
+            Log.i("PMM", "codEquipBoletim = " + boletimFertTO.getIdEquipBolFert());
+            Log.i("PMM", "codTurnoBoletim = " + boletimFertTO.getIdTurnoBolFert());
             Log.i("PMM", "hodometroInicialBoletim = " + boletimFertTO.getHodometroInicialBolFert());
             Log.i("PMM", "hodometroFinalBoletim = " + boletimFertTO.getHodometroFinalBolFert());
             Log.i("PMM", "osBoletim = " + boletimFertTO.getOsBolFert());
             Log.i("PMM", "ativPrincBoletim = " + boletimFertTO.getAtivPrincBolFert());
-            Log.i("PMM", "dthrInicioBoletim = " + boletimFertTO.getDthrInicioBolFert());
-            Log.i("PMM", "dthrFimBoletim = " + boletimFertTO.getDthrFimBolFert());
+            Log.i("PMM", "dthrInicioBoletim = " + boletimFertTO.getDthrInicialBolFert());
+            Log.i("PMM", "dthrFimBoletim = " + boletimFertTO.getDthrFinalBolFert());
             Log.i("PMM", "statusBoletim = " + boletimFertTO.getStatusBolFert());
 
         }
 
-        ApontaFertTO apontaFertTO = new ApontaFertTO();
-        List apontaAplicFertList = apontaFertTO.all();
+        ApontFertTO apontFertTO = new ApontFertTO();
+        List apontaAplicFertList = apontFertTO.all();
 
         for (int j = 0; j < apontaAplicFertList.size(); j++) {
-            apontaFertTO = (ApontaFertTO) apontaAplicFertList.get(j);
+            apontFertTO = (ApontFertTO) apontaAplicFertList.get(j);
 
             Log.i("PMM", "APONTA FERT");
-            Log.i("PMM", "idApontaAplicFert = " + apontaFertTO.getIdApontaFert());
-            Log.i("PMM", "idBolApontaAplicFert = " + apontaFertTO.getIdBolApontaFert());
-            Log.i("PMM", "idExtBolApontaAplicFert = " + apontaFertTO.getIdExtBolApontaFert());
-            Log.i("PMM", "osApontaAplicFert = " + apontaFertTO.getOsApontaFert());
-            Log.i("PMM", "ativApontaAplicFert = " + apontaFertTO.getAtivApontaFert());
-            Log.i("PMM", "paradaApontaAplicFert = " + apontaFertTO.getParadaApontaFert());
-            Log.i("PMM", "dthrApontaAplicFert = " + apontaFertTO.getDthrApontaFert());
-            Log.i("PMM", "pressaoApontaAplicFert= " + apontaFertTO.getPressaoApontaFert());
-            Log.i("PMM", "velocApontaAplicFert = " + apontaFertTO.getVelocApontaFert());
-            Log.i("PMM", "bocalApontaAplicFert = " + apontaFertTO.getBocalApontaFert());
+            Log.i("PMM", "idApontaAplicFert = " + apontFertTO.getIdApontFert());
+            Log.i("PMM", "idBolApontaAplicFert = " + apontFertTO.getIdBolApontFert());
+            Log.i("PMM", "idExtBolApontaAplicFert = " + apontFertTO.getIdExtBolApontFert());
+            Log.i("PMM", "osApontaAplicFert = " + apontFertTO.getOsApontFert());
+            Log.i("PMM", "ativApontaAplicFert = " + apontFertTO.getAtivApontFert());
+            Log.i("PMM", "paradaApontaAplicFert = " + apontFertTO.getParadaApontFert());
+            Log.i("PMM", "dthrApontaAplicFert = " + apontFertTO.getDthrApontFert());
+            Log.i("PMM", "pressaoApontaAplicFert= " + apontFertTO.getPressaoApontFert());
+            Log.i("PMM", "velocApontaAplicFert = " + apontFertTO.getVelocApontFert());
+            Log.i("PMM", "bocalApontaAplicFert = " + apontFertTO.getBocalApontFert());
 
         }
 
@@ -513,42 +511,42 @@ public class MenuInicialActivity extends ActivityGeneric {
             Log.i("PMM", "idEquip = " + equipTO.getIdEquip());
             Log.i("PMM", "codEquip = " + equipTO.getNroEquip());
             Log.i("PMM", "codTurno = " + equipTO.getCodTurno());
-            Log.i("PMM", "idChecklist = " + equipTO.getIdChecklist());
+            Log.i("PMM", "idCheckList = " + equipTO.getIdCheckList());
             Log.i("PMM", "tipoEquipFert = " + equipTO.getTipoEquipFert());
 
         }
 
-        CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-        List cabecList = cabecCheckListTO.all();
+        CabecCLTO cabecCLTO = new CabecCLTO();
+        List cabecList = cabecCLTO.all();
 
         for (int j = 0; j < cabecList.size(); j++) {
 
-            cabecCheckListTO = (CabecCheckListTO) cabecList.get(j);
+            cabecCLTO = (CabecCLTO) cabecList.get(j);
 
             Log.i("PMM", "CabecCheckList");
-            Log.i("PMM", "IdCabecCheck = " + cabecCheckListTO.getIdCab());
-            Log.i("PMM", "EquipCabecCheckList = " + cabecCheckListTO.getEquipCab());
-            Log.i("PMM", "DtCabecCheckList = " + cabecCheckListTO.getDtCab());
-            Log.i("PMM", "FuncCabecCheckList = " + cabecCheckListTO.getFuncCab());
-            Log.i("PMM", "TurnoCabecCheckList = " + cabecCheckListTO.getTurnoCab());
-            Log.i("PMM", "StatusCabecCheckList = " + cabecCheckListTO.getStatusCab());
-            Log.i("PMM", "QtdeItemCabecCheckList = " + cabecCheckListTO.getQtdeItemCab());
-            Log.i("PMM", "DtAtualCheckList = " + cabecCheckListTO.getDtAtualCab());
+            Log.i("PMM", "IdCabecCheck = " + cabecCLTO.getIdCabCL());
+            Log.i("PMM", "EquipCabecCheckList = " + cabecCLTO.getEquipCabCL());
+            Log.i("PMM", "DtCabecCheckList = " + cabecCLTO.getDtCabCL());
+            Log.i("PMM", "FuncCabecCheckList = " + cabecCLTO.getFuncCabCL());
+            Log.i("PMM", "TurnoCabecCheckList = " + cabecCLTO.getTurnoCabCL());
+            Log.i("PMM", "StatusCabecCheckList = " + cabecCLTO.getStatusCabCL());
+            Log.i("PMM", "QtdeItemCabecCheckList = " + cabecCLTO.getQtdeItemCabCL());
+            Log.i("PMM", "DtAtualCheckList = " + cabecCLTO.getDtAtualCabCL());
 
         }
 
-        RespItemCheckListTO respItemCheckListTO = new RespItemCheckListTO();
-        List respItemList = respItemCheckListTO.all();
+        RespItemCLTO respItemCLTO = new RespItemCLTO();
+        List respItemList = respItemCLTO.all();
 
         for (int j = 0; j < respItemList.size(); j++) {
 
-            respItemCheckListTO = (RespItemCheckListTO) respItemList.get(j);
+            respItemCLTO = (RespItemCLTO) respItemList.get(j);
 
             Log.i("PMM", "RespItemCheckList");
-            Log.i("PMM", "IdItemCheckList = " + respItemCheckListTO.getIdIt());
-            Log.i("PMM", "IdItItemCheckList = " + respItemCheckListTO.getIdItBDIt());
-            Log.i("PMM", "IdCabecItemCheckList = " + respItemCheckListTO.getIdCabIt());
-            Log.i("PMM", "OpcaoItemCheckList = " + respItemCheckListTO.getOpIt());
+            Log.i("PMM", "IdItemCheckList = " + respItemCLTO.getIdItCL());
+            Log.i("PMM", "IdItItemCheckList = " + respItemCLTO.getIdItBDItCL());
+            Log.i("PMM", "IdCabecItemCheckList = " + respItemCLTO.getIdCabItCL());
+            Log.i("PMM", "OpcaoItemCheckList = " + respItemCLTO.getOpItCL());
 
         }
 
@@ -559,15 +557,15 @@ public class MenuInicialActivity extends ActivityGeneric {
 
     public void clearBD() {
 
-        TransbordoTO transbordoTO = new TransbordoTO();
-        transbordoTO.deleteAll();
+        TransbMMTO transbMMTO = new TransbMMTO();
+        transbMMTO.deleteAll();
 
-        ImplementoTO implementoTO = new ImplementoTO();
-        List implementoList = implementoTO.get("idApontImplemento", 0L);
+        ImpleMMTO impleMMTO = new ImpleMMTO();
+        List implementoList = impleMMTO.get("idApontImpleMM", 0L);
 
         for (int i = 0; i < implementoList.size(); i++) {
-            implementoTO = (ImplementoTO) implementoList.get(i);
-            implementoTO.delete();
+            impleMMTO = (ImpleMMTO) implementoList.get(i);
+            impleMMTO.delete();
         }
 
         OSTO osto = new OSTO();

@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class EquipActivity extends ActivityGeneric {
 
@@ -43,10 +43,10 @@ public class EquipActivity extends ActivityGeneric {
         textViewDescEquip.setText(String.valueOf(equipTO.getDescrClasseEquip()));
 
         if(pmmContext.getTipoEquip() == 1) {
-            pmmContext.getBoletimMMTO().setCodEquipBoletim(equipTO.getIdEquip());
+            pmmContext.getBoletimMMTO().setIdEquipBolMM(equipTO.getIdEquip());
         }
         else{
-            pmmContext.getBoletimFertTO().setCodEquipBolFert(equipTO.getIdEquip());
+            pmmContext.getBoletimFertTO().setIdEquipBolFert(equipTO.getIdEquip());
         }
 
         buttonOkEquip.setOnClickListener(new View.OnClickListener() {

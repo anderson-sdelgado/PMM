@@ -11,10 +11,10 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.BocalTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ParadaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
+import br.com.usinasantafe.pmm.to.estaticas.AtividadeTO;
+import br.com.usinasantafe.pmm.to.estaticas.BocalTO;
+import br.com.usinasantafe.pmm.to.estaticas.ParadaTO;
+import br.com.usinasantafe.pmm.to.variaveis.BackupApontaTO;
 
 /**
  * Created by anderson on 08/03/2018.

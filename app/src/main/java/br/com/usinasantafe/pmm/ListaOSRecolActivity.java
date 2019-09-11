@@ -9,8 +9,8 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.RecolhFertTO;
 
 public class ListaOSRecolActivity extends ActivityGeneric {
 
@@ -30,11 +30,11 @@ public class ListaOSRecolActivity extends ActivityGeneric {
         boletimFertTO = (BoletimFertTO) boletimList.get(0);
         boletimList.clear();
 
-        RecolhimentoTO recolhimentoTO = new RecolhimentoTO();
+        RecolhFertTO recolhFertTO = new RecolhFertTO();
 
         ListView listaRecMang = (ListView) findViewById(R.id.listaRecMang);
-        AdapterListRecol adapterListRecol = new AdapterListRecol(this, recolhimentoTO.getAndOrderBy("idBolRecol", boletimFertTO.getIdBolFert(), "idRecol", true));
-        listaRecMang.setAdapter(adapterListRecol);
+        AdapterListRecolh adapterListRecolh = new AdapterListRecolh(this, recolhFertTO.getAndOrderBy("idBolRecolhFert", boletimFertTO.getIdBolFert(), "idRecolhFert", true));
+        listaRecMang.setAdapter(adapterListRecolh);
 
         listaRecMang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -42,7 +42,7 @@ public class ListaOSRecolActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                pmmContext.setContRecolhimento(position);
+                pmmContext.setContRecolh(position);
                 Intent it = new Intent(ListaOSRecolActivity.this, RecolhimentoActivity.class);
                 startActivity(it);
                 finish();

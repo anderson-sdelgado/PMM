@@ -1,85 +1,87 @@
 package br.com.usinasantafe.pmm.conWEB;
 
+import br.com.usinasantafe.pmm.PMMContext;
+
 public class UrlsConexaoHttp {
 
-    private int tipoEnvio = 1;
+    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmmdev/view/";
+    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmmdev/view/";
 
-    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmm/";
-    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmm/";
-
-    //public static String localPSTVariavel = "br.com.usinasantafe.pmm.to.tb.variaveis.";
-    public static String localPSTEstatica = "br.com.usinasantafe.pmm.to.tb.estaticas.";
+    public static String localPSTEstatica = "br.com.usinasantafe.pmm.to.estaticas.";
     public static String localUrl = "br.com.usinasantafe.pmm.conWEB.UrlsConexaoHttp";
 
-    public static String AtividadeTO = urlPrincipal + "atividade2.php";
-    public static String BocalTO = urlPrincipal + "bocal2.php";
-    public static String EquipSegTO = urlPrincipal + "equipseg2.php";
-    public static String ItemCheckListTO = urlPrincipal + "itemchecklist2.php";
-    public static String MotoristaTO = urlPrincipal + "motorista2.php";
-    public static String ParadaTO = urlPrincipal + "parada2.php";
-    public static String PressaoBocalTO = urlPrincipal + "pressaobocal2.php";
-    public static String RAtivParadaTO = urlPrincipal + "rativparada2.php";
-    public static String TurnoTO = urlPrincipal + "turno2.php";
+    public static String put = "?versao=" + PMMContext.versaoAplic.replace(".", "_");
+
+    public static String AtividadeTO = urlPrincipal + "atividade.php" + put;
+    public static String BocalTO = urlPrincipal + "bocal.php" + put;
+    public static String EquipSegTO = urlPrincipal + "equipseg.php" + put;
+    public static String ItemCheckListTO = urlPrincipal + "itemchecklist.php" + put;
+    public static String FuncionarioTO = urlPrincipal + "funcionario.php" + put;
+    public static String ParadaTO = urlPrincipal + "parada.php" + put;
+    public static String PressaoBocalTO = urlPrincipal + "pressaobocal.php" + put;
+    public static String RAtivParadaTO = urlPrincipal + "rativparada.php" + put;
+    public static String RFuncaoAtivParTO = urlPrincipal + "rfuncaoativpar.php" + put;
+    public static String TurnoTO = urlPrincipal + "turno.php" + put;
 
     public UrlsConexaoHttp() {
     }
 
     public String getsInserirCheckList() {
-        return urlPrincEnvio + "inserirchecklist2.php";
+        return urlPrincEnvio + "inserirchecklist.php" + put;
     }
 
     public String getsInsertApontaMM() {
-        return urlPrincEnvio + "inserirapontmm2.php";
+        return urlPrincEnvio + "inserirapontmm.php" + put;
     }
 
     public String getsInsertBolAbertoMM() {
-        return urlPrincEnvio + "inserirbolabertomm2.php";
+        return urlPrincEnvio + "inserirbolabertomm.php" + put;
     }
 
     public String getsInsertBolFechadoMM() {
-        return urlPrincEnvio + "inserirbolfechadomm2.php";
+        return urlPrincEnvio + "inserirbolfechadomm.php" + put;
     }
 
     public String getsInsertApontaFert() {
-        return urlPrincEnvio + "inserirapontfert2.php";
+        return urlPrincEnvio + "inserirapontfert.php" + put;
     }
 
     public String getsInsertBolAbertoFert() {
-        return urlPrincEnvio + "inserirbolabertofert2.php";
+        return urlPrincEnvio + "inserirbolabertofert.php" + put;
     }
 
     public String getsInsertBolFechadoFert() {
-        return urlPrincEnvio + "inserirbolfechadofert2.php";
+        return urlPrincEnvio + "inserirbolfechadofert.php" + put;
     }
 
     public String urlVerifica(String classe) {
         String retorno = "";
         if (classe.equals("Equip")) {
-            retorno = urlPrincEnvio + "equip2.php";
+            retorno = urlPrincipal + "equip.php" + put;
         } else if (classe.equals("OS")) {
-            retorno = urlPrincEnvio + "os2.php";
+            retorno = urlPrincipal + "os.php" + put;
         } else if (classe.equals("Atividade")) {
-            retorno = urlPrincEnvio + "atualativ2.php";
+            retorno = urlPrincipal + "atualativ.php" + put;
         } else if (classe.equals("AtualParada")) {
-            retorno = urlPrincEnvio + "atualparada2.php";
+            retorno = urlPrincipal + "atualparada.php" + put;
         } else if (classe.equals("Atualiza")) {
-            retorno = urlPrincEnvio + "atualaplic2.php";
+            retorno = urlPrincipal + "atualaplic.php" + put;
         } else if (classe.equals("Operador")) {
-            retorno = urlPrincEnvio + "motorista2.php";
+            retorno = urlPrincipal + "motorista.php" + put;
         } else if (classe.equals("Turno")) {
-            retorno = urlPrincEnvio + "turno2.php";
+            retorno = urlPrincipal + "turno.php" + put;
         } else if (classe.equals("EquipSeg")) {
-            retorno = urlPrincEnvio + "equipseg2.php";
+            retorno = urlPrincipal + "equipseg.php" + put;
         } else if (classe.equals("CheckList")) {
-            retorno = urlPrincEnvio + "atualchecklist2.php";
+            retorno = urlPrincipal + "atualchecklist.php" + put;
         } else if (classe.equals("Pneu")) {
-            retorno = urlPrincEnvio + "pneu2.php";
+            retorno = urlPrincipal + "pneu.php" + put;
         } else if (classe.equals("Bocal")) {
-            retorno = urlPrincEnvio + "bocal2.php";
+            retorno = urlPrincipal + "bocal.php" + put;
         } else if (classe.equals("PressaoBocal")) {
-            retorno = urlPrincEnvio + "pressaobocal2.php";
+            retorno = urlPrincipal + "pressaobocal.php" + put;
         } else if (classe.equals("Perda")) {
-            retorno = urlPrincEnvio + "perda2.php";
+            retorno = urlPrincipal + "perda.php" + put;
         }
         return retorno;
     }

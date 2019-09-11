@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import br.com.usinasantafe.pmm.MenuInicialActivity;
 import br.com.usinasantafe.pmm.conWEB.ConHttpGetBDGenerico;
 import br.com.usinasantafe.pmm.conWEB.UrlsConexaoHttp;
 import br.com.usinasantafe.pmm.pst.GenericRecordable;
@@ -21,9 +20,9 @@ import android.util.Log;
 
 public class ManipDadosReceb {
 
-	private ArrayList tabelaAtualizar;
+	private ArrayList tabAtualArrayList;
 	private static ManipDadosReceb instance = null;
-	private int contAtualizaBD = 0;
+	private int contAtualBD = 0;
 	private String classe = "";
 	private ProgressDialog progressDialog;
 	private int qtdeBD = 0;
@@ -31,8 +30,6 @@ public class ManipDadosReceb {
 	private Context context;
 	private int tipoReceb;
 	private UrlsConexaoHttp urlsConexaoHttp;
-	private String versao;
-	private MenuInicialActivity menuInicialActivity;
 	
 	public ManipDadosReceb() {
 
@@ -70,7 +67,7 @@ public class ManipDadosReceb {
 
 				Log.i("PMM", " SALVOU DADOS ");
 
-				if(contAtualizaBD > 0){
+				if(contAtualBD > 0){
 					atualizandoBD();
 				}
 
@@ -94,23 +91,23 @@ public class ManipDadosReceb {
 			
 			this.tipoReceb = 1;
 			this.progressDialog = progressDialog;
-			tabelaAtualizar = new ArrayList();
+			tabAtualArrayList = new ArrayList();
 	        Class<?> retClasse = Class.forName(urlsConexaoHttp.localUrl); 
 
 	        for (Field field : retClasse.getDeclaredFields()) {
 	            String campo = field.getName();
 	            Log.i("PMM", "Campo = " + campo);
 	            if(campo.contains("TO")){
-	            	tabelaAtualizar.add(campo);
+	            	tabAtualArrayList.add(campo);
 	            }
 	            
 	        }
 	        
-	        classe = (String) tabelaAtualizar.get(contAtualizaBD);
+	        classe = (String) tabAtualArrayList.get(contAtualBD);
 			
 	        String[] url = {classe};
 			
-		    contAtualizaBD++;
+		    contAtualBD++;
 
 	        ConHttpGetBDGenerico conHttpGetBDGenerico = new ConHttpGetBDGenerico();
 	        conHttpGetBDGenerico.execute(url);
@@ -126,23 +123,23 @@ public class ManipDadosReceb {
 		try {
 
 			this.tipoReceb = 2;
-			tabelaAtualizar = new ArrayList();
+			tabAtualArrayList = new ArrayList();
 			Class<?> retClasse = Class.forName(urlsConexaoHttp.localUrl);
 
 			for (Field field : retClasse.getDeclaredFields()) {
 				String campo = field.getName();
 				Log.i("PMM", "Campo = " + campo);
 				if (campo.contains("TO")) {
-					tabelaAtualizar.add(campo);
+					tabAtualArrayList.add(campo);
 				}
 
 			}
 
-			classe = (String) tabelaAtualizar.get(contAtualizaBD);
+			classe = (String) tabAtualArrayList.get(contAtualBD);
 
 			String[] url = {classe};
 
-			contAtualizaBD++;
+			contAtualBD++;
 
 			ConHttpGetBDGenerico conHttpGetBDGenerico = new ConHttpGetBDGenerico();
 			conHttpGetBDGenerico.execute(url);
@@ -158,14 +155,14 @@ public class ManipDadosReceb {
 
 		if(this.tipoReceb == 1){
 		
-			qtdeBD = tabelaAtualizar.size();
+			qtdeBD = tabAtualArrayList.size();
 			
-			if(contAtualizaBD < tabelaAtualizar.size()){
+			if(contAtualBD < tabAtualArrayList.size()){
 				
-				this.progressDialog.setProgress((contAtualizaBD * 100) / qtdeBD);
-		        classe = (String) tabelaAtualizar.get(contAtualizaBD);
+				this.progressDialog.setProgress((contAtualBD * 100) / qtdeBD);
+		        classe = (String) tabAtualArrayList.get(contAtualBD);
 				String[] url = {classe};
-				contAtualizaBD++;
+				contAtualBD++;
 
 				ConHttpGetBDGenerico conHttpGetBDGenerico = new ConHttpGetBDGenerico();
 		        conHttpGetBDGenerico.execute(url);
@@ -174,7 +171,7 @@ public class ManipDadosReceb {
 			else
 			{
 				this.progressDialog.dismiss();
-				contAtualizaBD = 0;
+				contAtualBD = 0;
 				ManipDadosEnvio.getInstance().envioDados(this.context);
 				AlertDialog.Builder alerta = new AlertDialog.Builder(this.context);
 				alerta.setTitle("ATENCAO");
@@ -192,13 +189,13 @@ public class ManipDadosReceb {
 		}
 		else if(this.tipoReceb == 2){
 			
-			qtdeBD = tabelaAtualizar.size();
+			qtdeBD = tabAtualArrayList.size();
 			
-			if(contAtualizaBD < tabelaAtualizar.size()){
+			if(contAtualBD < tabAtualArrayList.size()){
 				
-		        classe = (String) tabelaAtualizar.get(contAtualizaBD);
+		        classe = (String) tabAtualArrayList.get(contAtualBD);
 				String[] url = {classe};
-				contAtualizaBD++;
+				contAtualBD++;
 
 				ConHttpGetBDGenerico conHttpGetBDGenerico = new ConHttpGetBDGenerico();
 		        conHttpGetBDGenerico.execute(url);
@@ -206,7 +203,7 @@ public class ManipDadosReceb {
 			}
 			else
 			{
-				contAtualizaBD = 0;
+				contAtualBD = 0;
 			}
 			
 		}
@@ -238,19 +235,19 @@ public class ManipDadosReceb {
 		try {
 
 			Class<?> retClasse = Class.forName(urlsConexaoHttp.localUrl);
-			tabelaAtualizar = new ArrayList();
+			tabAtualArrayList = new ArrayList();
 
 			for (Field field : retClasse.getDeclaredFields()) {
 				String campo = field.getName();
 				Log.i("PMM", "Campo = " + campo);
 				if (campo.equals("datahorahttp")) {
 					Log.i("PMM", "Campo = " + campo);
-					tabelaAtualizar.add(campo);
+					tabAtualArrayList.add(campo);
 				}
 
 			}
 
-			classe = (String) tabelaAtualizar.get(contAtualizaBD);
+			classe = (String) tabAtualArrayList.get(contAtualBD);
 
 			String[] url = {classe};
 

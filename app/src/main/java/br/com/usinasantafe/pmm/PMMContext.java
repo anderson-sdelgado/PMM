@@ -2,10 +2,10 @@ package br.com.usinasantafe.pmm;
 
 import android.app.Application;
 
-import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.ApontFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
 
 /**
  * Created by anderson on 26/04/2017.
@@ -15,8 +15,8 @@ public class PMMContext extends Application {
 
     private BoletimMMTO boletimMMTO;
     private BoletimFertTO boletimFertTO;
-    private ApontaMMTO apontaMMTO;
-    private ApontaFertTO apontaFertTO;
+    private ApontMMTO apontMMTO;
+    private ApontFertTO apontFertTO;
     private int verPosTela;
     //1 - Inicio do boletim;
     // 2 - Trabalhando Moto Mec;
@@ -29,14 +29,14 @@ public class PMMContext extends Application {
     // 19 - Trocar de implemento
     private int contImplemento;
     private String textoHorimetro;
-    public static String versaoAplic = "2.00";
-    private int contRendimento;
-    private int posRendimento;
-    private int contRecolhimento;
-    private int posRecolhimento;
+    public static String versaoAplic = "2.01";
+    private int contRend;
+    private int posRend;
+    private int contRecolh;
+    private int posRecolh;
     private int contDataHora;
     private String verAtualCL;
-    private Long posChecklist;
+    private Long posCheckList;
     private int tipoEquip; //1 - Tipo Motomec; 2 - Tipo Fertirrigação
 
     private boolean verVisDados;
@@ -64,16 +64,16 @@ public class PMMContext extends Application {
         return boletimFertTO;
     }
 
-    public ApontaMMTO getApontaMMTO() {
-        if (apontaMMTO == null)
-            apontaMMTO = new ApontaMMTO();
-        return apontaMMTO;
+    public ApontMMTO getApontMMTO() {
+        if (apontMMTO == null)
+            apontMMTO = new ApontMMTO();
+        return apontMMTO;
     }
 
-    public ApontaFertTO getApontaFertTO() {
-        if (apontaFertTO == null)
-            apontaFertTO = new ApontaFertTO();
-        return apontaFertTO;
+    public ApontFertTO getApontFertTO() {
+        if (apontFertTO == null)
+            apontFertTO = new ApontFertTO();
+        return apontFertTO;
     }
 
 
@@ -101,12 +101,12 @@ public class PMMContext extends Application {
         this.contImplemento = contImplemento;
     }
 
-    public Long getPosChecklist() {
-        return posChecklist;
+    public Long getPosCheckList() {
+        return posCheckList;
     }
 
-    public void setPosChecklist(Long posChecklist) {
-        this.posChecklist = posChecklist;
+    public void setPosCheckList(Long posCheckList) {
+        this.posCheckList = posCheckList;
     }
 
     public String getTextoHorimetro() {
@@ -117,36 +117,36 @@ public class PMMContext extends Application {
         this.textoHorimetro = textoHorimetro;
     }
 
-    public int getContRendimento() {
-        return contRendimento;
+    public int getContRend() {
+        return contRend;
     }
 
-    public void setContRendimento(int contRendimento) {
-        this.contRendimento = contRendimento;
+    public void setContRend(int contRend) {
+        this.contRend = contRend;
     }
 
-    public int getPosRendimento() {
-        return posRendimento;
+    public int getPosRend() {
+        return posRend;
     }
 
-    public void setPosRendimento(int posRendimento) {
-        this.posRendimento = posRendimento;
+    public void setPosRend(int posRend) {
+        this.posRend = posRend;
     }
 
-    public int getContRecolhimento() {
-        return contRecolhimento;
+    public int getContRecolh() {
+        return contRecolh;
     }
 
-    public void setContRecolhimento(int contRecolhimento) {
-        this.contRecolhimento = contRecolhimento;
+    public void setContRecolh(int contRecolh) {
+        this.contRecolh = contRecolh;
     }
 
-    public int getPosRecolhimento() {
-        return posRecolhimento;
+    public int getPosRecolh() {
+        return posRecolh;
     }
 
-    public void setPosRecolhimento(int posRecolhimento) {
-        this.posRecolhimento = posRecolhimento;
+    public void setPosRecolh(int posRecolh) {
+        this.posRecolh = posRecolh;
     }
 
     public String getVerAtualCL() {

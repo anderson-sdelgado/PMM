@@ -16,15 +16,16 @@ import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipSegTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ApontaMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BackupApontaTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.TransbordoTO;
+import br.com.usinasantafe.pmm.to.estaticas.AtividadeTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipSegTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.estaticas.RFuncaoAtivParTO;
+import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.BackupApontaTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.TransbMMTO;
 
 public class TransbordoActivity extends ActivityGeneric {
 
@@ -125,18 +126,18 @@ public class TransbordoActivity extends ActivityGeneric {
 
                     if(equipSegList.size() > 0){
 
-                        TransbordoTO transbordoTO = new TransbordoTO();
-                        transbordoTO.setCodEquipTransbordo(Long.parseLong(editTextPadrao.getText().toString()));
-                        transbordoTO.deleteAll();
-                        transbordoTO.insert();
+                        TransbMMTO transbMMTO = new TransbMMTO();
+                        transbMMTO.setCodEquipTransbMM(Long.parseLong(editTextPadrao.getText().toString()));
+                        transbMMTO.deleteAll();
+                        transbMMTO.insert();
 
                         if(pmmContext.getVerPosTela() == 2) {
 
-                            pmmContext.getApontaMMTO().setTransbordoAponta(Long.parseLong(editTextPadrao.getText().toString()));
+                            pmmContext.getApontMMTO().setTransbApontMM(Long.parseLong(editTextPadrao.getText().toString()));
 
-                            pmmContext.getApontaMMTO().setLatitudeAponta(0D);
-                            pmmContext.getApontaMMTO().setLongitudeAponta(0D);
-                            ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontaMMTO(), 2L);
+                            pmmContext.getApontMMTO().setLatitudeApontMM(0D);
+                            pmmContext.getApontMMTO().setLongitudeApontMM(0D);
+                            ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontMMTO());
 
                             ConfigTO configTO = new ConfigTO();
                             List listConfigTO = configTO.all();
@@ -146,25 +147,52 @@ public class TransbordoActivity extends ActivityGeneric {
                             configTO.update();
 
                             AtividadeTO atividadeTO = new AtividadeTO();
-                            List atividadeList = atividadeTO.get("idAtiv", pmmContext.getApontaMMTO().getAtividadeAponta());
+                            List atividadeList = atividadeTO.get("idAtiv", pmmContext.getApontMMTO().getAtivApontMM());
                             atividadeTO = (AtividadeTO) atividadeList.get(0);
 
-                            if (atividadeTO.getFlagRendimento() == 1) {
+                            RFuncaoAtivParTO rFuncaoAtivParTO = new RFuncaoAtivParTO();
+                            ArrayList pesqList = new ArrayList();
+
+                            EspecificaPesquisa pesq1 = new EspecificaPesquisa();
+                            pesq1.setCampo("idAtivPar");
+                            pesq1.setValor(atividadeTO.getIdAtiv());
+                            pesq1.setTipo(1);
+                            pesqList.add(pesq1);
+
+                            EspecificaPesquisa pesq2 = new EspecificaPesquisa();
+                            pesq2.setCampo("tipoFuncao");
+                            pesq2.setValor(1L);
+                            pesq2.setTipo(1);
+                            pesqList.add(pesq2);
+
+                            List rFuncaoAtivParList = rFuncaoAtivParTO.get(pesqList);
+
+                            boolean rendimento = false;
+
+                            for (int i = 0; i < rFuncaoAtivParList.size(); i++) {
+                                rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtivParList.get(i);
+                                if(rFuncaoAtivParTO.getCodFuncao() == 1){
+                                    rendimento = true;
+                                }
+                            }
+                            rFuncaoAtivParList.clear();
+
+                            if (rendimento) {
 
                                 BoletimMMTO boletimMMTO = new BoletimMMTO();
-                                List listBoletim = boletimMMTO.get("statusBoletim", 1L);
+                                List listBoletim = boletimMMTO.get("statusBolMM", 1L);
 
                                 if (listBoletim.size() > 0) {
-                                    RendimentoTO rendimentoTO = new RendimentoTO();
-                                    List rendList = rendimentoTO.get("nroOSRendimento", pmmContext.getApontaMMTO().getOsAponta());
+                                    RendMMTO rendMMTO = new RendMMTO();
+                                    List rendList = rendMMTO.get("nroOSRendMM", pmmContext.getApontMMTO().getOsApontMM());
                                     if (rendList.size() == 0) {
                                         boletimMMTO = (BoletimMMTO) listBoletim.get(0);
-                                        rendimentoTO.setIdBolRendimento(boletimMMTO.getIdBoletim());
-                                        rendimentoTO.setIdExtBolRendimento(boletimMMTO.getIdExtBoletim());
-                                        rendimentoTO.setNroOSRendimento(pmmContext.getApontaMMTO().getOsAponta());
-                                        rendimentoTO.setValorRendimento(0D);
-                                        rendimentoTO.insert();
-                                        rendimentoTO.commit();
+                                        rendMMTO.setIdBolRendMM(boletimMMTO.getIdBolMM());
+                                        rendMMTO.setIdExtBolRendMM(boletimMMTO.getIdExtBolMM());
+                                        rendMMTO.setNroOSRendMM(pmmContext.getApontMMTO().getOsApontMM());
+                                        rendMMTO.setValorRendMM(0D);
+                                        rendMMTO.insert();
+                                        rendMMTO.commit();
                                     }
 
                                 }
@@ -205,12 +233,12 @@ public class TransbordoActivity extends ActivityGeneric {
                                 configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
                                 configTO.update();
 
-                                ApontaMMTO apontaMMTO = new ApontaMMTO();
-                                apontaMMTO.setOsAponta(backupApontaTO.getOsAponta());
-                                apontaMMTO.setAtividadeAponta(backupApontaTO.getAtividadeAponta());
-                                apontaMMTO.setParadaAponta(backupApontaTO.getParadaAponta());
-                                apontaMMTO.setTransbordoAponta(Long.parseLong(editTextPadrao.getText().toString()));
-                                ManipDadosEnvio.getInstance().salvaApontaMM(apontaMMTO, 2L);
+                                ApontMMTO apontMMTO = new ApontMMTO();
+                                apontMMTO.setOsApontMM(backupApontaTO.getOsAponta());
+                                apontMMTO.setAtivApontMM(backupApontaTO.getAtividadeAponta());
+                                apontMMTO.setParadaApontMM(backupApontaTO.getParadaAponta());
+                                apontMMTO.setTransbApontMM(Long.parseLong(editTextPadrao.getText().toString()));
+                                ManipDadosEnvio.getInstance().salvaApontaMM(apontMMTO);
 
                                 Intent it = new Intent(TransbordoActivity.this, MenuPrincNormalActivity.class);
                                 startActivity(it);

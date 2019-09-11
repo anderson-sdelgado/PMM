@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class SenhaActivity extends ActivityGeneric {
 

@@ -9,8 +9,8 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
 
 public class ListaOSRendActivity extends ActivityGeneric {
 
@@ -26,13 +26,13 @@ public class ListaOSRendActivity extends ActivityGeneric {
         pmmContext = (PMMContext) getApplication();
 
         BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List listBoletim = boletimMMTO.get("statusBoletim", 1L);
+        List listBoletim = boletimMMTO.get("statusBolMM", 1L);
         boletimMMTO = (BoletimMMTO) listBoletim.get(0);
         listBoletim.clear();
 
-        RendimentoTO rendimentoTO = new RendimentoTO();
+        RendMMTO rendMMTO = new RendMMTO();
         ListView listaOSRend = (ListView) findViewById(R.id.listaOSRend);
-        AdapterListRend adapterListRend = new AdapterListRend(this, rendimentoTO.getAndOrderBy("idBolRendimento", boletimMMTO.getIdBoletim(), "idRendimento", true));
+        AdapterListRend adapterListRend = new AdapterListRend(this, rendMMTO.getAndOrderBy("idBolRendMM", boletimMMTO.getIdBolMM(), "idRendMM", true));
         listaOSRend.setAdapter(adapterListRend);
 
         listaOSRend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -41,7 +41,7 @@ public class ListaOSRendActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                pmmContext.setPosRendimento(position);
+                pmmContext.setPosRend(position);
                 Intent it = new Intent(ListaOSRendActivity.this, RendimentoActivity.class);
                 startActivity(it);
                 finish();

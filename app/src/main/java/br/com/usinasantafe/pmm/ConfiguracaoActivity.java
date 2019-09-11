@@ -14,8 +14,8 @@ import java.util.List;
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosReceb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class ConfiguracaoActivity extends ActivityGeneric {
 
@@ -51,7 +51,6 @@ public class ConfiguracaoActivity extends ActivityGeneric {
             editTextSenhaConfig.setText(configTO.getSenhaConfig());
 
         }
-
 
         btOkConfig.setOnClickListener(new View.OnClickListener() {
             @Override

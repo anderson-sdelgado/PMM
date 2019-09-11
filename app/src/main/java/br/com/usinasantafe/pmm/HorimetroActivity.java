@@ -8,20 +8,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.to.tb.estaticas.AtividadeTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.ItemCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.estaticas.TurnoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.CabecCheckListTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RecolhimentoTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.RendimentoTO;
+import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
+import br.com.usinasantafe.pmm.to.estaticas.AtividadeTO;
+import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.to.estaticas.ItemCheckListTO;
+import br.com.usinasantafe.pmm.to.estaticas.RFuncaoAtivParTO;
+import br.com.usinasantafe.pmm.to.estaticas.TurnoTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.variaveis.RecolhFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
 
 public class HorimetroActivity extends ActivityGeneric {
 
@@ -150,10 +153,10 @@ public class HorimetroActivity extends ActivityGeneric {
 
         Long ativPrinc;
         if(pmmContext.getTipoEquip() == 1) {
-            ativPrinc = pmmContext.getBoletimMMTO().getAtivPrincBoletim();
-            pmmContext.getBoletimMMTO().setHodometroInicialBoletim(horimetroNum);
-            pmmContext.getBoletimMMTO().setHodometroFinalBoletim(0D);
-            pmmContext.getBoletimMMTO().setIdExtBoletim(0L);
+            ativPrinc = pmmContext.getBoletimMMTO().getAtivPrincBolMM();
+            pmmContext.getBoletimMMTO().setHodometroInicialBolMM(horimetroNum);
+            pmmContext.getBoletimMMTO().setHodometroFinalBolMM(0D);
+            pmmContext.getBoletimMMTO().setIdExtBolMM(0L);
         }
         else{
             ativPrinc = pmmContext.getBoletimFertTO().getAtivPrincBolFert();
@@ -167,7 +170,30 @@ public class HorimetroActivity extends ActivityGeneric {
         atividadeTO = (AtividadeTO) lAtiv.get(0);
         lAtiv.clear();
 
-        if (atividadeTO.getFlagImplemento() == 1) {
+        RFuncaoAtivParTO rFuncaoAtivParTO = new RFuncaoAtivParTO();
+        ArrayList pesqList = new ArrayList();
+
+        EspecificaPesquisa pesquisa1 = new EspecificaPesquisa();
+        pesquisa1.setCampo("idAtivPar");
+        pesquisa1.setValor(atividadeTO.getIdAtiv());
+        pesquisa1.setTipo(1);
+        pesqList.add(pesquisa1);
+
+        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
+        pesquisa2.setCampo("codFuncao");
+        pesquisa2.setValor(3L);
+        pesquisa2.setTipo(1);
+        pesqList.add(pesquisa2);
+
+        EspecificaPesquisa pesquisa3 = new EspecificaPesquisa();
+        pesquisa3.setCampo("tipoFuncao");
+        pesquisa3.setValor(1L);
+        pesquisa3.setTipo(1);
+        pesqList.add(pesquisa3);
+
+        List rFuncaoAtivParList = rFuncaoAtivParTO.get(pesqList);
+
+        if (rFuncaoAtivParList.size() > 0) {
 
             pmmContext.setContImplemento(1);
             Intent it = new Intent(HorimetroActivity.this, ImplementoActivity.class);
@@ -182,16 +208,16 @@ public class HorimetroActivity extends ActivityGeneric {
                 configTO.update();
                 configTO.commit();
 
-                pmmContext.getBoletimMMTO().setStatusBoletim(1L);
+                pmmContext.getBoletimMMTO().setStatusBolMM(1L);
 
                 Long equip;
                 Long turno;
                 if (pmmContext.getTipoEquip() == 1) {
-                    equip = pmmContext.getBoletimMMTO().getCodEquipBoletim();
-                    turno = pmmContext.getBoletimMMTO().getCodTurnoBoletim();
+                    equip = pmmContext.getBoletimMMTO().getIdEquipBolMM();
+                    turno = pmmContext.getBoletimMMTO().getIdTurnoBolMM();
                 } else {
-                    equip = pmmContext.getBoletimFertTO().getCodEquipBolFert();
-                    turno = pmmContext.getBoletimFertTO().getCodTurnoBolFert();
+                    equip = pmmContext.getBoletimFertTO().getIdEquipBolFert();
+                    turno = pmmContext.getBoletimFertTO().getIdTurnoBolFert();
                 }
 
                 EquipTO equipTO = new EquipTO();
@@ -203,7 +229,7 @@ public class HorimetroActivity extends ActivityGeneric {
                 List turnoList = turnoTO.get("idTurno", turno);
                 turnoTO = (TurnoTO) turnoList.get(0);
 
-                if ((equipTO.getIdChecklist() > 0) &&
+                if ((equipTO.getIdCheckList() > 0) &&
                         ((configTO.getUltTurnoCLConfig() != turnoTO.getIdTurno())
                                 || ((configTO.getUltTurnoCLConfig() == turnoTO.getIdTurno())
                                 && (!configTO.getDtUltCLConfig().equals(Tempo.getInstance().dataSHora()))))) {
@@ -211,7 +237,7 @@ public class HorimetroActivity extends ActivityGeneric {
                     ManipDadosEnvio.getInstance().salvaBoletimAbertoMM(pmmContext.getBoletimMMTO(), true, 0D, 0D);
                     ManipDadosEnvio.getInstance().envioDadosPrinc();
 
-                    pmmContext.setPosChecklist(1L);
+                    pmmContext.setPosCheckList(1L);
 
                     if (pmmContext.getVerAtualCL().equals("N_AC")) {
 
@@ -222,19 +248,19 @@ public class HorimetroActivity extends ActivityGeneric {
                     } else {
 
                         ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
-                        List itemCheckList = itemCheckListTO.get("idChecklist", equipTO.getIdChecklist());
+                        List itemCheckList = itemCheckListTO.get("idCheckList", equipTO.getIdCheckList());
                         Long qtde = (long) itemCheckList.size();
                         itemCheckList.clear();
 
-                        CabecCheckListTO cabecCheckListTO = new CabecCheckListTO();
-                        cabecCheckListTO.setDtCab(Tempo.getInstance().datahora());
-                        cabecCheckListTO.setEquipCab(equipTO.getNroEquip());
-                        cabecCheckListTO.setFuncCab(pmmContext.getBoletimMMTO().getCodMotoBoletim());
-                        cabecCheckListTO.setTurnoCab(pmmContext.getBoletimMMTO().getCodTurnoBoletim());
-                        cabecCheckListTO.setQtdeItemCab(qtde);
-                        cabecCheckListTO.setStatusCab(1L);
-                        cabecCheckListTO.setDtAtualCab("0");
-                        cabecCheckListTO.insert();
+                        CabecCLTO cabecCLTO = new CabecCLTO();
+                        cabecCLTO.setDtCabCL(Tempo.getInstance().datahora());
+                        cabecCLTO.setEquipCabCL(equipTO.getNroEquip());
+                        cabecCLTO.setFuncCabCL(pmmContext.getBoletimMMTO().getMatricFuncBolMM());
+                        cabecCLTO.setTurnoCabCL(pmmContext.getBoletimMMTO().getIdTurnoBolMM());
+                        cabecCLTO.setQtdeItemCabCL(qtde);
+                        cabecCLTO.setStatusCabCL(1L);
+                        cabecCLTO.setDtAtualCabCL("0");
+                        cabecCLTO.insert();
 
                         Intent it = new Intent(HorimetroActivity.this, ItemCheckListActivity.class);
                         startActivity(it);
@@ -276,18 +302,18 @@ public class HorimetroActivity extends ActivityGeneric {
         if(pmmContext.getTipoEquip() == 1) {
 
             BoletimMMTO boletimMMTO = new BoletimMMTO();
-            List boletimList = boletimMMTO.get("statusBoletim", 1L);
+            List boletimList = boletimMMTO.get("statusBolMM", 1L);
             boletimMMTO = (BoletimMMTO) boletimList.get(0);
             boletimList.clear();
 
-            boletimMMTO.setHodometroFinalBoletim(horimetroNum);
+            boletimMMTO.setHodometroFinalBolMM(horimetroNum);
             boletimMMTO.update();
 
-            RendimentoTO rendimentoTO = new RendimentoTO();
-            List rendimentoList = rendimentoTO.get("idBolRendimento", boletimMMTO.getIdBoletim());
+            RendMMTO rendMMTO = new RendMMTO();
+            List rendimentoList = rendMMTO.get("idBolRendMM", boletimMMTO.getIdBolMM());
 
             if (rendimentoList.size() > 0) {
-                pmmContext.setContRendimento(1);
+                pmmContext.setContRend(1);
                 Intent it = new Intent(HorimetroActivity.this, RendimentoActivity.class);
                 startActivity(it);
                 finish();
@@ -312,11 +338,11 @@ public class HorimetroActivity extends ActivityGeneric {
             boletimFertTO.setHodometroFinalBolFert(horimetroNum);
             boletimFertTO.update();
 
-            RecolhimentoTO recolhimentoTO = new RecolhimentoTO();
-            List recolhimentoList = recolhimentoTO.get("idBolRecol", boletimFertTO.getIdBolFert());
+            RecolhFertTO recolhFertTO = new RecolhFertTO();
+            List recolhimentoList = recolhFertTO.get("idBolRecolhMM", boletimFertTO.getIdBolFert());
 
             if (recolhimentoList.size() > 0) {
-                pmmContext.setContRecolhimento(1);
+                pmmContext.setContRecolh(1);
                 Intent it = new Intent(HorimetroActivity.this, RecolhimentoActivity.class);
                 startActivity(it);
                 finish();

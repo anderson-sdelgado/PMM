@@ -8,9 +8,9 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.tb.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class EsperaDadosOperActivity extends ActivityGeneric {
 
@@ -29,11 +29,11 @@ public class EsperaDadosOperActivity extends ActivityGeneric {
         if(pmmContext.getTipoEquip() == 1) {
 
             BoletimMMTO boletimMMTO = new BoletimMMTO();
-            List boletimMMList = boletimMMTO.get("statusBoletim", 1L);
+            List boletimMMList = boletimMMTO.get("statusBolMM", 1L);
             boletimMMTO = (BoletimMMTO) boletimMMList.get(0);
             boletimMMList.clear();
 
-            equip = boletimMMTO.getCodEquipBoletim();
+            equip = boletimMMTO.getIdEquipBolMM();
 
         }
         else {
@@ -43,7 +43,7 @@ public class EsperaDadosOperActivity extends ActivityGeneric {
             boletimFertTO = (BoletimFertTO) boletimFertList.get(0);
             boletimFertList.clear();
 
-            equip = boletimFertTO.getCodEquipBolFert();
+            equip = boletimFertTO.getIdEquipBolFert();
 
         }
 
