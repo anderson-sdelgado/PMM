@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.to.estaticas.BocalTO;
 
 public class ListaBocalFertActivity extends ActivityGeneric {
@@ -51,14 +51,15 @@ public class ListaBocalFertActivity extends ActivityGeneric {
 
                             progressBar = new ProgressDialog(ListaBocalFertActivity.this);
                             progressBar.setCancelable(true);
-                            progressBar.setMessage("ATUALIZANDO BOCAL...");
+                            progressBar.setMessage("ATUALIZANDO ...");
+                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                            progressBar.setProgress(0);
+                            progressBar.setMax(100);
                             progressBar.show();
 
-                            ManipDadosVerif.getInstance().verDados("", "Bocal"
-                                    , ListaBocalFertActivity.this, ListaBocalFertActivity.class, progressBar);
+                            pmmContext.getBoletimCTR().atualDadosBocal(ListaBocalFertActivity.this, ListaBocalFertActivity.class, progressBar);
 
                         } else {
-
                             AlertDialog.Builder alerta = new AlertDialog.Builder( ListaBocalFertActivity.this);
                             alerta.setTitle("ATENÇÃO");
                             alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
@@ -68,11 +69,8 @@ public class ListaBocalFertActivity extends ActivityGeneric {
 
                                 }
                             });
-
                             alerta.show();
-
                         }
-
 
                     }
                 });
@@ -80,7 +78,6 @@ public class ListaBocalFertActivity extends ActivityGeneric {
                 alerta.setPositiveButton("NÃO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 });
 
@@ -111,7 +108,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
                                     long id) {
 
                 BocalTO bocalTO = (BocalTO)  bocalList.get(position);
-                pmmContext.getApontFertTO().setBocalApontFert(bocalTO.getIdBocal());
+                pmmContext.getApontCTR().setBocal(bocalTO.getIdBocal());
                 bocalList.clear();
 
                 Intent it = new Intent(ListaBocalFertActivity.this, ListaPressaoFertActivity.class);

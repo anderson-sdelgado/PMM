@@ -37,7 +37,7 @@ public class BoletimMMTO extends Entidade {
 	@DatabaseField
 	private Long statusConBolMM;  //0 - OffLine; 1 - OnLine
 	@DatabaseField
-	private Long qtdeApontBolMM;  //0 - OffLine; 1 - OnLine
+	private Long qtdeApontBolMM;
 
     public BoletimMMTO() {
 	}

@@ -1,4 +1,4 @@
-package br.com.usinasantafe.pmm.conWEB;
+package br.com.usinasantafe.pmm.util;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -10,8 +10,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
-
-import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
 
 /**
  * Created by anderson on 16/11/2015.
@@ -90,7 +88,7 @@ public class ConHttpPostVerGenerico extends AsyncTask<String, Void, String> {
 
         try {
             Log.i("ECM", "VALOR RECEBIDO --> " + result);
-            ManipDadosVerif.getInstance().manipularDadosHttp(result);
+            VerifDadosServ.getInstance().manipularDadosHttp(result);
         } catch (Exception e) {
             Log.i("PMM", "Erro2 = " + e);
         }

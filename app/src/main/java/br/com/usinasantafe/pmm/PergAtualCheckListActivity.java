@@ -11,11 +11,10 @@ import android.widget.Button;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
-import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.estaticas.ItemCheckListTO;
-import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
+import br.com.usinasantafe.pmm.control.CheckListCTR;
+import br.com.usinasantafe.pmm.control.ConfigCTR;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
+import br.com.usinasantafe.pmm.dao.CabecalhoCLDAO;
 import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class PergAtualCheckListActivity extends ActivityGeneric {
@@ -38,26 +37,9 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                EquipTO equipTO = new EquipTO();
-                List equipList = equipTO.get("idEquip", pmmContext.getBoletimMMTO().getIdEquipBolMM());
-                equipTO = (EquipTO) equipList.get(0);
-                equipList.clear();
-
-                ItemCheckListTO itemCheckListTO = new ItemCheckListTO();
-                List itemCheckList =  itemCheckListTO.get("idCheckList", equipTO.getIdCheckList());
-                Long qtde = (long) itemCheckList.size();
-                itemCheckList.clear();
-
-                CabecCLTO cabecCLTO = new CabecCLTO();
-                cabecCLTO.setDtCabCL(Tempo.getInstance().datahora());
-                cabecCLTO.setEquipCabCL(equipTO.getNroEquip());
-                cabecCLTO.setFuncCabCL(pmmContext.getBoletimMMTO().getMatricFuncBolMM());
-                cabecCLTO.setTurnoCabCL(pmmContext.getBoletimMMTO().getIdTurnoBolMM());
-                cabecCLTO.setQtdeItemCabCL(qtde);
-                cabecCLTO.setStatusCabCL(1L);
-                cabecCLTO.setDtAtualCabCL("0");
-                cabecCLTO.insert();
-
+                CheckListCTR checkListCTR = new CheckListCTR();
+                checkListCTR.createCabecAberto(pmmContext.getBoletimCTR());
+                pmmContext.setPosCheckList(1);
                 Intent it = new Intent(PergAtualCheckListActivity.this, ItemCheckListActivity.class);
                 startActivity(it);
                 finish();
@@ -80,13 +62,10 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
                     progressBar.setMessage("ATUALIZANDO CHECKLIST...");
                     progressBar.show();
 
-                    ConfigTO configTO = new ConfigTO();
-                    List configList = configTO.all();
-                    configTO = (ConfigTO) configList.get(0);
-                    configList.clear();
-
-                    ManipDadosVerif.getInstance().verDados(String.valueOf(configTO.getEquipConfig()), "CheckList"
-                            , PergAtualCheckListActivity.this, ItemCheckListActivity.class, progressBar);
+                    ConfigCTR configCTR = new ConfigCTR();
+                    CheckListCTR checkListCTR = new CheckListCTR();
+                    checkListCTR.createCabecAberto(pmmContext.getBoletimCTR());
+                    checkListCTR.atualCheckList(String.valueOf(configCTR.getEquip().getIdEquip()), PergAtualCheckListActivity.this, ItemCheckListActivity.class, progressBar);
 
                 } else {
 

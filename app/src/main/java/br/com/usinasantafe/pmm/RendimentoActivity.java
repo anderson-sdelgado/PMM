@@ -11,17 +11,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
-import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.to.estaticas.OSTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
 
 public class RendimentoActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private RendMMTO rendMMTO;
-    private List rendList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +40,7 @@ public class RendimentoActivity extends ActivityGeneric {
             cont = pmmContext.getPosRend();
         }
 
-        BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List listBoletim = boletimMMTO.get("statusBolMM", 1L);
-        boletimMMTO = (BoletimMMTO) listBoletim.get(0);
-        listBoletim.clear();
-
-        rendMMTO = new RendMMTO();
-        rendList = rendMMTO.getAndOrderBy("idBolRendMM", boletimMMTO.getIdBolMM(), "idRendMM", true);
-        rendMMTO = (RendMMTO) rendList.get(cont);
+        rendMMTO =  pmmContext.getBoletimCTR().getRend(cont);
 
         textViewRendimento.setText("OS " + rendMMTO.getNroOSRendMM() +" \nRENDIMENTO :");
         if(rendMMTO.getValorRendMM() > 0){
@@ -64,109 +53,16 @@ public class RendimentoActivity extends ActivityGeneric {
         buttonOkRendimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(pmmContext.getVerPosTela() == 4){
-
-                    if (!editTextPadrao.getText().toString().equals("")) {
-
-                        String rend = editTextPadrao.getText().toString();
-                        Double rendNum = Double.valueOf(rend.replace(",", "."));
-
-                        OSTO osTO = new OSTO();
-                        List osList = osTO.get("nroOS", rendMMTO.getNroOSRendMM());
-                        if (osList.size() > 0) {
-                            osTO = (OSTO) osList.get(0);
-                        } else {
-                            osTO.setAreaProgrOS(150D);
-                        }
-
-                        if (rendNum <= osTO.getAreaProgrOS()) {
-
-                            rendMMTO.setValorRendMM(rendNum);
-                            rendMMTO.setDthrRendMM(Tempo.getInstance().datahora());
-                            rendMMTO.update();
-                            rendMMTO.commit();
-
-                            if (rendList.size() == pmmContext.getContRend()) {
-
-                                ManipDadosEnvio.getInstance().salvaBoletimFechadoMM();
-                                ManipDadosEnvio.getInstance().envioDadosPrinc();
-                                Intent it = new Intent(RendimentoActivity.this, MenuInicialActivity.class);
-                                startActivity(it);
-                                finish();
-
-                            } else {
-
-                                pmmContext.setContRend(pmmContext.getContRend() + 1);
-                                Intent it = new Intent(RendimentoActivity.this, RendimentoActivity.class);
-                                startActivity(it);
-                                finish();
-
-                            }
-
-                        } else {
-                            AlertDialog.Builder alerta = new AlertDialog.Builder(RendimentoActivity.this);
-                            alerta.setTitle("ATENCAO");
-                            alerta.setMessage("VALOR INFORMADO MAIS ALTO DO QUE O PERMITIDO PRA OS. VALOR VERIFIQUE O VALOR DIGITADO.");
-                            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            });
-
-                            alerta.show();
-                        }
-
-                    }
-
-                }else if(pmmContext.getVerPosTela() == 7){
-
-                    if (!editTextPadrao.getText().toString().equals("")) {
-
-                        String rend = editTextPadrao.getText().toString();
-                        Double rendNum = Double.valueOf(rend.replace(",", "."));
-
-                        OSTO osTO = new OSTO();
-                        List osList = osTO.get("nroOS", rendMMTO.getNroOSRendMM());
-                        if (osList.size() > 0) {
-                            osTO = (OSTO) osList.get(0);
-                        } else {
-                            osTO.setAreaProgrOS(150D);
-                        }
-
-                        if (rendNum <= osTO.getAreaProgrOS()) {
-
-                            rendMMTO.setValorRendMM(rendNum);
-                            rendMMTO.update();
-                            rendMMTO.commit();
-
-                            Intent it = new Intent(RendimentoActivity.this, ListaOSRendActivity.class);
-                            startActivity(it);
-                            finish();
-
-                        } else {
-                            AlertDialog.Builder alerta = new AlertDialog.Builder(RendimentoActivity.this);
-                            alerta.setTitle("ATENCAO");
-                            alerta.setMessage("VALOR INFORMADO MAIS ALTO DO QUE O PERMITIDO PRA OS. VALOR VERIFIQUE O VALOR DIGITADO.");
-                            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            });
-
-                            alerta.show();
-                        }
-
-                    }
-                    else{
+                if (!editTextPadrao.getText().toString().equals("")) {
+                    verifRend();
+                }
+                else{
+                    if(pmmContext.getVerPosTela() == 7){
                         Intent it = new Intent(RendimentoActivity.this, MenuPrincNormalActivity.class);
                         startActivity(it);
                         finish();
                     }
                 }
-
             }
         });
 
@@ -201,6 +97,58 @@ public class RendimentoActivity extends ActivityGeneric {
             Intent it = new Intent(RendimentoActivity.this, ListaOSRendActivity.class);
             startActivity(it);
             finish();
+        }
+    }
+
+    public void verTela(Double rendNum){
+
+        rendMMTO.setValorRendMM(rendNum);
+        pmmContext.getBoletimCTR().atualRend(rendMMTO);
+
+        if (pmmContext.getVerPosTela() == 4) {
+            if (pmmContext.getBoletimCTR().qtdeRend() == pmmContext.getContRend()) {
+                pmmContext.getBoletimCTR().salvarBolFechadoMM();
+                Intent it = new Intent(RendimentoActivity.this, MenuInicialActivity.class);
+                startActivity(it);
+                finish();
+            } else {
+                pmmContext.setContRend(pmmContext.getContRend() + 1);
+                Intent it = new Intent(RendimentoActivity.this, RendimentoActivity.class);
+                startActivity(it);
+                finish();
+            }
+
+        }
+        else if (pmmContext.getVerPosTela() == 7) {
+            Intent it = new Intent(RendimentoActivity.this, ListaOSRendActivity.class);
+            startActivity(it);
+            finish();
+        }
+    }
+
+    public void verifRend(){
+        String rend = editTextPadrao.getText().toString();
+        Double rendNum = Double.valueOf(rend.replace(",", "."));
+        OSTO osTO = new OSTO();
+        List osList = osTO.get("nroOS", rendMMTO.getNroOSRendMM());
+        if (osList.size() > 0) {
+            osTO = (OSTO) osList.get(0);
+        } else {
+            osTO.setAreaProgrOS(150D);
+        }
+        if (rendNum <= osTO.getAreaProgrOS()) {
+            verTela(rendNum);
+        } else {
+            AlertDialog.Builder alerta = new AlertDialog.Builder(RendimentoActivity.this);
+            alerta.setTitle("ATENCAO");
+            alerta.setMessage("VALOR INFORMADO MAIS ALTO DO QUE O PERMITIDO PRA OS. VALOR VERIFIQUE O VALOR DIGITADO.");
+            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            alerta.show();
         }
     }
 

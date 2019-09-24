@@ -1,12 +1,10 @@
-package br.com.usinasantafe.pmm.conWEB;
+package br.com.usinasantafe.pmm.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import br.com.usinasantafe.pmm.bo.ManipDadosReceb;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -96,7 +94,7 @@ public class ConHttpGetBDGenerico extends AsyncTask<String, Void, String> {
 	protected void onPostExecute(String result) {
 
 		try {
-			ManipDadosReceb.getInstance().manipularDadosHttp(tipo, result);
+			AtualDadosServ.getInstance().manipularDadosHttp(tipo, result);
 		} catch (Exception e) {
 			Log.i("PMM", "Erro2 = " + e);
 		}

@@ -26,8 +26,6 @@ public class CabecCLTO extends Entidade {
     @DatabaseField
     private Long statusCabCL;  //1 - Aberto; 2 - Encerrado
     @DatabaseField
-    private Long qtdeItemCabCL;
-    @DatabaseField
     private String dtAtualCabCL;
 
     public CabecCLTO() {
@@ -77,14 +75,6 @@ public class CabecCLTO extends Entidade {
         this.statusCabCL = statusCabCL;
     }
 
-    public Long getQtdeItemCabCL() {
-        return qtdeItemCabCL;
-    }
-
-    public void setQtdeItemCabCL(Long qtdeItemCabCL) {
-        this.qtdeItemCabCL = qtdeItemCabCL;
-    }
-
     public String getDtAtualCabCL() {
         return dtAtualCabCL;
     }
@@ -92,4 +82,5 @@ public class CabecCLTO extends Entidade {
     public void setDtAtualCabCL(String dtAtualCabCL) {
         this.dtAtualCabCL = dtAtualCabCL;
     }
+
 }

@@ -34,7 +34,7 @@ public class Tempo {
         return instance;
     }
 
-    public String datahora(){
+    public String dataComHora(){
 
         String dataCerta = "";
 

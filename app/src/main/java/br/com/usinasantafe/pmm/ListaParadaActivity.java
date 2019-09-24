@@ -15,27 +15,22 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
-import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
-import br.com.usinasantafe.pmm.bo.Tempo;
+import br.com.usinasantafe.pmm.control.ApontCTR;
 import br.com.usinasantafe.pmm.to.estaticas.ParadaTO;
-import br.com.usinasantafe.pmm.to.estaticas.RAtivParadaTO;
-import br.com.usinasantafe.pmm.to.variaveis.BackupApontaTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class ListaParadaActivity extends ActivityGeneric {
 
     private ListView paradaListView;
-    private ConfigTO configTO;
+//    private ConfigTO configTO;
     private PMMContext pmmContext;
     private List paradaList;
     private ProgressDialog progressBar;
     private ArrayAdapter<String> adapter;
     private String paradaString;
+    private ApontCTR apontCTR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,31 +43,10 @@ public class ListaParadaActivity extends ActivityGeneric {
         Button buttonRetMenuParada = (Button) findViewById(R.id.buttonRetMenuParada);
         EditText editPesqListParada = (EditText) findViewById(R.id.editPesqListParada);
 
-        configTO = new ConfigTO();
-        List listConfigTO = configTO.all();
-        configTO = (ConfigTO) listConfigTO.get(0);
-
-        Long ativ;
-        if(pmmContext.getTipoEquip() == 1){
-            ativ = pmmContext.getApontMMTO().getAtivApontMM();
-        } else {
-            ativ = pmmContext.getApontFertTO().getAtivApontFert();
-        }
-
-        RAtivParadaTO rAtivParadaTO = new RAtivParadaTO();
-        List rAtivParadaList = rAtivParadaTO.get("idAtiv", ativ);
-
-        ArrayList<Long> rLista = new ArrayList<Long>();
-
-        for (int i = 0; i < rAtivParadaList.size(); i++) {
-            rAtivParadaTO = (RAtivParadaTO) rAtivParadaList.get(i);
-            rLista.add(rAtivParadaTO.getIdParada());
-        }
-
-        rAtivParadaList.clear();
+        apontCTR = new ApontCTR();
 
         ParadaTO paradaTO = new ParadaTO();
-        paradaList = paradaTO.inAndOrderBy("idParada", rLista, "codParada", true);
+        paradaList = apontCTR.rAtivParadaList();
 
         String itens[] = new String[paradaList.size()];
 
@@ -114,17 +88,15 @@ public class ListaParadaActivity extends ActivityGeneric {
 
                 if (conexaoWeb.verificaConexao(ListaParadaActivity.this)) {
 
-                    progressBar = new ProgressDialog(v.getContext());
+                    progressBar = new ProgressDialog(ListaParadaActivity.this);
                     progressBar.setCancelable(true);
-                    progressBar.setMessage("ATUALIZANDO PARADAS...");
+                    progressBar.setMessage("ATUALIZANDO ...");
+                    progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                    progressBar.setProgress(0);
+                    progressBar.setMax(100);
                     progressBar.show();
 
-                    ConfigTO configTO = new ConfigTO();
-                    List configList = configTO.all();
-                    configTO = (ConfigTO) configList.get(0);
-
-                    ManipDadosVerif.getInstance().verDados("", "AtualParada"
-                            , ListaParadaActivity.this, ListaParadaActivity.class, progressBar);
+                    pmmContext.getBoletimCTR().atualDadosParada(ListaParadaActivity.this, ListaParadaActivity.class, progressBar);
 
                 } else {
 
@@ -182,19 +154,9 @@ public class ListaParadaActivity extends ActivityGeneric {
                         List paradaList = paradaTO.get("codParada", paradaString.substring(0, paradaString.indexOf('-')).trim());
                         paradaTO = (ParadaTO) paradaList.get(0);
 
-                        if(pmmContext.getTipoEquip() == 1) {
-                            pmmContext.getApontMMTO().setTransbApontMM(0L);
-                            pmmContext.getApontMMTO().setParadaApontMM(paradaTO.getIdParada());
-                        }
-                        else{
-                            pmmContext.getApontFertTO().setBocalApontFert(0L);
-                            pmmContext.getApontFertTO().setPressaoApontFert(0D);
-                            pmmContext.getApontFertTO().setVelocApontFert(0L);
-                            pmmContext.getApontFertTO().setParadaApontFert(paradaTO.getIdParada());
-                        }
+                        pmmContext.getApontCTR().setParadaApont(paradaTO.getIdParada());
 
-                        if (verifBackup()) {
-
+                        if (pmmContext.getApontCTR().verifBackupApont()) {
                             AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
                             alerta.setTitle("ATENÇÃO");
                             alerta.setMessage("PARADA JÁ APONTADA PARA O EQUIPAMENTO!");
@@ -205,30 +167,10 @@ public class ListaParadaActivity extends ActivityGeneric {
 
                                 }
                             });
-
                             alerta.show();
-
                         } else {
 
-                            if(pmmContext.getTipoEquip() == 1) {
-                                pmmContext.getApontMMTO().setLatitudeApontMM(0D);
-                                pmmContext.getApontMMTO().setLongitudeApontMM(0D);
-                            }
-                            else{
-                                pmmContext.getApontFertTO().setLatitudeApontFert(0D);
-                                pmmContext.getApontFertTO().setLongitudeApontFert(0D);
-                            }
-
-                            configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
-                            configTO.update();
-
-                            if(pmmContext.getTipoEquip() == 1) {
-                                ManipDadosEnvio.getInstance().salvaApontaMM(pmmContext.getApontMMTO());
-                            }
-                            else{
-                                ManipDadosEnvio.getInstance().salvaApontaFert(pmmContext.getApontFertTO());
-                            }
-
+                            pmmContext.getApontCTR().salvarApont();
                             Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
                             startActivity(it);
                             finish();
@@ -257,38 +199,6 @@ public class ListaParadaActivity extends ActivityGeneric {
             }
 
         });
-
-    }
-
-
-    public boolean verifBackup() {
-
-        boolean v = false;
-
-        BackupApontaTO backupApontaTO = new BackupApontaTO();
-        List bkpApontaList = backupApontaTO.all();
-
-        if (bkpApontaList.size() > 0) {
-
-            backupApontaTO = (BackupApontaTO) bkpApontaList.get(bkpApontaList.size() - 1);
-            if(pmmContext.getTipoEquip() == 1) {
-                if ((pmmContext.getApontMMTO().getOsApontMM().equals(backupApontaTO.getOsAponta()))
-                        && (pmmContext.getApontMMTO().getAtivApontMM().equals(backupApontaTO.getAtividadeAponta()))
-                        && (pmmContext.getApontMMTO().getParadaApontMM().equals(backupApontaTO.getParadaAponta()))) {
-                    v = true;
-                }
-            }
-            else{
-                if ((pmmContext.getApontFertTO().getOsApontFert().equals(backupApontaTO.getOsAponta()))
-                        && (pmmContext.getApontFertTO().getAtivApontFert().equals(backupApontaTO.getAtividadeAponta()))
-                        && (pmmContext.getApontFertTO().getParadaApontFert().equals(backupApontaTO.getParadaAponta()))) {
-                    v = true;
-                }
-            }
-
-        }
-
-        return v;
 
     }
 

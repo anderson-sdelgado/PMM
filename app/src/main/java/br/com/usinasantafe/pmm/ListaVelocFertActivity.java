@@ -17,8 +17,8 @@ import java.util.HashSet;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
-import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.estaticas.PressaoBocalTO;
@@ -60,11 +60,13 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
                             progressBar = new ProgressDialog(ListaVelocFertActivity.this);
                             progressBar.setCancelable(true);
-                            progressBar.setMessage("ATUALIZANDO VELOCIDADE...");
+                            progressBar.setMessage("ATUALIZANDO ...");
+                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                            progressBar.setProgress(0);
+                            progressBar.setMax(100);
                             progressBar.show();
 
-                            ManipDadosVerif.getInstance().verDados("", "PressaoBocal"
-                                    , ListaVelocFertActivity.this, ListaVelocFertActivity.class, progressBar);
+                            pmmContext.getBoletimCTR().atualDadosPressao(ListaVelocFertActivity.this, ListaVelocFertActivity.class, progressBar);
 
                         } else {
 
@@ -102,20 +104,20 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
         PressaoBocalTO pressaoBocalTO = new PressaoBocalTO();
 
-        ArrayList listaPesq = new ArrayList();
+        ArrayList pesqList = new ArrayList();
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("idBocal");
-        pesquisa.setValor(pmmContext.getApontFertTO().getBocalApontFert());
+        pesquisa.setValor(pmmContext.getApontCTR().getBocalApontFert());
         pesquisa.setTipo(1);
-        listaPesq.add(pesquisa);
+        pesqList.add(pesquisa);
 
         EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
         pesquisa2.setCampo("valorPressao");
-        pesquisa2.setValor(pmmContext.getApontFertTO().getPressaoApontFert());
+        pesquisa2.setValor(pmmContext.getApontCTR().getPressaoApontFert());
         pesquisa2.setTipo(1);
-        listaPesq.add(pesquisa2);
+        pesqList.add(pesquisa2);
 
-        velocList = pressaoBocalTO.getAndOrderBy(listaPesq, "valorVeloc", true);
+        velocList = pressaoBocalTO.getAndOrderBy(pesqList, "valorVeloc", true);
 
         ArrayList<String> itens = new ArrayList<String>();
 
@@ -140,57 +142,11 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                                     long id) {
 
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
-                pmmContext.getApontFertTO().setVelocApontFert(Long.parseLong(textView.getText().toString()));
+                pmmContext.getApontCTR().setVelocApont(Long.parseLong(textView.getText().toString()));
                 velocList.clear();
 
-                BoletimFertTO boletimFertTO = new BoletimFertTO();
-                List boletimList = boletimFertTO.get("statusBolFert", 1L);
+                pmmContext.getApontCTR().salvarApont();
 
-                if (boletimList.size() > 0) {
-
-                    boletimFertTO = (BoletimFertTO) boletimList.get(0);
-
-                    RecolhFertTO recolhFertTO = new RecolhFertTO();
-                    ArrayList pesqList = new ArrayList();
-
-                    EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-                    pesquisa.setCampo("idBolRecolhFert");
-                    pesquisa.setValor(boletimFertTO.getIdBolFert());
-                    pesquisa.setTipo(1);
-                    pesqList.add(pesquisa);
-
-                    EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-                    pesquisa2.setCampo("nroOSRecolhFert");
-                    pesquisa2.setValor(pmmContext.getApontFertTO().getOsApontFert());
-                    pesquisa2.setTipo(1);
-                    pesqList.add(pesquisa2);
-
-                    List rendList = recolhFertTO.get(pesqList);
-
-                    if (rendList.size() == 0) {
-                        recolhFertTO.setIdBolRecolhFert(boletimFertTO.getIdBolFert());
-                        recolhFertTO.setIdExtBolRecolhFert(boletimFertTO.getIdExtBolFert());
-                        recolhFertTO.setNroOSRecolhFert(pmmContext.getApontFertTO().getOsApontFert());
-                        recolhFertTO.setValorRecolhFert(0L);
-                        recolhFertTO.insert();
-                        recolhFertTO.commit();
-                    }
-
-                }
-
-                boletimList.clear();
-
-                pmmContext.getApontFertTO().setLatitudeApontFert(0D);
-                pmmContext.getApontFertTO().setLongitudeApontFert(0D);
-
-                ConfigTO configTO = new ConfigTO();
-                List configList = configTO.all();
-                configTO = (ConfigTO) configList.get(0);
-                configList.clear();
-                configTO.setDtUltApontConfig(Tempo.getInstance().datahora());
-                configTO.update();
-
-                ManipDadosEnvio.getInstance().salvaApontaFert(pmmContext.getApontFertTO());
                 Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincNormalActivity.class);
                 startActivity(it);
                 finish();

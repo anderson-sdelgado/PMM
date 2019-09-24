@@ -13,15 +13,16 @@ import android.widget.EditText;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
+import br.com.usinasantafe.pmm.control.ConfigCTR;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.to.estaticas.OSTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class OSActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private ProgressDialog progressBar;
     private Handler customHandler = new Handler();
+    private ConfigCTR configCTR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +35,14 @@ public class OSActivity extends ActivityGeneric {
         Button buttonOkOS = (Button) findViewById(R.id.buttonOkPadrao);
         Button buttonCancOS = (Button) findViewById(R.id.buttonCancPadrao);
 
+        configCTR = new ConfigCTR();
+
         if (pmmContext.getVerPosTela() == 1) {
             EditText editText = (EditText) findViewById(R.id.editTextPadrao);
             editText.setText("");
         } else {
-            ConfigTO configTO = new ConfigTO();
-            List configList = configTO.all();
-            configTO = (ConfigTO) configList.get(0);
             EditText editText = (EditText) findViewById(R.id.editTextPadrao);
-            editText.setText(String.valueOf(configTO.getOsConfig()));
+            editText.setText(String.valueOf(configCTR.getConfig().getOsConfig()));
         }
 
         buttonOkOS.setOnClickListener(new View.OnClickListener() {
@@ -51,49 +51,32 @@ public class OSActivity extends ActivityGeneric {
 
                 if (!editTextPadrao.getText().toString().equals("")) {
 
+                    Long nroOS = Long.parseLong(editTextPadrao.getText().toString());
+                    configCTR.atualOsConfig(nroOS);
+
                     try{
 
-                        OSTO osTO = new OSTO();
-
                         if (pmmContext.getVerPosTela() == 1) {
-                            if(pmmContext.getTipoEquip() == 1) {
-                                pmmContext.getBoletimMMTO().setOsBolMM(Long.parseLong(editTextPadrao.getText().toString()));
-                            }
-                            else {
-                                pmmContext.getBoletimFertTO().setOsBolFert(Long.parseLong(editTextPadrao.getText().toString()));
-                            }
+                            pmmContext.getBoletimCTR().setOSBol(nroOS);
                         }
                         else {
-                            if(pmmContext.getTipoEquip() == 1) {
-                                pmmContext.getApontMMTO().setOsApontMM(Long.parseLong(editTextPadrao.getText().toString()));
-                            }
-                            else {
-                                pmmContext.getApontFertTO().setOsApontFert(Long.parseLong(editTextPadrao.getText().toString()));
-                            }
-
+                            pmmContext.getApontCTR().setOSApont(nroOS);
                         }
 
                         ConexaoWeb conexaoWeb = new ConexaoWeb();
-
+                        OSTO osTO = new OSTO();
                         if (osTO.hasElements()) {
 
-                            List osList = osTO.get("nroOS", Long.parseLong(editTextPadrao.getText().toString()));
+                            List osList = osTO.get("nroOS", nroOS);
 
                             if (osList.size() > 0) {
 
-                                ConfigTO configTO = new ConfigTO();
-                                List configList = configTO.all();
-                                configTO = (ConfigTO) configList.get(0);
-                                configTO.setOsConfig(Long.parseLong(editTextPadrao.getText().toString()));
-
                                 if (conexaoWeb.verificaConexao(OSActivity.this)) {
-                                    configTO.setStatusConConfig(1L);
+                                    configCTR.atualStatusConConfig(1L);
                                 }
                                 else{
-                                    configTO.setStatusConConfig(0L);
+                                    configCTR.atualStatusConConfig(0L);
                                 }
-
-                                configTO.update();
 
                                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                                 startActivity(it);
@@ -110,17 +93,13 @@ public class OSActivity extends ActivityGeneric {
 
                                     customHandler.postDelayed(updateTimerThread, 10000);
 
-                                    ManipDadosVerif.getInstance().verDados(editTextPadrao.getText().toString(), "OS"
+                                    pmmContext.getBoletimCTR().verOS(editTextPadrao.getText().toString()
                                             , OSActivity.this, ListaAtividadeActivity.class, progressBar);
+
 
                                 } else {
 
-                                    ConfigTO configTO = new ConfigTO();
-                                    List configList = configTO.all();
-                                    configTO = (ConfigTO) configList.get(0);
-                                    configTO.setOsConfig(Long.parseLong(editTextPadrao.getText().toString()));
-                                    configTO.setStatusConConfig(0L);
-                                    configTO.update();
+                                    configCTR.atualStatusConConfig(0L);
 
                                     Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                                     startActivity(it);
@@ -141,17 +120,12 @@ public class OSActivity extends ActivityGeneric {
 
                                 customHandler.postDelayed(updateTimerThread, 10000);
 
-                                ManipDadosVerif.getInstance().verDados(editTextPadrao.getText().toString(), "OS"
+                                pmmContext.getBoletimCTR().verOS(editTextPadrao.getText().toString()
                                         , OSActivity.this, ListaAtividadeActivity.class, progressBar);
 
                             } else {
 
-                                ConfigTO configTO = new ConfigTO();
-                                List configList = configTO.all();
-                                configTO = (ConfigTO) configList.get(0);
-                                configTO.setOsConfig(Long.parseLong(editTextPadrao.getText().toString()));
-                                configTO.setStatusConConfig(0L);
-                                configTO.update();
+                                configCTR.atualStatusConConfig(0L);
 
                                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                                 startActivity(it);
@@ -210,18 +184,15 @@ public class OSActivity extends ActivityGeneric {
 
         public void run() {
 
-            if(!ManipDadosVerif.getInstance().isVerTerm()) {
+            if(!VerifDadosServ.getInstance().isVerTerm()) {
 
-                ManipDadosVerif.getInstance().cancelVer();
+                VerifDadosServ.getInstance().cancelVer();
+
                 if (progressBar.isShowing()) {
                     progressBar.dismiss();
                 }
-                ConfigTO configTO = new ConfigTO();
-                List configList = configTO.all();
-                configTO = (ConfigTO) configList.get(0);
-                configTO.setOsConfig(Long.parseLong(editTextPadrao.getText().toString()));
-                configTO.setStatusConConfig(0L);
-                configTO.update();
+
+                configCTR.atualStatusConConfig(0L);
 
                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                 startActivity(it);

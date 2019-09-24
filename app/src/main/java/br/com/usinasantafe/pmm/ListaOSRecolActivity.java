@@ -25,15 +25,10 @@ public class ListaOSRecolActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        BoletimFertTO boletimFertTO = new BoletimFertTO();
-        List boletimList = boletimFertTO.get("statusBolFert", 1L);
-        boletimFertTO = (BoletimFertTO) boletimList.get(0);
-        boletimList.clear();
-
         RecolhFertTO recolhFertTO = new RecolhFertTO();
 
         ListView listaRecMang = (ListView) findViewById(R.id.listaRecMang);
-        AdapterListRecolh adapterListRecolh = new AdapterListRecolh(this, recolhFertTO.getAndOrderBy("idBolRecolhFert", boletimFertTO.getIdBolFert(), "idRecolhFert", true));
+        AdapterListRecolh adapterListRecolh = new AdapterListRecolh(this, recolhFertTO.getAndOrderBy("idBolRecolhFert",  pmmContext.getBoletimCTR().getIdBol(), "idRecolhFert", true));
         listaRecMang.setAdapter(adapterListRecolh);
 
         listaRecMang.setOnItemClickListener(new AdapterView.OnItemClickListener() {

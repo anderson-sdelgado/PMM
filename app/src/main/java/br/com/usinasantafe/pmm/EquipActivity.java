@@ -6,16 +6,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.List;
-
+import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class EquipActivity extends ActivityGeneric {
 
     private TextView textViewCodEquip;
     private TextView textViewDescEquip;
     private PMMContext pmmContext;
+    private ConfigCTR configCTR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,31 +28,18 @@ public class EquipActivity extends ActivityGeneric {
         Button buttonOkEquip = (Button) findViewById(R.id.buttonOkEquip);
         Button buttonCancEquip = (Button) findViewById(R.id.buttonCancEquip);
 
-        ConfigTO configTO = new ConfigTO();
-        List listConfigTO = configTO.all();
-        configTO = (ConfigTO) listConfigTO.get(0);
-        listConfigTO.clear();
-
-        EquipTO equipTO = new EquipTO();
-        List listEquipTO = equipTO.get("idEquip", configTO.getEquipConfig());
-        equipTO = (EquipTO) listEquipTO.get(0);
-        listEquipTO.clear();
+        configCTR = new ConfigCTR();
+        EquipTO equipTO = configCTR.getEquip();
 
         textViewCodEquip.setText(String.valueOf(equipTO.getNroEquip()));
         textViewDescEquip.setText(String.valueOf(equipTO.getDescrClasseEquip()));
-
-        if(pmmContext.getTipoEquip() == 1) {
-            pmmContext.getBoletimMMTO().setIdEquipBolMM(equipTO.getIdEquip());
-        }
-        else{
-            pmmContext.getBoletimFertTO().setIdEquipBolFert(equipTO.getIdEquip());
-        }
 
         buttonOkEquip.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
+                pmmContext.getBoletimCTR().setEquipBol();
                 Intent it = new Intent(EquipActivity.this, ListaTurnoActivity.class);
                 startActivity(it);
                 finish();

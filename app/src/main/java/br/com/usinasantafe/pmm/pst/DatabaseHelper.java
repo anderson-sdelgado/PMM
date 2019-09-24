@@ -24,12 +24,11 @@ import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
 import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.PerdaTO;
+import br.com.usinasantafe.pmm.to.estaticas.ImpleMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.InfoColheitaTO;
 import br.com.usinasantafe.pmm.to.variaveis.RecolhFertTO;
 import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.RespItemCLTO;
-import br.com.usinasantafe.pmm.to.variaveis.TransbMMTO;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -88,12 +87,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, RespItemCLTO.class);
 			TableUtils.createTable(cs, RendMMTO.class);
 			TableUtils.createTable(cs, RecolhFertTO.class);
-			TableUtils.createTable(cs, TransbMMTO.class);
 			TableUtils.createTable(cs, ImpleMMTO.class);
 			TableUtils.createTable(cs, BackupApontaTO.class);
 			TableUtils.createTable(cs, BoletimFertTO.class);
 			TableUtils.createTable(cs, ApontFertTO.class);
-			TableUtils.createTable(cs, PerdaTO.class);
+			TableUtils.createTable(cs, InfoColheitaTO.class);
 			
 		}
 		catch(Exception e){

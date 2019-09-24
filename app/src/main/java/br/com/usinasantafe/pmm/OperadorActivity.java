@@ -11,7 +11,9 @@ import android.widget.Button;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
+import br.com.usinasantafe.pmm.control.BoletimCTR;
+import br.com.usinasantafe.pmm.util.AtualDadosServ;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.to.estaticas.FuncionarioTO;
 
 public class OperadorActivity extends ActivityGeneric {
@@ -47,11 +49,13 @@ public class OperadorActivity extends ActivityGeneric {
 
                             progressBar = new ProgressDialog(OperadorActivity.this);
                             progressBar.setCancelable(true);
-                            progressBar.setMessage("ATUALIZANDO OPERADOR...");
+                            progressBar.setMessage("ATUALIZANDO ...");
+                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                            progressBar.setProgress(0);
+                            progressBar.setMax(100);
                             progressBar.show();
 
-                            ManipDadosVerif.getInstance().verDados("", "Operador"
-                                    , OperadorActivity.this, OperadorActivity.class, progressBar);
+                            pmmContext.getBoletimCTR().atualDadosOperador(OperadorActivity.this, OperadorActivity.class, progressBar);
 
                         } else {
 
@@ -93,19 +97,15 @@ public class OperadorActivity extends ActivityGeneric {
 
                 if (!editTextPadrao.getText().toString().equals("")) {
 
-                    FuncionarioTO motoristaBD = new FuncionarioTO();
-                    List listaMotorista = motoristaBD.get("matricFunc", Long.parseLong(editTextPadrao.getText().toString()));
+                    FuncionarioTO funcTO = new FuncionarioTO();
+                    List funcList = funcTO.get("matricFunc", Long.parseLong(editTextPadrao.getText().toString()));
 
-                    if (listaMotorista.size() > 0) {
+                    if (funcList.size() > 0) {
 
-                        motoristaBD = (FuncionarioTO) listaMotorista.get(0);
-                        if(pmmContext.getTipoEquip() == 1) {
-                            pmmContext.getBoletimMMTO().setMatricFuncBolMM(motoristaBD.getMatricFunc());
-                        }
-                        else{
-                            pmmContext.getBoletimFertTO().setMatricFuncBolFert(motoristaBD.getMatricFunc());
-                        }
-                        listaMotorista.clear();
+                        funcTO = (FuncionarioTO) funcList.get(0);
+                        pmmContext.getBoletimCTR().setFuncBol(funcTO.getMatricFunc());
+                        funcList.clear();
+
                         Intent it = new Intent(OperadorActivity.this, EquipActivity.class);
                         startActivity(it);
                         finish();

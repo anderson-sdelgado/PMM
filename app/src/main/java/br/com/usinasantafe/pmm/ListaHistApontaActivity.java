@@ -8,11 +8,14 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.variaveis.BackupApontaTO;
 import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class ListaHistApontaActivity extends ActivityGeneric {
+
+    private PMMContext pmmContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,27 +24,10 @@ public class ListaHistApontaActivity extends ActivityGeneric {
 
         Button buttonRetHistorico = (Button) findViewById(R.id.buttonRetHistorico);
 
-        BackupApontaTO backupApontaTO = new BackupApontaTO();
-
-        ConfigTO configTO = new ConfigTO();
-        List configList = configTO.all();
-        configTO = (ConfigTO) configList.get(0);
-        configList.clear();
-
-        EquipTO equipTO = new EquipTO();
-        List equipTOList = equipTO.get("idEquip", configTO.getEquipConfig());
-        equipTO = (EquipTO) equipTOList.get(0);
-        equipTOList.clear();
-
-        int tipoEquip;
-        if ((equipTO.getTipoEquipFert() == 1) || (equipTO.getTipoEquipFert() == 2)) {
-            tipoEquip = 2;
-        } else {
-            tipoEquip = 1;
-        }
+        pmmContext = (PMMContext) getApplication();
 
         ListView listaHistorico = (ListView) findViewById(R.id.listaHistorico);
-        AdapterListHistorico adapterListHistorico = new AdapterListHistorico(this, backupApontaTO.all(), tipoEquip);
+        AdapterListHistorico adapterListHistorico = new AdapterListHistorico(this, pmmContext.getApontCTR().getListApont(), pmmContext.getBoletimCTR().getTipoEquip());
         listaHistorico.setAdapter(adapterListHistorico);
 
         buttonRetHistorico.setOnClickListener(new View.OnClickListener() {

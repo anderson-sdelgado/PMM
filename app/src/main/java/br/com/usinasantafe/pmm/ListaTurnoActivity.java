@@ -14,7 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
+import br.com.usinasantafe.pmm.control.BoletimCTR;
+import br.com.usinasantafe.pmm.control.ConfigCTR;
+import br.com.usinasantafe.pmm.util.AtualDadosServ;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.estaticas.TurnoTO;
 import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
@@ -24,8 +27,6 @@ public class ListaTurnoActivity extends ActivityGeneric {
     private ListView turnoListView;
     private List turnoList;
     private PMMContext pmmContext;
-    private EquipTO equipTO;
-    private ConfigTO configTO;
     private ProgressDialog progressBar;
 
     @Override
@@ -55,11 +56,13 @@ public class ListaTurnoActivity extends ActivityGeneric {
 
                             progressBar = new ProgressDialog(ListaTurnoActivity.this);
                             progressBar.setCancelable(true);
-                            progressBar.setMessage("ATUALIZANDO TURNO...");
+                            progressBar.setMessage("ATUALIZANDO ...");
+                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                            progressBar.setProgress(0);
+                            progressBar.setMax(100);
                             progressBar.show();
 
-                            ManipDadosVerif.getInstance().verDados("", "Turno"
-                                    , ListaTurnoActivity.this, ListaTurnoActivity.class, progressBar);
+                            pmmContext.getBoletimCTR().atualDadosTurno(ListaTurnoActivity.this, ListaTurnoActivity.class, progressBar);
 
                         } else {
 
@@ -94,18 +97,10 @@ public class ListaTurnoActivity extends ActivityGeneric {
 
         });
 
-        configTO = new ConfigTO();
-        List listConfigTO = configTO.all();
-        configTO = (ConfigTO) listConfigTO.get(0);
-        listConfigTO.clear();
-
-        equipTO = new EquipTO();
-        List listEquipTO = equipTO.get("idEquip", configTO.getEquipConfig());
-        equipTO = (EquipTO) listEquipTO.get(0);
-        listConfigTO.clear();
+        ConfigCTR configCTR = new ConfigCTR();
 
         TurnoTO turnoTO = new TurnoTO();
-        turnoList = turnoTO.get("codTurno", equipTO.getCodTurno());
+        turnoList = turnoTO.get("codTurno", configCTR.getEquip().getCodTurno());
 
         ArrayList<String> itens = new ArrayList<String>();
 
@@ -125,12 +120,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
                                     long id) {
 
                 TurnoTO turnoTO = (TurnoTO) turnoList.get(position);
-                if(pmmContext.getTipoEquip() == 1) {
-                    pmmContext.getBoletimMMTO().setIdTurnoBolMM(turnoTO.getIdTurno());
-                }
-                else{
-                    pmmContext.getBoletimFertTO().setIdTurnoBolFert(turnoTO.getIdTurno());
-                }
+                pmmContext.getBoletimCTR().setTurnoBol(turnoTO.getIdTurno());
                 turnoList.clear();
 
 //                if(Tempo.getInstance().verDthrServ(configTO.getDtServConfig())){

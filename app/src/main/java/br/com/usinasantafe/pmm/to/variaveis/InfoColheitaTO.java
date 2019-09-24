@@ -5,8 +5,8 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import br.com.usinasantafe.pmm.pst.Entidade;
 
-@DatabaseTable(tableName="tbperdavar")
-public class PerdaTO extends Entidade {
+@DatabaseTable(tableName="tbinfocolhvar")
+public class InfoColheitaTO extends Entidade {
 
     @DatabaseField(generatedId=true)
     private Long idPerda;
@@ -33,7 +33,7 @@ public class PerdaTO extends Entidade {
     @DatabaseField
     private Double totalPerda;
 
-    public PerdaTO() {
+    public InfoColheitaTO() {
     }
 
     public Long getIdPerda() {

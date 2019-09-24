@@ -25,33 +25,34 @@ import java.util.Calendar;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
-import br.com.usinasantafe.pmm.bo.ManipDadosReceb;
-import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
+import br.com.usinasantafe.pmm.to.variaveis.ApontImpleMMTO;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
+import br.com.usinasantafe.pmm.control.CheckListCTR;
+import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.estaticas.FuncionarioTO;
 import br.com.usinasantafe.pmm.to.estaticas.OSTO;
 import br.com.usinasantafe.pmm.to.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.variaveis.ApontFertTO;
 import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.AtualAplicTO;
 import br.com.usinasantafe.pmm.to.variaveis.BackupApontaTO;
 import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
 import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
+import br.com.usinasantafe.pmm.to.estaticas.ImpleMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.RespItemCLTO;
-import br.com.usinasantafe.pmm.to.variaveis.TransbMMTO;
 
 public class MenuInicialActivity extends ActivityGeneric {
 
-    private ListView lista;
+    private ListView listView;
     private PMMContext pmmContext;
     private ProgressDialog progressBar;
-    private ConfigTO configTO;
-    private EquipTO equipTO;
+    private ConfigCTR configCTR;
+
+    private CheckListCTR checkListCTR;
 
     private TextView textViewProcesso;
     private Handler customHandler = new Handler();
@@ -73,113 +74,28 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         customHandler.postDelayed(updateTimerThread, 0);
 
-        configTO = new ConfigTO();
-        List configList = configTO.all();
+        progressBar = new ProgressDialog(this);
+        checkListCTR = new CheckListCTR();
+        configCTR = new ConfigCTR();
 
-        if (configList.size() > 0) {
-
-            configTO = (ConfigTO) configList.get(0);
-
-            equipTO = new EquipTO();
-            List listEquipTO = equipTO.get("idEquip", configTO.getEquipConfig());
-            equipTO = (EquipTO) listEquipTO.get(0);
-            listEquipTO.clear();
-
-            if ((equipTO.getTipoEquipFert() == 1) || (equipTO.getTipoEquipFert() == 2)) {
-                pmmContext.setTipoEquip(2);
-            } else {
-                pmmContext.setTipoEquip(1);
+        if(pmmContext.getBoletimCTR().verBolABerto()){
+            if(checkListCTR.verCabecAberto()){
+                checkListCTR.clearRespCabecAberto();
+                pmmContext.setPosCheckList(1);
+                Intent it = new Intent(MenuInicialActivity.this, ItemCheckListActivity.class);
+                startActivity(it);
+                finish();
             }
-
-            progressBar = new ProgressDialog(this);
-
-            ConexaoWeb conexaoWeb = new ConexaoWeb();
-            if (conexaoWeb.verificaConexao(this)) {
-
-                if (configList.size() > 0) {
-
-                    progressBar.setCancelable(true);
-                    progressBar.setMessage("BUSCANDO ATUALIZAÇÃO...");
-                    progressBar.show();
-
-                    AtualAplicTO atualAplicTO = new AtualAplicTO();
-                    atualAplicTO.setVersaoAtual(pmmContext.versaoAplic);
-
-                    atualAplicTO.setIdEquipAtualizacao(equipTO.getNroEquip());
-                    atualAplicTO.setIdCheckList(equipTO.getIdCheckList());
-
-                    ManipDadosVerif.getInstance().verAtualizacao(atualAplicTO, this, progressBar);
-                }
-
-            } else {
-                if (configList.size() > 0) {
-                    startTimer("N_NAC");
-                }
+            else{
+                Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
+                startActivity(it);
+                finish();
             }
-
-            configList.clear();
-
-            List boletimList;
-            if (pmmContext.getTipoEquip() == 1) {
-                BoletimMMTO boletimMMTO = new BoletimMMTO();
-                boletimList = boletimMMTO.get("statusBolMM", 1L);
-            } else {
-                BoletimFertTO boletimFertTO = new BoletimFertTO();
-                boletimList = boletimFertTO.get("statusBolFert", 1L);
-            }
-
-            if (boletimList.size() > 0) {
-
-                CabecCLTO cabecCLTO = new CabecCLTO();
-                List cabecList = cabecCLTO.get("statusCabCL", 1L);
-
-                if (pmmContext.getTipoEquip() == 1) {
-                    pmmContext.setBoletimMMTO((BoletimMMTO) boletimList.get(0));
-                } else {
-                    pmmContext.setBoletimFertTO((BoletimFertTO) boletimList.get(0));
-                }
-
-                if (cabecList.size() == 0) {
-
-                    if (progressBar.isShowing()) {
-                        progressBar.dismiss();
-                    }
-
-                    Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
-                    startActivity(it);
-                    finish();
-
-                } else {
-
-                    RespItemCLTO respItemCLTO = new RespItemCLTO();
-
-                    if (respItemCLTO.hasElements()) {
-                        cabecCLTO = (CabecCLTO) cabecList.get(0);
-                        List respList = respItemCLTO.get("idCabItCL", cabecCLTO.getIdCabCL());
-                        for (int i = 0; i < respList.size(); i++) {
-                            respItemCLTO = (RespItemCLTO) respList.get(i);
-                            respItemCLTO.delete();
-                        }
-                    }
-
-                    if (progressBar.isShowing()) {
-                        progressBar.dismiss();
-                    }
-
-                    pmmContext.setPosCheckList(1L);
-                    Intent it = new Intent(MenuInicialActivity.this, ItemCheckListActivity.class);
-                    startActivity(it);
-                    finish();
-
-                }
-
-                cabecList.clear();
-
-            }
-
-            boletimList.clear();
-
         }
+        else{
+            atualizarAplic();
+        }
+
 
         listarMenuInicial();
 
@@ -196,21 +112,21 @@ public class MenuInicialActivity extends ActivityGeneric {
         itens.add("ATUALIZAR APLICATIVO");
 
         AdapterList adapterList = new AdapterList(this, itens);
-        lista = (ListView) findViewById(R.id.listaMenuInicial);
-        lista.setAdapter(adapterList);
+        listView = (ListView) findViewById(R.id.listaMenuInicial);
+        listView.setAdapter(adapterList);
 
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
+                TextView textView = v.findViewById(R.id.textViewItemList);
                 String text = textView.getText().toString();
 
                 if (text.equals("BOLETIM")) {
                     FuncionarioTO funcionarioTO = new FuncionarioTO();
-                    if (funcionarioTO.hasElements() && configTO.hasElements()) {
+                    if (funcionarioTO.hasElements() && configCTR.hasElements()) {
                         pmmContext.setVerPosTela(1);
                         clearBD();
                         customHandler.removeCallbacks(updateTimerThread);
@@ -239,8 +155,9 @@ public class MenuInicialActivity extends ActivityGeneric {
                         progressBar.setProgress(0);
                         progressBar.setMax(100);
                         progressBar.show();
-                        ManipDadosReceb.getInstance().atualizarBD(progressBar);
-                        ManipDadosReceb.getInstance().setContext(MenuInicialActivity.this);
+
+                        configCTR.atualTodasTabelas(MenuInicialActivity.this, progressBar);
+
                     } else {
                         AlertDialog.Builder alerta = new AlertDialog.Builder(MenuInicialActivity.this);
                         alerta.setTitle("ATENÇÃO");
@@ -257,26 +174,11 @@ public class MenuInicialActivity extends ActivityGeneric {
 
                 } else if (text.equals("REENVIO DE DADOS")) {
 
-                    ManipDadosEnvio.getInstance().envioDados(MenuInicialActivity.this);
+                    EnvioDadosServ.getInstance().envioDados(MenuInicialActivity.this);
 
                 } else if (text.equals("ATUALIZAR APLICATIVO")) {
 
-                    ConexaoWeb conexaoWeb = new ConexaoWeb();
-                    if (conexaoWeb.verificaConexao(v.getContext())) {
-
-                        if (configTO.hasElements()) {
-
-                            progressBar = new ProgressDialog(v.getContext());
-                            progressBar.setCancelable(true);
-                            progressBar.setMessage("Buscando Atualização...");
-                            progressBar.show();
-
-                            AtualAplicTO atualAplicTO = new AtualAplicTO();
-                            atualAplicTO.setIdEquipAtualizacao(configTO.getEquipConfig());
-                            atualAplicTO.setVersaoAtual(pmmContext.versaoAplic);
-                            ManipDadosVerif.getInstance().verAtualizacao(atualAplicTO, MenuInicialActivity.this, progressBar);
-                        }
-                    }
+                    atualizarAplic();
 
                 }
 
@@ -298,12 +200,7 @@ public class MenuInicialActivity extends ActivityGeneric {
             int pos1 = verAtual.indexOf("#") + 1;
             verAtualCL = verAtual.substring(0, (pos1 - 1));
             String dthr = verAtual.substring(pos1);
-            configTO = new ConfigTO();
-            List configList = configTO.all();
-            configTO = (ConfigTO) configList.get(0);
-            configList.clear();
-            configTO.setDtServConfig(dthr);
-            configTO.update();
+            configCTR.atualDtServConfig(dthr);
         }
 
         pmmContext.setVerAtualCL(verAtualCL);
@@ -317,7 +214,6 @@ public class MenuInicialActivity extends ActivityGeneric {
         if (alarmeAtivo) {
 
             Log.i("PMM", "NOVO TIMER");
-
             Intent intent = new Intent("EXECUTAR_ALARME");
             PendingIntent p = PendingIntent.getBroadcast(this, 0, intent, 0);
 
@@ -346,17 +242,14 @@ public class MenuInicialActivity extends ActivityGeneric {
     private Runnable updateTimerThread = new Runnable() {
 
         public void run() {
-
-            ConfigTO configTO = new ConfigTO();
-            List configList = configTO.all();
-            if (configList.size() > 0) {
-                if (ManipDadosEnvio.getInstance().getStatusEnvio() == 1) {
+            if (configCTR.hasElements()) {
+                if (EnvioDadosServ.getInstance().getStatusEnvio() == 1) {
                     textViewProcesso.setTextColor(Color.YELLOW);
                     textViewProcesso.setText("Enviando Dados...");
-                } else if (ManipDadosEnvio.getInstance().getStatusEnvio() == 2) {
+                } else if (EnvioDadosServ.getInstance().getStatusEnvio() == 2) {
                     textViewProcesso.setTextColor(Color.RED);
                     textViewProcesso.setText("Existem Dados para serem Enviados");
-                } else if (ManipDadosEnvio.getInstance().getStatusEnvio() == 3) {
+                } else if (EnvioDadosServ.getInstance().getStatusEnvio() == 3) {
                     textViewProcesso.setTextColor(Color.GREEN);
                     textViewProcesso.setText("Todos os Dados já foram Enviados");
                 }
@@ -367,6 +260,41 @@ public class MenuInicialActivity extends ActivityGeneric {
             customHandler.postDelayed(this, 10000);
         }
     };
+
+    public void clearBD() {
+
+        ImpleMMTO impleMMTO = new ImpleMMTO();
+        List implementoList = impleMMTO.all();
+
+        for (int i = 0; i < implementoList.size(); i++) {
+            impleMMTO = (ImpleMMTO) implementoList.get(i);
+            impleMMTO.delete();
+        }
+
+        OSTO osto = new OSTO();
+        osto.deleteAll();
+
+        ROSAtivTO rosAtivTO = new ROSAtivTO();
+        rosAtivTO.deleteAll();
+
+        BackupApontaTO backupApontaTO = new BackupApontaTO();
+        backupApontaTO.deleteAll();
+
+    }
+
+    public void atualizarAplic(){
+        ConexaoWeb conexaoWeb = new ConexaoWeb();
+        if (conexaoWeb.verificaConexao(this)) {
+            if (configCTR.hasElements()) {
+                progressBar.setCancelable(true);
+                progressBar.setMessage("BUSCANDO ATUALIZAÇÃO...");
+                progressBar.show();
+                VerifDadosServ.getInstance().verAtualAplic(pmmContext.versaoAplic, this, progressBar);
+            }
+        } else {
+            startTimer("N_NAC");
+        }
+    }
 
     public void teste() {
 
@@ -412,16 +340,16 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         }
 
-        ImpleMMTO impleMMTO = new ImpleMMTO();
-        List implementoList = impleMMTO.all();
+        ApontImpleMMTO apontImpleMMTO = new ApontImpleMMTO();
+        List apontImpleList = apontImpleMMTO.all();
 
-        for (int l = 0; l < implementoList.size(); l++) {
-            impleMMTO = (ImpleMMTO) implementoList.get(l);
+        for (int l = 0; l < apontImpleList.size(); l++) {
+            apontImpleMMTO = (ApontImpleMMTO) apontImpleList.get(l);
             Log.i("PMM", "IMPLEMENTO");
-            Log.i("PMM", "idImplemento = " + impleMMTO.getIdImpleMM());
-            Log.i("PMM", "idApontImplemento = " + impleMMTO.getIdApontImpleMM());
-            Log.i("PMM", "posImplemento = " + impleMMTO.getPosImpleMM());
-            Log.i("PMM", "codEquipImplemento = " + impleMMTO.getCodEquipImpleMM());
+            Log.i("PMM", "idApontImplemento = " + apontImpleMMTO.getIdApontImpleMM());
+//            Log.i("PMM", "idApontMM = " + apontImpleMMTO.getIdApontMM());
+            Log.i("PMM", "posImplemento = " + apontImpleMMTO.getPosImpleMM());
+            Log.i("PMM", "codEquipImplemento = " + apontImpleMMTO.getCodEquipImpleMM());
         }
 
         RendMMTO rendMMTO = new RendMMTO();
@@ -491,7 +419,6 @@ public class MenuInicialActivity extends ActivityGeneric {
 
             Log.i("PMM", "Config");
             Log.i("PMM", "equipConfig = " + configTO.getEquipConfig());
-            Log.i("PMM", "classeEquipConfig = " + configTO.getClasseEquipConfig());
             Log.i("PMM", "senhaConfig = " + configTO.getSenhaConfig());
             Log.i("PMM", "ultTurnoCLConfig = " + configTO.getUltTurnoCLConfig());
             Log.i("PMM", "dtUltApontConfig = " + configTO.getDtUltApontConfig());
@@ -530,7 +457,6 @@ public class MenuInicialActivity extends ActivityGeneric {
             Log.i("PMM", "FuncCabecCheckList = " + cabecCLTO.getFuncCabCL());
             Log.i("PMM", "TurnoCabecCheckList = " + cabecCLTO.getTurnoCabCL());
             Log.i("PMM", "StatusCabecCheckList = " + cabecCLTO.getStatusCabCL());
-            Log.i("PMM", "QtdeItemCabecCheckList = " + cabecCLTO.getQtdeItemCabCL());
             Log.i("PMM", "DtAtualCheckList = " + cabecCLTO.getDtAtualCabCL());
 
         }
@@ -550,33 +476,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         }
 
-
         Log.i("PMM", "versão = " + PMMContext.versaoAplic);
-
-    }
-
-    public void clearBD() {
-
-        TransbMMTO transbMMTO = new TransbMMTO();
-        transbMMTO.deleteAll();
-
-        ImpleMMTO impleMMTO = new ImpleMMTO();
-        List implementoList = impleMMTO.get("idApontImpleMM", 0L);
-
-        for (int i = 0; i < implementoList.size(); i++) {
-            impleMMTO = (ImpleMMTO) implementoList.get(i);
-            impleMMTO.delete();
-        }
-
-        OSTO osto = new OSTO();
-        osto.deleteAll();
-
-        ROSAtivTO rosAtivTO = new ROSAtivTO();
-        rosAtivTO.deleteAll();
-
-        BackupApontaTO backupApontaTO = new BackupApontaTO();
-        backupApontaTO.deleteAll();
-
     }
 
 }

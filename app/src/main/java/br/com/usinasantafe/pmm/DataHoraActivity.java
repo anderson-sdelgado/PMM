@@ -122,13 +122,7 @@ public class DataHoraActivity extends ActivityGeneric {
                             }
                             break;
                         case 4:
-                            Long codTurno;
-                            if(pmmContext.getTipoEquip() == 1) {
-                                codTurno = pmmContext.getBoletimMMTO().getIdTurnoBolMM();
-                            }
-                            else {
-                                codTurno = pmmContext.getBoletimFertTO().getIdTurnoBolFert();
-                            }
+                            Long codTurno = pmmContext.getBoletimCTR().getTurno();
                             TurnoTO turnoTO = new TurnoTO();
                             List turnoList = turnoTO.get("idTurno", codTurno);
                             turnoTO = (TurnoTO) turnoList.get(0);

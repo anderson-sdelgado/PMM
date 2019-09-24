@@ -1,6 +1,5 @@
 package br.com.usinasantafe.pmm;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,9 +9,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
+import br.com.usinasantafe.pmm.control.ConfigCTR;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.variaveis.PerdaTO;
+import br.com.usinasantafe.pmm.to.variaveis.InfoColheitaTO;
 
 public class DadosColheitaActivity extends ActivityGeneric {
 
@@ -34,32 +34,26 @@ public class DadosColheitaActivity extends ActivityGeneric {
         TextView textViewTotalDadoPerda = (TextView) findViewById(R.id.textViewTotalDadoPerda);
         Button buttonSair = (Button) findViewById(R.id.buttonSair);
 
-        PerdaTO perdaTO = new PerdaTO();
-        List perdaList = perdaTO.all();
-        perdaTO = (PerdaTO) perdaList.get(0);
-        perdaList.clear();
+        InfoColheitaTO infoColheitaTO = new InfoColheitaTO();
+        List infoColheitaList = infoColheitaTO.all();
+        infoColheitaTO = (InfoColheitaTO) infoColheitaList.get(0);
+        infoColheitaList.clear();
 
-        textViewTituloPerda.setText("DADOS DE PERDAS\n" + perdaTO.getDthrPerda());
+        textViewTituloPerda.setText("DADOS DE PERDAS\n" + infoColheitaTO.getDthrPerda());
         textViewTituloPerda.setTextColor(Color.GREEN);
-        textViewToleteDadoPerda.setText(String.valueOf(perdaTO.getToletePerda()).replace(".", ","));
-        textViewLascaDadoPerda.setText(String.valueOf(perdaTO.getLascaPerda()).replace(".", ","));
-        textViewTocoDadoPerda.setText(String.valueOf(perdaTO.getTocoPerda()).replace(".", ","));
-        textViewPonteiroDadoPerda.setText(String.valueOf(perdaTO.getPonteiroPerda()).replace(".", ","));
-        textViewCanaInteiraDadoPerda.setText(String.valueOf(perdaTO.getCanaInteiraPerda()).replace(".", ","));
-        textViewPedacoDadoPerda.setText(String.valueOf(perdaTO.getPedacoPerda()).replace(".", ","));
-        textViewRepiqueDadoPerda.setText(String.valueOf(perdaTO.getRepiquePerda()).replace(".", ","));
-        textViewSoqueiraDadoPerda.setText(String.valueOf(perdaTO.getSoqueiraPerda()).replace(".", ","));
-        textViewNroSoqueiraDadoPerda.setText(String.valueOf(perdaTO.getNroSoqueiraPerda()).replace(".", ","));
-        textViewTotalDadoPerda.setText(String.valueOf(perdaTO.getTotalPerda()).replace(".", ","));
+        textViewToleteDadoPerda.setText(String.valueOf(infoColheitaTO.getToletePerda()).replace(".", ","));
+        textViewLascaDadoPerda.setText(String.valueOf(infoColheitaTO.getLascaPerda()).replace(".", ","));
+        textViewTocoDadoPerda.setText(String.valueOf(infoColheitaTO.getTocoPerda()).replace(".", ","));
+        textViewPonteiroDadoPerda.setText(String.valueOf(infoColheitaTO.getPonteiroPerda()).replace(".", ","));
+        textViewCanaInteiraDadoPerda.setText(String.valueOf(infoColheitaTO.getCanaInteiraPerda()).replace(".", ","));
+        textViewPedacoDadoPerda.setText(String.valueOf(infoColheitaTO.getPedacoPerda()).replace(".", ","));
+        textViewRepiqueDadoPerda.setText(String.valueOf(infoColheitaTO.getRepiquePerda()).replace(".", ","));
+        textViewSoqueiraDadoPerda.setText(String.valueOf(infoColheitaTO.getSoqueiraPerda()).replace(".", ","));
+        textViewNroSoqueiraDadoPerda.setText(String.valueOf(infoColheitaTO.getNroSoqueiraPerda()).replace(".", ","));
+        textViewTotalDadoPerda.setText(String.valueOf(infoColheitaTO.getTotalPerda()).replace(".", ","));
 
-        ConfigTO configTO = new ConfigTO();
-        List configList = configTO.all();
-        configTO = (ConfigTO) configList.get(0);
-        configList.clear();
-        configTO.setVisDadosConfig(2L);
-        configTO.update();
-
-        ManipDadosVerif.getInstance().setVerTelaAtualPerda(4);
+        ConfigCTR configCTR = new ConfigCTR();
+        configCTR.atualVisDadosColhConfig(3L);
 
         buttonSair.setOnClickListener(new View.OnClickListener() {
             @Override

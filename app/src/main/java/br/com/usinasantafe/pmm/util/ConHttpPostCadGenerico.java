@@ -1,4 +1,4 @@
-package br.com.usinasantafe.pmm.conWEB;
+package br.com.usinasantafe.pmm.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -8,8 +8,10 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 
-import br.com.usinasantafe.pmm.bo.ManipDadosEnvio;
 import br.com.usinasantafe.pmm.bo.Tempo;
+import br.com.usinasantafe.pmm.control.ApontCTR;
+import br.com.usinasantafe.pmm.control.BoletimCTR;
+import br.com.usinasantafe.pmm.control.CheckListCTR;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -70,7 +72,7 @@ public class ConHttpPostCadGenerico extends AsyncTask<String, Void, String> {
 			
 		} catch (Exception e) {
 			Log.i("PMM", "Erro = " + e);
-			ManipDadosEnvio.getInstance().setEnviando(false);
+			EnvioDadosServ.getInstance().setEnviando(false);
 			Tempo.getInstance().setEnvioDado(true);
 			if(bufferedReader != null){
 				try {
@@ -100,29 +102,31 @@ public class ConHttpPostCadGenerico extends AsyncTask<String, Void, String> {
 	protected void onPostExecute(String result) {
 
 		try {
-			ManipDadosEnvio.getInstance().setEnviando(false);
+			EnvioDadosServ.getInstance().setEnviando(false);
 			Log.i("ECM", "VALOR RECEBIDO --> " + result);
 			if(result.trim().equals("GRAVOU-CHECKLIST")){
-				ManipDadosEnvio.getInstance().delChecklist();
-			}
-			else if(result.trim().equals("GRAVOU-BOLFECHADOFERT")){
-				ManipDadosEnvio.getInstance().delBolFechadoFert();
-			}
-			else if(result.trim().equals("GRAVOU-APONTAFERT")){
-				ManipDadosEnvio.getInstance().delApontaFert();
+				CheckListCTR checkListCTR = new CheckListCTR();
+				checkListCTR.delChecklist();
 			}
 			else{
-                if(result.trim().contains("BOLABERTOMM")){
-                    ManipDadosEnvio.getInstance().updBolAbertoMM(result);
-                }
-				else if(result.trim().contains("BOLFECHADOMM")){
-					ManipDadosEnvio.getInstance().updBolFechadoMM(result);
-				}
-				else if(result.trim().contains("APONTMM")){
-					ManipDadosEnvio.getInstance().updApontMM(result);
-				}
-                else if(result.trim().contains("FERT")){
-					ManipDadosEnvio.getInstance().atualDelBoletimFert(result);
+				if (result.trim().contains("BOLABERTOMM")) {
+					BoletimCTR boletimCTR = new BoletimCTR();
+					boletimCTR.updateBolAbertoMM(result);
+				} else if (result.trim().contains("BOLFECHADOMM")) {
+					BoletimCTR boletimCTR = new BoletimCTR();
+					boletimCTR.updateBolFechadoMM(result);
+				} else if (result.trim().contains("APONTMM")) {
+					ApontCTR apontCTR = new ApontCTR();
+					apontCTR.updateApontMM(result);
+				} else if (result.trim().contains("BOLABERTOFERT")) {
+					BoletimCTR boletimCTR = new BoletimCTR();
+					boletimCTR.updateBolAbertoFert(result);
+				} else if (result.trim().contains("BOLFECHADOFERT")) {
+					BoletimCTR boletimCTR = new BoletimCTR();
+					boletimCTR.updateBolFechadoFert(result);
+				} else if (result.trim().contains("APONTFERT")) {
+					ApontCTR apontCTR = new ApontCTR();
+					apontCTR.updateApontaFert(result);
 				}
 			}
 		} catch (Exception e) {

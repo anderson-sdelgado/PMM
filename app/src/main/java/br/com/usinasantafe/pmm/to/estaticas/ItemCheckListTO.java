@@ -19,8 +19,6 @@ public class ItemCheckListTO extends Entidade {
     @DatabaseField
     private Long idCheckList;
     @DatabaseField
-    private Long seqItemCheckList;
-    @DatabaseField
     private String descrItemCheckList;
 
     public ItemCheckListTO() {
@@ -40,14 +38,6 @@ public class ItemCheckListTO extends Entidade {
 
     public void setIdCheckList(Long idCheckList) {
         this.idCheckList = idCheckList;
-    }
-
-    public Long getSeqItemCheckList() {
-        return seqItemCheckList;
-    }
-
-    public void setSeqItemCheckList(Long seqItemCheckList) {
-        this.seqItemCheckList = seqItemCheckList;
     }
 
     public String getDescrItemCheckList() {

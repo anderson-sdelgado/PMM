@@ -18,15 +18,11 @@ public class RecolhFertTO extends Entidade {
     @DatabaseField
     private Long idBolRecolhFert;
     @DatabaseField
-    private Long idExtBolRecolhFert;
-    @DatabaseField
     private Long nroOSRecolhFert;
     @DatabaseField
     private Long valorRecolhFert;
     @DatabaseField
     private String dthrRecolhFert;
-    @DatabaseField
-    private Long statusRecolhFert; //1 - Aberto; 2 - Encerrado
 
     public RecolhFertTO() {
     }
@@ -45,14 +41,6 @@ public class RecolhFertTO extends Entidade {
 
     public void setIdBolRecolhFert(Long idBolRecolhFert) {
         this.idBolRecolhFert = idBolRecolhFert;
-    }
-
-    public Long getIdExtBolRecolhFert() {
-        return idExtBolRecolhFert;
-    }
-
-    public void setIdExtBolRecolhFert(Long idExtBolRecolhFert) {
-        this.idExtBolRecolhFert = idExtBolRecolhFert;
     }
 
     public Long getNroOSRecolhFert() {
@@ -79,11 +67,4 @@ public class RecolhFertTO extends Entidade {
         this.dthrRecolhFert = dthrRecolhFert;
     }
 
-    public Long getStatusRecolhFert() {
-        return statusRecolhFert;
-    }
-
-    public void setStatusRecolhFert(Long statusRecolhFert) {
-        this.statusRecolhFert = statusRecolhFert;
-    }
 }

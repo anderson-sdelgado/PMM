@@ -25,14 +25,9 @@ public class ListaOSRendActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List listBoletim = boletimMMTO.get("statusBolMM", 1L);
-        boletimMMTO = (BoletimMMTO) listBoletim.get(0);
-        listBoletim.clear();
-
         RendMMTO rendMMTO = new RendMMTO();
         ListView listaOSRend = (ListView) findViewById(R.id.listaOSRend);
-        AdapterListRend adapterListRend = new AdapterListRend(this, rendMMTO.getAndOrderBy("idBolRendMM", boletimMMTO.getIdBolMM(), "idRendMM", true));
+        AdapterListRend adapterListRend = new AdapterListRend(this, rendMMTO.getAndOrderBy("idBolRendMM", pmmContext.getBoletimCTR().getIdBol(), "idRendMM", true));
         listaOSRend.setAdapter(adapterListRend);
 
         listaOSRend.setOnItemClickListener(new AdapterView.OnItemClickListener() {

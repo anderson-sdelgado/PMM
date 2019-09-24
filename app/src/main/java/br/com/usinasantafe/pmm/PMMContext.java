@@ -2,6 +2,9 @@ package br.com.usinasantafe.pmm;
 
 import android.app.Application;
 
+import br.com.usinasantafe.pmm.control.ApontCTR;
+import br.com.usinasantafe.pmm.control.BoletimCTR;
+import br.com.usinasantafe.pmm.control.ColheitaCTR;
 import br.com.usinasantafe.pmm.to.variaveis.ApontFertTO;
 import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
@@ -13,10 +16,13 @@ import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
 
 public class PMMContext extends Application {
 
-    private BoletimMMTO boletimMMTO;
-    private BoletimFertTO boletimFertTO;
-    private ApontMMTO apontMMTO;
-    private ApontFertTO apontFertTO;
+    private BoletimCTR boletimCTR;
+    private ApontCTR apontCTR;
+    private ColheitaCTR colheitaCTR;
+//    private BoletimMMTO boletimMMTO;
+//    private BoletimFertTO boletimFertTO;
+//    private ApontMMTO apontMMTO;
+//    private ApontFertTO apontFertTO;
     private int verPosTela;
     //1 - Inicio do boletim;
     // 2 - Trabalhando Moto Mec;
@@ -36,7 +42,7 @@ public class PMMContext extends Application {
     private int posRecolh;
     private int contDataHora;
     private String verAtualCL;
-    private Long posCheckList;
+    private int posCheckList;
     private int tipoEquip; //1 - Tipo Motomec; 2 - Tipo Fertirrigação
 
     private boolean verVisDados;
@@ -52,37 +58,22 @@ public class PMMContext extends Application {
         super.onCreate();
     }
 
-    public BoletimMMTO getBoletimMMTO() {
-        if (boletimMMTO == null)
-            boletimMMTO = new BoletimMMTO();
-        return boletimMMTO;
+    public BoletimCTR getBoletimCTR() {
+        if (boletimCTR == null)
+            boletimCTR = new BoletimCTR();
+        return boletimCTR;
     }
 
-    public BoletimFertTO getBoletimFertTO() {
-        if (boletimFertTO == null)
-            boletimFertTO = new BoletimFertTO();
-        return boletimFertTO;
+    public ApontCTR getApontCTR(){
+        if (apontCTR == null)
+            apontCTR = new ApontCTR();
+        return apontCTR;
     }
 
-    public ApontMMTO getApontMMTO() {
-        if (apontMMTO == null)
-            apontMMTO = new ApontMMTO();
-        return apontMMTO;
-    }
-
-    public ApontFertTO getApontFertTO() {
-        if (apontFertTO == null)
-            apontFertTO = new ApontFertTO();
-        return apontFertTO;
-    }
-
-
-    public void setBoletimMMTO(BoletimMMTO boletimMMTO){
-        this.boletimMMTO = boletimMMTO;
-    }
-
-    public void setBoletimFertTO(BoletimFertTO boletimFertTO) {
-        this.boletimFertTO = boletimFertTO;
+    public ColheitaCTR getColheitaCTR(){
+        if (colheitaCTR == null)
+            colheitaCTR = new ColheitaCTR();
+        return colheitaCTR;
     }
 
     public int getVerPosTela() {
@@ -101,11 +92,11 @@ public class PMMContext extends Application {
         this.contImplemento = contImplemento;
     }
 
-    public Long getPosCheckList() {
+    public int getPosCheckList() {
         return posCheckList;
     }
 
-    public void setPosCheckList(Long posCheckList) {
+    public void setPosCheckList(int posCheckList) {
         this.posCheckList = posCheckList;
     }
 

@@ -7,9 +7,7 @@ import android.os.Handler;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class EsperaDadosOperActivity extends ActivityGeneric {
@@ -24,41 +22,9 @@ public class EsperaDadosOperActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Long equip;
-
-        if(pmmContext.getTipoEquip() == 1) {
-
-            BoletimMMTO boletimMMTO = new BoletimMMTO();
-            List boletimMMList = boletimMMTO.get("statusBolMM", 1L);
-            boletimMMTO = (BoletimMMTO) boletimMMList.get(0);
-            boletimMMList.clear();
-
-            equip = boletimMMTO.getIdEquipBolMM();
-
-        }
-        else {
-
-            BoletimFertTO boletimFertTO = new BoletimFertTO();
-            List boletimFertList = boletimFertTO.get("statusBolFert", 1L);
-            boletimFertTO = (BoletimFertTO) boletimFertList.get(0);
-            boletimFertList.clear();
-
-            equip = boletimFertTO.getIdEquipBolFert();
-
-        }
-
-        ConfigTO configTO = new ConfigTO();
-        List configList = configTO.all();
-        configTO = (ConfigTO) configList.get(0);
-        configList.clear();
-        configTO.setVisDadosConfig(0L);
-        configTO.update();
-
-        ManipDadosVerif.getInstance().setVerTelaAtualPerda(0);
-
         ConexaoWeb conexaoWeb = new ConexaoWeb();
         if (conexaoWeb.verificaConexao(this)) {
-            ManipDadosVerif.getInstance().verDados(String.valueOf(equip), "Perda", EsperaDadosOperActivity.this, DadosColheitaActivity.class,  MenuPrincNormalActivity.class);
+            pmmContext.getColheitaCTR().verInfoColheitaEquip(EsperaDadosOperActivity.this, MenuPrincNormalActivity.class, DadosColheitaActivity.class);
             customHandler.postDelayed(runnable, 10000);
         }
         else{
@@ -71,7 +37,7 @@ public class EsperaDadosOperActivity extends ActivityGeneric {
 
     private Runnable runnable = new Runnable(){
         public void run() {
-            if(!ManipDadosVerif.getInstance().isVerTerm()) {
+            if(!VerifDadosServ.getInstance().isVerTerm()) {
                 Intent it = new Intent(EsperaDadosOperActivity.this, MenuPrincNormalActivity.class);
                 startActivity(it);
                 finish();

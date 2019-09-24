@@ -14,8 +14,6 @@ public class ConfigTO extends Entidade {
     private Long idConfig;
 	@DatabaseField
 	private Long equipConfig;
-	@DatabaseField
-	private Long classeEquipConfig;
     @DatabaseField
 	private String senhaConfig;
 	@DatabaseField
@@ -33,7 +31,7 @@ public class ConfigTO extends Entidade {
 	@DatabaseField
 	private Double horimetroConfig;
 	@DatabaseField
-	private Long visDadosConfig; //0 - Verificar Dados; 1- Dados Recebidos; 2 - Dados Visualizados
+	private Long visDadosColhConfig; //0 - Verificar Dados; 1- Dados Recebidos; 2 - Dados Visualizados
 	@DatabaseField
 	private Long statusConConfig;  //0 - Offline; 1 - Online
 
@@ -54,14 +52,6 @@ public class ConfigTO extends Entidade {
 
 	public void setSenhaConfig(String senhaconfig) {
 		this.senhaConfig = senhaconfig;
-	}
-
-	public Long getClasseEquipConfig() {
-		return classeEquipConfig;
-	}
-
-	public void setClasseEquipConfig(Long classeEquipConfig) {
-		this.classeEquipConfig = classeEquipConfig;
 	}
 
 	public Long getUltTurnoCLConfig() {
@@ -104,12 +94,12 @@ public class ConfigTO extends Entidade {
         this.dtUltCLConfig = dtUltCLConfig;
     }
 
-	public Long getVisDadosConfig() {
-		return visDadosConfig;
+	public Long getVisDadosColhConfig() {
+		return visDadosColhConfig;
 	}
 
-	public void setVisDadosConfig(Long visDadosConfig) {
-		this.visDadosConfig = visDadosConfig;
+	public void setVisDadosColhConfig(Long visDadosConfig) {
+		this.visDadosColhConfig = visDadosConfig;
 	}
 
 	public Long getStatusConConfig() {

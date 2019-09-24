@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.to.estaticas.PressaoBocalTO;
 
 public class ListaPressaoFertActivity extends ActivityGeneric {
@@ -54,11 +54,13 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
 
                             progressBar = new ProgressDialog(ListaPressaoFertActivity.this);
                             progressBar.setCancelable(true);
-                            progressBar.setMessage("ATUALIZANDO PRESSÃO...");
+                            progressBar.setMessage("ATUALIZANDO ...");
+                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                            progressBar.setProgress(0);
+                            progressBar.setMax(100);
                             progressBar.show();
 
-                            ManipDadosVerif.getInstance().verDados("", "PressaoBocal"
-                                    , ListaPressaoFertActivity.this, ListaPressaoFertActivity.class, progressBar);
+                            pmmContext.getBoletimCTR().atualDadosPressao(ListaPressaoFertActivity.this, ListaPressaoFertActivity.class, progressBar);
 
                         } else {
 
@@ -94,7 +96,7 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
         });
 
         PressaoBocalTO pressaoBocalTO = new PressaoBocalTO();
-        pressaoBocalList = pressaoBocalTO.getAndOrderBy("idBocal", pmmContext.getApontFertTO().getBocalApontFert(), "valorPressao", true);
+        pressaoBocalList = pressaoBocalTO.getAndOrderBy("idBocal", pmmContext.getApontCTR().getBocalApontFert(), "valorPressao", true);
 
         ArrayList<String> itens = new ArrayList<String>();
 
@@ -119,7 +121,7 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
                                     long id) {
 
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
-                pmmContext.getApontFertTO().setPressaoApontFert(Double.parseDouble(textView.getText().toString()));
+                pmmContext.getApontCTR().setPressaoBocal(Double.parseDouble(textView.getText().toString()));
                 pressaoBocalList.clear();
 
                 Intent it = new Intent(ListaPressaoFertActivity.this, ListaVelocFertActivity.class);

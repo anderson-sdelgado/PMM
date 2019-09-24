@@ -38,6 +38,8 @@ public class BoletimFertTO extends Entidade {
     private Long statusBolFert;  //0 - Esta apontando os implementos; 1 - Aberto; 2 - Encerrado
     @DatabaseField
     private Long statusConBolFert;  //0 - OffLine; 1 - OnLine
+    @DatabaseField
+    private Long qtdeApontBolFert;
 
     public BoletimFertTO() {
     }
@@ -152,5 +154,13 @@ public class BoletimFertTO extends Entidade {
 
     public void setIdEquipBombaBolFert(Long idEquipBombaBolFert) {
         this.idEquipBombaBolFert = idEquipBombaBolFert;
+    }
+
+    public Long getQtdeApontBolFert() {
+        return qtdeApontBolFert;
+    }
+
+    public void setQtdeApontBolFert(Long qtdeApontBolFert) {
+        this.qtdeApontBolFert = qtdeApontBolFert;
     }
 }

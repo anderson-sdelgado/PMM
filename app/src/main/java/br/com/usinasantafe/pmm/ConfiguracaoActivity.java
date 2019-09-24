@@ -9,12 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.List;
-
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.bo.ManipDadosReceb;
-import br.com.usinasantafe.pmm.bo.ManipDadosVerif;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.util.AtualDadosServ;
+import br.com.usinasantafe.pmm.control.ConfigCTR;
+import br.com.usinasantafe.pmm.dao.EquipDAO;
 import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class ConfiguracaoActivity extends ActivityGeneric {
@@ -22,6 +20,8 @@ public class ConfiguracaoActivity extends ActivityGeneric {
     private ProgressDialog progressBar;
     private EditText editTextEquipConfig;
     private EditText editTextSenhaConfig;
+    private EquipDAO equipDAO;
+    private ConfigCTR configCTR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +34,13 @@ public class ConfiguracaoActivity extends ActivityGeneric {
         editTextEquipConfig = (EditText)  findViewById(R.id.editTextEquipConfig);
         editTextSenhaConfig = (EditText)  findViewById(R.id.editTextSenhaConfig);
 
+        equipDAO = new EquipDAO();
+        configCTR = new ConfigCTR();
         ConfigTO configTO = new ConfigTO();
 
         if (configTO.hasElements()) {
 
-            List configList = configTO.all();
-            configTO = (ConfigTO) configList.get(0);
-            configList.clear();
-
-            EquipTO equipTO = new EquipTO();
-            List equipList = equipTO.get("idEquip", configTO.getEquipConfig());
-            equipTO = (EquipTO) equipList.get(0);
-            equipList.clear();
-
-            editTextEquipConfig.setText(String.valueOf(equipTO.getNroEquip()));
+            editTextEquipConfig.setText(String.valueOf(equipDAO.getEquip().getNroEquip()));
             editTextSenhaConfig.setText(configTO.getSenhaConfig());
 
         }
@@ -64,9 +57,8 @@ public class ConfiguracaoActivity extends ActivityGeneric {
                         progressBar.setMessage("Pequisando o Equipamento...");
                         progressBar.show();
 
-                        ManipDadosVerif.getInstance().setSenha(editTextSenhaConfig.getText().toString());
-                        ManipDadosVerif.getInstance().verDados(editTextEquipConfig.getText().toString(), "Equip"
-                                ,ConfiguracaoActivity.this ,MenuInicialActivity.class, progressBar);
+                        configCTR.salvarConfig(editTextSenhaConfig.getText().toString());
+                        configCTR.verEquipConfig(editTextEquipConfig.getText().toString(),ConfiguracaoActivity.this ,MenuInicialActivity.class, progressBar);
 
                 }
 
@@ -98,8 +90,9 @@ public class ConfiguracaoActivity extends ActivityGeneric {
                     progressBar.setProgress(0);
                     progressBar.setMax(100);
                     progressBar.show();
-                    ManipDadosReceb.getInstance().atualizarBD(progressBar);
-                    ManipDadosReceb.getInstance().setContext(ConfiguracaoActivity.this);
+
+                    configCTR.atualTodasTabelas(ConfiguracaoActivity.this, progressBar);
+
                 }
                 else{
                     AlertDialog.Builder alerta = new AlertDialog.Builder(ConfiguracaoActivity.this);
