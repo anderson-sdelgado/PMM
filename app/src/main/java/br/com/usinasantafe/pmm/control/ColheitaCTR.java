@@ -9,11 +9,11 @@ public class ColheitaCTR {
     public ColheitaCTR() {
     }
 
-    public void verInfoColheitaEquip(Context telaAtual, Class telaProx1, Class telaProx2){
+    public void verInfoColheitaEquip(String dados,Context telaAtual, Class telaProx1, Class telaProx2){
         ConfigCTR configCTR = new ConfigCTR();
         configCTR.atualVisDadosColhConfig(0L);
         InfoColheitaDAO infoColheitaDAO = new InfoColheitaDAO();
-        infoColheitaDAO.verInfoColheitaEquip(String.valueOf(configCTR.getEquip().getIdEquip()) ,telaAtual, telaProx1, telaProx2);
+        infoColheitaDAO.verInfoColheitaEquip(dados ,telaAtual, telaProx1, telaProx2);
     }
 
 }

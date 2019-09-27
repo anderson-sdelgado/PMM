@@ -1,4 +1,4 @@
-package br.com.usinasantafe.pmm.to.estaticas;
+package br.com.usinasantafe.pmm.to.variaveis;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -8,7 +8,7 @@ import br.com.usinasantafe.pmm.pst.Entidade;
 /**
  * Created by anderson on 06/11/2017.
  */
-@DatabaseTable(tableName="tbimplemmvar")
+@DatabaseTable(tableName="tbimplementovar")
 public class ImpleMMTO extends Entidade {
 
     private static final long serialVersionUID = 1L;
@@ -36,4 +36,5 @@ public class ImpleMMTO extends Entidade {
     public void setPosImpleMM(Long posImpleMM) {
         this.posImpleMM = posImpleMM;
     }
+
 }

@@ -1,37 +1,16 @@
 package br.com.usinasantafe.pmm.util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import android.content.Context;
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.control.ApontCTR;
+import br.com.usinasantafe.pmm.control.ApontMMMovLeiraCTR;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.variaveis.ApontFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.estaticas.ImpleMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.RecolhFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.RespItemCLTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
 
 public class EnvioDadosServ {
 
@@ -113,8 +92,8 @@ public class EnvioDadosServ {
 
     public void envioApontMM() {
 
-        ApontCTR apontCTR = new ApontCTR();
-        String dados = apontCTR.dadosEnvioApontMM();
+        ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
+        String dados = apontMMMovLeiraCTR.dadosEnvioApontMM();
 
         Log.i("PMM", "APONTAMENTO = " + dados);
 
@@ -168,8 +147,8 @@ public class EnvioDadosServ {
 
     public void envioApontaFert() {
 
-        ApontCTR apontCTR = new ApontCTR();
-        String dados = apontCTR.dadosEnvioApontFert();
+        ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
+        String dados = apontMMMovLeiraCTR.dadosEnvioApontFert();
 
         Log.i("PMM", "APONTAMENTO = " + dados);
 
@@ -187,41 +166,48 @@ public class EnvioDadosServ {
 
     public boolean verifChecklist() {
         CheckListCTR checkListCTR = new CheckListCTR();
-        return checkListCTR.bolFechList().size() > 0;
+        return checkListCTR.verEnvioDados();
     }
 
     public Boolean verifBolFechadoMM() {
         BoletimCTR boletimCTR = new BoletimCTR();
-        return boletimCTR.bolFechMMList().size() > 0;
+        return boletimCTR.verEnvioDadosBolFechMM();
     }
 
     public Boolean verifBolAbertoSemEnvioMM() {
         BoletimCTR boletimCTR = new BoletimCTR();
-        return boletimCTR.bolAbertoSemEnvioMMList().size() > 0;
+        return boletimCTR.verEnvioDadosBolAbertoMM();
     }
 
-    public Boolean verifApontMM() {
-        ApontCTR apontCTR = new ApontCTR();
-        return apontCTR.apontAbertoMMList().size() > 0; }
+    public Boolean verifApontMovLeiraMM() {
+        ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
+        return apontMMMovLeiraCTR.verEnvioDadosApontMM();
+    }
 
     public Boolean verifBolFechadoFert() {
         BoletimCTR boletimCTR = new BoletimCTR();
-        return boletimCTR.bolFechFertList().size() > 0;
+        return boletimCTR.verEnvioDadosBolFechFert();
     }
 
     public Boolean verifBolAbertoSemEnvioFert() {
         BoletimCTR boletimCTR = new BoletimCTR();
-        return boletimCTR.bolAbertoSemEnvioFertList().size() > 0;
+        return boletimCTR.verEnvioDadosBolAbertoFert();
     }
 
     public Boolean verifApontaFert() {
-        ApontCTR apontCTR = new ApontCTR();
-        return apontCTR.apontAbertoFertList().size() > 0;
+        ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
+        return apontMMMovLeiraCTR.verEnvioDadosApontFert();
     }
 
     public Boolean verifPerda() {
+        boolean ret = false;
         ConfigCTR configCTR = new ConfigCTR();
-        return configCTR.getVisDadosColhConfig() == 1;
+        if(configCTR.hasElements()){
+            if(configCTR.getVisDadosColhConfig() == 1){
+                ret = true;
+            }
+        }
+        return ret;
     }
 
     /////////////////////////MECANISMO DE ENVIO//////////////////////////////////
@@ -256,7 +242,7 @@ public class EnvioDadosServ {
                         enviarBolAbertosMM();
                     }
                     else {
-                        if (verifApontMM()) {
+                        if (verifApontMovLeiraMM()) {
                             envioApontMM();
                         }
                         else{
@@ -284,7 +270,7 @@ public class EnvioDadosServ {
         if ((!verifPerda())
                 && (!verifBolFechadoMM())
                 && (!verifBolAbertoSemEnvioMM())
-                && (!verifApontMM())
+                && (!verifApontMovLeiraMM())
                 && (!verifChecklist())
                 && (!verifBolFechadoFert())
                 && (!verifBolAbertoSemEnvioFert())

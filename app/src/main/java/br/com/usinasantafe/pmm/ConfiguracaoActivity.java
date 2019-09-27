@@ -40,6 +40,7 @@ public class ConfiguracaoActivity extends ActivityGeneric {
 
         if (configTO.hasElements()) {
 
+            configTO = configCTR.getConfig();
             editTextEquipConfig.setText(String.valueOf(equipDAO.getEquip().getNroEquip()));
             editTextSenhaConfig.setText(configTO.getSenhaConfig());
 

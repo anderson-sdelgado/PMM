@@ -62,19 +62,19 @@ public class OSDAO {
 
                     }
 
-                    configCTR.atualStatusConConfig(1L);
+                    configCTR.setStatusConConfig(1L);
                     VerifDadosServ.getInstance().pulaTelaComTerm();
 
                 } else {
 
-                    configCTR.atualStatusConConfig(0L);
+                    configCTR.setStatusConConfig(0L);
                     VerifDadosServ.getInstance().msg("OS INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
 
                 }
 
             } else {
 
-                configCTR.atualStatusConConfig(0L);
+                configCTR.setStatusConConfig(0L);
                 VerifDadosServ.getInstance().msg("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
 
             }

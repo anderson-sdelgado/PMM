@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.to.estaticas.BocalTO;
 
 public class ListaBocalFertActivity extends ActivityGeneric {
@@ -108,7 +107,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
                                     long id) {
 
                 BocalTO bocalTO = (BocalTO)  bocalList.get(position);
-                pmmContext.getApontCTR().setBocal(bocalTO.getIdBocal());
+                pmmContext.getApontMMMovLeiraCTR().setBocal(bocalTO.getIdBocal());
                 bocalList.clear();
 
                 Intent it = new Intent(ListaBocalFertActivity.this, ListaPressaoFertActivity.class);

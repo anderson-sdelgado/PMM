@@ -29,39 +29,39 @@ public class ConfigCTR {
         configDAO.salvarConfig(senha);
     }
 
-    public void atualEquipConfig(EquipTO equipTO){
+    public void setEquipConfig(EquipTO equipTO){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.atualEquipConfig(equipTO);
+        configDAO.setEquipConfig(equipTO);
     }
 
-    public void atualDtServConfig(String data){
+    public void setDtServConfig(String data){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.atualDtServConfig(data);
+        configDAO.setDtServConfig(data);
     }
 
-    public void atualStatusConConfig(Long status){
+    public void setStatusConConfig(Long status){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.atualStatusConConfig(status);
+        configDAO.setStatusConConfig(status);
     }
 
-    public void atualOsConfig(Long nroOS){
+    public void setOsConfig(Long nroOS){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.atualOsConfig(nroOS);
+        configDAO.setOsConfig(nroOS);
     }
 
-    public void atualDtUltApontConfig(String data){
+    public void setDtUltApontConfig(String data){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.atualDtUltApontConfig(data);
+        configDAO.setDtUltApontConfig(data);
     }
 
-    public void atualHorimetroConfig(Double horimetro){
+    public void setHorimetroConfig(Double horimetro){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.atualHorimetroConfig(horimetro);
+        configDAO.setHorimetroConfig(horimetro);
     }
 
-    public void atualCheckListConfig(Long idTurno, String dataComHora){
+    public void setCheckListConfig(Long idTurno){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.atualCheckListConfig(idTurno, dataComHora);
+        configDAO.setCheckListConfig(idTurno);
     }
 
     public void verEquipConfig(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){

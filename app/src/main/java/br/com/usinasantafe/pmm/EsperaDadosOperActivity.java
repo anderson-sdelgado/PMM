@@ -3,6 +3,7 @@ package br.com.usinasantafe.pmm;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import java.util.List;
 
@@ -24,7 +25,8 @@ public class EsperaDadosOperActivity extends ActivityGeneric {
 
         ConexaoWeb conexaoWeb = new ConexaoWeb();
         if (conexaoWeb.verificaConexao(this)) {
-            pmmContext.getColheitaCTR().verInfoColheitaEquip(EsperaDadosOperActivity.this, MenuPrincNormalActivity.class, DadosColheitaActivity.class);
+
+            pmmContext.getColheitaCTR().verInfoColheitaEquip(String.valueOf(pmmContext.getBoletimCTR().getFunc()), EsperaDadosOperActivity.this, MenuPrincNormalActivity.class, DadosColheitaActivity.class);
             customHandler.postDelayed(runnable, 10000);
         }
         else{
@@ -38,6 +40,7 @@ public class EsperaDadosOperActivity extends ActivityGeneric {
     private Runnable runnable = new Runnable(){
         public void run() {
             if(!VerifDadosServ.getInstance().isVerTerm()) {
+                Log.i("PMM", "CHEGOU AKI 1");
                 Intent it = new Intent(EsperaDadosOperActivity.this, MenuPrincNormalActivity.class);
                 startActivity(it);
                 finish();

@@ -5,7 +5,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.estaticas.EquipSegTO;
-import br.com.usinasantafe.pmm.to.estaticas.ImpleMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
 
 public class EquipSegDAO {
 
@@ -16,7 +16,7 @@ public class EquipSegDAO {
         return verEquipSeg(nroEquip, 3L);
     }
 
-    public void setImple(ImpleMMTO impleMMTO){
+    public void setImplemento(ImpleMMTO impleMMTO){
         List impleList = impleMMTO.get("posImpleMM", impleMMTO.getPosImpleMM());
         if(impleList.size() > 0) {
             Long imp = impleMMTO.getCodEquipImpleMM();

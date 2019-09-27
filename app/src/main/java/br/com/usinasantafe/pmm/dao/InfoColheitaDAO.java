@@ -48,15 +48,18 @@ public class InfoColheitaDAO {
                     }
 
                     if(configCTR.getVisDadosColhConfig() == 0L){
+                        Log.i("PMM", "CHEGOU AKI 2");
                         VerifDadosServ.getInstance().pulaTelaDadosColheita();
                     }
                     else{
+                        Log.i("PMM", "CHEGOU AKI 3");
                         configCTR.atualVisDadosColhConfig(2L);
                     }
 
                 } else {
 
                     if(configCTR.getVisDadosColhConfig() == 0L) {
+                        Log.i("PMM", "CHEGOU AKI 4");
                         configCTR.atualVisDadosColhConfig(3L);
                         VerifDadosServ.getInstance().pulaTelaComTermSemBarra();
                     }
@@ -64,6 +67,7 @@ public class InfoColheitaDAO {
 
             } else {
                 if(configCTR.getVisDadosColhConfig() == 0L) {
+                    Log.i("PMM", "CHEGOU AKI 5");
                     configCTR.atualVisDadosColhConfig(1L);
                     VerifDadosServ.getInstance().pulaTelaComTermSemBarra();
                 }
@@ -71,6 +75,7 @@ public class InfoColheitaDAO {
 
         } catch (Exception e) {
             if(configCTR.getVisDadosColhConfig() == 0L) {
+                Log.i("PMM", "CHEGOU AKI 6");
                 configCTR.atualVisDadosColhConfig(1L);
                 VerifDadosServ.getInstance().pulaTelaComTermSemBarra();
             }

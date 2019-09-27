@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -28,6 +29,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
     private List turnoList;
     private PMMContext pmmContext;
     private ProgressDialog progressBar;
+    private ConfigCTR configCTR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +99,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
 
         });
 
-        ConfigCTR configCTR = new ConfigCTR();
+        configCTR = new ConfigCTR();
 
         TurnoTO turnoTO = new TurnoTO();
         turnoList = turnoTO.get("codTurno", configCTR.getEquip().getCodTurno());

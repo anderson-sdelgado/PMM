@@ -12,11 +12,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.to.estaticas.RFuncaoAtivParTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.variaveis.RecolhFertTO;
 
 public class HorimetroActivity extends ActivityGeneric {
 
@@ -119,7 +115,7 @@ public class HorimetroActivity extends ActivityGeneric {
                 finish();
             }
             else{
-                configCTR.atualHorimetroConfig(horimetroNum);
+                configCTR.setHorimetroConfig(horimetroNum);
                 pmmContext.getBoletimCTR().salvarBolAbertoMM();
                 CheckListCTR checkListCTR = new CheckListCTR();
                 if(checkListCTR.verAberturaCheckList(pmmContext.getBoletimCTR().getTurno())){
@@ -151,10 +147,8 @@ public class HorimetroActivity extends ActivityGeneric {
     }
 
     public void salvarBoletimFechado() {
-
-        configCTR.atualHorimetroConfig(horimetroNum);
+        configCTR.setHorimetroConfig(horimetroNum);
         pmmContext.getBoletimCTR().setHodometroFinalBol(horimetroNum);
-
         if(configCTR.getEquip().getTipo() == 1){
             if (pmmContext.getBoletimCTR().verRendMM()) {
                 pmmContext.setContRend(1);

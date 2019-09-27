@@ -77,13 +77,13 @@ public class BoletimFertDAO {
 
         boletimFertTO.setStatusBolFert(1L);
         boletimFertTO.setDthrInicialBolFert(Tempo.getInstance().dataComHora());
+        boletimFertTO.setQtdeApontBolFert(0L);
+        boletimFertTO.insert();
 
         String dataComHora = Tempo.getInstance().dataComHora();
 
         CheckListCTR checkListCTR = new CheckListCTR();
         if(checkListCTR.verAberturaCheckList(boletimFertTO.getIdTurnoBolFert())) {
-
-            boletimFertTO.setQtdeApontBolFert(1L);
 
             BoletimCTR boletimCTR = new BoletimCTR();
 
@@ -100,29 +100,21 @@ public class BoletimFertDAO {
             apontFertTO.setStatusApontFert(1L);
             apontFertTO.insert();
 
-            ConfigCTR configCTR = new ConfigCTR();
-            configCTR.atualCheckListConfig(boletimCTR.getTurno(), dataComHora);
-
-        }else{
-
-            boletimFertTO.setQtdeApontBolFert(0L);
-
         }
-
-        boletimFertTO.insert();
 
     }
 
-    public void salvarBolFechado() {
+    public void salvarBolFechado(BoletimFertTO boletimFertTO) {
 
-        BoletimFertTO boletimFertTO = new BoletimFertTO();
-        List boletimFertList = boletimFertTO.get("statusBolFert", 1L);
-        boletimFertTO = (BoletimFertTO) boletimFertList.get(0);
+        BoletimFertTO boletimFertTOBD = new BoletimFertTO();
+        List boletimFertList = boletimFertTOBD.get("statusBolFert", 1L);
+        boletimFertTOBD = (BoletimFertTO) boletimFertList.get(0);
         boletimFertList.clear();
 
-        boletimFertTO.setDthrFinalBolFert(Tempo.getInstance().dataComHora());
-        boletimFertTO.setStatusBolFert(2L);
-        boletimFertTO.update();
+        boletimFertTOBD.setDthrFinalBolFert(Tempo.getInstance().dataComHora());
+        boletimFertTOBD.setStatusBolFert(2L);
+        boletimFertTOBD.setHodometroFinalBolFert(boletimFertTO.getHodometroFinalBolFert());
+        boletimFertTOBD.update();
 
     }
 

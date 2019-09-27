@@ -23,7 +23,6 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
     private ListView atividadeListView;
     private PMMContext pmmContext;
-    private List atividadeList;
     private ProgressDialog progressBar;
     private ArrayList ativArrayList;
     private Long nroOS = 0L;
@@ -112,6 +111,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 // TODO Auto-generated method stub
 
                 AtividadeTO atividadeTO = (AtividadeTO) ativArrayList.get(position);
+                ativArrayList.clear();
 
                 if (pmmContext.getVerPosTela() == 1) {
 
@@ -122,14 +122,12 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                     startActivity(it);
                     finish();
 
-                    atividadeList.clear();
-                    ativArrayList.clear();
-
                 } else if ((pmmContext.getVerPosTela() == 2)) {
 
-                    pmmContext.getApontCTR().setAtivApont(atividadeTO.getIdAtiv());
+                    pmmContext.getApontMMMovLeiraCTR().setOSApont(nroOS);
+                    pmmContext.getApontMMMovLeiraCTR().setAtivApont(atividadeTO.getIdAtiv());
 
-                    if (pmmContext.getApontCTR().verifBackupApont()) {
+                    if (pmmContext.getApontMMMovLeiraCTR().verifBackupApont()) {
 
                         AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
                         alerta.setTitle("ATENÇÃO");
@@ -167,39 +165,33 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                 finish();
                             }
                             else{
-                                pmmContext.getApontCTR().salvarApont();
+
+                                pmmContext.getApontMMMovLeiraCTR().salvarApont();
                                 if (rendimento) {
                                     pmmContext.getBoletimCTR().insRend(nroOS);
                                 }
+
+                                Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
+                                startActivity(it);
+                                finish();
+
                             }
 
-                            Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
-                            startActivity(it);
-                            finish();
-
                         }else{
-
                             Intent it = new Intent(ListaAtividadeActivity.this, ListaBocalFertActivity.class);
                             startActivity(it);
                             finish();
-
                         }
-
-                        atividadeList.clear();
-                        ativArrayList.clear();
 
                     }
 
                 } else if(pmmContext.getVerPosTela() == 3) {
 
-                    pmmContext.getApontCTR().setAtivApont(atividadeTO.getIdAtiv());
+                    pmmContext.getApontMMMovLeiraCTR().setAtivApont(atividadeTO.getIdAtiv());
 
                     Intent it = new Intent(ListaAtividadeActivity.this, ListaParadaActivity.class);
                     startActivity(it);
                     finish();
-
-                    atividadeList.clear();
-                    ativArrayList.clear();
 
                 }
 

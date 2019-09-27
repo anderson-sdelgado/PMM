@@ -20,6 +20,7 @@ import java.util.Map;
 
 import br.com.usinasantafe.pmm.MenuInicialActivity;
 import br.com.usinasantafe.pmm.bo.AtualizarAplicativo;
+import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.dao.AtividadeDAO;
@@ -44,7 +45,6 @@ import android.os.AsyncTask;
 public class VerifDadosServ {
 
     private static VerifDadosServ instance = null;
-    private GenericRecordable genericRecordable;
     private UrlsConexaoHttp urlsConexaoHttp;
     private Context telaAtual;
     private Class telaProx1;
@@ -149,11 +149,15 @@ public class VerifDadosServ {
 
         verTerm = true;
         urlsConexaoHttp = new UrlsConexaoHttp();
-        this.tipo = "Perda";
-
+        this.tipo = "Colheita";
         ConfigCTR configCTR = new ConfigCTR();
-        this.dado = String.valueOf(configCTR.getEquip().getIdEquip());
-
+        BoletimCTR boletimCTR = new BoletimCTR();
+        if(configCTR.getEquip().getTipo() == 1){
+            this.dado = String.valueOf(boletimCTR.getBolMMAberto().getMatricFuncBolMM());
+        }
+        else{
+            this.dado = String.valueOf(boletimCTR.getBolFertAberto().getMatricFuncBolFert());
+        }
         envioDados();
 
     }
@@ -258,7 +262,7 @@ public class VerifDadosServ {
         if(!verTerm){
             this.progressDialog.dismiss();
             this.verTerm = true;
-            Intent it = new Intent(telaAtual, telaProx1);
+            Intent it = new Intent(telaAtual, telaProx2);
             telaAtual.startActivity(it);
         }
     }

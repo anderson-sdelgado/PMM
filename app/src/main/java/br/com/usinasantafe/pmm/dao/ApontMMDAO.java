@@ -5,12 +5,11 @@ import java.util.Calendar;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
+import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.ApontImpleMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.estaticas.ImpleMMTO;
 
 public class ApontMMDAO {
 
@@ -22,27 +21,28 @@ public class ApontMMDAO {
         apontMMTO.setLatitudeApontMM(0D);
         apontMMTO.setLongitudeApontMM(0D);
 
-        String datahora = Tempo.getInstance().dataComHora();
-        apontMMTO.setDthrApontMM(datahora);
+        String dataComHora = Tempo.getInstance().dataComHora();
+        apontMMTO.setDthrApontMM(dataComHora);
 
         apontMMTO.setIdBolApontMM(boletimMMTO.getIdBolMM());
         apontMMTO.setIdExtBolApontMM(boletimMMTO.getIdExtBolMM());
         apontMMTO.setStatusApontMM(1L);
         apontMMTO.insert();
 
-        ImpleMMTO impleMMTO = new ImpleMMTO();
-        List impleList = impleMMTO.get("idApontImpleMM", 0L);
-
-        List apontaList = apontMMTO.get("dthrApontMM", datahora);
+        List apontaList = apontMMTO.get("dthrApontMM", dataComHora);
         apontMMTO = (ApontMMTO) apontaList.get(0);
+        apontaList.clear();
+
+        ImpleMMTO impleMMTO = new ImpleMMTO();
+        List impleList = impleMMTO.all();
 
         for (int i = 0; i < impleList.size(); i++) {
             impleMMTO = (ImpleMMTO) impleList.get(i);
             ApontImpleMMTO apontImpleMMTO = new ApontImpleMMTO();
-            apontImpleMMTO.setIdApontImpleMM(apontMMTO.getIdApontMM());
+            apontImpleMMTO.setIdApontMM(apontMMTO.getIdApontMM());
             apontImpleMMTO.setCodEquipImpleMM(impleMMTO.getCodEquipImpleMM());
             apontImpleMMTO.setPosImpleMM(impleMMTO.getPosImpleMM());
-            apontImpleMMTO.setDthrImpleMM(datahora);
+            apontImpleMMTO.setDthrImpleMM(dataComHora);
             apontImpleMMTO.insert();
         }
 
@@ -131,7 +131,7 @@ public class ApontMMDAO {
 
     }
 
-    public List apontAbertoList(Long idBolMM){
+    public List apontAbertoMMList(Long idBolMM){
 
         ApontMMTO apontMMTO = new ApontMMTO();
 

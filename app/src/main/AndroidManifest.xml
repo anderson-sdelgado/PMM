@@ -22,6 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ListaAbertLeiraActivity"></activity>
         <activity
             android:name=".DadosColheitaActivity"
             android:screenOrientation="portrait" />
@@ -39,6 +40,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -46,6 +48,7 @@
         <receiver android:name=".ReceberAlarme">
             <intent-filter>
                 <action android:name="EXECUTAR_ALARME" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>

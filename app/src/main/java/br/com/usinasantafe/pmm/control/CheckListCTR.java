@@ -83,6 +83,11 @@ public class CheckListCTR {
         return cabecalhoCLDAO.bolFechList();
     }
 
+    public boolean verEnvioDados(){
+        CabecalhoCLDAO cabecalhoCLDAO = new CabecalhoCLDAO();
+        return bolFechList().size() > 0;
+    }
+
     public String dadosEnvio(){
 
         List cabecCheckListLista = bolFechList();

@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
+import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.ApontImpleMMTO;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
@@ -41,7 +42,6 @@ import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
 import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.estaticas.ImpleMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.RespItemCLTO;
 
@@ -77,6 +77,10 @@ public class MenuInicialActivity extends ActivityGeneric {
         progressBar = new ProgressDialog(this);
         checkListCTR = new CheckListCTR();
         configCTR = new ConfigCTR();
+
+        if (configCTR.hasElements()) {
+            pmmContext.getBoletimCTR().setTipoEquip();
+        }
 
         if(pmmContext.getBoletimCTR().verBolABerto()){
             if(checkListCTR.verCabecAberto()){
@@ -188,6 +192,20 @@ public class MenuInicialActivity extends ActivityGeneric {
 
     }
 
+    public void atualizarAplic(){
+        ConexaoWeb conexaoWeb = new ConexaoWeb();
+        if (conexaoWeb.verificaConexao(this)) {
+            if (configCTR.hasElements()) {
+                progressBar.setCancelable(true);
+                progressBar.setMessage("BUSCANDO ATUALIZAÇÃO...");
+                progressBar.show();
+                VerifDadosServ.getInstance().verAtualAplic(pmmContext.versaoAplic, this, progressBar);
+            }
+        } else {
+            startTimer("N_NAC");
+        }
+    }
+
     public void startTimer(String verAtual) {
 
         Log.i("PMM", "VERATUAL = " + verAtual);
@@ -200,7 +218,7 @@ public class MenuInicialActivity extends ActivityGeneric {
             int pos1 = verAtual.indexOf("#") + 1;
             verAtualCL = verAtual.substring(0, (pos1 - 1));
             String dthr = verAtual.substring(pos1);
-            configCTR.atualDtServConfig(dthr);
+            configCTR.setDtServConfig(dthr);
         }
 
         pmmContext.setVerAtualCL(verAtualCL);
@@ -282,19 +300,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
     }
 
-    public void atualizarAplic(){
-        ConexaoWeb conexaoWeb = new ConexaoWeb();
-        if (conexaoWeb.verificaConexao(this)) {
-            if (configCTR.hasElements()) {
-                progressBar.setCancelable(true);
-                progressBar.setMessage("BUSCANDO ATUALIZAÇÃO...");
-                progressBar.show();
-                VerifDadosServ.getInstance().verAtualAplic(pmmContext.versaoAplic, this, progressBar);
-            }
-        } else {
-            startTimer("N_NAC");
-        }
-    }
+
 
     public void teste() {
 
@@ -344,10 +350,10 @@ public class MenuInicialActivity extends ActivityGeneric {
         List apontImpleList = apontImpleMMTO.all();
 
         for (int l = 0; l < apontImpleList.size(); l++) {
-            apontImpleMMTO = (ApontImpleMMTO) apontImpleList.get(l);
+            apontImpleMMTO = (br.com.usinasantafe.pmm.to.variaveis.ApontImpleMMTO) apontImpleList.get(l);
             Log.i("PMM", "IMPLEMENTO");
             Log.i("PMM", "idApontImplemento = " + apontImpleMMTO.getIdApontImpleMM());
-//            Log.i("PMM", "idApontMM = " + apontImpleMMTO.getIdApontMM());
+            Log.i("PMM", "idApontMM = " + apontImpleMMTO.getIdApontMM());
             Log.i("PMM", "posImplemento = " + apontImpleMMTO.getPosImpleMM());
             Log.i("PMM", "codEquipImplemento = " + apontImpleMMTO.getCodEquipImpleMM());
         }
@@ -368,8 +374,6 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         BoletimFertTO boletimFertTO = new BoletimFertTO();
         List boletimFertList = boletimFertTO.all();
-
-        Log.i("PMM", "AKI");
 
         for (int i = 0; i < boletimFertList.size(); i++) {
 

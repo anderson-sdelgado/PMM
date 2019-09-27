@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.control.ApontCTR;
+import br.com.usinasantafe.pmm.control.ApontMMMovLeiraCTR;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 
@@ -114,19 +114,19 @@ public class ConHttpPostCadGenerico extends AsyncTask<String, Void, String> {
 					boletimCTR.updateBolAbertoMM(result);
 				} else if (result.trim().contains("BOLFECHADOMM")) {
 					BoletimCTR boletimCTR = new BoletimCTR();
-					boletimCTR.updateBolFechadoMM(result);
+					boletimCTR.deleteBolFechadoMM(result);
 				} else if (result.trim().contains("APONTMM")) {
-					ApontCTR apontCTR = new ApontCTR();
-					apontCTR.updateApontMM(result);
+					ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
+					apontMMMovLeiraCTR.updateApontMM(result);
 				} else if (result.trim().contains("BOLABERTOFERT")) {
 					BoletimCTR boletimCTR = new BoletimCTR();
 					boletimCTR.updateBolAbertoFert(result);
 				} else if (result.trim().contains("BOLFECHADOFERT")) {
 					BoletimCTR boletimCTR = new BoletimCTR();
-					boletimCTR.updateBolFechadoFert(result);
+					boletimCTR.deleteBolFechadoFert(result);
 				} else if (result.trim().contains("APONTFERT")) {
-					ApontCTR apontCTR = new ApontCTR();
-					apontCTR.updateApontaFert(result);
+					ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
+					apontMMMovLeiraCTR.updateApontaFert(result);
 				}
 			}
 		} catch (Exception e) {

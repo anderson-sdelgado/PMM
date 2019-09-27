@@ -9,6 +9,7 @@ import br.com.usinasantafe.pmm.to.estaticas.EquipSegTO;
 import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.to.estaticas.FuncionarioTO;
+import br.com.usinasantafe.pmm.to.estaticas.LeiraTO;
 import br.com.usinasantafe.pmm.to.estaticas.OSTO;
 import br.com.usinasantafe.pmm.to.estaticas.ParadaTO;
 import br.com.usinasantafe.pmm.to.estaticas.PressaoBocalTO;
@@ -18,14 +19,16 @@ import br.com.usinasantafe.pmm.to.estaticas.RFuncaoAtivParTO;
 import br.com.usinasantafe.pmm.to.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.to.estaticas.TurnoTO;
 import br.com.usinasantafe.pmm.to.variaveis.ApontFertTO;
+import br.com.usinasantafe.pmm.to.variaveis.ApontImpleMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.BackupApontaTO;
 import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
 import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.estaticas.ImpleMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.InfoColheitaTO;
+import br.com.usinasantafe.pmm.to.variaveis.MovLeiraTO;
 import br.com.usinasantafe.pmm.to.variaveis.RecolhFertTO;
 import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.RespItemCLTO;
@@ -79,6 +82,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, BocalTO.class);
 			TableUtils.createTable(cs, PressaoBocalTO.class);
 			TableUtils.createTable(cs, RFuncaoAtivParTO.class);
+			TableUtils.createTable(cs, LeiraTO.class);
 
 			TableUtils.createTable(cs, ConfigTO.class);
 			TableUtils.createTable(cs, BoletimMMTO.class);
@@ -92,6 +96,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, BoletimFertTO.class);
 			TableUtils.createTable(cs, ApontFertTO.class);
 			TableUtils.createTable(cs, InfoColheitaTO.class);
+			TableUtils.createTable(cs, ApontImpleMMTO.class);
+			TableUtils.createTable(cs, MovLeiraTO.class);
 			
 		}
 		catch(Exception e){

@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.control.ApontCTR;
+import br.com.usinasantafe.pmm.control.ApontMMMovLeiraCTR;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
-import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
 import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.MovLeiraTO;
 import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
 
 public class BoletimMMDAO {
@@ -77,6 +77,18 @@ public class BoletimMMDAO {
 
     }
 
+    public void insMovLeira(Long idLeira, Long tipo){
+        BoletimMMTO boletimMMTO = getBolMMAberto();
+        MovLeiraTO movLeiraTO = new MovLeiraTO();
+        movLeiraTO.setTipoMovLeira(tipo);
+        movLeiraTO.setIdLeira(idLeira);
+        movLeiraTO.setDataHoraMovLeira(Tempo.getInstance().dataComHora());
+        movLeiraTO.setIdBolLeiraMM(boletimMMTO.getIdBolMM());
+        movLeiraTO.setIdExtBolLeiraMM(boletimMMTO.getIdExtBolMM());
+        movLeiraTO.setStatusMovLeira(1L);
+        movLeiraTO.insert();
+    }
+
     public boolean verRend(){
         RendMMTO rendMMTO = new RendMMTO();
         List rendList = rendMMTO.get("idBolRendMM", getBolMMAberto().getIdBolMM());
@@ -109,14 +121,13 @@ public class BoletimMMDAO {
 
         boletimMMTO.setStatusBolMM(1L);
         boletimMMTO.setDthrInicialBolMM(Tempo.getInstance().dataComHora());
+        boletimMMTO.setQtdeApontBolMM(0L);
+        boletimMMTO.insert();
 
         String dataComHora = Tempo.getInstance().dataComHora();
 
         CheckListCTR checkListCTR = new CheckListCTR();
         if(checkListCTR.verAberturaCheckList(boletimMMTO.getIdTurnoBolMM())) {
-
-            boletimMMTO.setQtdeApontBolMM(1L);
-            boletimMMTO.insert();
 
             BoletimCTR boletimCTR = new BoletimCTR();
 
@@ -128,34 +139,27 @@ public class BoletimMMDAO {
             apontMMTO.setAtivApontMM(boletimMMTO.getAtivPrincBolMM());
             apontMMTO.setParadaApontMM(boletimCTR.getIdParadaCheckList());
             apontMMTO.setStatusConApontMM(boletimMMTO.getStatusConBolMM());
+            apontMMTO.setTransbApontMM(0L);
             apontMMTO.setStatusApontMM(1L);
 
-            ApontCTR apontCTR = new ApontCTR();
-            apontCTR.salvarApontMM(apontMMTO);
-
-            ConfigCTR configCTR = new ConfigCTR();
-            configCTR.atualCheckListConfig(boletimCTR.getTurno(), dataComHora);
-
-        }
-        else{
-
-            boletimMMTO.setQtdeApontBolMM(0L);
-            boletimMMTO.insert();
+            ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
+            apontMMMovLeiraCTR.salvarApontMM(apontMMTO);
 
         }
 
     }
 
-    public void salvarBolFechado() {
+    public void salvarBolFechado(BoletimMMTO boletimMMTO) {
 
-        BoletimMMTO boletimMMTO = new BoletimMMTO();
-        List listBoletim = boletimMMTO.get("statusBolMM", 1L);
-        boletimMMTO = (BoletimMMTO) listBoletim.get(0);
+        BoletimMMTO boletimMMTOBD = new BoletimMMTO();
+        List listBoletim = boletimMMTOBD.get("statusBolMM", 1L);
+        boletimMMTOBD = (BoletimMMTO) listBoletim.get(0);
         listBoletim.clear();
 
-        boletimMMTO.setDthrFinalBolMM(Tempo.getInstance().dataComHora());
-        boletimMMTO.setStatusBolMM(2L);
-        boletimMMTO.update();
+        boletimMMTOBD.setDthrFinalBolMM(Tempo.getInstance().dataComHora());
+        boletimMMTOBD.setStatusBolMM(2L);
+        boletimMMTOBD.setHodometroFinalBolMM(boletimMMTO.getHodometroFinalBolMM());
+        boletimMMTOBD.update();
 
     }
 

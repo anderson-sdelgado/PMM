@@ -33,49 +33,48 @@ public class ConfigDAO {
         configTO.commit();
     }
 
-    public void atualEquipConfig(EquipTO equipTO){
+    public void setEquipConfig(EquipTO equipTO){
         ConfigTO configTO = getConfig();
         configTO.setEquipConfig(equipTO.getIdEquip());
         configTO.setHorimetroConfig(equipTO.getHorimetroEquip());
         configTO.update();
     }
 
-    public void atualDtServConfig(String data){
+    public void setDtServConfig(String data){
         ConfigTO configTO = getConfig();
         configTO.setDtServConfig(data);
         configTO.update();
     }
 
-    public void atualStatusConConfig(Long status){
+    public void setStatusConConfig(Long status){
         ConfigTO configTO = getConfig();
         configTO.setStatusConConfig(status);
         configTO.update();
     }
 
-    public void atualOsConfig(Long nroOS){
+    public void setOsConfig(Long nroOS){
         ConfigTO configTO = getConfig();
         configTO.setOsConfig(nroOS);
         configTO.update();
     }
 
-    public void atualDtUltApontConfig(String data){
+    public void setDtUltApontConfig(String data){
         ConfigTO configTO = getConfig();
         configTO.setDtUltApontConfig(data);
         configTO.update();
     }
 
-    public void atualHorimetroConfig(Double horimetro){
+    public void setHorimetroConfig(Double horimetro){
         ConfigTO configTO = getConfig();
         configTO.setHorimetroConfig(horimetro);
         configTO.setDtUltApontConfig("");
         configTO.update();
     }
 
-    public void atualCheckListConfig(Long idTurno, String dataComHora){
+    public void setCheckListConfig(Long idTurno){
         ConfigTO configTO = getConfig();
         configTO.setUltTurnoCLConfig(idTurno);
         configTO.setDtUltCLConfig(Tempo.getInstance().dataSHora());
-        configTO.setDtUltApontConfig(dataComHora);
         configTO.update();
     }
 

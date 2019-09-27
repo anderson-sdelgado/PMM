@@ -52,7 +52,7 @@ public class OSActivity extends ActivityGeneric {
                 if (!editTextPadrao.getText().toString().equals("")) {
 
                     Long nroOS = Long.parseLong(editTextPadrao.getText().toString());
-                    configCTR.atualOsConfig(nroOS);
+                    configCTR.setOsConfig(nroOS);
 
                     try{
 
@@ -60,7 +60,7 @@ public class OSActivity extends ActivityGeneric {
                             pmmContext.getBoletimCTR().setOSBol(nroOS);
                         }
                         else {
-                            pmmContext.getApontCTR().setOSApont(nroOS);
+                            pmmContext.getApontMMMovLeiraCTR().setOSApont(nroOS);
                         }
 
                         ConexaoWeb conexaoWeb = new ConexaoWeb();
@@ -72,10 +72,10 @@ public class OSActivity extends ActivityGeneric {
                             if (osList.size() > 0) {
 
                                 if (conexaoWeb.verificaConexao(OSActivity.this)) {
-                                    configCTR.atualStatusConConfig(1L);
+                                    configCTR.setStatusConConfig(1L);
                                 }
                                 else{
-                                    configCTR.atualStatusConConfig(0L);
+                                    configCTR.setStatusConConfig(0L);
                                 }
 
                                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
@@ -99,7 +99,7 @@ public class OSActivity extends ActivityGeneric {
 
                                 } else {
 
-                                    configCTR.atualStatusConConfig(0L);
+                                    configCTR.setStatusConConfig(0L);
 
                                     Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                                     startActivity(it);
@@ -125,7 +125,7 @@ public class OSActivity extends ActivityGeneric {
 
                             } else {
 
-                                configCTR.atualStatusConConfig(0L);
+                                configCTR.setStatusConConfig(0L);
 
                                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                                 startActivity(it);
@@ -192,7 +192,7 @@ public class OSActivity extends ActivityGeneric {
                     progressBar.dismiss();
                 }
 
-                configCTR.atualStatusConConfig(0L);
+                configCTR.setStatusConConfig(0L);
 
                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                 startActivity(it);

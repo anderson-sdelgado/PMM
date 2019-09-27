@@ -27,8 +27,6 @@ public class EquipMBActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private ProgressDialog progressBar;
-    private ConfigTO configTO;
-    private EquipTO equipTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

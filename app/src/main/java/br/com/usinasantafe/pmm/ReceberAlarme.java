@@ -7,6 +7,9 @@ import android.util.Log;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.ApontImpleMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.pst.DatabaseHelper;
@@ -69,6 +72,44 @@ public class ReceberAlarme extends BroadcastReceiver {
 			Log.i("PMM", "dthrAponta = " + apontMMTO.getDthrApontMM());
 			Log.i("PMM", "statusApontMM = " + apontMMTO.getStatusApontMM());
 
+		}
+
+		ImpleMMTO impleMMTO = new ImpleMMTO();
+		List impleMMList = impleMMTO.all();
+
+		for (int i = 0; i < impleMMList.size(); i++) {
+
+			impleMMTO = (ImpleMMTO) impleMMList.get(i);
+			Log.i("PMM", "IMPLEMENTO MM");
+			Log.i("PMM", "posImpleMM = " + impleMMTO.getPosImpleMM());
+			Log.i("PMM", "codEquipImpleMM = " + impleMMTO.getCodEquipImpleMM());
+
+		}
+
+		ApontImpleMMTO apontImpleMMTO = new ApontImpleMMTO();
+		List apontImpleList = apontImpleMMTO.all();
+
+		for (int l = 0; l < apontImpleList.size(); l++) {
+			apontImpleMMTO = (br.com.usinasantafe.pmm.to.variaveis.ApontImpleMMTO) apontImpleList.get(l);
+			Log.i("PMM", "IMPLEMENTO");
+			Log.i("PMM", "idApontImplemento = " + apontImpleMMTO.getIdApontImpleMM());
+			Log.i("PMM", "idApontMM = " + apontImpleMMTO.getIdApontMM());
+			Log.i("PMM", "posImplemento = " + apontImpleMMTO.getPosImpleMM());
+			Log.i("PMM", "codEquipImplemento = " + apontImpleMMTO.getCodEquipImpleMM());
+		}
+
+		RendMMTO rendMMTO = new RendMMTO();
+		List rendimentoList = rendMMTO.all();
+
+		for (int j = 0; j < rendimentoList.size(); j++) {
+			rendMMTO = (RendMMTO) rendimentoList.get(j);
+			Log.i("PMM", "RENDIMENTO");
+			Log.i("PMM", "idRendimento = " + rendMMTO.getIdRendMM());
+			Log.i("PMM", "idBolRendimento = " + rendMMTO.getIdBolRendMM());
+			Log.i("PMM", "idExtBolRendimento = " + rendMMTO.getIdExtBolRendMM());
+			Log.i("PMM", "nroOSRendimento = " + rendMMTO.getNroOSRendMM());
+			Log.i("PMM", "valorRendimento = " + rendMMTO.getValorRendMM());
+			Log.i("PMM", "dthrRendimento = " + rendMMTO.getDthrRendMM());
 		}
 
 		BoletimFertTO boletimFertTO = new BoletimFertTO();

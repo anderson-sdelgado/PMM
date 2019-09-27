@@ -78,7 +78,7 @@ public class EquipDAO {
                 }
 
                 ConfigCTR configCTR = new ConfigCTR();
-                configCTR.atualEquipConfig(equipTO);
+                configCTR.setEquipConfig(equipTO);
 
                 VerifDadosServ.getInstance().pulaTelaSemTerm();
 

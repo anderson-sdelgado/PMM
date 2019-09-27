@@ -19,7 +19,6 @@ public class RecolhimentoActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private RecolhFertTO recolhFertTO;
-    private List recolList;
     private BoletimCTR boletimCTR;
 
     @Override

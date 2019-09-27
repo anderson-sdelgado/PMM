@@ -18,19 +18,16 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.control.ApontCTR;
 import br.com.usinasantafe.pmm.to.estaticas.ParadaTO;
 
 public class ListaParadaActivity extends ActivityGeneric {
 
     private ListView paradaListView;
-//    private ConfigTO configTO;
     private PMMContext pmmContext;
     private List paradaList;
     private ProgressDialog progressBar;
     private ArrayAdapter<String> adapter;
     private String paradaString;
-    private ApontCTR apontCTR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +40,8 @@ public class ListaParadaActivity extends ActivityGeneric {
         Button buttonRetMenuParada = (Button) findViewById(R.id.buttonRetMenuParada);
         EditText editPesqListParada = (EditText) findViewById(R.id.editPesqListParada);
 
-        apontCTR = new ApontCTR();
-
         ParadaTO paradaTO = new ParadaTO();
-        paradaList = apontCTR.rAtivParadaList();
+        paradaList = pmmContext.getApontMMMovLeiraCTR().rAtivParadaList();
 
         String itens[] = new String[paradaList.size()];
 
@@ -154,9 +149,9 @@ public class ListaParadaActivity extends ActivityGeneric {
                         List paradaList = paradaTO.get("codParada", paradaString.substring(0, paradaString.indexOf('-')).trim());
                         paradaTO = (ParadaTO) paradaList.get(0);
 
-                        pmmContext.getApontCTR().setParadaApont(paradaTO.getIdParada());
+                        pmmContext.getApontMMMovLeiraCTR().setParadaApont(paradaTO.getIdParada());
 
-                        if (pmmContext.getApontCTR().verifBackupApont()) {
+                        if (pmmContext.getApontMMMovLeiraCTR().verifBackupApont()) {
                             AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
                             alerta.setTitle("ATENÇÃO");
                             alerta.setMessage("PARADA JÁ APONTADA PARA O EQUIPAMENTO!");
@@ -170,7 +165,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                             alerta.show();
                         } else {
 
-                            pmmContext.getApontCTR().salvarApont();
+                            pmmContext.getApontMMMovLeiraCTR().salvarApont();
                             Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
                             startActivity(it);
                             finish();

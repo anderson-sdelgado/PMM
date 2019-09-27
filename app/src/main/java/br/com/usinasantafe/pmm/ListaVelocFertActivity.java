@@ -17,14 +17,8 @@ import java.util.HashSet;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.util.EnvioDadosServ;
-import br.com.usinasantafe.pmm.util.VerifDadosServ;
-import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.estaticas.PressaoBocalTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.variaveis.RecolhFertTO;
 
 public class ListaVelocFertActivity extends ActivityGeneric {
 
@@ -107,13 +101,13 @@ public class ListaVelocFertActivity extends ActivityGeneric {
         ArrayList pesqList = new ArrayList();
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("idBocal");
-        pesquisa.setValor(pmmContext.getApontCTR().getBocalApontFert());
+        pesquisa.setValor(pmmContext.getApontMMMovLeiraCTR().getBocalApontFert());
         pesquisa.setTipo(1);
         pesqList.add(pesquisa);
 
         EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
         pesquisa2.setCampo("valorPressao");
-        pesquisa2.setValor(pmmContext.getApontCTR().getPressaoApontFert());
+        pesquisa2.setValor(pmmContext.getApontMMMovLeiraCTR().getPressaoApontFert());
         pesquisa2.setTipo(1);
         pesqList.add(pesquisa2);
 
@@ -142,10 +136,10 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                                     long id) {
 
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
-                pmmContext.getApontCTR().setVelocApont(Long.parseLong(textView.getText().toString()));
+                pmmContext.getApontMMMovLeiraCTR().setVelocApont(Long.parseLong(textView.getText().toString()));
                 velocList.clear();
 
-                pmmContext.getApontCTR().salvarApont();
+                pmmContext.getApontMMMovLeiraCTR().salvarApont();
 
                 Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincNormalActivity.class);
                 startActivity(it);

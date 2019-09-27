@@ -8,7 +8,7 @@ public class UrlsConexaoHttp {
     public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmmdev/view/";
 
     public static String localPSTEstatica = "br.com.usinasantafe.pmm.to.estaticas.";
-    public static String localUrl = "br.com.usinasantafe.pmm.conWEB.UrlsConexaoHttp";
+    public static String localUrl = "br.com.usinasantafe.pmm.util.UrlsConexaoHttp";
 
     public static String put = "?versao=" + PMMContext.versaoAplic.replace(".", "_");
 
@@ -22,6 +22,7 @@ public class UrlsConexaoHttp {
     public static String RAtivParadaTO = urlPrincipal + "rativparada.php" + put;
     public static String RFuncaoAtivParTO = urlPrincipal + "rfuncaoativpar.php" + put;
     public static String TurnoTO = urlPrincipal + "turno.php" + put;
+    public static String LeiraTO = urlPrincipal + "leira.php" + put;
 
     public UrlsConexaoHttp() {
     }
@@ -76,11 +77,7 @@ public class UrlsConexaoHttp {
             retorno = urlPrincipal + "atualchecklist.php" + put;
         } else if (classe.equals("Pneu")) {
             retorno = urlPrincipal + "pneu.php" + put;
-        } else if (classe.equals("Bocal")) {
-            retorno = urlPrincipal + "bocal.php" + put;
-        } else if (classe.equals("PressaoBocal")) {
-            retorno = urlPrincipal + "pressaobocal.php" + put;
-        } else if (classe.equals("Perda")) {
+        } else if (classe.equals("Colheita")) {
             retorno = urlPrincipal + "perda.php" + put;
         }
         return retorno;

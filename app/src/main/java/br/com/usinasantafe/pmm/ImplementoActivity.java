@@ -11,15 +11,11 @@ import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.estaticas.ImpleMMTO;
+import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
 
 public class ImplementoActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
-    private ConfigTO configTO;
-    private EquipTO equipTO;
     private ProgressDialog progressBar;
 
     @Override

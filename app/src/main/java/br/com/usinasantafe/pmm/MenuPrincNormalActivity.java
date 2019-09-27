@@ -14,19 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.control.ApontCTR;
+import br.com.usinasantafe.pmm.control.ApontMMMovLeiraCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
-import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.estaticas.RFuncaoAtivParTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.BackupApontaTO;
 import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class MenuPrincNormalActivity extends ActivityGeneric {
@@ -152,8 +147,8 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                     startActivity(it);
                     finish();
                 } else if (text.equals("NOVO TRANSBORDO")) {
-                    ApontCTR apontCTR = new ApontCTR();
-                    int ver =  apontCTR.verTrocaTransb();
+                    ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
+                    int ver =  apontMMMovLeiraCTR.verTrocaTransb();
                     if (ver == 1) {
                         Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! APONTE UMA ATIVIDADE ANTES DE TROCAR DE TRANSBORDO.",
                                 Toast.LENGTH_LONG).show();
@@ -216,8 +211,8 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                             Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                     Toast.LENGTH_LONG).show();
                         } else {
-                            ApontCTR apontCTR = new ApontCTR();
-                            apontCTR.salvarParadaImple();
+                            ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
+                            apontMMMovLeiraCTR.salvarParadaImple();
                             pmmContext.setVerPosTela(19);
                             pmmContext.setContImplemento(1);
                             customHandler.removeCallbacks(updateTimerThread);

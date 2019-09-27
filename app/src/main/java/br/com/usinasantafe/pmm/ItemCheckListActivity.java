@@ -10,7 +10,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.bo.Tempo;
+import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
+import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
@@ -37,7 +40,7 @@ public class ItemCheckListActivity extends ActivityGeneric {
         Button buttonReparo = (Button) findViewById(R.id.buttonReparo);
         Button buttonCancChecklist = (Button) findViewById(R.id.buttonCancChecklist);
 
-        CheckListCTR checkListCTR = new CheckListCTR();
+        checkListCTR = new CheckListCTR();
         itemCheckListTO = checkListCTR.getItemCheckList(pmmContext.getPosCheckList());
 
         textViewItemChecklist.setText(pmmContext.getPosCheckList() + " - " + itemCheckListTO.getDescrItemCheckList());
@@ -90,6 +93,8 @@ public class ItemCheckListActivity extends ActivityGeneric {
         checkListCTR.setRespCheckList(respItemCLTO);
 
         if(checkListCTR.qtdeItemCheckList() == pmmContext.getPosCheckList()){
+            ConfigCTR configCTR = new ConfigCTR();
+            configCTR.setCheckListConfig(pmmContext.getBoletimCTR().getTurno());
             checkListCTR.salvarBolFechado();
             Intent it = new Intent(ItemCheckListActivity.this, EsperaDadosOperActivity.class);
             startActivity(it);

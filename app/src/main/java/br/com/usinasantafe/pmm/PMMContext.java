@@ -2,13 +2,9 @@ package br.com.usinasantafe.pmm;
 
 import android.app.Application;
 
-import br.com.usinasantafe.pmm.control.ApontCTR;
+import br.com.usinasantafe.pmm.control.ApontMMMovLeiraCTR;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.ColheitaCTR;
-import br.com.usinasantafe.pmm.to.variaveis.ApontFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
 
 /**
  * Created by anderson on 26/04/2017.
@@ -17,12 +13,8 @@ import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
 public class PMMContext extends Application {
 
     private BoletimCTR boletimCTR;
-    private ApontCTR apontCTR;
+    private ApontMMMovLeiraCTR apontMMMovLeiraCTR;
     private ColheitaCTR colheitaCTR;
-//    private BoletimMMTO boletimMMTO;
-//    private BoletimFertTO boletimFertTO;
-//    private ApontMMTO apontMMTO;
-//    private ApontFertTO apontFertTO;
     private int verPosTela;
     //1 - Inicio do boletim;
     // 2 - Trabalhando Moto Mec;
@@ -43,7 +35,6 @@ public class PMMContext extends Application {
     private int contDataHora;
     private String verAtualCL;
     private int posCheckList;
-    private int tipoEquip; //1 - Tipo Motomec; 2 - Tipo Fertirrigação
 
     private boolean verVisDados;
 
@@ -64,10 +55,10 @@ public class PMMContext extends Application {
         return boletimCTR;
     }
 
-    public ApontCTR getApontCTR(){
-        if (apontCTR == null)
-            apontCTR = new ApontCTR();
-        return apontCTR;
+    public ApontMMMovLeiraCTR getApontMMMovLeiraCTR(){
+        if (apontMMMovLeiraCTR == null)
+            apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
+        return apontMMMovLeiraCTR;
     }
 
     public ColheitaCTR getColheitaCTR(){
@@ -148,14 +139,6 @@ public class PMMContext extends Application {
         this.verAtualCL = verAtualCL;
     }
 
-    public int getTipoEquip() {
-        return tipoEquip;
-    }
-
-    public void setTipoEquip(int tipoEquip) {
-        this.tipoEquip = tipoEquip;
-    }
-
     public int getContDataHora() {
         return contDataHora;
     }
@@ -204,11 +187,4 @@ public class PMMContext extends Application {
         this.minuto = minuto;
     }
 
-    public boolean isVerVisDados() {
-        return verVisDados;
-    }
-
-    public void setVerVisDados(boolean verVisDados) {
-        this.verVisDados = verVisDados;
-    }
 }

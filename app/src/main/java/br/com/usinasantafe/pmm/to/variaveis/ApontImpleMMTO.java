@@ -13,7 +13,7 @@ public class ApontImpleMMTO extends Entidade {
     @DatabaseField(generatedId=true)
     private Long idApontImpleMM;
     @DatabaseField
-    private Long idapontMM;
+    private Long idApontMM;
     @DatabaseField
     private Long posImpleMM;
     @DatabaseField
@@ -29,12 +29,12 @@ public class ApontImpleMMTO extends Entidade {
         this.idApontImpleMM = idApontImpleMM;
     }
 
-    public Long getIdapontMM() {
-        return idapontMM;
+    public Long getIdApontMM() {
+        return idApontMM;
     }
 
     public void setIdApontMM(Long idapontMM) {
-        this.idapontMM = idapontMM;
+        this.idApontMM = idapontMM;
     }
 
     public Long getPosImpleMM() {

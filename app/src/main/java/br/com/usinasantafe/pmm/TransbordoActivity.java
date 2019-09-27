@@ -11,19 +11,13 @@ import android.widget.Button;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.control.ApontCTR;
-import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.to.estaticas.RFuncaoAtivParTO;
 
 public class TransbordoActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
-    private EquipTO equipTO;
     private ProgressDialog progressBar;
-    private BoletimCTR boletimCTR;
-    private ApontCTR apontCTR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +29,6 @@ public class TransbordoActivity extends ActivityGeneric {
         Button buttonOkTransbordo = (Button) findViewById(R.id.buttonOkPadrao);
         Button buttonCancTransbordo = (Button) findViewById(R.id.buttonCancPadrao);
         Button buttonAtualPadrao = (Button) findViewById(R.id.buttonAtualPadrao);
-
-        boletimCTR = new BoletimCTR();
-        apontCTR = new ApontCTR();
 
         buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,10 +96,11 @@ public class TransbordoActivity extends ActivityGeneric {
                 if (!editTextPadrao.getText().toString().equals("")) {
 
                     Long transb = Long.parseLong(editTextPadrao.getText().toString());
+                    pmmContext.getApontMMMovLeiraCTR().setTransb(transb);
 
-                    if(boletimCTR.verTransb(transb)){
+                    if(pmmContext.getBoletimCTR().verTransb(transb)){
 
-                        if(apontCTR.verifBackupApontTransb()){
+                        if(pmmContext.getApontMMMovLeiraCTR().verifBackupApontTransb()){
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);
                             alerta.setTitle("ATENÇÃO");
@@ -126,18 +118,13 @@ public class TransbordoActivity extends ActivityGeneric {
                         else{
 
                             if(pmmContext.getVerPosTela() == 2) {
-
-                                pmmContext.getApontCTR().setTransb(transb);
-                                pmmContext.getApontCTR().salvarApont();
-
+                                pmmContext.getApontMMMovLeiraCTR().salvarApont();
                             }
                             else {
-
-                                pmmContext.getApontCTR().salvarApontTransb();
-
+                                pmmContext.getApontMMMovLeiraCTR().salvarApontTransb();
                             }
 
-                            List rFuncaoAtivParList = pmmContext.getBoletimCTR().retFuncaoAtivParList(pmmContext.getApontCTR().getAtivApont());
+                            List rFuncaoAtivParList = pmmContext.getBoletimCTR().retFuncaoAtivParList(pmmContext.getApontMMMovLeiraCTR().getAtivApont());
 
                             boolean rendimento = false;
 
