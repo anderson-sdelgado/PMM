@@ -3,8 +3,8 @@ package br.com.usinasantafe.pmm.dao;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
 
 public class ConfigDAO {
 
@@ -88,5 +88,7 @@ public class ConfigDAO {
         ConfigTO configTO = getConfig();
         return configTO.getVisDadosColhConfig();
     }
+
+
 
 }

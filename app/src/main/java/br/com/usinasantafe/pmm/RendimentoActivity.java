@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.to.estaticas.OSTO;
-import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.bean.estaticas.OSTO;
+import br.com.usinasantafe.pmm.bean.variaveis.RendMMTO;
 
 public class RendimentoActivity extends ActivityGeneric {
 

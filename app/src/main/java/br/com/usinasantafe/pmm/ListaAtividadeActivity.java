@@ -16,8 +16,8 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.to.estaticas.AtividadeTO;
-import br.com.usinasantafe.pmm.to.estaticas.RFuncaoAtivParTO;
+import br.com.usinasantafe.pmm.bean.estaticas.AtividadeTO;
+import br.com.usinasantafe.pmm.bean.estaticas.RFuncaoAtivParTO;
 
 public class ListaAtividadeActivity extends ActivityGeneric {
 

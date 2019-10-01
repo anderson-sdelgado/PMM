@@ -11,11 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import br.com.usinasantafe.pmm.MenuInicialActivity;
@@ -27,15 +23,8 @@ import br.com.usinasantafe.pmm.dao.AtividadeDAO;
 import br.com.usinasantafe.pmm.dao.EquipDAO;
 import br.com.usinasantafe.pmm.dao.InfoColheitaDAO;
 import br.com.usinasantafe.pmm.dao.OSDAO;
-import br.com.usinasantafe.pmm.pst.GenericRecordable;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.estaticas.ParadaTO;
-import br.com.usinasantafe.pmm.to.estaticas.RAtivParadaTO;
-import br.com.usinasantafe.pmm.to.variaveis.AtualAplicTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.variaveis.InfoColheitaTO;
+import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.bean.variaveis.AtualAplicTO;
 
 import android.os.AsyncTask;
 
@@ -119,7 +108,6 @@ public class VerifDadosServ {
 
     public void verDados(String dado, String tipo, Context telaAtual, Class telaProx, ProgressDialog progressDialog) {
 
-        this.verTerm = false;
         this.urlsConexaoHttp = new UrlsConexaoHttp();
         this.telaAtual = telaAtual;
         this.telaProx1 = telaProx;
@@ -133,7 +121,6 @@ public class VerifDadosServ {
 
     public void verDados(String dado, String tipo, Context telaAtual, Class telaProx1, Class telaProx2) {
 
-        this.verTerm = false;
         this.urlsConexaoHttp = new UrlsConexaoHttp();
         this.telaAtual = telaAtual;
         this.telaProx1 = telaProx1;
@@ -227,7 +214,7 @@ public class VerifDadosServ {
         telaAtual.startActivity(it);
     }
 
-    public void msg(String texto){
+    public void msgSemTerm(String texto){
         this.progressDialog.dismiss();
         AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
         alerta.setTitle("ATENÇÃO");
@@ -247,6 +234,23 @@ public class VerifDadosServ {
             this.verTerm = true;
             Intent it = new Intent(telaAtual, telaProx1);
             telaAtual.startActivity(it);
+        }
+    }
+
+    public void msgComTerm(String texto){
+        if(!verTerm){
+            this.progressDialog.dismiss();
+            this.verTerm = true;
+            AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
+            alerta.setTitle("ATENÇÃO");
+            alerta.setMessage(texto);
+            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // TODO Auto-generated method stub
+                }
+            });
+            alerta.show();
         }
     }
 
@@ -271,5 +275,7 @@ public class VerifDadosServ {
         return verTerm;
     }
 
-
+    public void setVerTerm(boolean verTerm) {
+        this.verTerm = verTerm;
+    }
 }

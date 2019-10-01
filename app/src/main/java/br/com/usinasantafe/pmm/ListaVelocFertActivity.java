@@ -18,7 +18,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.estaticas.PressaoBocalTO;
+import br.com.usinasantafe.pmm.bean.estaticas.PressaoBocalTO;
 
 public class ListaVelocFertActivity extends ActivityGeneric {
 

@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Objects;
 
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.estaticas.AtividadeTO;
-import br.com.usinasantafe.pmm.to.estaticas.REquipAtivTO;
-import br.com.usinasantafe.pmm.to.estaticas.RFuncaoAtivParTO;
-import br.com.usinasantafe.pmm.to.estaticas.ROSAtivTO;
+import br.com.usinasantafe.pmm.bean.estaticas.AtividadeTO;
+import br.com.usinasantafe.pmm.bean.estaticas.REquipAtivTO;
+import br.com.usinasantafe.pmm.bean.estaticas.RFuncaoAtivParTO;
+import br.com.usinasantafe.pmm.bean.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class AtividadeDAO {
@@ -25,6 +25,7 @@ public class AtividadeDAO {
     }
 
     public void verAtiv(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
+        VerifDadosServ.getInstance().setVerTerm(true);
         VerifDadosServ.getInstance().verDados(dado, "Atividade", telaAtual, telaProx, progressDialog);
     }
 
@@ -92,11 +93,11 @@ public class AtividadeDAO {
                 VerifDadosServ.getInstance().pulaTelaSemTerm();
 
             } else {
-                VerifDadosServ.getInstance().msg("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
+                VerifDadosServ.getInstance().msgSemTerm("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
             }
 
         } catch (Exception e) {
-            VerifDadosServ.getInstance().msg("FALHA DE PESQUISA DE OS! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
+            VerifDadosServ.getInstance().msgSemTerm("FALHA DE PESQUISA DE OS! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
 
     }

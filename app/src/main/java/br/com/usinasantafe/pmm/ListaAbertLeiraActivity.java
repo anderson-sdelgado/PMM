@@ -11,7 +11,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.to.estaticas.LeiraTO;
+import br.com.usinasantafe.pmm.bean.estaticas.LeiraTO;
 
 public class ListaAbertLeiraActivity extends ActivityGeneric {
 
@@ -26,6 +26,7 @@ public class ListaAbertLeiraActivity extends ActivityGeneric {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_abert_leira);
 
+        pmmContext = (PMMContext) getApplication();
         itens = new ArrayList<ViewHolderChoice>();
 
         Button buttonRetListaLeira = (Button) findViewById(R.id.buttonRetListaLeira);
@@ -33,6 +34,14 @@ public class ListaAbertLeiraActivity extends ActivityGeneric {
 
         LeiraTO leiraTO = new LeiraTO();
         leiraList = leiraTO.orderBy("codLeira", true);
+
+        for (int i = 0; i < leiraList.size(); i++) {
+            leiraTO = (LeiraTO) leiraList.get(i);
+            ViewHolderChoice viewHolderChoice = new ViewHolderChoice();
+            viewHolderChoice.setSelected(false);
+            viewHolderChoice.setDescrCheckBox(String.valueOf(leiraTO.getCodLeira()));
+            itens.add(viewHolderChoice);
+        }
 
         adapterListChoice = new AdapterListChoice(this, itens);
         leiraListView = (ListView) findViewById(R.id.listLeira);

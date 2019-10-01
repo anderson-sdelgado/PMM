@@ -7,10 +7,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import java.util.List;
-
-import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.RendMMTO;
 
 public class ListaOSRendActivity extends ActivityGeneric {
 

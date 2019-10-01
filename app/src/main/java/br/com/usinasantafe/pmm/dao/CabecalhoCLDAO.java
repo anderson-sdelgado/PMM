@@ -5,10 +5,10 @@ import java.util.List;
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.estaticas.ItemCheckListTO;
-import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.bean.estaticas.ItemCheckListTO;
+import br.com.usinasantafe.pmm.bean.variaveis.CabecCLTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
 
 public class CabecalhoCLDAO {
 
@@ -41,7 +41,6 @@ public class CabecalhoCLDAO {
         cabecCLTO.setFuncCabCL(boletimCTR.getFunc());
         cabecCLTO.setTurnoCabCL(boletimCTR.getTurno());
         cabecCLTO.setStatusCabCL(1L);
-        cabecCLTO.setDtAtualCabCL("0");
         cabecCLTO.insert();
 
     }
@@ -62,12 +61,6 @@ public class CabecalhoCLDAO {
             return false;
         }
 
-    }
-
-    public void atualDataAtualCL(){
-        CabecCLTO cabecCLTO = getCabecAberto();
-        cabecCLTO.setDtAtualCabCL(Tempo.getInstance().dataComHora());
-        cabecCLTO.update();
     }
 
     public ItemCheckListTO getItemCheckList(int pos){

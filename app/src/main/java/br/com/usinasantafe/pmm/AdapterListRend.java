@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.RendMMTO;
 
 /**
  * Created by anderson on 19/10/2015.

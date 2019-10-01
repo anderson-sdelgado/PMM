@@ -5,8 +5,9 @@ import android.content.Context;
 
 import br.com.usinasantafe.pmm.dao.ConfigDAO;
 import br.com.usinasantafe.pmm.dao.EquipDAO;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.dao.OSDAO;
+import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
 
 public class ConfigCTR {
@@ -86,6 +87,12 @@ public class ConfigCTR {
     public Long getVisDadosColhConfig(){
         ConfigDAO configDAO = new ConfigDAO();
         return configDAO.getVisDadosColhConfig();
+    }
+
+    public boolean verTipoOS(){
+        ConfigDAO configDAO = new ConfigDAO();
+        OSDAO osDAO = new OSDAO();
+        return osDAO.verTipoOS(configDAO.getConfig().getOsConfig());
     }
 
 }

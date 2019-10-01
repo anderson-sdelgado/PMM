@@ -11,9 +11,9 @@ import org.json.JSONObject;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.to.estaticas.REquipAtivTO;
+import br.com.usinasantafe.pmm.bean.estaticas.REquipAtivTO;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
 
 public class EquipDAO {
 
@@ -35,6 +35,7 @@ public class EquipDAO {
     }
 
     public void verEquip(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
+        VerifDadosServ.getInstance().setVerTerm(true);
         VerifDadosServ.getInstance().verDados(dado, "Equip", telaAtual, telaProx, progressDialog);
     }
 
@@ -83,11 +84,11 @@ public class EquipDAO {
                 VerifDadosServ.getInstance().pulaTelaSemTerm();
 
             } else {
-                VerifDadosServ.getInstance().msg("EQUIPAMENTO INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
+                VerifDadosServ.getInstance().msgSemTerm("EQUIPAMENTO INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
             }
 
         } catch (Exception e) {
-            VerifDadosServ.getInstance().msg("FALHA DE PESQUISA DE EQUIPAMENTO! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
+            VerifDadosServ.getInstance().msgSemTerm("FALHA DE PESQUISA DE EQUIPAMENTO! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
     }
 

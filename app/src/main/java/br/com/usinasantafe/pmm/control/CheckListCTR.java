@@ -2,7 +2,6 @@ package br.com.usinasantafe.pmm.control;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -14,9 +13,9 @@ import java.util.List;
 import br.com.usinasantafe.pmm.dao.CabecalhoCLDAO;
 import br.com.usinasantafe.pmm.dao.ItemCheckListDAO;
 import br.com.usinasantafe.pmm.dao.RespItemCLDAO;
-import br.com.usinasantafe.pmm.to.estaticas.ItemCheckListTO;
-import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
-import br.com.usinasantafe.pmm.to.variaveis.RespItemCLTO;
+import br.com.usinasantafe.pmm.bean.estaticas.ItemCheckListTO;
+import br.com.usinasantafe.pmm.bean.variaveis.CabecCLTO;
+import br.com.usinasantafe.pmm.bean.variaveis.RespItemCLTO;
 
 public class CheckListCTR {
 

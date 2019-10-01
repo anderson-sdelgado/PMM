@@ -108,5 +108,6 @@
     <string name="texto_total">TOTAL</string>
     <string name="texto_valor_total">0,1820</string>
     <string name="texto_titulo_perda">DADOS DE PERDAS\n01/07/2019</string>
-    <string name="texto_leira">LEIRA</string>
+    <string name="texto_abrir_leira">ABRIR LEIRA(S)</string>
+    <string name="texto_fech_leira">FECHAR LEIRA:</string>
 </resources>

@@ -21,8 +21,8 @@ import br.com.usinasantafe.pmm.control.ApontMMMovLeiraCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.to.estaticas.RFuncaoAtivParTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.bean.estaticas.RFuncaoAtivParTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
 
 public class MenuPrincNormalActivity extends ActivityGeneric {
 
@@ -55,35 +55,25 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
             List rFuncaoAtivParList = pmmContext.getBoletimCTR().retFuncaoAtivParList(pmmContext.getBoletimCTR().ultAtivMMMenu());
 
-            boolean transbordo = false;
-            boolean rendimento = false;
-            boolean implemento = false;
-
             for (int i = 0; i < rFuncaoAtivParList.size(); i++) {
                 RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtivParList.get(i);
                 if(rFuncaoAtivParTO.getCodFuncao() == 2){
-                    transbordo = true;
+                    itens.add("NOVO TRANSBORDO");
                 }
                 if(rFuncaoAtivParTO.getCodFuncao() == 1){
-                    rendimento = true;
+                    itens.add("RENDIMENTO");
                 }
                 if(rFuncaoAtivParTO.getCodFuncao() == 3){
-                    implemento = true;
+                    itens.add("TROCAR IMPLEMENTO");
+                }
+                if(rFuncaoAtivParTO.getCodFuncao() == 5){
+                    if(configCTR.verTipoOS()){
+                        itens.add("ABRIR LEIRA(S)");
+                        itens.add("FECHAR LEIRA");
+                    }
                 }
             }
             rFuncaoAtivParList.clear();
-
-            if (transbordo) {
-                itens.add("NOVO TRANSBORDO");
-            }
-
-            if (rendimento) {
-                itens.add("RENDIMENTO");
-            }
-
-            if (implemento) {
-                itens.add("TROCAR IMPLEMENTO");
-            }
         }
         else{
             itens.add("RECOLHIMENTO MANGUEIRA");
@@ -222,8 +212,15 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                         }
 
                     }
+                } else if (text.equals("ABRIR LEIRA(S)")) {
+                    Intent it = new Intent(MenuPrincNormalActivity.this, ListaAbertLeiraActivity.class);
+                    startActivity(it);
+                    finish();
+                } else if (text.equals("FECHAR LEIRA")) {
+                    Intent it = new Intent(MenuPrincNormalActivity.this, FechLeiraActivity.class);
+                    startActivity(it);
+                    finish();
                 }
-
             }
 
         });

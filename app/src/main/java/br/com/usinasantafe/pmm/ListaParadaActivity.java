@@ -18,7 +18,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.to.estaticas.ParadaTO;
+import br.com.usinasantafe.pmm.bean.estaticas.ParadaTO;
 
 public class ListaParadaActivity extends ActivityGeneric {
 

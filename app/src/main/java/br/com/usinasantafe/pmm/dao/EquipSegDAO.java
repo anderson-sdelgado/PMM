@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.estaticas.EquipSegTO;
-import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
+import br.com.usinasantafe.pmm.bean.estaticas.EquipSegTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ImpleMMTO;
 
 public class EquipSegDAO {
 

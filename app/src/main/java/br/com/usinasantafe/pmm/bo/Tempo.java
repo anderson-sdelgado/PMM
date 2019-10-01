@@ -4,20 +4,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import br.com.usinasantafe.pmm.to.estaticas.DataTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
 
 public class Tempo {
 

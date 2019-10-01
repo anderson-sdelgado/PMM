@@ -21,16 +21,16 @@ import br.com.usinasantafe.pmm.dao.BoletimMMDAO;
 import br.com.usinasantafe.pmm.dao.EquipDAO;
 import br.com.usinasantafe.pmm.dao.EquipSegDAO;
 import br.com.usinasantafe.pmm.dao.OSDAO;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontImpleMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.MovLeiraTO;
-import br.com.usinasantafe.pmm.to.variaveis.RecolhFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontFertTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontImpleMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.BoletimFertTO;
+import br.com.usinasantafe.pmm.bean.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ImpleMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.MovLeiraTO;
+import br.com.usinasantafe.pmm.bean.variaveis.RecolhFertTO;
+import br.com.usinasantafe.pmm.bean.variaveis.RendMMTO;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
 
 public class BoletimCTR {
@@ -329,6 +329,11 @@ public class BoletimCTR {
     public void insMovLeiraAberta(Long idLeira){
         BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
         boletimMMDAO.insMovLeira(idLeira,1L);
+    }
+
+    public void insMovLeiraFechada(Long idLeira){
+        BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
+        boletimMMDAO.insMovLeira(idLeira,2L);
     }
 
     public RecolhFertTO getRecolh(int pos) {
@@ -700,6 +705,38 @@ public class BoletimCTR {
                 apontaArrayList.clear();
 
             }
+
+            JSONObject jObjMovLeira = new JSONObject(objTerc);
+            JSONArray jsonArrayMovLeira = jObjMovLeira.getJSONArray("movLeira");
+
+            if (jsonArrayMovLeira.length() > 0) {
+
+                ArrayList<Long> movLeiraArrayList = new ArrayList<Long>();
+                MovLeiraTO movLeiraTO = new MovLeiraTO();
+
+                for (int i = 0; i < jsonArrayMovLeira.length(); i++) {
+
+                    JSONObject objMovLeira = jsonArrayMovLeira.getJSONObject(i);
+                    Gson gsonMovLeira = new Gson();
+                    movLeiraTO = gsonMovLeira.fromJson(objMovLeira.toString(), MovLeiraTO.class);
+
+                    movLeiraArrayList.add(movLeiraTO.getIdMovLeira());
+
+                }
+
+                List movLeiraList = movLeiraTO.in("idMovLeira", movLeiraArrayList);
+
+                for (int i = 0; i < movLeiraList.size(); i++) {
+
+                    movLeiraTO = (MovLeiraTO) movLeiraList.get(i);
+                    movLeiraTO.setIdExtBolMovLeira(boletimMMTO.getIdExtBolMM());
+                    movLeiraTO.setStatusMovLeira(2L);
+                    movLeiraTO.update();
+
+                }
+
+            }
+
 
         }
         catch(Exception e){

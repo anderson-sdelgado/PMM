@@ -16,13 +16,20 @@
         style="@style/TextViewTituloLista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/texto_leira" />
+        android:text="@string/texto_abrir_leira" />
 
     <ListView
         android:id="@+id/listLeira"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/buttonAtualAtividade"
+        style="@style/BotaoAvulso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/texto_atualizar" />
 
     <LinearLayout
         android:id="@+id/rightRelativeLayout"

@@ -8,14 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.List;
-
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.util.VerifDadosServ;
-import br.com.usinasantafe.pmm.dao.CabecalhoCLDAO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class PergAtualCheckListActivity extends ActivityGeneric {
 
@@ -65,7 +60,7 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
                     ConfigCTR configCTR = new ConfigCTR();
                     CheckListCTR checkListCTR = new CheckListCTR();
                     checkListCTR.createCabecAberto(pmmContext.getBoletimCTR());
-                    checkListCTR.atualCheckList(String.valueOf(configCTR.getEquip().getIdEquip()), PergAtualCheckListActivity.this, ItemCheckListActivity.class, progressBar);
+                    checkListCTR.atualCheckList(String.valueOf(configCTR.getEquip().getNroEquip()), PergAtualCheckListActivity.this, ItemCheckListActivity.class, progressBar);
 
                 } else {
 

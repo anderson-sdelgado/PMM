@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +16,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
-import br.com.usinasantafe.pmm.to.estaticas.OSTO;
+import br.com.usinasantafe.pmm.bean.estaticas.OSTO;
 
 public class OSActivity extends ActivityGeneric {
 
@@ -77,6 +78,8 @@ public class OSActivity extends ActivityGeneric {
                                 else{
                                     configCTR.setStatusConConfig(0L);
                                 }
+
+                                VerifDadosServ.getInstance().setVerTerm(true);
 
                                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                                 startActivity(it);
@@ -193,7 +196,7 @@ public class OSActivity extends ActivityGeneric {
                 }
 
                 configCTR.setStatusConConfig(0L);
-
+                Log.i("PMM", "CHEGOU AKI 6 ");
                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                 startActivity(it);
                 finish();

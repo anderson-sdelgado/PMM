@@ -10,10 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.util.AtualDadosServ;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.dao.EquipDAO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
 
 public class ConfiguracaoActivity extends ActivityGeneric {
 

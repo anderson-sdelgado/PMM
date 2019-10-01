@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -15,13 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.util.AtualDadosServ;
-import br.com.usinasantafe.pmm.util.VerifDadosServ;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.estaticas.TurnoTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.bean.estaticas.TurnoTO;
 
 public class ListaTurnoActivity extends ActivityGeneric {
 

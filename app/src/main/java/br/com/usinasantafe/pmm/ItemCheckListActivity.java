@@ -7,19 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.util.EnvioDadosServ;
-import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.estaticas.ItemCheckListTO;
-import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
-import br.com.usinasantafe.pmm.to.variaveis.RespItemCLTO;
+import br.com.usinasantafe.pmm.bean.estaticas.ItemCheckListTO;
+import br.com.usinasantafe.pmm.bean.variaveis.RespItemCLTO;
 
 public class ItemCheckListActivity extends ActivityGeneric {
 

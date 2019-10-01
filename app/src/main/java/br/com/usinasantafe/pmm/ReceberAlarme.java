@@ -7,20 +7,21 @@ import android.util.Log;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontImpleMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ImpleMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontImpleMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.MovLeiraTO;
+import br.com.usinasantafe.pmm.bean.variaveis.RendMMTO;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.pst.DatabaseHelper;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.variaveis.RespItemCLTO;
+import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontFertTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.BoletimFertTO;
+import br.com.usinasantafe.pmm.bean.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.CabecCLTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.bean.variaveis.RespItemCLTO;
 
 public class ReceberAlarme extends BroadcastReceiver {
 
@@ -32,7 +33,7 @@ public class ReceberAlarme extends BroadcastReceiver {
 		}
 
 		Log.i("PMM", "DATA HORA = " + Tempo.getInstance().dataComHora());
-		teste();
+//		teste();
 
 		if(EnvioDadosServ.getInstance().verifDadosEnvio()){
 			Log.i("PMM", "ENVIANDO");
@@ -90,7 +91,7 @@ public class ReceberAlarme extends BroadcastReceiver {
 		List apontImpleList = apontImpleMMTO.all();
 
 		for (int l = 0; l < apontImpleList.size(); l++) {
-			apontImpleMMTO = (br.com.usinasantafe.pmm.to.variaveis.ApontImpleMMTO) apontImpleList.get(l);
+			apontImpleMMTO = (ApontImpleMMTO) apontImpleList.get(l);
 			Log.i("PMM", "IMPLEMENTO");
 			Log.i("PMM", "idApontImplemento = " + apontImpleMMTO.getIdApontImpleMM());
 			Log.i("PMM", "idApontMM = " + apontImpleMMTO.getIdApontMM());
@@ -110,6 +111,21 @@ public class ReceberAlarme extends BroadcastReceiver {
 			Log.i("PMM", "nroOSRendimento = " + rendMMTO.getNroOSRendMM());
 			Log.i("PMM", "valorRendimento = " + rendMMTO.getValorRendMM());
 			Log.i("PMM", "dthrRendimento = " + rendMMTO.getDthrRendMM());
+		}
+
+		MovLeiraTO movLeiraTO = new MovLeiraTO();
+		List movLeiraList = movLeiraTO.all();
+
+		for (int l = 0; l < movLeiraList.size(); l++) {
+			movLeiraTO = (MovLeiraTO) movLeiraList.get(l);
+			Log.i("PMM", "MOVLEIRA");
+			Log.i("PMM", "idMovLeira = " + movLeiraTO.getIdMovLeira());
+			Log.i("PMM", "idBolMovLeira = " + movLeiraTO.getIdBolMovLeira());
+			Log.i("PMM", "idExtBolMovLeira = " + movLeiraTO.getIdExtBolMovLeira());
+			Log.i("PMM", "idLeira = " + movLeiraTO.getIdLeira());
+			Log.i("PMM", "tipoMovLeira = " + movLeiraTO.getTipoMovLeira());
+			Log.i("PMM", "dataHoraMovLeira = " + movLeiraTO.getDataHoraMovLeira());
+			Log.i("PMM", "statusMovLeira = " + movLeiraTO.getStatusMovLeira());
 		}
 
 		BoletimFertTO boletimFertTO = new BoletimFertTO();
@@ -185,7 +201,6 @@ public class ReceberAlarme extends BroadcastReceiver {
 			Log.i("PMM", "IdCabecCheck = " + cabecCLTO.getIdCabCL());
 			Log.i("PMM", "DtCabecCheckList = " + cabecCLTO.getDtCabCL());
 			Log.i("PMM", "StatusCabecCheckList = " + cabecCLTO.getStatusCabCL());
-			Log.i("PMM", "DtAtualCheckList = " + cabecCLTO.getDtAtualCabCL());
 
 		}
 

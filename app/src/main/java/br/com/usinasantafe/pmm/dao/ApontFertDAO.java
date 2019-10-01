@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.variaveis.ApontFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.RecolhFertTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontFertTO;
+import br.com.usinasantafe.pmm.bean.variaveis.BoletimFertTO;
+import br.com.usinasantafe.pmm.bean.variaveis.RecolhFertTO;
 
 public class ApontFertDAO {
 

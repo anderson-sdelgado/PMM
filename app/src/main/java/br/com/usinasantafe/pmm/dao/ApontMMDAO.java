@@ -6,10 +6,10 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontImpleMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ImpleMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontImpleMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.BoletimMMTO;
 
 public class ApontMMDAO {
 

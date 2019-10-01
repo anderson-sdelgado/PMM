@@ -25,25 +25,25 @@ import java.util.Calendar;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontImpleMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ImpleMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontImpleMMTO;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.estaticas.FuncionarioTO;
-import br.com.usinasantafe.pmm.to.estaticas.OSTO;
-import br.com.usinasantafe.pmm.to.estaticas.ROSAtivTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.BackupApontaTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.RespItemCLTO;
+import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.bean.estaticas.FuncionarioTO;
+import br.com.usinasantafe.pmm.bean.estaticas.OSTO;
+import br.com.usinasantafe.pmm.bean.estaticas.ROSAtivTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontFertTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.BackupApontaTO;
+import br.com.usinasantafe.pmm.bean.variaveis.BoletimFertTO;
+import br.com.usinasantafe.pmm.bean.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.CabecCLTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.bean.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.RespItemCLTO;
 
 public class MenuInicialActivity extends ActivityGeneric {
 
@@ -83,6 +83,7 @@ public class MenuInicialActivity extends ActivityGeneric {
         }
 
         if(pmmContext.getBoletimCTR().verBolABerto()){
+            startTimer("N_NAC");
             if(checkListCTR.verCabecAberto()){
                 checkListCTR.clearRespCabecAberto();
                 pmmContext.setPosCheckList(1);
@@ -350,7 +351,7 @@ public class MenuInicialActivity extends ActivityGeneric {
         List apontImpleList = apontImpleMMTO.all();
 
         for (int l = 0; l < apontImpleList.size(); l++) {
-            apontImpleMMTO = (br.com.usinasantafe.pmm.to.variaveis.ApontImpleMMTO) apontImpleList.get(l);
+            apontImpleMMTO = (br.com.usinasantafe.pmm.bean.variaveis.ApontImpleMMTO) apontImpleList.get(l);
             Log.i("PMM", "IMPLEMENTO");
             Log.i("PMM", "idApontImplemento = " + apontImpleMMTO.getIdApontImpleMM());
             Log.i("PMM", "idApontMM = " + apontImpleMMTO.getIdApontMM());
@@ -461,7 +462,6 @@ public class MenuInicialActivity extends ActivityGeneric {
             Log.i("PMM", "FuncCabecCheckList = " + cabecCLTO.getFuncCabCL());
             Log.i("PMM", "TurnoCabecCheckList = " + cabecCLTO.getTurnoCabCL());
             Log.i("PMM", "StatusCabecCheckList = " + cabecCLTO.getStatusCabCL());
-            Log.i("PMM", "DtAtualCheckList = " + cabecCLTO.getDtAtualCabCL());
 
         }
 

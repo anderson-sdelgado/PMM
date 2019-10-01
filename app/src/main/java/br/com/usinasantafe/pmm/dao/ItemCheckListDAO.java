@@ -2,14 +2,15 @@ package br.com.usinasantafe.pmm.dao;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.estaticas.ItemCheckListTO;
+import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.bean.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class ItemCheckListDAO {
@@ -18,6 +19,7 @@ public class ItemCheckListDAO {
     }
 
     public void atualCheckList(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
+        VerifDadosServ.getInstance().setVerTerm(true);
         VerifDadosServ.getInstance().verDados(dado, "CheckList", telaAtual, telaProx, progressDialog);
     }
 
@@ -61,8 +63,6 @@ public class ItemCheckListDAO {
 
                 }
 
-                CabecalhoCLDAO cabecalhoCLDAO = new CabecalhoCLDAO();
-                cabecalhoCLDAO.atualDataAtualCL();
                 VerifDadosServ.getInstance().pulaTelaSemTerm();
 
             } else {

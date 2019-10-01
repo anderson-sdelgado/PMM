@@ -8,20 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
-import br.com.usinasantafe.pmm.util.EnvioDadosServ;
-import br.com.usinasantafe.pmm.util.VerifDadosServ;
-import br.com.usinasantafe.pmm.bo.Tempo;
-import br.com.usinasantafe.pmm.dao.CabecalhoCLDAO;
-import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.estaticas.EquipSegTO;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.estaticas.TurnoTO;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
 
 public class EquipMBActivity extends ActivityGeneric {
 

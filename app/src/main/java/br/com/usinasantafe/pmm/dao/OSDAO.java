@@ -8,9 +8,11 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.to.estaticas.OSTO;
-import br.com.usinasantafe.pmm.to.estaticas.ROSAtivTO;
+import br.com.usinasantafe.pmm.bean.estaticas.OSTO;
+import br.com.usinasantafe.pmm.bean.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class OSDAO {
@@ -19,6 +21,7 @@ public class OSDAO {
     }
 
     public void verOS(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
+        VerifDadosServ.getInstance().setVerTerm(false);
         VerifDadosServ.getInstance().verDados(dado, "OS", telaAtual, telaProx, progressDialog);
     }
 
@@ -68,22 +71,37 @@ public class OSDAO {
                 } else {
 
                     configCTR.setStatusConConfig(0L);
-                    VerifDadosServ.getInstance().msg("OS INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
+                    VerifDadosServ.getInstance().msgComTerm("OS INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
 
                 }
 
             } else {
 
                 configCTR.setStatusConConfig(0L);
-                VerifDadosServ.getInstance().msg("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
+                VerifDadosServ.getInstance().msgComTerm("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
 
             }
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            VerifDadosServ.getInstance().msg("FALHA DE PESQUISA DE OS! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
+            VerifDadosServ.getInstance().msgSemTerm("FALHA DE PESQUISA DE OS! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
 
+    }
+
+    public boolean verTipoOS(Long nroOS){
+        boolean ret = true;
+        OSTO osTO = new OSTO();
+        if(osTO.hasElements()){
+            List osList = osTO.get("nroOS", nroOS);
+            if(osList.size() > 0){
+                osTO = (OSTO) osList.get(0);
+                if(osTO.getTipoOS() == 0){
+                    ret = false;
+                }
+            }
+        }
+        return ret;
     }
 
 }

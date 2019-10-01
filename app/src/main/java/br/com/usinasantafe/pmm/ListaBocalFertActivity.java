@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
-import br.com.usinasantafe.pmm.to.estaticas.BocalTO;
+import br.com.usinasantafe.pmm.bean.estaticas.BocalTO;
 
 public class ListaBocalFertActivity extends ActivityGeneric {
 

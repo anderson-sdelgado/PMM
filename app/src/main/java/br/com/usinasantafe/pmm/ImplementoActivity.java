@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.bo.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
-import br.com.usinasantafe.pmm.to.variaveis.ImpleMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ImpleMMTO;
 
 public class ImplementoActivity extends ActivityGeneric {
 

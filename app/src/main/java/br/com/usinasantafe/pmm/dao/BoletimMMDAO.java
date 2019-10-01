@@ -8,10 +8,10 @@ import br.com.usinasantafe.pmm.control.ApontMMMovLeiraCTR;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.MovLeiraTO;
-import br.com.usinasantafe.pmm.to.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.BoletimMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.MovLeiraTO;
+import br.com.usinasantafe.pmm.bean.variaveis.RendMMTO;
 
 public class BoletimMMDAO {
 
@@ -83,8 +83,8 @@ public class BoletimMMDAO {
         movLeiraTO.setTipoMovLeira(tipo);
         movLeiraTO.setIdLeira(idLeira);
         movLeiraTO.setDataHoraMovLeira(Tempo.getInstance().dataComHora());
-        movLeiraTO.setIdBolLeiraMM(boletimMMTO.getIdBolMM());
-        movLeiraTO.setIdExtBolLeiraMM(boletimMMTO.getIdExtBolMM());
+        movLeiraTO.setIdBolMovLeira(boletimMMTO.getIdBolMM());
+        movLeiraTO.setIdExtBolMovLeira(boletimMMTO.getIdExtBolMM());
         movLeiraTO.setStatusMovLeira(1L);
         movLeiraTO.insert();
     }

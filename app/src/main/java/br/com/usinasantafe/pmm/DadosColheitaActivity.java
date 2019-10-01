@@ -10,9 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.util.VerifDadosServ;
-import br.com.usinasantafe.pmm.to.variaveis.ConfigTO;
-import br.com.usinasantafe.pmm.to.variaveis.InfoColheitaTO;
+import br.com.usinasantafe.pmm.bean.variaveis.InfoColheitaTO;
 
 public class DadosColheitaActivity extends ActivityGeneric {
 

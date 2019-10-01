@@ -1,7 +1,6 @@
 package br.com.usinasantafe.pmm.dao;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -10,7 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.to.variaveis.InfoColheitaTO;
+import br.com.usinasantafe.pmm.bean.variaveis.InfoColheitaTO;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class InfoColheitaDAO {
@@ -19,6 +18,7 @@ public class InfoColheitaDAO {
     }
 
     public void verInfoColheitaEquip(String dado, Context telaAtual, Class telaProx1, Class telaProx2){
+        VerifDadosServ.getInstance().setVerTerm(false);
         VerifDadosServ.getInstance().verDados(dado, "Colheita", telaAtual, telaProx1, telaProx2);
     }
 
@@ -48,18 +48,15 @@ public class InfoColheitaDAO {
                     }
 
                     if(configCTR.getVisDadosColhConfig() == 0L){
-                        Log.i("PMM", "CHEGOU AKI 2");
                         VerifDadosServ.getInstance().pulaTelaDadosColheita();
                     }
                     else{
-                        Log.i("PMM", "CHEGOU AKI 3");
                         configCTR.atualVisDadosColhConfig(2L);
                     }
 
                 } else {
 
                     if(configCTR.getVisDadosColhConfig() == 0L) {
-                        Log.i("PMM", "CHEGOU AKI 4");
                         configCTR.atualVisDadosColhConfig(3L);
                         VerifDadosServ.getInstance().pulaTelaComTermSemBarra();
                     }
@@ -67,7 +64,6 @@ public class InfoColheitaDAO {
 
             } else {
                 if(configCTR.getVisDadosColhConfig() == 0L) {
-                    Log.i("PMM", "CHEGOU AKI 5");
                     configCTR.atualVisDadosColhConfig(1L);
                     VerifDadosServ.getInstance().pulaTelaComTermSemBarra();
                 }
@@ -75,7 +71,6 @@ public class InfoColheitaDAO {
 
         } catch (Exception e) {
             if(configCTR.getVisDadosColhConfig() == 0L) {
-                Log.i("PMM", "CHEGOU AKI 6");
                 configCTR.atualVisDadosColhConfig(1L);
                 VerifDadosServ.getInstance().pulaTelaComTermSemBarra();
             }

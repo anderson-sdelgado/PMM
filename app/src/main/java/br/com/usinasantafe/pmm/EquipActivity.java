@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
 
 public class EquipActivity extends ActivityGeneric {
 

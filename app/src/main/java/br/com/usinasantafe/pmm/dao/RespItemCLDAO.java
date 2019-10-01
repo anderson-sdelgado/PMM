@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.variaveis.CabecCLTO;
-import br.com.usinasantafe.pmm.to.variaveis.RespItemCLTO;
+import br.com.usinasantafe.pmm.bean.variaveis.RespItemCLTO;
 
 public class RespItemCLDAO {
 

@@ -19,13 +19,13 @@ import br.com.usinasantafe.pmm.dao.BoletimFertDAO;
 import br.com.usinasantafe.pmm.dao.BoletimMMDAO;
 import br.com.usinasantafe.pmm.dao.EquipDAO;
 import br.com.usinasantafe.pmm.dao.MovLeiraDAO;
-import br.com.usinasantafe.pmm.to.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.to.estaticas.ParadaTO;
-import br.com.usinasantafe.pmm.to.estaticas.RAtivParadaTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontFertTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontImpleMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.ApontMMTO;
-import br.com.usinasantafe.pmm.to.variaveis.MovLeiraTO;
+import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.bean.estaticas.ParadaTO;
+import br.com.usinasantafe.pmm.bean.estaticas.RAtivParadaTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontFertTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontImpleMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ApontMMTO;
+import br.com.usinasantafe.pmm.bean.variaveis.MovLeiraTO;
 
 public class ApontMMMovLeiraCTR {
 
@@ -391,7 +391,10 @@ public class ApontMMMovLeiraCTR {
         try{
 
             int pos1 = retorno.indexOf("_") + 1;
-            String objPrinc = retorno.substring(pos1);
+            int pos2 = retorno.indexOf("|") + 1;
+
+            String objPrinc = retorno.substring(pos1, pos2);
+            String objSeg = retorno.substring(pos2);
 
             JSONObject jObjApontMM = new JSONObject(objPrinc);
             JSONArray jsonArrayApontMM = jObjApontMM.getJSONArray("apont");
@@ -430,6 +433,36 @@ public class ApontMMMovLeiraCTR {
                 }
 
                 rLista.clear();
+
+            }
+
+            JSONObject jObjMovLeira = new JSONObject(objSeg);
+            JSONArray jsonArrayMovLeira = jObjMovLeira.getJSONArray("movLeira");
+
+            if (jsonArrayMovLeira.length() > 0) {
+
+                ArrayList<Long> movLeiraArrayList = new ArrayList<Long>();
+                MovLeiraTO movLeiraTO = new MovLeiraTO();
+
+                for (int i = 0; i < jsonArrayMovLeira.length(); i++) {
+
+                    JSONObject objMovLeira = jsonArrayMovLeira.getJSONObject(i);
+                    Gson gsonMovLeira = new Gson();
+                    movLeiraTO = gsonMovLeira.fromJson(objMovLeira.toString(), MovLeiraTO.class);
+
+                    movLeiraArrayList.add(movLeiraTO.getIdMovLeira());
+
+                }
+
+                List movLeiraList = movLeiraTO.in("idMovLeira", movLeiraArrayList);
+
+                for (int i = 0; i < movLeiraList.size(); i++) {
+
+                    movLeiraTO = (MovLeiraTO) movLeiraList.get(i);
+                    movLeiraTO.setStatusMovLeira(2L);
+                    movLeiraTO.update();
+
+                }
 
             }
 

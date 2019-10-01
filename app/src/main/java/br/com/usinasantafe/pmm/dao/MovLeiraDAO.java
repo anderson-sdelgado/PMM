@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.to.variaveis.MovLeiraTO;
+import br.com.usinasantafe.pmm.bean.variaveis.MovLeiraTO;
 
 public class MovLeiraDAO {
 
@@ -23,7 +23,7 @@ public class MovLeiraDAO {
         pesqArrayList.add(pesquisa);
 
         EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-        pesquisa2.setCampo("idBolLeiraMM");
+        pesquisa2.setCampo("idBolMovLeira");
         pesquisa2.setValor(idBolMM);
         pesquisa2.setTipo(1);
         pesqArrayList.add(pesquisa2);
@@ -34,7 +34,7 @@ public class MovLeiraDAO {
 
     public List movLeiraAbertoMMList() {
         MovLeiraTO movLeiraTO = new MovLeiraTO();
-        return movLeiraTO.get("statusApontMM", 1L);
+        return movLeiraTO.get("statusMovLeira", 1L);
     }
 
 }
