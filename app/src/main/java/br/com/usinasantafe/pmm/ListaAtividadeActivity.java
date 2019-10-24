@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bo.ConexaoWeb;
+import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.bean.estaticas.AtividadeTO;
 import br.com.usinasantafe.pmm.bean.estaticas.RFuncaoAtivParTO;

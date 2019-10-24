@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bo.Tempo;
+import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.bean.variaveis.ImpleMMTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ApontImpleMMTO;

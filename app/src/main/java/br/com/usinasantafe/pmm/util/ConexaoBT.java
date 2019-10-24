@@ -1,4 +1,4 @@
-package br.com.usinasantafe.pmm.bo;
+package br.com.usinasantafe.pmm.util;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -12,7 +12,7 @@ import br.com.usinasantafe.pmm.bean.variaveis.ApontImpleMMTO;
 import br.com.usinasantafe.pmm.bean.variaveis.MovLeiraTO;
 import br.com.usinasantafe.pmm.bean.variaveis.RendMMTO;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
-import br.com.usinasantafe.pmm.bo.Tempo;
+import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.pst.DatabaseHelper;
 import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ApontFertTO;

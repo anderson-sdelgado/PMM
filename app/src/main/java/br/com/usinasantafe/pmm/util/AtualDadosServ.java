@@ -94,8 +94,6 @@ public class AtualDadosServ {
 			this.progressDialog = progressDialog;
 			tabAtualArrayList = new ArrayList();
 
-			Log.i("PMM", "AKI 5");
-
 	        Class<?> retClasse = Class.forName(urlsConexaoHttp.localUrl); 
 
 	        for (Field field : retClasse.getDeclaredFields()) {

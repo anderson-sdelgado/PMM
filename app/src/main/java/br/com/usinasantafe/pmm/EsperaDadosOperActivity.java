@@ -3,9 +3,8 @@ package br.com.usinasantafe.pmm;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
-import br.com.usinasantafe.pmm.bo.ConexaoWeb;
+import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class EsperaDadosOperActivity extends ActivityGeneric {

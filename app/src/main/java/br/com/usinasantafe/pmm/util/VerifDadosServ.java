@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.usinasantafe.pmm.MenuInicialActivity;
-import br.com.usinasantafe.pmm.bo.AtualizarAplicativo;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
@@ -58,8 +57,36 @@ public class VerifDadosServ {
     }
 
     public void manipularDadosHttp(String result) {
-        if (!result.equals("")) {
-            retornoVerifNormal(result);
+        try {
+            if (!result.equals("")) {
+                if (this.tipo.equals("Equip")) {
+                    EquipDAO equipDAO = new EquipDAO();
+                    equipDAO.recDadosEquip(result);
+                } else if (this.tipo.equals("OS")) {
+                    OSDAO osDAO = new OSDAO();
+                    osDAO.recDadosOS(result);
+                } else if (this.tipo.equals("Atividade")) {
+                    AtividadeDAO atividadeDAO = new AtividadeDAO();
+                    atividadeDAO.recDadosAtiv(result);
+                } else if (this.tipo.equals("Atualiza")) {
+                    String verAtualizacao = result.trim();
+                    if (verAtualizacao.equals("S")) {
+                        AtualizarAplicativo atualizarAplicativo = new AtualizarAplicativo();
+                        atualizarAplicativo.setContext(this.menuInicialActivity);
+                        atualizarAplicativo.execute();
+                    } else {
+                        this.menuInicialActivity.startTimer(verAtualizacao);
+                    }
+                } else if (this.tipo.equals("CheckList")) {
+                    CheckListCTR checkListCTR = new CheckListCTR();
+                    checkListCTR.recDadosCheckList(result);
+                } else if (this.tipo.equals("Colheita")) {
+                    InfoColheitaDAO infoColheitaDAO = new InfoColheitaDAO();
+                    infoColheitaDAO.recColheita(result);
+                }
+            }
+        } catch (Exception e) {
+            Log.i("PMM", "Erro Manip atualizar = " + e);
         }
     }
 
@@ -162,42 +189,6 @@ public class VerifDadosServ {
         conHttpPostVerGenerico = new ConHttpPostVerGenerico();
         conHttpPostVerGenerico.setParametrosPost(parametrosPost);
         conHttpPostVerGenerico.execute(url);
-
-    }
-
-    public void retornoVerifNormal(String result) {
-
-        try {
-
-            if (this.tipo.equals("Equip")) {
-                EquipDAO equipDAO = new EquipDAO();
-                equipDAO.recDadosEquip(result);
-            } else if (this.tipo.equals("OS")) {
-                OSDAO osDAO = new OSDAO();
-                osDAO.recDadosOS(result);
-            } else if (this.tipo.equals("Atividade")) {
-                AtividadeDAO atividadeDAO = new AtividadeDAO();
-                atividadeDAO.recDadosAtiv(result);
-            } else if (this.tipo.equals("Atualiza")) {
-                String verAtualizacao = result.trim();
-                if (verAtualizacao.equals("S")) {
-                    AtualizarAplicativo atualizarAplicativo = new AtualizarAplicativo();
-                    atualizarAplicativo.setContext(this.menuInicialActivity);
-                    atualizarAplicativo.execute();
-                } else {
-                    this.menuInicialActivity.startTimer(verAtualizacao);
-                }
-            } else if (this.tipo.equals("CheckList")) {
-                CheckListCTR checkListCTR = new CheckListCTR();
-                checkListCTR.recDadosCheckList(result);
-            } else if (this.tipo.equals("Colheita")) {
-                InfoColheitaDAO infoColheitaDAO = new InfoColheitaDAO();
-                infoColheitaDAO.recColheita(result);
-            }
-
-        } catch (Exception e) {
-            Log.i("PMM", "Erro Manip atualizar = " + e);
-        }
 
     }
 

@@ -10,7 +10,7 @@ import android.widget.Button;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bo.ConexaoWeb;
+import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.bean.estaticas.FuncionarioTO;
 
 public class OperadorActivity extends ActivityGeneric {

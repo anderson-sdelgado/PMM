@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bo.ConexaoWeb;
+import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.bean.variaveis.ImpleMMTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ApontImpleMMTO;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;

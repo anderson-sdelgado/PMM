@@ -2,7 +2,7 @@ package br.com.usinasantafe.pmm.dao;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bo.Tempo;
+import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;

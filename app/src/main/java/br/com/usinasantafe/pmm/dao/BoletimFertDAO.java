@@ -3,7 +3,7 @@ package br.com.usinasantafe.pmm.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bo.Tempo;
+import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;

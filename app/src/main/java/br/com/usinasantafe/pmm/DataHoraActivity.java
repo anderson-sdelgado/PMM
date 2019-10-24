@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bo.Tempo;
+import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.bean.estaticas.TurnoTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
 

@@ -1,4 +1,4 @@
-package br.com.usinasantafe.pmm.bo;
+package br.com.usinasantafe.pmm.util;
 
 import android.Manifest;
 import android.app.Activity;
