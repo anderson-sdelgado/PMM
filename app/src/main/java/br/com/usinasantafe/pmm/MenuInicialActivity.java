@@ -51,7 +51,6 @@ public class MenuInicialActivity extends ActivityGeneric {
     private PMMContext pmmContext;
     private ProgressDialog progressBar;
     private ConfigCTR configCTR;
-
     private CheckListCTR checkListCTR;
 
     private TextView textViewProcesso;
@@ -80,6 +79,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         if (configCTR.hasElements()) {
             pmmContext.getBoletimCTR().setTipoEquip();
+            pmmContext.getApontCTR().setTipoEquip();
         }
 
         if(pmmContext.getBoletimCTR().verBolABerto()){
@@ -92,9 +92,16 @@ public class MenuInicialActivity extends ActivityGeneric {
                 finish();
             }
             else{
-                Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
-                startActivity(it);
-                finish();
+                if(pmmContext.getPneuCTR().verCalibAberto()){
+                    Intent it = new Intent(MenuInicialActivity.this, ListaPosPneuActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else {
+                    Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
+                    startActivity(it);
+                    finish();
+                }
             }
         }
         else{

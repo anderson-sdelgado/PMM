@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -98,16 +99,17 @@ public class HorimetroActivity extends ActivityGeneric {
     }
 
     public void salvarBoletimAberto() {
-        pmmContext.getBoletimCTR().setHodometroInicialBol(horimetroNum);
+        pmmContext.getBoletimCTR().setHodometroInicialBol(horimetroNum, getLongitude(), getLatitude());
         if(configCTR.getEquip().getTipo() == 1){
-            List rFuncaoAtivParList = pmmContext.getBoletimCTR().retFuncaoAtivParList(pmmContext.getBoletimCTR().getAtiv());
+            List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(pmmContext.getBoletimCTR().getAtiv());
             boolean implemento = false;
-            for (int i = 0; i < rFuncaoAtivParList.size(); i++) {
-                RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtivParList.get(i);
+            for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
+                RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtividadeList.get(i);
                 if(rFuncaoAtivParTO.getCodFuncao() == 3){
                     implemento = true;
                 }
             }
+            rFuncaoAtividadeList.clear();
             if(implemento){
                 pmmContext.setContImplemento(1);
                 Intent it = new Intent(HorimetroActivity.this, ImplementoActivity.class);
@@ -119,13 +121,14 @@ public class HorimetroActivity extends ActivityGeneric {
                 pmmContext.getBoletimCTR().salvarBolAbertoMM();
                 CheckListCTR checkListCTR = new CheckListCTR();
                 if(checkListCTR.verAberturaCheckList(pmmContext.getBoletimCTR().getTurno())){
+                    pmmContext.getApontCTR().inserirParadaCheckList(pmmContext.getBoletimCTR());
                     pmmContext.setPosCheckList(1);
+                    checkListCTR.createCabecAberto(pmmContext.getBoletimCTR());
                     if (pmmContext.getVerAtualCL().equals("N_AC")) {
                         Intent it = new Intent(HorimetroActivity.this, PergAtualCheckListActivity.class);
                         startActivity(it);
                         finish();
                     } else {
-                        checkListCTR.createCabecAberto(pmmContext.getBoletimCTR());
                         Intent it = new Intent(HorimetroActivity.this, ItemCheckListActivity.class);
                         startActivity(it);
                         finish();

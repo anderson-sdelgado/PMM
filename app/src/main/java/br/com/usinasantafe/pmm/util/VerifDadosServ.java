@@ -21,6 +21,7 @@ import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.dao.AtividadeDAO;
 import br.com.usinasantafe.pmm.dao.EquipDAO;
 import br.com.usinasantafe.pmm.dao.InfoColheitaDAO;
+import br.com.usinasantafe.pmm.dao.ItemPneuDAO;
 import br.com.usinasantafe.pmm.dao.OSDAO;
 import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.bean.variaveis.AtualAplicTO;
@@ -83,6 +84,9 @@ public class VerifDadosServ {
                 } else if (this.tipo.equals("Colheita")) {
                     InfoColheitaDAO infoColheitaDAO = new InfoColheitaDAO();
                     infoColheitaDAO.recColheita(result);
+                } else if (this.tipo.equals("Pneu")) {
+                    ItemPneuDAO itemPneuDAO = new ItemPneuDAO();
+                    itemPneuDAO.recDadosPneu(result);
                 }
             }
         } catch (Exception e) {

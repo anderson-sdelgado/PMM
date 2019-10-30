@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.control.ApontMMMovLeiraCTR;
+import br.com.usinasantafe.pmm.control.ApontCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
@@ -30,6 +30,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
     private ListView listViewAtiv;
     private ProgressDialog progressBar;
     private ConfigCTR configCTR;
+    private ConfigTO configTO;
 
     private TextView textViewProcessoNormal;
     private Handler customHandler = new Handler();
@@ -48,15 +49,29 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
         ArrayList<String> itens = new ArrayList<String>();
 
+        configTO = configCTR.getConfig();
+
+        if (Tempo.getInstance().verDthrServ(configTO.getDtServConfig())) {
+            configCTR.atualDifDthrConfig(0L);
+        } else {
+            if (configTO.getDifDthrConfig() == 0) {
+                pmmContext.setContDataHora(1);
+                pmmContext.setVerPosTela(5);
+                Intent it = new Intent(MenuPrincNormalActivity.this, MsgDataHoraActivity.class);
+                startActivity(it);
+                finish();
+            }
+        }
+
         itens.add("TRABALHANDO");
         itens.add("PARADO");
 
         if(configCTR.getEquip().getTipo() == 1){
 
-            List rFuncaoAtivParList = pmmContext.getBoletimCTR().retFuncaoAtivParList(pmmContext.getBoletimCTR().ultAtivMMMenu());
+            List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(pmmContext.getBoletimCTR().ultAtivBolMenu());
 
-            for (int i = 0; i < rFuncaoAtivParList.size(); i++) {
-                RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtivParList.get(i);
+            for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
+                RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtividadeList.get(i);
                 if(rFuncaoAtivParTO.getCodFuncao() == 2){
                     itens.add("NOVO TRANSBORDO");
                 }
@@ -73,7 +88,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                     }
                 }
             }
-            rFuncaoAtivParList.clear();
+            rFuncaoAtividadeList.clear();
         }
         else{
             itens.add("RECOLHIMENTO MANGUEIRA");
@@ -96,7 +111,6 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
                 String text = textView.getText().toString();
 
-                ConfigTO configTO = configCTR.getConfig();
 
                 if (text.equals("TRABALHANDO")) {
                     if (configTO.getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
@@ -137,8 +151,8 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                     startActivity(it);
                     finish();
                 } else if (text.equals("NOVO TRANSBORDO")) {
-                    ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
-                    int ver =  apontMMMovLeiraCTR.verTrocaTransb();
+                    ApontCTR apontCTR = new ApontCTR();
+                    int ver =  apontCTR.verTrocaTransb();
                     if (ver == 1) {
                         Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! APONTE UMA ATIVIDADE ANTES DE TROCAR DE TRANSBORDO.",
                                 Toast.LENGTH_LONG).show();
@@ -201,8 +215,8 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                             Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                     Toast.LENGTH_LONG).show();
                         } else {
-                            ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
-                            apontMMMovLeiraCTR.salvarParadaImple();
+                            ApontCTR apontCTR = new ApontCTR();
+                            apontCTR.inserirParadaImplemento(pmmContext.getBoletimCTR());
                             pmmContext.setVerPosTela(19);
                             pmmContext.setContImplemento(1);
                             customHandler.removeCallbacks(updateTimerThread);

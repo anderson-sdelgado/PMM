@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.bean.estaticas.TurnoTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
@@ -163,11 +164,10 @@ public class DataHoraActivity extends ActivityGeneric {
                                 pmmContext.setMinuto(valor);
                                 Long dif = Tempo.getInstance().difDthr(pmmContext.getDia(), pmmContext.getMes(), pmmContext.getAno()
                                         , pmmContext.getHora(), pmmContext.getMinuto());
-                                ConfigTO configTO = new ConfigTO();
-                                List configList = configTO.all();
-                                configTO = (ConfigTO) configList.get(0);
-                                configList.clear();
 
+                                ConfigCTR configCTR = new ConfigCTR();
+
+                                ConfigTO configTO = configCTR.getConfig();
                                 configTO.setDifDthrConfig(dif);
                                 configTO.update();
 

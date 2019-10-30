@@ -91,7 +91,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
             textViewTituloAtividade.setText("ATIVIDADE");
         }
 
-        ativArrayList = pmmContext.getBoletimCTR().retAtivFiltrArrayList(nroOS);
+        ativArrayList = pmmContext.getBoletimCTR().getAtivArrayList(nroOS);
 
         ArrayList<String> itens = new ArrayList<String>();
         for (int i = 0; i < ativArrayList.size(); i++) {
@@ -124,10 +124,10 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                 } else if ((pmmContext.getVerPosTela() == 2)) {
 
-                    pmmContext.getApontMMMovLeiraCTR().setOSApont(nroOS);
-                    pmmContext.getApontMMMovLeiraCTR().setAtivApont(atividadeTO.getIdAtiv());
+                    pmmContext.getApontCTR().setOSApont(nroOS);
+                    pmmContext.getApontCTR().setAtivApont(atividadeTO.getIdAtiv());
 
-                    if (pmmContext.getApontMMMovLeiraCTR().verifBackupApont()) {
+                    if (pmmContext.getApontCTR().verifBackupApont()) {
 
                         AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
                         alerta.setTitle("ATENÇÃO");
@@ -144,13 +144,13 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                         if (configCTR.getEquip().getTipo() == 1) {
 
-                            List rFuncaoAtivParList = pmmContext.getBoletimCTR().retFuncaoAtivParList(atividadeTO.getIdAtiv());
+                            List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(atividadeTO.getIdAtiv());
 
                             boolean transbordo = false;
                             boolean rendimento = false;
 
-                            for (int i = 0; i < rFuncaoAtivParList.size(); i++) {
-                                RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtivParList.get(i);
+                            for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
+                                RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtividadeList.get(i);
                                 if(rFuncaoAtivParTO.getCodFuncao() == 2){
                                     transbordo = true;
                                 }
@@ -158,6 +158,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                     rendimento = true;
                                 }
                             }
+                            rFuncaoAtividadeList.clear();
 
                             if(transbordo){
                                 Intent it = new Intent(ListaAtividadeActivity.this, TransbordoActivity.class);
@@ -166,9 +167,9 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                             }
                             else{
 
-                                pmmContext.getApontMMMovLeiraCTR().salvarApont();
+                                pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
                                 if (rendimento) {
-                                    pmmContext.getBoletimCTR().insRend(nroOS);
+                                    pmmContext.getBoletimCTR().insRendBD(nroOS);
                                 }
 
                                 Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
@@ -187,7 +188,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                 } else if(pmmContext.getVerPosTela() == 3) {
 
-                    pmmContext.getApontMMMovLeiraCTR().setAtivApont(atividadeTO.getIdAtiv());
+                    pmmContext.getApontCTR().setAtivApont(atividadeTO.getIdAtiv());
 
                     Intent it = new Intent(ListaAtividadeActivity.this, ListaParadaActivity.class);
                     startActivity(it);

@@ -33,7 +33,7 @@ public class ReceberAlarme extends BroadcastReceiver {
 		}
 
 		Log.i("PMM", "DATA HORA = " + Tempo.getInstance().dataComHora());
-//		teste();
+		teste();
 
 		if(EnvioDadosServ.getInstance().verifDadosEnvio()){
 			Log.i("PMM", "ENVIANDO");

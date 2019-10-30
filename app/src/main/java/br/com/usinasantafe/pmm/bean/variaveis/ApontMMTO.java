@@ -33,7 +33,7 @@ public class ApontMMTO extends Entidade  {
 	@DatabaseField
 	private Long statusConApontMM;  //0 - OffLine; 1 - OnLine
 	@DatabaseField
-	private Long statusApontMM;  //1 - Enviar; 2 - Enviado
+	private Long statusApontMM;  //0 - Aberto; 1 - Enviar; 2 - Enviado
 
 	public ApontMMTO() {
 	}

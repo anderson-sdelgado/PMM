@@ -61,7 +61,7 @@ public class OSActivity extends ActivityGeneric {
                             pmmContext.getBoletimCTR().setOSBol(nroOS);
                         }
                         else {
-                            pmmContext.getApontMMMovLeiraCTR().setOSApont(nroOS);
+                            pmmContext.getApontCTR().setOSApont(nroOS);
                         }
 
                         ConexaoWeb conexaoWeb = new ConexaoWeb();
@@ -196,7 +196,6 @@ public class OSActivity extends ActivityGeneric {
                 }
 
                 configCTR.setStatusConConfig(0L);
-                Log.i("PMM", "CHEGOU AKI 6 ");
                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                 startActivity(it);
                 finish();

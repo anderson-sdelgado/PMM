@@ -101,13 +101,13 @@ public class ListaVelocFertActivity extends ActivityGeneric {
         ArrayList pesqList = new ArrayList();
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("idBocal");
-        pesquisa.setValor(pmmContext.getApontMMMovLeiraCTR().getBocalApontFert());
+        pesquisa.setValor(pmmContext.getApontCTR().getBocalApontFert());
         pesquisa.setTipo(1);
         pesqList.add(pesquisa);
 
         EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
         pesquisa2.setCampo("valorPressao");
-        pesquisa2.setValor(pmmContext.getApontMMMovLeiraCTR().getPressaoApontFert());
+        pesquisa2.setValor(pmmContext.getApontCTR().getPressaoApontFert());
         pesquisa2.setTipo(1);
         pesqList.add(pesquisa2);
 
@@ -136,10 +136,10 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                                     long id) {
 
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
-                pmmContext.getApontMMMovLeiraCTR().setVelocApont(Long.parseLong(textView.getText().toString()));
+                pmmContext.getApontCTR().setVelocApont(Long.parseLong(textView.getText().toString()));
                 velocList.clear();
 
-                pmmContext.getApontMMMovLeiraCTR().salvarApont();
+                pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
 
                 Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincNormalActivity.class);
                 startActivity(it);

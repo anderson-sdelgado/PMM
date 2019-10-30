@@ -1,8 +1,17 @@
 package br.com.usinasantafe.pmm.dao;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.control.ApontCTR;
+import br.com.usinasantafe.pmm.control.BoletimInterface;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
@@ -12,23 +21,18 @@ import br.com.usinasantafe.pmm.bean.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.bean.variaveis.RecolhFertTO;
 
 
-public class BoletimFertDAO {
+public class BoletimFertDAO implements BoletimInterface {
 
     public BoletimFertDAO() {
     }
 
-    public boolean verBolFertAberto(){
+    @Override
+    public boolean verBolAberto() {
         BoletimFertTO boletimFertTO = new BoletimFertTO();
         List boletimFertList = boletimFertTO.get("statusBolFert", 1L);
         Boolean ret = (boletimFertList.size() > 0);
         boletimFertList.clear();
         return ret;
-    }
-
-    public void atualQtdeApontBol(){
-        BoletimFertTO boletimFertTO = getBolFertAberto();
-        boletimFertTO.setQtdeApontBolFert(boletimFertTO.getQtdeApontBolFert() + 1L);
-        boletimFertTO.update();
     }
 
     public BoletimFertTO getBolFertAberto(){
@@ -39,10 +43,18 @@ public class BoletimFertDAO {
         return boletimFertTO;
     }
 
-    public Long getIdBolFertAberto(){
+    public void atualQtdeApontBol(){
+        BoletimFertTO boletimFertTO = getBolFertAberto();
+        boletimFertTO.setQtdeApontBolFert(boletimFertTO.getQtdeApontBolFert() + 1L);
+        boletimFertTO.update();
+    }
+
+    @Override
+    public Long getIdBolAberto() {
         BoletimFertTO boletimFertTO = getBolFertAberto();
         return boletimFertTO.getIdBolFert();
     }
+
 
     public boolean verRecolh(){
         RecolhFertTO recolhFertTO = new RecolhFertTO();
@@ -117,7 +129,7 @@ public class BoletimFertDAO {
 
     }
 
-    public List bolFechList() {
+    public List bolFechadoList() {
         BoletimFertTO boletimFertTO = new BoletimFertTO();
         return boletimFertTO.get("statusBolFert", 2L);
     }
@@ -142,6 +154,184 @@ public class BoletimFertDAO {
 
         return boletimFertTO.get(pesqList);
 
+    }
+
+
+    public String dadosEnvioBolAberto(BoletimFertTO boletimFertTO){
+
+        JsonArray jsonArrayBoletim = new JsonArray();
+
+        Gson gsonCabec = new Gson();
+        jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimFertTO, boletimFertTO.getClass()));
+
+        ApontCTR apontCTR = new ApontCTR();
+        String dadosEnvioApont = apontCTR.dadosEnvioApontBolFert(boletimFertTO.getIdBolFert());
+
+        JsonObject jsonBoletim = new JsonObject();
+        jsonBoletim.add("boletim", jsonArrayBoletim);
+
+        return jsonBoletim.toString() + "_" + dadosEnvioApont;
+
+    }
+
+    public String dadosEnvioBolFechado(){
+
+        List boletimFertList = bolFechadoList();
+
+        JsonArray jsonArrayBoletim = new JsonArray();
+        String dadosEnvioApont = "";
+        JsonArray jsonArrayRecolhimento = new JsonArray();
+
+        for (int i = 0; i < boletimFertList.size(); i++) {
+
+            BoletimFertTO boletimFertTO = (BoletimFertTO) boletimFertList.get(i);
+            Gson gsonCabec = new Gson();
+            jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimFertTO, boletimFertTO.getClass()));
+
+            ApontCTR apontCTR = new ApontCTR();
+            dadosEnvioApont = apontCTR.dadosEnvioApontBolFert(boletimFertTO.getIdBolFert());
+
+            RecolhFertTO recolhFertTO = new RecolhFertTO();
+            List recolhimentoList = recolhFertTO.get("idBolRecolhFert", boletimFertTO.getIdBolFert());
+
+            for (int j = 0; j < recolhimentoList.size(); j++) {
+                recolhFertTO = (RecolhFertTO) recolhimentoList.get(j);
+                Gson gsonRecol = new Gson();
+                jsonArrayRecolhimento.add(gsonRecol.toJsonTree(recolhFertTO, recolhFertTO.getClass()));
+            }
+
+            recolhimentoList.clear();
+
+        }
+
+        boletimFertList.clear();
+
+        JsonObject jsonBoletim = new JsonObject();
+        jsonBoletim.add("boletim", jsonArrayBoletim);
+
+
+        JsonObject jsonRecolhimento = new JsonObject();
+        jsonRecolhimento.add("recolhimento", jsonArrayRecolhimento);
+
+        return jsonBoletim.toString() + "_" + dadosEnvioApont + "|" + jsonRecolhimento.toString();
+    }
+
+    @Override
+    public void updateBolAberto(String retorno) {
+        try{
+
+            int pos1 = retorno.indexOf("_") + 1;
+            int pos2 = retorno.indexOf("|") + 1;
+            String objPrinc = retorno.substring(pos1, pos2);
+            String objSeg = retorno.substring(pos2);
+
+            JSONObject jObjBolFert = new JSONObject(objPrinc);
+            JSONArray jsonArrayBolFert = jObjBolFert.getJSONArray("boletim");
+
+            JSONObject objBol = jsonArrayBolFert.getJSONObject(0);
+            Gson gsonBol = new Gson();
+            BoletimFertTO boletimFertTO = gsonBol.fromJson(objBol.toString(), BoletimFertTO.class);
+
+            List bolFertList = boletimFertTO.get("idBolFert", boletimFertTO.getIdBolFert());
+            BoletimFertTO boletimFertTOBD = (BoletimFertTO) bolFertList.get(0);
+            bolFertList.clear();
+
+            boletimFertTOBD.setIdExtBolFert(boletimFertTO.getIdExtBolFert());
+            boletimFertTOBD.update();
+
+            JSONObject jObjApontFert = new JSONObject(objSeg);
+            JSONArray jsonArrayApontFert = jObjApontFert.getJSONArray("apont");
+
+            if (jsonArrayApontFert.length() > 0) {
+
+                ArrayList<Long> rList = new ArrayList<Long>();
+                ApontFertTO apontFertTO = new ApontFertTO();
+
+                for (int i = 0; i < jsonArrayApontFert.length(); i++) {
+
+                    JSONObject objApont = jsonArrayApontFert.getJSONObject(i);
+                    Gson gsonApont = new Gson();
+                    apontFertTO = gsonApont.fromJson(objApont.toString(), ApontFertTO.class);
+
+                    rList.add(apontFertTO.getIdApontFert());
+
+                }
+
+                List apontFertList = apontFertTO.in("idApontFert", rList);
+
+                for (int i = 0; i < apontFertList.size(); i++) {
+
+                    apontFertTO = (ApontFertTO) apontFertList.get(0);
+                    apontFertTO.setIdExtBolApontFert(boletimFertTO.getIdExtBolFert());
+                    apontFertTO.setStatusApontFert(2L);
+                    apontFertTO.update();
+
+                }
+
+                rList.clear();
+
+            }
+
+        }
+        catch(Exception e){
+            Tempo.getInstance().setEnvioDado(true);
+        }
+    }
+
+    @Override
+    public void deleteBolFechado(String retorno) {
+        try{
+
+            int pos1 = retorno.indexOf("_") + 1;
+            String objPrinc = retorno.substring(pos1);
+
+            JSONObject jObjBolFert = new JSONObject(objPrinc);
+            JSONArray jsonArrayBolFert = jObjBolFert.getJSONArray("boletim");
+
+            for (int i = 0; i < jsonArrayBolFert.length(); i++) {
+
+                JSONObject objBol = jsonArrayBolFert.getJSONObject(i);
+                Gson gsonBol = new Gson();
+                BoletimFertTO boletimFertTO = gsonBol.fromJson(objBol.toString(), BoletimFertTO.class);
+
+                List bolFertList = boletimFertTO.get("idBolFert", boletimFertTO.getIdBolFert());
+                BoletimFertTO boletimFertTOBD = (BoletimFertTO) bolFertList.get(0);
+                bolFertList.clear();
+
+                if(boletimFertTOBD.getQtdeApontBolFert() == boletimFertTO.getQtdeApontBolFert()){
+
+                    ApontFertTO apontFertTO = new ApontFertTO();
+                    List apontList = apontFertTO.get("idBolApontFert", boletimFertTOBD.getIdBolFert());
+
+                    for (int j = 0; j < apontList.size(); j++) {
+
+                        apontFertTO = (ApontFertTO) apontList.get(j);
+                        apontFertTO.delete();
+
+                    }
+
+                    apontList.clear();
+
+                    RecolhFertTO recolhFertTO = new RecolhFertTO();
+                    List recolhList = recolhFertTO.get("idBolRecolhFert", boletimFertTOBD.getIdBolFert());
+
+                    for (int j = 0; j < recolhList.size(); j++) {
+                        recolhFertTO = (RecolhFertTO) recolhList.get(j);
+                        recolhFertTO.delete();
+                    }
+
+                    recolhList.clear();
+
+                    boletimFertTOBD.delete();
+
+                }
+
+            }
+
+        }
+        catch(Exception e){
+            Tempo.getInstance().setEnvioDado(true);
+        }
     }
 
 }

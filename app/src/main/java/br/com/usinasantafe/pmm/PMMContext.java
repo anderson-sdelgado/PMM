@@ -2,8 +2,9 @@ package br.com.usinasantafe.pmm;
 
 import android.app.Application;
 
-import br.com.usinasantafe.pmm.control.ApontMMMovLeiraCTR;
+import br.com.usinasantafe.pmm.control.ApontCTR;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
+import br.com.usinasantafe.pmm.control.PneuCTR;
 import br.com.usinasantafe.pmm.control.ColheitaCTR;
 
 /**
@@ -13,8 +14,9 @@ import br.com.usinasantafe.pmm.control.ColheitaCTR;
 public class PMMContext extends Application {
 
     private BoletimCTR boletimCTR;
-    private ApontMMMovLeiraCTR apontMMMovLeiraCTR;
+    private ApontCTR apontCTR;
     private ColheitaCTR colheitaCTR;
+    private PneuCTR pneuCTR;
     private int verPosTela;
     //1 - Inicio do boletim;
     // 2 - Trabalhando Moto Mec;
@@ -55,16 +57,22 @@ public class PMMContext extends Application {
         return boletimCTR;
     }
 
-    public ApontMMMovLeiraCTR getApontMMMovLeiraCTR(){
-        if (apontMMMovLeiraCTR == null)
-            apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
-        return apontMMMovLeiraCTR;
+    public ApontCTR getApontCTR(){
+        if (apontCTR == null)
+            apontCTR = new ApontCTR();
+        return apontCTR;
     }
 
     public ColheitaCTR getColheitaCTR(){
         if (colheitaCTR == null)
             colheitaCTR = new ColheitaCTR();
         return colheitaCTR;
+    }
+
+    public PneuCTR getPneuCTR(){
+        if (pneuCTR == null)
+            pneuCTR = new PneuCTR();
+        return pneuCTR;
     }
 
     public int getVerPosTela() {

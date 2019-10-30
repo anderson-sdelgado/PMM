@@ -1,35 +1,64 @@
 package br.com.usinasantafe.pmm.dao;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.bean.variaveis.CabecPneuTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ItemPneuTO;
+import br.com.usinasantafe.pmm.bean.variaveis.MovLeiraTO;
+import br.com.usinasantafe.pmm.control.ApontInterface;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.bean.variaveis.ImpleMMTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ApontImpleMMTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ApontMMTO;
-import br.com.usinasantafe.pmm.bean.variaveis.BoletimMMTO;
 
-public class ApontMMDAO {
+public class ApontMMDAO implements ApontInterface {
 
     public ApontMMDAO() {
     }
 
-    public void salvarApont(ApontMMTO apontMMTO, BoletimMMTO boletimMMTO){
+    @Override
+    public boolean verApontAberto() {
+        ApontMMTO apontMMTO = new ApontMMTO();
+        List apontaMMList = apontMMTO.get("statusApontMM", 0L);
+        boolean ret = (apontaMMList.size() > 0);
+        apontaMMList.clear();
+        return ret;
+    }
 
-        apontMMTO.setLatitudeApontMM(0D);
-        apontMMTO.setLongitudeApontMM(0D);
+    public ApontMMTO getApontMMAberto(){
+        ApontMMTO apontMMTO = new ApontMMTO();
+        List apontaMMList = apontMMTO.get("statusApontMM", 0L);
+        apontMMTO = (ApontMMTO) apontaMMList.get(0);
+        apontaMMList.clear();
+        return apontMMTO;
+    }
 
-        String dataComHora = Tempo.getInstance().dataComHora();
-        apontMMTO.setDthrApontMM(dataComHora);
+    @Override
+    public Long getIdApontAberto() {
+        ApontMMTO apontMMTO = getApontMMAberto();
+        return apontMMTO.getIdApontMM();
+    }
 
-        apontMMTO.setIdBolApontMM(boletimMMTO.getIdBolMM());
-        apontMMTO.setIdExtBolApontMM(boletimMMTO.getIdExtBolMM());
-        apontMMTO.setStatusApontMM(1L);
+    public List getListAllApont(Long idBolMM){
+        ApontMMTO apontMMTO = new ApontMMTO();
+        return apontMMTO.getAndOrderBy("idBolApontMM", idBolMM, "idApontMM", true);
+    }
+
+    public void salvarApont(ApontMMTO apontMMTO){
+
         apontMMTO.insert();
 
-        List apontaList = apontMMTO.get("dthrApontMM", dataComHora);
+        List apontaList = apontMMTO.get("dthrApontMM", apontMMTO.getDthrApontMM());
         apontMMTO = (ApontMMTO) apontaList.get(0);
         apontaList.clear();
 
@@ -42,23 +71,43 @@ public class ApontMMDAO {
             apontImpleMMTO.setIdApontMM(apontMMTO.getIdApontMM());
             apontImpleMMTO.setCodEquipImpleMM(impleMMTO.getCodEquipImpleMM());
             apontImpleMMTO.setPosImpleMM(impleMMTO.getPosImpleMM());
-            apontImpleMMTO.setDthrImpleMM(dataComHora);
+            apontImpleMMTO.setDthrImpleMM(apontMMTO.getDthrApontMM());
             apontImpleMMTO.insert();
         }
 
     }
 
-    public List apontList(Long idBolMM){
-        ApontMMTO apontMMTO = new ApontMMTO();
-        return apontMMTO.getAndOrderBy("idBolApontMM", idBolMM, "idApontMM", true);
+    public void updApont(ApontMMTO apontMMTO){
+
+        apontMMTO.setStatusApontMM(1L);
+        apontMMTO.update();
+
+        List apontaList = apontMMTO.get("dthrApontMM", apontMMTO.getDthrApontMM());
+        apontMMTO = (ApontMMTO) apontaList.get(0);
+        apontaList.clear();
+
+        ImpleMMTO impleMMTO = new ImpleMMTO();
+        List impleList = impleMMTO.all();
+
+        for (int i = 0; i < impleList.size(); i++) {
+            impleMMTO = (ImpleMMTO) impleList.get(i);
+            ApontImpleMMTO apontImpleMMTO = new ApontImpleMMTO();
+            apontImpleMMTO.setIdApontMM(apontMMTO.getIdApontMM());
+            apontImpleMMTO.setCodEquipImpleMM(impleMMTO.getCodEquipImpleMM());
+            apontImpleMMTO.setPosImpleMM(impleMMTO.getPosImpleMM());
+            apontImpleMMTO.setDthrImpleMM(apontMMTO.getDthrApontMM());
+            apontImpleMMTO.insert();
+        }
+
     }
+
 
     public int verTransbordo(String data) {
 
         int retorno = 0;
 
         BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
-        List apontMMList = apontList(boletimMMDAO.getIdBolMMAberto());
+        List apontMMList = getListAllApont(boletimMMDAO.getIdBolAberto());
 
         if (apontMMList.size() > 0) {
             ApontMMTO apontaMMTO = (ApontMMTO) apontMMList.get(apontMMList.size() - 1);
@@ -113,25 +162,7 @@ public class ApontMMDAO {
         return retorno;
     }
 
-
-    public void salvarParadaImple(BoletimMMTO boletimMMTO){
-
-        BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
-        List apontMMList = apontList(boletimMMDAO.getIdBolMMAberto());
-        ApontMMTO apontMMTOBD = (ApontMMTO) apontMMList.get(apontMMList.size() - 1);
-
-        AtividadeDAO atividadeDAO = new AtividadeDAO();
-
-        ApontMMTO apontMMTO = new ApontMMTO();
-        apontMMTO.setOsApontMM(apontMMTOBD.getOsApontMM());
-        apontMMTO.setAtivApontMM(apontMMTOBD.getAtivApontMM());
-        apontMMTO.setParadaApontMM(atividadeDAO.idParadaImplemento());
-        apontMMTO.setTransbApontMM(apontMMTOBD.getTransbApontMM());
-        salvarApont(apontMMTO, boletimMMTO);
-
-    }
-
-    public List apontAbertoMMList(Long idBolMM){
+    public List getListApontEnvio(Long idBolMM){
 
         ApontMMTO apontMMTO = new ApontMMTO();
 
@@ -152,9 +183,194 @@ public class ApontMMDAO {
 
     }
 
-    public List apontAbertoMMList() {
+    public List getListApontEnvio() {
         ApontMMTO apontMMTO = new ApontMMTO();
         return apontMMTO.get("statusApontMM", 1L);
+    }
+
+    public String dadosEnvioApontMM(List apontaList, List movLeiraList){
+
+        JsonArray jsonArrayAponta = new JsonArray();
+        JsonArray jsonArrayImplemento = new JsonArray();
+        JsonArray jsonArrayMovLeira = new JsonArray();
+        JsonArray jsonArrayCabecPneu = new JsonArray();
+        JsonArray jsonArrayItemPneu = new JsonArray();
+
+        for (int i = 0; i < apontaList.size(); i++) {
+
+            ApontMMTO apontMMTO = (ApontMMTO) apontaList.get(i);
+            Gson gson = new Gson();
+            jsonArrayAponta.add(gson.toJsonTree(apontMMTO, apontMMTO.getClass()));
+
+            CabecPneuTO cabecPneuTO = new CabecPneuTO();
+            List cabecPneuList = cabecPneuTO.get("idApontCabecPneu", apontMMTO.getIdApontMM());
+
+            for (int l = 0; l < cabecPneuList.size(); l++) {
+
+                cabecPneuTO = (CabecPneuTO) cabecPneuList.get(l);
+                Gson gsonCabecPneu = new Gson();
+                jsonArrayCabecPneu.add(gsonCabecPneu.toJsonTree(cabecPneuTO, cabecPneuTO.getClass()));
+
+                ItemPneuTO itemPneuTO = new ItemPneuTO();
+                List itemPneuList = itemPneuTO.get("idCabecItemPneu", cabecPneuTO.getIdCabecPneu());
+
+                for (int m = 0; m < itemPneuList.size(); m++) {
+                    itemPneuTO = (ItemPneuTO) itemPneuList.get(m);
+                    Gson gsonItemPneu = new Gson();
+                    jsonArrayItemPneu.add(gsonItemPneu.toJsonTree(itemPneuTO, itemPneuTO.getClass()));
+                }
+
+                itemPneuList.clear();
+
+            }
+
+            cabecPneuList.clear();
+
+            ApontImpleMMTO apontImpleMMTO = new ApontImpleMMTO();
+            List apontImpleList = apontImpleMMTO.get("idApontMM", apontMMTO.getIdApontMM());
+
+            for (int l = 0; l < apontImpleList.size(); l++) {
+                apontImpleMMTO = (ApontImpleMMTO) apontImpleList.get(l);
+                Gson gsonItemImp = new Gson();
+                jsonArrayImplemento.add(gsonItemImp.toJsonTree(apontImpleMMTO, apontImpleMMTO.getClass()));
+            }
+
+            apontImpleList.clear();
+
+        }
+
+        apontaList.clear();
+
+        for (int j = 0; j < movLeiraList.size(); j++) {
+            MovLeiraTO movLeiraTO = (MovLeiraTO) movLeiraList.get(j);
+            Gson gsonRend = new Gson();
+            jsonArrayMovLeira.add(gsonRend.toJsonTree(movLeiraTO, movLeiraTO.getClass()));
+        }
+
+        movLeiraList.clear();
+
+        JsonObject jsonAponta = new JsonObject();
+        jsonAponta.add("aponta", jsonArrayAponta);
+
+        JsonObject jsonImplemento = new JsonObject();
+        jsonImplemento.add("implemento", jsonArrayImplemento);
+
+        JsonObject jsonMovLeira = new JsonObject();
+        jsonMovLeira.add("movleira", jsonArrayMovLeira);
+
+        JsonObject jsonCabecPneu = new JsonObject();
+        jsonCabecPneu.add("cabecpneu", jsonArrayCabecPneu);
+
+        JsonObject jsonItemPneu = new JsonObject();
+        jsonItemPneu.add("itempneu", jsonArrayItemPneu);
+
+        return jsonAponta.toString() + "|" + jsonImplemento.toString() + "#" + jsonMovLeira.toString() + "?" + jsonCabecPneu.toString() + "@" + jsonItemPneu.toString();
+
+    }
+
+    public void updateApont(String retorno) {
+
+        try{
+
+            int pos1 = retorno.indexOf("_") + 1;
+            int pos2 = retorno.indexOf("|") + 1;
+
+            String objPrinc = retorno.substring(pos1, pos2);
+            String objSeg = retorno.substring(pos2);
+
+            JSONObject jObjApontMM = new JSONObject(objPrinc);
+            JSONArray jsonArrayApontMM = jObjApontMM.getJSONArray("apont");
+
+            if (jsonArrayApontMM.length() > 0) {
+
+                ArrayList<Long> rList = new ArrayList<Long>();
+                ApontMMTO apontMMTO = new ApontMMTO();
+
+                for (int i = 0; i < jsonArrayApontMM.length(); i++) {
+
+                    JSONObject objApont = jsonArrayApontMM.getJSONObject(i);
+                    Gson gsonApont = new Gson();
+                    apontMMTO = gsonApont.fromJson(objApont.toString(), ApontMMTO.class);
+
+                    rList.add(apontMMTO.getIdApontMM());
+
+                }
+
+                List apontMMList = apontMMTO.in("idApontMM", rList);
+
+                for (int i = 0; i < apontMMList.size(); i++) {
+
+                    apontMMTO = (ApontMMTO) apontMMList.get(0);
+                    apontMMTO.setStatusApontMM(2L);
+                    apontMMTO.update();
+
+                }
+
+                ApontImpleMMTO apontImpleMMTO = new ApontImpleMMTO();
+                List apontImpleList = apontImpleMMTO.in("idApontImpleMM", rList);
+
+                for (int l = 0; l < apontImpleList.size(); l++) {
+                    apontImpleMMTO = (ApontImpleMMTO) apontImpleList.get(l);
+                    apontImpleMMTO.delete();
+                }
+
+                CabecPneuTO cabecPneuTO = new CabecPneuTO();
+                List cabecPneuList = cabecPneuTO.in("idApontCabecPneu", rList);
+
+                for (int l = 0; l < cabecPneuList.size(); l++) {
+
+                    cabecPneuTO = (CabecPneuTO) cabecPneuList.get(l);
+
+                    ItemPneuTO itemPneuTO = new ItemPneuTO();
+                    List itemPneuList = itemPneuTO.get("idCabecItemPneu", cabecPneuTO.getIdCabecPneu());
+
+                    for (int m = 0; m < itemPneuList.size(); m++) {
+                        itemPneuTO = (ItemPneuTO) itemPneuList.get(m);
+                        itemPneuTO.delete();
+                    }
+
+                    cabecPneuTO.delete();
+                }
+
+                rList.clear();
+
+            }
+
+            JSONObject jObjMovLeira = new JSONObject(objSeg);
+            JSONArray jsonArrayMovLeira = jObjMovLeira.getJSONArray("movLeira");
+
+            if (jsonArrayMovLeira.length() > 0) {
+
+                ArrayList<Long> movLeiraArrayList = new ArrayList<Long>();
+                MovLeiraTO movLeiraTO = new MovLeiraTO();
+
+                for (int i = 0; i < jsonArrayMovLeira.length(); i++) {
+
+                    JSONObject objMovLeira = jsonArrayMovLeira.getJSONObject(i);
+                    Gson gsonMovLeira = new Gson();
+                    movLeiraTO = gsonMovLeira.fromJson(objMovLeira.toString(), MovLeiraTO.class);
+
+                    movLeiraArrayList.add(movLeiraTO.getIdMovLeira());
+
+                }
+
+                List movLeiraList = movLeiraTO.in("idMovLeira", movLeiraArrayList);
+
+                for (int i = 0; i < movLeiraList.size(); i++) {
+
+                    movLeiraTO = (MovLeiraTO) movLeiraList.get(i);
+                    movLeiraTO.setStatusMovLeira(2L);
+                    movLeiraTO.update();
+
+                }
+
+            }
+
+        }
+        catch(Exception e){
+            Tempo.getInstance().setEnvioDado(true);
+        }
+
     }
 
 }

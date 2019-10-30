@@ -6,7 +6,7 @@ import java.util.Map;
 import android.content.Context;
 import android.util.Log;
 
-import br.com.usinasantafe.pmm.control.ApontMMMovLeiraCTR;
+import br.com.usinasantafe.pmm.control.ApontCTR;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
@@ -73,7 +73,7 @@ public class EnvioDadosServ {
     public void enviarBolAbertosMM() {
 
         BoletimCTR boletimCTR = new BoletimCTR();
-        String dados = boletimCTR.dadosEnvioBolAbertoMMSemEnvio();
+        String dados = boletimCTR.dadosEnvioBolAbertoMM();
 
         Log.i("PMM", "ABERTO = " + dados);
 
@@ -91,8 +91,8 @@ public class EnvioDadosServ {
 
     public void envioApontMM() {
 
-        ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
-        String dados = apontMMMovLeiraCTR.dadosEnvioApontMM();
+        ApontCTR apontCTR = new ApontCTR();
+        String dados = apontCTR.dadosEnvioApontMM();
 
         Log.i("PMM", "APONTAMENTO = " + dados);
 
@@ -128,7 +128,7 @@ public class EnvioDadosServ {
     public void enviarBolAbertosFert() {
 
         BoletimCTR boletimCTR = new BoletimCTR();
-        String dados = boletimCTR.dadosEnvioBolAbertoFertSemEnvio();
+        String dados = boletimCTR.dadosEnvioBolAbertoFert();
 
         Log.i("PMM", "ABERTO = " + dados);
 
@@ -146,8 +146,8 @@ public class EnvioDadosServ {
 
     public void envioApontaFert() {
 
-        ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
-        String dados = apontMMMovLeiraCTR.dadosEnvioApontFert();
+        ApontCTR apontCTR = new ApontCTR();
+        String dados = apontCTR.dadosEnvioApontFert();
 
         Log.i("PMM", "APONTAMENTO = " + dados);
 
@@ -170,32 +170,32 @@ public class EnvioDadosServ {
 
     public Boolean verifBolFechadoMM() {
         BoletimCTR boletimCTR = new BoletimCTR();
-        return boletimCTR.verEnvioDadosBolFechMM();
+        return boletimCTR.verEnvioBolFechMM();
     }
 
     public Boolean verifBolAbertoSemEnvioMM() {
         BoletimCTR boletimCTR = new BoletimCTR();
-        return boletimCTR.verEnvioDadosBolAbertoMM();
+        return boletimCTR.verEnvioBolAbertoMM();
     }
 
     public Boolean verifApontMovLeiraMM() {
-        ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
-        return apontMMMovLeiraCTR.verEnvioDadosApontMM();
+        ApontCTR apontCTR = new ApontCTR();
+        return apontCTR.verEnvioDadosApontMM();
     }
 
     public Boolean verifBolFechadoFert() {
         BoletimCTR boletimCTR = new BoletimCTR();
-        return boletimCTR.verEnvioDadosBolFechFert();
+        return boletimCTR.verEnvioBolFechFert();
     }
 
     public Boolean verifBolAbertoSemEnvioFert() {
         BoletimCTR boletimCTR = new BoletimCTR();
-        return boletimCTR.verEnvioDadosBolAbertoFert();
+        return boletimCTR.verEnvioBolAbertoFert();
     }
 
     public Boolean verifApontaFert() {
-        ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
-        return apontMMMovLeiraCTR.verEnvioDadosApontFert();
+        ApontCTR apontCTR = new ApontCTR();
+        return apontCTR.verEnvioDadosApontFert();
     }
 
     public Boolean verifPerda() {

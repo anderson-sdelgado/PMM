@@ -12,9 +12,11 @@ import br.com.usinasantafe.pmm.bean.estaticas.FuncionarioTO;
 import br.com.usinasantafe.pmm.bean.estaticas.LeiraTO;
 import br.com.usinasantafe.pmm.bean.estaticas.OSTO;
 import br.com.usinasantafe.pmm.bean.estaticas.ParadaTO;
+import br.com.usinasantafe.pmm.bean.estaticas.PneuTO;
 import br.com.usinasantafe.pmm.bean.estaticas.PressaoBocalTO;
 import br.com.usinasantafe.pmm.bean.estaticas.RAtivParadaTO;
 import br.com.usinasantafe.pmm.bean.estaticas.REquipAtivTO;
+import br.com.usinasantafe.pmm.bean.estaticas.REquipPneuTO;
 import br.com.usinasantafe.pmm.bean.estaticas.RFuncaoAtivParTO;
 import br.com.usinasantafe.pmm.bean.estaticas.ROSAtivTO;
 import br.com.usinasantafe.pmm.bean.estaticas.TurnoTO;
@@ -25,9 +27,11 @@ import br.com.usinasantafe.pmm.bean.variaveis.BackupApontaTO;
 import br.com.usinasantafe.pmm.bean.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.bean.variaveis.BoletimMMTO;
 import br.com.usinasantafe.pmm.bean.variaveis.CabecCLTO;
+import br.com.usinasantafe.pmm.bean.variaveis.CabecPneuTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ImpleMMTO;
 import br.com.usinasantafe.pmm.bean.variaveis.InfoColheitaTO;
+import br.com.usinasantafe.pmm.bean.variaveis.ItemPneuTO;
 import br.com.usinasantafe.pmm.bean.variaveis.MovLeiraTO;
 import br.com.usinasantafe.pmm.bean.variaveis.RecolhFertTO;
 import br.com.usinasantafe.pmm.bean.variaveis.RendMMTO;
@@ -83,6 +87,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, PressaoBocalTO.class);
 			TableUtils.createTable(cs, RFuncaoAtivParTO.class);
 			TableUtils.createTable(cs, LeiraTO.class);
+			TableUtils.createTable(cs, REquipPneuTO.class);
+			TableUtils.createTable(cs, PneuTO.class);
 
 			TableUtils.createTable(cs, ConfigTO.class);
 			TableUtils.createTable(cs, BoletimMMTO.class);
@@ -98,6 +104,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, InfoColheitaTO.class);
 			TableUtils.createTable(cs, ApontImpleMMTO.class);
 			TableUtils.createTable(cs, MovLeiraTO.class);
+			TableUtils.createTable(cs, CabecPneuTO.class);
+			TableUtils.createTable(cs, ItemPneuTO.class);
 			
 		}
 		catch(Exception e){

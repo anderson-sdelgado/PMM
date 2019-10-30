@@ -89,6 +89,10 @@ public class ConfigDAO {
         return configTO.getVisDadosColhConfig();
     }
 
-
+    public void atualDifDthrConfig(Long status){
+        ConfigTO configTO = getConfig();
+        configTO.setDifDthrConfig(status);
+        configTO.update();
+    }
 
 }

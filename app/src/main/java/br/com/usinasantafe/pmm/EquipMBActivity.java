@@ -136,13 +136,14 @@ public class EquipMBActivity extends ActivityGeneric {
         pmmContext.getBoletimCTR().salvarBolAbertoFert();
         CheckListCTR checkListCTR = new CheckListCTR();
         if(checkListCTR.verAberturaCheckList(pmmContext.getBoletimCTR().getTurno())){
+            pmmContext.getApontCTR().inserirParadaCheckList(pmmContext.getBoletimCTR());
             pmmContext.setPosCheckList(1);
+            checkListCTR.createCabecAberto(pmmContext.getBoletimCTR());
             if (pmmContext.getVerAtualCL().equals("N_AC")) {
                 Intent it = new Intent(EquipMBActivity.this, PergAtualCheckListActivity.class);
                 startActivity(it);
                 finish();
             } else {
-                checkListCTR.createCabecAberto(pmmContext.getBoletimCTR());
                 Intent it = new Intent(EquipMBActivity.this, ItemCheckListActivity.class);
                 startActivity(it);
                 finish();

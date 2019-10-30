@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.dao.CabecalhoCLDAO;
+import br.com.usinasantafe.pmm.dao.CabecCheckListDAO;
 import br.com.usinasantafe.pmm.dao.ItemCheckListDAO;
 import br.com.usinasantafe.pmm.dao.RespItemCLDAO;
 import br.com.usinasantafe.pmm.bean.estaticas.ItemCheckListTO;
@@ -24,30 +24,30 @@ public class CheckListCTR {
     }
 
     public boolean verCabecAberto(){
-        CabecalhoCLDAO cabecalhoCLDAO = new CabecalhoCLDAO();
-        return cabecalhoCLDAO.verCabecAberto();
+        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
+        return cabecCheckListDAO.verCabecAberto();
     }
 
     public void clearRespCabecAberto(){
-        CabecalhoCLDAO cabecalhoCLDAO = new CabecalhoCLDAO();
-        CabecCLTO cabecCLTO = cabecalhoCLDAO.getCabecAberto();
+        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
+        CabecCLTO cabecCLTO = cabecCheckListDAO.getCabecAberto();
         RespItemCLDAO respItemCLDAO = new RespItemCLDAO();
         respItemCLDAO.clearRespItem(cabecCLTO.getIdCabCL());
     }
 
     public void createCabecAberto(BoletimCTR boletimCTR){
-        CabecalhoCLDAO cabecalhoCLDAO = new CabecalhoCLDAO();
-        cabecalhoCLDAO.createCabecAberto(boletimCTR);
+        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
+        cabecCheckListDAO.createCabecAberto(boletimCTR);
     }
 
     public void salvarBolFechado(){
-        CabecalhoCLDAO cabecalhoCLDAO = new CabecalhoCLDAO();
-        cabecalhoCLDAO.salvarFechCheckList();
+        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
+        cabecCheckListDAO.salvarFechCheckList();
     }
 
     public boolean verAberturaCheckList(Long turno){
-        CabecalhoCLDAO cabecalhoCLDAO = new CabecalhoCLDAO();
-        return cabecalhoCLDAO.verAberturaCheckList(turno);
+        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
+        return cabecCheckListDAO.verAberturaCheckList(turno);
     }
 
     public void atualCheckList(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
@@ -61,14 +61,14 @@ public class CheckListCTR {
     }
 
     public ItemCheckListTO getItemCheckList(int pos){
-        CabecalhoCLDAO cabecalhoCLDAO = new CabecalhoCLDAO();
-        return cabecalhoCLDAO.getItemCheckList(pos);
+        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
+        return cabecCheckListDAO.getItemCheckList(pos);
     }
 
     public void setRespCheckList(RespItemCLTO respItemCLTO){
         RespItemCLDAO respItemCLDAO = new RespItemCLDAO();
-        CabecalhoCLDAO cabecalhoCLDAO = new CabecalhoCLDAO();
-        respItemCLDAO.setRespCheckList(cabecalhoCLDAO.getCabecAberto().getIdCabCL(), respItemCLTO);
+        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
+        respItemCLDAO.setRespCheckList(cabecCheckListDAO.getCabecAberto().getIdCabCL(), respItemCLTO);
     }
 
     public int qtdeItemCheckList(){
@@ -78,12 +78,12 @@ public class CheckListCTR {
     }
 
     public List bolFechList(){
-        CabecalhoCLDAO cabecalhoCLDAO = new CabecalhoCLDAO();
-        return cabecalhoCLDAO.bolFechList();
+        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
+        return cabecCheckListDAO.bolFechList();
     }
 
     public boolean verEnvioDados(){
-        CabecalhoCLDAO cabecalhoCLDAO = new CabecalhoCLDAO();
+        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
         return bolFechList().size() > 0;
     }
 

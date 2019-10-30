@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.bean.estaticas.RFuncaoAtivParTO;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.bean.estaticas.ParadaTO;
 
@@ -41,7 +42,7 @@ public class ListaParadaActivity extends ActivityGeneric {
         EditText editPesqListParada = (EditText) findViewById(R.id.editPesqListParada);
 
         ParadaTO paradaTO = new ParadaTO();
-        paradaList = pmmContext.getApontMMMovLeiraCTR().rAtivParadaList();
+        paradaList = pmmContext.getApontCTR().getListParada();
 
         String itens[] = new String[paradaList.size()];
 
@@ -149,9 +150,9 @@ public class ListaParadaActivity extends ActivityGeneric {
                         List paradaList = paradaTO.get("codParada", paradaString.substring(0, paradaString.indexOf('-')).trim());
                         paradaTO = (ParadaTO) paradaList.get(0);
 
-                        pmmContext.getApontMMMovLeiraCTR().setParadaApont(paradaTO.getIdParada());
+                        pmmContext.getApontCTR().setParadaApont(paradaTO.getIdParada());
 
-                        if (pmmContext.getApontMMMovLeiraCTR().verifBackupApont()) {
+                        if (pmmContext.getApontCTR().verifBackupApont()) {
                             AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
                             alerta.setTitle("ATENÇÃO");
                             alerta.setMessage("PARADA JÁ APONTADA PARA O EQUIPAMENTO!");
@@ -165,10 +166,30 @@ public class ListaParadaActivity extends ActivityGeneric {
                             alerta.show();
                         } else {
 
-                            pmmContext.getApontMMMovLeiraCTR().salvarApont();
-                            Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
-                            startActivity(it);
-                            finish();
+                            List rFuncaoParadaList = pmmContext.getBoletimCTR().getFuncaoParadaList(paradaTO.getIdParada());
+
+                            boolean calibPneu = false;
+                            for (int i = 0; i < rFuncaoParadaList.size(); i++) {
+                                RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoParadaList.get(i);
+                                if(rFuncaoAtivParTO.getCodFuncao() == 3){
+                                    calibPneu = true;
+                                }
+                            }
+                            rFuncaoParadaList.clear();
+
+                            if(calibPneu){
+                                pmmContext.getApontCTR().salvarApont(0L, getLongitude(), getLatitude());
+                                Intent it = new Intent(ListaParadaActivity.this, ListaPosPneuActivity.class);
+                                startActivity(it);
+                                finish();
+                            }
+                            else{
+                                pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
+                                Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
+                                startActivity(it);
+                                finish();
+                            }
+
 
                             paradaList.clear();
 

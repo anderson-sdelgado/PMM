@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -117,6 +118,7 @@ public class ImplementoActivity extends ActivityGeneric {
                             impleMMTO.setPosImpleMM(2L);
                             impleMMTO.setCodEquipImpleMM(impl);
                             pmmContext.getBoletimCTR().setImplemento(impleMMTO);
+                            Log.i("PMM", "SALVOU BOLETIM 4");
                             verTela();
                         }
                         else{
@@ -124,6 +126,7 @@ public class ImplementoActivity extends ActivityGeneric {
                         }
                     }
                     else{
+                        Log.i("PMM", "SALVOU BOLETIM 2");
                         verTela();
                     }
                 }
@@ -144,6 +147,7 @@ public class ImplementoActivity extends ActivityGeneric {
 
     public void verTela(){
         if (pmmContext.getVerPosTela() == 1) {
+            Log.i("PMM", "SALVOU BOLETIM 3");
             salvarBoletimAberto();
         }
         else if (pmmContext.getVerPosTela() == 19) {
@@ -168,16 +172,18 @@ public class ImplementoActivity extends ActivityGeneric {
 
 
     public void salvarBoletimAberto() {
+        Log.i("PMM", "SALVOU BOLETIM 1");
         pmmContext.getBoletimCTR().salvarBolAbertoMM();
         CheckListCTR checkListCTR = new CheckListCTR();
         if(checkListCTR.verAberturaCheckList(pmmContext.getBoletimCTR().getTurno())){
+            pmmContext.getApontCTR().inserirParadaCheckList(pmmContext.getBoletimCTR());
             pmmContext.setPosCheckList(1);
+            checkListCTR.createCabecAberto(pmmContext.getBoletimCTR());
             if (pmmContext.getVerAtualCL().equals("N_AC")) {
                 Intent it = new Intent(ImplementoActivity.this, PergAtualCheckListActivity.class);
                 startActivity(it);
                 finish();
             } else {
-                checkListCTR.createCabecAberto(pmmContext.getBoletimCTR());
                 Intent it = new Intent(ImplementoActivity.this, ItemCheckListActivity.class);
                 startActivity(it);
                 finish();

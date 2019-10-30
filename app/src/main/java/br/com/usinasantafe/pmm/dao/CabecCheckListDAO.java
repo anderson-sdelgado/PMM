@@ -10,9 +10,9 @@ import br.com.usinasantafe.pmm.bean.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.bean.variaveis.CabecCLTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
 
-public class CabecalhoCLDAO {
+public class CabecCheckListDAO {
 
-    public CabecalhoCLDAO() {
+    public CabecCheckListDAO() {
     }
 
     public boolean verCabecAberto(){

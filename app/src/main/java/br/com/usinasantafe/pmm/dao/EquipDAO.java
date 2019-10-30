@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.bean.estaticas.REquipPneuTO;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.bean.estaticas.REquipAtivTO;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
@@ -22,7 +23,6 @@ public class EquipDAO {
 
     public EquipTO getEquip(){
         EquipTO equipTO = new EquipTO();
-//        List listEquipTO = equipTO.get("idEquip", equip);
         List equipList = equipTO.all();
         equipTO = (EquipTO) equipList.get(0);
         equipList.clear();
@@ -43,8 +43,10 @@ public class EquipDAO {
         try {
 
             int pos1 = result.indexOf("#") + 1;
+            int pos2 = result.indexOf("_") + 1;
             String objPrinc = result.substring(0, (pos1 - 1));
-            String objSeg = result.substring(pos1);
+            String objSeg = result.substring(pos1, (pos2 - 1));
+            String objTerc = result.substring(pos2);
 
             JSONObject jObj = new JSONObject(objPrinc);
             JSONArray jsonArray = jObj.getJSONArray("dados");
@@ -75,6 +77,21 @@ public class EquipDAO {
                     Gson gson = new Gson();
                     REquipAtivTO rEquipAtiv = gson.fromJson(objeto.toString(), REquipAtivTO.class);
                     rEquipAtiv.insert();
+
+                }
+
+                jObj = new JSONObject(objTerc);
+                jsonArray = jObj.getJSONArray("dados");
+
+                REquipPneuTO rEquipPneuTO = new REquipPneuTO();
+                rEquipPneuTO.deleteAll();
+
+                for (int j = 0; j < jsonArray.length(); j++) {
+
+                    JSONObject objeto = jsonArray.getJSONObject(j);
+                    Gson gson = new Gson();
+                    REquipPneuTO rEquipPneu = gson.fromJson(objeto.toString(), REquipPneuTO.class);
+                    rEquipPneu.insert();
 
                 }
 

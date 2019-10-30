@@ -95,7 +95,7 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
         });
 
         PressaoBocalTO pressaoBocalTO = new PressaoBocalTO();
-        pressaoBocalList = pressaoBocalTO.getAndOrderBy("idBocal", pmmContext.getApontMMMovLeiraCTR().getBocalApontFert(), "valorPressao", true);
+        pressaoBocalList = pressaoBocalTO.getAndOrderBy("idBocal", pmmContext.getApontCTR().getBocalApontFert(), "valorPressao", true);
 
         ArrayList<String> itens = new ArrayList<String>();
 
@@ -120,7 +120,7 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
                                     long id) {
 
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
-                pmmContext.getApontMMMovLeiraCTR().setPressaoBocal(Double.parseDouble(textView.getText().toString()));
+                pmmContext.getApontCTR().setPressaoBocal(Double.parseDouble(textView.getText().toString()));
                 pressaoBocalList.clear();
 
                 Intent it = new Intent(ListaPressaoFertActivity.this, ListaVelocFertActivity.class);

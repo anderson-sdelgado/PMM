@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 
-import br.com.usinasantafe.pmm.control.ApontMMMovLeiraCTR;
+import br.com.usinasantafe.pmm.control.ApontCTR;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 
@@ -110,22 +110,22 @@ public class ConHttpPostCadGenerico extends AsyncTask<String, Void, String> {
 			else{
 				if (result.trim().contains("BOLABERTOMM")) {
 					BoletimCTR boletimCTR = new BoletimCTR();
-					boletimCTR.updateBolAbertoMM(result);
+					boletimCTR.updBolAbertoMM(result);
 				} else if (result.trim().contains("BOLFECHADOMM")) {
 					BoletimCTR boletimCTR = new BoletimCTR();
-					boletimCTR.deleteBolFechadoMM(result);
+					boletimCTR.delBolFechadoMM(result);
 				} else if (result.trim().contains("APONTMM")) {
-					ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
-					apontMMMovLeiraCTR.updateApontMM(result);
+					ApontCTR apontCTR = new ApontCTR();
+					apontCTR.updateApontMM(result);
 				} else if (result.trim().contains("BOLABERTOFERT")) {
 					BoletimCTR boletimCTR = new BoletimCTR();
-					boletimCTR.updateBolAbertoFert(result);
+					boletimCTR.updBolAbertoFert(result);
 				} else if (result.trim().contains("BOLFECHADOFERT")) {
 					BoletimCTR boletimCTR = new BoletimCTR();
-					boletimCTR.deleteBolFechadoFert(result);
+					boletimCTR.delBolFechadoFert(result);
 				} else if (result.trim().contains("APONTFERT")) {
-					ApontMMMovLeiraCTR apontMMMovLeiraCTR = new ApontMMMovLeiraCTR();
-					apontMMMovLeiraCTR.updateApontaFert(result);
+					ApontCTR apontCTR = new ApontCTR();
+					apontCTR.updateApontaFert(result);
 				}
 			}
 		} catch (Exception e) {

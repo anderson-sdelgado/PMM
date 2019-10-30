@@ -32,8 +32,6 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                CheckListCTR checkListCTR = new CheckListCTR();
-                checkListCTR.createCabecAberto(pmmContext.getBoletimCTR());
                 pmmContext.setPosCheckList(1);
                 Intent it = new Intent(PergAtualCheckListActivity.this, ItemCheckListActivity.class);
                 startActivity(it);
@@ -59,7 +57,6 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
 
                     ConfigCTR configCTR = new ConfigCTR();
                     CheckListCTR checkListCTR = new CheckListCTR();
-                    checkListCTR.createCabecAberto(pmmContext.getBoletimCTR());
                     checkListCTR.atualCheckList(String.valueOf(configCTR.getEquip().getNroEquip()), PergAtualCheckListActivity.this, ItemCheckListActivity.class, progressBar);
 
                 } else {

@@ -96,11 +96,11 @@ public class TransbordoActivity extends ActivityGeneric {
                 if (!editTextPadrao.getText().toString().equals("")) {
 
                     Long transb = Long.parseLong(editTextPadrao.getText().toString());
-                    pmmContext.getApontMMMovLeiraCTR().setTransb(transb);
+                    pmmContext.getApontCTR().setTransb(transb);
 
                     if(pmmContext.getBoletimCTR().verTransb(transb)){
 
-                        if(pmmContext.getApontMMMovLeiraCTR().verifBackupApontTransb()){
+                        if(pmmContext.getApontCTR().verifBackupApontTransb()){
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);
                             alerta.setTitle("ATENÇÃO");
@@ -118,27 +118,27 @@ public class TransbordoActivity extends ActivityGeneric {
                         else{
 
                             if(pmmContext.getVerPosTela() == 2) {
-                                pmmContext.getApontMMMovLeiraCTR().salvarApont();
+                                pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
                             }
                             else {
-                                pmmContext.getApontMMMovLeiraCTR().salvarApontTransb();
+                                pmmContext.getApontCTR().inserirApontTransb(pmmContext.getBoletimCTR());
                             }
 
-                            List rFuncaoAtivParList = pmmContext.getBoletimCTR().retFuncaoAtivParList(pmmContext.getApontMMMovLeiraCTR().getAtivApont());
+                            List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(pmmContext.getApontCTR().getAtivApont());
 
                             boolean rendimento = false;
 
-                            for (int i = 0; i < rFuncaoAtivParList.size(); i++) {
-                                RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtivParList.get(i);
+                            for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
+                                RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtividadeList.get(i);
                                 if(rFuncaoAtivParTO.getCodFuncao() == 1){
                                     rendimento = true;
                                 }
                             }
-                            rFuncaoAtivParList.clear();
+                            rFuncaoAtividadeList.clear();
 
                             if (rendimento) {
                                 ConfigCTR configCTR = new ConfigCTR();
-                                pmmContext.getBoletimCTR().insRend(configCTR.getConfig().getOsConfig());
+                                pmmContext.getBoletimCTR().insRendBD(configCTR.getConfig().getOsConfig());
                             }
 
                             Intent it = new Intent(TransbordoActivity.this, MenuPrincNormalActivity.class);

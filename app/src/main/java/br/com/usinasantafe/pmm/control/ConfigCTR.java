@@ -95,4 +95,11 @@ public class ConfigCTR {
         return osDAO.verTipoOS(configDAO.getConfig().getOsConfig());
     }
 
+    public void atualDifDthrConfig(Long status){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.atualDifDthrConfig(status);
+    }
+
+
+
 }

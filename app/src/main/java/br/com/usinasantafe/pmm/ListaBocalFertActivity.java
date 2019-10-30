@@ -107,7 +107,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
                                     long id) {
 
                 BocalTO bocalTO = (BocalTO)  bocalList.get(position);
-                pmmContext.getApontMMMovLeiraCTR().setBocal(bocalTO.getIdBocal());
+                pmmContext.getApontCTR().setBocal(bocalTO.getIdBocal());
                 bocalList.clear();
 
                 Intent it = new Intent(ListaBocalFertActivity.this, ListaPressaoFertActivity.class);

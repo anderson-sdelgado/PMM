@@ -41,7 +41,7 @@ public class ApontFertTO extends Entidade {
     @DatabaseField
     private Long statusConApontFert;  //0 - OffLine; 1 - OnLine
     @DatabaseField
-    private Long statusApontFert;  //1 - Enviar; 2 - Enviado
+    private Long statusApontFert;  //0 - Aberto; 1 - Enviar; 2 - Enviado
 
     public ApontFertTO() {
     }

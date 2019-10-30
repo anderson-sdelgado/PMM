@@ -11,7 +11,7 @@ public class MovLeiraDAO {
     public MovLeiraDAO() {
     }
 
-    public List movLeiraAbertoList(Long idBolMM){
+    public List getListMovLeiraAberto(Long idBolMM){
 
         MovLeiraTO movLeiraTO = new MovLeiraTO();
 
@@ -32,7 +32,7 @@ public class MovLeiraDAO {
 
     }
 
-    public List movLeiraAbertoMMList() {
+    public List getListMovLeiraAberto() {
         MovLeiraTO movLeiraTO = new MovLeiraTO();
         return movLeiraTO.get("statusMovLeira", 1L);
     }

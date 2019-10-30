@@ -16,6 +16,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.bean.estaticas.TurnoTO;
+import br.com.usinasantafe.pmm.util.Tempo;
 
 public class ListaTurnoActivity extends ActivityGeneric {
 
@@ -116,29 +117,29 @@ public class ListaTurnoActivity extends ActivityGeneric {
                                     long id) {
 
                 TurnoTO turnoTO = (TurnoTO) turnoList.get(position);
-                pmmContext.getBoletimCTR().setTurnoBol(turnoTO.getIdTurno());
                 turnoList.clear();
 
-//                if(Tempo.getInstance().verDthrServ(configTO.getDtServConfig())){
-//                    configTO.setDifDthrConfig(0L);
-//                    configTO.update();
+                pmmContext.getBoletimCTR().setTurnoBol(turnoTO.getIdTurno());
+
+                if(Tempo.getInstance().verDthrServ(configCTR.getConfig().getDtServConfig())){
+                    configCTR.atualDifDthrConfig(0L);
                     Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
                     startActivity(it);
                     finish();
-//                }
-//                else{
-//                    if(configTO.getDifDthrConfig() == 0){
-//                        pmmContext.setContDataHora(1);
-//                        Intent it = new Intent(ListaTurnoActivity.this, MsgDataHoraActivity.class);
-//                        startActivity(it);
-//                        finish();
-//                    }
-//                    else{
-//                        Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
-//                        startActivity(it);
-//                        finish();
-//                    }
-//                }
+                }
+                else{
+                    if(configCTR.getConfig().getDifDthrConfig() == 0){
+                        pmmContext.setContDataHora(1);
+                        Intent it = new Intent(ListaTurnoActivity.this, MsgDataHoraActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                    else{
+                        Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                }
 
             }
 

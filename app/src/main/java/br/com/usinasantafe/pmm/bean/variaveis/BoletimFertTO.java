@@ -40,6 +40,10 @@ public class BoletimFertTO extends Entidade {
     private Long statusConBolFert;  //0 - OffLine; 1 - OnLine
     @DatabaseField
     private Long qtdeApontBolFert;
+    @DatabaseField
+    private Double longitudeBolFert;
+    @DatabaseField
+    private Double latitudeBolFert;
 
     public BoletimFertTO() {
     }
@@ -162,5 +166,21 @@ public class BoletimFertTO extends Entidade {
 
     public void setQtdeApontBolFert(Long qtdeApontBolFert) {
         this.qtdeApontBolFert = qtdeApontBolFert;
+    }
+
+    public Double getLongitudeBolFert() {
+        return longitudeBolFert;
+    }
+
+    public void setLongitudeBolFert(Double longitudeBolFert) {
+        this.longitudeBolFert = longitudeBolFert;
+    }
+
+    public Double getLatitudeBolFert() {
+        return latitudeBolFert;
+    }
+
+    public void setLatitudeBolFert(Double latitudeBolFert) {
+        this.latitudeBolFert = latitudeBolFert;
     }
 }

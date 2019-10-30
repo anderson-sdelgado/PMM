@@ -145,7 +145,7 @@ public class AtividadeDAO {
 
     }
 
-    public List retFuncaoAtivParList(Long idAtiv){
+    public List getListFuncaoAtividade(Long idAtiv){
 
         RFuncaoAtivParTO rFuncaoAtivParTO = new RFuncaoAtivParTO();
         ArrayList pesqList = new ArrayList();
@@ -159,6 +159,26 @@ public class AtividadeDAO {
         EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
         pesquisa2.setCampo("tipoFuncao");
         pesquisa2.setValor(1L);
+        pesquisa2.setTipo(1);
+        pesqList.add(pesquisa2);
+
+        return rFuncaoAtivParTO.get(pesqList);
+    }
+
+    public List getListFuncaoParada(Long idParada){
+
+        RFuncaoAtivParTO rFuncaoAtivParTO = new RFuncaoAtivParTO();
+        ArrayList pesqList = new ArrayList();
+
+        EspecificaPesquisa pesquisa1 = new EspecificaPesquisa();
+        pesquisa1.setCampo("idAtivPar");
+        pesquisa1.setValor(idParada);
+        pesquisa1.setTipo(1);
+        pesqList.add(pesquisa1);
+
+        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
+        pesquisa2.setCampo("tipoFuncao");
+        pesquisa2.setValor(2L);
         pesquisa2.setTipo(1);
         pesqList.add(pesquisa2);
 
