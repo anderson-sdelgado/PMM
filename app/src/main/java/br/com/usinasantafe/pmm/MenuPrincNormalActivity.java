@@ -83,8 +83,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                 }
                 if(rFuncaoAtivParTO.getCodFuncao() == 5){
                     if(configCTR.verTipoOS()){
-                        itens.add("ABRIR LEIRA(S)");
-                        itens.add("FECHAR LEIRA");
+                        itens.add("COMPOSTAGEM");
                     }
                 }
             }
@@ -110,7 +109,6 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
                 String text = textView.getText().toString();
-
 
                 if (text.equals("TRABALHANDO")) {
                     if (configTO.getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
@@ -226,12 +224,8 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                         }
 
                     }
-                } else if (text.equals("ABRIR LEIRA(S)")) {
-                    Intent it = new Intent(MenuPrincNormalActivity.this, ListaAbertLeiraActivity.class);
-                    startActivity(it);
-                    finish();
-                } else if (text.equals("FECHAR LEIRA")) {
-                    Intent it = new Intent(MenuPrincNormalActivity.this, FechLeiraActivity.class);
+                } else if (text.equals("COMPOSTAGEM")) {
+                    Intent it = new Intent(MenuPrincNormalActivity.this, ListaTipoCompActivity.class);
                     startActivity(it);
                     finish();
                 }

@@ -37,6 +37,7 @@ public class PMMContext extends Application {
     private int contDataHora;
     private String verAtualCL;
     private int posCheckList;
+    private int tipoMovComp;
 
     private boolean verVisDados;
 
@@ -195,4 +196,11 @@ public class PMMContext extends Application {
         this.minuto = minuto;
     }
 
+    public int getTipoMovComp() {
+        return tipoMovComp;
+    }
+
+    public void setTipoMovComp(int tipoMovComp) {
+        this.tipoMovComp = tipoMovComp;
+    }
 }

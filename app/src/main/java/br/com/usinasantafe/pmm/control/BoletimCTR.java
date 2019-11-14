@@ -257,7 +257,7 @@ public class BoletimCTR {
 
     public Double getLatitude(){
         if(tipoEquip == 1) {
-            return boletimMMTO.getLongitudeBolMM();
+            return boletimMMTO.getLatitudeBolMM();
         }
         else{
             return boletimFertTO.getLatitudeBolFert();
@@ -325,14 +325,9 @@ public class BoletimCTR {
 
     ////////////////////////////////// LEIRA ///////////////////////////////////////////
 
-    public void insMovLeiraAberta(Long idLeira){
+    public void insMovLeira(Long idLeira, int tipo){
         BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
-        boletimMMDAO.insMovLeira(idLeira,1L);
-    }
-
-    public void insMovLeiraFechada(Long idLeira){
-        BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
-        boletimMMDAO.insMovLeira(idLeira,2L);
+        boletimMMDAO.insMovLeira(idLeira, Long.valueOf(tipo));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////

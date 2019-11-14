@@ -13,7 +13,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.bean.estaticas.LeiraTO;
 
-public class ListaAbertLeiraActivity extends ActivityGeneric {
+public class ListaLeiraActivity extends ActivityGeneric {
 
     private ArrayList<ViewHolderChoice> itens;
     private PMMContext pmmContext;
@@ -53,7 +53,7 @@ public class ListaAbertLeiraActivity extends ActivityGeneric {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
 
-                Intent it = new Intent(ListaAbertLeiraActivity.this, MenuPrincNormalActivity.class);
+                Intent it = new Intent(ListaLeiraActivity.this, MenuPrincNormalActivity.class);
                 startActivity(it);
                 finish();
 
@@ -82,16 +82,16 @@ public class ListaAbertLeiraActivity extends ActivityGeneric {
                 if(leiraSelectedList.size() > 0){
 
                     for (int i = 0; i < leiraSelectedList.size(); i++) {
-                        pmmContext.getBoletimCTR().insMovLeiraAberta(leiraSelectedList.get(i));
+                        pmmContext.getBoletimCTR().insMovLeira(leiraSelectedList.get(i), pmmContext.getTipoMovComp());
                     }
 
-                    Intent it = new Intent(ListaAbertLeiraActivity.this, MenuPrincNormalActivity.class);
+                    Intent it = new Intent(ListaLeiraActivity.this, MenuPrincNormalActivity.class);
                     startActivity(it);
                     finish();
 
                 }
                 else{
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAbertLeiraActivity.this);
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(ListaLeiraActivity.this);
                     alerta.setTitle("ATENÇÃO");
                     alerta.setMessage("POR FAVOR! SELECIONE A(S) LEIRA(S) QUE SERA(M) ABERTA(S).");
                     alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
