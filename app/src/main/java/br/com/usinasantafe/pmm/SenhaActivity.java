@@ -39,11 +39,11 @@ public class SenhaActivity extends ActivityGeneric {
 
                 } else {
 
-                    List<ConfigTO> lista = configTO.get("senhaConfig", editTextSenha.getText().toString());
+                    List<ConfigTO> configList = configTO.get("senhaConfig", editTextSenha.getText().toString());
 
-                    if (lista.size() > 0) {
+                    if (configList.size() > 0) {
 
-                        configTO.setEquipConfig(((ConfigTO) lista.get(0)).getEquipConfig());
+                        configList.clear();
 
                         Intent it = new Intent(SenhaActivity.this, ConfiguracaoActivity.class);
                         startActivity(it);

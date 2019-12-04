@@ -300,7 +300,7 @@ public class ApontMMDAO implements ApontInterface {
 
                 for (int i = 0; i < apontMMList.size(); i++) {
 
-                    apontMMTO = (ApontMMTO) apontMMList.get(0);
+                    apontMMTO = (ApontMMTO) apontMMList.get(i);
                     apontMMTO.setStatusApontMM(2L);
                     apontMMTO.update();
 

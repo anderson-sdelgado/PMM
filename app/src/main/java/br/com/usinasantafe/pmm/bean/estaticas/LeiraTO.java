@@ -14,6 +14,8 @@ public class LeiraTO extends Entidade {
     private Long idLeira;
     @DatabaseField
     private Long codLeira;
+    @DatabaseField
+    private Long statusLeira; //0 - Liberada para qualquer Inicio; 1 - Leira para Finalizar Descarga; 2 - Leira para Finalizar Cargar
 
     public LeiraTO() {
     }
@@ -32,5 +34,13 @@ public class LeiraTO extends Entidade {
 
     public void setCodLeira(Long codLeira) {
         this.codLeira = codLeira;
+    }
+
+    public Long getStatusLeira() {
+        return statusLeira;
+    }
+
+    public void setStatusLeira(Long statusLeira) {
+        this.statusLeira = statusLeira;
     }
 }

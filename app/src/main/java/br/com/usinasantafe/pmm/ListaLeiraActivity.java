@@ -24,7 +24,7 @@ public class ListaLeiraActivity extends ActivityGeneric {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_abert_leira);
+        setContentView(R.layout.activity_lista_leira);
 
         pmmContext = (PMMContext) getApplication();
         itens = new ArrayList<ViewHolderChoice>();
@@ -32,8 +32,20 @@ public class ListaLeiraActivity extends ActivityGeneric {
         Button buttonRetListaLeira = (Button) findViewById(R.id.buttonRetListaLeira);
         Button buttonSalvarListaLeira = (Button) findViewById(R.id.buttonSalvarListaLeira);
 
+        Long status;
+
+        if(pmmContext.getTipoMovComp() == 2){
+            status = 1L;
+        }
+        else if(pmmContext.getTipoMovComp() == 4){
+            status = 2L;
+        }
+        else{
+            status = 0L;
+        }
+
         LeiraTO leiraTO = new LeiraTO();
-        leiraList = leiraTO.orderBy("codLeira", true);
+        leiraList = leiraTO.getAndOrderBy("statusLeira", status, "codLeira", true);
 
         for (int i = 0; i < leiraList.size(); i++) {
             leiraTO = (LeiraTO) leiraList.get(i);
@@ -75,6 +87,16 @@ public class ListaLeiraActivity extends ActivityGeneric {
                     if(viewHolderChoice.isSelected()){
                         LeiraTO leiraTO = (LeiraTO) leiraList.get(i);
                         leiraSelectedList.add(leiraTO.getIdLeira());
+                        if(pmmContext.getTipoMovComp() == 1){
+                            leiraTO.setStatusLeira(1L);
+                        }
+                        else if(pmmContext.getTipoMovComp() == 3){
+                            leiraTO.setStatusLeira(2L);
+                        }
+                        else{
+                            leiraTO.setStatusLeira(0L);
+                        }
+                        leiraTO.update();
                     }
 
                 }

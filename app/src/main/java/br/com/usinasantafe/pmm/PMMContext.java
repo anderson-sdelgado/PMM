@@ -39,8 +39,6 @@ public class PMMContext extends Application {
     private int posCheckList;
     private int tipoMovComp;
 
-    private boolean verVisDados;
-
     private int dia;
     private int mes;
     private int ano;

@@ -166,30 +166,29 @@ public class ListaParadaActivity extends ActivityGeneric {
                             alerta.show();
                         } else {
 
-                            List rFuncaoParadaList = pmmContext.getBoletimCTR().getFuncaoParadaList(paradaTO.getIdParada());
-
-                            boolean calibPneu = false;
-                            for (int i = 0; i < rFuncaoParadaList.size(); i++) {
-                                RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoParadaList.get(i);
-                                if(rFuncaoAtivParTO.getCodFuncao() == 3){
-                                    calibPneu = true;
-                                }
-                            }
-                            rFuncaoParadaList.clear();
-
-                            if(calibPneu){
-                                pmmContext.getApontCTR().salvarApont(0L, getLongitude(), getLatitude());
-                                Intent it = new Intent(ListaParadaActivity.this, ListaPosPneuActivity.class);
-                                startActivity(it);
-                                finish();
-                            }
-                            else{
+//                            List rFuncaoParadaList = pmmContext.getBoletimCTR().getFuncaoParadaList(paradaTO.getIdParada());
+//
+//                            boolean calibPneu = false;
+//                            for (int i = 0; i < rFuncaoParadaList.size(); i++) {
+//                                RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoParadaList.get(i);
+//                                if(rFuncaoAtivParTO.getCodFuncao() == 3){
+//                                    calibPneu = true;
+//                                }
+//                            }
+//                            rFuncaoParadaList.clear();
+//
+//                            if(calibPneu){
+//                                pmmContext.getApontCTR().salvarApont(0L, getLongitude(), getLatitude());
+//                                Intent it = new Intent(ListaParadaActivity.this, ListaPosPneuActivity.class);
+//                                startActivity(it);
+//                                finish();
+//                            }
+//                            else{
                                 pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
                                 Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
                                 startActivity(it);
                                 finish();
-                            }
-
+//                            }
 
                             paradaList.clear();
 
