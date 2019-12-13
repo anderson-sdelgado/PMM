@@ -29,7 +29,7 @@ public class PMMContext extends Application {
     // 19 - Trocar de implemento
     private int contImplemento;
     private String textoHorimetro;
-    public static String versaoAplic = "2.01";
+    public static String versaoAplic = "2.02";
     private int contRend;
     private int posRend;
     private int contRecolh;

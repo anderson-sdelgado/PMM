@@ -21,7 +21,7 @@ public class ItemPneuDAO {
     }
 
     public void salvarItem(ItemPneuTO itemPneuTO){
-        itemPneuTO.setDthrItemPneu(Tempo.getInstance().dataComHora());
+        itemPneuTO.setDthrItemPneu(Tempo.getInstance().dataComHora().getDataHora());
         itemPneuTO.insert();
     }
 

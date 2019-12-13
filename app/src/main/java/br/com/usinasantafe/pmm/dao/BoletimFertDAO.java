@@ -79,19 +79,19 @@ public class BoletimFertDAO implements BoletimInterface {
     }
 
     public void atualRecolh(RecolhFertTO recolhFertTO){
-        recolhFertTO.setDthrRecolhFert(Tempo.getInstance().dataComHora());
+        recolhFertTO.setDthrRecolhFert(Tempo.getInstance().dataComHora().getDataHora());
         recolhFertTO.update();
         recolhFertTO.commit();
     }
 
     public void salvarBolAberto(BoletimFertTO boletimFertTO){
 
+
         boletimFertTO.setStatusBolFert(1L);
-        boletimFertTO.setDthrInicialBolFert(Tempo.getInstance().dataComHora());
+        boletimFertTO.setDthrInicialBolFert(Tempo.getInstance().dataComHora().getDataHora());
+        boletimFertTO.setStatusDtHrInicialBolFert(Tempo.getInstance().dataComHora().getStatus());
         boletimFertTO.setQtdeApontBolFert(0L);
         boletimFertTO.insert();
-
-        String dataComHora = Tempo.getInstance().dataComHora();
 
         CheckListCTR checkListCTR = new CheckListCTR();
         if(checkListCTR.verAberturaCheckList(boletimFertTO.getIdTurnoBolFert())) {
@@ -99,7 +99,7 @@ public class BoletimFertDAO implements BoletimInterface {
             BoletimCTR boletimCTR = new BoletimCTR();
 
             ApontFertTO apontFertTO = new ApontFertTO();
-            apontFertTO.setDthrApontFert(dataComHora);
+            apontFertTO.setDthrApontFert(Tempo.getInstance().dataComHora().getDataHora());
             apontFertTO.setIdBolApontFert(boletimFertTO.getIdBolFert());
             apontFertTO.setIdExtBolApontFert(boletimFertTO.getIdExtBolFert());
             apontFertTO.setOsApontFert(boletimFertTO.getOsBolFert());
@@ -109,6 +109,7 @@ public class BoletimFertDAO implements BoletimInterface {
             apontFertTO.setLongitudeApontFert(0D);
             apontFertTO.setStatusConApontFert(boletimFertTO.getStatusConBolFert());
             apontFertTO.setStatusApontFert(1L);
+            apontFertTO.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
             apontFertTO.insert();
 
         }
@@ -122,7 +123,8 @@ public class BoletimFertDAO implements BoletimInterface {
         boletimFertTOBD = (BoletimFertTO) boletimFertList.get(0);
         boletimFertList.clear();
 
-        boletimFertTOBD.setDthrFinalBolFert(Tempo.getInstance().dataComHora());
+        boletimFertTOBD.setDthrFinalBolFert(Tempo.getInstance().dataComHora().getDataHora());
+        boletimFertTOBD.setStatusDtHrFinalBolFert(Tempo.getInstance().dataComHora().getStatus());
         boletimFertTOBD.setStatusBolFert(2L);
         boletimFertTOBD.setHodometroFinalBolFert(boletimFertTO.getHodometroFinalBolFert());
         boletimFertTOBD.update();

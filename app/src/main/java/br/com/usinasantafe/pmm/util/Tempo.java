@@ -7,6 +7,7 @@ import java.util.TimeZone;
 
 import android.util.Log;
 
+import br.com.usinasantafe.pmm.bean.DataHoraTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
 
 public class Tempo {
@@ -24,7 +25,7 @@ public class Tempo {
         return instance;
     }
 
-    public String dataComHora(){
+    public DataHoraTO dataComHora(){
 
         String dataCerta = "";
 
@@ -76,7 +77,16 @@ public class Tempo {
 
         dataCerta = ""+diaStr+"/"+mesStr+"/"+ano+" "+horasStr+":"+minutosStr;
 
-        return dataCerta;
+        DataHoraTO dataHoraTO = new DataHoraTO();
+        dataHoraTO.setDataHora(dataCerta);
+        if(dif() == 0){
+            dataHoraTO.setStatus(1L);
+        }
+        else{
+            dataHoraTO.setStatus(0L);
+        }
+
+        return dataHoraTO;
 
     }
 

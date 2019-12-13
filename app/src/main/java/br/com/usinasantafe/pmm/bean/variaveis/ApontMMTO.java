@@ -34,6 +34,8 @@ public class ApontMMTO extends Entidade  {
 	private Long statusConApontMM;  //0 - OffLine; 1 - OnLine
 	@DatabaseField
 	private Long statusApontMM;  //0 - Aberto; 1 - Enviar; 2 - Enviado
+	@DatabaseField
+	private Long statusDtHrApontMM;  //0 - Data Digitada; 1 - Data do Celular;
 
 	public ApontMMTO() {
 	}
@@ -128,5 +130,13 @@ public class ApontMMTO extends Entidade  {
 
 	public void setStatusApontMM(Long statusApontMM) {
 		this.statusApontMM = statusApontMM;
+	}
+
+	public Long getStatusDtHrApontMM() {
+		return statusDtHrApontMM;
+	}
+
+	public void setStatusDtHrApontMM(Long statusDtHrApontMM) {
+		this.statusDtHrApontMM = statusDtHrApontMM;
 	}
 }

@@ -11,10 +11,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.bean.DataHoraTO;
 import br.com.usinasantafe.pmm.bean.variaveis.CabecPneuTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ItemPneuTO;
 import br.com.usinasantafe.pmm.bean.variaveis.MovLeiraTO;
 import br.com.usinasantafe.pmm.control.ApontInterface;
+import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.bean.variaveis.ImpleMMTO;
@@ -139,7 +141,8 @@ public class ApontMMDAO implements ApontInterface {
 
             calBase.add(Calendar.MINUTE, +9);
 
-            dtStr = Tempo.getInstance().dataComHora();
+            DataHoraTO dataHoraTO = Tempo.getInstance().dataComHora();
+            dtStr = dataHoraTO.getDataHora();
 
             diaStr = dtStr.substring(0, 2);
             mesStr = dtStr.substring(3, 5);
@@ -371,6 +374,31 @@ public class ApontMMDAO implements ApontInterface {
             Tempo.getInstance().setEnvioDado(true);
         }
 
+    }
+
+    public ApontMMTO createApont(BoletimCTR boletimCTR){
+        ApontMMTO apontMMTO = new ApontMMTO();
+        List apontList = getListAllApont(boletimCTR.getIdBol());
+        if (apontList.size() == 0) {
+            apontMMTO.setIdBolApontMM(boletimCTR.getIdBol());
+            apontMMTO.setIdExtBolApontMM(boletimCTR.getIdExtBol());
+            apontMMTO.setOsApontMM(boletimCTR.getOS());
+            apontMMTO.setAtivApontMM(boletimCTR.getAtiv());
+            apontMMTO.setParadaApontMM(0L);
+            apontMMTO.setDthrApontMM(Tempo.getInstance().dataComHora().getDataHora());
+            apontMMTO.setStatusConApontMM(boletimCTR.getStatusConBol());
+            apontMMTO.setStatusApontMM(1L);
+            apontMMTO.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
+            apontMMTO.setLongitudeApontMM(boletimCTR.getLongitude());
+            apontMMTO.setLatitudeApontMM(boletimCTR.getLatitude());
+        } else {
+            ApontMMTO ultApontTO = (ApontMMTO) apontList.get(apontList.size() - 1);
+            apontMMTO = ultApontTO;
+            apontMMTO.setStatusApontMM(1L);
+        }
+        apontMMTO.setTransbApontMM(0L);
+        apontList.clear();
+        return apontMMTO;
     }
 
 }

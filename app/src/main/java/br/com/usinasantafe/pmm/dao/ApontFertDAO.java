@@ -16,6 +16,7 @@ import br.com.usinasantafe.pmm.bean.variaveis.ApontImpleMMTO;
 import br.com.usinasantafe.pmm.bean.variaveis.CabecPneuTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ItemPneuTO;
 import br.com.usinasantafe.pmm.control.ApontInterface;
+import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.bean.variaveis.ApontFertTO;
@@ -260,6 +261,33 @@ public class ApontFertDAO implements ApontInterface {
             Tempo.getInstance().setEnvioDado(true);
         }
 
+    }
+
+    public ApontFertTO createApont(BoletimCTR boletimCTR){
+        ApontFertTO apontFertTO = new ApontFertTO();
+        List apontList = getListAllApont(boletimCTR.getIdBol());
+        if (apontList.size() == 0) {
+            apontFertTO.setIdBolApontFert(boletimCTR.getIdBol());
+            apontFertTO.setIdExtBolApontFert(boletimCTR.getIdExtBol());
+            apontFertTO.setOsApontFert(boletimCTR.getIdExtBol());
+            apontFertTO.setAtivApontFert(boletimCTR.getAtiv());
+            apontFertTO.setParadaApontFert(0L);
+            apontFertTO.setDthrApontFert(Tempo.getInstance().dataComHora().getDataHora());
+            apontFertTO.setStatusConApontFert(boletimCTR.getStatusConBol());
+            apontFertTO.setStatusApontFert(1L);
+            apontFertTO.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
+            apontFertTO.setLongitudeApontFert(boletimCTR.getLongitude());
+            apontFertTO.setLatitudeApontFert(boletimCTR.getLatitude());
+        } else {
+            ApontFertTO ultApontTO = (ApontFertTO) apontList.get(apontList.size() - 1);
+            apontFertTO = ultApontTO;
+            apontFertTO.setStatusApontFert(1L);
+        }
+        apontFertTO.setPressaoApontFert(0D);
+        apontFertTO.setVelocApontFert(0L);
+        apontFertTO.setBocalApontFert(0L);
+        apontList.clear();
+        return apontFertTO;
     }
 
 }

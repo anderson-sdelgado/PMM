@@ -1,7 +1,5 @@
 package br.com.usinasantafe.pmm.dao;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -12,14 +10,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bean.variaveis.ApontFertTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ApontImpleMMTO;
-import br.com.usinasantafe.pmm.bean.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.control.BoletimInterface;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.control.ApontCTR;
-import br.com.usinasantafe.pmm.control.BoletimCTR;
-import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.bean.variaveis.ApontMMTO;
 import br.com.usinasantafe.pmm.bean.variaveis.BoletimMMTO;
@@ -99,7 +93,7 @@ public class BoletimMMDAO implements BoletimInterface {
         MovLeiraTO movLeiraTO = new MovLeiraTO();
         movLeiraTO.setTipoMovLeira(tipo);
         movLeiraTO.setIdLeira(idLeira);
-        movLeiraTO.setDataHoraMovLeira(Tempo.getInstance().dataComHora());
+        movLeiraTO.setDataHoraMovLeira(Tempo.getInstance().dataComHora().getDataHora());
         movLeiraTO.setIdBolMovLeira(boletimMMTO.getIdBolMM());
         movLeiraTO.setIdExtBolMovLeira(boletimMMTO.getIdExtBolMM());
         movLeiraTO.setStatusMovLeira(1L);
@@ -129,14 +123,15 @@ public class BoletimMMDAO implements BoletimInterface {
     }
 
     public void atualRend(RendMMTO rendMMTO){
-        rendMMTO.setDthrRendMM(Tempo.getInstance().dataComHora());
+        rendMMTO.setDthrRendMM(Tempo.getInstance().dataComHora().getDataHora());
         rendMMTO.update();
         rendMMTO.commit();
     }
 
     public void salvarBolAberto(BoletimMMTO boletimMMTO){
         boletimMMTO.setStatusBolMM(1L);
-        boletimMMTO.setDthrInicialBolMM(Tempo.getInstance().dataComHora());
+        boletimMMTO.setDthrInicialBolMM(Tempo.getInstance().dataComHora().getDataHora());
+        boletimMMTO.setStatusDtHrInicialBolMM(Tempo.getInstance().dataComHora().getStatus());
         boletimMMTO.setQtdeApontBolMM(0L);
         boletimMMTO.insert();
     }
@@ -148,7 +143,8 @@ public class BoletimMMDAO implements BoletimInterface {
         boletimMMTOBD = (BoletimMMTO) listBoletim.get(0);
         listBoletim.clear();
 
-        boletimMMTOBD.setDthrFinalBolMM(Tempo.getInstance().dataComHora());
+        boletimMMTOBD.setDthrFinalBolMM(Tempo.getInstance().dataComHora().getDataHora());
+        boletimMMTOBD.setStatusDtHrFinalBolMM(Tempo.getInstance().dataComHora().getStatus());
         boletimMMTOBD.setStatusBolMM(2L);
         boletimMMTOBD.setHodometroFinalBolMM(boletimMMTO.getHodometroFinalBolMM());
         boletimMMTOBD.update();

@@ -37,6 +37,10 @@ public class BoletimMMTO extends Entidade {
 	@DatabaseField
 	private Long statusConBolMM;  //0 - OffLine; 1 - OnLine
 	@DatabaseField
+	private Long statusDtHrInicialBolMM;  //0 - Data Digitada; 1 - Data do Celular;
+	@DatabaseField
+	private Long statusDtHrFinalBolMM;  //0 - Data Digitada; 1 - Data do Celular;
+	@DatabaseField
 	private Long qtdeApontBolMM;
 	@DatabaseField
 	private Double longitudeBolMM;
@@ -168,5 +172,21 @@ public class BoletimMMTO extends Entidade {
 
 	public void setLatitudeBolMM(Double latitudeBolMM) {
 		this.latitudeBolMM = latitudeBolMM;
+	}
+
+	public Long getStatusDtHrInicialBolMM() {
+		return statusDtHrInicialBolMM;
+	}
+
+	public void setStatusDtHrInicialBolMM(Long statusDtHrInicialBolMM) {
+		this.statusDtHrInicialBolMM = statusDtHrInicialBolMM;
+	}
+
+	public Long getStatusDtHrFinalBolMM() {
+		return statusDtHrFinalBolMM;
+	}
+
+	public void setStatusDtHrFinalBolMM(Long statusDtHrFinalBolMM) {
+		this.statusDtHrFinalBolMM = statusDtHrFinalBolMM;
 	}
 }
