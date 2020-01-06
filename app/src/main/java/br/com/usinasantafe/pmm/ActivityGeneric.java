@@ -2,24 +2,20 @@ package br.com.usinasantafe.pmm;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -47,9 +43,7 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper>implemen
     private ArrayList<String> permissionsToRequest;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
     private ArrayList<String> permissions = new ArrayList<>();
-    // integer for permissions results request
     private static final int ALL_PERMISSIONS_RESULT = 1011;
-    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,10 +118,8 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper>implemen
 
     }
 
-
     @Override
     public void onLocationChanged(Location location) {
-
     }
 
     @Override
@@ -162,12 +154,10 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper>implemen
 
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
     }
 
     @Override

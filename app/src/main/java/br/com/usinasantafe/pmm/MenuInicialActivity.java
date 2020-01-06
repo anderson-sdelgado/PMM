@@ -55,6 +55,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
     private TextView textViewProcesso;
     private Handler customHandler = new Handler();
+    private boolean verTela;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +84,8 @@ public class MenuInicialActivity extends ActivityGeneric {
         }
 
         if(pmmContext.getBoletimCTR().verBolABerto()){
-            startTimer("N_NAC");
             if(checkListCTR.verCabecAberto()){
+                startTimer("N_NAC");
                 checkListCTR.clearRespCabecAberto();
                 pmmContext.setPosCheckList(1);
                 Intent it = new Intent(MenuInicialActivity.this, ItemCheckListActivity.class);
@@ -93,18 +94,19 @@ public class MenuInicialActivity extends ActivityGeneric {
             }
             else{
                 if(pmmContext.getPneuCTR().verCalibAberto()){
+                    startTimer("N_NAC");
                     Intent it = new Intent(MenuInicialActivity.this, ListaPosPneuActivity.class);
                     startActivity(it);
                     finish();
                 }
                 else {
-                    Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
-                    startActivity(it);
-                    finish();
+                    verTela = true;
+                    atualizarAplic();
                 }
             }
         }
         else{
+            verTela = false;
             atualizarAplic();
         }
 
@@ -253,6 +255,13 @@ public class MenuInicialActivity extends ActivityGeneric {
         } else {
             Log.i("PMM", "TIMER já ativo");
         }
+
+        if(verTela){
+            Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
+            startActivity(it);
+            finish();
+        }
+
     }
 
     public boolean checkPermission(String permission) {

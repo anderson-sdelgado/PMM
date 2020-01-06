@@ -102,7 +102,7 @@ public class DataHoraActivity extends ActivityGeneric {
                             }
                             break;
                         case 3:
-                            if((valor >= 2019) && (valor <= 3000)){
+                            if((valor >= 2020) && (valor <= 3000)){
                                 pmmContext.setAno(valor);
                                 pmmContext.setContDataHora(pmmContext.getContDataHora() + 1);
                                 it = new Intent(DataHoraActivity.this, DataHoraActivity.class);
@@ -123,22 +123,7 @@ public class DataHoraActivity extends ActivityGeneric {
                             }
                             break;
                         case 4:
-                            Long codTurno = pmmContext.getBoletimCTR().getTurno();
-                            TurnoTO turnoTO = new TurnoTO();
-                            List turnoList = turnoTO.get("idTurno", codTurno);
-                            turnoTO = (TurnoTO) turnoList.get(0);
-                            turnoList.clear();
-
-                            String horaInicialStr = turnoTO.getDescTurno().substring(9, 11);
-                            String horaFinalStr = turnoTO.getDescTurno().substring(17, 19);
-                            int horaInicial = Integer.parseInt(horaInicialStr);
-                            int horaFinal = Integer.parseInt(horaFinalStr);
-
-                            if(horaFinal == 0){
-                                horaFinal = 23;
-                            }
-
-                            if((valor >= horaInicial) && (valor <= horaFinal)){
+                            if(valor <= 23){
                                 pmmContext.setHora(valor);
                                 pmmContext.setContDataHora(pmmContext.getContDataHora() + 1);
                                 it = new Intent(DataHoraActivity.this, DataHoraActivity.class);
@@ -160,7 +145,7 @@ public class DataHoraActivity extends ActivityGeneric {
 
                             break;
                         case 5:
-                            if((valor <= 59)){
+                            if(valor <= 59){
                                 pmmContext.setMinuto(valor);
                                 Long dif = Tempo.getInstance().difDthr(pmmContext.getDia(), pmmContext.getMes(), pmmContext.getAno()
                                         , pmmContext.getHora(), pmmContext.getMinuto());

@@ -32,7 +32,7 @@ public class ReceberAlarme extends BroadcastReceiver {
 			new DatabaseHelper(context);
 		}
 
-		Log.i("PMM", "DATA HORA = " + Tempo.getInstance().dataComHora());
+		Log.i("PMM", "DATA HORA = " + Tempo.getInstance().dataComHora().getDataHora());
 		teste();
 
 		if(EnvioDadosServ.getInstance().verifDadosEnvio()){
@@ -171,6 +171,7 @@ public class ReceberAlarme extends BroadcastReceiver {
 			Log.i("PMM", "dtUltApontConfig = " + configTO.getDtUltApontConfig());
 			Log.i("PMM", "osConfig = " + configTO.getOsConfig());
 			Log.i("PMM", "horimetroConfig = " + configTO.getHorimetroConfig());
+			Log.i("PMM", "dtServConfig = " + configTO.getDtServConfig());
 
 		}
 
