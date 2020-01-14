@@ -78,11 +78,6 @@ public class MenuInicialActivity extends ActivityGeneric {
         checkListCTR = new CheckListCTR();
         configCTR = new ConfigCTR();
 
-        if (configCTR.hasElements()) {
-            pmmContext.getBoletimCTR().setTipoEquip();
-            pmmContext.getApontCTR().setTipoEquip();
-        }
-
         if(pmmContext.getBoletimCTR().verBolABerto()){
             if(checkListCTR.verCabecAberto()){
                 startTimer("N_NAC");
@@ -109,7 +104,6 @@ public class MenuInicialActivity extends ActivityGeneric {
             verTela = false;
             atualizarAplic();
         }
-
 
         listarMenuInicial();
 
@@ -342,6 +336,7 @@ public class MenuInicialActivity extends ActivityGeneric {
             Log.i("PMM", "dthrInicioBoletim = " + boletimMMTO.getDthrInicialBolMM());
             Log.i("PMM", "dthrFimBoletim = " + boletimMMTO.getDthrFinalBolMM());
             Log.i("PMM", "statusBoletim = " + boletimMMTO.getStatusBolMM());
+            Log.i("PMM", "qtdeApontBolMM = " + boletimMMTO.getQtdeApontBolMM());
 
         }
 

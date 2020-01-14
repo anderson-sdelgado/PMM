@@ -43,12 +43,11 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         pmmContext = (PMMContext) getApplication();
         textViewProcessoNormal = (TextView) findViewById(R.id.textViewProcessoNormal);
 
-        configCTR = new ConfigCTR();
-
         customHandler.postDelayed(updateTimerThread, 0);
 
         ArrayList<String> itens = new ArrayList<String>();
 
+        configCTR = new ConfigCTR();
         configTO = configCTR.getConfig();
 
         if (Tempo.getInstance().verDthrServ(configTO.getDtServConfig())) {
@@ -252,7 +251,6 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                 textViewProcessoNormal.setTextColor(Color.GREEN);
                 textViewProcessoNormal.setText("Todos os Dados já foram enviados e recebidos");
             }
-
 
             if(configCTR.getConfig().getVisDadosColhConfig() == 2){
                 Intent it = new Intent( MenuPrincNormalActivity.this, DadosColheitaActivity.class);

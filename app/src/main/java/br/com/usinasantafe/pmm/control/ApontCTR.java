@@ -24,7 +24,6 @@ public class ApontCTR {
 
     private ApontMMTO apontMMTO;
     private ApontFertTO apontFertTO;
-    private int tipoEquip = 0;
 
     public ApontCTR() {
         if (apontMMTO == null)
@@ -35,19 +34,9 @@ public class ApontCTR {
 
     //////////////////////////// SETAR CAMPOS ///////////////////////////////////////////////
 
-    public void setTipoEquip(){
-        EquipDAO equipDAO = new EquipDAO();
-        EquipTO equipTO = equipDAO.getEquip();
-        if(equipTO.getTipo() == 1) {
-            tipoEquip = 1;
-        }
-        else{
-            tipoEquip = 2;
-        }
-    }
-
     public void setOSApont(Long os){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             apontMMTO.setOsApontMM(os);
         }
         else{
@@ -57,7 +46,7 @@ public class ApontCTR {
 
     public void setAtivApont(Long ativ){
         ConfigCTR configCTR = new ConfigCTR();
-        if(tipoEquip == 1) {
+        if(configCTR.getEquip().getTipo() == 1) {
             apontMMTO.setAtivApontMM(ativ);
             apontMMTO.setStatusConApontMM(configCTR.getConfig().getStatusConConfig());
             apontMMTO.setParadaApontMM(0L);
@@ -71,7 +60,8 @@ public class ApontCTR {
     }
 
     public void setParadaApont(Long parada){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             apontMMTO.setParadaApontMM(parada);
         }
         else{
@@ -103,7 +93,8 @@ public class ApontCTR {
     ////////////////////////////////// GET DE CAMPOS ///////////////////////////////////////////
 
     public Long getAtivApont(){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             return apontMMTO.getAtivApontMM();
         }
         else{
@@ -121,7 +112,8 @@ public class ApontCTR {
 
     public List getListParada(){
         Long ativ;
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             ativ = apontMMTO.getAtivApontMM();
         }
         else{
@@ -140,7 +132,8 @@ public class ApontCTR {
     }
 
     public Long getIdApont(){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             ApontMMDAO apontMMDAO = new ApontMMDAO();
             return apontMMDAO.getIdApontAberto();
         }
@@ -168,7 +161,8 @@ public class ApontCTR {
         BoletimCTR boletimCTR = new BoletimCTR();
         Long func = 0L;
         Long equip = 0L;
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             BoletimMMTO boletimMMTO = boletimCTR.getBolMMAberto();
             apontMMTO.setIdBolApontMM(boletimMMTO.getIdBolMM());
             apontMMTO.setIdExtBolApontMM(boletimMMTO.getIdExtBolMM());
@@ -176,7 +170,7 @@ public class ApontCTR {
             apontMMTO.setLongitudeApontMM(longitude);
             apontMMTO.setLatitudeApontMM(latitude);
             apontMMTO.setDthrApontMM(Tempo.getInstance().dataComHora().getDataHora());
-            apontMMTO.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
+//            apontMMTO.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
             salvarApontMM(apontMMTO);
             func = boletimMMTO.getMatricFuncBolMM();
             equip = boletimMMTO.getIdEquipBolMM();
@@ -189,7 +183,7 @@ public class ApontCTR {
             apontFertTO.setLongitudeApontFert(longitude);
             apontFertTO.setLatitudeApontFert(latitude);
             apontFertTO.setDthrApontFert(Tempo.getInstance().dataComHora().getDataHora());
-            apontFertTO.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
+//            apontFertTO.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
             salvarApontFert(apontFertTO);
             func = boletimFertTO.getMatricFuncBolFert();
             equip = boletimFertTO.getIdEquipBolFert();
@@ -201,7 +195,8 @@ public class ApontCTR {
     }
 
     public void atualApont(){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             ApontMMDAO apontMMDAO = new ApontMMDAO();
             ApontMMTO apontMMTO = apontMMDAO.getApontMMAberto();
             apontMMDAO.updApont(apontMMTO);
@@ -239,17 +234,18 @@ public class ApontCTR {
 
     public void inserirParadaImplemento(BoletimCTR boletimCTR){
         AtividadeDAO atividadeDAO = new AtividadeDAO();
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             ApontMMTO apontMMTO = createApontMM(boletimCTR);
             apontMMTO.setDthrApontMM(Tempo.getInstance().dataComHora().getDataHora());
-            apontMMTO.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
+//            apontMMTO.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
             apontMMTO.setParadaApontMM(atividadeDAO.idParadaImplemento());
             salvarApontMM(apontMMTO);
         }
         else{
             ApontFertTO apontFertTO = createApontFert(boletimCTR);
             apontFertTO.setDthrApontFert(Tempo.getInstance().dataComHora().getDataHora());
-            apontFertTO.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
+//            apontFertTO.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
             apontFertTO.setParadaApontFert(atividadeDAO.idParadaImplemento());
             salvarApontFert(apontFertTO);
         }
@@ -258,17 +254,18 @@ public class ApontCTR {
 
     public void inserirParadaCheckList(BoletimCTR boletimCTR){
         AtividadeDAO atividadeDAO = new AtividadeDAO();
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             ApontMMTO apontMMTO = createApontMM(boletimCTR);
             apontMMTO.setDthrApontMM(Tempo.getInstance().dataComHora().getDataHora());
-            apontMMTO.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
+//            apontMMTO.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
             apontMMTO.setParadaApontMM(atividadeDAO.idParadaCheckList());
             salvarApontMM(apontMMTO);
         }
         else{
             ApontFertTO apontFertTO = createApontFert(boletimCTR);
             apontFertTO.setDthrApontFert(Tempo.getInstance().dataComHora().getDataHora());
-            apontFertTO.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
+//            apontFertTO.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
             apontFertTO.setParadaApontFert(atividadeDAO.idParadaCheckList());
             salvarApontFert(apontFertTO);
         }
@@ -277,7 +274,7 @@ public class ApontCTR {
     public void inserirApontTransb(BoletimCTR boletimCTR){
         ApontMMTO apontMMTO = createApontMM(boletimCTR);
         apontMMTO.setDthrApontMM(Tempo.getInstance().dataComHora().getDataHora());
-        apontMMTO.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
+//        apontMMTO.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
         apontMMTO.setTransbApontMM(this.apontMMTO.getTransbApontMM());
         salvarApontMM(apontMMTO);
     }
@@ -290,8 +287,7 @@ public class ApontCTR {
 
         boolean v = false;
         ConfigCTR configCTR = new ConfigCTR();
-
-        if(configCTR.getEquip().getTipo() == 1){
+        if(configCTR.getEquip().getTipo() == 1) {
             BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
             ApontMMDAO apontMMDAO = new ApontMMDAO();
             List apontMMList = apontMMDAO.getListAllApont(boletimMMDAO.getIdBolAberto());
@@ -351,7 +347,8 @@ public class ApontCTR {
     /////////////////// RETORNA TODOS APONTAMENTO PARA HISTORICO ////////////////////////////////
 
     public List getListAllApontHist(Long idBolAberto){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             ApontMMDAO apontMMDAO = new ApontMMDAO();
             List apontMMList = apontMMDAO.getListAllApont(idBolAberto);
             return  apontMMList;

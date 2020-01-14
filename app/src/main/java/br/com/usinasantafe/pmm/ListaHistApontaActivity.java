@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import br.com.usinasantafe.pmm.control.ConfigCTR;
+
 public class ListaHistApontaActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
@@ -15,12 +17,14 @@ public class ListaHistApontaActivity extends ActivityGeneric {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_hist_aponta);
 
-        Button buttonRetHistorico = (Button) findViewById(R.id.buttonRetHistorico);
-
         pmmContext = (PMMContext) getApplication();
 
+        Button buttonRetHistorico = (Button) findViewById(R.id.buttonRetHistorico);
+
+        ConfigCTR configCTR = new ConfigCTR();
+
         ListView listaHistorico = (ListView) findViewById(R.id.listaHistorico);
-        AdapterListHistorico adapterListHistorico = new AdapterListHistorico(this, pmmContext.getApontCTR().getListAllApontHist(pmmContext.getBoletimCTR().getIdBol()), pmmContext.getBoletimCTR().getTipoEquip());
+        AdapterListHistorico adapterListHistorico = new AdapterListHistorico(this, pmmContext.getApontCTR().getListAllApontHist(pmmContext.getBoletimCTR().getIdBol()), configCTR.getEquip().getTipo());
         listaHistorico.setAdapter(adapterListHistorico);
 
         buttonRetHistorico.setOnClickListener(new View.OnClickListener() {

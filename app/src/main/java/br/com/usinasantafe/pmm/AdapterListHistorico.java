@@ -25,12 +25,12 @@ public class AdapterListHistorico extends BaseAdapter {
 
     private List itens;
     private LayoutInflater layoutInflater;
-    private int tipoEquip;
+    private Long tipoEquip;
     private TextView textViewHistApont;
     private TextView textViewHistHorario;
     private TextView textViewHistDetalhes;
 
-    public AdapterListHistorico(Context context, List itens, int tipoEquip) {
+    public AdapterListHistorico(Context context, List itens, Long tipoEquip) {
         this.itens = itens;
         layoutInflater = LayoutInflater.from(context);
         this.tipoEquip = tipoEquip;
@@ -59,7 +59,7 @@ public class AdapterListHistorico extends BaseAdapter {
         textViewHistHorario = (TextView) view.findViewById(R.id.textViewHistHorario);
         textViewHistDetalhes = (TextView) view.findViewById(R.id.textViewHistDetalhes);
 
-        if (tipoEquip == 1) {
+        if (tipoEquip == 1L) {
             ApontMMTO apontMMTO = (ApontMMTO) itens.get(position);
             descrApont(apontMMTO.getParadaApontMM(), apontMMTO.getAtivApontMM());
             horarioApont(apontMMTO.getDthrApontMM());

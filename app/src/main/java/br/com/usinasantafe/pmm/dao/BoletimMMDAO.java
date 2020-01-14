@@ -52,10 +52,6 @@ public class BoletimMMDAO implements BoletimInterface {
         boletimMMTO.update();
     }
 
-
-
-
-
     public void insRend(Long nroOS){
 
         BoletimMMTO boletimMMTO = getBolMMAberto();

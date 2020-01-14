@@ -31,7 +31,6 @@ public class BoletimCTR {
     private BoletimFertTO boletimFertTO;
     private OSDAO osDAO;
     private AtividadeDAO atividadeDAO;
-    private int tipoEquip;
 
     public BoletimCTR() {
         if (boletimMMTO == null)
@@ -72,19 +71,9 @@ public class BoletimCTR {
 
     //////////////////////////// SETAR CAMPOS ///////////////////////////////////////////////
 
-    public void setTipoEquip(){
-        EquipDAO equipDAO = new EquipDAO();
-        EquipTO equipTO = equipDAO.getEquip();
-        if(equipTO.getTipo() == 1) {
-            tipoEquip = 1;
-        }
-        else{
-            tipoEquip = 2;
-        }
-    }
-
     public void setFuncBol(Long matric){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             boletimMMTO.setMatricFuncBolMM(matric);
         }
         else{
@@ -93,18 +82,18 @@ public class BoletimCTR {
     }
 
     public void setEquipBol(){
-        EquipDAO equipDAO = new EquipDAO();
-        EquipTO equipTO = equipDAO.getEquip();
-        if(equipTO.getTipo() == 1) {
-            boletimMMTO.setIdEquipBolMM(equipTO.getIdEquip());
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
+            boletimMMTO.setIdEquipBolMM(configCTR.getEquip().getIdEquip());
         }
         else{
-            boletimFertTO.setIdEquipBolFert(equipTO.getIdEquip());
+            boletimFertTO.setIdEquipBolFert(configCTR.getEquip().getIdEquip());
         }
     }
 
     public void setTurnoBol(Long idTurno){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             boletimMMTO.setIdTurnoBolMM(idTurno);
         }
         else{
@@ -113,7 +102,8 @@ public class BoletimCTR {
     }
 
     public void setOSBol(Long os){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             boletimMMTO.setOsBolMM(os);
         }
         else{
@@ -123,7 +113,7 @@ public class BoletimCTR {
 
     public void setAtivBol(Long ativ){
         ConfigCTR configCTR = new ConfigCTR();
-        if(tipoEquip == 1) {
+        if(configCTR.getEquip().getTipo() == 1) {
             boletimMMTO.setAtivPrincBolMM(ativ);
             boletimMMTO.setStatusConBolMM(configCTR.getConfig().getStatusConConfig());
         }
@@ -135,7 +125,8 @@ public class BoletimCTR {
 
 
     public void setHodometroInicialBol(Double horimetroNum, Double longitude, Double latitude){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             boletimMMTO.setHodometroInicialBolMM(horimetroNum);
             boletimMMTO.setHodometroFinalBolMM(0D);
             boletimMMTO.setIdExtBolMM(0L);
@@ -152,7 +143,8 @@ public class BoletimCTR {
     }
 
     public void setHodometroFinalBol(Double horimetroNum){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             boletimMMTO.setHodometroFinalBolMM(horimetroNum);
         }
         else{
@@ -168,12 +160,9 @@ public class BoletimCTR {
 
     ////////////////////////////////// GET DE CAMPOS ///////////////////////////////////////////
 
-    public int getTipoEquip() {
-        return tipoEquip;
-    }
-
     public Long getAtiv(){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             return boletimMMTO.getAtivPrincBolMM();
         }
         else{
@@ -182,7 +171,8 @@ public class BoletimCTR {
     }
 
     public Long getTurno(){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             return boletimMMTO.getIdTurnoBolMM();
         }
         else{
@@ -191,7 +181,8 @@ public class BoletimCTR {
     }
 
     public Long getFunc(){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             return boletimMMTO.getMatricFuncBolMM();
         }
         else{
@@ -200,7 +191,8 @@ public class BoletimCTR {
     }
 
     public Long getIdExtBol(){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             return boletimMMTO.getIdExtBolMM();
         }
         else{
@@ -209,7 +201,8 @@ public class BoletimCTR {
     }
 
     public Long getStatusConBol(){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             return boletimMMTO.getStatusConBolMM();
         }
         else{
@@ -217,17 +210,9 @@ public class BoletimCTR {
         }
     }
 
-    public Long getEquipBol(){
-        if(tipoEquip == 1) {
-            return boletimMMTO.getIdEquipBolMM();
-        }
-        else{
-            return boletimFertTO.getIdEquipBolFert();
-        }
-    }
-
     public Long getOS() {
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             return boletimMMTO.getOsBolMM();
         }
         else{
@@ -236,7 +221,8 @@ public class BoletimCTR {
     }
 
     public Long getIdBol(){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
             return boletimMMDAO.getIdBolAberto();
         }
@@ -247,7 +233,8 @@ public class BoletimCTR {
     }
 
     public Double getLongitude(){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             return boletimMMTO.getLongitudeBolMM();
         }
         else{
@@ -256,7 +243,8 @@ public class BoletimCTR {
     }
 
     public Double getLatitude(){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             return boletimMMTO.getLatitudeBolMM();
         }
         else{
@@ -405,9 +393,8 @@ public class BoletimCTR {
     /////////////////// ATUALIZAR QTDE DE APONTAMENTO DO BOLETIM ///////////////////////////
 
     public void atualQtdeApontBol(){
-        EquipDAO equipDAO = new EquipDAO();
-        EquipTO equipTO = equipDAO.getEquip();
-        if(equipTO.getTipo() == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
             boletimMMDAO.atualQtdeApontBol();
         }
@@ -526,7 +513,8 @@ public class BoletimCTR {
     ////////////////////////////// ATUALIZAÇÃO DE DADOS POR CLASSE /////////////////////////////////////
 
     public Long ultAtivBolMenu(){
-        if(tipoEquip == 1) {
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.getEquip().getTipo() == 1) {
             ApontMMDAO apontMMDAO = new ApontMMDAO();
             List apontList = apontMMDAO.getListAllApont(getIdBol());
             if (apontList.size() == 0) {
@@ -605,8 +593,5 @@ public class BoletimCTR {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 
 }

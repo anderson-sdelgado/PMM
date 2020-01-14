@@ -81,7 +81,7 @@ public class ReceberAlarme extends BroadcastReceiver {
 		for (int i = 0; i < impleMMList.size(); i++) {
 
 			impleMMTO = (ImpleMMTO) impleMMList.get(i);
-			Log.i("PMM", "IMPLEMENTO MM");
+			Log.i("PMM", "IMPLEMENTO");
 			Log.i("PMM", "posImpleMM = " + impleMMTO.getPosImpleMM());
 			Log.i("PMM", "codEquipImpleMM = " + impleMMTO.getCodEquipImpleMM());
 
@@ -92,11 +92,12 @@ public class ReceberAlarme extends BroadcastReceiver {
 
 		for (int l = 0; l < apontImpleList.size(); l++) {
 			apontImpleMMTO = (ApontImpleMMTO) apontImpleList.get(l);
-			Log.i("PMM", "IMPLEMENTO");
+			Log.i("PMM", "APONT IMPLEMENTO MM");
 			Log.i("PMM", "idApontImplemento = " + apontImpleMMTO.getIdApontImpleMM());
 			Log.i("PMM", "idApontMM = " + apontImpleMMTO.getIdApontMM());
 			Log.i("PMM", "posImplemento = " + apontImpleMMTO.getPosImpleMM());
 			Log.i("PMM", "codEquipImplemento = " + apontImpleMMTO.getCodEquipImpleMM());
+			Log.i("PMM", "dthrImpleMM = " + apontImpleMMTO.getDthrImpleMM());
 		}
 
 		RendMMTO rendMMTO = new RendMMTO();
@@ -153,6 +154,7 @@ public class ReceberAlarme extends BroadcastReceiver {
 			Log.i("PMM", "idApontaAplicFert = " + apontFertTO.getIdApontFert());
 			Log.i("PMM", "idBolApontaAplicFert = " + apontFertTO.getIdBolApontFert());
 			Log.i("PMM", "idExtBolApontaAplicFert = " + apontFertTO.getIdExtBolApontFert());
+			Log.i("PMM", "dthrApontFert = " + apontFertTO.getDthrApontFert());
 			Log.i("PMM", "statusApontFert = " + apontFertTO.getStatusApontFert());
 
 		}
