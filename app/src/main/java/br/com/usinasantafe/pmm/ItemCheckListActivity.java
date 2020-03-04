@@ -2,7 +2,6 @@ package br.com.usinasantafe.pmm;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -87,7 +86,7 @@ public class ItemCheckListActivity extends ActivityGeneric {
             ConfigCTR configCTR = new ConfigCTR();
             configCTR.setCheckListConfig(pmmContext.getBoletimCTR().getTurno());
             checkListCTR.salvarBolFechado();
-            Intent it = new Intent(ItemCheckListActivity.this, EsperaDadosOperActivity.class);
+            Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);
             startActivity(it);
             finish();
         }

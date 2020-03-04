@@ -6,8 +6,8 @@ import android.content.Context;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bean.variaveis.ItemPneuTO;
-import br.com.usinasantafe.pmm.dao.CabecPneuDAO;
-import br.com.usinasantafe.pmm.dao.ItemPneuDAO;
+import br.com.usinasantafe.pmm.bean.dao.CabecPneuDAO;
+import br.com.usinasantafe.pmm.bean.dao.ItemPneuDAO;
 
 public class PneuCTR {
 

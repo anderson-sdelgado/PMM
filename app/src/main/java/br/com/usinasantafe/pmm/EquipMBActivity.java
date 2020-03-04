@@ -150,7 +150,7 @@ public class EquipMBActivity extends ActivityGeneric {
             }
         }
         else{
-            Intent it = new Intent(EquipMBActivity.this, EsperaDadosOperActivity.class);
+            Intent it = new Intent(EquipMBActivity.this, EsperaInforActivity.class);
             startActivity(it);
             finish();
         }

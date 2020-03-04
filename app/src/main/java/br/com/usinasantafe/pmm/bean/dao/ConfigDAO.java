@@ -1,4 +1,4 @@
-package br.com.usinasantafe.pmm.dao;
+package br.com.usinasantafe.pmm.bean.dao;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class ConfigDAO {
         configTO.setDtUltApontConfig("");
         configTO.setDtServConfig("");
         configTO.setDifDthrConfig(0L);
-        configTO.setVisDadosColhConfig(0L);
+        configTO.setVerInforConfig(0L);
         configTO.setSenhaConfig(senha);
         configTO.insert();
         configTO.commit();
@@ -78,15 +78,15 @@ public class ConfigDAO {
         configTO.update();
     }
 
-    public void atualVisDadosColhConfig(Long tipo){
+    public void atualVerInforConfig(Long tipo){
         ConfigTO configTO = getConfig();
-        configTO.setVisDadosColhConfig(tipo);
+        configTO.setVerInforConfig(tipo);
         configTO.update();
     }
 
-    public Long getVisDadosColhConfig(){
+    public Long getVerInforConfig(){
         ConfigTO configTO = getConfig();
-        return configTO.getVisDadosColhConfig();
+        return configTO.getVerInforConfig();
     }
 
     public void atualDifDthrConfig(Long status){

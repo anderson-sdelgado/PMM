@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import br.com.usinasantafe.pmm.conHttp.GetBDGenerico;
 import br.com.usinasantafe.pmm.pst.GenericRecordable;
 
 import com.google.gson.Gson;
@@ -55,6 +56,7 @@ public class AtualDadosServ {
 				JSONObject jObj = new JSONObject(result);
 				JSONArray jsonArray = jObj.getJSONArray("dados");
 				Class classe = Class.forName(manipLocalClasse(tipo));
+
 				genericRecordable.deleteAll(classe);
 
 				for(int i = 0; i < jsonArray.length(); i++){
@@ -109,11 +111,11 @@ public class AtualDadosServ {
 	        String[] url = {classe};
 		    contAtualBD++;
 
-	        ConHttpGetBDGenerico conHttpGetBDGenerico = new ConHttpGetBDGenerico();
-	        conHttpGetBDGenerico.execute(url);
+	        GetBDGenerico getBDGenerico = new GetBDGenerico();
+	        getBDGenerico.execute(url);
 	        
 		} catch (Exception e) {
-			Log.i("PMM", "ERRO = " + e);
+			Log.i("PMM", "ERRO 2 = " + e);
 		}
         
 	}
@@ -145,8 +147,8 @@ public class AtualDadosServ {
 			String[] url = {classe};
 			contAtualBD++;
 
-			ConHttpGetBDGenerico conHttpGetBDGenerico = new ConHttpGetBDGenerico();
-			conHttpGetBDGenerico.execute(url);
+			GetBDGenerico getBDGenerico = new GetBDGenerico();
+			getBDGenerico.execute(url);
 
 		} catch (Exception e) {
 			Log.i("PMM", "ERRO = " + e);
@@ -159,7 +161,11 @@ public class AtualDadosServ {
 		if(this.tipoReceb == 1){
 		
 			qtdeBD = tabAtualArrayList.size();
-			
+
+			Log.i("PMM", "CHEGOU AKI 1");
+			Log.i("PMM", "contAtualBD = " + contAtualBD);
+			Log.i("PMM", "tabAtualArrayList.size() = " + tabAtualArrayList.size());
+
 			if(contAtualBD < tabAtualArrayList.size()){
 				
 				this.progressDialog.setProgress((contAtualBD * 100) / qtdeBD);
@@ -167,8 +173,8 @@ public class AtualDadosServ {
 				String[] url = {classe};
 				contAtualBD++;
 
-				ConHttpGetBDGenerico conHttpGetBDGenerico = new ConHttpGetBDGenerico();
-		        conHttpGetBDGenerico.execute(url);
+				GetBDGenerico getBDGenerico = new GetBDGenerico();
+		        getBDGenerico.execute(url);
 		        
 			} else {
 				contAtualBD = 0;
@@ -197,8 +203,8 @@ public class AtualDadosServ {
 				String[] url = {classe};
 				contAtualBD++;
 
-				ConHttpGetBDGenerico conHttpGetBDGenerico = new ConHttpGetBDGenerico();
-		        conHttpGetBDGenerico.execute(url);
+				GetBDGenerico getBDGenerico = new GetBDGenerico();
+		        getBDGenerico.execute(url);
 		        
 			} else {
 
@@ -267,8 +273,8 @@ public class AtualDadosServ {
 
 			String[] url = {classe};
 
-			ConHttpGetBDGenerico conHttpGetBDGenerico = new ConHttpGetBDGenerico();
-			conHttpGetBDGenerico.execute(url);
+			GetBDGenerico getBDGenerico = new GetBDGenerico();
+			getBDGenerico.execute(url);
 
 		} catch (Exception e) {
 			Log.i("PMM", "Erro Manip2 = " + e);

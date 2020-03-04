@@ -1,4 +1,4 @@
-package br.com.usinasantafe.pmm.util;
+package br.com.usinasantafe.pmm.conHttp;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -11,15 +11,17 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
+
 /**
  * Created by anderson on 16/11/2015.
  */
-public class ConHttpPostVerGenerico extends AsyncTask<String, Void, String> {
+public class PostVerGenerico extends AsyncTask<String, Void, String> {
 
-    private static ConHttpPostCadGenerico instance = null;
+    private static PostCadGenerico instance = null;
     private Map<String, Object> parametrosPost = null;
 
-    public ConHttpPostVerGenerico() {
+    public PostVerGenerico() {
     }
 
     @Override

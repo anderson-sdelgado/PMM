@@ -1,4 +1,4 @@
-package br.com.usinasantafe.pmm.dao;
+package br.com.usinasantafe.pmm.bean.dao;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

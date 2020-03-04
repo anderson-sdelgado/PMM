@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.bean.variaveis.InfoColheitaTO;
+import br.com.usinasantafe.pmm.bean.variaveis.InfColheitaTO;
 
 public class DadosColheitaActivity extends ActivityGeneric {
 
@@ -32,26 +32,26 @@ public class DadosColheitaActivity extends ActivityGeneric {
         TextView textViewTotalDadoPerda = (TextView) findViewById(R.id.textViewTotalDadoPerda);
         Button buttonSair = (Button) findViewById(R.id.buttonSair);
 
-        InfoColheitaTO infoColheitaTO = new InfoColheitaTO();
-        List infoColheitaList = infoColheitaTO.all();
-        infoColheitaTO = (InfoColheitaTO) infoColheitaList.get(0);
+        InfColheitaTO infColheitaTO = new InfColheitaTO();
+        List infoColheitaList = infColheitaTO.all();
+        infColheitaTO = (InfColheitaTO) infoColheitaList.get(0);
         infoColheitaList.clear();
 
-        textViewTituloPerda.setText("DADOS DE PERDAS\n" + infoColheitaTO.getDthrPerda());
+        textViewTituloPerda.setText("DADOS DE PERDAS\n" + infColheitaTO.getDthrPerda());
         textViewTituloPerda.setTextColor(Color.GREEN);
-        textViewToleteDadoPerda.setText(String.valueOf(infoColheitaTO.getToletePerda()).replace(".", ","));
-        textViewLascaDadoPerda.setText(String.valueOf(infoColheitaTO.getLascaPerda()).replace(".", ","));
-        textViewTocoDadoPerda.setText(String.valueOf(infoColheitaTO.getTocoPerda()).replace(".", ","));
-        textViewPonteiroDadoPerda.setText(String.valueOf(infoColheitaTO.getPonteiroPerda()).replace(".", ","));
-        textViewCanaInteiraDadoPerda.setText(String.valueOf(infoColheitaTO.getCanaInteiraPerda()).replace(".", ","));
-        textViewPedacoDadoPerda.setText(String.valueOf(infoColheitaTO.getPedacoPerda()).replace(".", ","));
-        textViewRepiqueDadoPerda.setText(String.valueOf(infoColheitaTO.getRepiquePerda()).replace(".", ","));
-        textViewSoqueiraDadoPerda.setText(String.valueOf(infoColheitaTO.getSoqueiraPerda()).replace(".", ","));
-        textViewNroSoqueiraDadoPerda.setText(String.valueOf(infoColheitaTO.getNroSoqueiraPerda()).replace(".", ","));
-        textViewTotalDadoPerda.setText(String.valueOf(infoColheitaTO.getTotalPerda()).replace(".", ","));
+        textViewToleteDadoPerda.setText(String.valueOf(infColheitaTO.getToletePerda()).replace(".", ","));
+        textViewLascaDadoPerda.setText(String.valueOf(infColheitaTO.getLascaPerda()).replace(".", ","));
+        textViewTocoDadoPerda.setText(String.valueOf(infColheitaTO.getTocoPerda()).replace(".", ","));
+        textViewPonteiroDadoPerda.setText(String.valueOf(infColheitaTO.getPonteiroPerda()).replace(".", ","));
+        textViewCanaInteiraDadoPerda.setText(String.valueOf(infColheitaTO.getCanaInteiraPerda()).replace(".", ","));
+        textViewPedacoDadoPerda.setText(String.valueOf(infColheitaTO.getPedacoPerda()).replace(".", ","));
+        textViewRepiqueDadoPerda.setText(String.valueOf(infColheitaTO.getRepiquePerda()).replace(".", ","));
+        textViewSoqueiraDadoPerda.setText(String.valueOf(infColheitaTO.getSoqueiraPerda()).replace(".", ","));
+        textViewNroSoqueiraDadoPerda.setText(String.valueOf(infColheitaTO.getNroSoqueiraPerda()).replace(".", ","));
+        textViewTotalDadoPerda.setText(String.valueOf(infColheitaTO.getTotalPerda()).replace(".", ","));
 
         ConfigCTR configCTR = new ConfigCTR();
-        configCTR.atualVisDadosColhConfig(3L);
+        configCTR.atualVerInforConfig(3L);
 
         buttonSair.setOnClickListener(new View.OnClickListener() {
             @Override

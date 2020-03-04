@@ -30,7 +30,8 @@ import br.com.usinasantafe.pmm.bean.variaveis.CabecCLTO;
 import br.com.usinasantafe.pmm.bean.variaveis.CabecPneuTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ImpleMMTO;
-import br.com.usinasantafe.pmm.bean.variaveis.InfoColheitaTO;
+import br.com.usinasantafe.pmm.bean.variaveis.InfColheitaTO;
+import br.com.usinasantafe.pmm.bean.variaveis.InfPlantioTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ItemPneuTO;
 import br.com.usinasantafe.pmm.bean.variaveis.MovLeiraTO;
 import br.com.usinasantafe.pmm.bean.variaveis.RecolhFertTO;
@@ -55,9 +56,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public DatabaseHelper(Context context) {
 
 		super(context, FORCA_DB_NAME, null, FORCA_BD_VERSION);
-
 		instance = this;
-		
+
 	}
 
 	@Override
@@ -101,7 +101,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, BackupApontaTO.class);
 			TableUtils.createTable(cs, BoletimFertTO.class);
 			TableUtils.createTable(cs, ApontFertTO.class);
-			TableUtils.createTable(cs, InfoColheitaTO.class);
+			TableUtils.createTable(cs, InfColheitaTO.class);
+			TableUtils.createTable(cs, InfPlantioTO.class);
 			TableUtils.createTable(cs, ApontImpleMMTO.class);
 			TableUtils.createTable(cs, MovLeiraTO.class);
 			TableUtils.createTable(cs, CabecPneuTO.class);

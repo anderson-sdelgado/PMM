@@ -31,7 +31,7 @@ public class ConfigTO extends Entidade {
 	@DatabaseField
 	private Double horimetroConfig;
 	@DatabaseField
-	private Long visDadosColhConfig; //0 - Verificar Dados; 1- Dados Recebidos; 2 - Dados Visualizados
+	private Long verInforConfig; //0 - Verificar Dados; 1- Dados Recebidos; 2 - Dados Visualizados
 	@DatabaseField
 	private Long statusConConfig;  //0 - Offline; 1 - Online
 
@@ -94,12 +94,12 @@ public class ConfigTO extends Entidade {
         this.dtUltCLConfig = dtUltCLConfig;
     }
 
-	public Long getVisDadosColhConfig() {
-		return visDadosColhConfig;
+	public Long getVerInforConfig() {
+		return verInforConfig;
 	}
 
-	public void setVisDadosColhConfig(Long visDadosConfig) {
-		this.visDadosColhConfig = visDadosConfig;
+	public void setVerInforConfig(Long visDadosConfig) {
+		this.verInforConfig = visDadosConfig;
 	}
 
 	public Long getStatusConConfig() {

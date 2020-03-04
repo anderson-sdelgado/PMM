@@ -6,6 +6,7 @@ import java.util.Map;
 import android.content.Context;
 import android.util.Log;
 
+import br.com.usinasantafe.pmm.conHttp.PostCadGenerico;
 import br.com.usinasantafe.pmm.control.ApontCTR;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
@@ -45,7 +46,7 @@ public class EnvioDadosServ {
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
-        ConHttpPostCadGenerico conHttpPostGenerico = new ConHttpPostCadGenerico();
+        PostCadGenerico conHttpPostGenerico = new PostCadGenerico();
         conHttpPostGenerico.setParametrosPost(parametrosPost);
         conHttpPostGenerico.execute(url);
 
@@ -64,7 +65,7 @@ public class EnvioDadosServ {
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
-        ConHttpPostCadGenerico conHttpPostGenerico = new ConHttpPostCadGenerico();
+        PostCadGenerico conHttpPostGenerico = new PostCadGenerico();
         conHttpPostGenerico.setParametrosPost(parametrosPost);
         conHttpPostGenerico.execute(url);
 
@@ -83,7 +84,7 @@ public class EnvioDadosServ {
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
-        ConHttpPostCadGenerico conHttpPostGenerico = new ConHttpPostCadGenerico();
+        PostCadGenerico conHttpPostGenerico = new PostCadGenerico();
         conHttpPostGenerico.setParametrosPost(parametrosPost);
         conHttpPostGenerico.execute(url);
 
@@ -100,9 +101,9 @@ public class EnvioDadosServ {
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
-        ConHttpPostCadGenerico conHttpPostCadGenerico = new ConHttpPostCadGenerico();
-        conHttpPostCadGenerico.setParametrosPost(parametrosPost);
-        conHttpPostCadGenerico.execute(url);
+        PostCadGenerico postCadGenerico = new PostCadGenerico();
+        postCadGenerico.setParametrosPost(parametrosPost);
+        postCadGenerico.execute(url);
 
     }
 
@@ -119,7 +120,7 @@ public class EnvioDadosServ {
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
-        ConHttpPostCadGenerico conHttpPostGenerico = new ConHttpPostCadGenerico();
+        PostCadGenerico conHttpPostGenerico = new PostCadGenerico();
         conHttpPostGenerico.setParametrosPost(parametrosPost);
         conHttpPostGenerico.execute(url);
 
@@ -138,7 +139,7 @@ public class EnvioDadosServ {
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
-        ConHttpPostCadGenerico conHttpPostGenerico = new ConHttpPostCadGenerico();
+        PostCadGenerico conHttpPostGenerico = new PostCadGenerico();
         conHttpPostGenerico.setParametrosPost(parametrosPost);
         conHttpPostGenerico.execute(url);
 
@@ -155,9 +156,9 @@ public class EnvioDadosServ {
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
-        ConHttpPostCadGenerico conHttpPostCadGenerico = new ConHttpPostCadGenerico();
-        conHttpPostCadGenerico.setParametrosPost(parametrosPost);
-        conHttpPostCadGenerico.execute(url);
+        PostCadGenerico postCadGenerico = new PostCadGenerico();
+        postCadGenerico.setParametrosPost(parametrosPost);
+        postCadGenerico.execute(url);
 
     }
 
@@ -198,11 +199,11 @@ public class EnvioDadosServ {
         return apontCTR.verEnvioDadosApontFert();
     }
 
-    public Boolean verifPerda() {
+    public Boolean verifInfor() {
         boolean ret = false;
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.hasElements()){
-            if(configCTR.getVisDadosColhConfig() == 1){
+            if(configCTR.getVerInforConfig() == 1){
                 ret = true;
             }
         }
@@ -225,8 +226,8 @@ public class EnvioDadosServ {
 
     public void envioDadosPrinc() {
 
-        if(verifPerda()){
-            VerifDadosServ.getInstance().verDadosPerda();
+        if(verifInfor()){
+            VerifDadosServ.getInstance().verDadosInfor();
         }
         else {
             if (verifChecklist()) {
@@ -266,7 +267,7 @@ public class EnvioDadosServ {
     }
 
     public boolean verifDadosEnvio() {
-        if ((!verifPerda())
+        if ((!verifInfor())
                 && (!verifBolFechadoMM())
                 && (!verifBolAbertoSemEnvioMM())
                 && (!verifApontMovLeiraMM())

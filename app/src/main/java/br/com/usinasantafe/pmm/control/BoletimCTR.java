@@ -2,21 +2,18 @@ package br.com.usinasantafe.pmm.control;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.bean.variaveis.ApontFertTO;
-import br.com.usinasantafe.pmm.dao.ApontFertDAO;
-import br.com.usinasantafe.pmm.dao.ApontMMDAO;
-import br.com.usinasantafe.pmm.dao.AtividadeDAO;
-import br.com.usinasantafe.pmm.dao.BoletimFertDAO;
-import br.com.usinasantafe.pmm.dao.BoletimMMDAO;
-import br.com.usinasantafe.pmm.dao.EquipDAO;
-import br.com.usinasantafe.pmm.dao.EquipSegDAO;
-import br.com.usinasantafe.pmm.dao.OSDAO;
-import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.bean.dao.ApontFertDAO;
+import br.com.usinasantafe.pmm.bean.dao.ApontMMDAO;
+import br.com.usinasantafe.pmm.bean.dao.AtividadeDAO;
+import br.com.usinasantafe.pmm.bean.dao.BoletimFertDAO;
+import br.com.usinasantafe.pmm.bean.dao.BoletimMMDAO;
+import br.com.usinasantafe.pmm.bean.dao.EquipSegDAO;
+import br.com.usinasantafe.pmm.bean.dao.OSDAO;
 import br.com.usinasantafe.pmm.bean.variaveis.ApontMMTO;
 import br.com.usinasantafe.pmm.bean.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.bean.variaveis.BoletimMMTO;

@@ -10,9 +10,9 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.dao.CabecCheckListDAO;
-import br.com.usinasantafe.pmm.dao.ItemCheckListDAO;
-import br.com.usinasantafe.pmm.dao.RespItemCLDAO;
+import br.com.usinasantafe.pmm.bean.dao.CabecCheckListDAO;
+import br.com.usinasantafe.pmm.bean.dao.ItemCheckListDAO;
+import br.com.usinasantafe.pmm.bean.dao.RespItemCLDAO;
 import br.com.usinasantafe.pmm.bean.estaticas.ItemCheckListTO;
 import br.com.usinasantafe.pmm.bean.variaveis.CabecCLTO;
 import br.com.usinasantafe.pmm.bean.variaveis.RespItemCLTO;

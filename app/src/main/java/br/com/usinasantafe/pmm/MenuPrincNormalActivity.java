@@ -252,7 +252,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                 textViewProcessoNormal.setText("Todos os Dados já foram enviados e recebidos");
             }
 
-            if(configCTR.getConfig().getVisDadosColhConfig() == 2){
+            if(configCTR.getConfig().getVerInforConfig() == 2){
                 Intent it = new Intent( MenuPrincNormalActivity.this, DadosColheitaActivity.class);
                 startActivity(it);
                 finish();

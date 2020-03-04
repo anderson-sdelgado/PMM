@@ -3,9 +3,9 @@ package br.com.usinasantafe.pmm.control;
 import android.app.ProgressDialog;
 import android.content.Context;
 
-import br.com.usinasantafe.pmm.dao.ConfigDAO;
-import br.com.usinasantafe.pmm.dao.EquipDAO;
-import br.com.usinasantafe.pmm.dao.OSDAO;
+import br.com.usinasantafe.pmm.bean.dao.ConfigDAO;
+import br.com.usinasantafe.pmm.bean.dao.EquipDAO;
+import br.com.usinasantafe.pmm.bean.dao.OSDAO;
 import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
@@ -79,14 +79,14 @@ public class ConfigCTR {
         AtualDadosServ.getInstance().atualTodasTabBD(tela, progressDialog);
     }
 
-    public void atualVisDadosColhConfig(Long tipo){
+    public void atualVerInforConfig(Long tipo){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.atualVisDadosColhConfig(tipo);
+        configDAO.atualVerInforConfig(tipo);
     }
 
-    public Long getVisDadosColhConfig(){
+    public Long getVerInforConfig(){
         ConfigDAO configDAO = new ConfigDAO();
-        return configDAO.getVisDadosColhConfig();
+        return configDAO.getVerInforConfig();
     }
 
     public boolean verTipoOS(){

@@ -5,7 +5,7 @@ import android.app.Application;
 import br.com.usinasantafe.pmm.control.ApontCTR;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.PneuCTR;
-import br.com.usinasantafe.pmm.control.ColheitaCTR;
+import br.com.usinasantafe.pmm.control.InformativoCTR;
 
 /**
  * Created by anderson on 26/04/2017.
@@ -15,7 +15,7 @@ public class PMMContext extends Application {
 
     private BoletimCTR boletimCTR;
     private ApontCTR apontCTR;
-    private ColheitaCTR colheitaCTR;
+    private InformativoCTR informativoCTR;
     private PneuCTR pneuCTR;
     private int verPosTela;
     //1 - Inicio do boletim;
@@ -29,7 +29,7 @@ public class PMMContext extends Application {
     // 19 - Trocar de implemento
     private int contImplemento;
     private String textoHorimetro;
-    public static String versaoAplic = "2.02";
+    public static String versaoAplic = "2.03";
     private int contRend;
     private int posRend;
     private int contRecolh;
@@ -62,10 +62,10 @@ public class PMMContext extends Application {
         return apontCTR;
     }
 
-    public ColheitaCTR getColheitaCTR(){
-        if (colheitaCTR == null)
-            colheitaCTR = new ColheitaCTR();
-        return colheitaCTR;
+    public InformativoCTR getInformativoCTR(){
+        if (informativoCTR == null)
+            informativoCTR = new InformativoCTR();
+        return informativoCTR;
     }
 
     public PneuCTR getPneuCTR(){

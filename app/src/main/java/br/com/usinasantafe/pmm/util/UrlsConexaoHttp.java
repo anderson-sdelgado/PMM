@@ -77,8 +77,8 @@ public class UrlsConexaoHttp {
             retorno = urlPrincipal + "atualchecklist.php" + put;
         } else if (classe.equals("Pneu")) {
             retorno = urlPrincipal + "pneu.php" + put;
-        } else if (classe.equals("Colheita")) {
-            retorno = urlPrincipal + "perda.php" + put;
+        } else if (classe.equals("Informativo")) {
+            retorno = urlPrincipal + "informativo.php" + put;
         }
         return retorno;
     }

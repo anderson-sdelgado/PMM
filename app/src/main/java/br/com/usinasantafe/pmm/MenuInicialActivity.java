@@ -300,8 +300,8 @@ public class MenuInicialActivity extends ActivityGeneric {
             impleMMTO.delete();
         }
 
-        OSTO osto = new OSTO();
-        osto.deleteAll();
+        OSTO osTO = new OSTO();
+        osTO.deleteAll();
 
         ROSAtivTO rosAtivTO = new ROSAtivTO();
         rosAtivTO.deleteAll();

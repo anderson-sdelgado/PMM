@@ -1,4 +1,4 @@
-package br.com.usinasantafe.pmm.dao;
+package br.com.usinasantafe.pmm.bean.dao;
 
 import android.app.ProgressDialog;
 import android.content.Context;

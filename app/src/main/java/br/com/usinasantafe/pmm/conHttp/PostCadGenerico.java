@@ -1,4 +1,4 @@
-package br.com.usinasantafe.pmm.util;
+package br.com.usinasantafe.pmm.conHttp;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,23 +11,25 @@ import java.util.Map;
 import br.com.usinasantafe.pmm.control.ApontCTR;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
+import br.com.usinasantafe.pmm.util.Tempo;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class ConHttpPostCadGenerico extends AsyncTask<String, Void, String> {
+public class PostCadGenerico extends AsyncTask<String, Void, String> {
 
 
-	private static ConHttpPostCadGenerico instance = null;
+	private static PostCadGenerico instance = null;
 	private Map<String, Object> parametrosPost = null;
 
-	public ConHttpPostCadGenerico() {
+	public PostCadGenerico() {
 
 	}
 
-    public static ConHttpPostCadGenerico getInstance() {
+    public static PostCadGenerico getInstance() {
         if (instance == null)
-        instance = new ConHttpPostCadGenerico();
+        instance = new PostCadGenerico();
         return instance;
     }
 

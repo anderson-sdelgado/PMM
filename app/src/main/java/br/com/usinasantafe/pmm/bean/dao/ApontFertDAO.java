@@ -1,6 +1,4 @@
-package br.com.usinasantafe.pmm.dao;
-
-import android.util.Log;
+package br.com.usinasantafe.pmm.bean.dao;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -12,7 +10,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bean.variaveis.ApontImpleMMTO;
 import br.com.usinasantafe.pmm.bean.variaveis.CabecPneuTO;
 import br.com.usinasantafe.pmm.bean.variaveis.ItemPneuTO;
 import br.com.usinasantafe.pmm.control.ApontInterface;
@@ -20,7 +17,6 @@ import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.bean.variaveis.ApontFertTO;
-import br.com.usinasantafe.pmm.bean.variaveis.BoletimFertTO;
 import br.com.usinasantafe.pmm.bean.variaveis.RecolhFertTO;
 
 public class ApontFertDAO implements ApontInterface {

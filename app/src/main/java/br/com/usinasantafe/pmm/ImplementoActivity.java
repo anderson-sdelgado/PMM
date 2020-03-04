@@ -190,7 +190,7 @@ public class ImplementoActivity extends ActivityGeneric {
             }
         }
         else{
-            Intent it = new Intent(ImplementoActivity.this, EsperaDadosOperActivity.class);
+            Intent it = new Intent(ImplementoActivity.this, EsperaInforActivity.class);
             startActivity(it);
             finish();
         }
