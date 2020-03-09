@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import br.com.usinasantafe.pmm.conHttp.GetBDGenerico;
-import br.com.usinasantafe.pmm.pst.GenericRecordable;
+import br.com.usinasantafe.pmm.util.conHttp.GetBDGenerico;
+import br.com.usinasantafe.pmm.model.pst.GenericRecordable;
 
 import com.google.gson.Gson;
 

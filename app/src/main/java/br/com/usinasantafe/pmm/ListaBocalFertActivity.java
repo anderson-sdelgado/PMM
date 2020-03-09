@@ -13,8 +13,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.estaticas.BocalBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.bean.estaticas.BocalTO;
 
 public class ListaBocalFertActivity extends ActivityGeneric {
 
@@ -86,14 +86,14 @@ public class ListaBocalFertActivity extends ActivityGeneric {
 
         });
 
-        BocalTO bocalTO = new BocalTO();
-        bocalList = bocalTO.orderBy("codBocal", true);
+        BocalBean bocalBean = new BocalBean();
+        bocalList = bocalBean.orderBy("codBocal", true);
 
         ArrayList<String> itens = new ArrayList<String>();
 
         for(int i = 0; i < bocalList.size(); i++){
-            bocalTO = (BocalTO) bocalList.get(i);
-            itens.add(bocalTO.getCodBocal() + " - " + bocalTO.getDescrBocal());
+            bocalBean = (BocalBean) bocalList.get(i);
+            itens.add(bocalBean.getCodBocal() + " - " + bocalBean.getDescrBocal());
         }
 
         AdapterList adapterList = new AdapterList(this, itens);
@@ -106,8 +106,8 @@ public class ListaBocalFertActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                BocalTO bocalTO = (BocalTO)  bocalList.get(position);
-                pmmContext.getApontCTR().setBocal(bocalTO.getIdBocal());
+                BocalBean bocalBean = (BocalBean)  bocalList.get(position);
+                pmmContext.getApontCTR().setBocal(bocalBean.getIdBocal());
                 bocalList.clear();
 
                 Intent it = new Intent(ListaBocalFertActivity.this, ListaPressaoFertActivity.class);

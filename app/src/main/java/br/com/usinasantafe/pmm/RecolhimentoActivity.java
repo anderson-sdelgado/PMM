@@ -8,12 +8,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.control.BoletimCTR;
-import br.com.usinasantafe.pmm.bean.variaveis.RecolhFertTO;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 
 public class RecolhimentoActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
-    private RecolhFertTO recolhFertTO;
+    private RecolhFertBean recolhFertBean;
     private BoletimCTR boletimCTR;
 
     @Override
@@ -38,11 +38,11 @@ public class RecolhimentoActivity extends ActivityGeneric {
             cont = pmmContext.getPosRecolh();
         }
 
-        recolhFertTO =  boletimCTR.getRecolh(cont);
+        recolhFertBean =  boletimCTR.getRecolh(cont);
 
-        textViewRecolMang.setText("OS: " + recolhFertTO.getNroOSRecolhFert() + " \nRECOL. MANGUEIRA:");
-        if (recolhFertTO.getValorRecolhFert() > 0) {
-            editText.setText(String.valueOf(recolhFertTO.getValorRecolhFert()));
+        textViewRecolMang.setText("OS: " + recolhFertBean.getNroOSRecolhFert() + " \nRECOL. MANGUEIRA:");
+        if (recolhFertBean.getValorRecolhFert() > 0) {
+            editText.setText(String.valueOf(recolhFertBean.getValorRecolhFert()));
         } else {
             editText.setText("");
         }
@@ -103,8 +103,8 @@ public class RecolhimentoActivity extends ActivityGeneric {
     public void verTela(){
 
         Long valorRecolMang = Long.parseLong(editTextPadrao.getText().toString());
-        recolhFertTO.setValorRecolhFert(valorRecolMang);
-        pmmContext.getBoletimCTR().atualRecolh(recolhFertTO);
+        recolhFertBean.setValorRecolhFert(valorRecolMang);
+        pmmContext.getBoletimCTR().atualRecolh(recolhFertBean);
 
         if (pmmContext.getVerPosTela() == 4) {
             if (pmmContext.getBoletimCTR().qtdeRecolh() == pmmContext.getContRecolh()) {

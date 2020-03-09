@@ -11,8 +11,8 @@ import android.widget.Button;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bean.estaticas.PneuTO;
-import br.com.usinasantafe.pmm.bean.variaveis.ItemPneuTO;
+import br.com.usinasantafe.pmm.model.bean.estaticas.PneuBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ItemPneuBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
@@ -40,10 +40,10 @@ public class PneuActivity extends ActivityGeneric {
 
                 if (!editTextPadrao.getText().toString().equals("")) {
 
-                    pmmContext.getPneuCTR().getItemPneuTO().setNroPneuItemPneu(editTextPadrao.getText().toString());
+                    pmmContext.getPneuCTR().getItemPneuBean().setNroPneuItemPneu(editTextPadrao.getText().toString());
 
-                    PneuTO pneuTO = new PneuTO();
-                    List pneuList = pneuTO.get("codPneu", editTextPadrao.getText().toString());
+                    PneuBean pneuBean = new PneuBean();
+                    List pneuList = pneuBean.get("codPneu", editTextPadrao.getText().toString());
 
                     if(pneuList.size() > 0){
 
@@ -53,8 +53,8 @@ public class PneuActivity extends ActivityGeneric {
 
                         List itemMedPneuList = pmmContext.getPneuCTR().getListItemCalibPneu();
                         for(int i = 0; i < itemMedPneuList.size(); i++) {
-                            ItemPneuTO itemPneuTO = (ItemPneuTO) itemMedPneuList.get(i);
-                            if(editTextPadrao.getText().toString().equals(itemPneuTO.getNroPneuItemPneu())){
+                            ItemPneuBean itemPneuBean = (ItemPneuBean) itemMedPneuList.get(i);
+                            if(editTextPadrao.getText().toString().equals(itemPneuBean.getNroPneuItemPneu())){
                                 verCad = false;
                             }
                         }

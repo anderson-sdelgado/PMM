@@ -7,7 +7,7 @@ public class UrlsConexaoHttp {
     public static String urlPrincipal = "http://www.usinasantafe.com.br/pmmqa/view/";
     public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmmqa/view/";
 
-    public static String localPSTEstatica = "br.com.usinasantafe.pmm.bean.estaticas.";
+    public static String localPSTEstatica = "br.com.usinasantafe.pmm.model.bean.estaticas.";
     public static String localUrl = "br.com.usinasantafe.pmm.util.UrlsConexaoHttp";
 
     public static String put = "?versao=" + PMMContext.versaoAplic.replace(".", "_");

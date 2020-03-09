@@ -14,10 +14,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.bean.estaticas.AtividadeTO;
-import br.com.usinasantafe.pmm.bean.estaticas.RFuncaoAtivParTO;
+import br.com.usinasantafe.pmm.model.bean.estaticas.AtividadeBean;
 
 public class ListaAtividadeActivity extends ActivityGeneric {
 
@@ -95,8 +95,8 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
         ArrayList<String> itens = new ArrayList<String>();
         for (int i = 0; i < ativArrayList.size(); i++) {
-            AtividadeTO atividadeTO = (AtividadeTO) ativArrayList.get(i);
-            itens.add(atividadeTO.getCodAtiv() + " - " + atividadeTO.getDescrAtiv());
+            AtividadeBean atividadeBean = (AtividadeBean) ativArrayList.get(i);
+            itens.add(atividadeBean.getCodAtiv() + " - " + atividadeBean.getDescrAtiv());
         }
 
         AdapterList adapterList = new AdapterList(this, itens);
@@ -110,12 +110,12 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                     long id) {
                 // TODO Auto-generated method stub
 
-                AtividadeTO atividadeTO = (AtividadeTO) ativArrayList.get(position);
+                AtividadeBean atividadeBean = (AtividadeBean) ativArrayList.get(position);
                 ativArrayList.clear();
 
                 if (pmmContext.getVerPosTela() == 1) {
 
-                    pmmContext.getBoletimCTR().setAtivBol(atividadeTO.getIdAtiv());
+                    pmmContext.getBoletimCTR().setAtivBol(atividadeBean.getIdAtiv());
                     pmmContext.setTextoHorimetro("HORÍMETRO INICIAL:");
 
                     Intent it = new Intent(ListaAtividadeActivity.this, HorimetroActivity.class);
@@ -125,7 +125,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 } else if ((pmmContext.getVerPosTela() == 2)) {
 
                     pmmContext.getApontCTR().setOSApont(nroOS);
-                    pmmContext.getApontCTR().setAtivApont(atividadeTO.getIdAtiv());
+                    pmmContext.getApontCTR().setAtivApont(atividadeBean.getIdAtiv());
 
                     if (pmmContext.getApontCTR().verifBackupApont()) {
 
@@ -144,17 +144,17 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                         if (configCTR.getEquip().getTipo() == 1) {
 
-                            List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(atividadeTO.getIdAtiv());
+                            List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(atividadeBean.getIdAtiv());
 
                             boolean transbordo = false;
                             boolean rendimento = false;
 
                             for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
-                                RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtividadeList.get(i);
-                                if(rFuncaoAtivParTO.getCodFuncao() == 2){
+                                RFuncaoAtivParBean rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtividadeList.get(i);
+                                if(rFuncaoAtivParBean.getCodFuncao() == 2){
                                     transbordo = true;
                                 }
-                                if(rFuncaoAtivParTO.getCodFuncao() == 1){
+                                if(rFuncaoAtivParBean.getCodFuncao() == 1){
                                     rendimento = true;
                                 }
                             }
@@ -188,7 +188,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                 } else if(pmmContext.getVerPosTela() == 3) {
 
-                    pmmContext.getApontCTR().setAtivApont(atividadeTO.getIdAtiv());
+                    pmmContext.getApontCTR().setAtivApont(atividadeBean.getIdAtiv());
 
                     Intent it = new Intent(ListaAtividadeActivity.this, ListaParadaActivity.class);
                     startActivity(it);

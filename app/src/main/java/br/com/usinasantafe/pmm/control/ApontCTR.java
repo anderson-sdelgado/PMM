@@ -3,31 +3,31 @@ package br.com.usinasantafe.pmm.control;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bean.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.bean.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.bean.dao.AtividadeDAO;
-import br.com.usinasantafe.pmm.bean.dao.CabecPneuDAO;
+import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.RAtivParadaBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMBean;
+import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
+import br.com.usinasantafe.pmm.model.dao.CabecPneuDAO;
 import br.com.usinasantafe.pmm.util.Tempo;
-import br.com.usinasantafe.pmm.bean.dao.ApontFertDAO;
-import br.com.usinasantafe.pmm.bean.dao.ApontMMDAO;
-import br.com.usinasantafe.pmm.bean.dao.BoletimFertDAO;
-import br.com.usinasantafe.pmm.bean.dao.BoletimMMDAO;
-import br.com.usinasantafe.pmm.bean.dao.MovLeiraDAO;
-import br.com.usinasantafe.pmm.bean.estaticas.ParadaTO;
-import br.com.usinasantafe.pmm.bean.estaticas.RAtivParadaTO;
-import br.com.usinasantafe.pmm.bean.variaveis.ApontFertTO;
-import br.com.usinasantafe.pmm.bean.variaveis.ApontMMTO;
+import br.com.usinasantafe.pmm.model.dao.ApontFertDAO;
+import br.com.usinasantafe.pmm.model.dao.ApontMMDAO;
+import br.com.usinasantafe.pmm.model.dao.BoletimFertDAO;
+import br.com.usinasantafe.pmm.model.dao.BoletimMMDAO;
+import br.com.usinasantafe.pmm.model.dao.MovLeiraDAO;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMBean;
 
 public class ApontCTR {
 
-    private ApontMMTO apontMMTO;
-    private ApontFertTO apontFertTO;
+    private ApontMMBean apontMMBean;
+    private ApontFertBean apontFertBean;
 
     public ApontCTR() {
-        if (apontMMTO == null)
-            apontMMTO = new ApontMMTO();
-        if (apontFertTO == null)
-            apontFertTO = new ApontFertTO();
+        if (apontMMBean == null)
+            apontMMBean = new ApontMMBean();
+        if (apontFertBean == null)
+            apontFertBean = new ApontFertBean();
     }
 
     //////////////////////////// SETAR CAMPOS ///////////////////////////////////////////////
@@ -35,55 +35,55 @@ public class ApontCTR {
     public void setOSApont(Long os){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            apontMMTO.setOsApontMM(os);
+            apontMMBean.setOsApontMM(os);
         }
         else{
-            apontFertTO.setOsApontFert(os);
+            apontFertBean.setOsApontFert(os);
         }
     }
 
     public void setAtivApont(Long ativ){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            apontMMTO.setAtivApontMM(ativ);
-            apontMMTO.setStatusConApontMM(configCTR.getConfig().getStatusConConfig());
-            apontMMTO.setParadaApontMM(0L);
-            apontMMTO.setTransbApontMM(0L);
+            apontMMBean.setAtivApontMM(ativ);
+            apontMMBean.setStatusConApontMM(configCTR.getConfig().getStatusConConfig());
+            apontMMBean.setParadaApontMM(0L);
+            apontMMBean.setTransbApontMM(0L);
         }
         else{
-            apontFertTO.setAtivApontFert(ativ);
-            apontFertTO.setStatusConApontFert(configCTR.getConfig().getStatusConConfig());
-            apontFertTO.setParadaApontFert(0L);
+            apontFertBean.setAtivApontFert(ativ);
+            apontFertBean.setStatusConApontFert(configCTR.getConfig().getStatusConConfig());
+            apontFertBean.setParadaApontFert(0L);
         }
     }
 
     public void setParadaApont(Long parada){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            apontMMTO.setParadaApontMM(parada);
+            apontMMBean.setParadaApontMM(parada);
         }
         else{
-            apontFertTO.setBocalApontFert(0L);
-            apontFertTO.setPressaoApontFert(0D);
-            apontFertTO.setVelocApontFert(0L);
-            apontFertTO.setParadaApontFert(parada);
+            apontFertBean.setBocalApontFert(0L);
+            apontFertBean.setPressaoApontFert(0D);
+            apontFertBean.setVelocApontFert(0L);
+            apontFertBean.setParadaApontFert(parada);
         }
     }
 
     public void setTransb(Long transb){
-        apontMMTO.setTransbApontMM(transb);
+        apontMMBean.setTransbApontMM(transb);
     }
 
     public void setBocal(Long bocal){
-        apontFertTO.setBocalApontFert(bocal);
+        apontFertBean.setBocalApontFert(bocal);
     }
 
     public void setPressaoBocal(Double pressaoBocal){
-        apontFertTO.setPressaoApontFert(pressaoBocal);
+        apontFertBean.setPressaoApontFert(pressaoBocal);
     }
 
     public void setVelocApont(Long velocApont){
-        apontFertTO.setVelocApontFert(velocApont);
+        apontFertBean.setVelocApontFert(velocApont);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,40 +93,40 @@ public class ApontCTR {
     public Long getAtivApont(){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            return apontMMTO.getAtivApontMM();
+            return apontMMBean.getAtivApontMM();
         }
         else{
-            return apontFertTO.getAtivApontFert();
+            return apontFertBean.getAtivApontFert();
         }
     }
 
     public Long getBocalApontFert(){
-        return apontFertTO.getBocalApontFert();
+        return apontFertBean.getBocalApontFert();
     }
 
     public Double getPressaoApontFert(){
-        return apontFertTO.getPressaoApontFert();
+        return apontFertBean.getPressaoApontFert();
     }
 
     public List getListParada(){
         Long ativ;
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            ativ = apontMMTO.getAtivApontMM();
+            ativ = apontMMBean.getAtivApontMM();
         }
         else{
-            ativ = apontFertTO.getAtivApontFert();
+            ativ = apontFertBean.getAtivApontFert();
         }
-        RAtivParadaTO rAtivParadaTO = new RAtivParadaTO();
-        List rAtivParadaList = rAtivParadaTO.get("idAtiv", ativ);
+        RAtivParadaBean rAtivParadaBean = new RAtivParadaBean();
+        List rAtivParadaList = rAtivParadaBean.get("idAtiv", ativ);
         ArrayList<Long> rLista = new ArrayList<Long>();
         for (int i = 0; i < rAtivParadaList.size(); i++) {
-            rAtivParadaTO = (RAtivParadaTO) rAtivParadaList.get(i);
-            rLista.add(rAtivParadaTO.getIdParada());
+            rAtivParadaBean = (RAtivParadaBean) rAtivParadaList.get(i);
+            rLista.add(rAtivParadaBean.getIdParada());
         }
         rAtivParadaList.clear();
-        ParadaTO paradaTO = new ParadaTO();
-        return paradaTO.inAndOrderBy("idParada", rLista, "codParada", true);
+        ParadaBean paradaBean = new ParadaBean();
+        return paradaBean.inAndOrderBy("idParada", rLista, "codParada", true);
     }
 
     public Long getIdApont(){
@@ -145,12 +145,12 @@ public class ApontCTR {
 
     //////////////////////////// CRIAR E ATUALIZAR APONTAMENTO ////////////////////////////////////
 
-    private ApontMMTO createApontMM(BoletimCTR boletimCTR){
+    private ApontMMBean createApontMM(BoletimCTR boletimCTR){
         ApontMMDAO apontMMDAO = new ApontMMDAO();
         return apontMMDAO.createApont(boletimCTR);
     }
 
-    private ApontFertTO createApontFert(BoletimCTR boletimCTR){
+    private ApontFertBean createApontFert(BoletimCTR boletimCTR){
         ApontFertDAO apontFertDAO = new ApontFertDAO();
         return apontFertDAO.createApont(boletimCTR);
     }
@@ -161,30 +161,30 @@ public class ApontCTR {
         Long equip = 0L;
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            BoletimMMTO boletimMMTO = boletimCTR.getBolMMAberto();
-            apontMMTO.setIdBolApontMM(boletimMMTO.getIdBolMM());
-            apontMMTO.setIdExtBolApontMM(boletimMMTO.getIdExtBolMM());
-            apontMMTO.setStatusApontMM(status);
-            apontMMTO.setLongitudeApontMM(longitude);
-            apontMMTO.setLatitudeApontMM(latitude);
-            apontMMTO.setDthrApontMM(Tempo.getInstance().dataComHora().getDataHora());
-            apontMMTO.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
-            salvarApontMM(apontMMTO);
-            func = boletimMMTO.getMatricFuncBolMM();
-            equip = boletimMMTO.getIdEquipBolMM();
+            BoletimMMBean boletimMMBean = boletimCTR.getBolMMAberto();
+            apontMMBean.setIdBolApontMM(boletimMMBean.getIdBolMM());
+            apontMMBean.setIdExtBolApontMM(boletimMMBean.getIdExtBolMM());
+            apontMMBean.setStatusApontMM(status);
+            apontMMBean.setLongitudeApontMM(longitude);
+            apontMMBean.setLatitudeApontMM(latitude);
+            apontMMBean.setDthrApontMM(Tempo.getInstance().dataComHora().getDataHora());
+            apontMMBean.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
+            salvarApontMM(apontMMBean);
+            func = boletimMMBean.getMatricFuncBolMM();
+            equip = boletimMMBean.getIdEquipBolMM();
         }
         else{
-            BoletimFertTO boletimFertTO = boletimCTR.getBolFertAberto();
-            apontFertTO.setIdBolApontFert(boletimFertTO.getIdBolFert());
-            apontFertTO.setIdExtBolApontFert(boletimFertTO.getIdExtBolFert());
-            apontFertTO.setStatusApontFert(status);
-            apontFertTO.setLongitudeApontFert(longitude);
-            apontFertTO.setLatitudeApontFert(latitude);
-            apontFertTO.setDthrApontFert(Tempo.getInstance().dataComHora().getDataHora());
-            apontFertTO.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
-            salvarApontFert(apontFertTO);
-            func = boletimFertTO.getMatricFuncBolFert();
-            equip = boletimFertTO.getIdEquipBolFert();
+            BoletimFertBean boletimFertBean = boletimCTR.getBolFertAberto();
+            apontFertBean.setIdBolApontFert(boletimFertBean.getIdBolFert());
+            apontFertBean.setIdExtBolApontFert(boletimFertBean.getIdExtBolFert());
+            apontFertBean.setStatusApontFert(status);
+            apontFertBean.setLongitudeApontFert(longitude);
+            apontFertBean.setLatitudeApontFert(latitude);
+            apontFertBean.setDthrApontFert(Tempo.getInstance().dataComHora().getDataHora());
+            apontFertBean.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
+            salvarApontFert(apontFertBean);
+            func = boletimFertBean.getMatricFuncBolFert();
+            equip = boletimFertBean.getIdEquipBolFert();
         }
         if(status == 0L){
             CabecPneuDAO cabecPneuDAO = new CabecPneuDAO();
@@ -196,35 +196,35 @@ public class ApontCTR {
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
             ApontMMDAO apontMMDAO = new ApontMMDAO();
-            ApontMMTO apontMMTO = apontMMDAO.getApontMMAberto();
-            apontMMDAO.updApont(apontMMTO);
+            ApontMMBean apontMMBean = apontMMDAO.getApontMMAberto();
+            apontMMDAO.updApont(apontMMBean);
         }
         else{
             ApontFertDAO apontFertDAO = new ApontFertDAO();
-            ApontFertTO apontFertTO = apontFertDAO.getApontFertAberto();
-            apontFertDAO.updApont(apontFertTO);
+            ApontFertBean apontFertBean = apontFertDAO.getApontFertAberto();
+            apontFertDAO.updApont(apontFertBean);
         }
     }
 
-    private void salvarApontMM(ApontMMTO apontMMTO){
+    private void salvarApontMM(ApontMMBean apontMMBean){
 
         BoletimCTR boletimCTR = new BoletimCTR();
         boletimCTR.atualQtdeApontBol();
 
         ApontMMDAO apontMMDAO = new ApontMMDAO();
-        apontMMDAO.salvarApont(apontMMTO);
+        apontMMDAO.salvarApont(apontMMBean);
 
         ConfigCTR configCTR = new ConfigCTR();
         configCTR.setDtUltApontConfig(Tempo.getInstance().dataComHora().getDataHora());
     }
 
-    private void salvarApontFert(ApontFertTO apontFertTO){
+    private void salvarApontFert(ApontFertBean apontFertBean){
 
         BoletimCTR boletimCTR = new BoletimCTR();
         boletimCTR.atualQtdeApontBol();
 
         ApontFertDAO apontFertDAO = new ApontFertDAO();
-        apontFertDAO.salvarApont(apontFertTO);
+        apontFertDAO.salvarApont(apontFertBean);
 
         ConfigCTR configCTR = new ConfigCTR();
         configCTR.setDtUltApontConfig(Tempo.getInstance().dataComHora().getDataHora());
@@ -234,18 +234,18 @@ public class ApontCTR {
         AtividadeDAO atividadeDAO = new AtividadeDAO();
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            ApontMMTO apontMMTO = createApontMM(boletimCTR);
-            apontMMTO.setDthrApontMM(Tempo.getInstance().dataComHora().getDataHora());
-            apontMMTO.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
-            apontMMTO.setParadaApontMM(atividadeDAO.idParadaImplemento());
-            salvarApontMM(apontMMTO);
+            ApontMMBean apontMMBean = createApontMM(boletimCTR);
+            apontMMBean.setDthrApontMM(Tempo.getInstance().dataComHora().getDataHora());
+            apontMMBean.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
+            apontMMBean.setParadaApontMM(atividadeDAO.idParadaImplemento());
+            salvarApontMM(apontMMBean);
         }
         else{
-            ApontFertTO apontFertTO = createApontFert(boletimCTR);
-            apontFertTO.setDthrApontFert(Tempo.getInstance().dataComHora().getDataHora());
-            apontFertTO.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
-            apontFertTO.setParadaApontFert(atividadeDAO.idParadaImplemento());
-            salvarApontFert(apontFertTO);
+            ApontFertBean apontFertBean = createApontFert(boletimCTR);
+            apontFertBean.setDthrApontFert(Tempo.getInstance().dataComHora().getDataHora());
+            apontFertBean.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
+            apontFertBean.setParadaApontFert(atividadeDAO.idParadaImplemento());
+            salvarApontFert(apontFertBean);
         }
 
     }
@@ -254,27 +254,27 @@ public class ApontCTR {
         AtividadeDAO atividadeDAO = new AtividadeDAO();
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            ApontMMTO apontMMTO = createApontMM(boletimCTR);
-            apontMMTO.setDthrApontMM(Tempo.getInstance().dataComHora().getDataHora());
-            apontMMTO.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
-            apontMMTO.setParadaApontMM(atividadeDAO.idParadaCheckList());
-            salvarApontMM(apontMMTO);
+            ApontMMBean apontMMBean = createApontMM(boletimCTR);
+            apontMMBean.setDthrApontMM(Tempo.getInstance().dataComHora().getDataHora());
+            apontMMBean.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
+            apontMMBean.setParadaApontMM(atividadeDAO.idParadaCheckList());
+            salvarApontMM(apontMMBean);
         }
         else{
-            ApontFertTO apontFertTO = createApontFert(boletimCTR);
-            apontFertTO.setDthrApontFert(Tempo.getInstance().dataComHora().getDataHora());
-            apontFertTO.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
-            apontFertTO.setParadaApontFert(atividadeDAO.idParadaCheckList());
-            salvarApontFert(apontFertTO);
+            ApontFertBean apontFertBean = createApontFert(boletimCTR);
+            apontFertBean.setDthrApontFert(Tempo.getInstance().dataComHora().getDataHora());
+            apontFertBean.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
+            apontFertBean.setParadaApontFert(atividadeDAO.idParadaCheckList());
+            salvarApontFert(apontFertBean);
         }
     }
 
     public void inserirApontTransb(BoletimCTR boletimCTR){
-        ApontMMTO apontMMTO = createApontMM(boletimCTR);
-        apontMMTO.setDthrApontMM(Tempo.getInstance().dataComHora().getDataHora());
-        apontMMTO.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
-        apontMMTO.setTransbApontMM(this.apontMMTO.getTransbApontMM());
-        salvarApontMM(apontMMTO);
+        ApontMMBean apontMMBean = createApontMM(boletimCTR);
+        apontMMBean.setDthrApontMM(Tempo.getInstance().dataComHora().getDataHora());
+        apontMMBean.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
+        apontMMBean.setTransbApontMM(this.apontMMBean.getTransbApontMM());
+        salvarApontMM(apontMMBean);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -290,10 +290,10 @@ public class ApontCTR {
             ApontMMDAO apontMMDAO = new ApontMMDAO();
             List apontMMList = apontMMDAO.getListAllApont(boletimMMDAO.getIdBolAberto());
             if(apontMMList.size() > 0){
-                ApontMMTO apontMMTO = (ApontMMTO) apontMMList.get(apontMMList.size() - 1);
-                if ((this.apontMMTO.getOsApontMM().equals(apontMMTO.getOsApontMM()))
-                        && (this.apontMMTO.getAtivApontMM().equals(apontMMTO.getAtivApontMM()))
-                        && (this.apontMMTO.getParadaApontMM().equals(apontMMTO.getParadaApontMM()))) {
+                ApontMMBean apontMMBean = (ApontMMBean) apontMMList.get(apontMMList.size() - 1);
+                if ((this.apontMMBean.getOsApontMM().equals(apontMMBean.getOsApontMM()))
+                        && (this.apontMMBean.getAtivApontMM().equals(apontMMBean.getAtivApontMM()))
+                        && (this.apontMMBean.getParadaApontMM().equals(apontMMBean.getParadaApontMM()))) {
                     v = true;
                 }
             }
@@ -304,10 +304,10 @@ public class ApontCTR {
             ApontFertDAO apontFertDAO = new ApontFertDAO();
             List apontFertList = apontFertDAO.getListAllApont(boletimFertDAO.getIdBolAberto());
             if(apontFertList.size() > 0){
-                ApontFertTO apontFertTO = (ApontFertTO) apontFertList.get(apontFertList.size() - 1);
-                if ((this.apontFertTO.getOsApontFert().equals(apontFertTO.getOsApontFert()))
-                        && (this.apontFertTO.getAtivApontFert().equals(apontFertTO.getAtivApontFert()))
-                        && (this.apontFertTO.getParadaApontFert().equals(apontFertTO.getParadaApontFert()))) {
+                ApontFertBean apontFertBean = (ApontFertBean) apontFertList.get(apontFertList.size() - 1);
+                if ((this.apontFertBean.getOsApontFert().equals(apontFertBean.getOsApontFert()))
+                        && (this.apontFertBean.getAtivApontFert().equals(apontFertBean.getAtivApontFert()))
+                        && (this.apontFertBean.getParadaApontFert().equals(apontFertBean.getParadaApontFert()))) {
                     v = true;
                 }
             }
@@ -322,11 +322,11 @@ public class ApontCTR {
         ApontMMDAO apontMMDAO = new ApontMMDAO();
         List apontMMList = apontMMDAO.getListAllApont(boletimMMDAO.getIdBolAberto());
         if(apontMMList.size() > 0){
-            ApontMMTO apontMMTO = (ApontMMTO) apontMMList.get(apontMMList.size() - 1);
-            if ((this.apontMMTO.getOsApontMM().equals(apontMMTO.getOsApontMM()))
-                    && (this.apontMMTO.getAtivApontMM().equals(apontMMTO.getAtivApontMM()))
-                    && (this.apontMMTO.getParadaApontMM().equals(apontMMTO.getParadaApontMM()))
-                    && (this.apontMMTO.getTransbApontMM().equals(apontMMTO.getTransbApontMM()))) {
+            ApontMMBean apontMMBean = (ApontMMBean) apontMMList.get(apontMMList.size() - 1);
+            if ((this.apontMMBean.getOsApontMM().equals(apontMMBean.getOsApontMM()))
+                    && (this.apontMMBean.getAtivApontMM().equals(apontMMBean.getAtivApontMM()))
+                    && (this.apontMMBean.getParadaApontMM().equals(apontMMBean.getParadaApontMM()))
+                    && (this.apontMMBean.getTransbApontMM().equals(apontMMBean.getTransbApontMM()))) {
                 v = true;
             }
         }

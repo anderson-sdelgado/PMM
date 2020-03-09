@@ -6,7 +6,7 @@ import java.util.Map;
 import android.content.Context;
 import android.util.Log;
 
-import br.com.usinasantafe.pmm.conHttp.PostCadGenerico;
+import br.com.usinasantafe.pmm.util.conHttp.PostCadGenerico;
 import br.com.usinasantafe.pmm.control.ApontCTR;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;

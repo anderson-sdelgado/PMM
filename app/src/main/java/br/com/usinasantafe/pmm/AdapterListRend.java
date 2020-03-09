@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bean.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 
 /**
  * Created by anderson on 19/10/2015.
@@ -47,12 +47,12 @@ public class AdapterListRend extends BaseAdapter {
         TextView textViewRendNroOS = (TextView) view.findViewById(R.id.textViewRendNroOS);
         TextView textViewRendValor = (TextView) view.findViewById(R.id.textViewRendValor);
 
-        RendMMTO rendMMTO = (RendMMTO) itens.get(position);
+        RendMMBean rendMMBean = (RendMMBean) itens.get(position);
 
-        textViewRendNroOS.setText("NRO OS: " + rendMMTO.getNroOSRendMM());
+        textViewRendNroOS.setText("NRO OS: " + rendMMBean.getNroOSRendMM());
 
-        if(rendMMTO.getValorRendMM() > 0){
-            textViewRendValor.setText("REND.: " + rendMMTO.getValorRendMM());
+        if(rendMMBean.getValorRendMM() > 0){
+            textViewRendValor.setText("REND.: " + rendMMBean.getValorRendMM());
         }
         else{
             textViewRendValor.setText("REND.: ");

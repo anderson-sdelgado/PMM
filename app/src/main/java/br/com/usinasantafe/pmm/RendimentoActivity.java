@@ -11,13 +11,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bean.estaticas.OSTO;
-import br.com.usinasantafe.pmm.bean.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.model.bean.estaticas.OSBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 
 public class RendimentoActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
-    private RendMMTO rendMMTO;
+    private RendMMBean rendMMBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +40,11 @@ public class RendimentoActivity extends ActivityGeneric {
             cont = pmmContext.getPosRend();
         }
 
-        rendMMTO =  pmmContext.getBoletimCTR().getRend(cont);
+        rendMMBean =  pmmContext.getBoletimCTR().getRend(cont);
 
-        textViewRendimento.setText("OS " + rendMMTO.getNroOSRendMM() +" \nRENDIMENTO :");
-        if(rendMMTO.getValorRendMM() > 0){
-            editText.setText(String.valueOf(rendMMTO.getValorRendMM()).replace(".", ","));
+        textViewRendimento.setText("OS " + rendMMBean.getNroOSRendMM() +" \nRENDIMENTO :");
+        if(rendMMBean.getValorRendMM() > 0){
+            editText.setText(String.valueOf(rendMMBean.getValorRendMM()).replace(".", ","));
         }
         else{
             editText.setText("");
@@ -102,8 +102,8 @@ public class RendimentoActivity extends ActivityGeneric {
 
     public void verTela(Double rendNum){
 
-        rendMMTO.setValorRendMM(rendNum);
-        pmmContext.getBoletimCTR().atualRend(rendMMTO);
+        rendMMBean.setValorRendMM(rendNum);
+        pmmContext.getBoletimCTR().atualRend(rendMMBean);
 
         if (pmmContext.getVerPosTela() == 4) {
             if (pmmContext.getBoletimCTR().qtdeRend() == pmmContext.getContRend()) {
@@ -129,10 +129,10 @@ public class RendimentoActivity extends ActivityGeneric {
     public void verifRend(){
         String rend = editTextPadrao.getText().toString();
         Double rendNum = Double.valueOf(rend.replace(",", "."));
-        OSTO osTO = new OSTO();
-        List osList = osTO.get("nroOS", rendMMTO.getNroOSRendMM());
+        OSBean osTO = new OSBean();
+        List osList = osTO.get("nroOS", rendMMBean.getNroOSRendMM());
         if (osList.size() > 0) {
-            osTO = (OSTO) osList.get(0);
+            osTO = (OSBean) osList.get(0);
         } else {
             osTO.setAreaProgrOS(150D);
         }

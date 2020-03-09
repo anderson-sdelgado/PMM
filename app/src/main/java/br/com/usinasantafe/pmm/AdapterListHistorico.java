@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.estaticas.BocalBean;
 import br.com.usinasantafe.pmm.util.Tempo;
-import br.com.usinasantafe.pmm.bean.estaticas.AtividadeTO;
-import br.com.usinasantafe.pmm.bean.estaticas.BocalTO;
-import br.com.usinasantafe.pmm.bean.estaticas.ParadaTO;
-import br.com.usinasantafe.pmm.bean.variaveis.ApontFertTO;
-import br.com.usinasantafe.pmm.bean.variaveis.ApontMMTO;
+import br.com.usinasantafe.pmm.model.bean.estaticas.AtividadeBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMBean;
 
 /**
  * Created by anderson on 08/03/2018.
@@ -60,31 +60,31 @@ public class AdapterListHistorico extends BaseAdapter {
         textViewHistDetalhes = (TextView) view.findViewById(R.id.textViewHistDetalhes);
 
         if (tipoEquip == 1L) {
-            ApontMMTO apontMMTO = (ApontMMTO) itens.get(position);
-            descrApont(apontMMTO.getParadaApontMM(), apontMMTO.getAtivApontMM());
-            horarioApont(apontMMTO.getDthrApontMM());
-            if(apontMMTO.getTransbApontMM() > 0){
-                textViewHistDetalhes.setText("TRANSBORDO: " + apontMMTO.getTransbApontMM());
+            ApontMMBean apontMMBean = (ApontMMBean) itens.get(position);
+            descrApont(apontMMBean.getParadaApontMM(), apontMMBean.getAtivApontMM());
+            horarioApont(apontMMBean.getDthrApontMM());
+            if(apontMMBean.getTransbApontMM() > 0){
+                textViewHistDetalhes.setText("TRANSBORDO: " + apontMMBean.getTransbApontMM());
             }
             else{
                 textViewHistDetalhes.setText("");
             }
         }
         else{
-            ApontFertTO apontFertTO = (ApontFertTO) itens.get(position);
-            descrApont(apontFertTO.getParadaApontFert(), apontFertTO.getAtivApontFert());
-            horarioApont(apontFertTO.getDthrApontFert());
-            if(apontFertTO.getParadaApontFert() > 0) {
+            ApontFertBean apontFertBean = (ApontFertBean) itens.get(position);
+            descrApont(apontFertBean.getParadaApontFert(), apontFertBean.getAtivApontFert());
+            horarioApont(apontFertBean.getDthrApontFert());
+            if(apontFertBean.getParadaApontFert() > 0) {
                 textViewHistDetalhes.setText("");
             }
             else{
-                BocalTO bocalTO = new BocalTO();
-                List bocalList = bocalTO.get("idBocal", apontFertTO.getBocalApontFert());
-                bocalTO = (BocalTO) bocalList.get(0);
+                BocalBean bocalBean = new BocalBean();
+                List bocalList = bocalBean.get("idBocal", apontFertBean.getBocalApontFert());
+                bocalBean = (BocalBean) bocalList.get(0);
                 bocalList.clear();
-                textViewHistDetalhes.setText("BOCAL: " + bocalTO.getDescrBocal() + "\n" +
-                        "PRESSÃO: " + apontFertTO.getPressaoApontFert() + "\n" +
-                        "VELOCIDADE: " + apontFertTO.getVelocApontFert());
+                textViewHistDetalhes.setText("BOCAL: " + bocalBean.getDescrBocal() + "\n" +
+                        "PRESSÃO: " + apontFertBean.getPressaoApontFert() + "\n" +
+                        "VELOCIDADE: " + apontFertBean.getVelocApontFert());
             }
         }
 
@@ -93,17 +93,17 @@ public class AdapterListHistorico extends BaseAdapter {
 
     public void descrApont(Long parada, Long ativ){
         if(parada == 0) {
-            AtividadeTO atividadeTO = new AtividadeTO();
-            List atividadeList = atividadeTO.get("idAtiv", ativ);
-            atividadeTO = (AtividadeTO) atividadeList.get(0);
-            textViewHistApont.setText("ATIVIDADE: " + atividadeTO.getCodAtiv() + " - " + atividadeTO.getDescrAtiv());
+            AtividadeBean atividadeBean = new AtividadeBean();
+            List atividadeList = atividadeBean.get("idAtiv", ativ);
+            atividadeBean = (AtividadeBean) atividadeList.get(0);
+            textViewHistApont.setText("ATIVIDADE: " + atividadeBean.getCodAtiv() + " - " + atividadeBean.getDescrAtiv());
             textViewHistApont.setTextColor(Color.BLUE);
         }
         else{
-            ParadaTO paradaTO = new ParadaTO();
-            List paradaList = paradaTO.get("idParada", parada);
-            paradaTO = (ParadaTO) paradaList.get(0);
-            textViewHistApont.setText("PARADA: " + paradaTO.getCodParada() + " - " + paradaTO.getDescrParada());
+            ParadaBean paradaBean = new ParadaBean();
+            List paradaList = paradaBean.get("idParada", parada);
+            paradaBean = (ParadaBean) paradaList.get(0);
+            textViewHistApont.setText("PARADA: " + paradaBean.getCodParada() + " - " + paradaBean.getDescrParada());
             textViewHistApont.setTextColor(Color.RED);
         }
     }

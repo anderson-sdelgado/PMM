@@ -3,11 +3,11 @@ package br.com.usinasantafe.pmm.control;
 import android.app.ProgressDialog;
 import android.content.Context;
 
-import br.com.usinasantafe.pmm.bean.dao.ConfigDAO;
-import br.com.usinasantafe.pmm.bean.dao.EquipDAO;
-import br.com.usinasantafe.pmm.bean.dao.OSDAO;
-import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.model.dao.ConfigDAO;
+import br.com.usinasantafe.pmm.model.dao.EquipDAO;
+import br.com.usinasantafe.pmm.model.dao.OSDAO;
+import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
 
 public class ConfigCTR {
@@ -16,11 +16,11 @@ public class ConfigCTR {
     }
 
     public boolean hasElements(){
-        ConfigTO configTO = new ConfigTO();
-        return configTO.hasElements();
+        ConfigBean configBean = new ConfigBean();
+        return configBean.hasElements();
     }
 
-    public ConfigTO getConfig(){
+    public ConfigBean getConfig(){
         ConfigDAO configDAO = new ConfigDAO();
         return configDAO.getConfig();
     }
@@ -30,9 +30,9 @@ public class ConfigCTR {
         configDAO.salvarConfig(senha);
     }
 
-    public void setEquipConfig(EquipTO equipTO){
+    public void setEquipConfig(EquipBean equipBean){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setEquipConfig(equipTO);
+        configDAO.setEquipConfig(equipBean);
     }
 
     public void setDtServConfig(String data){
@@ -70,7 +70,7 @@ public class ConfigCTR {
         equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog);
     }
 
-    public EquipTO getEquip(){
+    public EquipBean getEquip(){
         EquipDAO equipDAO = new EquipDAO();
         return equipDAO.getEquip();
     }

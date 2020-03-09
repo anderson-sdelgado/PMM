@@ -11,7 +11,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bean.estaticas.LeiraTO;
+import br.com.usinasantafe.pmm.model.bean.estaticas.LeiraBean;
 
 public class ListaLeiraActivity extends ActivityGeneric {
 
@@ -44,14 +44,14 @@ public class ListaLeiraActivity extends ActivityGeneric {
             status = 0L;
         }
 
-        LeiraTO leiraTO = new LeiraTO();
-        leiraList = leiraTO.getAndOrderBy("statusLeira", status, "codLeira", true);
+        LeiraBean leiraBean = new LeiraBean();
+        leiraList = leiraBean.getAndOrderBy("statusLeira", status, "codLeira", true);
 
         for (int i = 0; i < leiraList.size(); i++) {
-            leiraTO = (LeiraTO) leiraList.get(i);
+            leiraBean = (LeiraBean) leiraList.get(i);
             ViewHolderChoice viewHolderChoice = new ViewHolderChoice();
             viewHolderChoice.setSelected(false);
-            viewHolderChoice.setDescrCheckBox(String.valueOf(leiraTO.getCodLeira()));
+            viewHolderChoice.setDescrCheckBox(String.valueOf(leiraBean.getCodLeira()));
             itens.add(viewHolderChoice);
         }
 
@@ -85,18 +85,18 @@ public class ListaLeiraActivity extends ActivityGeneric {
                     ViewHolderChoice viewHolderChoice = itens.get(i);
 
                     if(viewHolderChoice.isSelected()){
-                        LeiraTO leiraTO = (LeiraTO) leiraList.get(i);
-                        leiraSelectedList.add(leiraTO.getIdLeira());
+                        LeiraBean leiraBean = (LeiraBean) leiraList.get(i);
+                        leiraSelectedList.add(leiraBean.getIdLeira());
                         if(pmmContext.getTipoMovComp() == 1){
-                            leiraTO.setStatusLeira(1L);
+                            leiraBean.setStatusLeira(1L);
                         }
                         else if(pmmContext.getTipoMovComp() == 3){
-                            leiraTO.setStatusLeira(2L);
+                            leiraBean.setStatusLeira(2L);
                         }
                         else{
-                            leiraTO.setStatusLeira(0L);
+                            leiraBean.setStatusLeira(0L);
                         }
-                        leiraTO.update();
+                        leiraBean.update();
                     }
 
                 }

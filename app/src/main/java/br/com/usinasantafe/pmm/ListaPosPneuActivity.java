@@ -12,8 +12,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bean.estaticas.REquipPneuTO;
-import br.com.usinasantafe.pmm.bean.variaveis.ItemPneuTO;
+import br.com.usinasantafe.pmm.model.bean.estaticas.REquipPneuBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ItemPneuBean;
 
 public class ListaPosPneuActivity extends ActivityGeneric {
 
@@ -37,22 +37,22 @@ public class ListaPosPneuActivity extends ActivityGeneric {
 
         ArrayList<String> itens = new ArrayList<String>();
 
-        REquipPneuTO rEquipPneuTO = new REquipPneuTO();
-        List rEquipPneuList = rEquipPneuTO.all();
+        REquipPneuBean rEquipPneuBean = new REquipPneuBean();
+        List rEquipPneuList = rEquipPneuBean.all();
 
         List itemMedPneuList = pmmContext.getPneuCTR().getListItemCalibPneu();
         boolean verCad;
         for(int i = 0; i < rEquipPneuList.size(); i++){
-            rEquipPneuTO = (REquipPneuTO) rEquipPneuList.get(i);
+            rEquipPneuBean = (REquipPneuBean) rEquipPneuList.get(i);
             verCad = true;
             for(int j = 0; j < itemMedPneuList.size(); j++) {
-                ItemPneuTO itemPneuTO = (ItemPneuTO) itemMedPneuList.get(j);
-                if(rEquipPneuTO.getIdPosConfPneu() == itemPneuTO.getPosItemPneu()){
+                ItemPneuBean itemPneuBean = (ItemPneuBean) itemMedPneuList.get(j);
+                if(rEquipPneuBean.getIdPosConfPneu() == itemPneuBean.getPosItemPneu()){
                     verCad = false;
                 }
             }
             if(verCad) {
-                itens.add(rEquipPneuTO.getPosPneu());
+                itens.add(rEquipPneuBean.getPosPneu());
             }
         }
         itemMedPneuList.clear();
@@ -72,12 +72,12 @@ public class ListaPosPneuActivity extends ActivityGeneric {
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
                 String posPneu = textView.getText().toString();
 
-                REquipPneuTO rEquipPneuTO = new REquipPneuTO();
-                List rEquipPneuList = rEquipPneuTO.get("posPneu", posPneu);
-                rEquipPneuTO = (REquipPneuTO) rEquipPneuList.get(0);
+                REquipPneuBean rEquipPneuBean = new REquipPneuBean();
+                List rEquipPneuList = rEquipPneuBean.get("posPneu", posPneu);
+                rEquipPneuBean = (REquipPneuBean) rEquipPneuList.get(0);
                 rEquipPneuList.clear();
 
-                pmmContext.getPneuCTR().setItemPneuTO(rEquipPneuTO.getIdPosConfPneu());
+                pmmContext.getPneuCTR().setItemPneuBean(rEquipPneuBean.getIdPosConfPneu());
 
                 Intent it = new Intent(ListaPosPneuActivity.this, PneuActivity.class);
                 startActivity(it);

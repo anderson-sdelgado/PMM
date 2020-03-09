@@ -11,8 +11,8 @@ import android.widget.EditText;
 
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.bean.dao.EquipDAO;
-import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.model.dao.EquipDAO;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 
 public class ConfiguracaoActivity extends ActivityGeneric {
 
@@ -35,13 +35,13 @@ public class ConfiguracaoActivity extends ActivityGeneric {
 
         equipDAO = new EquipDAO();
         configCTR = new ConfigCTR();
-        ConfigTO configTO = new ConfigTO();
+        ConfigBean configBean = new ConfigBean();
 
-        if (configTO.hasElements()) {
+        if (configBean.hasElements()) {
 
-            configTO = configCTR.getConfig();
+            configBean = configCTR.getConfig();
             editTextEquipConfig.setText(String.valueOf(equipDAO.getEquip().getNroEquip()));
-            editTextSenhaConfig.setText(configTO.getSenhaConfig());
+            editTextSenhaConfig.setText(configBean.getSenhaConfig());
 
         }
 

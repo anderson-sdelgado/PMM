@@ -13,9 +13,9 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.estaticas.TurnoBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.bean.estaticas.TurnoTO;
 import br.com.usinasantafe.pmm.util.Tempo;
 
 public class ListaTurnoActivity extends ActivityGeneric {
@@ -96,14 +96,14 @@ public class ListaTurnoActivity extends ActivityGeneric {
 
         configCTR = new ConfigCTR();
 
-        TurnoTO turnoTO = new TurnoTO();
-        turnoList = turnoTO.get("codTurno", configCTR.getEquip().getCodTurno());
+        TurnoBean turnoBean = new TurnoBean();
+        turnoList = turnoBean.get("codTurno", configCTR.getEquip().getCodTurno());
 
         ArrayList<String> itens = new ArrayList<String>();
 
         for(int i = 0; i < turnoList.size(); i++){
-            turnoTO = (TurnoTO) turnoList.get(i);
-            itens.add(turnoTO.getDescTurno());
+            turnoBean = (TurnoBean) turnoList.get(i);
+            itens.add(turnoBean.getDescTurno());
         }
 
         AdapterList adapterList = new AdapterList(this, itens);
@@ -116,10 +116,10 @@ public class ListaTurnoActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                TurnoTO turnoTO = (TurnoTO) turnoList.get(position);
+                TurnoBean turnoBean = (TurnoBean) turnoList.get(position);
                 turnoList.clear();
 
-                pmmContext.getBoletimCTR().setTurnoBol(turnoTO.getIdTurno());
+                pmmContext.getBoletimCTR().setTurnoBol(turnoBean.getIdTurno());
 
                 if(Tempo.getInstance().verDthrServ(configCTR.getConfig().getDtServConfig())){
                     configCTR.atualDifDthrConfig(0L);

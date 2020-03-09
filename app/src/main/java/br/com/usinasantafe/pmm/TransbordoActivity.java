@@ -10,9 +10,9 @@ import android.widget.Button;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.bean.estaticas.RFuncaoAtivParTO;
 
 public class TransbordoActivity extends ActivityGeneric {
 
@@ -129,8 +129,8 @@ public class TransbordoActivity extends ActivityGeneric {
                             boolean rendimento = false;
 
                             for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
-                                RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtividadeList.get(i);
-                                if(rFuncaoAtivParTO.getCodFuncao() == 1){
+                                RFuncaoAtivParBean rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtividadeList.get(i);
+                                if(rFuncaoAtivParBean.getCodFuncao() == 1){
                                     rendimento = true;
                                 }
                             }

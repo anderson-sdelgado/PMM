@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 
 public class SenhaActivity extends ActivityGeneric {
 
@@ -29,9 +29,9 @@ public class SenhaActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                ConfigTO configTO = new ConfigTO();
+                ConfigBean configBean = new ConfigBean();
 
-                if (!configTO.hasElements()) {
+                if (!configBean.hasElements()) {
 
                     Intent it = new Intent(SenhaActivity.this, ConfiguracaoActivity.class);
                     startActivity(it);
@@ -39,7 +39,7 @@ public class SenhaActivity extends ActivityGeneric {
 
                 } else {
 
-                    List<ConfigTO> configList = configTO.get("senhaConfig", editTextSenha.getText().toString());
+                    List<ConfigBean> configList = configBean.get("senhaConfig", editTextSenha.getText().toString());
 
                     if (configList.size() > 0) {
 

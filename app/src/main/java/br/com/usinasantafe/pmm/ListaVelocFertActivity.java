@@ -16,9 +16,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.estaticas.PressaoBocalBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.bean.estaticas.PressaoBocalTO;
+import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 
 public class ListaVelocFertActivity extends ActivityGeneric {
 
@@ -96,7 +96,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
         });
 
 
-        PressaoBocalTO pressaoBocalTO = new PressaoBocalTO();
+        PressaoBocalBean pressaoBocalBean = new PressaoBocalBean();
 
         ArrayList pesqList = new ArrayList();
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
@@ -111,13 +111,13 @@ public class ListaVelocFertActivity extends ActivityGeneric {
         pesquisa2.setTipo(1);
         pesqList.add(pesquisa2);
 
-        velocList = pressaoBocalTO.getAndOrderBy(pesqList, "valorVeloc", true);
+        velocList = pressaoBocalBean.getAndOrderBy(pesqList, "valorVeloc", true);
 
         ArrayList<String> itens = new ArrayList<String>();
 
         for(int i = 0; i < velocList.size(); i++){
-            pressaoBocalTO = (PressaoBocalTO) velocList.get(i);
-            itens.add("" + pressaoBocalTO.getValorVeloc());
+            pressaoBocalBean = (PressaoBocalBean) velocList.get(i);
+            itens.add("" + pressaoBocalBean.getValorVeloc());
         }
 
         HashSet<String> hashSet = new HashSet<String>(itens);

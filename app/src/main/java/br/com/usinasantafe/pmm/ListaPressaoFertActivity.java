@@ -16,8 +16,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.estaticas.PressaoBocalBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.bean.estaticas.PressaoBocalTO;
 
 public class ListaPressaoFertActivity extends ActivityGeneric {
 
@@ -94,14 +94,14 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
 
         });
 
-        PressaoBocalTO pressaoBocalTO = new PressaoBocalTO();
-        pressaoBocalList = pressaoBocalTO.getAndOrderBy("idBocal", pmmContext.getApontCTR().getBocalApontFert(), "valorPressao", true);
+        PressaoBocalBean pressaoBocalBean = new PressaoBocalBean();
+        pressaoBocalList = pressaoBocalBean.getAndOrderBy("idBocal", pmmContext.getApontCTR().getBocalApontFert(), "valorPressao", true);
 
         ArrayList<String> itens = new ArrayList<String>();
 
         for(int i = 0; i < pressaoBocalList.size(); i++){
-            pressaoBocalTO = (PressaoBocalTO) pressaoBocalList.get(i);
-            itens.add("" + pressaoBocalTO.getValorPressao());
+            pressaoBocalBean = (PressaoBocalBean) pressaoBocalList.get(i);
+            itens.add("" + pressaoBocalBean.getValorPressao());
         }
 
         HashSet<String> hashSet = new HashSet<String>(itens);

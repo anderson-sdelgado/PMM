@@ -7,7 +7,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import br.com.usinasantafe.pmm.bean.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 
 public class ListaOSRendActivity extends ActivityGeneric {
 
@@ -22,9 +22,9 @@ public class ListaOSRendActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        RendMMTO rendMMTO = new RendMMTO();
+        RendMMBean rendMMBean = new RendMMBean();
         ListView listaOSRend = (ListView) findViewById(R.id.listaOSRend);
-        AdapterListRend adapterListRend = new AdapterListRend(this, rendMMTO.getAndOrderBy("idBolRendMM", pmmContext.getBoletimCTR().getIdBol(), "idRendMM", true));
+        AdapterListRend adapterListRend = new AdapterListRend(this, rendMMBean.getAndOrderBy("idBolRendMM", pmmContext.getBoletimCTR().getIdBol(), "idRendMM", true));
         listaOSRend.setAdapter(adapterListRend);
 
         listaOSRend.setOnItemClickListener(new AdapterView.OnItemClickListener() {

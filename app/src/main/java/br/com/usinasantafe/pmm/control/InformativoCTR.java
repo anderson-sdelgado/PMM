@@ -2,7 +2,7 @@ package br.com.usinasantafe.pmm.control;
 
 import android.content.Context;
 
-import br.com.usinasantafe.pmm.bean.dao.InformativoDAO;
+import br.com.usinasantafe.pmm.model.dao.InformativoDAO;
 
 public class InformativoCTR {
 

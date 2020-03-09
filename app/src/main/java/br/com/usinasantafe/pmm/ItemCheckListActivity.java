@@ -8,13 +8,13 @@ import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.bean.estaticas.ItemCheckListTO;
-import br.com.usinasantafe.pmm.bean.variaveis.RespItemCLTO;
+import br.com.usinasantafe.pmm.model.bean.estaticas.ItemCheckListBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCLBean;
 
 public class ItemCheckListActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
-    private ItemCheckListTO itemCheckListTO;
+    private ItemCheckListBean itemCheckListBean;
     private CheckListCTR checkListCTR;
 
     @Override
@@ -31,9 +31,9 @@ public class ItemCheckListActivity extends ActivityGeneric {
         Button buttonCancChecklist = (Button) findViewById(R.id.buttonCancChecklist);
 
         checkListCTR = new CheckListCTR();
-        itemCheckListTO = checkListCTR.getItemCheckList(pmmContext.getPosCheckList());
+        itemCheckListBean = checkListCTR.getItemCheckList(pmmContext.getPosCheckList());
 
-        textViewItemChecklist.setText(pmmContext.getPosCheckList() + " - " + itemCheckListTO.getDescrItemCheckList());
+        textViewItemChecklist.setText(pmmContext.getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
 
         buttonConforme.setOnClickListener(new View.OnClickListener() {
 
@@ -77,10 +77,10 @@ public class ItemCheckListActivity extends ActivityGeneric {
 
     public void proximaTela(Long opcao){
 
-        RespItemCLTO respItemCLTO = new RespItemCLTO();
-        respItemCLTO.setIdItBDItCL(itemCheckListTO.getIdItemCheckList());
-        respItemCLTO.setOpItCL(opcao);
-        checkListCTR.setRespCheckList(respItemCLTO);
+        RespItemCLBean respItemCLBean = new RespItemCLBean();
+        respItemCLBean.setIdItBDItCL(itemCheckListBean.getIdItemCheckList());
+        respItemCLBean.setOpItCL(opcao);
+        checkListCTR.setRespCheckList(respItemCLBean);
 
         if(checkListCTR.qtdeItemCheckList() == pmmContext.getPosCheckList()){
             ConfigCTR configCTR = new ConfigCTR();

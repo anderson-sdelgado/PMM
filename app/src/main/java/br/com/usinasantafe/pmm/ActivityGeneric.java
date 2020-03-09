@@ -23,9 +23,8 @@ import com.google.android.gms.location.LocationServices;
 import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import br.com.usinasantafe.pmm.pst.DatabaseHelper;
+import br.com.usinasantafe.pmm.model.pst.DatabaseHelper;
 
 /**
  * Created by anderson on 01/10/2015.

@@ -33,7 +33,7 @@ public class PressaoEncPneuActivity extends ActivityGeneric {
 
                     if (qtde < 1000) {
 
-                        pmmContext.getPneuCTR().getItemPneuTO().setPressaoEncItemPneu(qtde);
+                        pmmContext.getPneuCTR().getItemPneuBean().setPressaoEncItemPneu(qtde);
 
                         Intent it = new Intent(PressaoEncPneuActivity.this, PressaoColPneuActivity.class);
                         startActivity(it);

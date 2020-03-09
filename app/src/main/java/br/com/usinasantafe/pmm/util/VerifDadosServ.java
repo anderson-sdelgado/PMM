@@ -15,17 +15,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.usinasantafe.pmm.MenuInicialActivity;
-import br.com.usinasantafe.pmm.conHttp.PostVerGenerico;
+import br.com.usinasantafe.pmm.util.conHttp.PostVerGenerico;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.bean.dao.AtividadeDAO;
-import br.com.usinasantafe.pmm.bean.dao.EquipDAO;
-import br.com.usinasantafe.pmm.bean.dao.InformativoDAO;
-import br.com.usinasantafe.pmm.bean.dao.ItemPneuDAO;
-import br.com.usinasantafe.pmm.bean.dao.OSDAO;
-import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
-import br.com.usinasantafe.pmm.bean.variaveis.AtualAplicTO;
+import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
+import br.com.usinasantafe.pmm.model.dao.EquipDAO;
+import br.com.usinasantafe.pmm.model.dao.InformativoDAO;
+import br.com.usinasantafe.pmm.model.dao.ItemPneuDAO;
+import br.com.usinasantafe.pmm.model.dao.OSDAO;
+import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.AtualAplicBean;
 
 import android.os.AsyncTask;
 
@@ -108,19 +108,19 @@ public class VerifDadosServ {
         this.tipo = "Atualiza";
         this.menuInicialActivity = menuInicialActivity;
 
-        AtualAplicTO atualAplicTO = new AtualAplicTO();
-        atualAplicTO.setVersaoAtual(versaoAplic);
+        AtualAplicBean atualAplicBean = new AtualAplicBean();
+        atualAplicBean.setVersaoAtual(versaoAplic);
 
         EquipDAO equipDAO = new EquipDAO();
-        EquipTO equipTO = equipDAO.getEquip();
+        EquipBean equipBean = equipDAO.getEquip();
 
-        atualAplicTO.setIdEquipAtualizacao(equipTO.getNroEquip());
-        atualAplicTO.setIdCheckList(equipTO.getIdCheckList());
+        atualAplicBean.setIdEquipAtualizacao(equipBean.getNroEquip());
+        atualAplicBean.setIdCheckList(equipBean.getIdCheckList());
 
         JsonArray jsonArray = new JsonArray();
 
         Gson gson = new Gson();
-        jsonArray.add(gson.toJsonTree(atualAplicTO, atualAplicTO.getClass()));
+        jsonArray.add(gson.toJsonTree(atualAplicBean, atualAplicBean.getClass()));
 
         JsonObject json = new JsonObject();
         json.add("dados", jsonArray);

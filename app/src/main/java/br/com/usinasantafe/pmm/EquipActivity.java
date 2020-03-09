@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.bean.estaticas.EquipTO;
+import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
 
 public class EquipActivity extends ActivityGeneric {
 
@@ -29,10 +29,10 @@ public class EquipActivity extends ActivityGeneric {
         Button buttonCancEquip = (Button) findViewById(R.id.buttonCancEquip);
 
         configCTR = new ConfigCTR();
-        EquipTO equipTO = configCTR.getEquip();
+        EquipBean equipBean = configCTR.getEquip();
 
-        textViewCodEquip.setText(String.valueOf(equipTO.getNroEquip()));
-        textViewDescEquip.setText(String.valueOf(equipTO.getDescrClasseEquip()));
+        textViewCodEquip.setText(String.valueOf(equipBean.getNroEquip()));
+        textViewDescEquip.setText(String.valueOf(equipBean.getDescrClasseEquip()));
 
         buttonOkEquip.setOnClickListener(new View.OnClickListener() {
 

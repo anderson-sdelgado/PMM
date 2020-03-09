@@ -6,60 +6,60 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bean.variaveis.ApontFertTO;
-import br.com.usinasantafe.pmm.bean.dao.ApontFertDAO;
-import br.com.usinasantafe.pmm.bean.dao.ApontMMDAO;
-import br.com.usinasantafe.pmm.bean.dao.AtividadeDAO;
-import br.com.usinasantafe.pmm.bean.dao.BoletimFertDAO;
-import br.com.usinasantafe.pmm.bean.dao.BoletimMMDAO;
-import br.com.usinasantafe.pmm.bean.dao.EquipSegDAO;
-import br.com.usinasantafe.pmm.bean.dao.OSDAO;
-import br.com.usinasantafe.pmm.bean.variaveis.ApontMMTO;
-import br.com.usinasantafe.pmm.bean.variaveis.BoletimFertTO;
-import br.com.usinasantafe.pmm.bean.variaveis.BoletimMMTO;
-import br.com.usinasantafe.pmm.bean.variaveis.ImpleMMTO;
-import br.com.usinasantafe.pmm.bean.variaveis.RecolhFertTO;
-import br.com.usinasantafe.pmm.bean.variaveis.RendMMTO;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontFertBean;
+import br.com.usinasantafe.pmm.model.dao.ApontFertDAO;
+import br.com.usinasantafe.pmm.model.dao.ApontMMDAO;
+import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
+import br.com.usinasantafe.pmm.model.dao.BoletimFertDAO;
+import br.com.usinasantafe.pmm.model.dao.BoletimMMDAO;
+import br.com.usinasantafe.pmm.model.dao.EquipSegDAO;
+import br.com.usinasantafe.pmm.model.dao.OSDAO;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
 
 public class BoletimCTR {
 
-    private BoletimMMTO boletimMMTO;
-    private BoletimFertTO boletimFertTO;
+    private BoletimMMBean boletimMMBean;
+    private BoletimFertBean boletimFertBean;
     private OSDAO osDAO;
     private AtividadeDAO atividadeDAO;
 
     public BoletimCTR() {
-        if (boletimMMTO == null)
-            boletimMMTO = new BoletimMMTO();
-        if (boletimFertTO == null)
-            boletimFertTO = new BoletimFertTO();
+        if (boletimMMBean == null)
+            boletimMMBean = new BoletimMMBean();
+        if (boletimFertBean == null)
+            boletimFertBean = new BoletimFertBean();
     }
 
     //////////////// VERIFICAR BOLETIM ABERTO E SETAR O MESMO //////////////////////////////////////
 
-    public boolean verBolABerto(){
+    public boolean verBolAberto(){
         boolean ret = false;
         BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
         BoletimFertDAO boletimFertDAO = new BoletimFertDAO();
         if(boletimMMDAO.verBolAberto() || boletimFertDAO.verBolAberto()){
             ret = true;
             if(boletimMMDAO.verBolAberto()){
-                boletimMMTO = getBolMMAberto();
+                boletimMMBean = getBolMMAberto();
             }
             if(boletimFertDAO.verBolAberto()){
-                boletimFertTO = getBolFertAberto();
+                boletimFertBean = getBolFertAberto();
             }
         }
         return ret;
     }
 
-    public BoletimMMTO getBolMMAberto(){
+    public BoletimMMBean getBolMMAberto(){
         BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
         return boletimMMDAO.getBolMMAberto();
     }
 
-    public BoletimFertTO getBolFertAberto(){
+    public BoletimFertBean getBolFertAberto(){
         BoletimFertDAO boletimFertDAO = new BoletimFertDAO();
         return boletimFertDAO.getBolFertAberto();
     }
@@ -71,52 +71,52 @@ public class BoletimCTR {
     public void setFuncBol(Long matric){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            boletimMMTO.setMatricFuncBolMM(matric);
+            boletimMMBean.setMatricFuncBolMM(matric);
         }
         else{
-            boletimFertTO.setMatricFuncBolFert(matric);
+            boletimFertBean.setMatricFuncBolFert(matric);
         }
     }
 
     public void setEquipBol(){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            boletimMMTO.setIdEquipBolMM(configCTR.getEquip().getIdEquip());
+            boletimMMBean.setIdEquipBolMM(configCTR.getEquip().getIdEquip());
         }
         else{
-            boletimFertTO.setIdEquipBolFert(configCTR.getEquip().getIdEquip());
+            boletimFertBean.setIdEquipBolFert(configCTR.getEquip().getIdEquip());
         }
     }
 
     public void setTurnoBol(Long idTurno){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            boletimMMTO.setIdTurnoBolMM(idTurno);
+            boletimMMBean.setIdTurnoBolMM(idTurno);
         }
         else{
-            boletimFertTO.setIdTurnoBolFert(idTurno);
+            boletimFertBean.setIdTurnoBolFert(idTurno);
         }
     }
 
     public void setOSBol(Long os){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            boletimMMTO.setOsBolMM(os);
+            boletimMMBean.setOsBolMM(os);
         }
         else{
-            boletimFertTO.setOsBolFert(os);
+            boletimFertBean.setOsBolFert(os);
         }
     }
 
     public void setAtivBol(Long ativ){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            boletimMMTO.setAtivPrincBolMM(ativ);
-            boletimMMTO.setStatusConBolMM(configCTR.getConfig().getStatusConConfig());
+            boletimMMBean.setAtivPrincBolMM(ativ);
+            boletimMMBean.setStatusConBolMM(configCTR.getConfig().getStatusConConfig());
         }
         else{
-            boletimFertTO.setAtivPrincBolFert(ativ);
-            boletimFertTO.setStatusConBolFert(configCTR.getConfig().getStatusConConfig());
+            boletimFertBean.setAtivPrincBolFert(ativ);
+            boletimFertBean.setStatusConBolFert(configCTR.getConfig().getStatusConConfig());
         }
     }
 
@@ -124,33 +124,33 @@ public class BoletimCTR {
     public void setHodometroInicialBol(Double horimetroNum, Double longitude, Double latitude){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            boletimMMTO.setHodometroInicialBolMM(horimetroNum);
-            boletimMMTO.setHodometroFinalBolMM(0D);
-            boletimMMTO.setIdExtBolMM(0L);
-            boletimMMTO.setLongitudeBolMM(longitude);
-            boletimMMTO.setLatitudeBolMM(latitude);
+            boletimMMBean.setHodometroInicialBolMM(horimetroNum);
+            boletimMMBean.setHodometroFinalBolMM(0D);
+            boletimMMBean.setIdExtBolMM(0L);
+            boletimMMBean.setLongitudeBolMM(longitude);
+            boletimMMBean.setLatitudeBolMM(latitude);
         }
         else{
-            boletimFertTO.setHodometroInicialBolFert(horimetroNum);
-            boletimFertTO.setHodometroFinalBolFert(0D);
-            boletimFertTO.setIdExtBolFert(0L);
-            boletimFertTO.setLongitudeBolFert(longitude);
-            boletimFertTO.setLongitudeBolFert(latitude);
+            boletimFertBean.setHodometroInicialBolFert(horimetroNum);
+            boletimFertBean.setHodometroFinalBolFert(0D);
+            boletimFertBean.setIdExtBolFert(0L);
+            boletimFertBean.setLongitudeBolFert(longitude);
+            boletimFertBean.setLongitudeBolFert(latitude);
         }
     }
 
     public void setHodometroFinalBol(Double horimetroNum){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            boletimMMTO.setHodometroFinalBolMM(horimetroNum);
+            boletimMMBean.setHodometroFinalBolMM(horimetroNum);
         }
         else{
-            boletimFertTO.setHodometroFinalBolFert(horimetroNum);
+            boletimFertBean.setHodometroFinalBolFert(horimetroNum);
         }
     }
 
     public void setIdEquipBombaBol(Long idEquip){
-        boletimFertTO.setIdEquipBombaBolFert(idEquip);
+        boletimFertBean.setIdEquipBombaBolFert(idEquip);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -160,60 +160,60 @@ public class BoletimCTR {
     public Long getAtiv(){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            return boletimMMTO.getAtivPrincBolMM();
+            return boletimMMBean.getAtivPrincBolMM();
         }
         else{
-            return boletimFertTO.getAtivPrincBolFert();
+            return boletimFertBean.getAtivPrincBolFert();
         }
     }
 
     public Long getTurno(){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            return boletimMMTO.getIdTurnoBolMM();
+            return boletimMMBean.getIdTurnoBolMM();
         }
         else{
-            return boletimFertTO.getIdTurnoBolFert();
+            return boletimFertBean.getIdTurnoBolFert();
         }
     }
 
     public Long getFunc(){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            return boletimMMTO.getMatricFuncBolMM();
+            return boletimMMBean.getMatricFuncBolMM();
         }
         else{
-            return boletimFertTO.getMatricFuncBolFert();
+            return boletimFertBean.getMatricFuncBolFert();
         }
     }
 
     public Long getIdExtBol(){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            return boletimMMTO.getIdExtBolMM();
+            return boletimMMBean.getIdExtBolMM();
         }
         else{
-            return boletimFertTO.getIdExtBolFert();
+            return boletimFertBean.getIdExtBolFert();
         }
     }
 
     public Long getStatusConBol(){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            return boletimMMTO.getStatusConBolMM();
+            return boletimMMBean.getStatusConBolMM();
         }
         else{
-            return boletimFertTO.getStatusConBolFert();
+            return boletimFertBean.getStatusConBolFert();
         }
     }
 
     public Long getOS() {
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            return boletimMMTO.getOsBolMM();
+            return boletimMMBean.getOsBolMM();
         }
         else{
-            return boletimFertTO.getOsBolFert();
+            return boletimFertBean.getOsBolFert();
         }
     }
 
@@ -232,20 +232,20 @@ public class BoletimCTR {
     public Double getLongitude(){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            return boletimMMTO.getLongitudeBolMM();
+            return boletimMMBean.getLongitudeBolMM();
         }
         else{
-            return boletimFertTO.getLongitudeBolFert();
+            return boletimFertBean.getLongitudeBolFert();
         }
     }
 
     public Double getLatitude(){
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
-            return boletimMMTO.getLatitudeBolMM();
+            return boletimMMBean.getLatitudeBolMM();
         }
         else{
-            return boletimFertTO.getLatitudeBolFert();
+            return boletimFertBean.getLatitudeBolFert();
         }
     }
 
@@ -263,14 +263,14 @@ public class BoletimCTR {
         return boletimMMDAO.verRend();
     }
 
-    public RendMMTO getRend(int pos){
+    public RendMMBean getRend(int pos){
         BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
         return boletimMMDAO.getRend(pos);
     }
 
-    public void atualRend(RendMMTO rendMMTO){
+    public void atualRend(RendMMBean rendMMBean){
         BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
-        boletimMMDAO.atualRend(rendMMTO);
+        boletimMMDAO.atualRend(rendMMBean);
     }
 
     public int qtdeRend(){
@@ -287,9 +287,9 @@ public class BoletimCTR {
         return equipSegDAO.verImple(nroEquip);
     }
 
-    public void setImplemento(ImpleMMTO impleMMTO){
+    public void setImplemento(ImpleMMBean impleMMBean){
         EquipSegDAO equipSegDAO = new EquipSegDAO();
-        equipSegDAO.setImplemento(impleMMTO);
+        equipSegDAO.setImplemento(impleMMBean);
     }
 
     public boolean verDuplicImpleMM(Long nroEquip){
@@ -333,14 +333,14 @@ public class BoletimCTR {
         return boletimFertDAO.verRecolh();
     }
 
-    public RecolhFertTO getRecolh(int pos) {
+    public RecolhFertBean getRecolh(int pos) {
         BoletimFertDAO boletimFertDAO = new BoletimFertDAO();
         return boletimFertDAO.getRecolh(pos);
     }
 
-    public void atualRecolh(RecolhFertTO recolhFertTO){
+    public void atualRecolh(RecolhFertBean recolhFertBean){
         BoletimFertDAO boletimFertDAO = new BoletimFertDAO();
-        boletimFertDAO.atualRecolh(recolhFertTO);
+        boletimFertDAO.atualRecolh(recolhFertBean);
     }
 
     public int qtdeRecolh(){
@@ -409,12 +409,12 @@ public class BoletimCTR {
 
     public void salvarBolAbertoMM(){
         BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
-        boletimMMDAO.salvarBolAberto(boletimMMTO);
+        boletimMMDAO.salvarBolAberto(boletimMMBean);
     }
 
     public void salvarBolFechadoMM(){
         BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
-        boletimMMDAO.salvarBolFechado(boletimMMTO);
+        boletimMMDAO.salvarBolFechado(boletimMMBean);
     }
 
     ////////// VERIFICAÇÃO PRA ENVIO ///////////////
@@ -461,12 +461,12 @@ public class BoletimCTR {
 
     public void salvarBolAbertoFert(){
         BoletimFertDAO boletimFertDAO = new BoletimFertDAO();
-        boletimFertDAO.salvarBolAberto(boletimFertTO);
+        boletimFertDAO.salvarBolAberto(boletimFertBean);
     }
 
     public void salvarBolFechadoFert(){
         BoletimFertDAO boletimFertDAO = new BoletimFertDAO();
-        boletimFertDAO.salvarBolFechado(boletimFertTO);
+        boletimFertDAO.salvarBolFechado(boletimFertBean);
     }
 
     ////////// VERIFICAÇÃO PRA ENVIO ///////////////
@@ -515,9 +515,9 @@ public class BoletimCTR {
             ApontMMDAO apontMMDAO = new ApontMMDAO();
             List apontList = apontMMDAO.getListAllApont(getIdBol());
             if (apontList.size() == 0) {
-                return boletimMMTO.getAtivPrincBolMM();
+                return boletimMMBean.getAtivPrincBolMM();
             } else {
-                ApontMMTO apontTO = (ApontMMTO) apontList.get(apontList.size() - 1);
+                ApontMMBean apontTO = (ApontMMBean) apontList.get(apontList.size() - 1);
                 return apontTO.getAtivApontMM();
             }
         }
@@ -525,9 +525,9 @@ public class BoletimCTR {
             ApontFertDAO apontFertDAO = new ApontFertDAO();
             List apontList = apontFertDAO.getListAllApont(getIdBol());
             if (apontList.size() == 0) {
-                return boletimFertTO.getAtivPrincBolFert();
+                return boletimFertBean.getAtivPrincBolFert();
             } else {
-                ApontFertTO apontTO = (ApontFertTO) apontList.get(apontList.size() - 1);
+                ApontFertBean apontTO = (ApontFertBean) apontList.get(apontList.size() - 1);
                 return apontTO.getAtivApontFert();
             }
         }
@@ -539,38 +539,38 @@ public class BoletimCTR {
 
     public void atualDadosOperador(Context telaAtual, Class telaProx, ProgressDialog progressDialog){
         ArrayList operadorArrayList = new ArrayList();
-        operadorArrayList.add("FuncionarioTO");
+        operadorArrayList.add("FuncionarioBean");
         AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, operadorArrayList);
     }
 
     public void atualDadosTurno(Context telaAtual, Class telaProx, ProgressDialog progressDialog) {
         ArrayList turnoArrayList = new ArrayList();
-        turnoArrayList.add("TurnoTO");
+        turnoArrayList.add("TurnoBean");
         AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, turnoArrayList);
     }
 
     public void atualDadosEquipSeg(Context telaAtual, Class telaProx, ProgressDialog progressDialog) {
         ArrayList equipSegArrayList = new ArrayList();
-        equipSegArrayList.add("EquipSegTO");
+        equipSegArrayList.add("EquipSegBean");
         AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, equipSegArrayList);
     }
 
     public void atualDadosParada(Context telaAtual, Class telaProx, ProgressDialog progressDialog) {
         ArrayList paradaArrayList = new ArrayList();
-        paradaArrayList.add("RAtivParadaTO");
-        paradaArrayList.add("ParadaTO");
+        paradaArrayList.add("RAtivParadaBean");
+        paradaArrayList.add("ParadaBean");
         AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, paradaArrayList);
     }
 
     public void atualDadosBocal(Context telaAtual, Class telaProx, ProgressDialog progressDialog) {
         ArrayList bocalArrayList = new ArrayList();
-        bocalArrayList.add("BocalTO");
+        bocalArrayList.add("BocalBean");
         AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, bocalArrayList);
     }
 
     public void atualDadosPressao(Context telaAtual, Class telaProx, ProgressDialog progressDialog) {
         ArrayList bocalArrayList = new ArrayList();
-        bocalArrayList.add("PressaoBocalTO");
+        bocalArrayList.add("PressaoBocalBean");
         AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, bocalArrayList);
     }
 

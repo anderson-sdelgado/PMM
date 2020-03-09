@@ -10,8 +10,8 @@ import android.widget.Button;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.estaticas.FuncionarioBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.bean.estaticas.FuncionarioTO;
 
 public class OperadorActivity extends ActivityGeneric {
 
@@ -94,12 +94,12 @@ public class OperadorActivity extends ActivityGeneric {
 
                 if (!editTextPadrao.getText().toString().equals("")) {
 
-                    FuncionarioTO funcTO = new FuncionarioTO();
+                    FuncionarioBean funcTO = new FuncionarioBean();
                     List funcList = funcTO.get("matricFunc", Long.parseLong(editTextPadrao.getText().toString()));
 
                     if (funcList.size() > 0) {
 
-                        funcTO = (FuncionarioTO) funcList.get(0);
+                        funcTO = (FuncionarioBean) funcList.get(0);
                         pmmContext.getBoletimCTR().setFuncBol(funcTO.getMatricFunc());
                         funcList.clear();
 

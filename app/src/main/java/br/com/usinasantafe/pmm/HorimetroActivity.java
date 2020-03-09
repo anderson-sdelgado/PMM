@@ -12,7 +12,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.bean.estaticas.RFuncaoAtivParTO;
+import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 
 public class HorimetroActivity extends ActivityGeneric {
 
@@ -103,8 +103,8 @@ public class HorimetroActivity extends ActivityGeneric {
             List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(pmmContext.getBoletimCTR().getAtiv());
             boolean implemento = false;
             for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
-                RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoAtividadeList.get(i);
-                if(rFuncaoAtivParTO.getCodFuncao() == 3){
+                RFuncaoAtivParBean rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtividadeList.get(i);
+                if(rFuncaoAtivParBean.getCodFuncao() == 3){
                     implemento = true;
                 }
             }

@@ -8,12 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.List;
-
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.Tempo;
-import br.com.usinasantafe.pmm.bean.estaticas.TurnoTO;
-import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 
 public class DataHoraActivity extends ActivityGeneric {
 
@@ -152,9 +149,9 @@ public class DataHoraActivity extends ActivityGeneric {
 
                                 ConfigCTR configCTR = new ConfigCTR();
 
-                                ConfigTO configTO = configCTR.getConfig();
-                                configTO.setDifDthrConfig(dif);
-                                configTO.update();
+                                ConfigBean configBean = configCTR.getConfig();
+                                configBean.setDifDthrConfig(dif);
+                                configBean.update();
 
                                 if (pmmContext.getVerPosTela() == 1) {
                                     it = new Intent(DataHoraActivity.this, OSActivity.class);

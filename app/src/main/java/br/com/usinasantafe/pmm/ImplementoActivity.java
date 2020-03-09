@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
-import br.com.usinasantafe.pmm.bean.variaveis.ImpleMMTO;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 
 public class ImplementoActivity extends ActivityGeneric {
 
@@ -96,10 +96,10 @@ public class ImplementoActivity extends ActivityGeneric {
                     if (!editTextPadrao.getText().toString().equals("")) {
                         Long impl = Long.parseLong(editTextPadrao.getText().toString());
                         if(pmmContext.getBoletimCTR().verImplemento(impl)){
-                            ImpleMMTO impleMMTO = new ImpleMMTO();
-                            impleMMTO.setPosImpleMM(1L);
-                            impleMMTO.setCodEquipImpleMM(impl);
-                            pmmContext.getBoletimCTR().setImplemento(impleMMTO);
+                            ImpleMMBean impleMMBean = new ImpleMMBean();
+                            impleMMBean.setPosImpleMM(1L);
+                            impleMMBean.setCodEquipImpleMM(impl);
+                            pmmContext.getBoletimCTR().setImplemento(impleMMBean);
                             pmmContext.setContImplemento(2);
                             Intent it = new Intent(ImplementoActivity.this, ImplementoActivity.class);
                             startActivity(it);
@@ -114,10 +114,10 @@ public class ImplementoActivity extends ActivityGeneric {
                     if (!editTextPadrao.getText().toString().equals("")) {
                         Long impl = Long.parseLong(editTextPadrao.getText().toString());
                         if(pmmContext.getBoletimCTR().verImplemento(impl) && (pmmContext.getBoletimCTR().verDuplicImpleMM(impl))){
-                            ImpleMMTO impleMMTO = new ImpleMMTO();
-                            impleMMTO.setPosImpleMM(2L);
-                            impleMMTO.setCodEquipImpleMM(impl);
-                            pmmContext.getBoletimCTR().setImplemento(impleMMTO);
+                            ImpleMMBean impleMMBean = new ImpleMMBean();
+                            impleMMBean.setPosImpleMM(2L);
+                            impleMMBean.setCodEquipImpleMM(impl);
+                            pmmContext.getBoletimCTR().setImplemento(impleMMBean);
                             Log.i("PMM", "SALVOU BOLETIM 4");
                             verTela();
                         }

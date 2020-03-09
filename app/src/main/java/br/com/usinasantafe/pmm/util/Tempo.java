@@ -7,8 +7,8 @@ import java.util.TimeZone;
 
 import android.util.Log;
 
-import br.com.usinasantafe.pmm.bean.DataHoraTO;
-import br.com.usinasantafe.pmm.bean.variaveis.ConfigTO;
+import br.com.usinasantafe.pmm.model.bean.DataHoraTO;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 
 public class Tempo {
 
@@ -318,11 +318,11 @@ public class Tempo {
     }
 
     public Long dif(){
-        ConfigTO configTO = new ConfigTO();
-        List configList = configTO.all();
-        configTO = (ConfigTO) configList.get(0);
+        ConfigBean configBean = new ConfigBean();
+        List configList = configBean.all();
+        configBean = (ConfigBean) configList.get(0);
         configList.clear();
-        return configTO.getDifDthrConfig();
+        return configBean.getDifDthrConfig();
     }
 
 }

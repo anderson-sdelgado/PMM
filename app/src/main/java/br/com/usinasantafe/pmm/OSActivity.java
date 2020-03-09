@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +15,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
-import br.com.usinasantafe.pmm.bean.estaticas.OSTO;
+import br.com.usinasantafe.pmm.model.bean.estaticas.OSBean;
 
 public class OSActivity extends ActivityGeneric {
 
@@ -65,7 +64,7 @@ public class OSActivity extends ActivityGeneric {
                         }
 
                         ConexaoWeb conexaoWeb = new ConexaoWeb();
-                        OSTO osTO = new OSTO();
+                        OSBean osTO = new OSBean();
                         if (osTO.hasElements()) {
 
                             List osList = osTO.get("nroOS", nroOS);

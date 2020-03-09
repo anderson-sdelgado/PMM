@@ -5,13 +5,13 @@ import android.content.Context;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bean.variaveis.ItemPneuTO;
-import br.com.usinasantafe.pmm.bean.dao.CabecPneuDAO;
-import br.com.usinasantafe.pmm.bean.dao.ItemPneuDAO;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ItemPneuBean;
+import br.com.usinasantafe.pmm.model.dao.CabecPneuDAO;
+import br.com.usinasantafe.pmm.model.dao.ItemPneuDAO;
 
 public class PneuCTR {
 
-    private ItemPneuTO itemPneuTO;
+    private ItemPneuBean itemPneuBean;
 
     public PneuCTR() {
     }
@@ -27,15 +27,15 @@ public class PneuCTR {
         return itemPneuDAO.getListItemPneu(cabecPneuDAO.getIdCabecAberto());
     }
 
-    public ItemPneuTO getItemPneuTO() {
-        return itemPneuTO;
+    public ItemPneuBean getItemPneuBean() {
+        return itemPneuBean;
     }
 
-    public void setItemPneuTO(Long idPosConfPneu) {
+    public void setItemPneuBean(Long idPosConfPneu) {
         CabecPneuDAO cabecPneuDAO = new CabecPneuDAO();
-        this.itemPneuTO = new ItemPneuTO();
-        this.itemPneuTO.setPosItemPneu(idPosConfPneu);
-        this.itemPneuTO.setIdCabecItemPneu(cabecPneuDAO.getIdCabecAberto());
+        this.itemPneuBean = new ItemPneuBean();
+        this.itemPneuBean.setPosItemPneu(idPosConfPneu);
+        this.itemPneuBean.setIdCabecItemPneu(cabecPneuDAO.getIdCabecAberto());
     }
 
     public void verPneu(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
@@ -45,7 +45,7 @@ public class PneuCTR {
 
     public void salvarItem(){
         ItemPneuDAO itemPneuDAO = new ItemPneuDAO();
-        itemPneuDAO.salvarItem(itemPneuTO);
+        itemPneuDAO.salvarItem(itemPneuBean);
     }
 
     public boolean verFechCabec(){

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bean.variaveis.RecolhFertTO;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 
 /**
  * Created by anderson on 19/10/2015.
@@ -48,12 +48,12 @@ public class AdapterListRecolh extends BaseAdapter {
         TextView textViewOSRecMang = (TextView) view.findViewById(R.id.textViewOSRecMang);
         TextView textViewValorRecMang = (TextView) view.findViewById(R.id.textViewValorRecMang);
 
-        RecolhFertTO recolhFertTO = (RecolhFertTO) itens.get(position);
+        RecolhFertBean recolhFertBean = (RecolhFertBean) itens.get(position);
 
-        textViewOSRecMang.setText("NRO OS: " + recolhFertTO.getNroOSRecolhFert());
+        textViewOSRecMang.setText("NRO OS: " + recolhFertBean.getNroOSRecolhFert());
 
-        if(recolhFertTO.getValorRecolhFert() > 0){
-            textViewValorRecMang.setText("QTDE REC.: " + recolhFertTO.getValorRecolhFert());
+        if(recolhFertBean.getValorRecolhFert() > 0){
+            textViewValorRecMang.setText("QTDE REC.: " + recolhFertBean.getValorRecolhFert());
         }
         else{
             textViewValorRecMang.setText("QTDE REC.: ");

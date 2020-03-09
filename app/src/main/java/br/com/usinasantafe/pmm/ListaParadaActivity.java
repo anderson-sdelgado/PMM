@@ -17,9 +17,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bean.estaticas.RFuncaoAtivParTO;
+import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.bean.estaticas.ParadaTO;
 
 public class ListaParadaActivity extends ActivityGeneric {
 
@@ -41,14 +40,14 @@ public class ListaParadaActivity extends ActivityGeneric {
         Button buttonRetMenuParada = (Button) findViewById(R.id.buttonRetMenuParada);
         EditText editPesqListParada = (EditText) findViewById(R.id.editPesqListParada);
 
-        ParadaTO paradaTO = new ParadaTO();
+        ParadaBean paradaBean = new ParadaBean();
         paradaList = pmmContext.getApontCTR().getListParada();
 
         String itens[] = new String[paradaList.size()];
 
         for (int i = 0; i < paradaList.size(); i++) {
-            paradaTO = (ParadaTO) paradaList.get(i);
-            itens[i] = paradaTO.getCodParada() + " - " + paradaTO.getDescrParada();
+            paradaBean = (ParadaBean) paradaList.get(i);
+            itens[i] = paradaBean.getCodParada() + " - " + paradaBean.getDescrParada();
         }
 
         adapter = new ArrayAdapter<String>(this, R.layout.activity_item_lista, R.id.textViewItemList, itens);
@@ -146,11 +145,11 @@ public class ListaParadaActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        ParadaTO paradaTO = new ParadaTO();
-                        List paradaList = paradaTO.get("codParada", paradaString.substring(0, paradaString.indexOf('-')).trim());
-                        paradaTO = (ParadaTO) paradaList.get(0);
+                        ParadaBean paradaBean = new ParadaBean();
+                        List paradaList = paradaBean.get("codParada", paradaString.substring(0, paradaString.indexOf('-')).trim());
+                        paradaBean = (ParadaBean) paradaList.get(0);
 
-                        pmmContext.getApontCTR().setParadaApont(paradaTO.getIdParada());
+                        pmmContext.getApontCTR().setParadaApont(paradaBean.getIdParada());
 
                         if (pmmContext.getApontCTR().verifBackupApont()) {
                             AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
@@ -166,11 +165,11 @@ public class ListaParadaActivity extends ActivityGeneric {
                             alerta.show();
                         } else {
 
-//                            List rFuncaoParadaList = pmmContext.getBoletimCTR().getFuncaoParadaList(paradaTO.getIdParada());
+//                            List rFuncaoParadaList = pmmContext.getBoletimCTR().getFuncaoParadaList(paradaBean.getIdParada());
 //
 //                            boolean calibPneu = false;
 //                            for (int i = 0; i < rFuncaoParadaList.size(); i++) {
-//                                RFuncaoAtivParTO rFuncaoAtivParTO = (RFuncaoAtivParTO) rFuncaoParadaList.get(i);
+//                                RFuncaoAtivParBean rFuncaoAtivParTO = (RFuncaoAtivParBean) rFuncaoParadaList.get(i);
 //                                if(rFuncaoAtivParTO.getCodFuncao() == 3){
 //                                    calibPneu = true;
 //                                }

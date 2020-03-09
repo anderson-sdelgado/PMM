@@ -33,7 +33,7 @@ public class PressaoColPneuActivity extends ActivityGeneric {
 
                     if (qtde < 1000) {
 
-                        pmmContext.getPneuCTR().getItemPneuTO().setPressaoColItemPneu(qtde);
+                        pmmContext.getPneuCTR().getItemPneuBean().setPressaoColItemPneu(qtde);
                         pmmContext.getPneuCTR().salvarItem();
 
                         if(pmmContext.getPneuCTR().verFechCabec()){

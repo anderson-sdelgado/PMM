@@ -7,7 +7,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import br.com.usinasantafe.pmm.bean.variaveis.RecolhFertTO;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 
 public class ListaOSRecolActivity extends ActivityGeneric {
 
@@ -22,10 +22,10 @@ public class ListaOSRecolActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        RecolhFertTO recolhFertTO = new RecolhFertTO();
+        RecolhFertBean recolhFertBean = new RecolhFertBean();
 
         ListView listaRecMang = (ListView) findViewById(R.id.listaRecMang);
-        AdapterListRecolh adapterListRecolh = new AdapterListRecolh(this, recolhFertTO.getAndOrderBy("idBolRecolhFert",  pmmContext.getBoletimCTR().getIdBol(), "idRecolhFert", true));
+        AdapterListRecolh adapterListRecolh = new AdapterListRecolh(this, recolhFertBean.getAndOrderBy("idBolRecolhFert",  pmmContext.getBoletimCTR().getIdBol(), "idRecolhFert", true));
         listaRecMang.setAdapter(adapterListRecolh);
 
         listaRecMang.setOnItemClickListener(new AdapterView.OnItemClickListener() {

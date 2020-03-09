@@ -2,14 +2,13 @@ package br.com.usinasantafe.pmm;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.bean.variaveis.InfPlantioTO;
+import br.com.usinasantafe.pmm.model.bean.variaveis.InfPlantioBean;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 
 public class DadosPlantioActivity extends ActivityGeneric {
@@ -27,17 +26,17 @@ public class DadosPlantioActivity extends ActivityGeneric {
         TextView textViewValorMP = (TextView) findViewById(R.id.textViewValorMP);
         Button buttonSair = (Button) findViewById(R.id.buttonSair);
 
-        InfPlantioTO infPlantioTO = new InfPlantioTO();
-        List infPlantioList = infPlantioTO.all();
-        infPlantioTO = (InfPlantioTO) infPlantioList.get(0);
+        InfPlantioBean infPlantioBean = new InfPlantioBean();
+        List infPlantioList = infPlantioBean.all();
+        infPlantioBean = (InfPlantioBean) infPlantioList.get(0);
         infPlantioList.clear();
 
-        textViewTituloPlantio.setText("DADOS DE PLANTIO\n" + infPlantioTO.getDthrPlantio());
-        textViewValorDM.setText(String.valueOf(infPlantioTO.getPorcDispon()).replace(".", ",") + "%");
-        textViewMetaAP.setText(String.valueOf(infPlantioTO.getQtdeProdPlanej()).replace(".", ","));
-        textViewValorAP.setText(String.valueOf(infPlantioTO.getQtdeProdReal()).replace(".", ","));
-        textViewMetaMP.setText(String.valueOf(infPlantioTO.getMediaProdPlanej()).replace(".", ","));
-        textViewValorMP.setText(String.valueOf(infPlantioTO.getMediaProdReal()).replace(".", ","));
+        textViewTituloPlantio.setText("DADOS DE PLANTIO\n" + infPlantioBean.getDthrPlantio());
+        textViewValorDM.setText(String.valueOf(infPlantioBean.getPorcDispon()).replace(".", ",") + "%");
+        textViewMetaAP.setText(String.valueOf(infPlantioBean.getQtdeProdPlanej()).replace(".", ","));
+        textViewValorAP.setText(String.valueOf(infPlantioBean.getQtdeProdReal()).replace(".", ","));
+        textViewMetaMP.setText(String.valueOf(infPlantioBean.getMediaProdPlanej()).replace(".", ","));
+        textViewValorMP.setText(String.valueOf(infPlantioBean.getMediaProdReal()).replace(".", ","));
 
         ConfigCTR configCTR = new ConfigCTR();
         configCTR.atualVerInforConfig(3L);
