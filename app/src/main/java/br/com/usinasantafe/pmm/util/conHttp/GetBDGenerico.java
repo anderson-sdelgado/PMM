@@ -10,7 +10,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
-import br.com.usinasantafe.pmm.util.UrlsConexaoHttp;
 
 public class GetBDGenerico extends AsyncTask<String, Void, String> {
 

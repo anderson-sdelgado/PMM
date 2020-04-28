@@ -11,7 +11,6 @@ import android.widget.EditText;
 
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.model.dao.EquipDAO;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 
 public class ConfiguracaoActivity extends ActivityGeneric {
@@ -19,7 +18,6 @@ public class ConfiguracaoActivity extends ActivityGeneric {
     private ProgressDialog progressBar;
     private EditText editTextEquipConfig;
     private EditText editTextSenhaConfig;
-    private EquipDAO equipDAO;
     private ConfigCTR configCTR;
 
     @Override
@@ -33,14 +31,13 @@ public class ConfiguracaoActivity extends ActivityGeneric {
         editTextEquipConfig = (EditText)  findViewById(R.id.editTextEquipConfig);
         editTextSenhaConfig = (EditText)  findViewById(R.id.editTextSenhaConfig);
 
-        equipDAO = new EquipDAO();
         configCTR = new ConfigCTR();
         ConfigBean configBean = new ConfigBean();
 
         if (configBean.hasElements()) {
 
             configBean = configCTR.getConfig();
-            editTextEquipConfig.setText(String.valueOf(equipDAO.getEquip().getNroEquip()));
+            editTextEquipConfig.setText(String.valueOf(configCTR.getEquip().getNroEquip()));
             editTextSenhaConfig.setText(configBean.getSenhaConfig());
 
         }

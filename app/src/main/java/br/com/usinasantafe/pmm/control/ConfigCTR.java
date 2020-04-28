@@ -81,7 +81,7 @@ public class ConfigCTR {
 
     public void atualVerInforConfig(Long tipo){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.atualVerInforConfig(tipo);
+        configDAO.setVerInforConfig(tipo);
     }
 
     public Long getVerInforConfig(){
@@ -95,9 +95,9 @@ public class ConfigCTR {
         return osDAO.verTipoOS(configDAO.getConfig().getOsConfig());
     }
 
-    public void atualDifDthrConfig(Long status){
+    public void setDifDthrConfig(Long status){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.atualDifDthrConfig(status);
+        configDAO.setDifDthrConfig(status);
     }
 
 

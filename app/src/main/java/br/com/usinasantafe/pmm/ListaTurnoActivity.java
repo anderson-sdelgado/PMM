@@ -122,7 +122,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
                 pmmContext.getBoletimCTR().setTurnoBol(turnoBean.getIdTurno());
 
                 if(Tempo.getInstance().verDthrServ(configCTR.getConfig().getDtServConfig())){
-                    configCTR.atualDifDthrConfig(0L);
+                    configCTR.setDifDthrConfig(0L);
                     Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
                     startActivity(it);
                     finish();

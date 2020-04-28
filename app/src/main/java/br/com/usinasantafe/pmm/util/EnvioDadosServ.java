@@ -11,6 +11,7 @@ import br.com.usinasantafe.pmm.control.ApontCTR;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
+import br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp;
 
 public class EnvioDadosServ {
 
@@ -31,7 +32,7 @@ public class EnvioDadosServ {
         return instance;
     }
 
-    //////////////////////// ENVIAR DADOS ////////////////////////////////////////////
+    ////////////////////////////////// ENVIAR DADOS ///////////////////////////////////////////////
 
     public void enviarChecklist() {
 
@@ -162,7 +163,9 @@ public class EnvioDadosServ {
 
     }
 
-    //////////////////////VERIFICAÇÃO DE DADOS///////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////VERIFICAÇÃO DE DADOS/////////////////////////////////////////
 
     public boolean verifChecklist() {
         CheckListCTR checkListCTR = new CheckListCTR();
@@ -210,7 +213,9 @@ public class EnvioDadosServ {
         return ret;
     }
 
-    /////////////////////////MECANISMO DE ENVIO//////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////MECANISMO DE ENVIO/////////////////////////////////////////
 
     public void envioDados(Context context) {
         enviando = true;
@@ -294,6 +299,38 @@ public class EnvioDadosServ {
         }
         return statusEnvio;
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////MECANISMO DE ENVIO/////////////////////////////////////////
+
+    public void recDados(String result){
+        if(result.trim().startsWith("GRAVOU-CHECKLIST")){
+            CheckListCTR checkListCTR = new CheckListCTR();
+            checkListCTR.delChecklist();
+        } else if (result.trim().startsWith("BOLABERTOMM")) {
+            BoletimCTR boletimCTR = new BoletimCTR();
+            boletimCTR.updBolAbertoMM(result);
+        } else if (result.trim().contains("BOLFECHADOMM")) {
+            BoletimCTR boletimCTR = new BoletimCTR();
+            boletimCTR.delBolFechadoMM(result);
+        } else if (result.trim().contains("APONTMM")) {
+            ApontCTR apontCTR = new ApontCTR();
+            apontCTR.updateApontMM(result);
+        } else if (result.trim().contains("BOLABERTOFERT")) {
+            BoletimCTR boletimCTR = new BoletimCTR();
+            boletimCTR.updBolAbertoFert(result);
+        } else if (result.trim().contains("BOLFECHADOFERT")) {
+            BoletimCTR boletimCTR = new BoletimCTR();
+            boletimCTR.delBolFechadoFert(result);
+        } else if (result.trim().contains("APONTFERT")) {
+            ApontCTR apontCTR = new ApontCTR();
+            apontCTR.updateApontaFert(result);
+        }
+
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public void setEnviando(boolean enviando) {
         this.enviando = enviando;

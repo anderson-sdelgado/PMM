@@ -25,7 +25,8 @@ import br.com.usinasantafe.pmm.model.dao.InformativoDAO;
 import br.com.usinasantafe.pmm.model.dao.ItemPneuDAO;
 import br.com.usinasantafe.pmm.model.dao.OSDAO;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.AtualAplicBean;
+import br.com.usinasantafe.pmm.model.bean.AtualAplicBean;
+import br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp;
 
 import android.os.AsyncTask;
 

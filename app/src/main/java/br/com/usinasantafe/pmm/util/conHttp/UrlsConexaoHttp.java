@@ -1,28 +1,28 @@
-package br.com.usinasantafe.pmm.util;
+package br.com.usinasantafe.pmm.util.conHttp;
 
 import br.com.usinasantafe.pmm.PMMContext;
 
 public class UrlsConexaoHttp {
 
-    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmmqa/view/";
-    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmmqa/view/";
+    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmm/view/";
+    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmm/view/";
 
     public static String localPSTEstatica = "br.com.usinasantafe.pmm.model.bean.estaticas.";
-    public static String localUrl = "br.com.usinasantafe.pmm.util.UrlsConexaoHttp";
+    public static String localUrl = "br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp";
 
     public static String put = "?versao=" + PMMContext.versaoAplic.replace(".", "_");
 
-    public static String AtividadeTO = urlPrincipal + "atividade.php" + put;
-    public static String BocalTO = urlPrincipal + "bocal.php" + put;
-    public static String EquipSegTO = urlPrincipal + "equipseg.php" + put;
-    public static String ItemCheckListTO = urlPrincipal + "itemchecklist.php" + put;
-    public static String FuncionarioTO = urlPrincipal + "funcionario.php" + put;
-    public static String ParadaTO = urlPrincipal + "parada.php" + put;
-    public static String PressaoBocalTO = urlPrincipal + "pressaobocal.php" + put;
-    public static String RAtivParadaTO = urlPrincipal + "rativparada.php" + put;
-    public static String RFuncaoAtivParTO = urlPrincipal + "rfuncaoativpar.php" + put;
-    public static String TurnoTO = urlPrincipal + "turno.php" + put;
-    public static String LeiraTO = urlPrincipal + "leira.php" + put;
+    public static String AtividadeBean = urlPrincipal + "atividade.php" + put;
+    public static String BocalBean = urlPrincipal + "bocal.php" + put;
+    public static String EquipSegBean = urlPrincipal + "equipseg.php" + put;
+    public static String ItemCheckListBean = urlPrincipal + "itemchecklist.php" + put;
+    public static String FuncBean = urlPrincipal + "funcionario.php" + put;
+    public static String ParadaBean = urlPrincipal + "parada.php" + put;
+    public static String PressaoBocalBean = urlPrincipal + "pressaobocal.php" + put;
+    public static String RAtivParadaBean = urlPrincipal + "rativparada.php" + put;
+    public static String RFuncaoAtivParBean = urlPrincipal + "rfuncaoativpar.php" + put;
+    public static String TurnoBean = urlPrincipal + "turno.php" + put;
+    public static String LeiraBean = urlPrincipal + "leira.php" + put;
 
     public UrlsConexaoHttp() {
     }

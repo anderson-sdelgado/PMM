@@ -1,4 +1,4 @@
-package br.com.usinasantafe.pmm.model.bean.variaveis;
+package br.com.usinasantafe.pmm.model.bean;
 
 /**
  * Created by anderson on 24/07/2017.

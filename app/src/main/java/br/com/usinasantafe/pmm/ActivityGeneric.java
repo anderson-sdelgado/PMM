@@ -29,7 +29,7 @@ import br.com.usinasantafe.pmm.model.pst.DatabaseHelper;
 /**
  * Created by anderson on 01/10/2015.
  */
-public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper>implements GoogleApiClient.ConnectionCallbacks,
+public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     public EditText editTextPadrao;

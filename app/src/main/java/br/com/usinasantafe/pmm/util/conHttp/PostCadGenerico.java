@@ -103,35 +103,11 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 	protected void onPostExecute(String result) {
 
 		try {
-			EnvioDadosServ.getInstance().setEnviando(false);
 			Log.i("ECM", "VALOR RECEBIDO --> " + result);
-			if(result.trim().equals("GRAVOU-CHECKLIST")){
-				CheckListCTR checkListCTR = new CheckListCTR();
-				checkListCTR.delChecklist();
-			}
-			else{
-				if (result.trim().contains("BOLABERTOMM")) {
-					BoletimCTR boletimCTR = new BoletimCTR();
-					boletimCTR.updBolAbertoMM(result);
-				} else if (result.trim().contains("BOLFECHADOMM")) {
-					BoletimCTR boletimCTR = new BoletimCTR();
-					boletimCTR.delBolFechadoMM(result);
-				} else if (result.trim().contains("APONTMM")) {
-					ApontCTR apontCTR = new ApontCTR();
-					apontCTR.updateApontMM(result);
-				} else if (result.trim().contains("BOLABERTOFERT")) {
-					BoletimCTR boletimCTR = new BoletimCTR();
-					boletimCTR.updBolAbertoFert(result);
-				} else if (result.trim().contains("BOLFECHADOFERT")) {
-					BoletimCTR boletimCTR = new BoletimCTR();
-					boletimCTR.delBolFechadoFert(result);
-				} else if (result.trim().contains("APONTFERT")) {
-					ApontCTR apontCTR = new ApontCTR();
-					apontCTR.updateApontaFert(result);
-				}
-			}
+			EnvioDadosServ.getInstance().setEnviando(false);
+			EnvioDadosServ.getInstance().recDados(result);
 		} catch (Exception e) {
-
+			EnvioDadosServ.getInstance().setEnviando(false);
 			Log.i("PMM", "Erro2 = " + e);
 		}
 		

@@ -539,7 +539,7 @@ public class BoletimCTR {
 
     public void atualDadosOperador(Context telaAtual, Class telaProx, ProgressDialog progressDialog){
         ArrayList operadorArrayList = new ArrayList();
-        operadorArrayList.add("FuncionarioBean");
+        operadorArrayList.add("FuncBean");
         AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, operadorArrayList);
     }
 

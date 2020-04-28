@@ -15,7 +15,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName="tbmotoristaest")
-public class FuncionarioBean extends Entidade {
+public class FuncBean extends Entidade {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -24,7 +24,7 @@ public class FuncionarioBean extends Entidade {
 	@DatabaseField
     private String nomeFunc;
 
-    public FuncionarioBean() {
+    public FuncBean() {
     }
 
 	public Long getMatricFunc() {

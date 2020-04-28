@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.estaticas.FuncBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontImpleMMBean;
@@ -32,7 +34,6 @@ import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
-import br.com.usinasantafe.pmm.model.bean.estaticas.FuncionarioBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.OSBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ROSAtivBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontFertBean;
@@ -133,8 +134,8 @@ public class MenuInicialActivity extends ActivityGeneric {
                 String text = textView.getText().toString();
 
                 if (text.equals("BOLETIM")) {
-                    FuncionarioBean funcionarioBean = new FuncionarioBean();
-                    if (funcionarioBean.hasElements() && configCTR.hasElements()) {
+                    FuncBean funcBean = new FuncBean();
+                    if (funcBean.hasElements() && configCTR.hasElements()) {
                         pmmContext.setVerPosTela(1);
                         clearBD();
                         customHandler.removeCallbacks(updateTimerThread);
@@ -227,7 +228,8 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         pmmContext.setVerAtualCL(verAtualCL);
 
-        boolean alarmeAtivo = (PendingIntent.getBroadcast(this, 0, new Intent("ALARME_DISPARADO"), PendingIntent.FLAG_NO_CREATE) == null);
+        Intent intent = new Intent(this, ReceberAlarme.class);
+        boolean alarmeAtivo = (PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_NO_CREATE) == null);
 
         if (progressBar.isShowing()) {
             progressBar.dismiss();
@@ -236,8 +238,8 @@ public class MenuInicialActivity extends ActivityGeneric {
         if (alarmeAtivo) {
 
             Log.i("PMM", "NOVO TIMER");
-            Intent intent = new Intent("EXECUTAR_ALARME");
-            PendingIntent p = PendingIntent.getBroadcast(this, 0, intent, 0);
+            PendingIntent p = PendingIntent.getBroadcast(getApplicationContext(), 0,
+                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(System.currentTimeMillis());
@@ -310,8 +312,6 @@ public class MenuInicialActivity extends ActivityGeneric {
         backupApontaBean.deleteAll();
 
     }
-
-
 
     public void teste() {
 

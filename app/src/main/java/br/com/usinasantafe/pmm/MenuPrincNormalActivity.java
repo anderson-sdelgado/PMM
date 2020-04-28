@@ -51,7 +51,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         configBean = configCTR.getConfig();
 
         if (Tempo.getInstance().verDthrServ(configBean.getDtServConfig())) {
-            configCTR.atualDifDthrConfig(0L);
+            configCTR.setDifDthrConfig(0L);
         } else {
             if ((configBean.getDifDthrConfig() == 0) && (pmmContext.getVerPosTela() != 5)) {
                 pmmContext.setContDataHora(1);

@@ -78,7 +78,7 @@ public class ConfigDAO {
         configBean.update();
     }
 
-    public void atualVerInforConfig(Long tipo){
+    public void setVerInforConfig(Long tipo){
         ConfigBean configBean = getConfig();
         configBean.setVerInforConfig(tipo);
         configBean.update();
@@ -89,7 +89,7 @@ public class ConfigDAO {
         return configBean.getVerInforConfig();
     }
 
-    public void atualDifDthrConfig(Long status){
+    public void setDifDthrConfig(Long status){
         ConfigBean configBean = getConfig();
         configBean.setDifDthrConfig(status);
         configBean.update();

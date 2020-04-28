@@ -210,14 +210,6 @@ public class Tempo {
 
     }
 
-	public boolean isEnvioDado() {
-		return envioDado;
-	}
-
-	public void setEnvioDado(boolean envioDado) {
-		this.envioDado = envioDado;
-	}
-
     public boolean verDthrServ(String dthrServ){
 
         StringBuffer dtServ = new StringBuffer(dthrServ);
@@ -323,6 +315,14 @@ public class Tempo {
         configBean = (ConfigBean) configList.get(0);
         configList.clear();
         return configBean.getDifDthrConfig();
+    }
+
+    public boolean isEnvioDado() {
+        return envioDado;
+    }
+
+    public void setEnvioDado(boolean envioDado) {
+        this.envioDado = envioDado;
     }
 
 }

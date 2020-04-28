@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import br.com.usinasantafe.pmm.util.conHttp.GetBDGenerico;
 import br.com.usinasantafe.pmm.model.pst.GenericRecordable;
+import br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp;
 
 import com.google.gson.Gson;
 
@@ -33,7 +34,6 @@ public class AtualDadosServ {
 	private UrlsConexaoHttp urlsConexaoHttp;
 	
 	public AtualDadosServ() {
-
 		genericRecordable = new GenericRecordable();
 	}
 	
@@ -101,7 +101,7 @@ public class AtualDadosServ {
 	        for (Field field : retClasse.getDeclaredFields()) {
 	            String campo = field.getName();
 	            Log.i("PMM", "Campo = " + campo);
-	            if(campo.contains("TO")){
+	            if(campo.contains("Bean")){
 	            	tabAtualArrayList.add(campo);
 	            }
 	            
@@ -283,7 +283,7 @@ public class AtualDadosServ {
 	}
 
 	public String manipLocalClasse(String classe){
-	    if(classe.contains("TO")){
+	    if(classe.contains("Bean")){
 	    	classe = urlsConexaoHttp.localPSTEstatica + classe;
 	    }
 		return classe;
