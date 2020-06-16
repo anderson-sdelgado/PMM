@@ -115,7 +115,7 @@ public class ApontFertDAO implements ApontInterface {
 
     }
 
-    public List getListApontEnvio(Long idBolMM){
+    public List getListApontEnvio(ArrayList<Long> idBolList){
 
         ApontFertBean apontFertBean = new ApontFertBean();
 
@@ -126,13 +126,7 @@ public class ApontFertDAO implements ApontInterface {
         pesquisa.setTipo(1);
         pesqArrayList.add(pesquisa);
 
-        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-        pesquisa2.setCampo("idBolApontFert");
-        pesquisa2.setValor(idBolMM);
-        pesquisa2.setTipo(1);
-        pesqArrayList.add(pesquisa2);
-
-        return apontFertBean.get(pesqArrayList);
+        return apontFertBean.inAndGet("idBolApontFert", idBolList, pesqArrayList);
 
     }
 

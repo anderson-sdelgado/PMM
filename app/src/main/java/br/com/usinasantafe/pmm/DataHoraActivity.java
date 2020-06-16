@@ -4,8 +4,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.control.ConfigCTR;
@@ -15,6 +19,7 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 public class DataHoraActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
+    private EditText editPadrao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,44 @@ public class DataHoraActivity extends ActivityGeneric {
                 textViewDataHora.setText("MINUTOS:");
                 break;
         }
+
+        editPadrao = (EditText) findViewById(R.id.editTextPadrao);
+
+        editPadrao.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+
+                switch (pmmContext.getContDataHora()) {
+                    case 1:
+                        editPadrao.setFilters(new InputFilter[] { new InputFilter.LengthFilter(2) });
+                        break;
+                    case 2:
+                        editPadrao.setFilters(new InputFilter[] { new InputFilter.LengthFilter(2) });
+                        break;
+                    case 3:
+                        editPadrao.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
+                        break;
+                    case 4:
+                        editPadrao.setFilters(new InputFilter[] { new InputFilter.LengthFilter(2) });
+                        break;
+                    case 5:
+                        editPadrao.setFilters(new InputFilter[] { new InputFilter.LengthFilter(2) });
+                        break;
+                }
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+            }
+        });
 
         buttonOkDataHora.setOnClickListener(new View.OnClickListener() {
 

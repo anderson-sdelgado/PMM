@@ -25,6 +25,11 @@
         android:layout_weight="1" />
 
     <TextView
+        android:id="@+id/textViewDataHora"
+        style="@style/TextViewItemList"
+        android:text="@string/texto_item_list" />
+
+    <TextView
         android:id="@+id/textViewProcessoNormal"
         style="@style/TextViewItemList"
         android:text="@string/texto_item_list" />

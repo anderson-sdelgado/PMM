@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.DataHoraTO;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ApontCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
@@ -33,6 +34,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
     private ConfigBean configBean;
 
     private TextView textViewProcessoNormal;
+    private TextView textViewDataHora;
     private Handler customHandler = new Handler();
 
     @Override
@@ -42,6 +44,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
         textViewProcessoNormal = (TextView) findViewById(R.id.textViewProcessoNormal);
+        textViewDataHora = (TextView) findViewById(R.id.textViewDataHora);
 
         customHandler.postDelayed(updateTimerThread, 0);
 
@@ -95,6 +98,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         itens.add("FINALIZAR BOLETIM");
         itens.add("HISTORICO");
         itens.add("REENVIO DE DADOS");
+        itens.add("DATA/HORA");
 
         AdapterList adapterList = new AdapterList(this, itens);
         listViewAtiv = (ListView) findViewById(R.id.listViewMenuPrinc);
@@ -191,7 +195,6 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
                             }
                         });
-
                         alerta.show();
                     }
 
@@ -227,6 +230,26 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                     Intent it = new Intent(MenuPrincNormalActivity.this, ListaTipoCompActivity.class);
                     startActivity(it);
                     finish();
+                } else if (text.equals("DATA/HORA")) {
+                    DataHoraTO dataHoraTO = Tempo.getInstance().dataComHoraSTZ();
+                    if(dataHoraTO.getStatus() == 1L){
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincNormalActivity.this);
+                        alerta.setTitle("ATENÇÃO");
+                        alerta.setMessage("A DATA/HORA FOI ADQUIRIDA AUTOMATICAMENTO. O SISTEMA NÃO DEIXA ALTERA A MESMA.");
+                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+                        alerta.show();
+                    }
+                    else{
+                        pmmContext.setContDataHora(1);
+                        pmmContext.setVerPosTela(5);
+                        Intent it = new Intent(MenuPrincNormalActivity.this, DataHoraActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
                 }
             }
 
@@ -250,6 +273,15 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
             } else if (EnvioDadosServ.getInstance().getStatusEnvio() == 3) {
                 textViewProcessoNormal.setTextColor(Color.GREEN);
                 textViewProcessoNormal.setText("Todos os Dados já foram enviados e recebidos");
+            }
+
+            DataHoraTO dataHoraTO = Tempo.getInstance().dataComHoraSTZ();
+            textViewDataHora.setText(dataHoraTO.getDataHora());
+            if(dataHoraTO.getStatus() == 1L){
+                textViewDataHora.setTextColor(Color.GREEN);
+            }
+            else{
+                textViewDataHora.setTextColor(Color.RED);
             }
 
             if(configCTR.getConfig().getVerInforConfig() == 2){

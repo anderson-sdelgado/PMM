@@ -162,10 +162,6 @@ public class AtualDadosServ {
 		
 			qtdeBD = tabAtualArrayList.size();
 
-			Log.i("PMM", "CHEGOU AKI 1");
-			Log.i("PMM", "contAtualBD = " + contAtualBD);
-			Log.i("PMM", "tabAtualArrayList.size() = " + tabAtualArrayList.size());
-
 			if(contAtualBD < tabAtualArrayList.size()){
 				
 				this.progressDialog.setProgress((contAtualBD * 100) / qtdeBD);

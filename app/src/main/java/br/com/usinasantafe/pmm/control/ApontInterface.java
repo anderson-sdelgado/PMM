@@ -1,5 +1,6 @@
 package br.com.usinasantafe.pmm.control;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ApontInterface {
@@ -10,7 +11,7 @@ public interface ApontInterface {
 
     public List getListAllApont(Long idBol);
 
-    public List getListApontEnvio(Long idBol);
+    public List getListApontEnvio(ArrayList<Long> idBolList);
 
     public List getListApontEnvio();
 

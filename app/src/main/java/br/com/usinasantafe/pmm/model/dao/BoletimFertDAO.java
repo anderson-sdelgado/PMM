@@ -166,8 +166,11 @@ public class BoletimFertDAO implements BoletimInterface {
         Gson gsonCabec = new Gson();
         jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimFertBean, boletimFertBean.getClass()));
 
+        ArrayList<Long> idBolList = new ArrayList<Long>();
+        idBolList.add(boletimFertBean.getIdBolFert());
+
         ApontCTR apontCTR = new ApontCTR();
-        String dadosEnvioApont = apontCTR.dadosEnvioApontBolFert(boletimFertBean.getIdBolFert());
+        String dadosEnvioApont = apontCTR.dadosEnvioApontBolFert(idBolList);
 
         JsonObject jsonBoletim = new JsonObject();
         jsonBoletim.add("boletim", jsonArrayBoletim);
@@ -184,14 +187,13 @@ public class BoletimFertDAO implements BoletimInterface {
         String dadosEnvioApont = "";
         JsonArray jsonArrayRecolhimento = new JsonArray();
 
+        ArrayList<Long> idBolList = new ArrayList<Long>();
+
         for (int i = 0; i < boletimFertList.size(); i++) {
 
             BoletimFertBean boletimFertBean = (BoletimFertBean) boletimFertList.get(i);
             Gson gsonCabec = new Gson();
             jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimFertBean, boletimFertBean.getClass()));
-
-            ApontCTR apontCTR = new ApontCTR();
-            dadosEnvioApont = apontCTR.dadosEnvioApontBolFert(boletimFertBean.getIdBolFert());
 
             RecolhFertBean recolhFertBean = new RecolhFertBean();
             List recolhimentoList = recolhFertBean.get("idBolRecolhFert", boletimFertBean.getIdBolFert());
@@ -204,9 +206,14 @@ public class BoletimFertDAO implements BoletimInterface {
 
             recolhimentoList.clear();
 
+            idBolList.add(boletimFertBean.getIdBolFert());
+
         }
 
         boletimFertList.clear();
+
+        ApontCTR apontCTR = new ApontCTR();
+        dadosEnvioApont = apontCTR.dadosEnvioApontBolFert(idBolList);
 
         JsonObject jsonBoletim = new JsonObject();
         jsonBoletim.add("boletim", jsonArrayBoletim);

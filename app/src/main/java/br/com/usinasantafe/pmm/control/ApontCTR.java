@@ -376,10 +376,10 @@ public class ApontCTR {
 
     ////////// DADOS PRA ENVIO ///////////////
 
-    public String dadosEnvioApontBolMM(Long idBol){
+    public String dadosEnvioApontBolMM(ArrayList<Long> idBolList){
         ApontMMDAO apontMMDAO = new ApontMMDAO();
         MovLeiraDAO movLeiraDAO = new MovLeiraDAO();
-        return apontMMDAO.dadosEnvioApontMM(apontMMDAO.getListApontEnvio(idBol), movLeiraDAO.getListMovLeiraAberto(idBol));
+        return apontMMDAO.dadosEnvioApontMM(apontMMDAO.getListApontEnvio(idBolList), movLeiraDAO.getListMovLeiraAberto(idBolList));
     }
 
     public String dadosEnvioApontMM(){
@@ -408,9 +408,9 @@ public class ApontCTR {
 
     ////////// DADOS PRA ENVIO ///////////////
 
-    public String dadosEnvioApontBolFert(Long idBol){
+    public String dadosEnvioApontBolFert(ArrayList<Long> idBolList){
         ApontFertDAO apontFertDAO = new ApontFertDAO();
-        return apontFertDAO.dadosEnvioApontFert(apontFertDAO.getListApontEnvio(idBol));
+        return apontFertDAO.dadosEnvioApontFert(apontFertDAO.getListApontEnvio(idBolList));
     }
 
     public String dadosEnvioApontFert(){

@@ -11,7 +11,7 @@ public class MovLeiraDAO {
     public MovLeiraDAO() {
     }
 
-    public List getListMovLeiraAberto(Long idBolMM){
+    public List getListMovLeiraAberto(ArrayList<Long> idBolList){
 
         MovLeiraBean movLeiraBean = new MovLeiraBean();
 
@@ -22,13 +22,7 @@ public class MovLeiraDAO {
         pesquisa.setTipo(1);
         pesqArrayList.add(pesquisa);
 
-        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-        pesquisa2.setCampo("idBolMovLeira");
-        pesquisa2.setValor(idBolMM);
-        pesquisa2.setTipo(1);
-        pesqArrayList.add(pesquisa2);
-
-        return movLeiraBean.get(pesqArrayList);
+        return movLeiraBean.inAndGet("idBolMovLeira", idBolList, pesqArrayList);
 
     }
 

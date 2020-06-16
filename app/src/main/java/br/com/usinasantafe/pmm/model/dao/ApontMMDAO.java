@@ -165,7 +165,7 @@ public class ApontMMDAO implements ApontInterface {
         return retorno;
     }
 
-    public List getListApontEnvio(Long idBolMM){
+    public List getListApontEnvio(ArrayList<Long> idBolList){
 
         ApontMMBean apontMMBean = new ApontMMBean();
 
@@ -176,13 +176,7 @@ public class ApontMMDAO implements ApontInterface {
         pesquisa.setTipo(1);
         pesqArrayList.add(pesquisa);
 
-        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-        pesquisa2.setCampo("idBolApontMM");
-        pesquisa2.setValor(idBolMM);
-        pesquisa2.setTipo(1);
-        pesqArrayList.add(pesquisa2);
-
-        return apontMMBean.get(pesqArrayList);
+        return apontMMBean.inAndGet("idBolApontMM", idBolList, pesqArrayList);
 
     }
 

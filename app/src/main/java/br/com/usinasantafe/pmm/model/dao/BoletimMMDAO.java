@@ -179,8 +179,11 @@ public class BoletimMMDAO implements BoletimInterface {
         JsonArray jsonArrayBoletim = new JsonArray();
         jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimMMBean, boletimMMBean.getClass()));
 
+        ArrayList<Long> idBolList = new ArrayList<Long>();
+        idBolList.add(boletimMMBean.getIdBolMM());
+
         ApontCTR apontCTR = new ApontCTR();
-        String dadosEnvioApont = apontCTR.dadosEnvioApontBolMM(boletimMMBean.getIdBolMM());
+        String dadosEnvioApont = apontCTR.dadosEnvioApontBolMM(idBolList);
 
         JsonObject jsonBoletim = new JsonObject();
         jsonBoletim.add("boletim", jsonArrayBoletim);
@@ -197,14 +200,13 @@ public class BoletimMMDAO implements BoletimInterface {
         String dadosEnvioApont = "";
         JsonArray jsonArrayRendimento = new JsonArray();
 
+        ArrayList<Long> idBolList = new ArrayList<Long>();
+
         for (int i = 0; i < boletimMMList.size(); i++) {
 
             BoletimMMBean boletimMMBean = (BoletimMMBean) boletimMMList.get(i);
             Gson gsonCabec = new Gson();
             jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimMMBean, boletimMMBean.getClass()));
-
-            ApontCTR apontCTR = new ApontCTR();
-            dadosEnvioApont = apontCTR.dadosEnvioApontBolMM(boletimMMBean.getIdBolMM());
 
             RendMMBean rendMMBean = new RendMMBean();
             List rendList = rendMMBean.get("idBolRendMM", boletimMMBean.getIdBolMM());
@@ -217,9 +219,14 @@ public class BoletimMMDAO implements BoletimInterface {
 
             rendList.clear();
 
+            idBolList.add(boletimMMBean.getIdBolMM());
+
         }
 
         boletimMMList.clear();
+
+        ApontCTR apontCTR = new ApontCTR();
+        dadosEnvioApont = apontCTR.dadosEnvioApontBolMM(idBolList);
 
         JsonObject jsonBoletim = new JsonObject();
         jsonBoletim.add("boletim", jsonArrayBoletim);
