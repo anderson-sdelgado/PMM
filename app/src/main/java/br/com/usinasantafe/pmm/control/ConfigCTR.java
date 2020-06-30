@@ -100,6 +100,9 @@ public class ConfigCTR {
         configDAO.setDifDthrConfig(status);
     }
 
-
+    public boolean verOS(Long nroOS){
+        OSDAO osDAO = new OSDAO();
+        return osDAO.verOS(nroOS);
+    }
 
 }

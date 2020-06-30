@@ -27,9 +27,9 @@ public class OSDAO {
 
     public void recDadosOS(String result){
 
-        try {
+        ConfigCTR configCTR = new ConfigCTR();
 
-            ConfigCTR configCTR = new ConfigCTR();
+        try {
 
             if (!result.contains("exceeded")) {
 
@@ -84,7 +84,8 @@ public class OSDAO {
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            VerifDadosServ.getInstance().msgSemTerm("FALHA DE PESQUISA DE OS! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
+            configCTR.setStatusConConfig(0L);
+            VerifDadosServ.getInstance().msgComTerm("FALHA DE PESQUISA DE OS! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
 
     }
@@ -101,6 +102,14 @@ public class OSDAO {
                 }
             }
         }
+        return ret;
+    }
+
+    public boolean verOS(Long nroOS){
+        OSBean osTO = new OSBean();
+        List osList = osTO.get("nroOS", nroOS);
+        boolean ret = osList.size() > 0;
+        osList.clear();
         return ret;
     }
 

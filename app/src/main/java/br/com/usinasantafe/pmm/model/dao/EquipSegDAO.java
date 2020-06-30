@@ -65,4 +65,15 @@ public class EquipSegDAO {
 
     }
 
+    public EquipSegBean getEquipSeg(Long nroEquip){
+
+        EquipSegBean equipSegBean = new EquipSegBean();
+        List equipSegList = equipSegBean.get("nroEquip", nroEquip);
+        equipSegBean = (EquipSegBean) equipSegList.get(0);
+        equipSegList.clear();
+
+        return equipSegBean;
+
+    }
+
 }

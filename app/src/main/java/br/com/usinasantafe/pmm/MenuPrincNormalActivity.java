@@ -16,22 +16,19 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.model.bean.DataHoraTO;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ApontCTR;
-import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 
 public class MenuPrincNormalActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private ListView listViewAtiv;
     private ProgressDialog progressBar;
-    private ConfigCTR configCTR;
-    private ConfigBean configBean;
+//    private ConfigCTR configCTR;
+//    private ConfigBean configBean;
 
     private TextView textViewProcessoNormal;
     private TextView textViewDataHora;
@@ -50,13 +47,13 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
         ArrayList<String> itens = new ArrayList<String>();
 
-        configCTR = new ConfigCTR();
-        configBean = configCTR.getConfig();
+//        configCTR = new ConfigCTR();
+//        configBean = configCTR.getConfig();
 
-        if (Tempo.getInstance().verDthrServ(configBean.getDtServConfig())) {
-            configCTR.setDifDthrConfig(0L);
+        if (Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())) {
+            pmmContext.getConfigCTR().setDifDthrConfig(0L);
         } else {
-            if ((configBean.getDifDthrConfig() == 0) && (pmmContext.getVerPosTela() != 5)) {
+            if ((pmmContext.getConfigCTR().getConfig().getDifDthrConfig() == 0) && (pmmContext.getVerPosTela() != 5)) {
                 pmmContext.setContDataHora(1);
                 pmmContext.setVerPosTela(5);
                 Intent it = new Intent(MenuPrincNormalActivity.this, MsgDataHoraActivity.class);
@@ -68,7 +65,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
         itens.add("TRABALHANDO");
         itens.add("PARADO");
 
-        if(configCTR.getEquip().getTipo() == 1){
+        if(pmmContext.getConfigCTR().getEquip().getTipo() == 1){
 
             List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(pmmContext.getBoletimCTR().ultAtivBolMenu());
 
@@ -84,7 +81,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                     itens.add("TROCAR IMPLEMENTO");
                 }
                 if(rFuncaoAtivParBean.getCodFuncao() == 5){
-                    if(configCTR.verTipoOS()){
+                    if(pmmContext.getConfigCTR().verTipoOS()){
                         itens.add("COMPOSTAGEM");
                     }
                 }
@@ -114,7 +111,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                 String text = textView.getText().toString();
 
                 if (text.equals("TRABALHANDO")) {
-                    if (configBean.getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
+                    if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
                         Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
@@ -125,7 +122,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                         finish();
                     }
                 } else if (text.equals("PARADO")) {
-                    if (configBean.getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
+                    if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
                         Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
@@ -136,7 +133,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                         finish();
                     }
                 } else if (text.equals("FINALIZAR BOLETIM")) {
-                    if (configBean.getDtUltApontConfig().equals("")) {
+                    if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals("")) {
                         Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! INSIRA OS APONTAMENTOS AO BOLETIM!",
                                 Toast.LENGTH_LONG).show();
                     } else {
@@ -184,7 +181,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                         progressBar.setMax(100);
                         progressBar.show();
 
-                        configCTR.atualTodasTabelas(MenuPrincNormalActivity.this, progressBar);
+                        pmmContext.getConfigCTR().atualTodasTabelas(MenuPrincNormalActivity.this, progressBar);
                     } else {
                         AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincNormalActivity.this);
                         alerta.setTitle("ATENÇÃO");
@@ -207,11 +204,11 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                 } else if (text.equals("REENVIO DE DADOS")) {
                     EnvioDadosServ.getInstance().envioDados(MenuPrincNormalActivity.this);
                 } else if (text.equals("TROCAR IMPLEMENTO")) {
-                    if (configBean.getDtUltApontConfig().equals("")) {
+                    if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals("")) {
                         Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! FAÇA ALGUM APONTAMENTO ANTES DE REALIZAR A TROCA DO(S) IMPLEMENTO(S)!",
                                 Toast.LENGTH_LONG).show();
                     } else {
-                        if (configBean.getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
+                        if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
                             Toast.makeText(MenuPrincNormalActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                     Toast.LENGTH_LONG).show();
                         } else {
@@ -231,8 +228,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                     startActivity(it);
                     finish();
                 } else if (text.equals("DATA/HORA")) {
-                    DataHoraTO dataHoraTO = Tempo.getInstance().dataComHoraSTZ();
-                    if(dataHoraTO.getStatus() == 1L){
+                    if(Tempo.getInstance().dif() == 0){
                         AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincNormalActivity.this);
                         alerta.setTitle("ATENÇÃO");
                         alerta.setMessage("A DATA/HORA FOI ADQUIRIDA AUTOMATICAMENTO. O SISTEMA NÃO DEIXA ALTERA A MESMA.");
@@ -275,16 +271,15 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
                 textViewProcessoNormal.setText("Todos os Dados já foram enviados e recebidos");
             }
 
-            DataHoraTO dataHoraTO = Tempo.getInstance().dataComHoraSTZ();
-            textViewDataHora.setText(dataHoraTO.getDataHora());
-            if(dataHoraTO.getStatus() == 1L){
+            textViewDataHora.setText(Tempo.getInstance().dataComHoraSTZ());
+            if(Tempo.getInstance().dif() == 0){
                 textViewDataHora.setTextColor(Color.GREEN);
             }
             else{
                 textViewDataHora.setTextColor(Color.RED);
             }
 
-            if(configCTR.getConfig().getVerInforConfig() == 2){
+            if(pmmContext.getConfigCTR().getConfig().getVerInforConfig() == 2){
                 Intent it = new Intent( MenuPrincNormalActivity.this, DadosColheitaActivity.class);
                 startActivity(it);
                 finish();

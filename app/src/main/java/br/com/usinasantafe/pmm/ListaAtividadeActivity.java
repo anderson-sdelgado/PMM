@@ -18,6 +18,7 @@ import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.estaticas.AtividadeBean;
+import br.com.usinasantafe.pmm.util.Tempo;
 
 public class ListaAtividadeActivity extends ActivityGeneric {
 
@@ -127,61 +128,79 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                     pmmContext.getApontCTR().setOSApont(nroOS);
                     pmmContext.getApontCTR().setAtivApont(atividadeBean.getIdAtiv());
 
-                    if (pmmContext.getApontCTR().verifBackupApont()) {
+                    if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
 
                         AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
                         alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!");
+                        alerta.setMessage("POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.");
                         alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
+                                startActivity(it);
+                                finish();
                             }
                         });
-
                         alerta.show();
 
                     } else {
 
-                        if (configCTR.getEquip().getTipo() == 1) {
+                        if (pmmContext.getApontCTR().verifBackupApont()) {
 
-                            List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(atividadeBean.getIdAtiv());
-
-                            boolean transbordo = false;
-                            boolean rendimento = false;
-
-                            for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
-                                RFuncaoAtivParBean rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtividadeList.get(i);
-                                if(rFuncaoAtivParBean.getCodFuncao() == 2){
-                                    transbordo = true;
+                            AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
+                            alerta.setTitle("ATENÇÃO");
+                            alerta.setMessage("OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!");
+                            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
                                 }
-                                if(rFuncaoAtivParBean.getCodFuncao() == 1){
-                                    rendimento = true;
-                                }
-                            }
-                            rFuncaoAtividadeList.clear();
+                            });
 
-                            if(transbordo){
-                                Intent it = new Intent(ListaAtividadeActivity.this, TransbordoActivity.class);
+                            alerta.show();
+
+                        } else {
+
+                            if (configCTR.getEquip().getTipo() == 1) {
+
+                                List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(atividadeBean.getIdAtiv());
+
+                                boolean transbordo = false;
+                                boolean rendimento = false;
+
+                                for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
+                                    RFuncaoAtivParBean rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtividadeList.get(i);
+                                    if (rFuncaoAtivParBean.getCodFuncao() == 2) {
+                                        transbordo = true;
+                                    }
+                                    if (rFuncaoAtivParBean.getCodFuncao() == 1) {
+                                        rendimento = true;
+                                    }
+                                }
+                                rFuncaoAtividadeList.clear();
+
+                                if (transbordo) {
+                                    Intent it = new Intent(ListaAtividadeActivity.this, TransbordoActivity.class);
+                                    startActivity(it);
+                                    finish();
+                                } else {
+
+                                    pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
+                                    if (rendimento) {
+                                        pmmContext.getBoletimCTR().insRendBD(nroOS);
+                                    }
+
+                                    Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
+                                    startActivity(it);
+                                    finish();
+
+                                }
+
+                            } else {
+                                Intent it = new Intent(ListaAtividadeActivity.this, ListaBocalFertActivity.class);
                                 startActivity(it);
                                 finish();
                             }
-                            else{
 
-                                pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
-                                if (rendimento) {
-                                    pmmContext.getBoletimCTR().insRendBD(nroOS);
-                                }
-
-                                Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
-                                startActivity(it);
-                                finish();
-
-                            }
-
-                        }else{
-                            Intent it = new Intent(ListaAtividadeActivity.this, ListaBocalFertActivity.class);
-                            startActivity(it);
-                            finish();
                         }
 
                     }

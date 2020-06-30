@@ -8,9 +8,6 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 
-import br.com.usinasantafe.pmm.control.ApontCTR;
-import br.com.usinasantafe.pmm.control.BoletimCTR;
-import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
 
@@ -103,7 +100,7 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 	protected void onPostExecute(String result) {
 
 		try {
-			Log.i("ECM", "VALOR RECEBIDO --> " + result);
+			Log.i("PMM", "VALOR RECEBIDO --> " + result);
 			EnvioDadosServ.getInstance().setEnviando(false);
 			EnvioDadosServ.getInstance().recDados(result);
 		} catch (Exception e) {

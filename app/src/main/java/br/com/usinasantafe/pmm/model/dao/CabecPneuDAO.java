@@ -37,7 +37,7 @@ public class CabecPneuDAO {
         cabecPneuBean.setIdApontCabecPneu(idApont);
         cabecPneuBean.setEquipCabecPneu(equip);
         cabecPneuBean.setFuncCabecPneu(func);
-        cabecPneuBean.setDthrCabecPneu(Tempo.getInstance().dataComHora().getDataHora());
+        cabecPneuBean.setDthrCabecPneu(Tempo.getInstance().dataComHora());
         cabecPneuBean.setStatusCabecPneu(1L);
         cabecPneuBean.insert();
     }

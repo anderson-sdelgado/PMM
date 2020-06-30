@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.model.bean.DataHoraTO;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CabecPneuBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ItemPneuBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.MovLeiraBean;
@@ -141,8 +140,7 @@ public class ApontMMDAO implements ApontInterface {
 
             calBase.add(Calendar.MINUTE, +9);
 
-            DataHoraTO dataHoraTO = Tempo.getInstance().dataComHora();
-            dtStr = dataHoraTO.getDataHora();
+            dtStr = Tempo.getInstance().dataComHora();
 
             diaStr = dtStr.substring(0, 2);
             mesStr = dtStr.substring(3, 5);
@@ -379,10 +377,9 @@ public class ApontMMDAO implements ApontInterface {
             apontMMBean.setOsApontMM(boletimCTR.getOS());
             apontMMBean.setAtivApontMM(boletimCTR.getAtiv());
             apontMMBean.setParadaApontMM(0L);
-            apontMMBean.setDthrApontMM(Tempo.getInstance().dataComHora().getDataHora());
+            apontMMBean.setDthrApontMM(Tempo.getInstance().dataComHora());
             apontMMBean.setStatusConApontMM(boletimCTR.getStatusConBol());
             apontMMBean.setStatusApontMM(1L);
-            apontMMBean.setStatusDtHrApontMM(Tempo.getInstance().dataComHora().getStatus());
             apontMMBean.setLongitudeApontMM(boletimCTR.getLongitude());
             apontMMBean.setLatitudeApontMM(boletimCTR.getLatitude());
         } else {

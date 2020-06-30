@@ -93,7 +93,7 @@ public class EquipMBActivity extends ActivityGeneric {
 
                     if (pmmContext.getBoletimCTR().verMotoBomba(motoBomba)) {
 
-                        pmmContext.getBoletimCTR().setIdEquipBombaBol(motoBomba);
+                        pmmContext.getBoletimCTR().setIdEquipBombaBol(pmmContext.getBoletimCTR().getEquipSeg(motoBomba).getIdEquip());
                         salvarBoletimAberto();
 
                     } else {

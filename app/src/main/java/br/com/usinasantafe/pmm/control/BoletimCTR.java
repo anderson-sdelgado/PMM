@@ -6,6 +6,7 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.estaticas.EquipSegBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontFertBean;
 import br.com.usinasantafe.pmm.model.dao.ApontFertDAO;
 import br.com.usinasantafe.pmm.model.dao.ApontMMDAO;
@@ -247,6 +248,11 @@ public class BoletimCTR {
         else{
             return boletimFertBean.getLatitudeBolFert();
         }
+    }
+
+    public EquipSegBean getEquipSeg(Long nroEquip){
+        EquipSegDAO equipSegDAO = new EquipSegDAO();
+        return equipSegDAO.getEquipSeg(nroEquip);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////

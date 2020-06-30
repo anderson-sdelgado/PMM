@@ -89,7 +89,7 @@ public class BoletimMMDAO implements BoletimInterface {
         MovLeiraBean movLeiraBean = new MovLeiraBean();
         movLeiraBean.setTipoMovLeira(tipo);
         movLeiraBean.setIdLeira(idLeira);
-        movLeiraBean.setDataHoraMovLeira(Tempo.getInstance().dataComHora().getDataHora());
+        movLeiraBean.setDataHoraMovLeira(Tempo.getInstance().dataComHora());
         movLeiraBean.setIdBolMovLeira(boletimMMBean.getIdBolMM());
         movLeiraBean.setIdExtBolMovLeira(boletimMMBean.getIdExtBolMM());
         movLeiraBean.setStatusMovLeira(1L);
@@ -119,15 +119,14 @@ public class BoletimMMDAO implements BoletimInterface {
     }
 
     public void atualRend(RendMMBean rendMMBean){
-        rendMMBean.setDthrRendMM(Tempo.getInstance().dataComHora().getDataHora());
+        rendMMBean.setDthrRendMM(Tempo.getInstance().dataComHora());
         rendMMBean.update();
         rendMMBean.commit();
     }
 
     public void salvarBolAberto(BoletimMMBean boletimMMBean){
         boletimMMBean.setStatusBolMM(1L);
-        boletimMMBean.setDthrInicialBolMM(Tempo.getInstance().dataComHora().getDataHora());
-        boletimMMBean.setStatusDtHrInicialBolMM(Tempo.getInstance().dataComHora().getStatus());
+        boletimMMBean.setDthrInicialBolMM(Tempo.getInstance().dataComHora());
         boletimMMBean.setQtdeApontBolMM(0L);
         boletimMMBean.insert();
     }
@@ -139,8 +138,7 @@ public class BoletimMMDAO implements BoletimInterface {
         boletimMMTOBD = (BoletimMMBean) listBoletim.get(0);
         listBoletim.clear();
 
-        boletimMMTOBD.setDthrFinalBolMM(Tempo.getInstance().dataComHora().getDataHora());
-        boletimMMTOBD.setStatusDtHrFinalBolMM(Tempo.getInstance().dataComHora().getStatus());
+        boletimMMTOBD.setDthrFinalBolMM(Tempo.getInstance().dataComHora());
         boletimMMTOBD.setStatusBolMM(2L);
         boletimMMTOBD.setHodometroFinalBolMM(boletimMMBean.getHodometroFinalBolMM());
         boletimMMTOBD.update();

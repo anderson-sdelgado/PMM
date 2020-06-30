@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ItemCheckListBean;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
@@ -78,6 +80,12 @@ public class ItemCheckListDAO {
     public int qtdeItem(Long idChecklist){
         ItemCheckListBean itemCheckListBean = new ItemCheckListBean();
         return itemCheckListBean.get("idCheckList", idChecklist).size();
+    }
+
+    public List getItemList(EquipBean equipBean){
+        ItemCheckListBean itemCheckListBean = new ItemCheckListBean();
+        List itemCheckListList = itemCheckListBean.getAndOrderBy("idCheckList", equipBean.getIdCheckList(), "idItemCheckList", true);
+        return itemCheckListList;
     }
 
 }

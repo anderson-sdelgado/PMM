@@ -39,10 +39,6 @@ public class BoletimFertBean extends Entidade {
     @DatabaseField
     private Long statusConBolFert;  //0 - OffLine; 1 - OnLine
     @DatabaseField
-    private Long statusDtHrInicialBolFert;  //0 - Data Digitada; 1 - Data do Celular;
-    @DatabaseField
-    private Long statusDtHrFinalBolFert;  //0 - Data Digitada; 1 - Data do Celular;
-    @DatabaseField
     private Long qtdeApontBolFert;
     @DatabaseField
     private Double longitudeBolFert;
@@ -186,21 +182,5 @@ public class BoletimFertBean extends Entidade {
 
     public void setLatitudeBolFert(Double latitudeBolFert) {
         this.latitudeBolFert = latitudeBolFert;
-    }
-
-    public Long getStatusDtHrInicialBolFert() {
-        return statusDtHrInicialBolFert;
-    }
-
-    public void setStatusDtHrInicialBolFert(Long statusDtHrInicialBolFert) {
-        this.statusDtHrInicialBolFert = statusDtHrInicialBolFert;
-    }
-
-    public Long getStatusDtHrFinalBolFert() {
-        return statusDtHrFinalBolFert;
-    }
-
-    public void setStatusDtHrFinalBolFert(Long statusDtHrFinalBolFert) {
-        this.statusDtHrFinalBolFert = statusDtHrFinalBolFert;
     }
 }

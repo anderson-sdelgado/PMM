@@ -42,8 +42,6 @@ public class ApontFertBean extends Entidade {
     private Long statusConApontFert;  //0 - OffLine; 1 - OnLine
     @DatabaseField
     private Long statusApontFert;  //0 - Aberto; 1 - Enviar; 2 - Enviado
-    @DatabaseField
-    private Long statusDtHrApontFert;  //0 - Data Digitada; 1 - Data do Celular;
 
     public ApontFertBean() {
     }
@@ -156,11 +154,4 @@ public class ApontFertBean extends Entidade {
         this.statusApontFert = statusApontFert;
     }
 
-    public Long getStatusDtHrApontFert() {
-        return statusDtHrApontFert;
-    }
-
-    public void setStatusDtHrApontFert(Long statusDtHrApontFert) {
-        this.statusDtHrApontFert = statusDtHrApontFert;
-    }
 }

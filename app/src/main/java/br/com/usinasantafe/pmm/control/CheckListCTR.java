@@ -60,6 +60,13 @@ public class CheckListCTR {
         itemCheckListDAO.recDadosCheckList(result);
     }
 
+    public List getItemList(){
+        ConfigCTR configCTR = new ConfigCTR();
+        ItemCheckListDAO itemCheckListDAO = new ItemCheckListDAO();
+        List itemCheckListList = itemCheckListDAO.getItemList(configCTR.getEquip());
+        return itemCheckListList;
+    }
+
     public ItemCheckListBean getItemCheckList(int pos){
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
         return cabecCheckListDAO.getItemCheckList(pos);

@@ -262,10 +262,9 @@ public class ApontFertDAO implements ApontInterface {
             apontFertBean.setOsApontFert(boletimCTR.getIdExtBol());
             apontFertBean.setAtivApontFert(boletimCTR.getAtiv());
             apontFertBean.setParadaApontFert(0L);
-            apontFertBean.setDthrApontFert(Tempo.getInstance().dataComHora().getDataHora());
+            apontFertBean.setDthrApontFert(Tempo.getInstance().dataComHora());
             apontFertBean.setStatusConApontFert(boletimCTR.getStatusConBol());
             apontFertBean.setStatusApontFert(1L);
-            apontFertBean.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
             apontFertBean.setLongitudeApontFert(boletimCTR.getLongitude());
             apontFertBean.setLatitudeApontFert(boletimCTR.getLatitude());
         } else {

@@ -19,6 +19,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
+import br.com.usinasantafe.pmm.util.Tempo;
 
 public class ListaParadaActivity extends ActivityGeneric {
 
@@ -151,48 +152,45 @@ public class ListaParadaActivity extends ActivityGeneric {
 
                         pmmContext.getApontCTR().setParadaApont(paradaBean.getIdParada());
 
-                        if (pmmContext.getApontCTR().verifBackupApont()) {
+                        if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
+
                             AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
                             alerta.setTitle("ATENÇÃO");
-                            alerta.setMessage("PARADA JÁ APONTADA PARA O EQUIPAMENTO!");
+                            alerta.setMessage("POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.");
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
-
+                                    Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
+                                    startActivity(it);
+                                    finish();
                                 }
                             });
                             alerta.show();
+
                         } else {
 
-//                            List rFuncaoParadaList = pmmContext.getBoletimCTR().getFuncaoParadaList(paradaBean.getIdParada());
-//
-//                            boolean calibPneu = false;
-//                            for (int i = 0; i < rFuncaoParadaList.size(); i++) {
-//                                RFuncaoAtivParBean rFuncaoAtivParTO = (RFuncaoAtivParBean) rFuncaoParadaList.get(i);
-//                                if(rFuncaoAtivParTO.getCodFuncao() == 3){
-//                                    calibPneu = true;
-//                                }
-//                            }
-//                            rFuncaoParadaList.clear();
-//
-//                            if(calibPneu){
-//                                pmmContext.getApontCTR().salvarApont(0L, getLongitude(), getLatitude());
-//                                Intent it = new Intent(ListaParadaActivity.this, ListaPosPneuActivity.class);
-//                                startActivity(it);
-//                                finish();
-//                            }
-//                            else{
+                            if (pmmContext.getApontCTR().verifBackupApont()) {
+                                AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
+                                alerta.setTitle("ATENÇÃO");
+                                alerta.setMessage("PARADA JÁ APONTADA PARA O EQUIPAMENTO!");
+                                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                });
+                                alerta.show();
+                            } else {
+
                                 pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
                                 Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
                                 startActivity(it);
                                 finish();
-//                            }
 
-                            paradaList.clear();
+                            }
 
                         }
 
+                        paradaList.clear();
 
                     }
 

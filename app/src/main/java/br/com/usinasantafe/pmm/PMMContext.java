@@ -4,6 +4,8 @@ import android.app.Application;
 
 import br.com.usinasantafe.pmm.control.ApontCTR;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
+import br.com.usinasantafe.pmm.control.CheckListCTR;
+import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.control.PneuCTR;
 import br.com.usinasantafe.pmm.control.InformativoCTR;
 
@@ -17,6 +19,8 @@ public class PMMContext extends Application {
     private ApontCTR apontCTR;
     private InformativoCTR informativoCTR;
     private PneuCTR pneuCTR;
+    private CheckListCTR checkListCTR;
+    private ConfigCTR configCTR;
     private int verPosTela;
     //1 - Inicio do boletim;
     // 2 - Trabalhando Moto Mec;
@@ -29,7 +33,7 @@ public class PMMContext extends Application {
     // 19 - Trocar de implemento
     private int contImplemento;
     private String textoHorimetro;
-    public static String versaoAplic = "2.05";
+    public static String versaoAplic = "2.07";
     private int contRend;
     private int posRend;
     private int contRecolh;
@@ -72,6 +76,18 @@ public class PMMContext extends Application {
         if (pneuCTR == null)
             pneuCTR = new PneuCTR();
         return pneuCTR;
+    }
+
+    public CheckListCTR getCheckListCTR(){
+        if (checkListCTR == null)
+            checkListCTR = new CheckListCTR();
+        return checkListCTR;
+    }
+
+    public ConfigCTR getConfigCTR(){
+        if (configCTR == null)
+            configCTR = new ConfigCTR();
+        return configCTR;
     }
 
     public int getVerPosTela() {

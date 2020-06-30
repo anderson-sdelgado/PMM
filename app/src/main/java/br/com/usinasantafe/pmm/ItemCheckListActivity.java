@@ -6,16 +6,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import br.com.usinasantafe.pmm.control.CheckListCTR;
-import br.com.usinasantafe.pmm.control.ConfigCTR;
+import java.util.List;
+
 import br.com.usinasantafe.pmm.model.bean.estaticas.ItemCheckListBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCLBean;
 
 public class ItemCheckListActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
-    private ItemCheckListBean itemCheckListBean;
-    private CheckListCTR checkListCTR;
+    private TextView textViewItemChecklist;
+    private List itemCheckListList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +24,14 @@ public class ItemCheckListActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        TextView textViewItemChecklist = (TextView) findViewById(R.id.textViewItemChecklist);
+        textViewItemChecklist = (TextView) findViewById(R.id.textViewItemChecklist);
         Button buttonConforme = (Button) findViewById(R.id.buttonConforme);
         Button buttonNaoConforme = (Button) findViewById(R.id.buttonNaoConforme);
         Button buttonReparo = (Button) findViewById(R.id.buttonReparo);
         Button buttonCancChecklist = (Button) findViewById(R.id.buttonCancChecklist);
 
-        checkListCTR = new CheckListCTR();
-        itemCheckListBean = checkListCTR.getItemCheckList(pmmContext.getPosCheckList());
-
+        itemCheckListList = pmmContext.getCheckListCTR().getItemList();
+        ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getPosCheckList() - 1);
         textViewItemChecklist.setText(pmmContext.getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
 
         buttonConforme.setOnClickListener(new View.OnClickListener() {
@@ -77,24 +76,23 @@ public class ItemCheckListActivity extends ActivityGeneric {
 
     public void proximaTela(Long opcao){
 
+        ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getPosCheckList() - 1);
         RespItemCLBean respItemCLBean = new RespItemCLBean();
         respItemCLBean.setIdItBDItCL(itemCheckListBean.getIdItemCheckList());
         respItemCLBean.setOpItCL(opcao);
-        checkListCTR.setRespCheckList(respItemCLBean);
+        pmmContext.getCheckListCTR().setRespCheckList(respItemCLBean);
 
-        if(checkListCTR.qtdeItemCheckList() == pmmContext.getPosCheckList()){
-            ConfigCTR configCTR = new ConfigCTR();
-            configCTR.setCheckListConfig(pmmContext.getBoletimCTR().getTurno());
-            checkListCTR.salvarBolFechado();
+        if(pmmContext.getCheckListCTR().qtdeItemCheckList() == pmmContext.getPosCheckList()){
+            pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getBoletimCTR().getTurno());
+            pmmContext.getCheckListCTR().salvarBolFechado();
             Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);
             startActivity(it);
             finish();
         }
         else{
             pmmContext.setPosCheckList(pmmContext.getPosCheckList() + 1);
-            Intent it = new Intent(ItemCheckListActivity.this, ItemCheckListActivity.class);
-            startActivity(it);
-            finish();
+            itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getPosCheckList() - 1);
+            textViewItemChecklist.setText(pmmContext.getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
         }
 
     }
@@ -102,9 +100,8 @@ public class ItemCheckListActivity extends ActivityGeneric {
     public void retornoTela(){
         if(pmmContext.getPosCheckList() > 1){
             pmmContext.setPosCheckList(pmmContext.getPosCheckList() - 1);
-            Intent it = new Intent(ItemCheckListActivity.this, ItemCheckListActivity.class);
-            startActivity(it);
-            finish();
+            ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getPosCheckList() - 1);
+            textViewItemChecklist.setText(pmmContext.getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
         }
     }
 

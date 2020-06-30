@@ -79,7 +79,7 @@ public class BoletimFertDAO implements BoletimInterface {
     }
 
     public void atualRecolh(RecolhFertBean recolhFertBean){
-        recolhFertBean.setDthrRecolhFert(Tempo.getInstance().dataComHora().getDataHora());
+        recolhFertBean.setDthrRecolhFert(Tempo.getInstance().dataComHora());
         recolhFertBean.update();
         recolhFertBean.commit();
     }
@@ -88,8 +88,7 @@ public class BoletimFertDAO implements BoletimInterface {
 
 
         boletimFertBean.setStatusBolFert(1L);
-        boletimFertBean.setDthrInicialBolFert(Tempo.getInstance().dataComHora().getDataHora());
-        boletimFertBean.setStatusDtHrInicialBolFert(Tempo.getInstance().dataComHora().getStatus());
+        boletimFertBean.setDthrInicialBolFert(Tempo.getInstance().dataComHora());
         boletimFertBean.setQtdeApontBolFert(0L);
         boletimFertBean.insert();
 
@@ -99,7 +98,7 @@ public class BoletimFertDAO implements BoletimInterface {
             BoletimCTR boletimCTR = new BoletimCTR();
 
             ApontFertBean apontFertBean = new ApontFertBean();
-            apontFertBean.setDthrApontFert(Tempo.getInstance().dataComHora().getDataHora());
+            apontFertBean.setDthrApontFert(Tempo.getInstance().dataComHora());
             apontFertBean.setIdBolApontFert(boletimFertBean.getIdBolFert());
             apontFertBean.setIdExtBolApontFert(boletimFertBean.getIdExtBolFert());
             apontFertBean.setOsApontFert(boletimFertBean.getOsBolFert());
@@ -109,7 +108,6 @@ public class BoletimFertDAO implements BoletimInterface {
             apontFertBean.setLongitudeApontFert(0D);
             apontFertBean.setStatusConApontFert(boletimFertBean.getStatusConBolFert());
             apontFertBean.setStatusApontFert(1L);
-            apontFertBean.setStatusDtHrApontFert(Tempo.getInstance().dataComHora().getStatus());
             apontFertBean.insert();
 
         }
@@ -123,8 +121,7 @@ public class BoletimFertDAO implements BoletimInterface {
         boletimFertTOBD = (BoletimFertBean) boletimFertList.get(0);
         boletimFertList.clear();
 
-        boletimFertTOBD.setDthrFinalBolFert(Tempo.getInstance().dataComHora().getDataHora());
-        boletimFertTOBD.setStatusDtHrFinalBolFert(Tempo.getInstance().dataComHora().getStatus());
+        boletimFertTOBD.setDthrFinalBolFert(Tempo.getInstance().dataComHora());
         boletimFertTOBD.setStatusBolFert(2L);
         boletimFertTOBD.setHodometroFinalBolFert(boletimFertBean.getHodometroFinalBolFert());
         boletimFertTOBD.update();

@@ -36,7 +36,7 @@ public class CabecCheckListDAO {
         ConfigCTR configCTR = new ConfigCTR();
 
         CabecCLBean cabecCLBean = new CabecCLBean();
-        cabecCLBean.setDtCabCL(Tempo.getInstance().dataComHora().getDataHora());
+        cabecCLBean.setDtCabCL(Tempo.getInstance().dataComHora());
         cabecCLBean.setEquipCabCL(configCTR.getEquip().getNroEquip());
         cabecCLBean.setFuncCabCL(boletimCTR.getFunc());
         cabecCLBean.setTurnoCabCL(boletimCTR.getTurno());

@@ -19,6 +19,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.model.bean.estaticas.PressaoBocalBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
+import br.com.usinasantafe.pmm.util.Tempo;
 
 public class ListaVelocFertActivity extends ActivityGeneric {
 
@@ -139,11 +140,47 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                 pmmContext.getApontCTR().setVelocApont(Long.parseLong(textView.getText().toString()));
                 velocList.clear();
 
-                pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
+                if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
 
-                Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincNormalActivity.class);
-                startActivity(it);
-                finish();
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(ListaVelocFertActivity.this);
+                    alerta.setTitle("ATENÇÃO");
+                    alerta.setMessage("POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.");
+                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincNormalActivity.class);
+                            startActivity(it);
+                            finish();
+                        }
+                    });
+                    alerta.show();
+
+                } else {
+
+                    if (pmmContext.getApontCTR().verifBackupApont()) {
+
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(ListaVelocFertActivity.this);
+                        alerta.setTitle("ATENÇÃO");
+                        alerta.setMessage("OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!");
+                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+
+                        alerta.show();
+
+                    } else {
+
+                        pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
+
+                        Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincNormalActivity.class);
+                        startActivity(it);
+                        finish();
+
+                    }
+
+                }
 
             }
 

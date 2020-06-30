@@ -13,6 +13,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
+import br.com.usinasantafe.pmm.util.Tempo;
 
 public class TransbordoActivity extends ActivityGeneric {
 
@@ -98,51 +99,68 @@ public class TransbordoActivity extends ActivityGeneric {
                     Long transb = Long.parseLong(editTextPadrao.getText().toString());
                     pmmContext.getApontCTR().setTransb(transb);
 
-                    if(pmmContext.getBoletimCTR().verTransb(transb)){
+                    if(pmmContext.getBoletimCTR().verTransb(transb)) {
 
-                        if(pmmContext.getApontCTR().verifBackupApontTransb()){
+                        if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);
                             alerta.setTitle("ATENÇÃO");
-                            alerta.setMessage("NUMERAÇÃO DE TRANSBORDO COM MESMO VALOR DO APONTAMENTO ANTERIOR. FAVOR, VERIFICAR A NUMERAÇÃO DIGITADA!");
+                            alerta.setMessage("POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.");
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
+                                    Intent it = new Intent(TransbordoActivity.this, MenuPrincNormalActivity.class);
+                                    startActivity(it);
+                                    finish();
                                 }
                             });
-
                             alerta.show();
 
-                        }
-                        else{
+                        } else {
 
-                            if(pmmContext.getVerPosTela() == 2) {
-                                pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
-                            }
-                            else {
-                                pmmContext.getApontCTR().inserirApontTransb(pmmContext.getBoletimCTR());
-                            }
+                            if (pmmContext.getApontCTR().verifBackupApontTransb()) {
 
-                            List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(pmmContext.getApontCTR().getAtivApont());
+                                AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);
+                                alerta.setTitle("ATENÇÃO");
+                                alerta.setMessage("NUMERAÇÃO DE TRANSBORDO COM MESMO VALOR DO APONTAMENTO ANTERIOR. FAVOR, VERIFICAR A NUMERAÇÃO DIGITADA!");
+                                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                            boolean rendimento = false;
+                                    }
+                                });
 
-                            for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
-                                RFuncaoAtivParBean rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtividadeList.get(i);
-                                if(rFuncaoAtivParBean.getCodFuncao() == 1){
-                                    rendimento = true;
+                                alerta.show();
+
+                            } else {
+
+                                if (pmmContext.getVerPosTela() == 2) {
+                                    pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
+                                } else {
+                                    pmmContext.getApontCTR().inserirApontTransb(pmmContext.getBoletimCTR());
                                 }
-                            }
-                            rFuncaoAtividadeList.clear();
 
-                            if (rendimento) {
-                                ConfigCTR configCTR = new ConfigCTR();
-                                pmmContext.getBoletimCTR().insRendBD(configCTR.getConfig().getOsConfig());
-                            }
+                                List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(pmmContext.getApontCTR().getAtivApont());
 
-                            Intent it = new Intent(TransbordoActivity.this, MenuPrincNormalActivity.class);
-                            startActivity(it);
+                                boolean rendimento = false;
+
+                                for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
+                                    RFuncaoAtivParBean rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtividadeList.get(i);
+                                    if (rFuncaoAtivParBean.getCodFuncao() == 1) {
+                                        rendimento = true;
+                                    }
+                                }
+                                rFuncaoAtividadeList.clear();
+
+                                if (rendimento) {
+                                    ConfigCTR configCTR = new ConfigCTR();
+                                    pmmContext.getBoletimCTR().insRendBD(configCTR.getConfig().getOsConfig());
+                                }
+
+                                Intent it = new Intent(TransbordoActivity.this, MenuPrincNormalActivity.class);
+                                startActivity(it);
+
+                            }
 
                         }
 
