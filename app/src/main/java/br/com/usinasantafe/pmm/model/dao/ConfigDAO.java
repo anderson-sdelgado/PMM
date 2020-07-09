@@ -58,6 +58,12 @@ public class ConfigDAO {
         configBean.update();
     }
 
+    public void setAtivConfig(Long idAtiv){
+        ConfigBean configBean = getConfig();
+        configBean.setAtivConfig(idAtiv);
+        configBean.update();
+    }
+
     public void setDtUltApontConfig(String data){
         ConfigBean configBean = getConfig();
         configBean.setDtUltApontConfig(data);

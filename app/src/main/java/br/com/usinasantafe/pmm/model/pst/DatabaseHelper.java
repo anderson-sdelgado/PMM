@@ -45,7 +45,7 @@ import com.j256.ormlite.table.TableUtils;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	public static final String FORCA_DB_NAME = "pmm_db";
-	public static final int FORCA_BD_VERSION = 3;
+	public static final int FORCA_BD_VERSION = 4;
 
 	private static DatabaseHelper instance;
 	
@@ -125,7 +125,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		
 		try {
 
-			if(oldVersion == 1 && (newVersion > 1)){
+			if((oldVersion == 1) && (newVersion > 1)){
 
 				TableUtils.dropTable(cs, EquipBean.class, true);
 				TableUtils.dropTable(cs, EquipSegBean.class, true);
@@ -200,7 +200,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 				TableUtils.createTable(cs, ItemPneuBean.class);
 
 			}
-			else if(oldVersion == 2 && (newVersion > 2)){
+			else if((oldVersion == 2) && (newVersion > 2)){
 
 				TableUtils.dropTable(cs, BoletimMMBean.class, true);
 				TableUtils.dropTable(cs, ApontMMBean.class, true);
@@ -211,6 +211,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 				TableUtils.createTable(cs, ApontMMBean.class);
 				TableUtils.createTable(cs, BoletimFertBean.class);
 				TableUtils.createTable(cs, ApontFertBean.class);
+
+			}
+			else if((oldVersion == 3) && (newVersion > 3)){
+
+				TableUtils.dropTable(cs, ConfigBean.class, true);
+
+				TableUtils.createTable(cs, ConfigBean.class);
 
 			}
 

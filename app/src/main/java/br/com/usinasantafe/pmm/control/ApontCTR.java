@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
-import br.com.usinasantafe.pmm.model.bean.estaticas.RAtivParadaBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMBean;
 import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
 import br.com.usinasantafe.pmm.model.dao.CabecPneuDAO;
+import br.com.usinasantafe.pmm.model.dao.ParadaDAO;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.model.dao.ApontFertDAO;
 import br.com.usinasantafe.pmm.model.dao.ApontMMDAO;
@@ -109,24 +109,9 @@ public class ApontCTR {
     }
 
     public List getListParada(){
-        Long ativ;
         ConfigCTR configCTR = new ConfigCTR();
-        if(configCTR.getEquip().getTipo() == 1) {
-            ativ = apontMMBean.getAtivApontMM();
-        }
-        else{
-            ativ = apontFertBean.getAtivApontFert();
-        }
-        RAtivParadaBean rAtivParadaBean = new RAtivParadaBean();
-        List rAtivParadaList = rAtivParadaBean.get("idAtiv", ativ);
-        ArrayList<Long> rLista = new ArrayList<Long>();
-        for (int i = 0; i < rAtivParadaList.size(); i++) {
-            rAtivParadaBean = (RAtivParadaBean) rAtivParadaList.get(i);
-            rLista.add(rAtivParadaBean.getIdParada());
-        }
-        rAtivParadaList.clear();
-        ParadaBean paradaBean = new ParadaBean();
-        return paradaBean.inAndOrderBy("idParada", rLista, "codParada", true);
+        ParadaDAO paradaDAO = new ParadaDAO();
+        return paradaDAO.getListParada(configCTR.getConfig().getAtivConfig());
     }
 
     public Long getIdApont(){
@@ -139,6 +124,11 @@ public class ApontCTR {
             ApontFertDAO apontFertDAO = new ApontFertDAO();
             return apontFertDAO.getIdApontAberto();
         }
+    }
+
+    public ParadaBean getParadaBean(String paradaString){
+        ParadaDAO paradaDAO = new ParadaDAO();
+        return paradaDAO.getParadaBean(paradaString);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,7 +145,7 @@ public class ApontCTR {
         return apontFertDAO.createApont(boletimCTR);
     }
 
-    public void salvarApont(Long status, Double longitude, Double latitude){
+    public void salvarApont(Long status, Long idParada, Long idTransb, Double longitude, Double latitude){
         BoletimCTR boletimCTR = new BoletimCTR();
         Long func = 0L;
         Long equip = 0L;
@@ -164,6 +154,10 @@ public class ApontCTR {
             BoletimMMBean boletimMMBean = boletimCTR.getBolMMAberto();
             apontMMBean.setIdBolApontMM(boletimMMBean.getIdBolMM());
             apontMMBean.setIdExtBolApontMM(boletimMMBean.getIdExtBolMM());
+            apontMMBean.setOsApontMM(configCTR.getConfig().getOsConfig());
+            apontMMBean.setAtivApontMM(configCTR.getConfig().getAtivConfig());
+            apontMMBean.setParadaApontMM(idParada);
+            apontMMBean.setTransbApontMM(idTransb);
             apontMMBean.setStatusApontMM(status);
             apontMMBean.setLongitudeApontMM(longitude);
             apontMMBean.setLatitudeApontMM(latitude);
@@ -176,6 +170,9 @@ public class ApontCTR {
             BoletimFertBean boletimFertBean = boletimCTR.getBolFertAberto();
             apontFertBean.setIdBolApontFert(boletimFertBean.getIdBolFert());
             apontFertBean.setIdExtBolApontFert(boletimFertBean.getIdExtBolFert());
+            apontFertBean.setOsApontFert(configCTR.getConfig().getOsConfig());
+            apontFertBean.setAtivApontFert(configCTR.getConfig().getAtivConfig());
+            apontFertBean.setParadaApontFert(idParada);
             apontFertBean.setStatusApontFert(status);
             apontFertBean.setLongitudeApontFert(longitude);
             apontFertBean.setLatitudeApontFert(latitude);
@@ -274,7 +271,7 @@ public class ApontCTR {
 
     //////////////////////////////// VERIFICAÇÃO APONT ///////////////////////////////////////////
 
-    public boolean verifBackupApont() {
+    public boolean verifBackupApont(Long idParada) {
 
         boolean v = false;
         ConfigCTR configCTR = new ConfigCTR();
@@ -284,9 +281,9 @@ public class ApontCTR {
             List apontMMList = apontMMDAO.getListAllApont(boletimMMDAO.getIdBolAberto());
             if(apontMMList.size() > 0){
                 ApontMMBean apontMMBean = (ApontMMBean) apontMMList.get(apontMMList.size() - 1);
-                if ((this.apontMMBean.getOsApontMM().equals(apontMMBean.getOsApontMM()))
-                        && (this.apontMMBean.getAtivApontMM().equals(apontMMBean.getAtivApontMM()))
-                        && (this.apontMMBean.getParadaApontMM().equals(apontMMBean.getParadaApontMM()))) {
+                if ((configCTR.getConfig().getOsConfig().equals(apontMMBean.getOsApontMM()))
+                        && (configCTR.getConfig().getAtivConfig().equals(apontMMBean.getAtivApontMM()))
+                        && (idParada.equals(apontMMBean.getParadaApontMM()))) {
                     v = true;
                 }
             }
@@ -298,9 +295,9 @@ public class ApontCTR {
             List apontFertList = apontFertDAO.getListAllApont(boletimFertDAO.getIdBolAberto());
             if(apontFertList.size() > 0){
                 ApontFertBean apontFertBean = (ApontFertBean) apontFertList.get(apontFertList.size() - 1);
-                if ((this.apontFertBean.getOsApontFert().equals(apontFertBean.getOsApontFert()))
-                        && (this.apontFertBean.getAtivApontFert().equals(apontFertBean.getAtivApontFert()))
-                        && (this.apontFertBean.getParadaApontFert().equals(apontFertBean.getParadaApontFert()))) {
+                if ((configCTR.getConfig().getOsConfig().equals(apontFertBean.getOsApontFert()))
+                        && (configCTR.getConfig().getAtivConfig().equals(apontFertBean.getAtivApontFert()))
+                        && (idParada.equals(apontFertBean.getParadaApontFert()))) {
                     v = true;
                 }
             }
@@ -309,17 +306,18 @@ public class ApontCTR {
         return v;
     }
 
-    public boolean verifBackupApontTransb() {
+    public boolean verifBackupApontTransb(Long idParada, Long idTransb) {
         boolean v = false;
+        ConfigCTR configCTR = new ConfigCTR();
         BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
         ApontMMDAO apontMMDAO = new ApontMMDAO();
         List apontMMList = apontMMDAO.getListAllApont(boletimMMDAO.getIdBolAberto());
         if(apontMMList.size() > 0){
             ApontMMBean apontMMBean = (ApontMMBean) apontMMList.get(apontMMList.size() - 1);
-            if ((this.apontMMBean.getOsApontMM().equals(apontMMBean.getOsApontMM()))
-                    && (this.apontMMBean.getAtivApontMM().equals(apontMMBean.getAtivApontMM()))
-                    && (this.apontMMBean.getParadaApontMM().equals(apontMMBean.getParadaApontMM()))
-                    && (this.apontMMBean.getTransbApontMM().equals(apontMMBean.getTransbApontMM()))) {
+            if ((configCTR.getConfig().getOsConfig().equals(apontMMBean.getOsApontMM()))
+                    && (configCTR.getConfig().getAtivConfig().equals(apontMMBean.getAtivApontMM()))
+                    && (idParada.equals(apontMMBean.getParadaApontMM()))
+                    && (idTransb.equals(apontMMBean.getTransbApontMM()))) {
                 v = true;
             }
         }

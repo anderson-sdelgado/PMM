@@ -96,10 +96,9 @@ public class TransbordoActivity extends ActivityGeneric {
 
                 if (!editTextPadrao.getText().toString().equals("")) {
 
-                    Long transb = Long.parseLong(editTextPadrao.getText().toString());
-                    pmmContext.getApontCTR().setTransb(transb);
+                    Long idTransb = Long.parseLong(editTextPadrao.getText().toString());
 
-                    if(pmmContext.getBoletimCTR().verTransb(transb)) {
+                    if(pmmContext.getBoletimCTR().verTransb(idTransb)) {
 
                         if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
 
@@ -118,7 +117,7 @@ public class TransbordoActivity extends ActivityGeneric {
 
                         } else {
 
-                            if (pmmContext.getApontCTR().verifBackupApontTransb()) {
+                            if (pmmContext.getApontCTR().verifBackupApontTransb(0L, idTransb)) {
 
                                 AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);
                                 alerta.setTitle("ATENÇÃO");
@@ -135,12 +134,12 @@ public class TransbordoActivity extends ActivityGeneric {
                             } else {
 
                                 if (pmmContext.getVerPosTela() == 2) {
-                                    pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
+                                    pmmContext.getApontCTR().salvarApont(1L, 0L, idTransb, getLongitude(), getLatitude());
                                 } else {
                                     pmmContext.getApontCTR().inserirApontTransb(pmmContext.getBoletimCTR());
                                 }
 
-                                List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(pmmContext.getApontCTR().getAtivApont());
+                                List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList();
 
                                 boolean rendimento = false;
 

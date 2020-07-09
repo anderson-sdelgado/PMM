@@ -41,13 +41,12 @@ public class ListaParadaActivity extends ActivityGeneric {
         Button buttonRetMenuParada = (Button) findViewById(R.id.buttonRetMenuParada);
         EditText editPesqListParada = (EditText) findViewById(R.id.editPesqListParada);
 
-        ParadaBean paradaBean = new ParadaBean();
         paradaList = pmmContext.getApontCTR().getListParada();
 
         String itens[] = new String[paradaList.size()];
 
         for (int i = 0; i < paradaList.size(); i++) {
-            paradaBean = (ParadaBean) paradaList.get(i);
+            ParadaBean paradaBean = (ParadaBean) paradaList.get(i);
             itens[i] = paradaBean.getCodParada() + " - " + paradaBean.getDescrParada();
         }
 
@@ -146,12 +145,6 @@ public class ListaParadaActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        ParadaBean paradaBean = new ParadaBean();
-                        List paradaList = paradaBean.get("codParada", paradaString.substring(0, paradaString.indexOf('-')).trim());
-                        paradaBean = (ParadaBean) paradaList.get(0);
-
-                        pmmContext.getApontCTR().setParadaApont(paradaBean.getIdParada());
-
                         if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
@@ -169,7 +162,7 @@ public class ListaParadaActivity extends ActivityGeneric {
 
                         } else {
 
-                            if (pmmContext.getApontCTR().verifBackupApont()) {
+                            if (pmmContext.getApontCTR().verifBackupApont(pmmContext.getApontCTR().getParadaBean(paradaString).getIdParada())) {
                                 AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
                                 alerta.setTitle("ATENÇÃO");
                                 alerta.setMessage("PARADA JÁ APONTADA PARA O EQUIPAMENTO!");
@@ -181,7 +174,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                                 alerta.show();
                             } else {
 
-                                pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
+                                pmmContext.getApontCTR().salvarApont(1L, pmmContext.getApontCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude());
                                 Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
                                 startActivity(it);
                                 finish();
@@ -200,13 +193,11 @@ public class ListaParadaActivity extends ActivityGeneric {
                 alerta.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
 
                 });
 
                 alerta.show();
-
 
             }
 

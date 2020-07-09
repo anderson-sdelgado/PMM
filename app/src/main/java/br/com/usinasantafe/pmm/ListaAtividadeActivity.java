@@ -16,7 +16,6 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.estaticas.AtividadeBean;
 import br.com.usinasantafe.pmm.util.Tempo;
 
@@ -27,7 +26,6 @@ public class ListaAtividadeActivity extends ActivityGeneric {
     private ProgressDialog progressBar;
     private ArrayList ativArrayList;
     private Long nroOS = 0L;
-    private ConfigCTR configCTR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +38,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
         Button buttonRetAtividade = (Button) findViewById(R.id.buttonRetAtividade);
         TextView textViewTituloAtividade = (TextView) findViewById(R.id.textViewTituloAtividade);
 
-        configCTR = new ConfigCTR();
-        nroOS =  configCTR.getConfig().getOsConfig();
+        nroOS =  pmmContext.getConfigCTR().getConfig().getOsConfig();
 
         buttonAtualAtividade.setOnClickListener(new View.OnClickListener() {
 
@@ -114,9 +111,10 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 AtividadeBean atividadeBean = (AtividadeBean) ativArrayList.get(position);
                 ativArrayList.clear();
 
+                pmmContext.getConfigCTR().setAtivConfig(atividadeBean.getIdAtiv());
+
                 if (pmmContext.getVerPosTela() == 1) {
 
-                    pmmContext.getBoletimCTR().setAtivBol(atividadeBean.getIdAtiv());
                     pmmContext.setTextoHorimetro("HORÍMETRO INICIAL:");
 
                     Intent it = new Intent(ListaAtividadeActivity.this, HorimetroActivity.class);
@@ -124,9 +122,6 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                     finish();
 
                 } else if ((pmmContext.getVerPosTela() == 2)) {
-
-                    pmmContext.getApontCTR().setOSApont(nroOS);
-                    pmmContext.getApontCTR().setAtivApont(atividadeBean.getIdAtiv());
 
                     if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
 
@@ -145,7 +140,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                     } else {
 
-                        if (pmmContext.getApontCTR().verifBackupApont()) {
+                        if (pmmContext.getApontCTR().verifBackupApont(0L)) {
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
                             alerta.setTitle("ATENÇÃO");
@@ -160,9 +155,9 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                         } else {
 
-                            if (configCTR.getEquip().getTipo() == 1) {
+                            if (pmmContext.getConfigCTR().getEquip().getTipo() == 1) {
 
-                                List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(atividadeBean.getIdAtiv());
+                                List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList();
 
                                 boolean transbordo = false;
                                 boolean rendimento = false;
@@ -184,7 +179,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                     finish();
                                 } else {
 
-                                    pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
+                                    pmmContext.getApontCTR().salvarApont(1L, 0L, 0L, getLongitude(), getLatitude());
                                     if (rendimento) {
                                         pmmContext.getBoletimCTR().insRendBD(nroOS);
                                     }
@@ -206,8 +201,6 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                     }
 
                 } else if(pmmContext.getVerPosTela() == 3) {
-
-                    pmmContext.getApontCTR().setAtivApont(atividadeBean.getIdAtiv());
 
                     Intent it = new Intent(ListaAtividadeActivity.this, ListaParadaActivity.class);
                     startActivity(it);

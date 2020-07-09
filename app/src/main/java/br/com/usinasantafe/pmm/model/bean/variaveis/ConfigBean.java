@@ -29,6 +29,8 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private Long osConfig;
 	@DatabaseField
+	private Long ativConfig;
+	@DatabaseField
 	private Double horimetroConfig;
 	@DatabaseField
 	private Long verInforConfig; //0 - Verificar Dados; 1- Dados Recebidos; 2 - Dados Visualizados
@@ -124,5 +126,13 @@ public class ConfigBean extends Entidade {
 
 	public void setDifDthrConfig(Long difDthrConfig) {
 		this.difDthrConfig = difDthrConfig;
+	}
+
+	public Long getAtivConfig() {
+		return ativConfig;
+	}
+
+	public void setAtivConfig(Long ativConfig) {
+		this.ativConfig = ativConfig;
 	}
 }

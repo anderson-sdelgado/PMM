@@ -27,8 +27,6 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
     private PMMContext pmmContext;
     private ListView listViewAtiv;
     private ProgressDialog progressBar;
-//    private ConfigCTR configCTR;
-//    private ConfigBean configBean;
 
     private TextView textViewProcessoNormal;
     private TextView textViewDataHora;
@@ -47,9 +45,6 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
         ArrayList<String> itens = new ArrayList<String>();
 
-//        configCTR = new ConfigCTR();
-//        configBean = configCTR.getConfig();
-
         if (Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())) {
             pmmContext.getConfigCTR().setDifDthrConfig(0L);
         } else {
@@ -67,7 +62,7 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
         if(pmmContext.getConfigCTR().getEquip().getTipo() == 1){
 
-            List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(pmmContext.getBoletimCTR().ultAtivBolMenu());
+            List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList();
 
             for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
                 RFuncaoAtivParBean rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtividadeList.get(i);

@@ -50,6 +50,11 @@ public class ConfigCTR {
         configDAO.setOsConfig(nroOS);
     }
 
+    public void setAtivConfig(Long idAtiv){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setAtivConfig(idAtiv);
+    }
+
     public void setDtUltApontConfig(String data){
         ConfigDAO configDAO = new ConfigDAO();
         configDAO.setDtUltApontConfig(data);

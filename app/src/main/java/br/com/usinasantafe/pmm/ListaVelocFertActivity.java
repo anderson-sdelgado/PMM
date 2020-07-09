@@ -157,7 +157,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
                 } else {
 
-                    if (pmmContext.getApontCTR().verifBackupApont()) {
+                    if (pmmContext.getApontCTR().verifBackupApont(0L)) {
 
                         AlertDialog.Builder alerta = new AlertDialog.Builder(ListaVelocFertActivity.this);
                         alerta.setTitle("ATENÇÃO");
@@ -172,7 +172,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
                     } else {
 
-                        pmmContext.getApontCTR().salvarApont(1L, getLongitude(), getLatitude());
+                        pmmContext.getApontCTR().salvarApont(1L, 0L, 0L, getLongitude(), getLatitude());
 
                         Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincNormalActivity.class);
                         startActivity(it);

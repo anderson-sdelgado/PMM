@@ -100,7 +100,7 @@ public class HorimetroActivity extends ActivityGeneric {
     public void salvarBoletimAberto() {
         pmmContext.getBoletimCTR().setHodometroInicialBol(horimetroNum, getLongitude(), getLatitude());
         if(configCTR.getEquip().getTipo() == 1){
-            List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList(pmmContext.getBoletimCTR().getAtiv());
+            List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList();
             boolean implemento = false;
             for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
                 RFuncaoAtivParBean rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtividadeList.get(i);

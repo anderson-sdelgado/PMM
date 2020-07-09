@@ -56,13 +56,6 @@ public class OSActivity extends ActivityGeneric {
                         Long nroOS = Long.parseLong(editTextPadrao.getText().toString());
                         configCTR.setOsConfig(nroOS);
 
-                        if (pmmContext.getVerPosTela() == 1) {
-                            pmmContext.getBoletimCTR().setOSBol(nroOS);
-                        }
-                        else {
-                            pmmContext.getApontCTR().setOSApont(nroOS);
-                        }
-
                         ConexaoWeb conexaoWeb = new ConexaoWeb();
 
                         if (pmmContext.getConfigCTR().verOS(nroOS)) {

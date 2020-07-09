@@ -8,6 +8,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipSegBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.model.dao.ApontFertDAO;
 import br.com.usinasantafe.pmm.model.dao.ApontMMDAO;
 import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
@@ -99,28 +100,17 @@ public class BoletimCTR {
         }
     }
 
-    public void setOSBol(Long os){
-        ConfigCTR configCTR = new ConfigCTR();
-        if(configCTR.getEquip().getTipo() == 1) {
-            boletimMMBean.setOsBolMM(os);
-        }
-        else{
-            boletimFertBean.setOsBolFert(os);
-        }
-    }
-
-    public void setAtivBol(Long ativ){
-        ConfigCTR configCTR = new ConfigCTR();
-        if(configCTR.getEquip().getTipo() == 1) {
-            boletimMMBean.setAtivPrincBolMM(ativ);
-            boletimMMBean.setStatusConBolMM(configCTR.getConfig().getStatusConConfig());
-        }
-        else{
-            boletimFertBean.setAtivPrincBolFert(ativ);
-            boletimFertBean.setStatusConBolFert(configCTR.getConfig().getStatusConConfig());
-        }
-    }
-
+//    public void setAtivBol(Long ativ){
+//        ConfigCTR configCTR = new ConfigCTR();
+//        if(configCTR.getEquip().getTipo() == 1) {
+//            boletimMMBean.setAtivPrincBolMM(ativ);
+//            boletimMMBean.setStatusConBolMM(configCTR.getConfig().getStatusConConfig());
+//        }
+//        else{
+//            boletimFertBean.setAtivPrincBolFert(ativ);
+//            boletimFertBean.setStatusConBolFert(configCTR.getConfig().getStatusConConfig());
+//        }
+//    }
 
     public void setHodometroInicialBol(Double horimetroNum, Double longitude, Double latitude){
         ConfigCTR configCTR = new ConfigCTR();
@@ -379,9 +369,10 @@ public class BoletimCTR {
 
     /////////// ATIVIDADE /////////
 
-    public List getFuncaoAtividadeList(Long idAtiv){
+    public List getFuncaoAtividadeList(){
         atividadeDAO = new AtividadeDAO();
-        return atividadeDAO.getListFuncaoAtividade(idAtiv);
+        ConfigCTR configCTR = new ConfigCTR();
+        return atividadeDAO.getListFuncaoAtividade(configCTR.getConfig().getAtivConfig());
     }
 
     /////////// PARADA /////////
@@ -415,6 +406,11 @@ public class BoletimCTR {
 
     public void salvarBolAbertoMM(){
         BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
+        ConfigCTR configCTR = new ConfigCTR();
+        ConfigBean configBean = configCTR.getConfig();
+        boletimMMBean.setOsBolMM(configBean.getOsConfig());
+        boletimMMBean.setAtivPrincBolMM(configBean.getAtivConfig());
+        boletimMMBean.setStatusConBolMM(configBean.getStatusConConfig());
         boletimMMDAO.salvarBolAberto(boletimMMBean);
     }
 
@@ -467,6 +463,11 @@ public class BoletimCTR {
 
     public void salvarBolAbertoFert(){
         BoletimFertDAO boletimFertDAO = new BoletimFertDAO();
+        ConfigCTR configCTR = new ConfigCTR();
+        ConfigBean configBean = configCTR.getConfig();
+        boletimFertBean.setOsBolFert(configBean.getOsConfig());
+        boletimFertBean.setAtivPrincBolFert(configBean.getAtivConfig());
+        boletimFertBean.setStatusConBolFert(configBean.getStatusConConfig());
         boletimFertDAO.salvarBolAberto(boletimFertBean);
     }
 
@@ -509,34 +510,6 @@ public class BoletimCTR {
     public void delBolFechadoFert(String retorno) {
         BoletimFertDAO boletimFertDAO = new BoletimFertDAO();
         boletimFertDAO.deleteBolFechado(retorno);
-    }
-
-    //////////////////////////////////////////////////////////////////////////////////////////
-
-    ////////////////////////////// ATUALIZAÇÃO DE DADOS POR CLASSE /////////////////////////////////////
-
-    public Long ultAtivBolMenu(){
-        ConfigCTR configCTR = new ConfigCTR();
-        if(configCTR.getEquip().getTipo() == 1) {
-            ApontMMDAO apontMMDAO = new ApontMMDAO();
-            List apontList = apontMMDAO.getListAllApont(getIdBol());
-            if (apontList.size() == 0) {
-                return boletimMMBean.getAtivPrincBolMM();
-            } else {
-                ApontMMBean apontTO = (ApontMMBean) apontList.get(apontList.size() - 1);
-                return apontTO.getAtivApontMM();
-            }
-        }
-        else{
-            ApontFertDAO apontFertDAO = new ApontFertDAO();
-            List apontList = apontFertDAO.getListAllApont(getIdBol());
-            if (apontList.size() == 0) {
-                return boletimFertBean.getAtivPrincBolFert();
-            } else {
-                ApontFertBean apontTO = (ApontFertBean) apontList.get(apontList.size() - 1);
-                return apontTO.getAtivApontFert();
-            }
-        }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////
