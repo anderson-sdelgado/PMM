@@ -7,6 +7,8 @@ import android.util.Log;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.estaticas.RAtivParadaBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontImpleMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.MovLeiraBean;
@@ -223,6 +225,20 @@ public class ReceberAlarme extends BroadcastReceiver {
 		}
 
 		Log.i("PMM", "versão = " + PMMContext.versaoAplic);
+
+		RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
+		List<RFuncaoAtivParBean> rFuncaoAtivParBeans = rFuncaoAtivParBean.all();
+
+		for(RFuncaoAtivParBean funcaoAtivParBean : rFuncaoAtivParBeans){
+
+			Log.i("PMM", "RFuncaoAtivParBean");
+			Log.i("PMM", "IdRFuncaoAtivPar = " + funcaoAtivParBean.getIdRFuncaoAtivPar());
+			Log.i("PMM", "IdAtivPar = " + funcaoAtivParBean.getIdAtivPar());
+			Log.i("PMM", "CodFuncao = " + funcaoAtivParBean.getCodFuncao());
+			Log.i("PMM", "TipoFuncao = " + funcaoAtivParBean.getTipoFuncao());
+
+
+		}
 
 	}
 }

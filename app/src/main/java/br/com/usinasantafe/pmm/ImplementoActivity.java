@@ -118,7 +118,6 @@ public class ImplementoActivity extends ActivityGeneric {
                             impleMMBean.setPosImpleMM(2L);
                             impleMMBean.setCodEquipImpleMM(impl);
                             pmmContext.getBoletimCTR().setImplemento(impleMMBean);
-                            Log.i("PMM", "SALVOU BOLETIM 4");
                             verTela();
                         }
                         else{
@@ -126,7 +125,6 @@ public class ImplementoActivity extends ActivityGeneric {
                         }
                     }
                     else{
-                        Log.i("PMM", "SALVOU BOLETIM 2");
                         verTela();
                     }
                 }
@@ -147,7 +145,6 @@ public class ImplementoActivity extends ActivityGeneric {
 
     public void verTela(){
         if (pmmContext.getVerPosTela() == 1) {
-            Log.i("PMM", "SALVOU BOLETIM 3");
             salvarBoletimAberto();
         }
         else if (pmmContext.getVerPosTela() == 19) {
@@ -172,7 +169,6 @@ public class ImplementoActivity extends ActivityGeneric {
 
 
     public void salvarBoletimAberto() {
-        Log.i("PMM", "SALVOU BOLETIM 1");
         pmmContext.getBoletimCTR().salvarBolAbertoMM();
         CheckListCTR checkListCTR = new CheckListCTR();
         if(checkListCTR.verAberturaCheckList(pmmContext.getBoletimCTR().getTurno())){

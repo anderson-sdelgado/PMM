@@ -156,6 +156,7 @@ public class ApontCTR {
             apontMMBean.setIdExtBolApontMM(boletimMMBean.getIdExtBolMM());
             apontMMBean.setOsApontMM(configCTR.getConfig().getOsConfig());
             apontMMBean.setAtivApontMM(configCTR.getConfig().getAtivConfig());
+            apontMMBean.setStatusConApontMM(configCTR.getConfig().getStatusConConfig());
             apontMMBean.setParadaApontMM(idParada);
             apontMMBean.setTransbApontMM(idTransb);
             apontMMBean.setStatusApontMM(status);
@@ -172,6 +173,7 @@ public class ApontCTR {
             apontFertBean.setIdExtBolApontFert(boletimFertBean.getIdExtBolFert());
             apontFertBean.setOsApontFert(configCTR.getConfig().getOsConfig());
             apontFertBean.setAtivApontFert(configCTR.getConfig().getAtivConfig());
+            apontFertBean.setStatusConApontFert(configCTR.getConfig().getStatusConConfig());
             apontFertBean.setParadaApontFert(idParada);
             apontFertBean.setStatusApontFert(status);
             apontFertBean.setLongitudeApontFert(longitude);
