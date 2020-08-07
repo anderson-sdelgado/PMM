@@ -96,13 +96,12 @@ public class ListaTurnoActivity extends ActivityGeneric {
 
         configCTR = new ConfigCTR();
 
-        TurnoBean turnoBean = new TurnoBean();
-        turnoList = turnoBean.get("codTurno", configCTR.getEquip().getCodTurno());
+        turnoList = pmmContext.getBoletimCTR().getTurnoList();
 
         ArrayList<String> itens = new ArrayList<String>();
 
         for(int i = 0; i < turnoList.size(); i++){
-            turnoBean = (TurnoBean) turnoList.get(i);
+            TurnoBean turnoBean = (TurnoBean) turnoList.get(i);
             itens.add(turnoBean.getDescTurno());
         }
 

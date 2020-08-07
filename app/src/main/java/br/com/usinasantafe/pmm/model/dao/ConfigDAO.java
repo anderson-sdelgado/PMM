@@ -11,6 +11,11 @@ public class ConfigDAO {
     public ConfigDAO() {
     }
 
+    public boolean hasElements(){
+        ConfigBean configBean = new ConfigBean();
+        return configBean.hasElements();
+    }
+
     public ConfigBean getConfig(){
         ConfigBean configBean = new ConfigBean();
         List listConfigTO = configBean.all();

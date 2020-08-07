@@ -54,17 +54,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	}
 	
 	public DatabaseHelper(Context context) {
-
 		super(context, FORCA_DB_NAME, null, FORCA_BD_VERSION);
 		instance = this;
-
 	}
 
 	@Override
 	public void close() {
 		super.close();
 		instance = null;
-		
 	}
 	
 	@Override
@@ -125,7 +122,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		
 		try {
 
-			if((oldVersion == 1) && (newVersion > 1)){
+			if((oldVersion <= 3) && (newVersion > 3)){
 
 				TableUtils.dropTable(cs, EquipBean.class, true);
 				TableUtils.dropTable(cs, EquipSegBean.class, true);
@@ -200,26 +197,26 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 				TableUtils.createTable(cs, ItemPneuBean.class);
 
 			}
-			else if((oldVersion == 2) && (newVersion > 2)){
-
-				TableUtils.dropTable(cs, BoletimMMBean.class, true);
-				TableUtils.dropTable(cs, ApontMMBean.class, true);
-				TableUtils.dropTable(cs, BoletimFertBean.class, true);
-				TableUtils.dropTable(cs, ApontFertBean.class, true);
-
-				TableUtils.createTable(cs, BoletimMMBean.class);
-				TableUtils.createTable(cs, ApontMMBean.class);
-				TableUtils.createTable(cs, BoletimFertBean.class);
-				TableUtils.createTable(cs, ApontFertBean.class);
-
-			}
-			else if((oldVersion == 3) && (newVersion > 3)){
-
-				TableUtils.dropTable(cs, ConfigBean.class, true);
-
-				TableUtils.createTable(cs, ConfigBean.class);
-
-			}
+//			else if((oldVersion == 2) && (newVersion > 2)){
+//
+//				TableUtils.dropTable(cs, BoletimMMBean.class, true);
+//				TableUtils.dropTable(cs, ApontMMBean.class, true);
+//				TableUtils.dropTable(cs, BoletimFertBean.class, true);
+//				TableUtils.dropTable(cs, ApontFertBean.class, true);
+//
+//				TableUtils.createTable(cs, BoletimMMBean.class);
+//				TableUtils.createTable(cs, ApontMMBean.class);
+//				TableUtils.createTable(cs, BoletimFertBean.class);
+//				TableUtils.createTable(cs, ApontFertBean.class);
+//
+//			}
+//			else if((oldVersion == 3) && (newVersion > 3)){
+//
+//				TableUtils.dropTable(cs, ConfigBean.class, true);
+//
+//				TableUtils.createTable(cs, ConfigBean.class);
+//
+//			}
 
 		} catch (Exception e) {
 			Log.e(DatabaseHelper.class.getName(), "Erro atualizando banco de dados...", e);

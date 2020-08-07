@@ -360,10 +360,12 @@ public class BoletimMMDAO implements BoletimInterface {
                 BoletimMMBean boletimMMTOBD = (BoletimMMBean) bolMMList.get(0);
                 bolMMList.clear();
 
-                if(boletimMMTOBD.getQtdeApontBolMM() == boletimMMBean.getQtdeApontBolMM()){
+                ApontMMBean apontMMBean = new ApontMMBean();
+                List apontaList = apontMMBean.get("idBolApontMM", boletimMMBean.getIdBolMM());
 
-                    ApontMMBean apontMMBean = new ApontMMBean();
-                    List apontaList = apontMMBean.get("idBolApontMM", boletimMMTOBD.getIdBolMM());
+                Long qtde = Long.valueOf(apontaList.size());
+
+                if(qtde == boletimMMBean.getQtdeApontBolMM()){
 
                     for (int j = 0; j < apontaList.size(); j++) {
 
@@ -385,7 +387,7 @@ public class BoletimMMDAO implements BoletimInterface {
                     apontaList.clear();
 
                     RendMMBean rendMMBean = new RendMMBean();
-                    List rendList = rendMMBean.get("idBolRendMM", boletimMMTOBD.getIdBolMM());
+                    List rendList = rendMMBean.get("idBolRendMM", boletimMMBean.getIdBolMM());
 
                     for (int j = 0; j < rendList.size(); j++) {
                         rendMMBean = (RendMMBean) rendList.get(j);

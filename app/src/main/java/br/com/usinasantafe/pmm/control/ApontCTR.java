@@ -9,6 +9,7 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMBean;
 import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
 import br.com.usinasantafe.pmm.model.dao.CabecPneuDAO;
 import br.com.usinasantafe.pmm.model.dao.ParadaDAO;
+import br.com.usinasantafe.pmm.model.dao.RFuncaoAtivParDAO;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.model.dao.ApontFertDAO;
 import br.com.usinasantafe.pmm.model.dao.ApontMMDAO;
@@ -228,36 +229,36 @@ public class ApontCTR {
     }
 
     public void inserirParadaImplemento(BoletimCTR boletimCTR){
-        AtividadeDAO atividadeDAO = new AtividadeDAO();
+        RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
             ApontMMBean apontMMBean = createApontMM(boletimCTR);
             apontMMBean.setDthrApontMM(Tempo.getInstance().dataComHora());
-            apontMMBean.setParadaApontMM(atividadeDAO.idParadaImplemento());
+            apontMMBean.setParadaApontMM(rFuncaoAtivParDAO.idParadaImplemento());
             salvarApontMM(apontMMBean);
         }
         else{
             ApontFertBean apontFertBean = createApontFert(boletimCTR);
             apontFertBean.setDthrApontFert(Tempo.getInstance().dataComHora());
-            apontFertBean.setParadaApontFert(atividadeDAO.idParadaImplemento());
+            apontFertBean.setParadaApontFert(rFuncaoAtivParDAO.idParadaImplemento());
             salvarApontFert(apontFertBean);
         }
 
     }
 
     public void inserirParadaCheckList(BoletimCTR boletimCTR){
-        AtividadeDAO atividadeDAO = new AtividadeDAO();
+        RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.getEquip().getTipo() == 1) {
             ApontMMBean apontMMBean = createApontMM(boletimCTR);
             apontMMBean.setDthrApontMM(Tempo.getInstance().dataComHora());
-            apontMMBean.setParadaApontMM(atividadeDAO.idParadaCheckList());
+            apontMMBean.setParadaApontMM(rFuncaoAtivParDAO.idParadaCheckList());
             salvarApontMM(apontMMBean);
         }
         else{
             ApontFertBean apontFertBean = createApontFert(boletimCTR);
             apontFertBean.setDthrApontFert(Tempo.getInstance().dataComHora());
-            apontFertBean.setParadaApontFert(atividadeDAO.idParadaCheckList());
+            apontFertBean.setParadaApontFert(rFuncaoAtivParDAO.idParadaCheckList());
             salvarApontFert(apontFertBean);
         }
     }

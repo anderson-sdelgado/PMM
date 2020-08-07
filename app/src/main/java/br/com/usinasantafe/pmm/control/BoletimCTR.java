@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipSegBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.TurnoBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.model.dao.ApontFertDAO;
@@ -22,6 +23,8 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
+import br.com.usinasantafe.pmm.model.dao.RFuncaoAtivParDAO;
+import br.com.usinasantafe.pmm.model.dao.TurnoDAO;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
 
 public class BoletimCTR {
@@ -245,6 +248,12 @@ public class BoletimCTR {
         return equipSegDAO.getEquipSeg(nroEquip);
     }
 
+    public List getTurnoList(){
+        ConfigCTR configCTR = new ConfigCTR();
+        TurnoDAO turnoDAO = new TurnoDAO();
+        return turnoDAO.getTurnoList(configCTR.getEquip().getCodTurno());
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////// RENDIMENTO ///////////////////////////////////////
@@ -359,8 +368,8 @@ public class BoletimCTR {
     //////////////////// RETORNO DA PARADA DE CHECKLIST /////////////////////////////////////
 
     public Long getIdParadaCheckList(){
-        atividadeDAO = new AtividadeDAO();
-        return atividadeDAO.idParadaCheckList();
+        RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
+        return rFuncaoAtivParDAO.idParadaCheckList();
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -370,16 +379,16 @@ public class BoletimCTR {
     /////////// ATIVIDADE /////////
 
     public List getFuncaoAtividadeList(){
-        atividadeDAO = new AtividadeDAO();
+        RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
         ConfigCTR configCTR = new ConfigCTR();
-        return atividadeDAO.getListFuncaoAtividade(configCTR.getConfig().getAtivConfig());
+        return rFuncaoAtivParDAO.getListFuncaoAtividade(configCTR.getConfig().getAtivConfig());
     }
 
     /////////// PARADA /////////
 
     public List getFuncaoParadaList(Long idParada){
-        atividadeDAO = new AtividadeDAO();
-        return atividadeDAO.getListFuncaoParada(idParada);
+        RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
+        return rFuncaoAtivParDAO.getListFuncaoParada(idParada);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////

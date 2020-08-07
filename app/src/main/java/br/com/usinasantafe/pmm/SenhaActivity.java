@@ -33,7 +33,7 @@ public class SenhaActivity extends ActivityGeneric {
 
                 if (!configBean.hasElements()) {
 
-                    Intent it = new Intent(SenhaActivity.this, ConfiguracaoActivity.class);
+                    Intent it = new Intent(SenhaActivity.this, ConfigActivity.class);
                     startActivity(it);
                     finish();
 
@@ -45,7 +45,7 @@ public class SenhaActivity extends ActivityGeneric {
 
                         configList.clear();
 
-                        Intent it = new Intent(SenhaActivity.this, ConfiguracaoActivity.class);
+                        Intent it = new Intent(SenhaActivity.this, ConfigActivity.class);
                         startActivity(it);
                         finish();
 

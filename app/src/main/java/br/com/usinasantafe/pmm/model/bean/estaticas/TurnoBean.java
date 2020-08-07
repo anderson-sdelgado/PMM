@@ -7,9 +7,9 @@ import br.com.usinasantafe.pmm.model.pst.Entidade;
 
 @DatabaseTable(tableName="tbturnoest")
 public class TurnoBean extends Entidade {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@DatabaseField(id=true)
 	private Long idTurno;
 	@DatabaseField

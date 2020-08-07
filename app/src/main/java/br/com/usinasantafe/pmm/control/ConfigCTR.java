@@ -16,8 +16,8 @@ public class ConfigCTR {
     }
 
     public boolean hasElements(){
-        ConfigBean configBean = new ConfigBean();
-        return configBean.hasElements();
+        ConfigDAO configDAO = new ConfigDAO();
+        return configDAO.hasElements();
     }
 
     public ConfigBean getConfig(){

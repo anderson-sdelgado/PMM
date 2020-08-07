@@ -13,17 +13,17 @@ import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 
-public class ConfiguracaoActivity extends ActivityGeneric {
+public class ConfigActivity extends ActivityGeneric {
 
     private ProgressDialog progressBar;
     private EditText editTextEquipConfig;
     private EditText editTextSenhaConfig;
-    private ConfigCTR configCTR;
+    private PMMContext pmmContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configuracao);
+        setContentView(R.layout.activity_config);
 
         Button btOkConfig =  (Button) findViewById(R.id.buttonSalvarConfig );
         Button btCancConfig = (Button) findViewById(R.id.buttonCancConfig);
@@ -31,15 +31,11 @@ public class ConfiguracaoActivity extends ActivityGeneric {
         editTextEquipConfig = (EditText)  findViewById(R.id.editTextEquipConfig);
         editTextSenhaConfig = (EditText)  findViewById(R.id.editTextSenhaConfig);
 
-        configCTR = new ConfigCTR();
-        ConfigBean configBean = new ConfigBean();
+        pmmContext = (PMMContext) getApplication();
 
-        if (configBean.hasElements()) {
-
-            configBean = configCTR.getConfig();
-            editTextEquipConfig.setText(String.valueOf(configCTR.getEquip().getNroEquip()));
-            editTextSenhaConfig.setText(configBean.getSenhaConfig());
-
+        if (pmmContext.getConfigCTR().hasElements()) {
+            editTextEquipConfig.setText(String.valueOf(pmmContext.getConfigCTR().getEquip().getNroEquip()));
+            editTextSenhaConfig.setText(pmmContext.getConfigCTR().getConfig().getSenhaConfig());
         }
 
         btOkConfig.setOnClickListener(new View.OnClickListener() {
@@ -54,8 +50,8 @@ public class ConfiguracaoActivity extends ActivityGeneric {
                         progressBar.setMessage("Pequisando o Equipamento...");
                         progressBar.show();
 
-                        configCTR.salvarConfig(editTextSenhaConfig.getText().toString());
-                        configCTR.verEquipConfig(editTextEquipConfig.getText().toString(),ConfiguracaoActivity.this ,MenuInicialActivity.class, progressBar);
+                        pmmContext.getConfigCTR().salvarConfig(editTextSenhaConfig.getText().toString());
+                        pmmContext.getConfigCTR().verEquipConfig(editTextEquipConfig.getText().toString(), ConfigActivity.this ,MenuInicialActivity.class, progressBar);
 
                 }
 
@@ -66,7 +62,7 @@ public class ConfiguracaoActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                Intent it = new Intent(ConfiguracaoActivity.this, MenuInicialActivity.class);
+                Intent it = new Intent(ConfigActivity.this, MenuInicialActivity.class);
                 startActivity(it);
                 finish();
 
@@ -79,7 +75,7 @@ public class ConfiguracaoActivity extends ActivityGeneric {
 
                 ConexaoWeb conexaoWeb = new ConexaoWeb();
 
-                if(conexaoWeb.verificaConexao(ConfiguracaoActivity.this)){
+                if(conexaoWeb.verificaConexao(ConfigActivity.this)){
                     progressBar = new ProgressDialog(v.getContext());
                     progressBar.setCancelable(true);
                     progressBar.setMessage("ATUALIZANDO ...");
@@ -88,11 +84,11 @@ public class ConfiguracaoActivity extends ActivityGeneric {
                     progressBar.setMax(100);
                     progressBar.show();
 
-                    configCTR.atualTodasTabelas(ConfiguracaoActivity.this, progressBar);
+                    pmmContext.getConfigCTR().atualTodasTabelas(ConfigActivity.this, progressBar);
 
                 }
                 else{
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(ConfiguracaoActivity.this);
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(ConfigActivity.this);
                     alerta.setTitle("ATENÇÃO");
                     alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
                     alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
