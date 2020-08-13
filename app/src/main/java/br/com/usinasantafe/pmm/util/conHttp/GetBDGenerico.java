@@ -69,11 +69,12 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 			connection.disconnect();
             
 		} catch (Exception e) {
+			Log.i("PMM", "ERRO PEGA DADOS 1 = " + e);
 			if(bufferedReader != null){
 				try {
 					bufferedReader.close();
 				} catch (Exception erro) {
-					
+					Log.i("PMM", "ERRO PEGA DADOS  2 = " + erro);
 				}
 			}
 		}
@@ -83,7 +84,7 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 				try {
 					bufferedReader.close();
 				} catch (Exception e) {
-					
+					Log.i("PMM", "ERRO PEGA DADOS 3 = " + e);
 				}
 			}
 			

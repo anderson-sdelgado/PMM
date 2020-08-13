@@ -6,7 +6,6 @@ import java.util.List;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMBean;
-import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
 import br.com.usinasantafe.pmm.model.dao.CabecPneuDAO;
 import br.com.usinasantafe.pmm.model.dao.ParadaDAO;
 import br.com.usinasantafe.pmm.model.dao.RFuncaoAtivParDAO;

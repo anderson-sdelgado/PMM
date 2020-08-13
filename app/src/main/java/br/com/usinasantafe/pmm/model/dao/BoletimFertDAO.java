@@ -15,7 +15,6 @@ import br.com.usinasantafe.pmm.control.BoletimInterface;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
-import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
@@ -28,19 +27,22 @@ public class BoletimFertDAO implements BoletimInterface {
 
     @Override
     public boolean verBolAberto() {
-        BoletimFertBean boletimFertBean = new BoletimFertBean();
-        List boletimFertList = boletimFertBean.get("statusBolFert", 1L);
+        List boletimFertList = listBolFertAberto();
         Boolean ret = (boletimFertList.size() > 0);
         boletimFertList.clear();
         return ret;
     }
 
     public BoletimFertBean getBolFertAberto(){
-        BoletimFertBean boletimFertBean = new BoletimFertBean();
-        List boletimFertList = boletimFertBean.get("statusBolFert", 1L);
-        boletimFertBean = (BoletimFertBean) boletimFertList.get(0);
+        List boletimFertList = listBolFertAberto();
+        BoletimFertBean boletimFertBean = (BoletimFertBean) boletimFertList.get(0);
         boletimFertList.clear();
         return boletimFertBean;
+    }
+
+    private List listBolFertAberto(){
+        BoletimFertBean boletimFertBean = new BoletimFertBean();
+        return boletimFertBean.get("statusBolFert", 1L);
     }
 
     public void atualQtdeApontBol(){
@@ -128,32 +130,32 @@ public class BoletimFertDAO implements BoletimInterface {
 
     }
 
-    public List bolFechadoList() {
+    public List boletimFechadoList() {
         BoletimFertBean boletimFertBean = new BoletimFertBean();
         return boletimFertBean.get("statusBolFert", 2L);
     }
 
-    public List bolAbertoSemEnvioList() {
-
-        BoletimFertBean boletimFertBean = new BoletimFertBean();
-
-        ArrayList pesqList = new ArrayList();
-
-        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-        pesquisa.setCampo("statusBolFert");
-        pesquisa.setValor(1L);
-        pesquisa.setTipo(1);
-        pesqList.add(pesquisa);
-
-        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-        pesquisa2.setCampo("idExtBolFert");
-        pesquisa2.setValor(0);
-        pesquisa2.setTipo(1);
-        pesqList.add(pesquisa2);
-
-        return boletimFertBean.get(pesqList);
-
-    }
+//    public List bolAbertoSemEnvioList() {
+//
+//        BoletimFertBean boletimFertBean = new BoletimFertBean();
+//
+//        ArrayList pesqList = new ArrayList();
+//
+//        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+//        pesquisa.setCampo("statusBolFert");
+//        pesquisa.setValor(1L);
+//        pesquisa.setTipo(1);
+//        pesqList.add(pesquisa);
+//
+//        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
+//        pesquisa2.setCampo("idExtBolFert");
+//        pesquisa2.setValor(0);
+//        pesquisa2.setTipo(1);
+//        pesqList.add(pesquisa2);
+//
+//        return boletimFertBean.get(pesqList);
+//
+//    }
 
 
     public String dadosEnvioBolAberto(BoletimFertBean boletimFertBean){
@@ -178,7 +180,7 @@ public class BoletimFertDAO implements BoletimInterface {
 
     public String dadosEnvioBolFechado(){
 
-        List boletimFertList = bolFechadoList();
+        List boletimFertList = boletimFechadoList();
 
         JsonArray jsonArrayBoletim = new JsonArray();
         String dadosEnvioApont = "";

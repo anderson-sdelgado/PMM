@@ -33,7 +33,7 @@ public class BoletimMMBean extends Entidade {
 	@DatabaseField
 	private String dthrFinalBolMM;
 	@DatabaseField
-	private Long statusBolMM;  //0 - Esta apontando os implementos; 1 - Aberto; 2 - Encerrado
+	private Long statusBolMM;  //1 - Aberto; 2 - Encerrado
 	@DatabaseField
 	private Long statusConBolMM;  //0 - OffLine; 1 - OnLine
 	@DatabaseField

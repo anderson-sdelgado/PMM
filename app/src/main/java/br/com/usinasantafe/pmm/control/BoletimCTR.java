@@ -7,17 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipSegBean;
-import br.com.usinasantafe.pmm.model.bean.estaticas.TurnoBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
-import br.com.usinasantafe.pmm.model.dao.ApontFertDAO;
-import br.com.usinasantafe.pmm.model.dao.ApontMMDAO;
 import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
 import br.com.usinasantafe.pmm.model.dao.BoletimFertDAO;
 import br.com.usinasantafe.pmm.model.dao.BoletimMMDAO;
 import br.com.usinasantafe.pmm.model.dao.EquipSegDAO;
 import br.com.usinasantafe.pmm.model.dao.OSDAO;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
@@ -432,19 +427,19 @@ public class BoletimCTR {
 
     public boolean verEnvioBolAbertoMM(){
         BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
-        return boletimMMDAO.bolAbertoSemEnvioList().size() > 0;
+        return boletimMMDAO.verBolAberto();
     }
 
     public boolean verEnvioBolFechMM() {
         BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
-        return boletimMMDAO.bolFechadoList().size() > 0;
+        return boletimMMDAO.boletimFechadoList().size() > 0;
     }
 
     ////////// DADOS PRA ENVIO ///////////////
 
     public String dadosEnvioBolAbertoMM(){
         BoletimMMDAO boletimMMDAO = new BoletimMMDAO();
-        return boletimMMDAO.dadosEnvioBolAberto(getBolMMAberto());
+        return boletimMMDAO.dadosEnvioBolAberto();
     }
 
     public String dadosEnvioBolFechadoMM(){
@@ -489,12 +484,12 @@ public class BoletimCTR {
 
     public boolean verEnvioBolAbertoFert(){
         BoletimFertDAO boletimFertDAO = new BoletimFertDAO();
-        return boletimFertDAO.bolAbertoSemEnvioList().size() > 0;
+        return boletimFertDAO.verBolAberto();
     }
 
     public boolean verEnvioBolFechFert() {
         BoletimFertDAO boletimFertDAO = new BoletimFertDAO();
-        return boletimFertDAO.bolFechadoList().size() > 0;
+        return boletimFertDAO.boletimFechadoList().size() > 0;
     }
 
     ////////// DADOS PRA ENVIO ///////////////

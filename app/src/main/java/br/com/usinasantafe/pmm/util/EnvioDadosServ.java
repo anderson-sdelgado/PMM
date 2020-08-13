@@ -243,12 +243,13 @@ public class EnvioDadosServ {
                     enviarBolFechadosMM();
                 }
                 else {
-                    if (verifBolAbertoSemEnvioMM()) {
-                        enviarBolAbertosMM();
-                    }
-                    else {
+//                    if (verifBolAbertoSemEnvioMM()) {
+//                        enviarBolAbertosMM();
+//                    }
+//                    else {
                         if (verifApontMovLeiraMM()) {
-                            envioApontMM();
+//                            envioApontMM();
+                            enviarBolAbertosMM();
                         }
                         else{
                             if (verifBolFechadoFert()) {
@@ -265,7 +266,7 @@ public class EnvioDadosServ {
                                 }
                             }
                         }
-                    }
+//                    }
                 }
             }
         }
@@ -274,7 +275,7 @@ public class EnvioDadosServ {
     public boolean verifDadosEnvio() {
         if ((!verifInfor())
                 && (!verifBolFechadoMM())
-                && (!verifBolAbertoSemEnvioMM())
+//                && (!verifBolAbertoSemEnvioMM())
                 && (!verifApontMovLeiraMM())
                 && (!verifChecklist())
                 && (!verifBolFechadoFert())

@@ -283,12 +283,7 @@ public class MenuInicialActivity extends ActivityGeneric {
     public void clearBD() {
 
         ImpleMMBean impleMMBean = new ImpleMMBean();
-        List implementoList = impleMMBean.all();
-
-        for (int i = 0; i < implementoList.size(); i++) {
-            impleMMBean = (ImpleMMBean) implementoList.get(i);
-            impleMMBean.delete();
-        }
+        impleMMBean.deleteAll();
 
         OSBean osTO = new OSBean();
         osTO.deleteAll();

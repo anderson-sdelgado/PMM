@@ -26,19 +26,22 @@ public class BoletimMMDAO implements BoletimInterface {
     }
 
     public boolean verBolAberto(){
-        BoletimMMBean boletimMMBean = new BoletimMMBean();
-        List boletimMMList = boletimMMBean.get("statusBolMM", 1L);
+        List boletimMMList = boletimAbertoList();
         boolean ret = (boletimMMList.size() > 0);
         boletimMMList.clear();
         return ret;
     }
 
     public BoletimMMBean getBolMMAberto(){
-        BoletimMMBean boletimMMBean = new BoletimMMBean();
-        List boletimMMList = boletimMMBean.get("statusBolMM", 1L);
-        boletimMMBean = (BoletimMMBean) boletimMMList.get(0);
+        List boletimMMList = boletimAbertoList();
+        BoletimMMBean boletimMMBean = (BoletimMMBean) boletimMMList.get(0);
         boletimMMList.clear();
         return boletimMMBean;
+    }
+
+    private List boletimAbertoList(){
+        BoletimMMBean boletimMMBean = new BoletimMMBean();
+        return boletimMMBean.get("statusBolMM", 1L);
     }
 
     public Long getIdBolAberto(){
@@ -133,52 +136,61 @@ public class BoletimMMDAO implements BoletimInterface {
 
     public void salvarBolFechado(BoletimMMBean boletimMMBean) {
 
-        BoletimMMBean boletimMMTOBD = new BoletimMMBean();
-        List listBoletim = boletimMMTOBD.get("statusBolMM", 1L);
-        boletimMMTOBD = (BoletimMMBean) listBoletim.get(0);
-        listBoletim.clear();
+        List<BoletimMMBean> listBoletim = boletimAbertoList();
 
-        boletimMMTOBD.setDthrFinalBolMM(Tempo.getInstance().dataComHora());
-        boletimMMTOBD.setStatusBolMM(2L);
-        boletimMMTOBD.setHodometroFinalBolMM(boletimMMBean.getHodometroFinalBolMM());
-        boletimMMTOBD.update();
+        for(BoletimMMBean boletimMMBeanBD : listBoletim){
+            boletimMMBeanBD.setDthrFinalBolMM(Tempo.getInstance().dataComHora());
+            boletimMMBeanBD.setStatusBolMM(2L);
+            boletimMMBeanBD.setHodometroFinalBolMM(boletimMMBean.getHodometroFinalBolMM());
+            boletimMMBeanBD.update();
+        }
+
+        listBoletim.clear();
 
     }
 
-    public List bolFechadoList() {
+    public List boletimFechadoList() {
         BoletimMMBean boletimMMBean = new BoletimMMBean();
         return boletimMMBean.get("statusBolMM", 2L);
     }
 
-    public List bolAbertoSemEnvioList() {
+//    public List bolAbertoSemEnvioList() {
+//
+//        BoletimMMBean boletimMMBean = new BoletimMMBean();
+//        ArrayList listaPesq = new ArrayList();
+//
+//        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+//        pesquisa.setCampo("statusBolMM");
+//        pesquisa.setValor(1L);
+//        pesquisa.setTipo(1);
+//        listaPesq.add(pesquisa);
+//
+//        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
+//        pesquisa2.setCampo("idExtBolMM");
+//        pesquisa2.setValor(0L);
+//        pesquisa2.setTipo(1);
+//        listaPesq.add(pesquisa2);
+//
+//        return boletimMMBean.get(listaPesq);
+//
+//    }
 
-        BoletimMMBean boletimMMBean = new BoletimMMBean();
-        ArrayList listaPesq = new ArrayList();
+    public String dadosEnvioBolAberto(){
 
-        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-        pesquisa.setCampo("statusBolMM");
-        pesquisa.setValor(1L);
-        pesquisa.setTipo(1);
-        listaPesq.add(pesquisa);
-
-        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-        pesquisa2.setCampo("idExtBolMM");
-        pesquisa2.setValor(0);
-        pesquisa2.setTipo(1);
-        listaPesq.add(pesquisa2);
-
-        return boletimMMBean.get(listaPesq);
-
-    }
-
-    public String dadosEnvioBolAberto(BoletimMMBean boletimMMBean){
-
-        Gson gsonCabec = new Gson();
-        JsonArray jsonArrayBoletim = new JsonArray();
-        jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimMMBean, boletimMMBean.getClass()));
+        List boletimMMList = boletimAbertoList();
 
         ArrayList<Long> idBolList = new ArrayList<Long>();
-        idBolList.add(boletimMMBean.getIdBolMM());
+        JsonArray jsonArrayBoletim = new JsonArray();
+
+        for (int i = 0; i < boletimMMList.size(); i++) {
+
+            BoletimMMBean boletimMMBean = (BoletimMMBean) boletimMMList.get(i);
+            Gson gsonCabec = new Gson();
+            jsonArrayBoletim.add(gsonCabec.toJsonTree(boletimMMBean, boletimMMBean.getClass()));
+
+            idBolList.add(boletimMMBean.getIdBolMM());
+
+        }
 
         ApontCTR apontCTR = new ApontCTR();
         String dadosEnvioApont = apontCTR.dadosEnvioApontBolMM(idBolList);
@@ -192,7 +204,7 @@ public class BoletimMMDAO implements BoletimInterface {
 
     public String dadosEnvioBolFechado(){
 
-        List boletimMMList = bolFechadoList();
+        List boletimMMList = boletimFechadoList();
 
         JsonArray jsonArrayBoletim = new JsonArray();
         String dadosEnvioApont = "";
@@ -249,16 +261,22 @@ public class BoletimMMDAO implements BoletimInterface {
             JSONObject jObjBolMM = new JSONObject(objPrinc);
             JSONArray jsonArrayBolMM = jObjBolMM.getJSONArray("boletim");
 
-            JSONObject objBol = jsonArrayBolMM.getJSONObject(0);
-            Gson gsonBol = new Gson();
-            BoletimMMBean boletimMMBean = gsonBol.fromJson(objBol.toString(), BoletimMMBean.class);
+            BoletimMMBean boletimMMBean = new BoletimMMBean();
 
-            List bolMMList = boletimMMBean.get("idBolMM", boletimMMBean.getIdBolMM());
-            BoletimMMBean boletimMMTOBD = (BoletimMMBean) bolMMList.get(0);
-            bolMMList.clear();
+            for (int i = 0; i < jsonArrayBolMM.length(); i++) {
 
-            boletimMMTOBD.setIdExtBolMM(boletimMMBean.getIdExtBolMM());
-            boletimMMTOBD.update();
+                JSONObject objBol = jsonArrayBolMM.getJSONObject(i);
+                Gson gsonBol = new Gson();
+                boletimMMBean = gsonBol.fromJson(objBol.toString(), BoletimMMBean.class);
+
+                List bolMMList = boletimMMBean.get("idBolMM", boletimMMBean.getIdBolMM());
+                BoletimMMBean boletimMMTOBD = (BoletimMMBean) bolMMList.get(0);
+                bolMMList.clear();
+
+                boletimMMTOBD.setIdExtBolMM(boletimMMBean.getIdExtBolMM());
+                boletimMMTOBD.update();
+
+            }
 
             JSONObject jObjApontMM = new JSONObject(objSeg);
             JSONArray jsonArrayApontMM = jObjApontMM.getJSONArray("apont");

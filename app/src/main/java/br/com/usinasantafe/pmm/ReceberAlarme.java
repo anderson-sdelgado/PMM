@@ -225,20 +225,20 @@ public class ReceberAlarme extends BroadcastReceiver {
 		}
 
 		Log.i("PMM", "versão = " + PMMContext.versaoAplic);
-
-		RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
-		List<RFuncaoAtivParBean> rFuncaoAtivParBeans = rFuncaoAtivParBean.all();
-
-		for(RFuncaoAtivParBean funcaoAtivParBean : rFuncaoAtivParBeans){
-
-			Log.i("PMM", "RFuncaoAtivParBean");
-			Log.i("PMM", "IdRFuncaoAtivPar = " + funcaoAtivParBean.getIdRFuncaoAtivPar());
-			Log.i("PMM", "IdAtivPar = " + funcaoAtivParBean.getIdAtivPar());
-			Log.i("PMM", "CodFuncao = " + funcaoAtivParBean.getCodFuncao());
-			Log.i("PMM", "TipoFuncao = " + funcaoAtivParBean.getTipoFuncao());
-
-
-		}
+//
+//		RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
+//		List<RFuncaoAtivParBean> rFuncaoAtivParBeans = rFuncaoAtivParBean.all();
+//
+//		for(RFuncaoAtivParBean funcaoAtivParBean : rFuncaoAtivParBeans){
+//
+//			Log.i("PMM", "RFuncaoAtivParBean");
+//			Log.i("PMM", "IdRFuncaoAtivPar = " + funcaoAtivParBean.getIdRFuncaoAtivPar());
+//			Log.i("PMM", "IdAtivPar = " + funcaoAtivParBean.getIdAtivPar());
+//			Log.i("PMM", "CodFuncao = " + funcaoAtivParBean.getCodFuncao());
+//			Log.i("PMM", "TipoFuncao = " + funcaoAtivParBean.getTipoFuncao());
+//
+//
+//		}
 
 	}
 }

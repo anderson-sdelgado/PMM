@@ -10,9 +10,7 @@ public interface BoletimInterface {
 
     public void atualQtdeApontBol();
 
-    public List bolFechadoList();
-
-    public List bolAbertoSemEnvioList();
+    public List boletimFechadoList();
 
     public String dadosEnvioBolFechado();
 
