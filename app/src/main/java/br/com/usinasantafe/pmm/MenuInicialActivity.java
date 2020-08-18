@@ -100,7 +100,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
     private void listarMenuInicial() {
 
-        ArrayList<String> itens = new ArrayList<String>();
+        ArrayList<String> itens = new ArrayList<>();
 
         itens.add("BOLETIM");
         itens.add("CONFIGURAÇÃO");
@@ -121,7 +121,7 @@ public class MenuInicialActivity extends ActivityGeneric {
                 TextView textView = v.findViewById(R.id.textViewItemList);
                 String text = textView.getText().toString();
 
-                if (text.equals("BOLETIM")) {
+                if(text.equals("BOLETIM")) {
                     FuncBean funcBean = new FuncBean();
                     if (funcBean.hasElements() && configCTR.hasElements()) {
                         pmmContext.setVerPosTela(1);
@@ -217,28 +217,27 @@ public class MenuInicialActivity extends ActivityGeneric {
         pmmContext.setVerAtualCL(verAtualCL);
 
         Intent intent = new Intent(this, ReceberAlarme.class);
-        boolean alarmeAtivo = (PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_NO_CREATE) == null);
+//        boolean alarmeAtivo = (PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_NO_CREATE) == null);
 
         if (progressBar.isShowing()) {
             progressBar.dismiss();
         }
 
-        if (alarmeAtivo) {
 
-            Log.i("PMM", "NOVO TIMER");
-            PendingIntent p = PendingIntent.getBroadcast(getApplicationContext(), 0,
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0,
                     intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(System.currentTimeMillis());
             c.add(Calendar.SECOND, 1);
 
-            AlarmManager alarme = (AlarmManager) getSystemService(ALARM_SERVICE);
-            alarme.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 60000, p);
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        } else {
-            Log.i("PMM", "TIMER já ativo");
-        }
+            if (pendingIntent != null && alarmManager != null) {
+                alarmManager.cancel(pendingIntent);
+            }
+
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 60000, pendingIntent);
 
         if(verTela){
             Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);

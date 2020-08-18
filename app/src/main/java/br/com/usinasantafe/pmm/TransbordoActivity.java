@@ -136,7 +136,7 @@ public class TransbordoActivity extends ActivityGeneric {
                                 if (pmmContext.getVerPosTela() == 2) {
                                     pmmContext.getApontCTR().salvarApont(1L, 0L, idTransb, getLongitude(), getLatitude());
                                 } else {
-                                    pmmContext.getApontCTR().inserirApontTransb(pmmContext.getBoletimCTR());
+                                    pmmContext.getApontCTR().inserirApontTransb(pmmContext.getBoletimCTR(), idTransb);
                                 }
 
                                 List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList();

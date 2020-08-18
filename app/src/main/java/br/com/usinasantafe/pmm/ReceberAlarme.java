@@ -30,17 +30,21 @@ public class ReceberAlarme extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 
-		if(DatabaseHelper.getInstance() == null){
-			new DatabaseHelper(context);
-		}
+//		if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
 
-		Log.i("PMM", "DATA HORA = " + Tempo.getInstance().dataComHora());
-		teste();
+			if (DatabaseHelper.getInstance() == null) {
+				new DatabaseHelper(context);
+			}
 
-		if(EnvioDadosServ.getInstance().verifDadosEnvio()){
-			Log.i("PMM", "ENVIANDO");
-			EnvioDadosServ.getInstance().envioDados(context);
-		}
+			Log.i("PMM", "DATA HORA = " + Tempo.getInstance().dataComHora());
+			teste();
+
+			if (EnvioDadosServ.getInstance().verifDadosEnvio()) {
+				Log.i("PMM", "ENVIANDO");
+				EnvioDadosServ.getInstance().envioDados(context);
+			}
+
+//		}
 	}
 
 	public void teste() {
@@ -73,6 +77,7 @@ public class ReceberAlarme extends BroadcastReceiver {
 			Log.i("PMM", "idBolAponta = " + apontMMBean.getIdBolApontMM());
 			Log.i("PMM", "idExtBolAponta = " + apontMMBean.getIdExtBolApontMM());
 			Log.i("PMM", "dthrAponta = " + apontMMBean.getDthrApontMM());
+			Log.i("PMM", "transbAponta = " + apontMMBean.getTransbApontMM());
 			Log.i("PMM", "statusApontMM = " + apontMMBean.getStatusApontMM());
 
 		}

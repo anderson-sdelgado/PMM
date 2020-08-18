@@ -262,10 +262,10 @@ public class ApontCTR {
         }
     }
 
-    public void inserirApontTransb(BoletimCTR boletimCTR){
+    public void inserirApontTransb(BoletimCTR boletimCTR, Long idTransb){
         ApontMMBean apontMMBean = createApontMM(boletimCTR);
         apontMMBean.setDthrApontMM(Tempo.getInstance().dataComHora());
-        apontMMBean.setTransbApontMM(this.apontMMBean.getTransbApontMM());
+        apontMMBean.setTransbApontMM(idTransb);
         salvarApontMM(apontMMBean);
     }
 
