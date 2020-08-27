@@ -29,11 +29,12 @@ public class PMMContext extends Application {
     // 5 - Digitar Data e Hora
     // 6 - Trocar Transbordo;
     // 7 - Editar Rendimento;
+    // 8 - Iniciar na parte de apontamento
     // 14 - Recolhimento de Mangueira;
     // 19 - Trocar de implemento
     private int contImplemento;
     private String textoHorimetro;
-    public static String versaoAplic = "2.11";
+    public static String versaoAplic = "2.12";
     private int contRend;
     private int posRend;
     private int contRecolh;

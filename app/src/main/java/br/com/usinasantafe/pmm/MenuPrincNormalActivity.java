@@ -47,8 +47,9 @@ public class MenuPrincNormalActivity extends ActivityGeneric {
 
         if (Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())) {
             pmmContext.getConfigCTR().setDifDthrConfig(0L);
-        } else {
-            if ((pmmContext.getConfigCTR().getConfig().getDifDthrConfig() == 0) && (pmmContext.getVerPosTela() != 5)) {
+        }
+        else {
+            if ((pmmContext.getConfigCTR().getConfig().getDifDthrConfig() == 0) && (pmmContext.getVerPosTela() == 8)) {
                 pmmContext.setContDataHora(1);
                 pmmContext.setVerPosTela(5);
                 Intent it = new Intent(MenuPrincNormalActivity.this, MsgDataHoraActivity.class);

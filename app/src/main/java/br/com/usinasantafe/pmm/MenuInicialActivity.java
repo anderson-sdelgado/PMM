@@ -23,15 +23,12 @@ import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.estaticas.FuncBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
-import br.com.usinasantafe.pmm.control.CheckListCTR;
-import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.estaticas.OSBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ROSAtivBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BackupApontaBean;
@@ -41,12 +38,9 @@ public class MenuInicialActivity extends ActivityGeneric {
     private ListView listView;
     private PMMContext pmmContext;
     private ProgressDialog progressBar;
-    private ConfigCTR configCTR;
-    private CheckListCTR checkListCTR;
 
     private TextView textViewProcesso;
     private Handler customHandler = new Handler();
-    private boolean verTela;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,16 +55,14 @@ public class MenuInicialActivity extends ActivityGeneric {
             ActivityCompat.requestPermissions((Activity) this, PERMISSIONS, 112);
         }
 
-        customHandler.postDelayed(updateTimerThread, 0);
+        verifEnvio();
 
         progressBar = new ProgressDialog(this);
-        checkListCTR = new CheckListCTR();
-        configCTR = new ConfigCTR();
 
         if(pmmContext.getBoletimCTR().verBolAberto()){
-            if(checkListCTR.verCabecAberto()){
+            if(pmmContext.getCheckListCTR().verCabecAberto()){
                 startTimer("N_NAC");
-                checkListCTR.clearRespCabecAberto();
+                pmmContext.getCheckListCTR().clearRespCabecAberto();
                 pmmContext.setPosCheckList(1);
                 Intent it = new Intent(MenuInicialActivity.this, ItemCheckListActivity.class);
                 startActivity(it);
@@ -84,13 +76,15 @@ public class MenuInicialActivity extends ActivityGeneric {
                     finish();
                 }
                 else {
-                    verTela = true;
-                    atualizarAplic();
+                    startTimer("N_NAC");
+                    pmmContext.setVerPosTela(8);
+                    Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
+                    startActivity(it);
+                    finish();
                 }
             }
         }
         else{
-            verTela = false;
             atualizarAplic();
         }
 
@@ -121,9 +115,11 @@ public class MenuInicialActivity extends ActivityGeneric {
                 TextView textView = v.findViewById(R.id.textViewItemList);
                 String text = textView.getText().toString();
 
-                if(text.equals("BOLETIM")) {
+                if (text.equals("BOLETIM")) {
                     FuncBean funcBean = new FuncBean();
-                    if (funcBean.hasElements() && configCTR.hasElements()) {
+                    if (funcBean.hasElements()
+                            && pmmContext.getConfigCTR().hasElements()
+                            && VerifDadosServ.getInstance().isVerTerm()) {
                         pmmContext.setVerPosTela(1);
                         clearBD();
                         customHandler.removeCallbacks(updateTimerThread);
@@ -153,7 +149,7 @@ public class MenuInicialActivity extends ActivityGeneric {
                         progressBar.setMax(100);
                         progressBar.show();
 
-                        configCTR.atualTodasTabelas(MenuInicialActivity.this, progressBar);
+                        pmmContext.getConfigCTR().atualTodasTabelas(MenuInicialActivity.this, progressBar);
 
                     } else {
                         AlertDialog.Builder alerta = new AlertDialog.Builder(MenuInicialActivity.this);
@@ -188,13 +184,16 @@ public class MenuInicialActivity extends ActivityGeneric {
     public void atualizarAplic(){
         ConexaoWeb conexaoWeb = new ConexaoWeb();
         if (conexaoWeb.verificaConexao(this)) {
-            if (configCTR.hasElements()) {
+            if (pmmContext.getConfigCTR().hasElements()) {
                 progressBar.setCancelable(true);
                 progressBar.setMessage("BUSCANDO ATUALIZAÇÃO...");
                 progressBar.show();
+                customHandler.postDelayed(updateTimerThread, 10000);
+                VerifDadosServ.getInstance().setVerTerm(false);
                 VerifDadosServ.getInstance().verAtualAplic(pmmContext.versaoAplic, this, progressBar);
             }
         } else {
+            VerifDadosServ.getInstance().setVerTerm(true);
             startTimer("N_NAC");
         }
     }
@@ -211,7 +210,7 @@ public class MenuInicialActivity extends ActivityGeneric {
             int pos1 = verAtual.indexOf("#") + 1;
             verAtualCL = verAtual.substring(0, (pos1 - 1));
             String dthr = verAtual.substring(pos1);
-            configCTR.setDtServConfig(dthr);
+            pmmContext.getConfigCTR().setDtServConfig(dthr);
         }
 
         pmmContext.setVerAtualCL(verAtualCL);
@@ -223,27 +222,20 @@ public class MenuInicialActivity extends ActivityGeneric {
             progressBar.dismiss();
         }
 
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0,
-                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(System.currentTimeMillis());
+        c.add(Calendar.SECOND, 1);
 
-            Calendar c = Calendar.getInstance();
-            c.setTimeInMillis(System.currentTimeMillis());
-            c.add(Calendar.SECOND, 1);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-            if (pendingIntent != null && alarmManager != null) {
-                alarmManager.cancel(pendingIntent);
-            }
-
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 60000, pendingIntent);
-
-        if(verTela){
-            Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
-            startActivity(it);
-            finish();
+        if (pendingIntent != null && alarmManager != null) {
+            alarmManager.cancel(pendingIntent);
         }
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 60000, pendingIntent);
 
     }
 
@@ -260,24 +252,35 @@ public class MenuInicialActivity extends ActivityGeneric {
     private Runnable updateTimerThread = new Runnable() {
 
         public void run() {
-            if (configCTR.hasElements()) {
-                if (EnvioDadosServ.getInstance().getStatusEnvio() == 1) {
-                    textViewProcesso.setTextColor(Color.YELLOW);
-                    textViewProcesso.setText("Enviando Dados...");
-                } else if (EnvioDadosServ.getInstance().getStatusEnvio() == 2) {
-                    textViewProcesso.setTextColor(Color.RED);
-                    textViewProcesso.setText("Existem Dados para serem Enviados");
-                } else if (EnvioDadosServ.getInstance().getStatusEnvio() == 3) {
-                    textViewProcesso.setTextColor(Color.GREEN);
-                    textViewProcesso.setText("Todos os Dados já foram Enviados");
+            verifEnvio();
+            if(!VerifDadosServ.getInstance().isVerTerm()) {
+                VerifDadosServ.getInstance().cancelVer();
+                if (progressBar.isShowing()) {
+                    progressBar.dismiss();
                 }
-            } else {
-                textViewProcesso.setTextColor(Color.RED);
-                textViewProcesso.setText("Aparelho sem Equipamento");
+                startTimer("N_NAC");
             }
             customHandler.postDelayed(this, 10000);
         }
     };
+
+    public void verifEnvio(){
+        if (pmmContext.getConfigCTR().hasElements()) {
+            if (EnvioDadosServ.getInstance().getStatusEnvio() == 1) {
+                textViewProcesso.setTextColor(Color.YELLOW);
+                textViewProcesso.setText("Enviando Dados...");
+            } else if (EnvioDadosServ.getInstance().getStatusEnvio() == 2) {
+                textViewProcesso.setTextColor(Color.RED);
+                textViewProcesso.setText("Existem Dados para serem Enviados");
+            } else if (EnvioDadosServ.getInstance().getStatusEnvio() == 3) {
+                textViewProcesso.setTextColor(Color.GREEN);
+                textViewProcesso.setText("Todos os Dados já foram Enviados");
+            }
+        } else {
+            textViewProcesso.setTextColor(Color.RED);
+            textViewProcesso.setText("Aparelho sem Equipamento");
+        }
+    }
 
     public void clearBD() {
 
