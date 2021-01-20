@@ -282,6 +282,7 @@ public class BoletimFertDAO implements BoletimInterface {
 
         }
         catch(Exception e){
+            LogErroDAO.getInstance().insert(e);
             Tempo.getInstance().setEnvioDado(true);
         }
     }
@@ -338,6 +339,7 @@ public class BoletimFertDAO implements BoletimInterface {
 
         }
         catch(Exception e){
+            LogErroDAO.getInstance().insert(e);
             Tempo.getInstance().setEnvioDado(true);
         }
     }

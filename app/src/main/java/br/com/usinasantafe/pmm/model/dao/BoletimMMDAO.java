@@ -154,27 +154,6 @@ public class BoletimMMDAO implements BoletimInterface {
         return boletimMMBean.get("statusBolMM", 2L);
     }
 
-//    public List bolAbertoSemEnvioList() {
-//
-//        BoletimMMBean boletimMMBean = new BoletimMMBean();
-//        ArrayList listaPesq = new ArrayList();
-//
-//        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-//        pesquisa.setCampo("statusBolMM");
-//        pesquisa.setValor(1L);
-//        pesquisa.setTipo(1);
-//        listaPesq.add(pesquisa);
-//
-//        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-//        pesquisa2.setCampo("idExtBolMM");
-//        pesquisa2.setValor(0L);
-//        pesquisa2.setTipo(1);
-//        listaPesq.add(pesquisa2);
-//
-//        return boletimMMBean.get(listaPesq);
-//
-//    }
-
     public String dadosEnvioBolAberto(){
 
         List boletimMMList = boletimAbertoList();
@@ -353,12 +332,13 @@ public class BoletimMMDAO implements BoletimInterface {
 
         }
         catch(Exception e){
+            LogErroDAO.getInstance().insert(e);
             Tempo.getInstance().setEnvioDado(true);
         }
 
     }
 
-    public void deleteBolFechado(String retorno) {
+    public void deleteBolFechado(String retorno){
 
         try{
 
@@ -418,9 +398,9 @@ public class BoletimMMDAO implements BoletimInterface {
 
             }
 
-
         }
         catch(Exception e){
+            LogErroDAO.getInstance().insert(e);
             Tempo.getInstance().setEnvioDado(true);
         }
 

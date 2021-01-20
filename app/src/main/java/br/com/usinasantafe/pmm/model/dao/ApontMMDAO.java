@@ -363,6 +363,7 @@ public class ApontMMDAO implements ApontInterface {
 
         }
         catch(Exception e){
+            LogErroDAO.getInstance().insert(e);
             Tempo.getInstance().setEnvioDado(true);
         }
 

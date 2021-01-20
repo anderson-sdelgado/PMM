@@ -36,6 +36,12 @@ public class ConfigBean extends Entidade {
 	private Long verInforConfig; //0 - Verificar Dados; 1- Dados Recebidos; 2 - Dados Visualizados
 	@DatabaseField
 	private Long statusConConfig;  //0 - Offline; 1 - Online
+	@DatabaseField
+	private Long flagLogEnvio;
+	@DatabaseField
+	private Long flagLogErro;
+	@DatabaseField
+	private Long atualCheckList;
 
 	public ConfigBean() {
 	}
@@ -134,5 +140,37 @@ public class ConfigBean extends Entidade {
 
 	public void setAtivConfig(Long ativConfig) {
 		this.ativConfig = ativConfig;
+	}
+
+	public Long getIdConfig() {
+		return idConfig;
+	}
+
+	public void setIdConfig(Long idConfig) {
+		this.idConfig = idConfig;
+	}
+
+	public Long getFlagLogEnvio() {
+		return flagLogEnvio;
+	}
+
+	public void setFlagLogEnvio(Long flagLogEnvio) {
+		this.flagLogEnvio = flagLogEnvio;
+	}
+
+	public Long getFlagLogErro() {
+		return flagLogErro;
+	}
+
+	public void setFlagLogErro(Long flagLogErro) {
+		this.flagLogErro = flagLogErro;
+	}
+
+	public Long getAtualCheckList() {
+		return atualCheckList;
+	}
+
+	public void setAtualCheckList(Long atualCheckList) {
+		this.atualCheckList = atualCheckList;
 	}
 }

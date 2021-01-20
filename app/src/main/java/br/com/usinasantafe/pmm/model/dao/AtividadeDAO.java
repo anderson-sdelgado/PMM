@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Objects;
 
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
-import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.model.bean.estaticas.AtividadeBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.REquipAtivBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ROSAtivBean;
@@ -115,6 +114,7 @@ public class AtividadeDAO {
             }
 
         } catch (Exception e) {
+            LogErroDAO.getInstance().insert(e);
             VerifDadosServ.getInstance().msgSemTerm("FALHA DE PESQUISA DE OS! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
 

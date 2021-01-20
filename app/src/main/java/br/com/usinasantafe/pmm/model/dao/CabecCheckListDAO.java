@@ -7,7 +7,7 @@ import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ItemCheckListBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.CabecCLBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.CabecCheckListBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 
 public class CabecCheckListDAO {
@@ -16,32 +16,32 @@ public class CabecCheckListDAO {
     }
 
     public boolean verCabecAberto(){
-        CabecCLBean cabecCLBean = new CabecCLBean();
-        List cabecList = cabecCLBean.get("statusCabCL", 1L);
+        CabecCheckListBean cabecCheckListBean = new CabecCheckListBean();
+        List cabecList = cabecCheckListBean.get("statusCabCL", 1L);
         Boolean ret = (cabecList.size() > 0);
         cabecList.clear();
         return ret;
     }
 
-    public CabecCLBean getCabecAberto(){
-        CabecCLBean cabecCLBean = new CabecCLBean();
-        List cabecList = cabecCLBean.get("statusCabCL", 1L);
-        cabecCLBean = (CabecCLBean) cabecList.get(0);
+    public CabecCheckListBean getCabecAberto(){
+        CabecCheckListBean cabecCheckListBean = new CabecCheckListBean();
+        List cabecList = cabecCheckListBean.get("statusCabCL", 1L);
+        cabecCheckListBean = (CabecCheckListBean) cabecList.get(0);
         cabecList.clear();
-        return cabecCLBean;
+        return cabecCheckListBean;
     }
 
     public void createCabecAberto(BoletimCTR boletimCTR){
 
         ConfigCTR configCTR = new ConfigCTR();
 
-        CabecCLBean cabecCLBean = new CabecCLBean();
-        cabecCLBean.setDtCabCL(Tempo.getInstance().dataComHora());
-        cabecCLBean.setEquipCabCL(configCTR.getEquip().getNroEquip());
-        cabecCLBean.setFuncCabCL(boletimCTR.getFunc());
-        cabecCLBean.setTurnoCabCL(boletimCTR.getTurno());
-        cabecCLBean.setStatusCabCL(1L);
-        cabecCLBean.insert();
+        CabecCheckListBean cabecCheckListBean = new CabecCheckListBean();
+        cabecCheckListBean.setDtCabCL(Tempo.getInstance().dataComHora());
+        cabecCheckListBean.setEquipCabCL(configCTR.getEquip().getNroEquip());
+        cabecCheckListBean.setFuncCabCL(boletimCTR.getFunc());
+        cabecCheckListBean.setTurnoCabCL(boletimCTR.getTurno());
+        cabecCheckListBean.setStatusCabCL(1L);
+        cabecCheckListBean.insert();
 
     }
 
@@ -77,14 +77,14 @@ public class CabecCheckListDAO {
     }
 
     public void salvarFechCheckList() {
-        CabecCLBean cabecCLBean = getCabecAberto();
-        cabecCLBean.setStatusCabCL(2L);
-        cabecCLBean.update();
+        CabecCheckListBean cabecCheckListBean = getCabecAberto();
+        cabecCheckListBean.setStatusCabCL(2L);
+        cabecCheckListBean.update();
     }
 
     public List bolFechList(){
-        CabecCLBean cabecCLBean = new CabecCLBean();
-        return cabecCLBean.get("statusCabCL", 2L);
+        CabecCheckListBean cabecCheckListBean = new CabecCheckListBean();
+        return cabecCheckListBean.get("statusCabCL", 2L);
     }
 
 }

@@ -91,23 +91,6 @@ public class EnvioDadosServ {
 
     }
 
-    public void envioApontMM() {
-
-        ApontCTR apontCTR = new ApontCTR();
-        String dados = apontCTR.dadosEnvioApontMM();
-
-        Log.i("PMM", "APONTAMENTO = " + dados);
-
-        String[] url = {urlsConexaoHttp.getsInsertApontaMM()};
-        Map<String, Object> parametrosPost = new HashMap<String, Object>();
-        parametrosPost.put("dado", dados);
-
-        PostCadGenerico postCadGenerico = new PostCadGenerico();
-        postCadGenerico.setParametrosPost(parametrosPost);
-        postCadGenerico.execute(url);
-
-    }
-
     public void enviarBolFechadosFert() {
 
         BoletimCTR boletimCTR = new BoletimCTR();
@@ -163,6 +146,23 @@ public class EnvioDadosServ {
 
     }
 
+    public void envioLogErro() {
+
+        ConfigCTR configCTR = new ConfigCTR();
+        String dados = configCTR.dadosEnvioLogErro();
+
+        Log.i("PMM", "LOG ERRO = " + dados);
+
+        String[] url = {urlsConexaoHttp.getsInsertLogErro()};
+        Map<String, Object> parametrosPost = new HashMap<String, Object>();
+        parametrosPost.put("dado", dados);
+
+        PostCadGenerico postCadGenerico = new PostCadGenerico();
+        postCadGenerico.setParametrosPost(parametrosPost);
+        postCadGenerico.execute(url);
+
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     //////////////////////////////////VERIFICAÇÃO DE DADOS/////////////////////////////////////////
@@ -200,6 +200,11 @@ public class EnvioDadosServ {
     public Boolean verifApontaFert() {
         ApontCTR apontCTR = new ApontCTR();
         return apontCTR.verEnvioDadosApontFert();
+    }
+
+    public Boolean verifLogErro() {
+        ConfigCTR configCTR = new ConfigCTR();
+        return configCTR.verEnvioLogErro();
     }
 
     public Boolean verifInfor() {
@@ -243,30 +248,29 @@ public class EnvioDadosServ {
                     enviarBolFechadosMM();
                 }
                 else {
-//                    if (verifBolAbertoSemEnvioMM()) {
-//                        enviarBolAbertosMM();
-//                    }
-//                    else {
-                        if (verifApontMovLeiraMM()) {
-//                            envioApontMM();
-                            enviarBolAbertosMM();
+                    if (verifApontMovLeiraMM()) {
+                        enviarBolAbertosMM();
+                    }
+                    else{
+                        if (verifBolFechadoFert()) {
+                            enviarBolFechadosFert();
                         }
-                        else{
-                            if (verifBolFechadoFert()) {
-                                enviarBolFechadosFert();
+                        else {
+                            if (verifBolAbertoSemEnvioFert()) {
+                                enviarBolAbertosFert();
                             }
                             else {
-                                if (verifBolAbertoSemEnvioFert()) {
-                                    enviarBolAbertosFert();
+                                if (verifApontaFert()) {
+                                    envioApontaFert();
                                 }
-                                else {
-                                    if (verifApontaFert()) {
+                                else{
+                                    if (verifLogErro()) {
                                         envioApontaFert();
                                     }
                                 }
                             }
                         }
-//                    }
+                    }
                 }
             }
         }
@@ -275,12 +279,12 @@ public class EnvioDadosServ {
     public boolean verifDadosEnvio() {
         if ((!verifInfor())
                 && (!verifBolFechadoMM())
-//                && (!verifBolAbertoSemEnvioMM())
                 && (!verifApontMovLeiraMM())
                 && (!verifChecklist())
                 && (!verifBolFechadoFert())
                 && (!verifBolAbertoSemEnvioFert())
-                && (!verifApontaFert())){
+                && (!verifApontaFert())
+                && (!verifLogErro())){
             enviando = false;
             return false;
         } else {
@@ -325,6 +329,9 @@ public class EnvioDadosServ {
             BoletimCTR boletimCTR = new BoletimCTR();
             boletimCTR.delBolFechadoFert(result);
         } else if (result.trim().contains("APONTFERT")) {
+            ApontCTR apontCTR = new ApontCTR();
+            apontCTR.updateApontaFert(result);
+        } else if (result.trim().contains("LOGERRO")) {
             ApontCTR apontCTR = new ApontCTR();
             apontCTR.updateApontaFert(result);
         }

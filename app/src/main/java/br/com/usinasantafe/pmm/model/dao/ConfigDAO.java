@@ -1,7 +1,13 @@
 package br.com.usinasantafe.pmm.model.dao;
 
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.AtualAplicBean;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
@@ -104,6 +110,43 @@ public class ConfigDAO {
         ConfigBean configBean = getConfig();
         configBean.setDifDthrConfig(status);
         configBean.update();
+    }
+
+    public AtualAplicBean recAtual(String result) {
+
+        AtualAplicBean atualAplicBean = new AtualAplicBean();
+
+        try {
+
+            JSONObject jObj = new JSONObject(result);
+            JSONArray jsonArray = jObj.getJSONArray("dados");
+
+            if (jsonArray.length() > 0) {
+
+                JSONObject objeto = jsonArray.getJSONObject(0);
+                Gson gson = new Gson();
+                atualAplicBean = gson.fromJson(objeto.toString(), AtualAplicBean.class);
+
+                ConfigBean configBean = getConfig();
+                configBean.setFlagLogEnvio(atualAplicBean.getFlagLogEnvio());
+                configBean.setFlagLogErro(atualAplicBean.getFlagLogErro());
+                configBean.setDtServConfig(atualAplicBean.getDthr());
+                configBean.setAtualCheckList(atualAplicBean.getFlagAtualCheckList());
+                configBean.update();
+
+                if(configBean.getFlagLogErro().equals(0L)){
+                    LogErroDAO logErroDAO = new LogErroDAO();
+                    logErroDAO.delLogErroAll();
+                }
+
+            }
+
+        } catch (Exception e) {
+            LogErroDAO.getInstance().insert(e);
+        }
+
+        return atualAplicBean;
+
     }
 
 }

@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
+import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.util.Tempo;
 
 import android.os.AsyncTask;
@@ -33,7 +34,6 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 
 	@Override
 	protected String doInBackground(String... arg) {
-		// TODO Auto-generated method stub
 		
 		BufferedReader bufferedReader = null;
 		String resultado = null;
@@ -69,14 +69,14 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 			connection.disconnect();
 			
 		} catch (Exception e) {
-			Log.i("PMM", "Erro = " + e);
+			LogErroDAO.getInstance().insert(e);
 			EnvioDadosServ.getInstance().setEnviando(false);
 			Tempo.getInstance().setEnvioDado(true);
 			if(bufferedReader != null){
 				try {
 					bufferedReader.close();
 				} catch (Exception er) {
-					Log.i("PMM", "Erro = " + er);
+					LogErroDAO.getInstance().insert(er);
 				}
 				
 			}
@@ -87,7 +87,7 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 				try {
 					bufferedReader.close();
 				} catch (Exception e) {
-					Log.i("PMM", "Erro = " + e);
+					LogErroDAO.getInstance().insert(e);
 				}
 				
 			}
@@ -105,7 +105,7 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 			EnvioDadosServ.getInstance().recDados(result);
 		} catch (Exception e) {
 			EnvioDadosServ.getInstance().setEnviando(false);
-			Log.i("PMM", "Erro2 = " + e);
+			LogErroDAO.getInstance().insert(e);
 		}
 		
     }

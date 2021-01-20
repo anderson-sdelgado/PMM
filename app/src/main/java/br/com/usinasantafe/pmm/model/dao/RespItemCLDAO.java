@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCLBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCheckListBean;
 
 public class RespItemCLDAO {
 
@@ -12,18 +12,18 @@ public class RespItemCLDAO {
     }
 
     public void clearRespItem(Long idCabCL){
-        RespItemCLBean respItemCLBean = new RespItemCLBean();
-        if (respItemCLBean.hasElements()) {
-            List respList = respItemCLBean.get("idCabItCL", idCabCL);
+        RespItemCheckListBean respItemCheckListBean = new RespItemCheckListBean();
+        if (respItemCheckListBean.hasElements()) {
+            List respList = respItemCheckListBean.get("idCabItCL", idCabCL);
             for (int i = 0; i < respList.size(); i++) {
-                respItemCLBean = (RespItemCLBean) respList.get(i);
-                respItemCLBean.delete();
+                respItemCheckListBean = (RespItemCheckListBean) respList.get(i);
+                respItemCheckListBean.delete();
             }
             respList.clear();
         }
     }
 
-    public void setRespCheckList(Long idCabCL, RespItemCLBean respItemCLBean){
+    public void setRespCheckList(Long idCabCL, RespItemCheckListBean respItemCheckListBean){
 
         ArrayList pesqArrayList = new ArrayList();
         EspecificaPesquisa pesquisa1 = new EspecificaPesquisa();
@@ -34,27 +34,27 @@ public class RespItemCLDAO {
 
         EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
         pesquisa2.setCampo("idItBDItCL");
-        pesquisa2.setValor(respItemCLBean.getIdItBDItCL());
+        pesquisa2.setValor(respItemCheckListBean.getIdItBDItCL());
         pesquisa2.setTipo(1);
         pesqArrayList.add(pesquisa2);
 
-        List respList = respItemCLBean.get(pesqArrayList);
+        List respList = respItemCheckListBean.get(pesqArrayList);
         if(respList.size() > 0) {
-            Long opcao = respItemCLBean.getOpItCL();
-            respItemCLBean = (RespItemCLBean) respList.get(0);
-            respItemCLBean.setOpItCL(opcao);
-            respItemCLBean.update();
+            Long opcao = respItemCheckListBean.getOpItCL();
+            respItemCheckListBean = (RespItemCheckListBean) respList.get(0);
+            respItemCheckListBean.setOpItCL(opcao);
+            respItemCheckListBean.update();
         }
         else{
-            respItemCLBean.setIdCabItCL(idCabCL);
-            respItemCLBean.insert();
+            respItemCheckListBean.setIdCabItCL(idCabCL);
+            respItemCheckListBean.insert();
         }
         respList.clear();
     }
 
     public List respItemList(Long idCabCL){
-        RespItemCLBean respItemCLBean = new RespItemCLBean();
-        return respItemCLBean.get("idCabItCL", idCabCL);
+        RespItemCheckListBean respItemCheckListBean = new RespItemCheckListBean();
+        return respItemCheckListBean.get("idCabItCL", idCabCL);
     }
 
 }

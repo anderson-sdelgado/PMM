@@ -71,7 +71,7 @@ public class ItemPneuDAO {
             }
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
+            LogErroDAO.getInstance().insert(e);
             VerifDadosServ.getInstance().msgSemTerm("FALHA DE PESQUISA DE PNEU! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
 

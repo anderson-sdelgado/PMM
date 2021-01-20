@@ -16,6 +16,6 @@ public interface BoletimInterface {
 
     public void updateBolAberto(String retorno);
 
-    public void deleteBolFechado(String retorno);
+    public void deleteBolFechado(String retorno) throws Exception;
 
 }

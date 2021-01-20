@@ -8,6 +8,7 @@ import java.util.TimeZone;
 import android.util.Log;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
+import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 
 public class Tempo {
 
@@ -238,8 +239,7 @@ public class Tempo {
 
         }
         catch (Exception e) {
-            // TODO Auto-generated catch block
-            Log.i("PMM", "Erro Manip = " + e);
+            LogErroDAO.getInstance().insert(e);
         }
 
         return data;

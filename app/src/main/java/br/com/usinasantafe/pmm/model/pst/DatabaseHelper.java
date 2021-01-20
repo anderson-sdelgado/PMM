@@ -26,17 +26,18 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BackupApontaBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.CabecCLBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.CabecCheckListBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CabecPneuBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfColheitaBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfPlantioBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ItemPneuBean;
+import br.com.usinasantafe.pmm.model.bean.LogErroBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.MovLeiraBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCLBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCheckListBean;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -45,7 +46,7 @@ import com.j256.ormlite.table.TableUtils;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	public static final String FORCA_DB_NAME = "pmm_db";
-	public static final int FORCA_BD_VERSION = 4;
+	public static final int FORCA_BD_VERSION = 5;
 
 	private static DatabaseHelper instance;
 	
@@ -90,8 +91,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, ConfigBean.class);
 			TableUtils.createTable(cs, BoletimMMBean.class);
 			TableUtils.createTable(cs, ApontMMBean.class);
-			TableUtils.createTable(cs, CabecCLBean.class);
-			TableUtils.createTable(cs, RespItemCLBean.class);
+			TableUtils.createTable(cs, CabecCheckListBean.class);
+			TableUtils.createTable(cs, RespItemCheckListBean.class);
 			TableUtils.createTable(cs, RendMMBean.class);
 			TableUtils.createTable(cs, RecolhFertBean.class);
 			TableUtils.createTable(cs, ImpleMMBean.class);
@@ -104,6 +105,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, MovLeiraBean.class);
 			TableUtils.createTable(cs, CabecPneuBean.class);
 			TableUtils.createTable(cs, ItemPneuBean.class);
+			TableUtils.createTable(cs, LogErroBean.class);
 			
 		}
 		catch(Exception e){
@@ -122,7 +124,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		
 		try {
 
-			if((oldVersion <= 3) && (newVersion > 3)){
+			if((oldVersion <= 5) && (newVersion > 5)){
 
 				TableUtils.dropTable(cs, EquipBean.class, true);
 				TableUtils.dropTable(cs, EquipSegBean.class, true);
@@ -145,8 +147,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 				TableUtils.dropTable(cs, ConfigBean.class, true);
 				TableUtils.dropTable(cs, BoletimMMBean.class, true);
 				TableUtils.dropTable(cs, ApontMMBean.class, true);
-				TableUtils.dropTable(cs, CabecCLBean.class, true);
-				TableUtils.dropTable(cs, RespItemCLBean.class, true);
+				TableUtils.dropTable(cs, CabecCheckListBean.class, true);
+				TableUtils.dropTable(cs, RespItemCheckListBean.class, true);
 				TableUtils.dropTable(cs, RendMMBean.class, true);
 				TableUtils.dropTable(cs, RecolhFertBean.class, true);
 				TableUtils.dropTable(cs, ImpleMMBean.class, true);
@@ -159,6 +161,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 				TableUtils.dropTable(cs, MovLeiraBean.class, true);
 				TableUtils.dropTable(cs, CabecPneuBean.class, true);
 				TableUtils.dropTable(cs, ItemPneuBean.class, true);
+
+				///////////////////////////////////////////////////////////////
 
 				TableUtils.createTable(cs, EquipBean.class);
 				TableUtils.createTable(cs, EquipSegBean.class);
@@ -181,8 +185,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 				TableUtils.createTable(cs, ConfigBean.class);
 				TableUtils.createTable(cs, BoletimMMBean.class);
 				TableUtils.createTable(cs, ApontMMBean.class);
-				TableUtils.createTable(cs, CabecCLBean.class);
-				TableUtils.createTable(cs, RespItemCLBean.class);
+				TableUtils.createTable(cs, CabecCheckListBean.class);
+				TableUtils.createTable(cs, RespItemCheckListBean.class);
 				TableUtils.createTable(cs, RendMMBean.class);
 				TableUtils.createTable(cs, RecolhFertBean.class);
 				TableUtils.createTable(cs, ImpleMMBean.class);
@@ -195,28 +199,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 				TableUtils.createTable(cs, MovLeiraBean.class);
 				TableUtils.createTable(cs, CabecPneuBean.class);
 				TableUtils.createTable(cs, ItemPneuBean.class);
+				TableUtils.createTable(cs, LogErroBean.class);
 
 			}
-//			else if((oldVersion == 2) && (newVersion > 2)){
-//
-//				TableUtils.dropTable(cs, BoletimMMBean.class, true);
-//				TableUtils.dropTable(cs, ApontMMBean.class, true);
-//				TableUtils.dropTable(cs, BoletimFertBean.class, true);
-//				TableUtils.dropTable(cs, ApontFertBean.class, true);
-//
-//				TableUtils.createTable(cs, BoletimMMBean.class);
-//				TableUtils.createTable(cs, ApontMMBean.class);
-//				TableUtils.createTable(cs, BoletimFertBean.class);
-//				TableUtils.createTable(cs, ApontFertBean.class);
-//
-//			}
-//			else if((oldVersion == 3) && (newVersion > 3)){
-//
-//				TableUtils.dropTable(cs, ConfigBean.class, true);
-//
-//				TableUtils.createTable(cs, ConfigBean.class);
-//
-//			}
 
 		} catch (Exception e) {
 			Log.e(DatabaseHelper.class.getName(), "Erro atualizando banco de dados...", e);

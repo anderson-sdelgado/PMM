@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:telaAtual="br.com.usinasantafe.pmm.ListaAtividadeActivity">
+    tools:telaAtual="br.com.usinasantafe.pmm.view.ListaAtividadeActivity">
 
     <TextView
         android:id="@+id/textViewTituloAtividade"

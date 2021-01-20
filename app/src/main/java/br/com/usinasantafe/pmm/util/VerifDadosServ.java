@@ -14,7 +14,9 @@ import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.usinasantafe.pmm.MenuInicialActivity;
+import br.com.usinasantafe.pmm.model.dao.ConfigDAO;
+import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
+import br.com.usinasantafe.pmm.view.MenuInicialActivity;
 import br.com.usinasantafe.pmm.util.conHttp.PostVerGenerico;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
@@ -71,13 +73,14 @@ public class VerifDadosServ {
                     AtividadeDAO atividadeDAO = new AtividadeDAO();
                     atividadeDAO.recDadosAtiv(result);
                 } else if (this.tipo.equals("Atualiza")) {
-                    String verAtualizacao = result.trim();
-                    if (verAtualizacao.equals("S")) {
+                    ConfigDAO configDAO = new ConfigDAO();
+                    AtualAplicBean atualAplicBean = configDAO.recAtual(result.trim());
+                    if (atualAplicBean.getFlagAtualApp().equals(1L)) {
                         AtualizarAplicativo atualizarAplicativo = new AtualizarAplicativo();
                         atualizarAplicativo.setContext(this.menuInicialActivity);
                         atualizarAplicativo.execute();
                     } else {
-                        this.menuInicialActivity.startTimer(verAtualizacao);
+                        this.menuInicialActivity.startTimer();
                     }
                 } else if (this.tipo.equals("CheckList")) {
                     CheckListCTR checkListCTR = new CheckListCTR();
@@ -91,7 +94,7 @@ public class VerifDadosServ {
                 }
             }
         } catch (Exception e) {
-            Log.i("PMM", "Erro Manip atualizar = " + e);
+            LogErroDAO.getInstance().insert(e);
         }
     }
 
@@ -115,7 +118,7 @@ public class VerifDadosServ {
         EquipDAO equipDAO = new EquipDAO();
         EquipBean equipBean = equipDAO.getEquip();
 
-        atualAplicBean.setIdEquipAtualizacao(equipBean.getNroEquip());
+        atualAplicBean.setIdEquipAtual(equipBean.getNroEquip());
         atualAplicBean.setIdCheckList(equipBean.getIdCheckList());
 
         JsonArray jsonArray = new JsonArray();
@@ -217,7 +220,6 @@ public class VerifDadosServ {
         alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
             }
         });
         alerta.show();
@@ -242,7 +244,6 @@ public class VerifDadosServ {
             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    // TODO Auto-generated method stub
                 }
             });
             alerta.show();

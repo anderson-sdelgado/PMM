@@ -5,6 +5,7 @@ import android.content.Context;
 
 import br.com.usinasantafe.pmm.model.dao.ConfigDAO;
 import br.com.usinasantafe.pmm.model.dao.EquipDAO;
+import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.model.dao.OSDAO;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
@@ -108,6 +109,16 @@ public class ConfigCTR {
     public boolean verOS(Long nroOS){
         OSDAO osDAO = new OSDAO();
         return osDAO.verOS(nroOS);
+    }
+
+    public boolean verEnvioLogErro(){
+        LogErroDAO logErroDAO = new LogErroDAO();
+        return verEnvioLogErro();
+    }
+
+    public String dadosEnvioLogErro(){
+        LogErroDAO logErroDAO = new LogErroDAO();
+        return logErroDAO.dadosEnvio();
     }
 
 }

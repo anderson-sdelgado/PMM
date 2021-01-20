@@ -25,51 +25,51 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DadosPlantioActivity"
+            android:name=".view.DadosPlantioActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ListaTipoCompActivity"
+            android:name=".view.ListaTipoCompActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ListaPosPneuActivity"
+            android:name=".view.ListaPosPneuActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".PneuActivity"
+            android:name=".view.PneuActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".PressaoEncPneuActivity"
+            android:name=".view.PressaoEncPneuActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".PressaoColPneuActivity"
+            android:name=".view.PressaoColPneuActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ListaLeiraActivity"
+            android:name=".view.ListaLeiraActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".DadosColheitaActivity"
+            android:name=".view.DadosColheitaActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".MsgDataHoraActivity"
+            android:name=".view.MsgDataHoraActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".DataHoraActivity"
+            android:name=".view.DataHoraActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".EquipMBActivity"
+            android:name=".view.EquipMBActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".MenuInicialActivity"
+            android:name=".view.MenuInicialActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" >
             <intent-filter>
@@ -80,96 +80,97 @@
         <receiver android:name=".ReceberAlarme">
         </receiver>
         <activity
-            android:name=".ListaBocalFertActivity"
+            android:name=".view.ListaBocalFertActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ConfigActivity"
+            android:name=".view.ConfigActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".EquipActivity"
+            android:name=".view.EquipActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".HorimetroActivity"
+            android:name=".view.HorimetroActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ImplementoActivity"
+            android:name=".view.ImplementoActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ItemCheckListActivity"
+            android:name=".view.ItemCheckListActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ListaAtividadeActivity"
+            android:name=".view.ListaAtividadeActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ListaHistApontaActivity"
+            android:name=".view.ListaHistApontaActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ListaOSRendActivity"
+            android:name=".view.ListaOSRendActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ListaParadaActivity"
+            android:name=".view.ListaParadaActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ListaOSRecolActivity"
+            android:name=".view.ListaOSRecolActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ListaTurnoActivity"
+            android:name=".view.ListaTurnoActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".MenuPrincNormalActivity"
+            android:name=".view.MenuPrincNormalActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".OperadorActivity"
+            android:name=".view.OperadorActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".OSActivity"
+            android:name=".view.OSActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ListaPressaoFertActivity"
+            android:name=".view.ListaPressaoFertActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".RecolhimentoActivity"
+            android:name=".view.RecolhimentoActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".RendimentoActivity"
+            android:name=".view.RendimentoActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".SenhaActivity"
+            android:name=".view.SenhaActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".TransbordoActivity"
+            android:name=".view.TransbordoActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ListaVelocFertActivity"
+            android:name=".view.ListaVelocFertActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".PergAtualCheckListActivity"
+            android:name=".view.PergAtualCheckListActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".EsperaInforActivity"
+            android:name=".view.EsperaInforActivity"
             tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".PMMContext" />
     </application>
 
 </manifest>

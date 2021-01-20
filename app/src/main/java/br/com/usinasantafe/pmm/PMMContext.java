@@ -8,12 +8,15 @@ import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.control.PneuCTR;
 import br.com.usinasantafe.pmm.control.InformativoCTR;
+import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 
 /**
  * Created by anderson on 26/04/2017.
  */
 
 public class PMMContext extends Application {
+
+    private Thread.UncaughtExceptionHandler mDefaultExceptionHandler;
 
     private BoletimCTR boletimCTR;
     private ApontCTR apontCTR;
@@ -34,13 +37,12 @@ public class PMMContext extends Application {
     // 19 - Trocar de implemento
     private int contImplemento;
     private String textoHorimetro;
-    public static String versaoAplic = "2.12";
+    public static String versaoAplic = "3.00";
     private int contRend;
     private int posRend;
     private int contRecolh;
     private int posRecolh;
     private int contDataHora;
-    private String verAtualCL;
     private int posCheckList;
     private int tipoMovComp;
 
@@ -53,6 +55,8 @@ public class PMMContext extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        mDefaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
+        Thread.setDefaultUncaughtExceptionHandler(handler);
     }
 
     public BoletimCTR getBoletimCTR() {
@@ -155,14 +159,6 @@ public class PMMContext extends Application {
         this.posRecolh = posRecolh;
     }
 
-    public String getVerAtualCL() {
-        return verAtualCL;
-    }
-
-    public void setVerAtualCL(String verAtualCL) {
-        this.verAtualCL = verAtualCL;
-    }
-
     public int getContDataHora() {
         return contDataHora;
     }
@@ -218,4 +214,12 @@ public class PMMContext extends Application {
     public void setTipoMovComp(int tipoMovComp) {
         this.tipoMovComp = tipoMovComp;
     }
+
+    private Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() {
+        public void uncaughtException(Thread thread, Throwable ex) {
+            LogErroDAO.getInstance().insert(ex);
+            mDefaultExceptionHandler.uncaughtException(thread, ex);
+        }
+    };
+
 }

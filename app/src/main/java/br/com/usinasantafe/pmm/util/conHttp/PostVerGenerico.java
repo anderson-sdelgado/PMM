@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 
+import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 /**
@@ -61,12 +62,12 @@ public class PostVerGenerico extends AsyncTask<String, Void, String> {
             connection.disconnect();
 
         } catch (Exception e) {
-            Log.i("PMM", "Erro = " + e);
+            LogErroDAO.getInstance().insert(e);
             if(bufferedReader != null){
                 try {
                     bufferedReader.close();
                 } catch (Exception er) {
-                    Log.i("PMM", "Erro = " + er);
+                    LogErroDAO.getInstance().insert(er);
                 }
 
             }
@@ -77,7 +78,7 @@ public class PostVerGenerico extends AsyncTask<String, Void, String> {
                 try {
                     bufferedReader.close();
                 } catch (Exception e) {
-                    Log.i("PMM", "Erro = " + e);
+                    LogErroDAO.getInstance().insert(e);
                 }
 
             }
@@ -92,7 +93,7 @@ public class PostVerGenerico extends AsyncTask<String, Void, String> {
             Log.i("ECM", "VALOR RECEBIDO --> " + result);
             VerifDadosServ.getInstance().manipularDadosHttp(result);
         } catch (Exception e) {
-            Log.i("PMM", "Erro2 = " + e);
+            LogErroDAO.getInstance().insert(e);
         }
 
     }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.util.conHttp.GetBDGenerico;
 import br.com.usinasantafe.pmm.model.pst.GenericRecordable;
 import br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp;
@@ -75,8 +76,7 @@ public class AtualDadosServ {
 
 			}
 			catch (Exception e) {
-			// TODO Auto-generated catch block
-			Log.i("PMM", "Erro Manip = " + e);
+				LogErroDAO.getInstance().insert(e);
 			}
 
 		}
@@ -115,7 +115,7 @@ public class AtualDadosServ {
 	        getBDGenerico.execute(url);
 	        
 		} catch (Exception e) {
-			Log.i("PMM", "ERRO 2 = " + e);
+			LogErroDAO.getInstance().insert(e);
 		}
         
 	}
@@ -151,7 +151,7 @@ public class AtualDadosServ {
 			getBDGenerico.execute(url);
 
 		} catch (Exception e) {
-			Log.i("PMM", "ERRO = " + e);
+			LogErroDAO.getInstance().insert(e);
 		}
 
 	}
@@ -273,7 +273,7 @@ public class AtualDadosServ {
 			getBDGenerico.execute(url);
 
 		} catch (Exception e) {
-			Log.i("PMM", "Erro Manip2 = " + e);
+			LogErroDAO.getInstance().insert(e);
 		}
 
 	}

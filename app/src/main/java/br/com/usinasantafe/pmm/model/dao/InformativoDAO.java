@@ -7,8 +7,8 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import br.com.usinasantafe.pmm.DadosColheitaActivity;
-import br.com.usinasantafe.pmm.DadosPlantioActivity;
+import br.com.usinasantafe.pmm.view.DadosColheitaActivity;
+import br.com.usinasantafe.pmm.view.DadosPlantioActivity;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfPlantioBean;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfColheitaBean;
@@ -59,6 +59,7 @@ public class InformativoDAO {
             }
 
         } catch (Exception e) {
+            LogErroDAO.getInstance().insert(e);
             if(configCTR.getVerInforConfig() == 0L) {
                 configCTR.atualVerInforConfig(1L);
                 VerifDadosServ.getInstance().pulaTelaComTermSemBarra();
@@ -115,6 +116,7 @@ public class InformativoDAO {
             }
 
         } catch (Exception e) {
+            LogErroDAO.getInstance().insert(e);
             if(configCTR.getVerInforConfig() == 0L) {
                 configCTR.atualVerInforConfig(1L);
                 VerifDadosServ.getInstance().pulaTelaComTermSemBarra();
@@ -171,6 +173,7 @@ public class InformativoDAO {
             }
 
         } catch (Exception e) {
+            LogErroDAO.getInstance().insert(e);
             if(configCTR.getVerInforConfig() == 0L) {
                 configCTR.atualVerInforConfig(1L);
                 VerifDadosServ.getInstance().pulaTelaComTermSemBarra();

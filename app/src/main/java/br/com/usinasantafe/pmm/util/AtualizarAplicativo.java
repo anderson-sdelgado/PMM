@@ -1,7 +1,5 @@
 package br.com.usinasantafe.pmm.util;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
@@ -19,6 +16,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 
 /**
  * Created by anderson on 24/07/2017.
@@ -131,7 +130,7 @@ public class AtualizarAplicativo extends AsyncTask<String ,Integer ,Boolean> {
 
             flag = true;
         } catch (Exception e) {
-            Log.e("PMM", "Update Error: " + e.getMessage());
+            LogErroDAO.getInstance().insert(e);
             flag = false;
         }
         return flag;

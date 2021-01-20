@@ -7,9 +7,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
+import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 
 public class GetBDGenerico extends AsyncTask<String, Void, String> {
 
@@ -69,12 +69,12 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 			connection.disconnect();
             
 		} catch (Exception e) {
-			Log.i("PMM", "ERRO PEGA DADOS 1 = " + e);
+			LogErroDAO.getInstance().insert(e);
 			if(bufferedReader != null){
 				try {
 					bufferedReader.close();
 				} catch (Exception erro) {
-					Log.i("PMM", "ERRO PEGA DADOS  2 = " + erro);
+					LogErroDAO.getInstance().insert(erro);
 				}
 			}
 		}
@@ -84,7 +84,7 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 				try {
 					bufferedReader.close();
 				} catch (Exception e) {
-					Log.i("PMM", "ERRO PEGA DADOS 3 = " + e);
+					LogErroDAO.getInstance().insert(e);
 				}
 			}
 			
@@ -98,7 +98,7 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 		try {
 			AtualDadosServ.getInstance().manipularDadosHttp(tipo, result);
 		} catch (Exception e) {
-			Log.i("PMM", "Erro2 = " + e);
+			LogErroDAO.getInstance().insert(e);
 		}
 
     }

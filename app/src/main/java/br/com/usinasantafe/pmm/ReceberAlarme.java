@@ -7,8 +7,6 @@ import android.util.Log;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.model.bean.estaticas.RAtivParadaBean;
-import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontImpleMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.MovLeiraBean;
@@ -21,9 +19,9 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.ApontFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.CabecCLBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.CabecCheckListBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCLBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCheckListBean;
 
 public class ReceberAlarme extends BroadcastReceiver {
 
@@ -200,32 +198,32 @@ public class ReceberAlarme extends BroadcastReceiver {
 
 		}
 
-		CabecCLBean cabecCLBean = new CabecCLBean();
-		List cabecList = cabecCLBean.all();
+		CabecCheckListBean cabecCheckListBean = new CabecCheckListBean();
+		List cabecList = cabecCheckListBean.all();
 
 		for (int j = 0; j < cabecList.size(); j++) {
 
-			cabecCLBean = (CabecCLBean) cabecList.get(j);
+			cabecCheckListBean = (CabecCheckListBean) cabecList.get(j);
 
 			Log.i("PMM", "CabecCheckList");
-			Log.i("PMM", "IdCabecCheck = " + cabecCLBean.getIdCabCL());
-			Log.i("PMM", "DtCabecCheckList = " + cabecCLBean.getDtCabCL());
-			Log.i("PMM", "StatusCabecCheckList = " + cabecCLBean.getStatusCabCL());
+			Log.i("PMM", "IdCabecCheck = " + cabecCheckListBean.getIdCabCL());
+			Log.i("PMM", "DtCabecCheckList = " + cabecCheckListBean.getDtCabCL());
+			Log.i("PMM", "StatusCabecCheckList = " + cabecCheckListBean.getStatusCabCL());
 
 		}
 
-		RespItemCLBean respItemCLBean = new RespItemCLBean();
-		List respItemList = respItemCLBean.all();
+		RespItemCheckListBean respItemCheckListBean = new RespItemCheckListBean();
+		List respItemList = respItemCheckListBean.all();
 
 		for (int j = 0; j < respItemList.size(); j++) {
 
-			respItemCLBean = (RespItemCLBean) respItemList.get(j);
+			respItemCheckListBean = (RespItemCheckListBean) respItemList.get(j);
 
 			Log.i("PMM", "RespItemCheckList");
-			Log.i("PMM", "IdItemCheckList = " + respItemCLBean.getIdItCL());
-			Log.i("PMM", "IdItItemCheckList = " + respItemCLBean.getIdItBDItCL());
-			Log.i("PMM", "IdCabecItemCheckList = " + respItemCLBean.getIdCabItCL());
-			Log.i("PMM", "OpcaoItemCheckList = " + respItemCLBean.getOpItCL());
+			Log.i("PMM", "IdItemCheckList = " + respItemCheckListBean.getIdItCL());
+			Log.i("PMM", "IdItItemCheckList = " + respItemCheckListBean.getIdItBDItCL());
+			Log.i("PMM", "IdCabecItemCheckList = " + respItemCheckListBean.getIdCabItCL());
+			Log.i("PMM", "OpcaoItemCheckList = " + respItemCheckListBean.getOpItCL());
 
 		}
 

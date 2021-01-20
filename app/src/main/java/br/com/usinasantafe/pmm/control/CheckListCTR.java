@@ -14,8 +14,8 @@ import br.com.usinasantafe.pmm.model.dao.CabecCheckListDAO;
 import br.com.usinasantafe.pmm.model.dao.ItemCheckListDAO;
 import br.com.usinasantafe.pmm.model.dao.RespItemCLDAO;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ItemCheckListBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.CabecCLBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCLBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.CabecCheckListBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCheckListBean;
 
 public class CheckListCTR {
 
@@ -30,9 +30,9 @@ public class CheckListCTR {
 
     public void clearRespCabecAberto(){
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
-        CabecCLBean cabecCLBean = cabecCheckListDAO.getCabecAberto();
+        CabecCheckListBean cabecCheckListBean = cabecCheckListDAO.getCabecAberto();
         RespItemCLDAO respItemCLDAO = new RespItemCLDAO();
-        respItemCLDAO.clearRespItem(cabecCLBean.getIdCabCL());
+        respItemCLDAO.clearRespItem(cabecCheckListBean.getIdCabCL());
     }
 
     public void createCabecAberto(BoletimCTR boletimCTR){
@@ -72,10 +72,10 @@ public class CheckListCTR {
         return cabecCheckListDAO.getItemCheckList(pos);
     }
 
-    public void setRespCheckList(RespItemCLBean respItemCLBean){
+    public void setRespCheckList(RespItemCheckListBean respItemCheckListBean){
         RespItemCLDAO respItemCLDAO = new RespItemCLDAO();
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
-        respItemCLDAO.setRespCheckList(cabecCheckListDAO.getCabecAberto().getIdCabCL(), respItemCLBean);
+        respItemCLDAO.setRespCheckList(cabecCheckListDAO.getCabecAberto().getIdCabCL(), respItemCheckListBean);
     }
 
     public int qtdeItemCheckList(){
@@ -90,7 +90,6 @@ public class CheckListCTR {
     }
 
     public boolean verEnvioDados(){
-        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
         return bolFechList().size() > 0;
     }
 
@@ -103,17 +102,17 @@ public class CheckListCTR {
 
         for (int i = 0; i < cabecCheckListLista.size(); i++) {
 
-            CabecCLBean cabecCLBean = (CabecCLBean) cabecCheckListLista.get(i);
+            CabecCheckListBean cabecCheckListBean = (CabecCheckListBean) cabecCheckListLista.get(i);
             Gson gsonCabec = new Gson();
-            jsonArrayCabec.add(gsonCabec.toJsonTree(cabecCLBean, cabecCLBean.getClass()));
+            jsonArrayCabec.add(gsonCabec.toJsonTree(cabecCheckListBean, cabecCheckListBean.getClass()));
 
             RespItemCLDAO respItemCLDAO = new RespItemCLDAO();
-            List respItemList = respItemCLDAO.respItemList(cabecCLBean.getIdCabCL());
+            List respItemList = respItemCLDAO.respItemList(cabecCheckListBean.getIdCabCL());
 
             for (int j = 0; j < respItemList.size(); j++) {
-                RespItemCLBean respItemCLBean = (RespItemCLBean) respItemList.get(j);
+                RespItemCheckListBean respItemCheckListBean = (RespItemCheckListBean) respItemList.get(j);
                 Gson gsonItem = new Gson();
-                jsonArrayItem.add(gsonItem.toJsonTree(respItemCLBean, respItemCLBean.getClass()));
+                jsonArrayItem.add(gsonItem.toJsonTree(respItemCheckListBean, respItemCheckListBean.getClass()));
             }
 
             respItemList.clear();
@@ -134,26 +133,26 @@ public class CheckListCTR {
 
     public void delChecklist() {
 
-        CabecCLBean cabecCLBean = new CabecCLBean();
-        List cabecCheckList = cabecCLBean.get("statusCabCL", 2L);
+        CabecCheckListBean cabecCheckListBean = new CabecCheckListBean();
+        List cabecCheckList = cabecCheckListBean.get("statusCabCL", 2L);
         ArrayList<Long> rLista = new ArrayList<Long>();
 
         for (int i = 0; i < cabecCheckList.size(); i++) {
-            cabecCLBean = (CabecCLBean) cabecCheckList.get(i);
-            rLista.add(cabecCLBean.getIdCabCL());
+            cabecCheckListBean = (CabecCheckListBean) cabecCheckList.get(i);
+            rLista.add(cabecCheckListBean.getIdCabCL());
         }
 
-        RespItemCLBean respItemCLBean = new RespItemCLBean();
-        List respItemList = respItemCLBean.in("idCabItCL", rLista);
+        RespItemCheckListBean respItemCheckListBean = new RespItemCheckListBean();
+        List respItemList = respItemCheckListBean.in("idCabItCL", rLista);
 
         for (int j = 0; j < respItemList.size(); j++) {
-            respItemCLBean = (RespItemCLBean) respItemList.get(j);
-            respItemCLBean.delete();
+            respItemCheckListBean = (RespItemCheckListBean) respItemList.get(j);
+            respItemCheckListBean.delete();
         }
 
         for (int i = 0; i < cabecCheckList.size(); i++) {
-            cabecCLBean = (CabecCLBean) cabecCheckList.get(i);
-            cabecCLBean.delete();
+            cabecCheckListBean = (CabecCheckListBean) cabecCheckList.get(i);
+            cabecCheckListBean.delete();
         }
 
     }

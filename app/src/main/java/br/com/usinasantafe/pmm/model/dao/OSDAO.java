@@ -83,7 +83,7 @@ public class OSDAO {
             }
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
+            LogErroDAO.getInstance().insert(e);
             configCTR.setStatusConConfig(0L);
             VerifDadosServ.getInstance().msgComTerm("FALHA DE PESQUISA DE OS! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }

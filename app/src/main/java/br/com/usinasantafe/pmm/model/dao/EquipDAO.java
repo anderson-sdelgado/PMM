@@ -105,6 +105,7 @@ public class EquipDAO {
             }
 
         } catch (Exception e) {
+            LogErroDAO.getInstance().insert(e);
             VerifDadosServ.getInstance().msgSemTerm("FALHA DE PESQUISA DE EQUIPAMENTO! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
     }
