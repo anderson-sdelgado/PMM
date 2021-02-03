@@ -6,6 +6,7 @@ import java.util.Map;
 import android.content.Context;
 import android.util.Log;
 
+import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.util.conHttp.PostCadGenerico;
 import br.com.usinasantafe.pmm.control.ApontCTR;
 import br.com.usinasantafe.pmm.control.BoletimCTR;
@@ -236,35 +237,29 @@ public class EnvioDadosServ {
 
     public void envioDadosPrinc() {
 
-        if(verifInfor()){
-            VerifDadosServ.getInstance().verDadosInfor();
+        if (verifLogErro()) {
+            envioLogErro();
         }
         else {
-            if (verifChecklist()) {
-                enviarChecklist();
-            }
-            else {
-                if (verifBolFechadoMM()) {
-                    enviarBolFechadosMM();
-                }
-                else {
-                    if (verifApontMovLeiraMM()) {
-                        enviarBolAbertosMM();
-                    }
-                    else{
-                        if (verifBolFechadoFert()) {
-                            enviarBolFechadosFert();
-                        }
-                        else {
-                            if (verifBolAbertoSemEnvioFert()) {
-                                enviarBolAbertosFert();
-                            }
-                            else {
-                                if (verifApontaFert()) {
-                                    envioApontaFert();
-                                }
-                                else{
-                                    if (verifLogErro()) {
+            if(verifInfor()){
+                VerifDadosServ.getInstance().verDadosInfor();
+            } else {
+                if (verifChecklist()) {
+                    enviarChecklist();
+                } else {
+                    if (verifBolFechadoMM()) {
+                        enviarBolFechadosMM();
+                    } else {
+                        if (verifApontMovLeiraMM()) {
+                            enviarBolAbertosMM();
+                        } else {
+                            if (verifBolFechadoFert()) {
+                                enviarBolFechadosFert();
+                            } else {
+                                if (verifBolAbertoSemEnvioFert()) {
+                                    enviarBolAbertosFert();
+                                } else {
+                                    if (verifApontaFert()) {
                                         envioApontaFert();
                                     }
                                 }
@@ -316,24 +311,27 @@ public class EnvioDadosServ {
         } else if (result.trim().startsWith("BOLABERTOMM")) {
             BoletimCTR boletimCTR = new BoletimCTR();
             boletimCTR.updBolAbertoMM(result);
-        } else if (result.trim().contains("BOLFECHADOMM")) {
+        } else if (result.trim().startsWith("BOLFECHADOMM")) {
             BoletimCTR boletimCTR = new BoletimCTR();
             boletimCTR.delBolFechadoMM(result);
-        } else if (result.trim().contains("APONTMM")) {
+        } else if (result.trim().startsWith("APONTMM")) {
             ApontCTR apontCTR = new ApontCTR();
             apontCTR.updateApontMM(result);
-        } else if (result.trim().contains("BOLABERTOFERT")) {
+        } else if (result.trim().startsWith("BOLABERTOFERT")) {
             BoletimCTR boletimCTR = new BoletimCTR();
             boletimCTR.updBolAbertoFert(result);
-        } else if (result.trim().contains("BOLFECHADOFERT")) {
+        } else if (result.trim().startsWith("BOLFECHADOFERT")) {
             BoletimCTR boletimCTR = new BoletimCTR();
             boletimCTR.delBolFechadoFert(result);
-        } else if (result.trim().contains("APONTFERT")) {
+        } else if (result.trim().startsWith("APONTFERT")) {
             ApontCTR apontCTR = new ApontCTR();
             apontCTR.updateApontaFert(result);
-        } else if (result.trim().contains("LOGERRO")) {
-            ApontCTR apontCTR = new ApontCTR();
-            apontCTR.updateApontaFert(result);
+        } else if (result.trim().startsWith("LOGERRO")) {
+            ConfigCTR configCTR = new ConfigCTR();
+            configCTR.updLogErro(result);
+        }
+        else{
+            LogErroDAO.getInstance().insert(result);
         }
 
     }

@@ -6,9 +6,9 @@ import java.util.List;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCheckListBean;
 
-public class RespItemCLDAO {
+public class RespItemCheckListDAO {
 
-    public RespItemCLDAO() {
+    public RespItemCheckListDAO() {
     }
 
     public void clearRespItem(Long idCabCL){

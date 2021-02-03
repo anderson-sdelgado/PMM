@@ -13,7 +13,7 @@ public class LogErroBean extends Entidade {
     @DatabaseField(generatedId=true)
     private Long idLog;
     @DatabaseField
-    private Long equip;
+    private Long idEquip;
     @DatabaseField
     private String exception;
     @DatabaseField
@@ -32,12 +32,12 @@ public class LogErroBean extends Entidade {
         this.idLog = idLog;
     }
 
-    public Long getEquip() {
-        return equip;
+    public Long getIdEquip() {
+        return idEquip;
     }
 
-    public void setEquip(Long equip) {
-        this.equip = equip;
+    public void setIdEquip(Long idEquip) {
+        this.idEquip = idEquip;
     }
 
     public String getException() {

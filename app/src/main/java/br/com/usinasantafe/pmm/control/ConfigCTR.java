@@ -113,12 +113,17 @@ public class ConfigCTR {
 
     public boolean verEnvioLogErro(){
         LogErroDAO logErroDAO = new LogErroDAO();
-        return verEnvioLogErro();
+        return logErroDAO.verEnvioLogErro();
     }
 
     public String dadosEnvioLogErro(){
         LogErroDAO logErroDAO = new LogErroDAO();
         return logErroDAO.dadosEnvio();
+    }
+
+    public void updLogErro(String retorno){
+        LogErroDAO logErroDAO = new LogErroDAO();
+        logErroDAO.updLogErro(retorno);
     }
 
 }

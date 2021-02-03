@@ -110,106 +110,125 @@ public class ListaAtividadeActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                AtividadeBean atividadeBean = (AtividadeBean) ativArrayList.get(position);
-                ativArrayList.clear();
+                if(ativArrayList.size() == 0){
 
-                pmmContext.getConfigCTR().setAtivConfig(atividadeBean.getIdAtiv());
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
+                    alerta.setTitle("ATENÇÃO");
+                    alerta.setMessage("FALHA NA SELEÇÃO DE ATIVIDADE. POR FAVOR, SELECIONE NOVAMENTE.");
+                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent it = new Intent(ListaAtividadeActivity.this, ListaAtividadeActivity.class);
+                            startActivity(it);
+                            finish();
+                        }
+                    });
+                    alerta.show();
 
-                if (pmmContext.getVerPosTela() == 1) {
+                }
+                else {
 
-                    pmmContext.setTextoHorimetro("HORÍMETRO INICIAL:");
+                    AtividadeBean atividadeBean = (AtividadeBean) ativArrayList.get(position);
+                    ativArrayList.clear();
 
-                    Intent it = new Intent(ListaAtividadeActivity.this, HorimetroActivity.class);
-                    startActivity(it);
-                    finish();
+                    pmmContext.getConfigCTR().setAtivConfig(atividadeBean.getIdAtiv());
 
-                } else if ((pmmContext.getVerPosTela() == 2)) {
+                    if (pmmContext.getVerPosTela() == 1) {
 
-                    if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
+                        pmmContext.setTextoHorimetro("HORÍMETRO INICIAL:");
 
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
-                        alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.");
-                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
-                                startActivity(it);
-                                finish();
-                            }
-                        });
-                        alerta.show();
+                        Intent it = new Intent(ListaAtividadeActivity.this, HorimetroActivity.class);
+                        startActivity(it);
+                        finish();
 
-                    } else {
+                    } else if ((pmmContext.getVerPosTela() == 2)) {
 
-                        if (pmmContext.getApontCTR().verifBackupApont(0L)) {
+                        if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
                             alerta.setTitle("ATENÇÃO");
-                            alerta.setMessage("OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!");
+                            alerta.setMessage("POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.");
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
+                                    startActivity(it);
+                                    finish();
                                 }
                             });
-
                             alerta.show();
 
                         } else {
 
-                            if (pmmContext.getConfigCTR().getEquip().getTipo() == 1) {
+                            if (pmmContext.getApontCTR().verifBackupApont(0L)) {
 
-                                List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList();
-
-                                boolean transbordo = false;
-                                boolean rendimento = false;
-
-                                for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
-                                    RFuncaoAtivParBean rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtividadeList.get(i);
-                                    if (rFuncaoAtivParBean.getCodFuncao() == 2) {
-                                        transbordo = true;
+                                AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
+                                alerta.setTitle("ATENÇÃO");
+                                alerta.setMessage("OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!");
+                                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
                                     }
-                                    if (rFuncaoAtivParBean.getCodFuncao() == 1) {
-                                        rendimento = true;
-                                    }
-                                }
-                                rFuncaoAtividadeList.clear();
+                                });
 
-                                if (transbordo) {
-                                    Intent it = new Intent(ListaAtividadeActivity.this, TransbordoActivity.class);
-                                    startActivity(it);
-                                    finish();
-                                } else {
-
-                                    pmmContext.getApontCTR().salvarApont(1L, 0L, 0L, getLongitude(), getLatitude());
-                                    if (rendimento) {
-                                        pmmContext.getBoletimCTR().insRendBD(nroOS);
-                                    }
-
-                                    Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
-                                    startActivity(it);
-                                    finish();
-
-                                }
+                                alerta.show();
 
                             } else {
-                                Intent it = new Intent(ListaAtividadeActivity.this, ListaBocalFertActivity.class);
-                                startActivity(it);
-                                finish();
+
+                                if (pmmContext.getConfigCTR().getEquip().getTipo() == 1) {
+
+                                    List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList();
+
+                                    boolean transbordo = false;
+                                    boolean rendimento = false;
+
+                                    for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
+                                        RFuncaoAtivParBean rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtividadeList.get(i);
+                                        if (rFuncaoAtivParBean.getCodFuncao() == 2) {
+                                            transbordo = true;
+                                        }
+                                        if (rFuncaoAtivParBean.getCodFuncao() == 1) {
+                                            rendimento = true;
+                                        }
+                                    }
+                                    rFuncaoAtividadeList.clear();
+
+                                    if (transbordo) {
+                                        Intent it = new Intent(ListaAtividadeActivity.this, TransbordoActivity.class);
+                                        startActivity(it);
+                                        finish();
+                                    } else {
+
+                                        pmmContext.getApontCTR().salvarApont(1L, 0L, 0L, getLongitude(), getLatitude());
+                                        if (rendimento) {
+                                            pmmContext.getBoletimCTR().insRendBD(nroOS);
+                                        }
+
+                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
+                                        startActivity(it);
+                                        finish();
+
+                                    }
+
+                                } else {
+                                    Intent it = new Intent(ListaAtividadeActivity.this, ListaBocalFertActivity.class);
+                                    startActivity(it);
+                                    finish();
+                                }
+
                             }
 
                         }
 
+                    } else if (pmmContext.getVerPosTela() == 3) {
+
+                        Intent it = new Intent(ListaAtividadeActivity.this, ListaParadaActivity.class);
+                        startActivity(it);
+                        finish();
+
                     }
 
-                } else if(pmmContext.getVerPosTela() == 3) {
-
-                    Intent it = new Intent(ListaAtividadeActivity.this, ListaParadaActivity.class);
-                    startActivity(it);
-                    finish();
-
                 }
-
             }
 
         });

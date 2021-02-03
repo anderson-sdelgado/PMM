@@ -32,8 +32,23 @@ public class LogErroDAO {
             if(configCTR.getConfig().getFlagLogErro().equals(1L)) {
                 ConfigBean configBean = configCTR.getConfig();
                 LogErroBean logErroBean = new LogErroBean();
-                logErroBean.setEquip(configBean.getEquipConfig());
+                logErroBean.setIdEquip(configBean.getEquipConfig());
                 logErroBean.setException(throwableToString(ex));
+                logErroBean.setDthr(Tempo.getInstance().dataComHoraSTZ());
+                logErroBean.setStatus(1L);
+                logErroBean.insert();
+            }
+        }
+    }
+
+    public void insert(String erro){
+        ConfigCTR configCTR = new ConfigCTR();
+        if(configCTR.hasElements()){
+            if(configCTR.getConfig().getFlagLogErro().equals(1L)) {
+                ConfigBean configBean = configCTR.getConfig();
+                LogErroBean logErroBean = new LogErroBean();
+                logErroBean.setIdEquip(configBean.getEquipConfig());
+                logErroBean.setException("RETORNO SERVIDOR COM FALHA = " + erro);
                 logErroBean.setDthr(Tempo.getInstance().dataComHoraSTZ());
                 logErroBean.setStatus(1L);
                 logErroBean.insert();
@@ -56,30 +71,30 @@ public class LogErroDAO {
     }
 
     public boolean verEnvioLogErro(){
-        List<LogErroBean> logErroList = logErroList();
+        List<LogErroBean> logErroList = logErroAbertList();
         boolean ret = logErroList.size() > 0;
         logErroList.clear();
         return ret;
     }
 
-    public List<LogErroBean> logErroList(){
+    public List<LogErroBean> logErroAbertList(){
         LogErroBean logErroBean = new LogErroBean();
         return logErroBean.get("status", 1L);
     }
 
-    public void delLogErroAll(){
+    public List<LogErroBean> logErroFechList(){
         LogErroBean logErroBean = new LogErroBean();
-        logErroBean.deleteAll();
+        return logErroBean.get("status", 2L);
     }
 
     public String dadosEnvio(){
 
         JsonArray jsonArrayLogErro = new JsonArray();
 
-        List<LogErroBean> logErroList = logErroList();
+        List<LogErroBean> logErroList = logErroAbertList();
         for (int i = 0; i < logErroList.size(); i++) {
 
-            LogErroBean logErroBean = (LogErroBean) logErroList.get(i);
+            LogErroBean logErroBean = logErroList.get(i);
             Gson gson = new Gson();
             jsonArrayLogErro.add(gson.toJsonTree(logErroBean, logErroBean.getClass()));
 
@@ -94,7 +109,7 @@ public class LogErroDAO {
 
     }
 
-    public void deleteBolFechado(String retorno){
+    public void updLogErro(String retorno){
 
         try{
 
@@ -111,7 +126,7 @@ public class LogErroDAO {
                 LogErroBean logErroBean = gsonBol.fromJson(objLogErro.toString(), LogErroBean.class);
 
                 List<LogErroBean> logErroList = logErroBean.get("idLog", logErroBean.getIdLog());
-                LogErroBean logErroBD = (LogErroBean) logErroList.get(0);
+                LogErroBean logErroBD = logErroList.get(0);
                 logErroBD.setStatus(2L);
                 logErroBD.update();
 
@@ -119,12 +134,22 @@ public class LogErroDAO {
 
             }
 
+            delLogErroFechado();
+
         }
         catch(Exception e){
             LogErroDAO.getInstance().insert(e);
             Tempo.getInstance().setEnvioDado(true);
         }
 
+    }
+
+    public void delLogErroFechado(){
+        List<LogErroBean> logErroList = logErroFechList();
+        for(LogErroBean logErroBean : logErroList){
+            logErroBean.delete();
+        }
+        logErroList.clear();
     }
 
 }

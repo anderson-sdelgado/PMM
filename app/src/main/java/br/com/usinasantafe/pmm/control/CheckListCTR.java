@@ -12,7 +12,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.model.dao.CabecCheckListDAO;
 import br.com.usinasantafe.pmm.model.dao.ItemCheckListDAO;
-import br.com.usinasantafe.pmm.model.dao.RespItemCLDAO;
+import br.com.usinasantafe.pmm.model.dao.RespItemCheckListDAO;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ItemCheckListBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CabecCheckListBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCheckListBean;
@@ -31,8 +31,8 @@ public class CheckListCTR {
     public void clearRespCabecAberto(){
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
         CabecCheckListBean cabecCheckListBean = cabecCheckListDAO.getCabecAberto();
-        RespItemCLDAO respItemCLDAO = new RespItemCLDAO();
-        respItemCLDAO.clearRespItem(cabecCheckListBean.getIdCabCL());
+        RespItemCheckListDAO respItemCheckListDAO = new RespItemCheckListDAO();
+        respItemCheckListDAO.clearRespItem(cabecCheckListBean.getIdCabCL());
     }
 
     public void createCabecAberto(BoletimCTR boletimCTR){
@@ -73,9 +73,9 @@ public class CheckListCTR {
     }
 
     public void setRespCheckList(RespItemCheckListBean respItemCheckListBean){
-        RespItemCLDAO respItemCLDAO = new RespItemCLDAO();
+        RespItemCheckListDAO respItemCheckListDAO = new RespItemCheckListDAO();
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
-        respItemCLDAO.setRespCheckList(cabecCheckListDAO.getCabecAberto().getIdCabCL(), respItemCheckListBean);
+        respItemCheckListDAO.setRespCheckList(cabecCheckListDAO.getCabecAberto().getIdCabCL(), respItemCheckListBean);
     }
 
     public int qtdeItemCheckList(){
@@ -106,8 +106,8 @@ public class CheckListCTR {
             Gson gsonCabec = new Gson();
             jsonArrayCabec.add(gsonCabec.toJsonTree(cabecCheckListBean, cabecCheckListBean.getClass()));
 
-            RespItemCLDAO respItemCLDAO = new RespItemCLDAO();
-            List respItemList = respItemCLDAO.respItemList(cabecCheckListBean.getIdCabCL());
+            RespItemCheckListDAO respItemCheckListDAO = new RespItemCheckListDAO();
+            List respItemList = respItemCheckListDAO.respItemList(cabecCheckListBean.getIdCabCL());
 
             for (int j = 0; j < respItemList.size(); j++) {
                 RespItemCheckListBean respItemCheckListBean = (RespItemCheckListBean) respItemList.get(j);

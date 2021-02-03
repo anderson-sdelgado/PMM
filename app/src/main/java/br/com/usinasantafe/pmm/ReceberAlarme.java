@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.LogErroBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontImpleMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.MovLeiraBean;
@@ -179,6 +180,8 @@ public class ReceberAlarme extends BroadcastReceiver {
 			Log.i("PMM", "osConfig = " + configBean.getOsConfig());
 			Log.i("PMM", "horimetroConfig = " + configBean.getHorimetroConfig());
 			Log.i("PMM", "dtServConfig = " + configBean.getDtServConfig());
+			Log.i("PMM", "flagLogErro = " + configBean.getFlagLogErro());
+			Log.i("PMM", "flagLogEnvio = " + configBean.getFlagLogEnvio());
 
 		}
 
@@ -227,21 +230,22 @@ public class ReceberAlarme extends BroadcastReceiver {
 
 		}
 
+		LogErroBean logErroBean = new LogErroBean();
+		List logErroList = logErroBean.all();
+
+		for (int j = 0; j < logErroList.size(); j++) {
+
+			logErroBean = (LogErroBean) logErroList.get(j);
+
+			Log.i("PMM", "LogErro");
+			Log.i("PMM", "IdLog = " + logErroBean.getIdLog());
+			Log.i("PMM", "IdEquip = " + logErroBean.getIdEquip());
+			Log.i("PMM", "Dthr = " + logErroBean.getDthr());
+			Log.i("PMM", "Exception = " + logErroBean.getException());
+			Log.i("PMM", "Status = " + logErroBean.getStatus());
+
+		}
 		Log.i("PMM", "versão = " + PMMContext.versaoAplic);
-//
-//		RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
-//		List<RFuncaoAtivParBean> rFuncaoAtivParBeans = rFuncaoAtivParBean.all();
-//
-//		for(RFuncaoAtivParBean funcaoAtivParBean : rFuncaoAtivParBeans){
-//
-//			Log.i("PMM", "RFuncaoAtivParBean");
-//			Log.i("PMM", "IdRFuncaoAtivPar = " + funcaoAtivParBean.getIdRFuncaoAtivPar());
-//			Log.i("PMM", "IdAtivPar = " + funcaoAtivParBean.getIdAtivPar());
-//			Log.i("PMM", "CodFuncao = " + funcaoAtivParBean.getCodFuncao());
-//			Log.i("PMM", "TipoFuncao = " + funcaoAtivParBean.getTipoFuncao());
-//
-//
-//		}
 
 	}
 }

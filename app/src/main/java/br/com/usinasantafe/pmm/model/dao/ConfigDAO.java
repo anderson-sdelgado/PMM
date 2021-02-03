@@ -134,11 +134,6 @@ public class ConfigDAO {
                 configBean.setAtualCheckList(atualAplicBean.getFlagAtualCheckList());
                 configBean.update();
 
-                if(configBean.getFlagLogErro().equals(0L)){
-                    LogErroDAO logErroDAO = new LogErroDAO();
-                    logErroDAO.delLogErroAll();
-                }
-
             }
 
         } catch (Exception e) {

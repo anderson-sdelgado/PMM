@@ -1,5 +1,7 @@
 package br.com.usinasantafe.pmm.model.dao;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -128,10 +130,12 @@ public class BoletimMMDAO implements BoletimInterface {
     }
 
     public void salvarBolAberto(BoletimMMBean boletimMMBean){
-        boletimMMBean.setStatusBolMM(1L);
-        boletimMMBean.setDthrInicialBolMM(Tempo.getInstance().dataComHora());
-        boletimMMBean.setQtdeApontBolMM(0L);
-        boletimMMBean.insert();
+        if(!verBolAberto()){
+            boletimMMBean.setStatusBolMM(1L);
+            boletimMMBean.setDthrInicialBolMM(Tempo.getInstance().dataComHora());
+            boletimMMBean.setQtdeApontBolMM(0L);
+            boletimMMBean.insert();
+        }
     }
 
     public void salvarBolFechado(BoletimMMBean boletimMMBean) {
@@ -332,6 +336,7 @@ public class BoletimMMDAO implements BoletimInterface {
 
         }
         catch(Exception e){
+            Log.i("PMM", "ERRO = " + e);
             LogErroDAO.getInstance().insert(e);
             Tempo.getInstance().setEnvioDado(true);
         }
@@ -354,45 +359,49 @@ public class BoletimMMDAO implements BoletimInterface {
                 Gson gsonBol = new Gson();
                 BoletimMMBean boletimMMBean = gsonBol.fromJson(objBol.toString(), BoletimMMBean.class);
 
-                List bolMMList = boletimMMBean.get("idBolMM", boletimMMBean.getIdBolMM());
-                BoletimMMBean boletimMMTOBD = (BoletimMMBean) bolMMList.get(0);
-                bolMMList.clear();
+                if(boletimFechadoList().size() > 0){
 
-                ApontMMBean apontMMBean = new ApontMMBean();
-                List apontaList = apontMMBean.get("idBolApontMM", boletimMMBean.getIdBolMM());
+                    List<BoletimMMBean> bolMMList = boletimMMBean.get("idBolMM", boletimMMBean.getIdBolMM());
+                    BoletimMMBean boletimMMTOBD = bolMMList.get(0);
+                    bolMMList.clear();
 
-                Long qtde = Long.valueOf(apontaList.size());
+                    ApontMMBean apontMMBean = new ApontMMBean();
+                    List apontaList = apontMMBean.get("idBolApontMM", boletimMMBean.getIdBolMM());
 
-                if(qtde == boletimMMBean.getQtdeApontBolMM()){
+                    Long qtde = Long.valueOf(apontaList.size());
 
-                    for (int j = 0; j < apontaList.size(); j++) {
+                    if (qtde == boletimMMBean.getQtdeApontBolMM()) {
 
-                        apontMMBean = (ApontMMBean) apontaList.get(j);
-                        apontMMBean.delete();
+                        for (int j = 0; j < apontaList.size(); j++) {
 
-                        ApontImpleMMBean apontImpleMMBean = new ApontImpleMMBean();
-                        List apontImpleList = apontImpleMMBean.get("idApontMM", apontMMBean.getIdApontMM());
+                            apontMMBean = (ApontMMBean) apontaList.get(j);
+                            apontMMBean.delete();
 
-                        for (int l = 0; l < apontImpleList.size(); l++) {
-                            apontImpleMMBean = (ApontImpleMMBean) apontImpleList.get(l);
-                            apontImpleMMBean.delete();
+                            ApontImpleMMBean apontImpleMMBean = new ApontImpleMMBean();
+                            List apontImpleList = apontImpleMMBean.get("idApontMM", apontMMBean.getIdApontMM());
+
+                            for (int l = 0; l < apontImpleList.size(); l++) {
+                                apontImpleMMBean = (ApontImpleMMBean) apontImpleList.get(l);
+                                apontImpleMMBean.delete();
+                            }
+
+                            apontImpleList.clear();
+
                         }
 
-                        apontImpleList.clear();
+                        apontaList.clear();
+
+                        RendMMBean rendMMBean = new RendMMBean();
+                        List rendList = rendMMBean.get("idBolRendMM", boletimMMBean.getIdBolMM());
+
+                        for (int j = 0; j < rendList.size(); j++) {
+                            rendMMBean = (RendMMBean) rendList.get(j);
+                            rendMMBean.delete();
+                        }
+
+                        boletimMMTOBD.delete();
 
                     }
-
-                    apontaList.clear();
-
-                    RendMMBean rendMMBean = new RendMMBean();
-                    List rendList = rendMMBean.get("idBolRendMM", boletimMMBean.getIdBolMM());
-
-                    for (int j = 0; j < rendList.size(); j++) {
-                        rendMMBean = (RendMMBean) rendList.get(j);
-                        rendMMBean.delete();
-                    }
-
-                    boletimMMTOBD.delete();
 
                 }
 
