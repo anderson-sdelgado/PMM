@@ -13,7 +13,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
-import br.com.usinasantafe.pmm.model.bean.LogErroBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
 import br.com.usinasantafe.pmm.util.Tempo;
 
 public class LogErroDAO {

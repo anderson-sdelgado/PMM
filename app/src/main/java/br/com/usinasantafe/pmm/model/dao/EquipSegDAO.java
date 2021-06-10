@@ -16,24 +16,26 @@ public class EquipSegDAO {
         return verEquipSeg(nroEquip, 3L);
     }
 
-    public void setImplemento(ImpleMMBean impleMMBean){
-        List impleList = impleMMBean.get("posImpleMM", impleMMBean.getPosImpleMM());
-        if(impleList.size() > 0) {
-            Long imp = impleMMBean.getCodEquipImpleMM();
-            impleMMBean = (ImpleMMBean) impleList.get(0);
-            impleMMBean.setCodEquipImpleMM(imp);
+    public void setImplemento(Long pos, Long impl){
+        ImpleMMBean impleMMBean = new ImpleMMBean();
+        List<ImpleMMBean> implList = impleMMBean.get("posImpleMM", pos);
+        if(implList.size() > 0) {
+            impleMMBean = implList.get(0);
+            impleMMBean.setCodEquipImpleMM(impl);
             impleMMBean.update();
         }
         else{
+            impleMMBean.setCodEquipImpleMM(impl);
+            impleMMBean.setPosImpleMM(pos);
             impleMMBean.insert();
         }
-        impleList.clear();
+        implList.clear();
     }
 
     public boolean verDuplicImple(Long nroEquip){
         ImpleMMBean impleMMBean = new ImpleMMBean();
-        List impleMMList = impleMMBean.get("codEquipImpleMM", nroEquip);
-        return (impleMMList.size() == 0);
+        List<ImpleMMBean> implMMList = impleMMBean.get("codEquipImpleMM", nroEquip);
+        return (implMMList.size() == 0);
     }
 
     public boolean verMotoBomba(Long nroEquip){

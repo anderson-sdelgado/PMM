@@ -20,7 +20,15 @@ public class OSBean extends Entidade {
 	private static final long serialVersionUID = 1L;
 	
 	@DatabaseField(id=true)
+	private Long idOS;
+	@DatabaseField
     private Long nroOS;
+	@DatabaseField
+	private Long idLibOS;
+	@DatabaseField
+	private Long idProprAgr;
+	@DatabaseField
+	private String descrProprAgr;
 	@DatabaseField
 	private Double areaProgrOS;
 	@DatabaseField
@@ -29,9 +37,21 @@ public class OSBean extends Entidade {
 	private String dtFimProgr;
 	@DatabaseField
 	private Long tipoOS;
+	@DatabaseField
+	private Long idAtiv;
+	@DatabaseField
+	private Long idAtivOS;
 
     public OSBean() {
     }
+
+	public Long getIdOS() {
+		return idOS;
+	}
+
+	public void setIdOS(Long idOS) {
+		this.idOS = idOS;
+	}
 
 	public Long getNroOS() {
 		return nroOS;
@@ -39,6 +59,30 @@ public class OSBean extends Entidade {
 
 	public void setNroOS(Long nroOS) {
 		this.nroOS = nroOS;
+	}
+
+	public Long getIdLibOS() {
+		return idLibOS;
+	}
+
+	public void setIdLibOS(Long idLibOS) {
+		this.idLibOS = idLibOS;
+	}
+
+	public Long getIdProprAgr() {
+		return idProprAgr;
+	}
+
+	public void setIdProprAgr(Long idProprAgr) {
+		this.idProprAgr = idProprAgr;
+	}
+
+	public String getDescrProprAgr() {
+		return descrProprAgr;
+	}
+
+	public void setDescrProprAgr(String descrProprAgr) {
+		this.descrProprAgr = descrProprAgr;
 	}
 
 	public Double getAreaProgrOS() {
@@ -71,5 +115,21 @@ public class OSBean extends Entidade {
 
 	public void setTipoOS(Long tipoOS) {
 		this.tipoOS = tipoOS;
+	}
+
+	public Long getIdAtiv() {
+		return idAtiv;
+	}
+
+	public void setIdAtiv(Long idAtiv) {
+		this.idAtiv = idAtiv;
+	}
+
+	public Long getIdAtivOS() {
+		return idAtivOS;
+	}
+
+	public void setIdAtivOS(Long idAtivOS) {
+		this.idAtivOS = idAtivOS;
 	}
 }

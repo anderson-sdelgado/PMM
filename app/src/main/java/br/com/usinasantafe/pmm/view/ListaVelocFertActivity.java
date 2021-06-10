@@ -19,6 +19,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.PressaoBocalBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.util.Tempo;
@@ -27,7 +28,6 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private ListView velocListView;
-    private List velocList;
     private ProgressDialog progressBar;
 
     @Override
@@ -63,7 +63,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getBoletimCTR().atualDadosPressao(ListaVelocFertActivity.this, ListaVelocFertActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDadosPressao(ListaVelocFertActivity.this, ListaVelocFertActivity.class, progressBar);
 
                         } else {
 
@@ -98,37 +98,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
         });
 
-
-        PressaoBocalBean pressaoBocalBean = new PressaoBocalBean();
-
-        ArrayList pesqList = new ArrayList();
-        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-        pesquisa.setCampo("idBocal");
-        pesquisa.setValor(pmmContext.getApontCTR().getBocalApontFert());
-        pesquisa.setTipo(1);
-        pesqList.add(pesquisa);
-
-        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-        pesquisa2.setCampo("valorPressao");
-        pesquisa2.setValor(pmmContext.getApontCTR().getPressaoApontFert());
-        pesquisa2.setTipo(1);
-        pesqList.add(pesquisa2);
-
-        velocList = pressaoBocalBean.getAndOrderBy(pesqList, "valorVeloc", true);
-
-        ArrayList<String> itens = new ArrayList<String>();
-
-        for(int i = 0; i < velocList.size(); i++){
-            pressaoBocalBean = (PressaoBocalBean) velocList.get(i);
-            itens.add("" + pressaoBocalBean.getValorVeloc());
-        }
-
-        HashSet<String> hashSet = new HashSet<String>(itens);
-        itens.clear();
-        itens.addAll(hashSet);
-        Collections.sort(itens);
-
-        AdapterList adapterList = new AdapterList(this, itens);
+        AdapterList adapterList = new AdapterList(this, pmmContext.getMotoMecFertCTR().velocArrayList());
         velocListView = (ListView) findViewById(R.id.listVelocidade);
         velocListView.setAdapter(adapterList);
 
@@ -139,8 +109,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                                     long id) {
 
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
-                pmmContext.getApontCTR().setVelocApont(Long.parseLong(textView.getText().toString()));
-                velocList.clear();
+                pmmContext.getConfigCTR().setVelocConfig(Long.parseLong(textView.getText().toString()));
 
                 if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
 
@@ -150,7 +119,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                     alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincNormalActivity.class);
+                            Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincPMMActivity.class);
                             startActivity(it);
                             finish();
                         }
@@ -159,7 +128,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
                 } else {
 
-                    if (pmmContext.getApontCTR().verifBackupApont(0L)) {
+                    if (pmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {
 
                         AlertDialog.Builder alerta = new AlertDialog.Builder(ListaVelocFertActivity.this);
                         alerta.setTitle("ATENÇÃO");
@@ -173,10 +142,24 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                         alerta.show();
 
                     } else {
+                        List<RFuncaoAtivParBean> rFuncaoAtivParList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList();
 
-                        pmmContext.getApontCTR().salvarApont(1L, 0L, 0L, getLongitude(), getLatitude());
+                        boolean recolhimento = false;
 
-                        Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincNormalActivity.class);
+                        for (int i = 0; i < rFuncaoAtivParList.size(); i++) {
+                            RFuncaoAtivParBean rFuncaoAtivParBean = rFuncaoAtivParList.get(i);
+                            if (rFuncaoAtivParBean.getCodFuncao() == 4) {
+                                recolhimento = true;
+                            }
+                        }
+                        rFuncaoAtivParList.clear();
+
+                        pmmContext.getMotoMecFertCTR().salvarApont( 0L, 0L, getLongitude(), getLatitude());
+                        if (recolhimento) {
+                            pmmContext.getMotoMecFertCTR().insRecolh();
+                        }
+
+                        Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincPMMActivity.class);
                         startActivity(it);
                         finish();
 

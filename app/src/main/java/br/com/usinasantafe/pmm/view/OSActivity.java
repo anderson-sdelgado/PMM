@@ -1,8 +1,6 @@
 package br.com.usinasantafe.pmm.view;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,7 +11,6 @@ import android.widget.EditText;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class OSActivity extends ActivityGeneric {
@@ -21,7 +18,6 @@ public class OSActivity extends ActivityGeneric {
     private PMMContext pmmContext;
     private ProgressDialog progressBar;
     private Handler customHandler = new Handler();
-    private ConfigCTR configCTR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +29,12 @@ public class OSActivity extends ActivityGeneric {
 
         Button buttonOkOS = (Button) findViewById(R.id.buttonOkPadrao);
         Button buttonCancOS = (Button) findViewById(R.id.buttonCancPadrao);
-
-        configCTR = new ConfigCTR();
+        EditText editText = (EditText) findViewById(R.id.editTextPadrao);
 
         if (pmmContext.getVerPosTela() == 1) {
-            EditText editText = (EditText) findViewById(R.id.editTextPadrao);
             editText.setText("");
         } else {
-            EditText editText = (EditText) findViewById(R.id.editTextPadrao);
-            editText.setText(String.valueOf(configCTR.getConfig().getOsConfig()));
+            editText.setText(String.valueOf(pmmContext.getConfigCTR().getConfig().getOsConfig()));
         }
 
         buttonOkOS.setOnClickListener(new View.OnClickListener() {
@@ -51,17 +44,17 @@ public class OSActivity extends ActivityGeneric {
                 if (!editTextPadrao.getText().toString().equals("")) {
 
                     Long nroOS = Long.parseLong(editTextPadrao.getText().toString());
-                    configCTR.setOsConfig(nroOS);
+                    pmmContext.getConfigCTR().setOsConfig(nroOS);
 
                     ConexaoWeb conexaoWeb = new ConexaoWeb();
 
                     if (pmmContext.getConfigCTR().verOS(nroOS)) {
 
                         if (conexaoWeb.verificaConexao(OSActivity.this)) {
-                            configCTR.setStatusConConfig(1L);
+                            pmmContext.getConfigCTR().setStatusConConfig(1L);
                         }
                         else{
-                            configCTR.setStatusConConfig(0L);
+                            pmmContext.getConfigCTR().setStatusConConfig(0L);
                         }
 
                         VerifDadosServ.getInstance().setVerTerm(true);
@@ -81,12 +74,12 @@ public class OSActivity extends ActivityGeneric {
 
                             customHandler.postDelayed(updateTimerThread, 10000);
 
-                            pmmContext.getBoletimCTR().verOS(editTextPadrao.getText().toString()
+                            pmmContext.getMotoMecFertCTR().verOS(editTextPadrao.getText().toString()
                                     , OSActivity.this, ListaAtividadeActivity.class, progressBar);
 
                         } else {
 
-                            configCTR.setStatusConConfig(0L);
+                            pmmContext.getConfigCTR().setStatusConConfig(0L);
 
                             Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                             startActivity(it);
@@ -117,7 +110,7 @@ public class OSActivity extends ActivityGeneric {
             startActivity(it);
             finish();
         } else {
-            Intent it = new Intent(OSActivity.this, MenuPrincNormalActivity.class);
+            Intent it = new Intent(OSActivity.this, MenuPrincPMMActivity.class);
             startActivity(it);
             finish();
         }
@@ -135,7 +128,7 @@ public class OSActivity extends ActivityGeneric {
                     progressBar.dismiss();
                 }
 
-                configCTR.setStatusConConfig(0L);
+                pmmContext.getConfigCTR().setStatusConConfig(0L);
                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                 startActivity(it);
                 finish();

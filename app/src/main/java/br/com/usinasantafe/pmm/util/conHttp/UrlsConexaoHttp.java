@@ -4,8 +4,8 @@ import br.com.usinasantafe.pmm.PMMContext;
 
 public class UrlsConexaoHttp {
 
-    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmm/view/";
-    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmm/view/";
+    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmmdev/view/";
+    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmmdev/view/";
 
     public static String localPSTEstatica = "br.com.usinasantafe.pmm.model.bean.estaticas.";
     public static String localUrl = "br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp";
@@ -31,28 +31,12 @@ public class UrlsConexaoHttp {
         return urlPrincEnvio + "inserirchecklist.php" + put;
     }
 
-    public String getsInsertApontaMM() {
-        return urlPrincEnvio + "inserirapontmm.php" + put;
-    }
-
     public String getsInsertBolAbertoMM() {
-        return urlPrincEnvio + "inserirbolabertomm.php" + put;
+        return urlPrincEnvio + "inserirbolabertommfert.php" + put;
     }
 
     public String getsInsertBolFechadoMM() {
-        return urlPrincEnvio + "inserirbolfechadomm.php" + put;
-    }
-
-    public String getsInsertApontaFert() {
-        return urlPrincEnvio + "inserirapontfert.php" + put;
-    }
-
-    public String getsInsertBolAbertoFert() {
-        return urlPrincEnvio + "inserirbolabertofert.php" + put;
-    }
-
-    public String getsInsertBolFechadoFert() {
-        return urlPrincEnvio + "inserirbolfechadofert.php" + put;
+        return urlPrincEnvio + "inserirbolfechadommfert.php" + put;
     }
 
     public String getsInsertLogErro() {

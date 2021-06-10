@@ -61,7 +61,7 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getBoletimCTR().atualDadosPressao(ListaPressaoFertActivity.this, ListaPressaoFertActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDadosPressao(ListaPressaoFertActivity.this, ListaPressaoFertActivity.class, progressBar);
 
                         } else {
 
@@ -96,13 +96,12 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
 
         });
 
-        PressaoBocalBean pressaoBocalBean = new PressaoBocalBean();
-        pressaoBocalList = pressaoBocalBean.getAndOrderBy("idBocal", pmmContext.getApontCTR().getBocalApontFert(), "valorPressao", true);
+        pressaoBocalList = pmmContext.getMotoMecFertCTR().pressaoBocalList();
 
         ArrayList<String> itens = new ArrayList<String>();
 
         for(int i = 0; i < pressaoBocalList.size(); i++){
-            pressaoBocalBean = (PressaoBocalBean) pressaoBocalList.get(i);
+            PressaoBocalBean pressaoBocalBean = (PressaoBocalBean) pressaoBocalList.get(i);
             itens.add("" + pressaoBocalBean.getValorPressao());
         }
 
@@ -122,7 +121,7 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
                                     long id) {
 
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
-                pmmContext.getApontCTR().setPressaoBocal(Double.parseDouble(textView.getText().toString()));
+                pmmContext.getConfigCTR().setPressaoConfig(Double.parseDouble(textView.getText().toString()));
                 pressaoBocalList.clear();
 
                 Intent it = new Intent(ListaPressaoFertActivity.this, ListaVelocFertActivity.class);

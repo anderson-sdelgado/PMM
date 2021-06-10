@@ -9,16 +9,21 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfColheitaBean;
 
 public class DadosColheitaActivity extends ActivityGeneric {
 
+    private PMMContext pmmContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dados_colheita);
+
+        pmmContext = (PMMContext) getApplication();
 
         TextView textViewTituloPerda = (TextView) findViewById(R.id.textViewTituloPerda);
         TextView textViewToleteDadoPerda = (TextView) findViewById(R.id.textViewToleteDadoPerda);
@@ -33,10 +38,7 @@ public class DadosColheitaActivity extends ActivityGeneric {
         TextView textViewTotalDadoPerda = (TextView) findViewById(R.id.textViewTotalDadoPerda);
         Button buttonSair = (Button) findViewById(R.id.buttonSair);
 
-        InfColheitaBean infColheitaBean = new InfColheitaBean();
-        List infoColheitaList = infColheitaBean.all();
-        infColheitaBean = (InfColheitaBean) infoColheitaList.get(0);
-        infoColheitaList.clear();
+        InfColheitaBean infColheitaBean = pmmContext.getInformativoCTR().getInfColheita();
 
         textViewTituloPerda.setText("DADOS DE PERDAS\n" + infColheitaBean.getDthrPerda());
         textViewTituloPerda.setTextColor(Color.GREEN);
@@ -51,13 +53,12 @@ public class DadosColheitaActivity extends ActivityGeneric {
         textViewNroSoqueiraDadoPerda.setText(String.valueOf(infColheitaBean.getNroSoqueiraPerda()).replace(".", ","));
         textViewTotalDadoPerda.setText(String.valueOf(infColheitaBean.getTotalPerda()).replace(".", ","));
 
-        ConfigCTR configCTR = new ConfigCTR();
-        configCTR.atualVerInforConfig(3L);
+        pmmContext.getConfigCTR().atualVerInforConfig(3L);
 
         buttonSair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(DadosColheitaActivity.this, MenuPrincNormalActivity.class);
+                Intent it = new Intent(DadosColheitaActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();
             }

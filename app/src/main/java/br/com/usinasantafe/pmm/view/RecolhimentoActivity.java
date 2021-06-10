@@ -9,14 +9,14 @@ import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.control.BoletimCTR;
+import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 
 public class RecolhimentoActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private RecolhFertBean recolhFertBean;
-    private BoletimCTR boletimCTR;
+    private MotoMecFertCTR motoMecFertCTR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class RecolhimentoActivity extends ActivityGeneric {
         TextView textViewRecolMang = (TextView) findViewById(R.id.textViewPadrao);
         EditText editText = (EditText) findViewById(R.id.editTextPadrao);
 
-        boletimCTR = new BoletimCTR();
+        motoMecFertCTR = new MotoMecFertCTR();
 
         int cont = 0;
 
@@ -40,7 +40,7 @@ public class RecolhimentoActivity extends ActivityGeneric {
             cont = pmmContext.getPosRecolh();
         }
 
-        recolhFertBean =  boletimCTR.getRecolh(cont);
+        recolhFertBean =  motoMecFertCTR.getRecolh(cont);
 
         textViewRecolMang.setText("OS: " + recolhFertBean.getNroOSRecolhFert() + " \nRECOL. MANGUEIRA:");
         if (recolhFertBean.getValorRecolhFert() > 0) {
@@ -58,7 +58,7 @@ public class RecolhimentoActivity extends ActivityGeneric {
                 }
                 else{
                     if(pmmContext.getVerPosTela() == 14){
-                        Intent it = new Intent(RecolhimentoActivity.this, MenuPrincNormalActivity.class);
+                        Intent it = new Intent(RecolhimentoActivity.this, MenuPrincPMMActivity.class);
                         startActivity(it);
                         finish();
                     }
@@ -105,11 +105,11 @@ public class RecolhimentoActivity extends ActivityGeneric {
 
         Long valorRecolMang = Long.parseLong(editTextPadrao.getText().toString());
         recolhFertBean.setValorRecolhFert(valorRecolMang);
-        pmmContext.getBoletimCTR().atualRecolh(recolhFertBean);
+        pmmContext.getMotoMecFertCTR().atualRecolh(recolhFertBean);
 
         if (pmmContext.getVerPosTela() == 4) {
-            if (pmmContext.getBoletimCTR().qtdeRecolh() == pmmContext.getContRecolh()) {
-                pmmContext.getBoletimCTR().salvarBolFechadoFert();
+            if (pmmContext.getMotoMecFertCTR().qtdeRecolh() == pmmContext.getContRecolh()) {
+                pmmContext.getMotoMecFertCTR().salvarBolMMFertFechado();
                 Intent it = new Intent(RecolhimentoActivity.this, MenuInicialActivity.class);
                 startActivity(it);
                 finish();

@@ -11,4 +11,5 @@
     <dimen name="fonte_num_ok_canc">18dp</dimen>
     <dimen name="fonte_valor_tab">20dp</dimen>
     <dimen name="fonte_titulo_tab">25dp</dimen>
+    <dimen name="item_lista">22dp</dimen>
 </resources>

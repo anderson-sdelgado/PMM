@@ -84,7 +84,7 @@ public class ItemCheckListActivity extends ActivityGeneric {
         pmmContext.getCheckListCTR().setRespCheckList(respItemCheckListBean);
 
         if(pmmContext.getCheckListCTR().qtdeItemCheckList() == pmmContext.getPosCheckList()){
-            pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getBoletimCTR().getTurno());
+            pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().getIdTurnoBolMMFert());
             pmmContext.getCheckListCTR().salvarBolFechado();
             Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);
             startActivity(it);

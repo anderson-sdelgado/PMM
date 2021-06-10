@@ -11,7 +11,7 @@ public class RFuncaoAtivParDAO {
     public RFuncaoAtivParDAO() {
     }
 
-    public List getListFuncaoAtividade(Long idAtiv){
+    public List<RFuncaoAtivParBean> getListFuncaoAtividade(Long idAtiv){
 
         RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
         ArrayList pesqList = new ArrayList();

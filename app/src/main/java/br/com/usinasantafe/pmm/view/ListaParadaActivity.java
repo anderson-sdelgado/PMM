@@ -43,7 +43,7 @@ public class ListaParadaActivity extends ActivityGeneric {
         Button buttonRetMenuParada = (Button) findViewById(R.id.buttonRetMenuParada);
         EditText editPesqListParada = (EditText) findViewById(R.id.editPesqListParada);
 
-        paradaList = pmmContext.getApontCTR().getListParada();
+        paradaList = pmmContext.getMotoMecFertCTR().getListParada();
 
         String itens[] = new String[paradaList.size()];
 
@@ -60,7 +60,6 @@ public class ListaParadaActivity extends ActivityGeneric {
 
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                // When user changed the Text
                 ListaParadaActivity.this.adapter.getFilter().filter(cs);
             }
 
@@ -93,7 +92,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                     progressBar.setMax(100);
                     progressBar.show();
 
-                    pmmContext.getBoletimCTR().atualDadosParada(ListaParadaActivity.this, ListaParadaActivity.class, progressBar);
+                    pmmContext.getMotoMecFertCTR().atualDadosParada(ListaParadaActivity.this, ListaParadaActivity.class, progressBar);
 
                 } else {
 
@@ -154,7 +153,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
+                                    Intent it = new Intent(ListaParadaActivity.this, MenuPrincPMMActivity.class);
                                     startActivity(it);
                                     finish();
                                 }
@@ -163,7 +162,7 @@ public class ListaParadaActivity extends ActivityGeneric {
 
                         } else {
 
-                            if (pmmContext.getApontCTR().verifBackupApont(pmmContext.getApontCTR().getParadaBean(paradaString).getIdParada())) {
+                            if (pmmContext.getMotoMecFertCTR().verifBackupApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada())) {
                                 AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
                                 alerta.setTitle("ATENÇÃO");
                                 alerta.setMessage("PARADA JÁ APONTADA PARA O EQUIPAMENTO!");
@@ -175,8 +174,9 @@ public class ListaParadaActivity extends ActivityGeneric {
                                 alerta.show();
                             } else {
 
-                                pmmContext.getApontCTR().salvarApont(1L, pmmContext.getApontCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude());
-                                Intent it = new Intent(ListaParadaActivity.this, MenuPrincNormalActivity.class);
+                                pmmContext.getConfigCTR().clearDadosFert();
+                                pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude());
+                                Intent it = new Intent(ListaParadaActivity.this, MenuPrincPMMActivity.class);
                                 startActivity(it);
                                 finish();
 

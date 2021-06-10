@@ -7,26 +7,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.usinasantafe.pmm.model.dao.ConfigDAO;
+import br.com.usinasantafe.pmm.control.InformativoCTR;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.view.MenuInicialActivity;
 import br.com.usinasantafe.pmm.util.conHttp.PostVerGenerico;
-import br.com.usinasantafe.pmm.control.BoletimCTR;
+import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
-import br.com.usinasantafe.pmm.model.dao.EquipDAO;
-import br.com.usinasantafe.pmm.model.dao.InformativoDAO;
-import br.com.usinasantafe.pmm.model.dao.ItemPneuDAO;
-import br.com.usinasantafe.pmm.model.dao.OSDAO;
-import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
 import br.com.usinasantafe.pmm.model.bean.AtualAplicBean;
 import br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp;
 
@@ -51,7 +41,6 @@ public class VerifDadosServ {
     private ConfigCTR configCTR;
 
     public VerifDadosServ() {
-        //genericRecordable = new GenericRecordable();
     }
 
     public static VerifDadosServ getInstance() {
@@ -63,18 +52,17 @@ public class VerifDadosServ {
     public void manipularDadosHttp(String result) {
         try {
             if (!result.equals("")) {
+                ConfigCTR configCTR = new ConfigCTR();
+                CheckListCTR checkListCTR = new CheckListCTR();
+                InformativoCTR informativoCTR = new InformativoCTR();
                 if (this.tipo.equals("Equip")) {
-                    EquipDAO equipDAO = new EquipDAO();
-                    equipDAO.recDadosEquip(result);
+                    configCTR.recDadosEquip(result);
                 } else if (this.tipo.equals("OS")) {
-                    OSDAO osDAO = new OSDAO();
-                    osDAO.recDadosOS(result);
+                    configCTR.recDadosOS(result);
                 } else if (this.tipo.equals("Atividade")) {
-                    AtividadeDAO atividadeDAO = new AtividadeDAO();
-                    atividadeDAO.recDadosAtiv(result);
+                    configCTR.recDadosAtiv(result);
                 } else if (this.tipo.equals("Atualiza")) {
-                    ConfigDAO configDAO = new ConfigDAO();
-                    AtualAplicBean atualAplicBean = configDAO.recAtual(result.trim());
+                    AtualAplicBean atualAplicBean = configCTR.recAtual(result.trim());
                     if (atualAplicBean.getFlagAtualApp().equals(1L)) {
                         AtualizarAplicativo atualizarAplicativo = new AtualizarAplicativo();
                         atualizarAplicativo.setContext(this.menuInicialActivity);
@@ -83,14 +71,9 @@ public class VerifDadosServ {
                         this.menuInicialActivity.startTimer();
                     }
                 } else if (this.tipo.equals("CheckList")) {
-                    CheckListCTR checkListCTR = new CheckListCTR();
                     checkListCTR.recDadosCheckList(result);
                 } else if (this.tipo.equals("Informativo")) {
-                    InformativoDAO informativoDAO = new InformativoDAO();
-                    informativoDAO.recInfor(result);
-                } else if (this.tipo.equals("Pneu")) {
-                    ItemPneuDAO itemPneuDAO = new ItemPneuDAO();
-                    itemPneuDAO.recDadosPneu(result);
+                    informativoCTR.recInfor(result);
                 }
             }
         } catch (Exception e) {
@@ -112,28 +95,14 @@ public class VerifDadosServ {
         this.tipo = "Atualiza";
         this.menuInicialActivity = menuInicialActivity;
 
-        AtualAplicBean atualAplicBean = new AtualAplicBean();
-        atualAplicBean.setVersaoAtual(versaoAplic);
+        ConfigCTR configCTR = new ConfigCTR();
+        String dados = configCTR.dadosVerAtualAplicBean(versaoAplic);
 
-        EquipDAO equipDAO = new EquipDAO();
-        EquipBean equipBean = equipDAO.getEquip();
-
-        atualAplicBean.setIdEquipAtual(equipBean.getNroEquip());
-        atualAplicBean.setIdCheckList(equipBean.getIdCheckList());
-
-        JsonArray jsonArray = new JsonArray();
-
-        Gson gson = new Gson();
-        jsonArray.add(gson.toJsonTree(atualAplicBean, atualAplicBean.getClass()));
-
-        JsonObject json = new JsonObject();
-        json.add("dados", jsonArray);
-
-        Log.i("PMM", "LISTA = " + json.toString());
+        Log.i("PMM", "LISTA = " + dados);
 
         String[] url = {urlsConexaoHttp.urlVerifica(tipo)};
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
-        parametrosPost.put("dado", json.toString());
+        parametrosPost.put("dado", dados);
 
         postVerGenerico = new PostVerGenerico();
         postVerGenerico.setParametrosPost(parametrosPost);
@@ -171,14 +140,10 @@ public class VerifDadosServ {
         verTerm = true;
         urlsConexaoHttp = new UrlsConexaoHttp();
         this.tipo = "Informativo";
-        ConfigCTR configCTR = new ConfigCTR();
-        BoletimCTR boletimCTR = new BoletimCTR();
-        if(configCTR.getEquip().getTipo() == 1){
-            this.dado = String.valueOf(boletimCTR.getBolMMAberto().getMatricFuncBolMM());
-        }
-        else{
-            this.dado = String.valueOf(boletimCTR.getBolFertAberto().getMatricFuncBolFert());
-        }
+
+        MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
+        this.dado = String.valueOf(motoMecFertCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert());
+
         envioDados();
 
     }

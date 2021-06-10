@@ -12,7 +12,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -27,8 +26,6 @@ import java.util.Calendar;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.ReceberAlarme;
-import br.com.usinasantafe.pmm.model.bean.AtualAplicBean;
-import br.com.usinasantafe.pmm.model.bean.estaticas.FuncBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
@@ -63,7 +60,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         progressBar = new ProgressDialog(this);
 
-        if(pmmContext.getBoletimCTR().verBolAberto()){
+        if(pmmContext.getMotoMecFertCTR().verBolAberto()){
             if(pmmContext.getCheckListCTR().verCabecAberto()){
                 startTimer();
                 pmmContext.getCheckListCTR().clearRespCabecAberto();
@@ -73,19 +70,11 @@ public class MenuInicialActivity extends ActivityGeneric {
                 finish();
             }
             else{
-                if(pmmContext.getPneuCTR().verCalibAberto()){
-                    startTimer();
-                    Intent it = new Intent(MenuInicialActivity.this, ListaPosPneuActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-                else {
-                    startTimer();
-                    pmmContext.setVerPosTela(8);
-                    Intent it = new Intent(MenuInicialActivity.this, MenuPrincNormalActivity.class);
-                    startActivity(it);
-                    finish();
-                }
+                startTimer();
+                pmmContext.setVerPosTela(8);
+                Intent it = new Intent(MenuInicialActivity.this, MenuPrincPMMActivity.class);
+                startActivity(it);
+                finish();
             }
         }
         else{
@@ -120,8 +109,7 @@ public class MenuInicialActivity extends ActivityGeneric {
                 String text = textView.getText().toString();
 
                 if (text.equals("BOLETIM")) {
-                    FuncBean funcBean = new FuncBean();
-                    if (funcBean.hasElements()
+                    if (pmmContext.getMotoMecFertCTR().hasElemFunc()
                             && pmmContext.getConfigCTR().hasElements()
                             && VerifDadosServ.getInstance().isVerTerm()) {
                         pmmContext.setVerPosTela(1);
@@ -272,8 +260,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
     public void clearBD() {
 
-        ImpleMMBean impleMMBean = new ImpleMMBean();
-        impleMMBean.deleteAll();
+        pmmContext.getMotoMecFertCTR().impleMMDelAll();
 
         OSBean osTO = new OSBean();
         osTO.deleteAll();

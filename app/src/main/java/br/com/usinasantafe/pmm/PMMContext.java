@@ -2,11 +2,10 @@ package br.com.usinasantafe.pmm;
 
 import android.app.Application;
 
-import br.com.usinasantafe.pmm.control.ApontCTR;
-import br.com.usinasantafe.pmm.control.BoletimCTR;
+import br.com.usinasantafe.pmm.control.CECCTR;
+import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.control.PneuCTR;
 import br.com.usinasantafe.pmm.control.InformativoCTR;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 
@@ -18,10 +17,9 @@ public class PMMContext extends Application {
 
     private Thread.UncaughtExceptionHandler mDefaultExceptionHandler;
 
-    private BoletimCTR boletimCTR;
-    private ApontCTR apontCTR;
+    private MotoMecFertCTR motoMecFertCTR;
+    private CECCTR cecCTR;
     private InformativoCTR informativoCTR;
-    private PneuCTR pneuCTR;
     private CheckListCTR checkListCTR;
     private ConfigCTR configCTR;
     private int verPosTela;
@@ -35,9 +33,9 @@ public class PMMContext extends Application {
     // 8 - Iniciar na parte de apontamento
     // 14 - Recolhimento de Mangueira;
     // 19 - Trocar de implemento
-    private int contImplemento;
+    private Long contImplemento;
     private String textoHorimetro;
-    public static String versaoAplic = "3.01";
+    public static String versaoAplic = "3.06";
     private int contRend;
     private int posRend;
     private int contRecolh;
@@ -59,28 +57,22 @@ public class PMMContext extends Application {
         Thread.setDefaultUncaughtExceptionHandler(handler);
     }
 
-    public BoletimCTR getBoletimCTR() {
-        if (boletimCTR == null)
-            boletimCTR = new BoletimCTR();
-        return boletimCTR;
+    public MotoMecFertCTR getMotoMecFertCTR() {
+        if (motoMecFertCTR == null)
+            motoMecFertCTR = new MotoMecFertCTR();
+        return motoMecFertCTR;
     }
 
-    public ApontCTR getApontCTR(){
-        if (apontCTR == null)
-            apontCTR = new ApontCTR();
-        return apontCTR;
+    public CECCTR getCecCTR() {
+        if (cecCTR == null)
+            cecCTR = new CECCTR();
+        return cecCTR;
     }
 
     public InformativoCTR getInformativoCTR(){
         if (informativoCTR == null)
             informativoCTR = new InformativoCTR();
         return informativoCTR;
-    }
-
-    public PneuCTR getPneuCTR(){
-        if (pneuCTR == null)
-            pneuCTR = new PneuCTR();
-        return pneuCTR;
     }
 
     public CheckListCTR getCheckListCTR(){
@@ -103,11 +95,11 @@ public class PMMContext extends Application {
         this.verPosTela = verPosTela;
     }
 
-    public int getContImplemento() {
+    public Long getContImplemento() {
         return contImplemento;
     }
 
-    public void setContImplemento(int contImplemento) {
+    public void setContImplemento(Long contImplemento) {
         this.contImplemento = contImplemento;
     }
 

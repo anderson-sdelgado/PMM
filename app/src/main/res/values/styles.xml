@@ -8,6 +8,29 @@
         <item name="android:colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="TextViewMenuNegrito">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/fonte_menu_atividade</item>
+        <item name="android:background">#000000</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:paddingLeft">3dp</item>
+        <item name="android:paddingTop">3dp</item>
+    </style>
+
+    <style name="TextViewMenuNormal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textSize">@dimen/fonte_menu_atividade</item>
+        <item name="android:background">#000000</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingLeft">3dp</item>
+    </style>
+
     <style name="TextViewTituloLista">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

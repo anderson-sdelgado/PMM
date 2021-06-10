@@ -13,7 +13,7 @@ public class ApontImpleMMBean extends Entidade {
     @DatabaseField(generatedId=true)
     private Long idApontImpleMM;
     @DatabaseField
-    private Long idApontMM;
+    private Long idApontMMFert;
     @DatabaseField
     private Long posImpleMM;
     @DatabaseField
@@ -29,12 +29,12 @@ public class ApontImpleMMBean extends Entidade {
         this.idApontImpleMM = idApontImpleMM;
     }
 
-    public Long getIdApontMM() {
-        return idApontMM;
+    public Long getIdApontMMFert() {
+        return idApontMMFert;
     }
 
-    public void setIdApontMM(Long idapontMM) {
-        this.idApontMM = idapontMM;
+    public void setIdApontMMFert(Long idapontMM) {
+        this.idApontMMFert = idapontMM;
     }
 
     public Long getPosImpleMM() {

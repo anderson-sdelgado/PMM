@@ -155,7 +155,37 @@ public class AtualDadosServ {
 		}
 
 	}
-	
+	public void atualTodasTabBD(){
+
+		try {
+
+			this.tipoReceb = 2;
+			tabAtualArrayList = new ArrayList();
+
+			Class<?> retClasse = Class.forName(urlsConexaoHttp.localUrl);
+
+			for (Field field : retClasse.getDeclaredFields()) {
+				String campo = field.getName();
+				Log.i("PMM", "Campo = " + campo);
+				if(campo.contains("Bean")){
+					tabAtualArrayList.add(campo);
+				}
+
+			}
+
+			classe = (String) tabAtualArrayList.get(contAtualBD);
+			String[] url = {classe};
+			contAtualBD++;
+
+			GetBDGenerico getBDGenerico = new GetBDGenerico();
+			getBDGenerico.execute(url);
+
+		} catch (Exception e) {
+			LogErroDAO.getInstance().insert(e);
+		}
+
+	}
+
 	public void atualizandoBD(){
 
 		if(this.tipoReceb == 1){

@@ -23,7 +23,7 @@ public class ListaHistApontaActivity extends ActivityGeneric {
         Button buttonRetHistorico = (Button) findViewById(R.id.buttonRetHistorico);
 
         ListView listaHistorico = (ListView) findViewById(R.id.listaHistorico);
-        AdapterListHistorico adapterListHistorico = new AdapterListHistorico(this, pmmContext.getApontCTR().getListAllApontHist(pmmContext.getBoletimCTR().getIdBol()), pmmContext.getConfigCTR().getEquip().getTipo());
+        AdapterListHistorico adapterListHistorico = new AdapterListHistorico(this, pmmContext.getMotoMecFertCTR().apontList());
         listaHistorico.setAdapter(adapterListHistorico);
 
         buttonRetHistorico.setOnClickListener(new View.OnClickListener() {
@@ -31,7 +31,7 @@ public class ListaHistApontaActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                Intent it = new Intent(ListaHistApontaActivity.this, MenuPrincNormalActivity.class);
+                Intent it = new Intent(ListaHistApontaActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();
             }

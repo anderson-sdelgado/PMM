@@ -30,6 +30,14 @@ public class ConfigDAO {
         return configBean;
     }
 
+    public boolean verSenha(String senha){
+        ConfigBean configBean = new ConfigBean();
+        List<ConfigBean> configList = configBean.get("senhaConfig", senha);
+        boolean ret = configList.size() > 0;
+        configList.clear();
+        return ret;
+    }
+
     public void salvarConfig(String senha){
         ConfigBean configBean = new ConfigBean();
         configBean.deleteAll();
@@ -39,6 +47,11 @@ public class ConfigDAO {
         configBean.setDtServConfig("");
         configBean.setDifDthrConfig(0L);
         configBean.setVerInforConfig(0L);
+        configBean.setFlagLogErro(0L);
+        configBean.setFlagLogEnvio(0L);
+        configBean.setPressaoConfig(0D);
+        configBean.setVelocConfig(0L);
+        configBean.setBocalConfig(0L);
         configBean.setSenhaConfig(senha);
         configBean.insert();
         configBean.commit();
@@ -72,6 +85,24 @@ public class ConfigDAO {
     public void setAtivConfig(Long idAtiv){
         ConfigBean configBean = getConfig();
         configBean.setAtivConfig(idAtiv);
+        configBean.update();
+    }
+
+    public void setPressaoConfig(Double pressao){
+        ConfigBean configBean = getConfig();
+        configBean.setPressaoConfig(pressao);
+        configBean.update();
+    }
+
+    public void setVelocConfig(Long veloc){
+        ConfigBean configBean = getConfig();
+        configBean.setVelocConfig(veloc);
+        configBean.update();
+    }
+
+    public void setBocalConfig(Long bocal){
+        ConfigBean configBean = getConfig();
+        configBean.setBocalConfig(bocal);
         configBean.update();
     }
 

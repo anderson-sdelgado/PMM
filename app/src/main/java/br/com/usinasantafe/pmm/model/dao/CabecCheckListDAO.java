@@ -3,7 +3,7 @@ package br.com.usinasantafe.pmm.model.dao;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.util.Tempo;
-import br.com.usinasantafe.pmm.control.BoletimCTR;
+import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ItemCheckListBean;
@@ -31,18 +31,14 @@ public class CabecCheckListDAO {
         return cabecCheckListBean;
     }
 
-    public void createCabecAberto(BoletimCTR boletimCTR){
-
-        ConfigCTR configCTR = new ConfigCTR();
-
+    public void createCabecAberto(Long nroEquip, Long matricFunc, Long idTurno){
         CabecCheckListBean cabecCheckListBean = new CabecCheckListBean();
         cabecCheckListBean.setDtCabCL(Tempo.getInstance().dataComHora());
-        cabecCheckListBean.setEquipCabCL(configCTR.getEquip().getNroEquip());
-        cabecCheckListBean.setFuncCabCL(boletimCTR.getFunc());
-        cabecCheckListBean.setTurnoCabCL(boletimCTR.getTurno());
+        cabecCheckListBean.setEquipCabCL(nroEquip);
+        cabecCheckListBean.setFuncCabCL(matricFunc);
+        cabecCheckListBean.setTurnoCabCL(idTurno);
         cabecCheckListBean.setStatusCabCL(1L);
         cabecCheckListBean.insert();
-
     }
 
     public boolean verAberturaCheckList(Long idTurno){

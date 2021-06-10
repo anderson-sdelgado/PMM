@@ -9,7 +9,6 @@ import android.widget.ListView;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 
 public class ListaOSRecolActivity extends ActivityGeneric {
 
@@ -24,10 +23,8 @@ public class ListaOSRecolActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        RecolhFertBean recolhFertBean = new RecolhFertBean();
-
         ListView listaRecMang = (ListView) findViewById(R.id.listaRecMang);
-        AdapterListRecolh adapterListRecolh = new AdapterListRecolh(this, recolhFertBean.getAndOrderBy("idBolRecolhFert",  pmmContext.getBoletimCTR().getIdBol(), "idRecolhFert", true));
+        AdapterListRecolh adapterListRecolh = new AdapterListRecolh(this, pmmContext.getMotoMecFertCTR().recolhList());
         listaRecMang.setAdapter(adapterListRecolh);
 
         listaRecMang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -49,7 +46,7 @@ public class ListaOSRecolActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(ListaOSRecolActivity.this, MenuPrincNormalActivity.class);
+                Intent it = new Intent(ListaOSRecolActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();
             }

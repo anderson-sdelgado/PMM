@@ -58,7 +58,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getBoletimCTR().atualDadosBocal(ListaBocalFertActivity.this, ListaBocalFertActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDadosBocal(ListaBocalFertActivity.this, ListaBocalFertActivity.class, progressBar);
 
                         } else {
                             AlertDialog.Builder alerta = new AlertDialog.Builder( ListaBocalFertActivity.this);
@@ -108,8 +108,8 @@ public class ListaBocalFertActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                BocalBean bocalBean = (BocalBean)  bocalList.get(position);
-                pmmContext.getApontCTR().setBocal(bocalBean.getIdBocal());
+                BocalBean bocalBean = (BocalBean) bocalList.get(position);
+                pmmContext.getConfigCTR().setBocalConfig(bocalBean.getIdBocal());
                 bocalList.clear();
 
                 Intent it = new Intent(ListaBocalFertActivity.this, ListaPressaoFertActivity.class);

@@ -9,7 +9,6 @@ import android.widget.ListView;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 
 public class ListaOSRendActivity extends ActivityGeneric {
 
@@ -24,9 +23,8 @@ public class ListaOSRendActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        RendMMBean rendMMBean = new RendMMBean();
         ListView listaOSRend = (ListView) findViewById(R.id.listaOSRend);
-        AdapterListRend adapterListRend = new AdapterListRend(this, rendMMBean.getAndOrderBy("idBolRendMM", pmmContext.getBoletimCTR().getIdBol(), "idRendMM", true));
+        AdapterListRend adapterListRend = new AdapterListRend(this, pmmContext.getMotoMecFertCTR().rendList());
         listaOSRend.setAdapter(adapterListRend);
 
         listaOSRend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -48,7 +46,7 @@ public class ListaOSRendActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(ListaOSRendActivity.this, MenuPrincNormalActivity.class);
+                Intent it = new Intent(ListaOSRendActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();
             }

@@ -11,12 +11,12 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.R;
+import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.model.bean.estaticas.BocalBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.model.bean.estaticas.AtividadeBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontFertBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMBean;
 
 /**
  * Created by anderson on 08/03/2018.
@@ -26,15 +26,13 @@ public class AdapterListHistorico extends BaseAdapter {
 
     private List itens;
     private LayoutInflater layoutInflater;
-    private Long tipoEquip;
     private TextView textViewHistApont;
     private TextView textViewHistHorario;
     private TextView textViewHistDetalhes;
 
-    public AdapterListHistorico(Context context, List itens, Long tipoEquip) {
+    public AdapterListHistorico(Context context, List itens) {
         this.itens = itens;
         layoutInflater = LayoutInflater.from(context);
-        this.tipoEquip = tipoEquip;
     }
 
     @Override
@@ -60,33 +58,22 @@ public class AdapterListHistorico extends BaseAdapter {
         textViewHistHorario = (TextView) view.findViewById(R.id.textViewHistHorario);
         textViewHistDetalhes = (TextView) view.findViewById(R.id.textViewHistDetalhes);
 
-        if (tipoEquip == 1L) {
-            ApontMMBean apontMMBean = (ApontMMBean) itens.get(position);
-            descrApont(apontMMBean.getParadaApontMM(), apontMMBean.getAtivApontMM());
-            horarioApont(apontMMBean.getDthrApontMM());
-            if(apontMMBean.getTransbApontMM() > 0){
-                textViewHistDetalhes.setText("TRANSBORDO: " + apontMMBean.getTransbApontMM());
-            }
-            else{
-                textViewHistDetalhes.setText("");
-            }
+        MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
+
+        ApontMMFertBean apontMMFertBean = (ApontMMFertBean) itens.get(position);
+        descrApont(apontMMFertBean.getParadaApontMMFert(), apontMMFertBean.getAtivApontMMFert());
+        horarioApont(apontMMFertBean.getDthrApontMMFert());
+        if(apontMMFertBean.getTransbApontMMFert() > 0){
+            textViewHistDetalhes.setText("TRANSBORDO: " + apontMMFertBean.getTransbApontMMFert());
+        }
+        else if(apontMMFertBean.getBocalApontMMFert() > 0){
+            BocalBean bocalBean = motoMecFertCTR.getBocalBean(apontMMFertBean.getBocalApontMMFert());
+            textViewHistDetalhes.setText("BOCAL: " + bocalBean.getDescrBocal() + "\n" +
+                    "PRESSÃO: " + apontMMFertBean.getPressaoApontMMFert() + "\n" +
+                    "VELOCIDADE: " + apontMMFertBean.getVelocApontMMFert());
         }
         else{
-            ApontFertBean apontFertBean = (ApontFertBean) itens.get(position);
-            descrApont(apontFertBean.getParadaApontFert(), apontFertBean.getAtivApontFert());
-            horarioApont(apontFertBean.getDthrApontFert());
-            if(apontFertBean.getParadaApontFert() > 0) {
-                textViewHistDetalhes.setText("");
-            }
-            else{
-                BocalBean bocalBean = new BocalBean();
-                List bocalList = bocalBean.get("idBocal", apontFertBean.getBocalApontFert());
-                bocalBean = (BocalBean) bocalList.get(0);
-                bocalList.clear();
-                textViewHistDetalhes.setText("BOCAL: " + bocalBean.getDescrBocal() + "\n" +
-                        "PRESSÃO: " + apontFertBean.getPressaoApontFert() + "\n" +
-                        "VELOCIDADE: " + apontFertBean.getVelocApontFert());
-            }
+            textViewHistDetalhes.setText("");
         }
 
         return view;

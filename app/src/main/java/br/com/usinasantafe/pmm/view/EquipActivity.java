@@ -8,15 +8,12 @@ import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
 
 public class EquipActivity extends ActivityGeneric {
 
     private TextView textViewCodEquip;
     private TextView textViewDescEquip;
     private PMMContext pmmContext;
-    private ConfigCTR configCTR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,18 +27,15 @@ public class EquipActivity extends ActivityGeneric {
         Button buttonOkEquip = (Button) findViewById(R.id.buttonOkEquip);
         Button buttonCancEquip = (Button) findViewById(R.id.buttonCancEquip);
 
-        configCTR = new ConfigCTR();
-        EquipBean equipBean = configCTR.getEquip();
-
-        textViewCodEquip.setText(String.valueOf(equipBean.getNroEquip()));
-        textViewDescEquip.setText(String.valueOf(equipBean.getDescrClasseEquip()));
+        textViewCodEquip.setText(String.valueOf(pmmContext.getConfigCTR().getEquip().getNroEquip()));
+        textViewDescEquip.setText(pmmContext.getConfigCTR().getEquip().getDescrClasseEquip());
 
         buttonOkEquip.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                pmmContext.getBoletimCTR().setEquipBol();
+                pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setIdEquipBolMMFert(pmmContext.getConfigCTR().getEquip().getIdEquip());
                 Intent it = new Intent(EquipActivity.this, ListaTurnoActivity.class);
                 startActivity(it);
                 finish();

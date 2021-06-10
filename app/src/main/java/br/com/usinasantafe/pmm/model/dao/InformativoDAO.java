@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import br.com.usinasantafe.pmm.view.DadosColheitaActivity;
 import br.com.usinasantafe.pmm.view.DadosPlantioActivity;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfPlantioBean;
@@ -17,6 +19,22 @@ import br.com.usinasantafe.pmm.util.VerifDadosServ;
 public class InformativoDAO {
 
     public InformativoDAO() {
+    }
+
+    public InfPlantioBean getInfPlantio(){
+        InfPlantioBean infPlantioBean = new InfPlantioBean();
+        List<InfPlantioBean> infPlantioList = infPlantioBean.all();
+        infPlantioBean = infPlantioList.get(0);
+        infPlantioList.clear();
+        return infPlantioBean;
+    }
+
+    public InfColheitaBean getInfColheita(){
+        InfColheitaBean infColheitaBean = new InfColheitaBean();
+        List<InfColheitaBean> infoColheitaList = infColheitaBean.all();
+        infColheitaBean = infoColheitaList.get(0);
+        infoColheitaList.clear();
+        return infColheitaBean;
     }
 
     public void verInformativo(String dado, Context telaAtual, Class telaProx){

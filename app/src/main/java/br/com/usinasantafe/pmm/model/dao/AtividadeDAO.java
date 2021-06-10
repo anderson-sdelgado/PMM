@@ -28,90 +28,75 @@ public class AtividadeDAO {
         VerifDadosServ.getInstance().verDados(dado, "Atividade", telaAtual, telaProx, progressDialog);
     }
 
-    public void recDadosAtiv(String result) {
+    public void recDadosAtiv(String objPrim, String objSeg, String objTerc, String objQuart) {
 
         try {
 
-            if (!result.contains("exceeded")) {
+            JSONObject jObj = new JSONObject(objPrim);
+            JSONArray jsonArray = jObj.getJSONArray("dados");
 
-                int pos1 = result.indexOf("_") + 1;
-                int pos2 = result.indexOf("|") + 1;
-                int pos3 = result.indexOf("#") + 1;
+            REquipAtivBean rEquipAtivBean = new REquipAtivBean();
+            rEquipAtivBean.deleteAll();
 
-                String objPrim = result.substring(0, (pos1 - 1));
-                String objSeg = result.substring(pos1, (pos2 - 1));
-                String objTerc = result.substring(pos2, (pos3 - 1));
-                String objQuart = result.substring(pos3);
+            for (int j = 0; j < jsonArray.length(); j++) {
 
-                JSONObject jObj = new JSONObject(objPrim);
-                JSONArray jsonArray = jObj.getJSONArray("dados");
+                JSONObject objeto = jsonArray.getJSONObject(j);
+                Gson gson = new Gson();
+                REquipAtivBean rEquipAtiv = gson.fromJson(objeto.toString(), REquipAtivBean.class);
+                rEquipAtiv.insert();
 
-                REquipAtivBean rEquipAtivBean = new REquipAtivBean();
-                rEquipAtivBean.deleteAll();
-
-                for (int j = 0; j < jsonArray.length(); j++) {
-
-                    JSONObject objeto = jsonArray.getJSONObject(j);
-                    Gson gson = new Gson();
-                    REquipAtivBean rEquipAtiv = gson.fromJson(objeto.toString(), REquipAtivBean.class);
-                    rEquipAtiv.insert();
-
-                }
-
-                jObj = new JSONObject(objSeg);
-                jsonArray = jObj.getJSONArray("dados");
-
-                if (jsonArray.length() > 0) {
-
-                    ROSAtivBean rosAtivBean = new ROSAtivBean();
-                    rosAtivBean.deleteAll();
-
-                    for (int j = 0; j < jsonArray.length(); j++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(j);
-                        Gson gson = new Gson();
-                        ROSAtivBean rosAtiv = gson.fromJson(objeto.toString(), ROSAtivBean.class);
-                        rosAtiv.insert();
-
-                    }
-
-                }
-
-                jObj = new JSONObject(objTerc);
-                jsonArray = jObj.getJSONArray("dados");
-
-                AtividadeBean atividadeBean = new AtividadeBean();
-                atividadeBean.deleteAll();
-
-                for (int j = 0; j < jsonArray.length(); j++) {
-
-                    JSONObject objeto = jsonArray.getJSONObject(j);
-                    Gson gson = new Gson();
-                    AtividadeBean atividade = gson.fromJson(objeto.toString(), AtividadeBean.class);
-                    atividade.insert();
-
-                }
-
-                jObj = new JSONObject(objQuart);
-                jsonArray = jObj.getJSONArray("dados");
-
-                RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
-                rFuncaoAtivParBean.deleteAll();
-
-                for (int j = 0; j < jsonArray.length(); j++) {
-
-                    JSONObject objeto = jsonArray.getJSONObject(j);
-                    Gson gson = new Gson();
-                    RFuncaoAtivParBean rFuncaoAtivPar = gson.fromJson(objeto.toString(), RFuncaoAtivParBean.class);
-                    rFuncaoAtivPar.insert();
-
-                }
-
-                VerifDadosServ.getInstance().pulaTelaSemTerm();
-
-            } else {
-                VerifDadosServ.getInstance().msgSemTerm("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
             }
+
+            jObj = new JSONObject(objSeg);
+            jsonArray = jObj.getJSONArray("dados");
+
+            if (jsonArray.length() > 0) {
+
+                ROSAtivBean rosAtivBean = new ROSAtivBean();
+                rosAtivBean.deleteAll();
+
+                for (int j = 0; j < jsonArray.length(); j++) {
+
+                    JSONObject objeto = jsonArray.getJSONObject(j);
+                    Gson gson = new Gson();
+                    ROSAtivBean rosAtiv = gson.fromJson(objeto.toString(), ROSAtivBean.class);
+                    rosAtiv.insert();
+
+                }
+
+            }
+
+            jObj = new JSONObject(objTerc);
+            jsonArray = jObj.getJSONArray("dados");
+
+            AtividadeBean atividadeBean = new AtividadeBean();
+            atividadeBean.deleteAll();
+
+            for (int j = 0; j < jsonArray.length(); j++) {
+
+                JSONObject objeto = jsonArray.getJSONObject(j);
+                Gson gson = new Gson();
+                AtividadeBean atividade = gson.fromJson(objeto.toString(), AtividadeBean.class);
+                atividade.insert();
+
+            }
+
+            jObj = new JSONObject(objQuart);
+            jsonArray = jObj.getJSONArray("dados");
+
+            RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
+            rFuncaoAtivParBean.deleteAll();
+
+            for (int j = 0; j < jsonArray.length(); j++) {
+
+                JSONObject objeto = jsonArray.getJSONObject(j);
+                Gson gson = new Gson();
+                RFuncaoAtivParBean rFuncaoAtivPar = gson.fromJson(objeto.toString(), RFuncaoAtivParBean.class);
+                rFuncaoAtivPar.insert();
+
+            }
+
+            VerifDadosServ.getInstance().pulaTelaSemTerm();
 
         } catch (Exception e) {
             LogErroDAO.getInstance().insert(e);

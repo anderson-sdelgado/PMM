@@ -11,7 +11,6 @@ import android.widget.Button;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.control.CheckListCTR;
 
 public class EquipMBActivity extends ActivityGeneric {
 
@@ -52,7 +51,7 @@ public class EquipMBActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getBoletimCTR().atualDadosEquipSeg(EquipMBActivity.this, EquipMBActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDadosEquipSeg(EquipMBActivity.this, EquipMBActivity.class, progressBar);
 
                         } else {
 
@@ -93,9 +92,9 @@ public class EquipMBActivity extends ActivityGeneric {
 
                     Long motoBomba = Long.parseLong(editTextPadrao.getText().toString());
 
-                    if (pmmContext.getBoletimCTR().verMotoBomba(motoBomba)) {
+                    if (pmmContext.getMotoMecFertCTR().verMotoBomba(motoBomba)) {
 
-                        pmmContext.getBoletimCTR().setIdEquipBombaBol(pmmContext.getBoletimCTR().getEquipSeg(motoBomba).getIdEquip());
+                        pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setIdEquipBombaBolMMFert(pmmContext.getMotoMecFertCTR().getEquipSeg(motoBomba).getIdEquip());
                         salvarBoletimAberto();
 
                     } else {
@@ -122,10 +121,8 @@ public class EquipMBActivity extends ActivityGeneric {
         });
 
         buttonCancMotoBomba.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-
                 if (editTextPadrao.getText().toString().length() > 0) {
                     editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
                 }
@@ -135,12 +132,11 @@ public class EquipMBActivity extends ActivityGeneric {
     }
 
     public void salvarBoletimAberto() {
-        pmmContext.getBoletimCTR().salvarBolAbertoFert();
-        CheckListCTR checkListCTR = new CheckListCTR();
-        if(checkListCTR.verAberturaCheckList(pmmContext.getBoletimCTR().getTurno())){
-            pmmContext.getApontCTR().inserirParadaCheckList(pmmContext.getBoletimCTR());
+        pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto();
+        if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().getIdTurnoBolMMFert())){
+            pmmContext.getMotoMecFertCTR().inserirParadaCheckList();
             pmmContext.setPosCheckList(1);
-            checkListCTR.createCabecAberto(pmmContext.getBoletimCTR());
+            pmmContext.getCheckListCTR().createCabecAberto();
             if (pmmContext.getConfigCTR().getConfig().getAtualCheckList().equals(1L)) {
                 Intent it = new Intent(EquipMBActivity.this, PergAtualCheckListActivity.class);
                 startActivity(it);

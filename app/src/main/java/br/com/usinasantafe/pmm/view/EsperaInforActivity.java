@@ -23,11 +23,11 @@ public class EsperaInforActivity extends ActivityGeneric {
 
         ConexaoWeb conexaoWeb = new ConexaoWeb();
         if (conexaoWeb.verificaConexao(this)) {
-            pmmContext.getInformativoCTR().verInfor(String.valueOf(pmmContext.getBoletimCTR().getFunc()), EsperaInforActivity.this, MenuPrincNormalActivity.class);
+            pmmContext.getInformativoCTR().verInfor(String.valueOf(pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().getIdEquipBolMMFert()), EsperaInforActivity.this, MenuPrincPMMActivity.class);
             customHandler.postDelayed(runnable, 10000);
         }
         else{
-            Intent it = new Intent(EsperaInforActivity.this, MenuPrincNormalActivity.class);
+            Intent it = new Intent(EsperaInforActivity.this, MenuPrincPMMActivity.class);
             startActivity(it);
             finish();
         }
@@ -37,7 +37,7 @@ public class EsperaInforActivity extends ActivityGeneric {
     private Runnable runnable = new Runnable(){
         public void run() {
             if(!VerifDadosServ.getInstance().isVerTerm()) {
-                Intent it = new Intent(EsperaInforActivity.this, MenuPrincNormalActivity.class);
+                Intent it = new Intent(EsperaInforActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();
             }

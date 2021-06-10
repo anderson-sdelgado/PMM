@@ -58,7 +58,6 @@ public class DataHoraActivity extends ActivityGeneric {
 
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                // When user changed the Text
 
                 switch (pmmContext.getContDataHora()) {
                     case 1:
@@ -204,7 +203,7 @@ public class DataHoraActivity extends ActivityGeneric {
                                     finish();
                                 }
                                 else {
-                                    it = new Intent(DataHoraActivity.this, MenuPrincNormalActivity.class);
+                                    it = new Intent(DataHoraActivity.this, MenuPrincPMMActivity.class);
                                     startActivity(it);
                                     finish();
                                 }

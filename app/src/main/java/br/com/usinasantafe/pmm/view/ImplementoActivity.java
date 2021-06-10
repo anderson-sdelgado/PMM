@@ -12,7 +12,6 @@ import android.widget.TextView;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 
 public class ImplementoActivity extends ActivityGeneric {
@@ -52,7 +51,7 @@ public class ImplementoActivity extends ActivityGeneric {
                             progressBar.setMessage("Atualizando Implemento...");
                             progressBar.show();
 
-                            pmmContext.getBoletimCTR().atualDadosEquipSeg(ImplementoActivity.this, ImplementoActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDadosEquipSeg(ImplementoActivity.this, ImplementoActivity.class, progressBar);
 
                         } else {
 
@@ -93,15 +92,12 @@ public class ImplementoActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                if(pmmContext.getContImplemento() == 1){
+                if(pmmContext.getContImplemento() == 1L){
                     if (!editTextPadrao.getText().toString().equals("")) {
                         Long impl = Long.parseLong(editTextPadrao.getText().toString());
-                        if(pmmContext.getBoletimCTR().verImplemento(impl)){
-                            ImpleMMBean impleMMBean = new ImpleMMBean();
-                            impleMMBean.setPosImpleMM(1L);
-                            impleMMBean.setCodEquipImpleMM(impl);
-                            pmmContext.getBoletimCTR().setImplemento(impleMMBean);
-                            pmmContext.setContImplemento(2);
+                        if(pmmContext.getMotoMecFertCTR().verImplemento(impl)){
+                            pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getContImplemento(), impl);
+                            pmmContext.setContImplemento(2L);
                             Intent it = new Intent(ImplementoActivity.this, ImplementoActivity.class);
                             startActivity(it);
                             finish();
@@ -114,11 +110,8 @@ public class ImplementoActivity extends ActivityGeneric {
                 else{
                     if (!editTextPadrao.getText().toString().equals("")) {
                         Long impl = Long.parseLong(editTextPadrao.getText().toString());
-                        if(pmmContext.getBoletimCTR().verImplemento(impl) && (pmmContext.getBoletimCTR().verDuplicImpleMM(impl))){
-                            ImpleMMBean impleMMBean = new ImpleMMBean();
-                            impleMMBean.setPosImpleMM(2L);
-                            impleMMBean.setCodEquipImpleMM(impl);
-                            pmmContext.getBoletimCTR().setImplemento(impleMMBean);
+                        if(pmmContext.getMotoMecFertCTR().verImplemento(impl) && (pmmContext.getMotoMecFertCTR().verDuplicImpleMM(impl))){
+                            pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getContImplemento(), impl);
                             verTela();
                         }
                         else{
@@ -148,7 +141,7 @@ public class ImplementoActivity extends ActivityGeneric {
             salvarBoletimAberto();
         }
         else if (pmmContext.getVerPosTela() == 19) {
-            Intent it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
+            Intent it = new Intent(ImplementoActivity.this, MenuPrincPMMActivity.class);
             startActivity(it);
             finish();
         }
@@ -169,12 +162,11 @@ public class ImplementoActivity extends ActivityGeneric {
 
 
     public void salvarBoletimAberto() {
-        pmmContext.getBoletimCTR().salvarBolAbertoMM();
-        CheckListCTR checkListCTR = new CheckListCTR();
-        if(checkListCTR.verAberturaCheckList(pmmContext.getBoletimCTR().getTurno())){
-            pmmContext.getApontCTR().inserirParadaCheckList(pmmContext.getBoletimCTR());
+        pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto();
+        if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().getIdTurnoBolMMFert())){
+            pmmContext.getMotoMecFertCTR().inserirParadaCheckList();
             pmmContext.setPosCheckList(1);
-            checkListCTR.createCabecAberto(pmmContext.getBoletimCTR());
+            pmmContext.getCheckListCTR().createCabecAberto();
             if (pmmContext.getConfigCTR().getConfig().getAtualCheckList().equals(1L)) {
                 Intent it = new Intent(ImplementoActivity.this, PergAtualCheckListActivity.class);
                 startActivity(it);
@@ -199,7 +191,7 @@ public class ImplementoActivity extends ActivityGeneric {
                 startActivity(it);
                 finish();
             } else if (pmmContext.getVerPosTela() == 19) {
-                Intent it = new Intent(ImplementoActivity.this, MenuPrincNormalActivity.class);
+                Intent it = new Intent(ImplementoActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();
             }

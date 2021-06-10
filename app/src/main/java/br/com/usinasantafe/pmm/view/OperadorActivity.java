@@ -8,11 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.List;
-
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.model.bean.estaticas.FuncBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 
 public class OperadorActivity extends ActivityGeneric {
@@ -54,7 +51,7 @@ public class OperadorActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getBoletimCTR().atualDadosOperador(OperadorActivity.this, OperadorActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDadosOperador(OperadorActivity.this, OperadorActivity.class, progressBar);
 
                         } else {
 
@@ -96,14 +93,10 @@ public class OperadorActivity extends ActivityGeneric {
 
                 if (!editTextPadrao.getText().toString().equals("")) {
 
-                    FuncBean funcTO = new FuncBean();
-                    List funcList = funcTO.get("matricFunc", Long.parseLong(editTextPadrao.getText().toString()));
+                    if (pmmContext.getConfigCTR().verFunc(Long.parseLong(editTextPadrao.getText().toString()))) {
 
-                    if (funcList.size() > 0) {
-
-                        funcTO = (FuncBean) funcList.get(0);
-                        pmmContext.getBoletimCTR().setFuncBol(funcTO.getMatricFunc());
-                        funcList.clear();
+                        pmmContext.getMotoMecFertCTR().getBoletimMMDAO().setBoletimMMBean();
+                        pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setMatricFuncBolMMFert(Long.parseLong(editTextPadrao.getText().toString()));
 
                         Intent it = new Intent(OperadorActivity.this, EquipActivity.class);
                         startActivity(it);
@@ -142,7 +135,6 @@ public class OperadorActivity extends ActivityGeneric {
         });
 
     }
-
 
     public void onBackPressed() {
         Intent it = new Intent(OperadorActivity.this, MenuInicialActivity.class);

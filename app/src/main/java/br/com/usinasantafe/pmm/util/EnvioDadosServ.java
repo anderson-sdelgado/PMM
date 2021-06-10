@@ -8,8 +8,7 @@ import android.util.Log;
 
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.util.conHttp.PostCadGenerico;
-import br.com.usinasantafe.pmm.control.ApontCTR;
-import br.com.usinasantafe.pmm.control.BoletimCTR;
+import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp;
@@ -22,7 +21,6 @@ public class EnvioDadosServ {
     private boolean enviando = false;
 
     public EnvioDadosServ() {
-
         urlsConexaoHttp = new UrlsConexaoHttp();
     }
 
@@ -54,10 +52,10 @@ public class EnvioDadosServ {
 
     }
 
-    public void enviarBolFechadosMM() {
+    public void enviarBolFechadoMMFert() {
 
-        BoletimCTR boletimCTR = new BoletimCTR();
-        String dados = boletimCTR.dadosEnvioBolFechadoMM();
+        MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
+        String dados = motoMecFertCTR.dadosEnvioBolFechadoMMFert();
 
         Log.i("PMM", "FECHADO = " + dados);
 
@@ -73,10 +71,10 @@ public class EnvioDadosServ {
 
     }
 
-    public void enviarBolAbertosMM() {
+    public void enviarBolAbertoMMFert() {
 
-        BoletimCTR boletimCTR = new BoletimCTR();
-        String dados = boletimCTR.dadosEnvioBolAbertoMM();
+        MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
+        String dados = motoMecFertCTR.dadosEnvioBolAbertoMMFert();
 
         Log.i("PMM", "ABERTO = " + dados);
 
@@ -89,61 +87,6 @@ public class EnvioDadosServ {
         PostCadGenerico conHttpPostGenerico = new PostCadGenerico();
         conHttpPostGenerico.setParametrosPost(parametrosPost);
         conHttpPostGenerico.execute(url);
-
-    }
-
-    public void enviarBolFechadosFert() {
-
-        BoletimCTR boletimCTR = new BoletimCTR();
-        String dados = boletimCTR.dadosEnvioBolFechadoFert();
-
-        Log.i("PMM", "FECHADO = " + dados);
-
-        UrlsConexaoHttp urlsConexaoHttp = new UrlsConexaoHttp();
-
-        String[] url = {urlsConexaoHttp.getsInsertBolFechadoFert()};
-        Map<String, Object> parametrosPost = new HashMap<String, Object>();
-        parametrosPost.put("dado", dados);
-
-        PostCadGenerico conHttpPostGenerico = new PostCadGenerico();
-        conHttpPostGenerico.setParametrosPost(parametrosPost);
-        conHttpPostGenerico.execute(url);
-
-    }
-
-    public void enviarBolAbertosFert() {
-
-        BoletimCTR boletimCTR = new BoletimCTR();
-        String dados = boletimCTR.dadosEnvioBolAbertoFert();
-
-        Log.i("PMM", "ABERTO = " + dados);
-
-        UrlsConexaoHttp urlsConexaoHttp = new UrlsConexaoHttp();
-
-        String[] url = {urlsConexaoHttp.getsInsertBolAbertoFert()};
-        Map<String, Object> parametrosPost = new HashMap<String, Object>();
-        parametrosPost.put("dado", dados);
-
-        PostCadGenerico conHttpPostGenerico = new PostCadGenerico();
-        conHttpPostGenerico.setParametrosPost(parametrosPost);
-        conHttpPostGenerico.execute(url);
-
-    }
-
-    public void envioApontaFert() {
-
-        ApontCTR apontCTR = new ApontCTR();
-        String dados = apontCTR.dadosEnvioApontFert();
-
-        Log.i("PMM", "APONTAMENTO = " + dados);
-
-        String[] url = {urlsConexaoHttp.getsInsertApontaFert()};
-        Map<String, Object> parametrosPost = new HashMap<String, Object>();
-        parametrosPost.put("dado", dados);
-
-        PostCadGenerico postCadGenerico = new PostCadGenerico();
-        postCadGenerico.setParametrosPost(parametrosPost);
-        postCadGenerico.execute(url);
 
     }
 
@@ -173,34 +116,14 @@ public class EnvioDadosServ {
         return checkListCTR.verEnvioDados();
     }
 
-    public Boolean verifBolFechadoMM() {
-        BoletimCTR boletimCTR = new BoletimCTR();
-        return boletimCTR.verEnvioBolFechMM();
+    public Boolean verifBolFechado() {
+        MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
+        return motoMecFertCTR.verEnvioBolFech();
     }
 
-    public Boolean verifBolAbertoSemEnvioMM() {
-        BoletimCTR boletimCTR = new BoletimCTR();
-        return boletimCTR.verEnvioBolAbertoMM();
-    }
-
-    public Boolean verifApontMovLeiraMM() {
-        ApontCTR apontCTR = new ApontCTR();
-        return apontCTR.verEnvioDadosApontMM();
-    }
-
-    public Boolean verifBolFechadoFert() {
-        BoletimCTR boletimCTR = new BoletimCTR();
-        return boletimCTR.verEnvioBolFechFert();
-    }
-
-    public Boolean verifBolAbertoSemEnvioFert() {
-        BoletimCTR boletimCTR = new BoletimCTR();
-        return boletimCTR.verEnvioBolAbertoFert();
-    }
-
-    public Boolean verifApontaFert() {
-        ApontCTR apontCTR = new ApontCTR();
-        return apontCTR.verEnvioDadosApontFert();
+    public Boolean verifApont() {
+        MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
+        return motoMecFertCTR.verEnvioApont();
     }
 
     public Boolean verifLogErro() {
@@ -247,23 +170,11 @@ public class EnvioDadosServ {
                 if (verifChecklist()) {
                     enviarChecklist();
                 } else {
-                    if (verifBolFechadoMM()) {
-                        enviarBolFechadosMM();
+                    if (verifBolFechado()) {
+                        enviarBolFechadoMMFert();
                     } else {
-                        if (verifApontMovLeiraMM()) {
-                            enviarBolAbertosMM();
-                        } else {
-                            if (verifBolFechadoFert()) {
-                                enviarBolFechadosFert();
-                            } else {
-                                if (verifBolAbertoSemEnvioFert()) {
-                                    enviarBolAbertosFert();
-                                } else {
-                                    if (verifApontaFert()) {
-                                        envioApontaFert();
-                                    }
-                                }
-                            }
+                        if (verifApont()) {
+                            enviarBolAbertoMMFert();
                         }
                     }
                 }
@@ -273,12 +184,9 @@ public class EnvioDadosServ {
 
     public boolean verifDadosEnvio() {
         if ((!verifInfor())
-                && (!verifBolFechadoMM())
-                && (!verifApontMovLeiraMM())
+                && (!verifBolFechado())
+                && (!verifApont())
                 && (!verifChecklist())
-                && (!verifBolFechadoFert())
-                && (!verifBolAbertoSemEnvioFert())
-                && (!verifApontaFert())
                 && (!verifLogErro())){
             enviando = false;
             return false;
@@ -309,23 +217,11 @@ public class EnvioDadosServ {
             CheckListCTR checkListCTR = new CheckListCTR();
             checkListCTR.delChecklist();
         } else if (result.trim().startsWith("BOLABERTOMM")) {
-            BoletimCTR boletimCTR = new BoletimCTR();
-            boletimCTR.updBolAbertoMM(result);
+            MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
+            motoMecFertCTR.updateBolAberto(result);
         } else if (result.trim().startsWith("BOLFECHADOMM")) {
-            BoletimCTR boletimCTR = new BoletimCTR();
-            boletimCTR.delBolFechadoMM(result);
-        } else if (result.trim().startsWith("APONTMM")) {
-            ApontCTR apontCTR = new ApontCTR();
-            apontCTR.updateApontMM(result);
-        } else if (result.trim().startsWith("BOLABERTOFERT")) {
-            BoletimCTR boletimCTR = new BoletimCTR();
-            boletimCTR.updBolAbertoFert(result);
-        } else if (result.trim().startsWith("BOLFECHADOFERT")) {
-            BoletimCTR boletimCTR = new BoletimCTR();
-            boletimCTR.delBolFechadoFert(result);
-        } else if (result.trim().startsWith("APONTFERT")) {
-            ApontCTR apontCTR = new ApontCTR();
-            apontCTR.updateApontaFert(result);
+            MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
+            motoMecFertCTR.deleteBolFechado(result);
         } else if (result.trim().startsWith("LOGERRO")) {
             ConfigCTR configCTR = new ConfigCTR();
             configCTR.updLogErro(result);

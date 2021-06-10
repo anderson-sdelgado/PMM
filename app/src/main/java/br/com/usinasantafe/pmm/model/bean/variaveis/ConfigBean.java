@@ -31,6 +31,12 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private Long ativConfig;
 	@DatabaseField
+	private Double pressaoConfig;
+	@DatabaseField
+	private Long velocConfig;
+	@DatabaseField
+	private Long bocalConfig;
+	@DatabaseField
 	private Double horimetroConfig;
 	@DatabaseField
 	private Long verInforConfig; //0 - Verificar Dados; 1- Dados Recebidos; 2 - Dados Visualizados
@@ -46,20 +52,28 @@ public class ConfigBean extends Entidade {
 	public ConfigBean() {
 	}
 
+	public Long getIdConfig() {
+		return idConfig;
+	}
+
+	public void setIdConfig(Long idConfig) {
+		this.idConfig = idConfig;
+	}
+
 	public Long getEquipConfig() {
 		return equipConfig;
 	}
 
-	public void setEquipConfig(Long camconfig) {
-		this.equipConfig = camconfig;
+	public void setEquipConfig(Long equipConfig) {
+		this.equipConfig = equipConfig;
 	}
 
 	public String getSenhaConfig() {
 		return senhaConfig;
 	}
 
-	public void setSenhaConfig(String senhaconfig) {
-		this.senhaConfig = senhaconfig;
+	public void setSenhaConfig(String senhaConfig) {
+		this.senhaConfig = senhaConfig;
 	}
 
 	public Long getUltTurnoCLConfig() {
@@ -70,52 +84,20 @@ public class ConfigBean extends Entidade {
 		this.ultTurnoCLConfig = ultTurnoCLConfig;
 	}
 
+	public String getDtUltCLConfig() {
+		return dtUltCLConfig;
+	}
+
+	public void setDtUltCLConfig(String dtUltCLConfig) {
+		this.dtUltCLConfig = dtUltCLConfig;
+	}
+
 	public String getDtUltApontConfig() {
 		return dtUltApontConfig;
 	}
 
 	public void setDtUltApontConfig(String dtUltApontConfig) {
 		this.dtUltApontConfig = dtUltApontConfig;
-	}
-
-	public Long getOsConfig() {
-		return osConfig;
-	}
-
-	public void setOsConfig(Long osConfig) {
-		this.osConfig = osConfig;
-	}
-
-	public Double getHorimetroConfig() {
-		return horimetroConfig;
-	}
-
-	public void setHorimetroConfig(Double horimetroConfig) {
-		this.horimetroConfig = horimetroConfig;
-	}
-
-    public String getDtUltCLConfig() {
-        return dtUltCLConfig;
-    }
-
-    public void setDtUltCLConfig(String dtUltCLConfig) {
-        this.dtUltCLConfig = dtUltCLConfig;
-    }
-
-	public Long getVerInforConfig() {
-		return verInforConfig;
-	}
-
-	public void setVerInforConfig(Long visDadosConfig) {
-		this.verInforConfig = visDadosConfig;
-	}
-
-	public Long getStatusConConfig() {
-		return statusConConfig;
-	}
-
-	public void setStatusConConfig(Long statusConConfig) {
-		this.statusConConfig = statusConConfig;
 	}
 
 	public String getDtServConfig() {
@@ -134,6 +116,14 @@ public class ConfigBean extends Entidade {
 		this.difDthrConfig = difDthrConfig;
 	}
 
+	public Long getOsConfig() {
+		return osConfig;
+	}
+
+	public void setOsConfig(Long osConfig) {
+		this.osConfig = osConfig;
+	}
+
 	public Long getAtivConfig() {
 		return ativConfig;
 	}
@@ -142,12 +132,52 @@ public class ConfigBean extends Entidade {
 		this.ativConfig = ativConfig;
 	}
 
-	public Long getIdConfig() {
-		return idConfig;
+	public Double getPressaoConfig() {
+		return pressaoConfig;
 	}
 
-	public void setIdConfig(Long idConfig) {
-		this.idConfig = idConfig;
+	public void setPressaoConfig(Double pressaoConfig) {
+		this.pressaoConfig = pressaoConfig;
+	}
+
+	public Long getVelocConfig() {
+		return velocConfig;
+	}
+
+	public void setVelocConfig(Long velocConfig) {
+		this.velocConfig = velocConfig;
+	}
+
+	public Long getBocalConfig() {
+		return bocalConfig;
+	}
+
+	public void setBocalConfig(Long bocalConfig) {
+		this.bocalConfig = bocalConfig;
+	}
+
+	public Double getHorimetroConfig() {
+		return horimetroConfig;
+	}
+
+	public void setHorimetroConfig(Double horimetroConfig) {
+		this.horimetroConfig = horimetroConfig;
+	}
+
+	public Long getVerInforConfig() {
+		return verInforConfig;
+	}
+
+	public void setVerInforConfig(Long verInforConfig) {
+		this.verInforConfig = verInforConfig;
+	}
+
+	public Long getStatusConConfig() {
+		return statusConConfig;
+	}
+
+	public void setStatusConConfig(Long statusConConfig) {
+		this.statusConConfig = statusConConfig;
 	}
 
 	public Long getFlagLogEnvio() {

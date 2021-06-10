@@ -38,7 +38,9 @@ public class EquipBean extends Entidade {
     @DatabaseField
     private Double medicaoEquipFert;
     @DatabaseField
-    private Long tipo;
+    private Long tipoEquip;
+    @DatabaseField
+    private Long classifEquip;
 
     public EquipBean() {
     }
@@ -115,11 +117,19 @@ public class EquipBean extends Entidade {
         this.medicaoEquipFert = medicaoEquipFert;
     }
 
-    public Long getTipo() {
-        return tipo;
+    public Long getTipoEquip() {
+        return tipoEquip;
     }
 
-    public void setTipo(Long tipo) {
-        this.tipo = tipo;
+    public void setTipoEquip(Long tipoEquip) {
+        this.tipoEquip = tipoEquip;
+    }
+
+    public Long getClassifEquip() {
+        return classifEquip;
+    }
+
+    public void setClassifEquip(Long classifEquip) {
+        this.classifEquip = classifEquip;
     }
 }

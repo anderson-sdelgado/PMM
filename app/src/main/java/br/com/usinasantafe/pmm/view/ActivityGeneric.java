@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -75,7 +76,6 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
         }
 
     }
-
 
     private ArrayList<String> permissionsToRequest(ArrayList<String> wantedPermissions) {
         ArrayList<String> result = new ArrayList<>();
@@ -230,8 +230,8 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
 
         if ((EditText) findViewById(R.id.editTextPadrao) != null) {
             editTextPadrao = (EditText) findViewById(R.id.editTextPadrao);
-            if (!this.getLocalClassName().equals("OSActivity") && (!this.getLocalClassName().equals("RendimentoActivity"))
-                    && (!this.getLocalClassName().equals("RecolhimentoActivity"))) {
+            if (!this.getLocalClassName().equals("view.OSActivity") && (!this.getLocalClassName().equals("view.RendimentoActivity"))
+                    && (!this.getLocalClassName().equals("view.RecolhimentoActivity"))) {
                 editTextPadrao.setText("");
             }
         }

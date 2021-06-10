@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".view.MenuPrincECMActivity">
+
+    <TextView
+        android:id="@+id/textViewTituloMotorista"
+        style="@style/TextViewMenuNegrito"
+        android:text="@string/texto_menu_titulo_motorista" />
+
+    <TextView
+        android:id="@+id/textViewMotorista"
+        style="@style/TextViewMenuNormal"
+        android:text="@string/texto_menu_motorista" />
+
+    <TextView
+        android:id="@+id/textViewCarreta"
+        style="@style/TextViewMenuNegrito"
+        android:text="@string/texto_menu_titulo_carreta" />
+
+    <TextView
+        android:id="@+id/textViewUltimaViagem"
+        style="@style/TextViewMenuNegrito"
+        android:paddingBottom="5dp"
+        android:text="@string/texto_menu_ultima_viagem" />
+
+
+    <ListView
+        android:id="@+id/motoMecListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/buttonParadaMotoMec"
+        style="@style/BotaoAvulso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/texto_motivo_parada" />
+
+    <Button
+        android:id="@+id/buttonRetMotoMec"
+        style="@style/BotaoAvulso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/texto_enc_boletim" />
+
+</LinearLayout>

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">PMM</string>
-    <string name="texto_menu_principal">PRINCIPAL - V 3.02</string>
+    <string name="texto_menu_principal">PRINCIPAL - V 3.06</string>
     <string name="texto_item_list">TESTE</string>
     <string name="texto_num1">1</string>
     <string name="texto_num2">2</string>
@@ -124,4 +124,22 @@
     <string name="texto_meta_mp">120</string>
     <string name="texto_valor_mp">100</string>
     <string name="texto_status_mp">MÉDIO</string>
+    <string name="texto_padrao_anterior">ANTERIOR</string>
+    <string name="texto_padrao_proximo">PROXIMO</string>
+    <string name="texto_carreta">N. CARRETA:</string>
+    <string name="texto_desengate_carreta">DESEJA DESENGATAR AS CARRETAS:</string>
+    <string name="texto_frente">NUM. FRENTE:</string>
+    <string name="texto_lista_certificado">CERTIFICADO</string>
+    <string name="texto_menu_titulo_motorista">MOTORISTA</string>
+    <string name="texto_menu_motorista">1 - FUNCIONARIO FICTICIO</string>
+    <string name="texto_menu_titulo_carreta">CARRETA(S): 715 - 720</string>
+    <string name="texto_menu_ultima_viagem">NÃO POSSUE CARREGAMENTOS</string>
+    <string name="texto_enc_boletim">ENCERRA BOLETIM</string>
+    <string name="texto_cam">1</string>
+    <string name="texto_saida_campo">DESEJA REALMENTE DAR SAÍDA DO CAMPO?</string>
+    <string name="texto_lista_motorista_atual">MOTORISTA ATUAL</string>
+    <string name="texto_cod_motorista">19759</string>
+    <string name="texto_nome_motorista">ANDERSON DA SILVA DELGADO</string>
+    <string name="texto_bt_manter_motorista">MANTER</string>
+    <string name="texto_bt_trocar_motorista">TROCAR</string>
 </resources>

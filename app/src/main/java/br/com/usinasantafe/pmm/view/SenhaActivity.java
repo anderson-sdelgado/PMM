@@ -8,12 +8,13 @@ import android.widget.EditText;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 
 public class SenhaActivity extends ActivityGeneric {
 
     private EditText editTextSenha;
+    private PMMContext pmmContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +25,15 @@ public class SenhaActivity extends ActivityGeneric {
         Button btOkSenha =  (Button) findViewById(R.id.buttonOkSenha);
         Button btCancSenha = (Button) findViewById(R.id.buttonCancSenha);
 
+        pmmContext = (PMMContext) getApplication();
+
         btOkSenha.setOnClickListener(new View.OnClickListener() {
 
             @SuppressWarnings("unchecked")
             @Override
             public void onClick(View v) {
 
-                ConfigBean configBean = new ConfigBean();
-
-                if (!configBean.hasElements()) {
+                if (!pmmContext.getConfigCTR().hasElements()) {
 
                     Intent it = new Intent(SenhaActivity.this, ConfigActivity.class);
                     startActivity(it);
@@ -40,11 +41,7 @@ public class SenhaActivity extends ActivityGeneric {
 
                 } else {
 
-                    List<ConfigBean> configList = configBean.get("senhaConfig", editTextSenha.getText().toString());
-
-                    if (configList.size() > 0) {
-
-                        configList.clear();
+                    if (pmmContext.getConfigCTR().verSenha(editTextSenha.getText().toString())) {
 
                         Intent it = new Intent(SenhaActivity.this, ConfigActivity.class);
                         startActivity(it);

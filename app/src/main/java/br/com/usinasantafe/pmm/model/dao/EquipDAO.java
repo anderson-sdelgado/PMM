@@ -4,13 +4,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.model.bean.estaticas.REquipPneuBean;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.estaticas.REquipAtivBean;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
@@ -27,9 +28,9 @@ public class EquipDAO {
         equipBean = (EquipBean) equipList.get(0);
         equipList.clear();
         if ((equipBean.getTipoEquipFert() == 1) || (equipBean.getTipoEquipFert() == 2)) {
-            equipBean.setTipo(2L);
+            equipBean.setTipoEquip(2L);
         } else {
-            equipBean.setTipo(1L);
+            equipBean.setTipoEquip(1L);
         }
         return equipBean;
     }
@@ -39,14 +40,8 @@ public class EquipDAO {
         VerifDadosServ.getInstance().verDados(dado, "Equip", telaAtual, telaProx, progressDialog);
     }
 
-    public void recDadosEquip(String result){
+    public void recDadosEquip(String objPrinc, String objSeg){
         try {
-
-            int pos1 = result.indexOf("#") + 1;
-            int pos2 = result.indexOf("_") + 1;
-            String objPrinc = result.substring(0, (pos1 - 1));
-            String objSeg = result.substring(pos1, (pos2 - 1));
-            String objTerc = result.substring(pos2);
 
             JSONObject jObj = new JSONObject(objPrinc);
             JSONArray jsonArray = jObj.getJSONArray("dados");
@@ -80,21 +75,6 @@ public class EquipDAO {
 
                 }
 
-                jObj = new JSONObject(objTerc);
-                jsonArray = jObj.getJSONArray("dados");
-
-                REquipPneuBean rEquipPneuBean = new REquipPneuBean();
-                rEquipPneuBean.deleteAll();
-
-                for (int j = 0; j < jsonArray.length(); j++) {
-
-                    JSONObject objeto = jsonArray.getJSONObject(j);
-                    Gson gson = new Gson();
-                    REquipPneuBean rEquipPneu = gson.fromJson(objeto.toString(), REquipPneuBean.class);
-                    rEquipPneu.insert();
-
-                }
-
                 ConfigCTR configCTR = new ConfigCTR();
                 configCTR.setEquipConfig(equipBean);
 
@@ -108,6 +88,24 @@ public class EquipDAO {
             LogErroDAO.getInstance().insert(e);
             VerifDadosServ.getInstance().msgSemTerm("FALHA DE PESQUISA DE EQUIPAMENTO! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
+    }
+
+    public String dadosEnvioEquip(){
+
+        EquipBean equipBean = new EquipBean();
+        List equipList = equipBean.all();
+        JsonArray equipJsonArray = new JsonArray();
+
+        equipBean = (EquipBean) equipList.get(0);
+        Gson gson = new Gson();
+        equipJsonArray.add(gson.toJsonTree(equipBean, equipBean.getClass()));
+        equipList.clear();
+
+        JsonObject equipJsonObj = new JsonObject();
+        equipJsonObj.add("equip", equipJsonArray);
+
+        return equipJsonObj.toString();
+
     }
 
 }

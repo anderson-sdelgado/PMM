@@ -42,7 +42,7 @@ public class RendimentoActivity extends ActivityGeneric {
             cont = pmmContext.getPosRend();
         }
 
-        rendMMBean =  pmmContext.getBoletimCTR().getRend(cont);
+        rendMMBean =  pmmContext.getMotoMecFertCTR().getRend(cont);
 
         textViewRendimento.setText("OS " + rendMMBean.getNroOSRendMM() +" \nRENDIMENTO :");
         if(rendMMBean.getValorRendMM() > 0){
@@ -60,7 +60,7 @@ public class RendimentoActivity extends ActivityGeneric {
                 }
                 else{
                     if(pmmContext.getVerPosTela() == 7){
-                        Intent it = new Intent(RendimentoActivity.this, MenuPrincNormalActivity.class);
+                        Intent it = new Intent(RendimentoActivity.this, MenuPrincPMMActivity.class);
                         startActivity(it);
                         finish();
                     }
@@ -104,11 +104,11 @@ public class RendimentoActivity extends ActivityGeneric {
     public void verTela(Double rendNum){
 
         rendMMBean.setValorRendMM(rendNum);
-        pmmContext.getBoletimCTR().atualRend(rendMMBean);
+        pmmContext.getMotoMecFertCTR().atualRend(rendMMBean);
 
         if (pmmContext.getVerPosTela() == 4) {
-            if (pmmContext.getBoletimCTR().qtdeRend() == pmmContext.getContRend()) {
-                pmmContext.getBoletimCTR().salvarBolFechadoMM();
+            if (pmmContext.getMotoMecFertCTR().qtdeRend() == pmmContext.getContRend()) {
+                pmmContext.getMotoMecFertCTR().salvarBolMMFertFechado();
                 Intent it = new Intent(RendimentoActivity.this, MenuInicialActivity.class);
                 startActivity(it);
                 finish();

@@ -16,7 +16,7 @@ public class RecolhFertBean extends Entidade {
     @DatabaseField(generatedId=true)
     private Long idRecolhFert;
     @DatabaseField
-    private Long idBolRecolhFert;
+    private Long idBolMMFert;
     @DatabaseField
     private Long nroOSRecolhFert;
     @DatabaseField
@@ -35,12 +35,12 @@ public class RecolhFertBean extends Entidade {
         this.idRecolhFert = idRecolhFert;
     }
 
-    public Long getIdBolRecolhFert() {
-        return idBolRecolhFert;
+    public Long getIdBolMMFert() {
+        return idBolMMFert;
     }
 
-    public void setIdBolRecolhFert(Long idBolRecolhFert) {
-        this.idBolRecolhFert = idBolRecolhFert;
+    public void setIdBolMMFert(Long idBolMMFert) {
+        this.idBolMMFert = idBolMMFert;
     }
 
     public Long getNroOSRecolhFert() {

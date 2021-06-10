@@ -56,7 +56,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                     progressBar.setMessage("Atualizando Atividades...");
                     progressBar.show();
 
-                    pmmContext.getBoletimCTR().verAtiv( String.valueOf(nroOS), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
+                    pmmContext.getMotoMecFertCTR().verAtiv( String.valueOf(nroOS), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
 
                 } else {
 
@@ -92,7 +92,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
             textViewTituloAtividade.setText("ATIVIDADE");
         }
 
-        ativArrayList = pmmContext.getBoletimCTR().getAtivArrayList(nroOS);
+        ativArrayList = pmmContext.getMotoMecFertCTR().getAtivArrayList(nroOS);
 
         ArrayList<String> itens = new ArrayList<String>();
         for (int i = 0; i < ativArrayList.size(); i++) {
@@ -151,7 +151,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
+                                    Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
                                     startActivity(it);
                                     finish();
                                 }
@@ -160,7 +160,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                         } else {
 
-                            if (pmmContext.getApontCTR().verifBackupApont(0L)) {
+                            if (pmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {
 
                                 AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
                                 alerta.setTitle("ATENÇÃO");
@@ -175,15 +175,15 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                             } else {
 
-                                if (pmmContext.getConfigCTR().getEquip().getTipo() == 1) {
+                                if (pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1) {
 
-                                    List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList();
+                                    List<RFuncaoAtivParBean> rFuncaoAtivParList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList();
 
                                     boolean transbordo = false;
                                     boolean rendimento = false;
 
-                                    for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
-                                        RFuncaoAtivParBean rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtividadeList.get(i);
+                                    for (int i = 0; i < rFuncaoAtivParList.size(); i++) {
+                                        RFuncaoAtivParBean rFuncaoAtivParBean = rFuncaoAtivParList.get(i);
                                         if (rFuncaoAtivParBean.getCodFuncao() == 2) {
                                             transbordo = true;
                                         }
@@ -191,7 +191,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                             rendimento = true;
                                         }
                                     }
-                                    rFuncaoAtividadeList.clear();
+                                    rFuncaoAtivParList.clear();
 
                                     if (transbordo) {
                                         Intent it = new Intent(ListaAtividadeActivity.this, TransbordoActivity.class);
@@ -199,12 +199,12 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                         finish();
                                     } else {
 
-                                        pmmContext.getApontCTR().salvarApont(1L, 0L, 0L, getLongitude(), getLatitude());
+                                        pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude());
                                         if (rendimento) {
-                                            pmmContext.getBoletimCTR().insRendBD(nroOS);
+                                            pmmContext.getMotoMecFertCTR().insRendBD(nroOS);
                                         }
 
-                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincNormalActivity.class);
+                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
                                         startActivity(it);
                                         finish();
 

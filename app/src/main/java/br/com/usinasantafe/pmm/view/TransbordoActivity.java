@@ -56,7 +56,7 @@ public class TransbordoActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getBoletimCTR().atualDadosEquipSeg(TransbordoActivity.this, TransbordoActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDadosEquipSeg(TransbordoActivity.this, TransbordoActivity.class, progressBar);
 
                         } else {
 
@@ -81,7 +81,6 @@ public class TransbordoActivity extends ActivityGeneric {
                 alerta.setPositiveButton("NÃO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 });
 
@@ -100,7 +99,7 @@ public class TransbordoActivity extends ActivityGeneric {
 
                     Long idTransb = Long.parseLong(editTextPadrao.getText().toString());
 
-                    if(pmmContext.getBoletimCTR().verTransb(idTransb)) {
+                    if(pmmContext.getMotoMecFertCTR().verTransb(idTransb)) {
 
                         if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
 
@@ -110,7 +109,7 @@ public class TransbordoActivity extends ActivityGeneric {
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent it = new Intent(TransbordoActivity.this, MenuPrincNormalActivity.class);
+                                    Intent it = new Intent(TransbordoActivity.this, MenuPrincPMMActivity.class);
                                     startActivity(it);
                                     finish();
                                 }
@@ -119,7 +118,7 @@ public class TransbordoActivity extends ActivityGeneric {
 
                         } else {
 
-                            if (pmmContext.getApontCTR().verifBackupApontTransb(0L, idTransb)) {
+                            if (pmmContext.getMotoMecFertCTR().verifBackupApontTransb(0L, idTransb)) {
 
                                 AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);
                                 alerta.setTitle("ATENÇÃO");
@@ -136,12 +135,12 @@ public class TransbordoActivity extends ActivityGeneric {
                             } else {
 
                                 if (pmmContext.getVerPosTela() == 2) {
-                                    pmmContext.getApontCTR().salvarApont(1L, 0L, idTransb, getLongitude(), getLatitude());
+                                    pmmContext.getMotoMecFertCTR().salvarApont(0L, idTransb, getLongitude(), getLatitude());
                                 } else {
-                                    pmmContext.getApontCTR().inserirApontTransb(pmmContext.getBoletimCTR(), idTransb);
+                                    pmmContext.getMotoMecFertCTR().inserirApontTransb(idTransb);
                                 }
 
-                                List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList();
+                                List<RFuncaoAtivParBean> rFuncaoAtividadeList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList();
 
                                 boolean rendimento = false;
 
@@ -155,10 +154,10 @@ public class TransbordoActivity extends ActivityGeneric {
 
                                 if (rendimento) {
                                     ConfigCTR configCTR = new ConfigCTR();
-                                    pmmContext.getBoletimCTR().insRendBD(configCTR.getConfig().getOsConfig());
+                                    pmmContext.getMotoMecFertCTR().insRendBD(configCTR.getConfig().getOsConfig());
                                 }
 
-                                Intent it = new Intent(TransbordoActivity.this, MenuPrincNormalActivity.class);
+                                Intent it = new Intent(TransbordoActivity.this, MenuPrincPMMActivity.class);
                                 startActivity(it);
 
                             }
@@ -202,7 +201,7 @@ public class TransbordoActivity extends ActivityGeneric {
             finish();
         }
         else{
-            Intent it = new Intent(TransbordoActivity.this, MenuPrincNormalActivity.class);
+            Intent it = new Intent(TransbordoActivity.this, MenuPrincPMMActivity.class);
             startActivity(it);
             finish();
         }

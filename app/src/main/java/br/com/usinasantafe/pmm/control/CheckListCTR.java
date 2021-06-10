@@ -35,9 +35,11 @@ public class CheckListCTR {
         respItemCheckListDAO.clearRespItem(cabecCheckListBean.getIdCabCL());
     }
 
-    public void createCabecAberto(BoletimCTR boletimCTR){
+    public void createCabecAberto(){
+        ConfigCTR configCTR = new ConfigCTR();
+        MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
-        cabecCheckListDAO.createCabecAberto(boletimCTR);
+        cabecCheckListDAO.createCabecAberto(configCTR.getEquip().getNroEquip() , motoMecFertCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert(), motoMecFertCTR.getBoletimMMFertAberto().getIdTurnoBolMMFert());
     }
 
     public void salvarBolFechado(){
@@ -60,10 +62,10 @@ public class CheckListCTR {
         itemCheckListDAO.recDadosCheckList(result);
     }
 
-    public List getItemList(){
+    public List<ItemCheckListBean> getItemList(){
         ConfigCTR configCTR = new ConfigCTR();
         ItemCheckListDAO itemCheckListDAO = new ItemCheckListDAO();
-        List itemCheckListList = itemCheckListDAO.getItemList(configCTR.getEquip());
+        List<ItemCheckListBean> itemCheckListList = itemCheckListDAO.getItemList(configCTR.getEquip());
         return itemCheckListList;
     }
 

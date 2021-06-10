@@ -17,7 +17,6 @@ import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.TurnoBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.Tempo;
 
 public class ListaTurnoActivity extends ActivityGeneric {
@@ -26,7 +25,6 @@ public class ListaTurnoActivity extends ActivityGeneric {
     private List turnoList;
     private PMMContext pmmContext;
     private ProgressDialog progressBar;
-    private ConfigCTR configCTR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +59,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getBoletimCTR().atualDadosTurno(ListaTurnoActivity.this, ListaTurnoActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDadosTurno(ListaTurnoActivity.this, ListaTurnoActivity.class, progressBar);
 
                         } else {
 
@@ -96,9 +94,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
 
         });
 
-        configCTR = new ConfigCTR();
-
-        turnoList = pmmContext.getBoletimCTR().getTurnoList();
+        turnoList = pmmContext.getMotoMecFertCTR().getTurnoCodList();
 
         ArrayList<String> itens = new ArrayList<String>();
 
@@ -120,16 +116,16 @@ public class ListaTurnoActivity extends ActivityGeneric {
                 TurnoBean turnoBean = (TurnoBean) turnoList.get(position);
                 turnoList.clear();
 
-                pmmContext.getBoletimCTR().setTurnoBol(turnoBean.getIdTurno());
+                pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setIdTurnoBolMMFert(turnoBean.getIdTurno());
 
-                if(Tempo.getInstance().verDthrServ(configCTR.getConfig().getDtServConfig())){
-                    configCTR.setDifDthrConfig(0L);
+                if(Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())){
+                    pmmContext.getConfigCTR().setDifDthrConfig(0L);
                     Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
                     startActivity(it);
                     finish();
                 }
                 else{
-                    if(configCTR.getConfig().getDifDthrConfig() == 0){
+                    if(pmmContext.getConfigCTR().getConfig().getDifDthrConfig() == 0){
                         pmmContext.setContDataHora(1);
                         Intent it = new Intent(ListaTurnoActivity.this, MsgDataHoraActivity.class);
                         startActivity(it);

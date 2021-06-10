@@ -7,19 +7,16 @@ import android.util.Log;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.model.bean.LogErroBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontImpleMMBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.MovLeiraBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.model.pst.DatabaseHelper;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontFertBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimFertBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CabecCheckListBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCheckListBean;
@@ -29,55 +26,53 @@ public class ReceberAlarme extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 
-//		if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
+		if (DatabaseHelper.getInstance() == null) {
+			new DatabaseHelper(context);
+		}
 
-			if (DatabaseHelper.getInstance() == null) {
-				new DatabaseHelper(context);
-			}
+		Log.i("PMM", "DATA HORA = " + Tempo.getInstance().dataComHora());
+		teste();
 
-			Log.i("PMM", "DATA HORA = " + Tempo.getInstance().dataComHora());
-			teste();
+		if (EnvioDadosServ.getInstance().verifDadosEnvio()) {
+			Log.i("PMM", "ENVIANDO");
+			EnvioDadosServ.getInstance().envioDados(context);
+		}
 
-			if (EnvioDadosServ.getInstance().verifDadosEnvio()) {
-				Log.i("PMM", "ENVIANDO");
-				EnvioDadosServ.getInstance().envioDados(context);
-			}
-
-//		}
 	}
 
 	public void teste() {
 
-		BoletimMMBean boletimMMBean = new BoletimMMBean();
-		List boletimMMList = boletimMMBean.all();
+		BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
+		List boletimMMFertList = boletimMMFertBean.all();
 
 		Log.i("PMM", "AKI");
 
-		for (int i = 0; i < boletimMMList.size(); i++) {
+		for (int i = 0; i < boletimMMFertList.size(); i++) {
 
-			boletimMMBean = (BoletimMMBean) boletimMMList.get(i);
+			boletimMMFertBean = (BoletimMMFertBean) boletimMMFertList.get(i);
 			Log.i("PMM", "BOLETIM MM");
-			Log.i("PMM", "idBoletim = " + boletimMMBean.getIdBolMM());
-			Log.i("PMM", "idExtBoletim = " + boletimMMBean.getIdExtBolMM());
-			Log.i("PMM", "dthrInicioBoletim = " + boletimMMBean.getDthrInicialBolMM());
-			Log.i("PMM", "dthrFimBoletim = " + boletimMMBean.getDthrFinalBolMM());
-			Log.i("PMM", "statusBoletim = " + boletimMMBean.getStatusBolMM());
+			Log.i("PMM", "idBoletim = " + boletimMMFertBean.getIdBolMMFert());
+			Log.i("PMM", "idExtBoletim = " + boletimMMFertBean.getIdExtBolMMFert());
+			Log.i("PMM", "matricFuncBoletim = " + boletimMMFertBean.getMatricFuncBolMMFert());
+			Log.i("PMM", "idTurnoBoletim = " + boletimMMFertBean.getIdTurnoBolMMFert());
+			Log.i("PMM", "dthrInicioBoletim = " + boletimMMFertBean.getDthrInicialBolMMFert());
+			Log.i("PMM", "dthrFimBoletim = " + boletimMMFertBean.getDthrFinalBolMMFert());
+			Log.i("PMM", "statusBoletim = " + boletimMMFertBean.getStatusBolMMFert());
 
 		}
 
-		ApontMMBean apontMMBean = new ApontMMBean();
+		ApontMMFertBean apontMMBean = new ApontMMFertBean();
 		List apontaMMList = apontMMBean.all();
 
 		for (int i = 0; i < apontaMMList.size(); i++) {
 
-			apontMMBean = (ApontMMBean) apontaMMList.get(i);
+			apontMMBean = (ApontMMFertBean) apontaMMList.get(i);
 			Log.i("PMM", "APONTAMENTO MM");
-			Log.i("PMM", "idAponta = " + apontMMBean.getIdApontMM());
-			Log.i("PMM", "idBolAponta = " + apontMMBean.getIdBolApontMM());
-			Log.i("PMM", "idExtBolAponta = " + apontMMBean.getIdExtBolApontMM());
-			Log.i("PMM", "dthrAponta = " + apontMMBean.getDthrApontMM());
-			Log.i("PMM", "transbAponta = " + apontMMBean.getTransbApontMM());
-			Log.i("PMM", "statusApontMM = " + apontMMBean.getStatusApontMM());
+			Log.i("PMM", "idApont = " + apontMMBean.getIdApontMMFert());
+			Log.i("PMM", "idBolApont = " + apontMMBean.getIdBolMMFert());
+			Log.i("PMM", "dthrApont = " + apontMMBean.getDthrApontMMFert());
+			Log.i("PMM", "transbApont = " + apontMMBean.getTransbApontMMFert());
+			Log.i("PMM", "statusApont = " + apontMMBean.getStatusApontMMFert());
 
 		}
 
@@ -100,7 +95,7 @@ public class ReceberAlarme extends BroadcastReceiver {
 			apontImpleMMBean = (ApontImpleMMBean) apontImpleList.get(l);
 			Log.i("PMM", "APONT IMPLEMENTO MM");
 			Log.i("PMM", "idApontImplemento = " + apontImpleMMBean.getIdApontImpleMM());
-			Log.i("PMM", "idApontMM = " + apontImpleMMBean.getIdApontMM());
+			Log.i("PMM", "idApontMM = " + apontImpleMMBean.getIdApontMMFert());
 			Log.i("PMM", "posImplemento = " + apontImpleMMBean.getPosImpleMM());
 			Log.i("PMM", "codEquipImplemento = " + apontImpleMMBean.getCodEquipImpleMM());
 			Log.i("PMM", "dthrImpleMM = " + apontImpleMMBean.getDthrImpleMM());
@@ -113,57 +108,12 @@ public class ReceberAlarme extends BroadcastReceiver {
 			rendMMBean = (RendMMBean) rendimentoList.get(j);
 			Log.i("PMM", "RENDIMENTO");
 			Log.i("PMM", "idRendimento = " + rendMMBean.getIdRendMM());
-			Log.i("PMM", "idBolRendimento = " + rendMMBean.getIdBolRendMM());
-			Log.i("PMM", "idExtBolRendimento = " + rendMMBean.getIdExtBolRendMM());
+			Log.i("PMM", "idBolRendimento = " + rendMMBean.getIdBolMMFert());
 			Log.i("PMM", "nroOSRendimento = " + rendMMBean.getNroOSRendMM());
 			Log.i("PMM", "valorRendimento = " + rendMMBean.getValorRendMM());
 			Log.i("PMM", "dthrRendimento = " + rendMMBean.getDthrRendMM());
 		}
 
-		MovLeiraBean movLeiraBean = new MovLeiraBean();
-		List movLeiraList = movLeiraBean.all();
-
-		for (int l = 0; l < movLeiraList.size(); l++) {
-			movLeiraBean = (MovLeiraBean) movLeiraList.get(l);
-			Log.i("PMM", "MOVLEIRA");
-			Log.i("PMM", "idMovLeira = " + movLeiraBean.getIdMovLeira());
-			Log.i("PMM", "idBolMovLeira = " + movLeiraBean.getIdBolMovLeira());
-			Log.i("PMM", "idExtBolMovLeira = " + movLeiraBean.getIdExtBolMovLeira());
-			Log.i("PMM", "idLeira = " + movLeiraBean.getIdLeira());
-			Log.i("PMM", "tipoMovLeira = " + movLeiraBean.getTipoMovLeira());
-			Log.i("PMM", "dataHoraMovLeira = " + movLeiraBean.getDataHoraMovLeira());
-			Log.i("PMM", "statusMovLeira = " + movLeiraBean.getStatusMovLeira());
-		}
-
-		BoletimFertBean boletimFertBean = new BoletimFertBean();
-		List boletimFertList = boletimFertBean.all();
-
-		for (int i = 0; i < boletimFertList.size(); i++) {
-
-			boletimFertBean = (BoletimFertBean) boletimFertList.get(i);
-			Log.i("PMM", "BOLETIM FERT");
-			Log.i("PMM", "idBoletim = " + boletimFertBean.getIdBolFert());
-			Log.i("PMM", "idExtBoletim = " + boletimFertBean.getIdExtBolFert());
-			Log.i("PMM", "dthrInicioBoletim = " + boletimFertBean.getDthrInicialBolFert());
-			Log.i("PMM", "dthrFimBoletim = " + boletimFertBean.getDthrFinalBolFert());
-			Log.i("PMM", "statusBoletim = " + boletimFertBean.getStatusBolFert());
-
-		}
-
-		ApontFertBean apontFertBean = new ApontFertBean();
-		List apontaAplicFertList = apontFertBean.all();
-
-		for (int j = 0; j < apontaAplicFertList.size(); j++) {
-			apontFertBean = (ApontFertBean) apontaAplicFertList.get(j);
-
-			Log.i("PMM", "APONTA FERT");
-			Log.i("PMM", "idApontaAplicFert = " + apontFertBean.getIdApontFert());
-			Log.i("PMM", "idBolApontaAplicFert = " + apontFertBean.getIdBolApontFert());
-			Log.i("PMM", "idExtBolApontaAplicFert = " + apontFertBean.getIdExtBolApontFert());
-			Log.i("PMM", "dthrApontFert = " + apontFertBean.getDthrApontFert());
-			Log.i("PMM", "statusApontFert = " + apontFertBean.getStatusApontFert());
-
-		}
 
 		ConfigBean configBean = new ConfigBean();
 		List configList = configBean.all();

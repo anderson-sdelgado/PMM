@@ -16,9 +16,7 @@ public class RendMMBean extends Entidade {
     @DatabaseField(generatedId=true)
     private Long idRendMM;
     @DatabaseField
-    private Long idBolRendMM;
-    @DatabaseField
-    private Long idExtBolRendMM;
+    private Long idBolMMFert;
     @DatabaseField
     private Long nroOSRendMM;
     @DatabaseField
@@ -33,20 +31,12 @@ public class RendMMBean extends Entidade {
         return idRendMM;
     }
 
-    public Long getIdBolRendMM() {
-        return idBolRendMM;
+    public Long getIdBolMMFert() {
+        return idBolMMFert;
     }
 
-    public void setIdBolRendMM(Long idBolRendMM) {
-        this.idBolRendMM = idBolRendMM;
-    }
-
-    public Long getIdExtBolRendMM() {
-        return idExtBolRendMM;
-    }
-
-    public void setIdExtBolRendMM(Long idExtBolRendMM) {
-        this.idExtBolRendMM = idExtBolRendMM;
+    public void setIdBolMMFert(Long idBolMMFert) {
+        this.idBolMMFert = idBolMMFert;
     }
 
     public Long getNroOSRendMM() {

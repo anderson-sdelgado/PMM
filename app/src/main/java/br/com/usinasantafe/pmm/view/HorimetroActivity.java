@@ -12,7 +12,6 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 
@@ -20,7 +19,7 @@ public class HorimetroActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private Double horimetroNum;
-    private ConfigCTR configCTR;
+//    private ConfigCTR configCTR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +43,13 @@ public class HorimetroActivity extends ActivityGeneric {
                     String horimetro = editTextPadrao.getText().toString();
                     horimetroNum = Double.valueOf(horimetro.replace(",", "."));
 
-                    configCTR = new ConfigCTR();
-                    if (horimetroNum >= configCTR.getConfig().getHorimetroConfig()) {
+                    if (horimetroNum >= pmmContext.getConfigCTR().getConfig().getHorimetroConfig()) {
                         verTela();
                     } else {
 
                         AlertDialog.Builder alerta = new AlertDialog.Builder(HorimetroActivity.this);
                         alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("O HORIMETRO DIGITADO " + horimetroNum + " É MENOR QUE O HORIMETRO ANTERIOR DA MAQUINA " + configCTR.getConfig().getHorimetroConfig() + ". DESEJA MANTER ESSE VALOR?");
+                        alerta.setMessage("O HORIMETRO DIGITADO " + horimetroNum + " É MENOR QUE O HORIMETRO ANTERIOR DA MAQUINA " + pmmContext.getConfigCTR().getConfig().getHorimetroConfig() + ". DESEJA MANTER ESSE VALOR?");
 
                         alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                             @Override
@@ -100,9 +98,9 @@ public class HorimetroActivity extends ActivityGeneric {
     }
 
     public void salvarBoletimAberto() {
-        pmmContext.getBoletimCTR().setHodometroInicialBol(horimetroNum, getLongitude(), getLatitude());
-        if(configCTR.getEquip().getTipo() == 1){
-            List rFuncaoAtividadeList = pmmContext.getBoletimCTR().getFuncaoAtividadeList();
+        pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setHodometroInicialBol(horimetroNum, getLongitude(), getLatitude());
+        if(pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1){
+            List<RFuncaoAtivParBean> rFuncaoAtividadeList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList();
             boolean implemento = false;
             for (int i = 0; i < rFuncaoAtividadeList.size(); i++) {
                 RFuncaoAtivParBean rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtividadeList.get(i);
@@ -112,19 +110,18 @@ public class HorimetroActivity extends ActivityGeneric {
             }
             rFuncaoAtividadeList.clear();
             if(implemento){
-                pmmContext.setContImplemento(1);
+                pmmContext.setContImplemento(1L);
                 Intent it = new Intent(HorimetroActivity.this, ImplementoActivity.class);
                 startActivity(it);
                 finish();
             }
             else{
-                configCTR.setHorimetroConfig(horimetroNum);
-                pmmContext.getBoletimCTR().salvarBolAbertoMM();
-                CheckListCTR checkListCTR = new CheckListCTR();
-                if(checkListCTR.verAberturaCheckList(pmmContext.getBoletimCTR().getTurno())){
-                    pmmContext.getApontCTR().inserirParadaCheckList(pmmContext.getBoletimCTR());
+                pmmContext.getConfigCTR().setHorimetroConfig(horimetroNum);
+                pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto();
+                if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().getIdTurnoBolMMFert())){
+                    pmmContext.getMotoMecFertCTR().inserirParadaCheckList();
                     pmmContext.setPosCheckList(1);
-                    checkListCTR.createCabecAberto(pmmContext.getBoletimCTR());
+                    pmmContext.getCheckListCTR().createCabecAberto();
                     if (pmmContext.getConfigCTR().getConfig().getAtualCheckList().equals(1L)) {
                         Intent it = new Intent(HorimetroActivity.this, PergAtualCheckListActivity.class);
                         startActivity(it);
@@ -151,29 +148,29 @@ public class HorimetroActivity extends ActivityGeneric {
     }
 
     public void salvarBoletimFechado() {
-        configCTR.setHorimetroConfig(horimetroNum);
-        pmmContext.getBoletimCTR().setHodometroFinalBol(horimetroNum);
-        if(configCTR.getEquip().getTipo() == 1){
-            if (pmmContext.getBoletimCTR().verRendMM()) {
+        pmmContext.getConfigCTR().setHorimetroConfig(horimetroNum);
+        pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setHodometroFinalBolMMFert(horimetroNum);
+        if(pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1){
+            if (pmmContext.getMotoMecFertCTR().verRendMM()) {
                 pmmContext.setContRend(1);
                 Intent it = new Intent(HorimetroActivity.this, RendimentoActivity.class);
                 startActivity(it);
                 finish();
             } else {
-                pmmContext.getBoletimCTR().salvarBolFechadoMM();
+                pmmContext.getMotoMecFertCTR().salvarBolMMFertFechado();
                 Intent it = new Intent(HorimetroActivity.this, MenuInicialActivity.class);
                 startActivity(it);
                 finish();
             }
         }
         else{
-            if (pmmContext.getBoletimCTR().verRecolh()) {
+            if (pmmContext.getMotoMecFertCTR().verRecolh()) {
                 pmmContext.setContRecolh(1);
                 Intent it = new Intent(HorimetroActivity.this, RecolhimentoActivity.class);
                 startActivity(it);
                 finish();
             } else {
-                pmmContext.getBoletimCTR().salvarBolFechadoFert();
+                pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto();
                 Intent it = new Intent(HorimetroActivity.this, MenuInicialActivity.class);
                 startActivity(it);
                 finish();
@@ -188,7 +185,7 @@ public class HorimetroActivity extends ActivityGeneric {
             startActivity(it);
             finish();
         } else {
-            Intent it = new Intent(HorimetroActivity.this, MenuPrincNormalActivity.class);
+            Intent it = new Intent(HorimetroActivity.this, MenuPrincPMMActivity.class);
             startActivity(it);
             finish();
         }

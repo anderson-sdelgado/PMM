@@ -8,16 +8,21 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfPlantioBean;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 
 public class DadosPlantioActivity extends ActivityGeneric {
 
+    private PMMContext pmmContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dados_plantio);
+
+        pmmContext = (PMMContext) getApplication();
 
         TextView textViewTituloPlantio = (TextView) findViewById(R.id.textViewTituloPlantio);
         TextView textViewValorDM = (TextView) findViewById(R.id.textViewValorDM);
@@ -27,10 +32,7 @@ public class DadosPlantioActivity extends ActivityGeneric {
         TextView textViewValorMP = (TextView) findViewById(R.id.textViewValorMP);
         Button buttonSair = (Button) findViewById(R.id.buttonSair);
 
-        InfPlantioBean infPlantioBean = new InfPlantioBean();
-        List infPlantioList = infPlantioBean.all();
-        infPlantioBean = (InfPlantioBean) infPlantioList.get(0);
-        infPlantioList.clear();
+        InfPlantioBean infPlantioBean = pmmContext.getInformativoCTR().getInfPlantio();
 
         textViewTituloPlantio.setText("DADOS DE PLANTIO\n" + infPlantioBean.getDthrPlantio());
         textViewValorDM.setText(String.valueOf(infPlantioBean.getPorcDispon()).replace(".", ",") + "%");
@@ -39,13 +41,12 @@ public class DadosPlantioActivity extends ActivityGeneric {
         textViewMetaMP.setText(String.valueOf(infPlantioBean.getMediaProdPlanej()).replace(".", ","));
         textViewValorMP.setText(String.valueOf(infPlantioBean.getMediaProdReal()).replace(".", ","));
 
-        ConfigCTR configCTR = new ConfigCTR();
-        configCTR.atualVerInforConfig(3L);
+        pmmContext.getConfigCTR().atualVerInforConfig(3L);
 
         buttonSair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(DadosPlantioActivity.this, MenuPrincNormalActivity.class);
+                Intent it = new Intent(DadosPlantioActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();
             }
