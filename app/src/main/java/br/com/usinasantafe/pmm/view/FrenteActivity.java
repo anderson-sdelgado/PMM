@@ -23,8 +23,8 @@ public class FrenteActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonOkFrente = (Button) findViewById(R.id.buttonOkPadrao);
-        Button buttonCancFrente = (Button) findViewById(R.id.buttonCancPadrao);
+        Button buttonOkFrente = findViewById(R.id.buttonOkPadrao);
+        Button buttonCancFrente = findViewById(R.id.buttonCancPadrao);
 
         buttonOkFrente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,7 +37,6 @@ public class FrenteActivity extends ActivityGeneric {
                     if (frente < 50) {
 
                         pmmContext.getCecCTR().salvarPrecCECAberto();
-
                         Intent it = new Intent(FrenteActivity.this, OSActivity.class);
                         startActivity(it);
                         finish();

@@ -28,17 +28,17 @@ public class RendimentoActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonOkRendimento = (Button) findViewById(R.id.buttonOkPadrao);
-        Button buttonCancRendimento = (Button) findViewById(R.id.buttonCancPadrao);
-        TextView textViewRendimento = (TextView) findViewById(R.id.textViewPadrao);
-        EditText editText = (EditText) findViewById(R.id.editTextPadrao);
+        Button buttonOkRendimento = findViewById(R.id.buttonOkPadrao);
+        Button buttonCancRendimento = findViewById(R.id.buttonCancPadrao);
+        TextView textViewRendimento = findViewById(R.id.textViewPadrao);
+        EditText editText = findViewById(R.id.editTextPadrao);
 
         int cont = 0;
 
-        if(pmmContext.getVerPosTela() == 4){
+        if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L){
             cont = pmmContext.getContRend() - 1;
         }
-        else if(pmmContext.getVerPosTela() == 7){
+        else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 7L){
             cont = pmmContext.getPosRend();
         }
 
@@ -59,7 +59,7 @@ public class RendimentoActivity extends ActivityGeneric {
                     verifRend();
                 }
                 else{
-                    if(pmmContext.getVerPosTela() == 7){
+                    if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 7L){
                         Intent it = new Intent(RendimentoActivity.this, MenuPrincPMMActivity.class);
                         startActivity(it);
                         finish();
@@ -81,7 +81,7 @@ public class RendimentoActivity extends ActivityGeneric {
     }
 
     public void onBackPressed()  {
-        if(pmmContext.getVerPosTela() == 4){
+        if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L){
             if(pmmContext.getPosRend() > 1){
                 pmmContext.setPosRend(pmmContext.getPosRend() - 1);
                 Intent it = new Intent(RendimentoActivity.this, RendimentoActivity.class);
@@ -94,7 +94,7 @@ public class RendimentoActivity extends ActivityGeneric {
                 finish();
             }
         }
-        else if(pmmContext.getVerPosTela() == 7){
+        else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 7L){
             Intent it = new Intent(RendimentoActivity.this, ListaOSRendActivity.class);
             startActivity(it);
             finish();
@@ -106,7 +106,7 @@ public class RendimentoActivity extends ActivityGeneric {
         rendMMBean.setValorRendMM(rendNum);
         pmmContext.getMotoMecFertCTR().atualRend(rendMMBean);
 
-        if (pmmContext.getVerPosTela() == 4) {
+        if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {
             if (pmmContext.getMotoMecFertCTR().qtdeRend() == pmmContext.getContRend()) {
                 pmmContext.getMotoMecFertCTR().salvarBolMMFertFechado();
                 Intent it = new Intent(RendimentoActivity.this, MenuInicialActivity.class);
@@ -120,7 +120,7 @@ public class RendimentoActivity extends ActivityGeneric {
             }
 
         }
-        else if (pmmContext.getVerPosTela() == 7) {
+        else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 7L) {
             Intent it = new Intent(RendimentoActivity.this, ListaOSRendActivity.class);
             startActivity(it);
             finish();

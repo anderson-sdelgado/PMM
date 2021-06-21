@@ -26,8 +26,8 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonSimAtualCL = (Button) findViewById(R.id.buttonSimAtualCL);
-        Button buttonNaoAtualCL = (Button) findViewById(R.id.buttonNaoAtualCL);
+        Button buttonSimAtualCL = findViewById(R.id.buttonSimAtualCL);
+        Button buttonNaoAtualCL = findViewById(R.id.buttonNaoAtualCL);
 
         buttonNaoAtualCL.setOnClickListener(new View.OnClickListener() {
 

@@ -12,10 +12,10 @@ public class MotoMecDAO {
     public MotoMecDAO() {
     }
 
-    public List<MotoMecBean> motoMecList(){
+    public List<MotoMecBean> motoMecList(Long aplic){
 
         ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqBeanAplic());
+        pesqArrayList.add(getPesqBeanAplic(aplic));
         pesqArrayList.add(getPesqBeanMotoMec());
 
         MotoMecBean motoMecBean = new MotoMecBean();
@@ -28,7 +28,7 @@ public class MotoMecDAO {
         MotoMecBean motoMecBean = new MotoMecBean();
         ArrayList pesqArrayList = new ArrayList();
 
-        pesqArrayList.add(getPesqBeanAplic());
+        pesqArrayList.add(getPesqBeanAplic(1L));
         pesqArrayList.add(getPesqBeanMotoMec());
 
         EspecificaPesquisa especificaPesquisa3 = new EspecificaPesquisa();
@@ -45,34 +45,12 @@ public class MotoMecDAO {
 
     }
 
-    public MotoMecBean getCheckList(){
-
-        MotoMecBean motoMecBean = new MotoMecBean();
-        ArrayList pesqArrayList = new ArrayList();
-
-        pesqArrayList.add(getPesqBeanAplic());
-        pesqArrayList.add(getPesqBeanParada());
-
-        EspecificaPesquisa especificaPesquisa3 = new EspecificaPesquisa();
-        especificaPesquisa3.setCampo("codFuncaoOperMotoMec");
-        especificaPesquisa3.setValor(18L);
-        especificaPesquisa3.setTipo(1);
-        pesqArrayList.add(especificaPesquisa3);
-
-        List<MotoMecBean> motoMecList = motoMecBean.get(pesqArrayList);
-        motoMecBean = motoMecList.get(0);
-        motoMecList.clear();
-
-        return motoMecBean;
-
-    }
-
     public MotoMecBean getSaidaCampo(){
 
         MotoMecBean motoMecBean = new MotoMecBean();
         ArrayList pesqArrayList = new ArrayList();
 
-        pesqArrayList.add(getPesqBeanAplic());
+        pesqArrayList.add(getPesqBeanAplic(1L));
         pesqArrayList.add(getPesqBeanInvisivel());
 
         EspecificaPesquisa especificaPesquisa3 = new EspecificaPesquisa();
@@ -89,19 +67,25 @@ public class MotoMecDAO {
 
     }
 
-    public MotoMecBean getVoltaTrabalho(){
+    public List<MotoMecBean> paradaList(Long aplic){
+
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqBeanAplic(aplic));
+        pesqArrayList.add(getPesqBeanParada());
+        MotoMecBean motoMecBean = new MotoMecBean();
+        return motoMecBean.getAndOrderBy(pesqArrayList, "posOperMotoMec", true);
+
+    }
+
+
+    public MotoMecBean getVoltaTrabalho(Long aplic, Long codFuncao){
 
         MotoMecBean motoMecBean = new MotoMecBean();
         ArrayList pesqArrayList = new ArrayList();
 
-        pesqArrayList.add(getPesqBeanAplic());
+        pesqArrayList.add(getPesqBeanAplic(aplic));
         pesqArrayList.add(getPesqBeanInvisivel());
-
-        EspecificaPesquisa especificaPesquisa3 = new EspecificaPesquisa();
-        especificaPesquisa3.setCampo("codFuncaoOperMotoMec");
-        especificaPesquisa3.setValor(14L);
-        especificaPesquisa3.setTipo(1);
-        pesqArrayList.add(especificaPesquisa3);
+        pesqArrayList.add(getPesqBeanFuncaoOper(codFuncao));
 
         List motoMecList = motoMecBean.get(pesqArrayList);
         motoMecBean = (MotoMecBean) motoMecList.get(0);
@@ -111,20 +95,10 @@ public class MotoMecDAO {
 
     }
 
-    public List<MotoMecBean> paradaList(){
-
-        ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqBeanAplic());
-        pesqArrayList.add(getPesqBeanParada());
-        MotoMecBean motoMecBean = new MotoMecBean();
-        return motoMecBean.getAndOrderBy(pesqArrayList, "posOperMotoMec", true);
-
-    }
-
-    private EspecificaPesquisa getPesqBeanAplic(){
+    private EspecificaPesquisa getPesqBeanAplic(Long aplic){
         EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
         especificaPesquisa.setCampo("aplicOperMotoMec");
-        especificaPesquisa.setValor(1L);
+        especificaPesquisa.setValor(aplic);
         especificaPesquisa.setTipo(1);
         return especificaPesquisa;
     }
@@ -149,6 +123,14 @@ public class MotoMecDAO {
         EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
         especificaPesquisa.setCampo("tipoOperMotoMec");
         especificaPesquisa.setValor(0L);
+        especificaPesquisa.setTipo(1);
+        return especificaPesquisa;
+    }
+
+    private EspecificaPesquisa getPesqBeanFuncaoOper(Long codFuncao){
+        EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
+        especificaPesquisa.setCampo("codFuncaoOperMotoMec");
+        especificaPesquisa.setValor(codFuncao);
         especificaPesquisa.setTipo(1);
         return especificaPesquisa;
     }

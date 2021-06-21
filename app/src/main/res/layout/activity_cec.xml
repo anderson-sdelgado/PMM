@@ -12,6 +12,15 @@
     tools:context=".view.CECActivity">
 
     <TextView
+        android:id="@+id/textViewCEC"
+        style="@style/TextViewTituloLista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/texto_titulo_leira"
+        android:paddingBottom="5dp"
+        />
+
+    <TextView
         android:id="@+id/textViewBoletim"
         android:layout_width="wrap_content"
         android:layout_height="0dp"

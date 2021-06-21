@@ -46,8 +46,8 @@ public class AdapterListRecolh extends BaseAdapter {
 
         view = layoutInflater.inflate(R.layout.activity_item_os_recol, null);
 
-        TextView textViewOSRecMang = (TextView) view.findViewById(R.id.textViewOSRecMang);
-        TextView textViewValorRecMang = (TextView) view.findViewById(R.id.textViewValorRecMang);
+        TextView textViewOSRecMang = view.findViewById(R.id.textViewOSRecMang);
+        TextView textViewValorRecMang = view.findViewById(R.id.textViewValorRecMang);
 
         RecolhFertBean recolhFertBean = (RecolhFertBean) itens.get(position);
 

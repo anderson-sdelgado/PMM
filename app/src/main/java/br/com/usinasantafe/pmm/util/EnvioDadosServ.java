@@ -6,6 +6,8 @@ import java.util.Map;
 import android.content.Context;
 import android.util.Log;
 
+import br.com.usinasantafe.pmm.control.CECCTR;
+import br.com.usinasantafe.pmm.control.CompostoCTR;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.util.conHttp.PostCadGenerico;
 import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
@@ -52,6 +54,59 @@ public class EnvioDadosServ {
 
     }
 
+    public void envioCarregInsumo() {
+
+        CompostoCTR compostoCTR = new CompostoCTR();
+        String dados = compostoCTR.dadosEnvioCarregInsumo();
+
+        String[] url = {urlsConexaoHttp.getsInsertCarregInsumo()};
+        Map<String, Object> parametrosPost = new HashMap<String, Object>();
+        parametrosPost.put("dado", dados);
+
+        Log.i("ECM", "CARREG = " + dados);
+
+        PostCadGenerico postCadGenerico = new PostCadGenerico();
+        postCadGenerico.setParametrosPost(parametrosPost);
+        postCadGenerico.execute(url);
+
+    }
+
+    public void envioLeiraDescarreg() {
+
+        CompostoCTR compostoCTR = new CompostoCTR();
+        String dados = compostoCTR.dadosEnvioLeiraDescarreg();
+
+        String[] url = {urlsConexaoHttp.getsInsertLeiraDescarreg()};
+        Map<String, Object> parametrosPost = new HashMap<String, Object>();
+        parametrosPost.put("dado", dados);
+
+        Log.i("ECM", "CARREG = " + dados);
+
+        PostCadGenerico postCadGenerico = new PostCadGenerico();
+        postCadGenerico.setParametrosPost(parametrosPost);
+        postCadGenerico.execute(url);
+
+    }
+
+    public void envioPreCEC() {
+
+        CECCTR cecCTR = new CECCTR();
+        String dados = cecCTR.dadosEnvioPreCEC();
+
+        String[] url = {urlsConexaoHttp.getsInsertPreCEC()};
+        Map<String, Object> parametrosPost = new HashMap<String, Object>();
+        parametrosPost.put("dado", dados);
+
+        Log.i("ECM", "DADOS VIAGEM = " + dados);
+
+        PostCadGenerico.getInstance().setParametrosPost(parametrosPost);
+
+        PostCadGenerico postCadGenerico = new PostCadGenerico();
+        postCadGenerico.setParametrosPost(parametrosPost);
+        postCadGenerico.execute(url);
+
+    }
+
     public void enviarBolFechadoMMFert() {
 
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
@@ -61,7 +116,7 @@ public class EnvioDadosServ {
 
         UrlsConexaoHttp urlsConexaoHttp = new UrlsConexaoHttp();
 
-        String[] url = {urlsConexaoHttp.getsInsertBolFechadoMM()};
+        String[] url = {urlsConexaoHttp.getsInsertBolFechadoMMFert()};
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
@@ -80,7 +135,7 @@ public class EnvioDadosServ {
 
         UrlsConexaoHttp urlsConexaoHttp = new UrlsConexaoHttp();
 
-        String[] url = {urlsConexaoHttp.getsInsertBolAbertoMM()};
+        String[] url = {urlsConexaoHttp.getsInsertBolAbertoMMFert()};
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
@@ -116,12 +171,27 @@ public class EnvioDadosServ {
         return checkListCTR.verEnvioDados();
     }
 
-    public Boolean verifBolFechado() {
+    public boolean verifEnviaCarregInsumo() {
+        CompostoCTR compostoCTR = new CompostoCTR();
+        return compostoCTR.verEnviaCarregInsumo();
+    }
+
+    public boolean verifEnvioLeiraDescarreg() {
+        CompostoCTR compostoCTR = new CompostoCTR();
+        return compostoCTR.verEnvioLeiraDescarreg();
+    }
+
+    public boolean verifPreCEC() {
+        CECCTR cecCTR = new CECCTR();
+        return cecCTR.verPreCECFechado();
+    }
+
+    public Boolean verifBolFechadoMMFert() {
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
         return motoMecFertCTR.verEnvioBolFech();
     }
 
-    public Boolean verifApont() {
+    public Boolean verifApontMMFert() {
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
         return motoMecFertCTR.verEnvioApont();
     }
@@ -170,11 +240,24 @@ public class EnvioDadosServ {
                 if (verifChecklist()) {
                     enviarChecklist();
                 } else {
-                    if (verifBolFechado()) {
-                        enviarBolFechadoMMFert();
+                    if (verifEnviaCarregInsumo()) {
+                        envioCarregInsumo();
                     } else {
-                        if (verifApont()) {
-                            enviarBolAbertoMMFert();
+                        if (verifEnvioLeiraDescarreg()) {
+                            envioLeiraDescarreg();
+                        } else {
+                            if (verifPreCEC()) {
+                                envioPreCEC();
+                            }
+                            else {
+                                if (verifBolFechadoMMFert()) {
+                                    enviarBolFechadoMMFert();
+                                } else {
+                                    if (verifApontMMFert()) {
+                                        enviarBolAbertoMMFert();
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -184,8 +267,11 @@ public class EnvioDadosServ {
 
     public boolean verifDadosEnvio() {
         if ((!verifInfor())
-                && (!verifBolFechado())
-                && (!verifApont())
+                && (!verifBolFechadoMMFert())
+                && (!verifEnviaCarregInsumo())
+                && (!verifEnvioLeiraDescarreg())
+                && (!verifPreCEC())
+                && (!verifApontMMFert())
                 && (!verifChecklist())
                 && (!verifLogErro())){
             enviando = false;
@@ -225,8 +311,16 @@ public class EnvioDadosServ {
         } else if (result.trim().startsWith("LOGERRO")) {
             ConfigCTR configCTR = new ConfigCTR();
             configCTR.updLogErro(result);
-        }
-        else{
+        } else if (result.trim().startsWith("GRAVOU-CARREGINSUMO")) {
+            CompostoCTR compostoCTR = new CompostoCTR();
+            compostoCTR.updateCarregInsumo(result);
+        } else if (result.trim().startsWith("GRAVOU-LEIRADESCARREG")) {
+            CompostoCTR compostoCTR = new CompostoCTR();
+            compostoCTR.updCarregLeiraDescarreg(result);
+        } else if(result.trim().startsWith("PRECEC")){
+            CECCTR cecCTR = new CECCTR();
+            cecCTR.atualPreCEC(result);
+        } else{
             LogErroDAO.getInstance().insert(result);
         }
 

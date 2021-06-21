@@ -1,7 +1,5 @@
 package br.com.usinasantafe.pmm.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,11 +22,10 @@ public class VerMotoristaActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonManterMotorista = (Button) findViewById(R.id.buttonManterMotorista);
-        Button buttonAlterarCabecalho = (Button) findViewById(R.id.buttonAlterarCabecalho);
-
-        TextView textViewCodMotorista = (TextView) findViewById(R.id.textViewCodMotorista);
-        TextView textViewNomeMotorista = (TextView) findViewById(R.id.textViewNomeMotorista);
+        Button buttonManterMotorista = findViewById(R.id.buttonManterMotorista);
+        Button buttonAlterarMotorista = findViewById(R.id.buttonAlterarMotorista);
+        TextView textViewCodMotorista = findViewById(R.id.textViewCodMotorista);
+        TextView textViewNomeMotorista = findViewById(R.id.textViewNomeMotorista);
 
         textViewCodMotorista.setText(String.valueOf(pmmContext.getMotoMecFertCTR().getMatricFunc().getMatricFunc()));
         textViewNomeMotorista.setText(pmmContext.getMotoMecFertCTR().getMatricFunc().getNomeFunc());
@@ -56,7 +53,7 @@ public class VerMotoristaActivity extends ActivityGeneric {
             }
         });
 
-        buttonAlterarCabecalho.setOnClickListener(new View.OnClickListener() {
+        buttonAlterarMotorista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -67,7 +64,7 @@ public class VerMotoristaActivity extends ActivityGeneric {
                 alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        pmmContext.setVerPosTela(9);
+                        pmmContext.getConfigCTR().setPosicaoTela(17L);
                         Intent it = new Intent(VerMotoristaActivity.this, HorimetroActivity.class);
                         startActivity(it);
                         finish();

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="br.com.usinasantafe.pmm">
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -15,6 +16,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <uses-feature android:name="android.hardware.camera" />
+
     <application
         android:name=".PMMContext"
         android:allowBackup="true"
@@ -24,6 +27,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".view.ProdutoActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".view.InformacaoActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".view.DigLeiraActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".view.VerMotoristaActivity"
             android:screenOrientation="portrait"
@@ -110,6 +125,7 @@
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -145,7 +161,7 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".view.ListaHistApontaActivity"
+            android:name=".view.ListaHistApontActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
@@ -157,7 +173,7 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".view.ListaOSRecolActivity"
+            android:name=".view.ListaOSRecolhActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
@@ -206,8 +222,12 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".view.EsperaInforActivity"
+            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".PMMContext" />
+        <activity
+            android:name=".zxing.CaptureActivity"
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity" />
     </application>
 
 </manifest>

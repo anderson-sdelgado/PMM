@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.variaveis.CECBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
 import br.com.usinasantafe.pmm.util.Tempo;
 
@@ -69,11 +70,12 @@ public class PreCECDAO {
         preCECBean.setCam(nroEquip);
         preCECBean.setStatus(2L);
         preCECBean.update();
+        delPrecCEC();
     }
 
     public String dadosEnvioPreCEC(){
 
-        List preCECFechadoList = getPreCECListFechado();
+        List preCECFechadoList = preCECListFechado();
         JsonArray preCECJsonArray = new JsonArray();
 
         for (int i = 0; i < preCECFechadoList.size(); i++) {
@@ -129,24 +131,34 @@ public class PreCECDAO {
 
     }
 
+    public void delPrecCEC(){
+        List<PreCECBean> precCECList = preCECListTerminado();
+        int qtdeCEC = precCECList.size();
+        if (qtdeCEC > 10) {
+            PreCECBean preCECBean = precCECList.get(0);
+            preCECBean.delete();
+        }
+        precCECList.clear();
+    }
+
     /////////////////////////////VERIFICAR DADOS////////////////////////////////
 
     public boolean verPreCECFechado(){
-        List preCECFechadoList = getPreCECListFechado();
+        List preCECFechadoList = preCECListFechado();
         boolean retorno = preCECFechadoList.size() > 0;
         preCECFechadoList.clear();
         return retorno;
     }
 
     public boolean verPreCECAberto(){
-        List preCECAbertoList = getPreCECListAberto();
+        List preCECAbertoList = preCECListAberto();
         boolean retorno = preCECAbertoList.size() > 0;
         preCECAbertoList.clear();
         return retorno;
     }
 
     public boolean verDataPreCEC(){
-        List preCECList = getPreCECListAberto();
+        List preCECList = preCECListAberto();
         PreCECBean preCECBean = (PreCECBean) preCECList.get(0);
         preCECList.clear();
         return ((!preCECBean.getDataSaidaUsina().equals("")) && (!preCECBean.getDataChegCampo().equals("")));
@@ -226,7 +238,7 @@ public class PreCECDAO {
     }
 
     public PreCECBean getPreCECAberto(){
-        List preCECList = getPreCECListAberto();
+        List preCECList = preCECListAberto();
         PreCECBean preCECBean = (PreCECBean) preCECList.get(0);
         preCECList.clear();
         return preCECBean;
@@ -239,15 +251,20 @@ public class PreCECDAO {
 
     public String getDataSaidaUlt(){
         PreCECBean preCECBean = new PreCECBean();
-        int qtdePreCEC = preCECBean.count();
+        List<PreCECBean> preCECList = preCECBean.all();
         String retorno;
-        if (qtdePreCEC == 0) {
+        if (preCECList.size() == 0)  {
             retorno = "NÃO POSSUE CARREGAMENTOS";
         } else {
-            List preCECList = preCECBean.all();
-            preCECBean = (PreCECBean) preCECList.get(qtdePreCEC - 1);
-            retorno = "ULT. VIAGEM: " + Tempo.getInstance().dataHoraCTZ(preCECBean.getDataSaidaCampo());
+            preCECBean = (PreCECBean) preCECList.get(preCECList.size() - 1);
+            if(preCECBean.getDataSaidaCampo().equals("")){
+                retorno = "NÃO POSSUE CARREGAMENTOS";
+            }
+            else {
+                retorno = "ULT. VIAGEM: " + Tempo.getInstance().dataHoraCTZ(preCECBean.getDataSaidaCampo());
+            }
         }
+        preCECList.clear();
         return retorno;
     }
 
@@ -255,21 +272,27 @@ public class PreCECDAO {
 
     ///////////////////////////////////LIST DE PRECEC/////////////////////////////////////////
 
-    private List getPreCECListAberto(){
+    private List<PreCECBean> preCECListAberto(){
         PreCECBean preCECBean = new PreCECBean();
-        List preCECList = preCECBean.get("status", 1L);
+        List<PreCECBean> preCECList = preCECBean.get("status", 1L);
         return preCECList;
     }
 
-    public List getPreCECListFechado(){
+    public List<PreCECBean> preCECListFechado(){
         PreCECBean preCECBean = new PreCECBean();
-        List preCECList = preCECBean.get("status", 2L);
+        List<PreCECBean> preCECList = preCECBean.get("status", 2L);
         return preCECList;
     }
 
-    public List getPreCECListEnviado(){
+//    public List getPreCECListEnviado(){
+//        PreCECBean preCECBean = new PreCECBean();
+//        List preCECList = preCECBean.get("status", 3L);
+//        return preCECList;
+//    }
+
+    public List<PreCECBean> preCECListTerminado(){
         PreCECBean preCECBean = new PreCECBean();
-        List preCECList = preCECBean.get("status", 3L);
+        List<PreCECBean> preCECList = preCECBean.difAndOrderBy("status", 1L, "idPreCEC", true);
         return preCECList;
     }
 

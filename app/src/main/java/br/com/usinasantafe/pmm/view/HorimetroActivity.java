@@ -12,14 +12,12 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 
 public class HorimetroActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private Double horimetroNum;
-//    private ConfigCTR configCTR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +26,22 @@ public class HorimetroActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonOkHorimetro = (Button) findViewById(R.id.buttonOkPadrao);
-        Button buttonCancHorimetro = (Button) findViewById(R.id.buttonCancPadrao);
+        Button buttonOkHorimetro = findViewById(R.id.buttonOkPadrao);
+        Button buttonCancHorimetro = findViewById(R.id.buttonCancPadrao);
+        TextView textViewHorimetro = findViewById(R.id.textViewPadrao);
 
-        TextView textViewHorimetro = (TextView) findViewById(R.id.textViewPadrao);
-        textViewHorimetro.setText(pmmContext.getTextoHorimetro());
+        if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
+            textViewHorimetro.setText("HORIMETRO/HODOMETRO INICIAL");
+        }
+        else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {
+            textViewHorimetro.setText("HORIMETRO/HODOMETRO FINAL");
+        }
+        else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 17L) {
+            textViewHorimetro.setText("HORIMETRO/HODOMETRO FINAL");
+        }
+        else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L) {
+            textViewHorimetro.setText("HORIMETRO/HODOMETRO INICIAL");
+        }
 
         buttonOkHorimetro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,11 +98,17 @@ public class HorimetroActivity extends ActivityGeneric {
     }
 
     public void verTela(){
-        if (pmmContext.getVerPosTela() == 1) {
+        if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
             salvarBoletimAberto();
         }
-        else if (pmmContext.getVerPosTela() == 4) {
+        else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {
             salvarBoletimFechado();
+        }
+        else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 17L) {
+            salvarBoletimFechado();
+        }
+        else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L) {
+            salvarBoletimAberto();
         }
     }
 
@@ -133,9 +148,17 @@ public class HorimetroActivity extends ActivityGeneric {
                     }
                 }
                 else{
-                    Intent it = new Intent(HorimetroActivity.this, EsperaInforActivity.class);
-                    startActivity(it);
-                    finish();
+                    if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
+                        pmmContext.getConfigCTR().setPosicaoTela(11L);
+                        Intent it = new Intent(HorimetroActivity.this, EsperaInforActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                    else{
+                        Intent it = new Intent(HorimetroActivity.this, VerMotoristaActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
                 }
             }
         }
@@ -158,9 +181,18 @@ public class HorimetroActivity extends ActivityGeneric {
                 finish();
             } else {
                 pmmContext.getMotoMecFertCTR().salvarBolMMFertFechado();
-                Intent it = new Intent(HorimetroActivity.this, MenuInicialActivity.class);
-                startActivity(it);
-                finish();
+
+                if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {
+                    Intent it = new Intent(HorimetroActivity.this, MenuInicialActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 17L) {
+                    pmmContext.getConfigCTR().setPosicaoTela(18L);
+                    Intent it = new Intent(HorimetroActivity.this, OperadorActivity.class);
+                    startActivity(it);
+                    finish();
+                }
             }
         }
         else{
@@ -180,14 +212,26 @@ public class HorimetroActivity extends ActivityGeneric {
     }
 
     public void onBackPressed() {
-        if (pmmContext.getVerPosTela() == 1) {
+        if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
             Intent it = new Intent(HorimetroActivity.this, ListaAtividadeActivity.class);
             startActivity(it);
             finish();
         } else {
-            Intent it = new Intent(HorimetroActivity.this, MenuPrincPMMActivity.class);
-            startActivity(it);
-            finish();
+            if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+                Intent it = new Intent(HorimetroActivity.this, MenuPrincPMMActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
+                Intent it = new Intent(HorimetroActivity.this, MenuPrincECMActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+                Intent it = new Intent(HorimetroActivity.this, MenuPrincPCOMPActivity.class);
+                startActivity(it);
+                finish();
+            }
         }
     }
 

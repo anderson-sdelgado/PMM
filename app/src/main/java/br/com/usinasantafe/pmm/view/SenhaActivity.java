@@ -21,9 +21,9 @@ public class SenhaActivity extends ActivityGeneric {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_senha);
 
-        editTextSenha = (EditText)  findViewById(R.id.editTextSenha);
-        Button btOkSenha =  (Button) findViewById(R.id.buttonOkSenha);
-        Button btCancSenha = (Button) findViewById(R.id.buttonCancSenha);
+        editTextSenha = findViewById(R.id.editTextSenha);
+        Button btOkSenha = findViewById(R.id.buttonOkSenha);
+        Button btCancSenha = findViewById(R.id.buttonCancSenha);
 
         pmmContext = (PMMContext) getApplication();
 

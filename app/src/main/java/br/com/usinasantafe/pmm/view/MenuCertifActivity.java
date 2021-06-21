@@ -32,25 +32,7 @@ public class MenuCertifActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        listarMenu();
-
-        Button buttonRetMenuInicialApont = (Button) findViewById(R.id.buttonRetMenuInicialApont);
-
-        buttonRetMenuInicialApont.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent it = new Intent(MenuCertifActivity.this, MenuPrincECMActivity.class);
-                startActivity(it);
-                finish();
-
-            }
-        });
-
-
-    }
-
-    public void listarMenu() {
+        Button buttonRetMenuInicialApont = findViewById(R.id.buttonRetMenuInicialApont);
 
         ArrayList<String> itens = new ArrayList<String>();
 
@@ -60,7 +42,7 @@ public class MenuCertifActivity extends ActivityGeneric {
         itens.add("LOG BOLETIM");
 
         AdapterList adapterList = new AdapterList(this, itens);
-        menuCertifListView = (ListView) findViewById(R.id.listViewMenuInicialApont);
+        menuCertifListView = findViewById(R.id.listViewMenuInicialApont);
         menuCertifListView.setAdapter(adapterList);
 
         menuCertifListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -153,7 +135,7 @@ public class MenuCertifActivity extends ActivityGeneric {
 
                 } else if (text.equals("LOG VIAGEM")) {
 
-                    if (pmmContext.getCecCTR().getPreCECFechadoList().size() > 0) {
+                    if (pmmContext.getCecCTR().verPreCECTerminadoList()) {
                         Intent it = new Intent(MenuCertifActivity.this, BackupPreCECActivity.class);
                         startActivity(it);
                         finish();
@@ -193,6 +175,17 @@ public class MenuCertifActivity extends ActivityGeneric {
 
             }
 
+        });
+
+        buttonRetMenuInicialApont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent it = new Intent(MenuCertifActivity.this, MenuPrincECMActivity.class);
+                startActivity(it);
+                finish();
+
+            }
         });
 
 

@@ -44,13 +44,14 @@ public class AdapterList extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = layoutInflater.inflate(R.layout.activity_item_lista, null);
-        TextView textView = (TextView) convertView.findViewById(R.id.textViewItemList);
+        TextView textView = convertView.findViewById(R.id.textViewItemList);
         textView.setText(itens.get(position));
         if(itens.get(position).equals("CERTIFICADO")
                 || itens.get(position).equals("MOTIVOS PARADA")
                 || itens.get(position).equals("TROCA MOTORISTA")
                 || itens.get(position).equals("CARREG REST/AGUA")
-                || itens.get(position).equals("VOLTAR AO TRABALHO")){
+                || itens.get(position).equals("VOLTAR AO TRABALHO")
+                || itens.get(position).equals("VERIFICAR LEIRA")){
             textView.setTypeface(null, Typeface.BOLD);
         }
         return convertView;

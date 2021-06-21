@@ -39,15 +39,42 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private Double horimetroConfig;
 	@DatabaseField
-	private Long verInforConfig; //0 - Verificar Dados; 1- Dados Recebidos; 2 - Dados Visualizados
+	private Long verInforConfig; // 0 - Verificar Dados; 1- Dados Recebidos; 2 - Dados Visualizados
 	@DatabaseField
-	private Long statusConConfig;  //0 - Offline; 1 - Online
+	private Long statusConConfig;  // 0 - Offline; 1 - Online
 	@DatabaseField
 	private Long flagLogEnvio;
 	@DatabaseField
 	private Long flagLogErro;
 	@DatabaseField
 	private Long atualCheckList;
+	@DatabaseField
+	private Long aplic; // 1 - PMM; 2 - ECM; 3 - PCOMP
+	@DatabaseField
+	private Long posFluxoViagem;
+	@DatabaseField
+	private Long posicaoTela;
+	// 1 - Inicio do Boletim; PMM - ECM - PCOMP
+	// 2 - Trabalhando Moto Mec;
+	// 3 - Parada Moto Mec;
+	// 4 - Finalizar Boletim Moto Mec;
+	// 5 - Digitar Data e Hora
+	// 6 - Trocar Transbordo;
+	// 7 - Editar Rendimento;
+	// 8 - Iniciar na parte de apontamento
+	// 9 - Recolhimento de Mangueira;
+	// 10 - Trocar de implemento
+	// 11 - Informação PMM
+	// 13 - Buscar Ordem Carreg Insumo
+	// 14 - Buscar Ordem Carreg Composto
+	// 15 - Envio Leira Descarreg Insumo
+	// 16 - Menu Certificado ECM - 5
+	// 17 - Trocar Motorista Fechamento de Boletim ECM - 9
+	// 18 - Abertura de Boletim ECM - 10
+	// 19 - Desengate no Menu MotoMec ECM - 3
+	// 20 - Engate no Menu MotoMec ECM - 4
+	// 21 - Desengate no Parada - 6
+	// 22 - Engate no Parada - 7
 
 	public ConfigBean() {
 	}
@@ -202,5 +229,29 @@ public class ConfigBean extends Entidade {
 
 	public void setAtualCheckList(Long atualCheckList) {
 		this.atualCheckList = atualCheckList;
+	}
+
+	public Long getAplic() {
+		return aplic;
+	}
+
+	public void setAplic(Long aplic) {
+		this.aplic = aplic;
+	}
+
+	public Long getPosFluxoViagem() {
+		return posFluxoViagem;
+	}
+
+	public void setPosFluxoViagem(Long posFluxoViagem) {
+		this.posFluxoViagem = posFluxoViagem;
+	}
+
+	public Long getPosicaoTela() {
+		return posicaoTela;
+	}
+
+	public void setPosicaoTela(Long posicaoTela) {
+		this.posicaoTela = posicaoTela;
 	}
 }

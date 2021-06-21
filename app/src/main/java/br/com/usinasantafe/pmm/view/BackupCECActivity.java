@@ -27,16 +27,16 @@ public class BackupCECActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        textViewBkpBoletim = (TextView) findViewById(R.id.textViewBkpBoletim);
-        Button buttonAntBkpBoletim = (Button) findViewById(R.id.buttonAntBkpBoletim);
-        Button buttonProxBkpBoletim = (Button) findViewById(R.id.buttonProxBkpBoletim);
-        Button buttonRetornarBkpBoletim = (Button) findViewById(R.id.buttonRetornarBkpBoletim);
+        textViewBkpBoletim = findViewById(R.id.textViewBkpBoletim);
+        Button buttonAntBkpBoletim = findViewById(R.id.buttonAntBkpBoletim);
+        Button buttonProxBkpBoletim = findViewById(R.id.buttonProxBkpBoletim);
+        Button buttonRetornarBkpBoletim = findViewById(R.id.buttonRetornarBkpBoletim);
 
         cecList = pmmContext.getCecCTR().cecListDesc();
 
         contador = cecList.size() - 1;
 
-        CECBean cecBean = (CECBean) cecList.get(contador);
+        CECBean cecBean = cecList.get(contador);
         textViewBkpBoletim.setText(visBoletim(cecBean));
 
         buttonAntBkpBoletim.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +48,7 @@ public class BackupCECActivity extends ActivityGeneric {
                     contador = contador + 1;
                 }
 
-                CECBean cecBean = (CECBean) cecList.get(contador);
+                CECBean cecBean = cecList.get(contador);
                 textViewBkpBoletim.setText(visBoletim(cecBean));
 
             }
@@ -63,7 +63,7 @@ public class BackupCECActivity extends ActivityGeneric {
                     contador = contador - 1;
                 }
 
-                CECBean cecBean = (CECBean) cecList.get(contador);
+                CECBean cecBean = cecList.get(contador);
                 textViewBkpBoletim.setText(visBoletim(cecBean));
 
             }

@@ -22,7 +22,7 @@ import br.com.usinasantafe.pmm.util.Tempo;
 public class ListaTurnoActivity extends ActivityGeneric {
 
     private ListView turnoListView;
-    private List turnoList;
+    private List<TurnoBean> turnoList;
     private PMMContext pmmContext;
     private ProgressDialog progressBar;
 
@@ -33,8 +33,8 @@ public class ListaTurnoActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonRetTurno = (Button) findViewById(R.id.buttonRetTurno);
-        Button buttonAtualTurno = (Button) findViewById(R.id.buttonAtualTurno);
+        Button buttonRetTurno = findViewById(R.id.buttonRetTurno);
+        Button buttonAtualTurno = findViewById(R.id.buttonAtualTurno);
 
         buttonAtualTurno.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,13 +98,12 @@ public class ListaTurnoActivity extends ActivityGeneric {
 
         ArrayList<String> itens = new ArrayList<String>();
 
-        for(int i = 0; i < turnoList.size(); i++){
-            TurnoBean turnoBean = (TurnoBean) turnoList.get(i);
+        for(TurnoBean turnoBean : turnoList){
             itens.add(turnoBean.getDescTurno());
         }
 
         AdapterList adapterList = new AdapterList(this, itens);
-        turnoListView = (ListView) findViewById(R.id.listaTurno);
+        turnoListView = findViewById(R.id.listaTurno);
         turnoListView.setAdapter(adapterList);
 
         turnoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -113,7 +112,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                TurnoBean turnoBean = (TurnoBean) turnoList.get(position);
+                TurnoBean turnoBean = turnoList.get(position);
                 turnoList.clear();
 
                 pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setIdTurnoBolMMFert(turnoBean.getIdTurno());

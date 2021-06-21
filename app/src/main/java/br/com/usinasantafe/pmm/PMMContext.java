@@ -3,6 +3,7 @@ package br.com.usinasantafe.pmm;
 import android.app.Application;
 
 import br.com.usinasantafe.pmm.control.CECCTR;
+import br.com.usinasantafe.pmm.control.CompostoCTR;
 import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
@@ -22,27 +23,17 @@ public class PMMContext extends Application {
     private InformativoCTR informativoCTR;
     private CheckListCTR checkListCTR;
     private ConfigCTR configCTR;
-    private int verPosTela;
-    //1 - Inicio do boletim;
-    // 2 - Trabalhando Moto Mec;
-    // 3 - Parada Moto Mec;
-    // 4 - Finalizar Boletim Moto Mec;
-    // 5 - Digitar Data e Hora
-    // 6 - Trocar Transbordo;
-    // 7 - Editar Rendimento;
-    // 8 - Iniciar na parte de apontamento
-    // 14 - Recolhimento de Mangueira;
-    // 19 - Trocar de implemento
+    private CompostoCTR compostoCTR;
+
     private Long contImplemento;
-    private String textoHorimetro;
-    public static String versaoAplic = "3.06";
+    public static String versaoAplic = "4.00";
     private int contRend;
     private int posRend;
     private int contRecolh;
     private int posRecolh;
     private int contDataHora;
     private int posCheckList;
-    private int tipoMovComp;
+    private boolean verTelaLeira;
 
     private int dia;
     private int mes;
@@ -87,12 +78,10 @@ public class PMMContext extends Application {
         return configCTR;
     }
 
-    public int getVerPosTela() {
-        return verPosTela;
-    }
-
-    public void setVerPosTela(int verPosTela) {
-        this.verPosTela = verPosTela;
+    public CompostoCTR getCompostoCTR(){
+        if (compostoCTR == null)
+            compostoCTR = new CompostoCTR();
+        return compostoCTR;
     }
 
     public Long getContImplemento() {
@@ -109,14 +98,6 @@ public class PMMContext extends Application {
 
     public void setPosCheckList(int posCheckList) {
         this.posCheckList = posCheckList;
-    }
-
-    public String getTextoHorimetro() {
-        return textoHorimetro;
-    }
-
-    public void setTextoHorimetro(String textoHorimetro) {
-        this.textoHorimetro = textoHorimetro;
     }
 
     public int getContRend() {
@@ -199,14 +180,6 @@ public class PMMContext extends Application {
         this.minuto = minuto;
     }
 
-    public int getTipoMovComp() {
-        return tipoMovComp;
-    }
-
-    public void setTipoMovComp(int tipoMovComp) {
-        this.tipoMovComp = tipoMovComp;
-    }
-
     private Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() {
         public void uncaughtException(Thread thread, Throwable ex) {
             LogErroDAO.getInstance().insert(ex);
@@ -214,4 +187,11 @@ public class PMMContext extends Application {
         }
     };
 
+    public boolean isVerTelaLeira() {
+        return verTelaLeira;
+    }
+
+    public void setVerTelaLeira(boolean verTelaLeira) {
+        this.verTelaLeira = verTelaLeira;
+    }
 }

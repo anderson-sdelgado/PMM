@@ -22,27 +22,24 @@ public class MsgSaidaCampoActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonSimSaidaCampo = (Button) findViewById(R.id.buttonSimSaidaCampo);
-        Button buttonNaoSaidaCampo = (Button) findViewById(R.id.buttonNaoSaidaCampo);
+        Button buttonSimSaidaCampo = findViewById(R.id.buttonSimSaidaCampo);
+        Button buttonNaoSaidaCampo = findViewById(R.id.buttonNaoSaidaCampo);
 
         buttonSimSaidaCampo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Long statusCon;
                 ConexaoWeb conexaoWeb = new ConexaoWeb();
                 if (conexaoWeb.verificaConexao(MsgSaidaCampoActivity.this)) {
-                    statusCon = 1L;
+                    pmmContext.getConfigCTR().setStatusConConfig(1L);
                 }
                 else{
-                    statusCon = 0L;
+                    pmmContext.getConfigCTR().setStatusConConfig(0L);
                 }
 
                 pmmContext.getCecCTR().setDataSaidaCampo();
 
-//                ecmContext.getMotoMecCTR().setAtivApont(ecmContext.getConfigCTR().getConfig().getAtivConfig());
-//                ecmContext.getMotoMecCTR().insApontMM(getLongitude(), getLatitude(), statusCon);
-
+                pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLatitude(), getLongitude());
                 Intent it = new Intent(MsgSaidaCampoActivity.this, VerMotoristaActivity.class);
                 startActivity(it);
                 finish();

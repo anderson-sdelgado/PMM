@@ -22,17 +22,35 @@ public class OSDAO {
     public OSDAO() {
     }
 
+    public OSBean getOSBean(Long nroOS){
+        OSBean osBean = new OSBean();
+        List<OSBean> osList = osBean.get("nroOS", nroOS);
+        osBean = osList.get(0);
+        osList.clear();
+        return osBean;
+    }
+
+    public void osDelAll(){
+        OSBean osBean = new OSBean();
+        osBean.deleteAll();
+    }
+
+    public void rOSAtivDelAll(){
+        ROSAtivBean rOSAtivBean = new ROSAtivBean();
+        rOSAtivBean.deleteAll();
+    }
+
     public boolean verLibOS(Long idLibOS, Long nroOS){
-        List<OSBean> libOSList = libOSList(idLibOS, nroOS);
-        boolean retorno = libOSList.size() > 0;
-        libOSList.clear();
+        List<OSBean> osList = libOSList(idLibOS, nroOS);
+        boolean retorno = osList.size() > 0;
+        osList.clear();
         return retorno;
     }
 
     public boolean verAtivOS(Long idAtivOS, Long nroOS){
-        List<OSBean> ativOSList = ativOSList(idAtivOS, nroOS);
-        boolean retorno = ativOSList.size() > 0;
-        ativOSList.clear();
+        List<OSBean> osList = ativOSList(idAtivOS, nroOS);
+        boolean retorno = osList.size() > 0;
+        osList.clear();
         return retorno;
     }
 
@@ -49,40 +67,40 @@ public class OSDAO {
     }
 
     public OSBean getOSIdAtiv(Long idAtivOS, Long nroOS){
-        List<OSBean> ativOSList = ativOSList(idAtivOS, nroOS);
-        OSBean osBean = ativOSList.get(0);
-        ativOSList.clear();
+        List<OSBean> osList = ativOSList(idAtivOS, nroOS);
+        OSBean osBean = osList.get(0);
+        osList.clear();
         return osBean;
     }
 
     public OSBean getOSLib(Long idLibOS, Long nroOS){
-        List<OSBean> libOSList = libOSList(idLibOS, nroOS);
-        OSBean osBean = libOSList.get(0);
-        libOSList.clear();
+        List<OSBean> osList = libOSList(idLibOS, nroOS);
+        OSBean osBean = osList.get(0);
+        osList.clear();
         return osBean;
     }
 
     private List<OSBean> ativOSList(Long idAtivOS, Long nroOS){
-        OSBean rAtivOSBean = new OSBean();
+        OSBean osBean = new OSBean();
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqAtiv(idAtivOS));
         pesqArrayList.add(getPesqNroOS(nroOS));
-        return rAtivOSBean.get(pesqArrayList);
+        return osBean.get(pesqArrayList);
     }
 
     private List<OSBean> libOSList(Long idLibOS, Long nroOS){
-        OSBean rAtivOSBean = new OSBean();
+        OSBean osBean = new OSBean();
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqLib(idLibOS));
         pesqArrayList.add(getPesqNroOS(nroOS));
-        return rAtivOSBean.get(pesqArrayList);
+        return osBean.get(pesqArrayList);
     }
 
     private List<OSBean> osList(Long nroOS){
-        OSBean rAtivOSBean = new OSBean();
+        OSBean osBean = new OSBean();
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqNroOS(nroOS));
-        return rAtivOSBean.get(pesqArrayList);
+        return osBean.get(pesqArrayList);
     }
 
     private EspecificaPesquisa getPesqAtiv(Long idAtivOS){
@@ -193,8 +211,8 @@ public class OSDAO {
     }
 
     public boolean verOS(Long nroOS){
-        OSBean osTO = new OSBean();
-        List osList = osTO.get("nroOS", nroOS);
+        OSBean osBean = new OSBean();
+        List<OSBean> osList = osBean.get("nroOS", nroOS);
         boolean ret = osList.size() > 0;
         osList.clear();
         return ret;

@@ -26,11 +26,11 @@ public class ItemCheckListActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        textViewItemChecklist = (TextView) findViewById(R.id.textViewItemChecklist);
-        Button buttonConforme = (Button) findViewById(R.id.buttonConforme);
-        Button buttonNaoConforme = (Button) findViewById(R.id.buttonNaoConforme);
-        Button buttonReparo = (Button) findViewById(R.id.buttonReparo);
-        Button buttonCancChecklist = (Button) findViewById(R.id.buttonCancChecklist);
+        textViewItemChecklist = findViewById(R.id.textViewItemChecklist);
+        Button buttonConforme = findViewById(R.id.buttonConforme);
+        Button buttonNaoConforme = findViewById(R.id.buttonNaoConforme);
+        Button buttonReparo = findViewById(R.id.buttonReparo);
+        Button buttonCancChecklist = findViewById(R.id.buttonCancChecklist);
 
         itemCheckListList = pmmContext.getCheckListCTR().getItemList();
         ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getPosCheckList() - 1);
@@ -86,6 +86,7 @@ public class ItemCheckListActivity extends ActivityGeneric {
         if(pmmContext.getCheckListCTR().qtdeItemCheckList() == pmmContext.getPosCheckList()){
             pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().getIdTurnoBolMMFert());
             pmmContext.getCheckListCTR().salvarBolFechado();
+            pmmContext.getConfigCTR().setPosicaoTela(11L);
             Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);
             startActivity(it);
             finish();

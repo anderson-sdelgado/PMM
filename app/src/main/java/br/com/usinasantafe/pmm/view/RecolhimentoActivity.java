@@ -25,18 +25,18 @@ public class RecolhimentoActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonOkRecolMang = (Button) findViewById(R.id.buttonOkPadrao);
-        Button buttonCancRecolMang = (Button) findViewById(R.id.buttonCancPadrao);
-        TextView textViewRecolMang = (TextView) findViewById(R.id.textViewPadrao);
-        EditText editText = (EditText) findViewById(R.id.editTextPadrao);
+        Button buttonOkRecolMang = findViewById(R.id.buttonOkPadrao);
+        Button buttonCancRecolMang = findViewById(R.id.buttonCancPadrao);
+        TextView textViewRecolMang = findViewById(R.id.textViewPadrao);
+        EditText editText = findViewById(R.id.editTextPadrao);
 
         motoMecFertCTR = new MotoMecFertCTR();
 
         int cont = 0;
 
-        if (pmmContext.getVerPosTela() == 4) {
+        if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {
             cont = pmmContext.getContRecolh() - 1;
-        } else if (pmmContext.getVerPosTela() == 14) {
+        } else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 9L) {
             cont = pmmContext.getPosRecolh();
         }
 
@@ -57,7 +57,7 @@ public class RecolhimentoActivity extends ActivityGeneric {
                     verTela();
                 }
                 else{
-                    if(pmmContext.getVerPosTela() == 14){
+                    if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 9L){
                         Intent it = new Intent(RecolhimentoActivity.this, MenuPrincPMMActivity.class);
                         startActivity(it);
                         finish();
@@ -82,7 +82,7 @@ public class RecolhimentoActivity extends ActivityGeneric {
     }
 
     public void onBackPressed() {
-        if (pmmContext.getVerPosTela() == 4) {
+        if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {
             if(pmmContext.getPosRecolh() > 1){
                 pmmContext.setPosRecolh(pmmContext.getPosRecolh() - 1);
                 Intent it = new Intent(RecolhimentoActivity.this, RecolhimentoActivity.class);
@@ -94,7 +94,7 @@ public class RecolhimentoActivity extends ActivityGeneric {
                 startActivity(it);
                 finish();
             }
-        } else if (pmmContext.getVerPosTela() == 14) {
+        } else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 9L) {
             Intent it = new Intent(RecolhimentoActivity.this, ListaOSRendActivity.class);
             startActivity(it);
             finish();
@@ -107,7 +107,7 @@ public class RecolhimentoActivity extends ActivityGeneric {
         recolhFertBean.setValorRecolhFert(valorRecolMang);
         pmmContext.getMotoMecFertCTR().atualRecolh(recolhFertBean);
 
-        if (pmmContext.getVerPosTela() == 4) {
+        if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {
             if (pmmContext.getMotoMecFertCTR().qtdeRecolh() == pmmContext.getContRecolh()) {
                 pmmContext.getMotoMecFertCTR().salvarBolMMFertFechado();
                 Intent it = new Intent(RecolhimentoActivity.this, MenuInicialActivity.class);
@@ -120,8 +120,8 @@ public class RecolhimentoActivity extends ActivityGeneric {
                 finish();
             }
         }
-        else if (pmmContext.getVerPosTela() == 14) {
-            Intent it = new Intent(RecolhimentoActivity.this, ListaOSRecolActivity.class);
+        else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 9L) {
+            Intent it = new Intent(RecolhimentoActivity.this, ListaOSRecolhActivity.class);
             startActivity(it);
             finish();
         }

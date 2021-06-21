@@ -9,9 +9,11 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.CECBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontImpleMMBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
@@ -114,6 +116,35 @@ public class ReceberAlarme extends BroadcastReceiver {
 			Log.i("PMM", "dthrRendimento = " + rendMMBean.getDthrRendMM());
 		}
 
+		PreCECBean preCECBean = new PreCECBean();
+		List preCECList = preCECBean.all();
+
+		for(int i = 0; i < preCECList.size(); i++){
+
+			preCECBean = (PreCECBean) preCECList.get(i);
+
+			Log.i("PMM", "PRE CEC");
+			Log.i("PMM", "idPreCEC = " + preCECBean.getIdPreCEC());
+			Log.i("PMM", "ativOS = " + preCECBean.getAtivOS());
+			Log.i("PMM", "cam = " + preCECBean.getCam());
+			Log.i("PMM", "moto = " + preCECBean.getMoto());
+			Log.i("PMM", "turno = " + preCECBean.getTurno());
+			Log.i("PMM", "status = " + preCECBean.getStatus());
+		}
+
+		CECBean cecBean = new CECBean();
+		List cecList = cecBean.all();
+
+		for(int i = 0; i < cecList.size(); i++){
+
+			cecBean = (CECBean) cecList.get(i);
+
+			Log.i("PMM", "CEC");
+			Log.i("PMM", "idCEC = " + cecBean.getIdCEC());
+			Log.i("PMM", "caminhaoCEC = " + cecBean.getCaminhaoCEC());
+			Log.i("PMM", "pesoLiquidoCEC = " +  cecBean.getPesoLiquidoCEC());
+
+		}
 
 		ConfigBean configBean = new ConfigBean();
 		List configList = configBean.all();
@@ -132,6 +163,7 @@ public class ReceberAlarme extends BroadcastReceiver {
 			Log.i("PMM", "dtServConfig = " + configBean.getDtServConfig());
 			Log.i("PMM", "flagLogErro = " + configBean.getFlagLogErro());
 			Log.i("PMM", "flagLogEnvio = " + configBean.getFlagLogEnvio());
+			Log.i("PMM", "posFluxoViagem = " + configBean.getPosFluxoViagem());
 
 		}
 

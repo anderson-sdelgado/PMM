@@ -32,8 +32,8 @@ public class ListaBocalFertActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonRetBocal = (Button) findViewById(R.id.buttonRetBocal);
-        Button buttonAtualBocal = (Button) findViewById(R.id.buttonAtualBocal);
+        Button buttonRetBocal = findViewById(R.id.buttonRetBocal);
+        Button buttonAtualBocal = findViewById(R.id.buttonAtualBocal);
 
         buttonAtualBocal.setOnClickListener(new View.OnClickListener() {
             @Override

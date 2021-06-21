@@ -12,7 +12,6 @@ import android.widget.TextView;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 
 public class ImplementoActivity extends ActivityGeneric {
 
@@ -26,10 +25,10 @@ public class ImplementoActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonOkImplemento = (Button) findViewById(R.id.buttonOkPadrao);
-        Button buttonCancImplemento = (Button) findViewById(R.id.buttonCancPadrao);
-        TextView textViewImplemento = (TextView) findViewById(R.id.textViewImplemento);
-        Button buttonAtualPadrao = (Button) findViewById(R.id.buttonAtualPadrao);
+        Button buttonOkImplemento = findViewById(R.id.buttonOkPadrao);
+        Button buttonCancImplemento = findViewById(R.id.buttonCancPadrao);
+        TextView textViewImplemento = findViewById(R.id.textViewImplemento);
+        Button buttonAtualPadrao = findViewById(R.id.buttonAtualPadrao);
 
         buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,10 +136,10 @@ public class ImplementoActivity extends ActivityGeneric {
     }
 
     public void verTela(){
-        if (pmmContext.getVerPosTela() == 1) {
+        if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
             salvarBoletimAberto();
         }
-        else if (pmmContext.getVerPosTela() == 19) {
+        else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 10L) {
             Intent it = new Intent(ImplementoActivity.this, MenuPrincPMMActivity.class);
             startActivity(it);
             finish();
@@ -178,6 +177,7 @@ public class ImplementoActivity extends ActivityGeneric {
             }
         }
         else{
+            pmmContext.getConfigCTR().setPosicaoTela(11L);
             Intent it = new Intent(ImplementoActivity.this, EsperaInforActivity.class);
             startActivity(it);
             finish();
@@ -186,11 +186,11 @@ public class ImplementoActivity extends ActivityGeneric {
 
     public void onBackPressed() {
         if (pmmContext.getContImplemento() == 1) {
-            if (pmmContext.getVerPosTela() == 1) {
+            if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
                 Intent it = new Intent(ImplementoActivity.this, HorimetroActivity.class);
                 startActivity(it);
                 finish();
-            } else if (pmmContext.getVerPosTela() == 19) {
+            } else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 10L) {
                 Intent it = new Intent(ImplementoActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();

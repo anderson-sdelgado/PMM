@@ -54,9 +54,9 @@ public class AdapterListHistorico extends BaseAdapter {
     public View getView(int position, View view, ViewGroup parent) {
 
         view = layoutInflater.inflate(R.layout.activity_item_historico, null);
-        textViewHistApont = (TextView) view.findViewById(R.id.textViewHistApont);
-        textViewHistHorario = (TextView) view.findViewById(R.id.textViewHistHorario);
-        textViewHistDetalhes = (TextView) view.findViewById(R.id.textViewHistDetalhes);
+        textViewHistApont = view.findViewById(R.id.textViewHistApont);
+        textViewHistHorario = view.findViewById(R.id.textViewHistHorario);
+        textViewHistDetalhes = view.findViewById(R.id.textViewHistDetalhes);
 
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
 

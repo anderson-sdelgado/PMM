@@ -1,7 +1,6 @@
 package br.com.usinasantafe.pmm.view;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -27,12 +26,8 @@ import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.ReceberAlarme;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
-import br.com.usinasantafe.pmm.model.bean.estaticas.OSBean;
-import br.com.usinasantafe.pmm.model.bean.estaticas.ROSAtivBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.BackupApontaBean;
 
 public class MenuInicialActivity extends ActivityGeneric {
 
@@ -49,11 +44,16 @@ public class MenuInicialActivity extends ActivityGeneric {
         setContentView(R.layout.activity_menu_inicial);
 
         pmmContext = (PMMContext) getApplication();
-        textViewProcesso = (TextView) findViewById(R.id.textViewProcesso);
+        textViewProcesso = findViewById(R.id.textViewProcesso);
+
+        if (!checkPermission(Manifest.permission.CAMERA)) {
+            String[] PERMISSIONS = {Manifest.permission.CAMERA};
+            ActivityCompat.requestPermissions(this, PERMISSIONS, 112);
+        }
 
         if (!checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            ActivityCompat.requestPermissions((Activity) this, PERMISSIONS, 112);
+            ActivityCompat.requestPermissions(this, PERMISSIONS, 112);
         }
 
         verifEnvio();
@@ -71,21 +71,28 @@ public class MenuInicialActivity extends ActivityGeneric {
             }
             else{
                 startTimer();
-                pmmContext.setVerPosTela(8);
-                Intent it = new Intent(MenuInicialActivity.this, MenuPrincPMMActivity.class);
-                startActivity(it);
-                finish();
+                pmmContext.getConfigCTR().setPosicaoTela(8L);
+                if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+                    Intent it = new Intent(MenuInicialActivity.this, MenuPrincPMMActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
+                    pmmContext.getCecCTR().delPreCECAberto();
+                    Intent it = new Intent(MenuInicialActivity.this, MenuPrincECMActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+                    Intent it = new Intent(MenuInicialActivity.this, MenuPrincPCOMPActivity.class);
+                    startActivity(it);
+                    finish();
+                }
             }
         }
         else{
             atualizarAplic();
         }
-
-        listarMenuInicial();
-
-    }
-
-    private void listarMenuInicial() {
 
         ArrayList<String> itens = new ArrayList<>();
 
@@ -96,7 +103,7 @@ public class MenuInicialActivity extends ActivityGeneric {
         itens.add("ATUALIZAR APLICATIVO");
 
         AdapterList adapterList = new AdapterList(this, itens);
-        listView = (ListView) findViewById(R.id.listaMenuInicial);
+        listView = findViewById(R.id.listaMenuInicial);
         listView.setAdapter(adapterList);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -112,7 +119,7 @@ public class MenuInicialActivity extends ActivityGeneric {
                     if (pmmContext.getMotoMecFertCTR().hasElemFunc()
                             && pmmContext.getConfigCTR().hasElements()
                             && VerifDadosServ.getInstance().isVerTerm()) {
-                        pmmContext.setVerPosTela(1);
+                        pmmContext.getConfigCTR().setPosicaoTela(1L);
                         clearBD();
                         customHandler.removeCallbacks(updateTimerThread);
                         Intent it = new Intent(MenuInicialActivity.this, OperadorActivity.class);
@@ -220,10 +227,8 @@ public class MenuInicialActivity extends ActivityGeneric {
         return (check == PackageManager.PERMISSION_GRANTED);
     }
 
-
     public void onBackPressed() {
     }
-
 
     private Runnable updateTimerThread = new Runnable() {
 
@@ -260,16 +265,11 @@ public class MenuInicialActivity extends ActivityGeneric {
 
     public void clearBD() {
 
-        pmmContext.getMotoMecFertCTR().impleMMDelAll();
-
-        OSBean osTO = new OSBean();
-        osTO.deleteAll();
-
-        ROSAtivBean rosAtivBean = new ROSAtivBean();
-        rosAtivBean.deleteAll();
-
-        BackupApontaBean backupApontaBean = new BackupApontaBean();
-        backupApontaBean.deleteAll();
+        if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+            pmmContext.getMotoMecFertCTR().impleMMDelAll();
+            pmmContext.getConfigCTR().osDelAll();
+            pmmContext.getConfigCTR().rOSAtivDelAll();
+        }
 
     }
 

@@ -29,9 +29,9 @@ public class TransbordoActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonOkTransbordo = (Button) findViewById(R.id.buttonOkPadrao);
-        Button buttonCancTransbordo = (Button) findViewById(R.id.buttonCancPadrao);
-        Button buttonAtualPadrao = (Button) findViewById(R.id.buttonAtualPadrao);
+        Button buttonOkTransbordo = findViewById(R.id.buttonOkPadrao);
+        Button buttonCancTransbordo = findViewById(R.id.buttonCancPadrao);
+        Button buttonAtualPadrao = findViewById(R.id.buttonAtualPadrao);
 
         buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +134,7 @@ public class TransbordoActivity extends ActivityGeneric {
 
                             } else {
 
-                                if (pmmContext.getVerPosTela() == 2) {
+                                if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L) {
                                     pmmContext.getMotoMecFertCTR().salvarApont(0L, idTransb, getLongitude(), getLatitude());
                                 } else {
                                     pmmContext.getMotoMecFertCTR().inserirApontTransb(idTransb);
@@ -195,7 +195,7 @@ public class TransbordoActivity extends ActivityGeneric {
     }
 
     public void onBackPressed()  {
-        if(pmmContext.getVerPosTela() == 2) {
+        if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L) {
             Intent it = new Intent(TransbordoActivity.this, ListaAtividadeActivity.class);
             startActivity(it);
             finish();

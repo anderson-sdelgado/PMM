@@ -10,6 +10,8 @@ import android.util.Log;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.usinasantafe.pmm.control.CECCTR;
+import br.com.usinasantafe.pmm.control.CompostoCTR;
 import br.com.usinasantafe.pmm.control.InformativoCTR;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.view.MenuInicialActivity;
@@ -55,6 +57,7 @@ public class VerifDadosServ {
                 ConfigCTR configCTR = new ConfigCTR();
                 CheckListCTR checkListCTR = new CheckListCTR();
                 InformativoCTR informativoCTR = new InformativoCTR();
+                CompostoCTR compostoCTR = new CompostoCTR();
                 if (this.tipo.equals("Equip")) {
                     configCTR.recDadosEquip(result);
                 } else if (this.tipo.equals("OS")) {
@@ -74,6 +77,13 @@ public class VerifDadosServ {
                     checkListCTR.recDadosCheckList(result);
                 } else if (this.tipo.equals("Informativo")) {
                     informativoCTR.recInfor(result);
+                } else if(tipo.equals("OrdCarregProduto")) {
+                    compostoCTR.recebOrdCarreg(result);
+                } else if(tipo.equals("OrdCarregComposto")) {
+                    compostoCTR.recebOrdCarreg(result);
+                } else if (this.tipo.equals("CEC")) {
+                    CECCTR cecCTR = new CECCTR();
+                    cecCTR.recDados(result);
                 }
             }
         } catch (Exception e) {
@@ -154,9 +164,9 @@ public class VerifDadosServ {
         this.urlsConexaoHttp = new UrlsConexaoHttp();
         String[] url = {urlsConexaoHttp.urlVerifica(tipo)};
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
-        parametrosPost.put("dado", String.valueOf(dado));
+        parametrosPost.put("dado", dado);
 
-        Log.i("PMM", "VERIFICA = " + String.valueOf(dado));
+        Log.i("PMM", "VERIFICA = " + dado);
 
         postVerGenerico = new PostVerGenerico();
         postVerGenerico.setParametrosPost(parametrosPost);

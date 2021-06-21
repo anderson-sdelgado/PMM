@@ -24,9 +24,9 @@ public class OperadorActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonOkMotorista = (Button) findViewById(R.id.buttonOkPadrao);
-        Button buttonCancMotorista = (Button) findViewById(R.id.buttonCancPadrao);
-        Button buttonAtualPadrao = (Button) findViewById(R.id.buttonAtualPadrao);
+        Button buttonOkMotorista = findViewById(R.id.buttonOkPadrao);
+        Button buttonCancMotorista = findViewById(R.id.buttonCancPadrao);
+        Button buttonAtualPadrao = findViewById(R.id.buttonAtualPadrao);
 
         buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +93,7 @@ public class OperadorActivity extends ActivityGeneric {
 
                 if (!editTextPadrao.getText().toString().equals("")) {
 
-                    if (pmmContext.getConfigCTR().verFunc(Long.parseLong(editTextPadrao.getText().toString()))) {
+                    if (pmmContext.getMotoMecFertCTR().verFunc(Long.parseLong(editTextPadrao.getText().toString()))) {
 
                         pmmContext.getMotoMecFertCTR().getBoletimMMDAO().setBoletimMMBean();
                         pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setMatricFuncBolMMFert(Long.parseLong(editTextPadrao.getText().toString()));

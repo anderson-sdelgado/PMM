@@ -4,12 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 
 import br.com.usinasantafe.pmm.model.bean.AtualAplicBean;
-import br.com.usinasantafe.pmm.model.bean.estaticas.FuncBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.OSBean;
 import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
 import br.com.usinasantafe.pmm.model.dao.AtualAplicDAO;
 import br.com.usinasantafe.pmm.model.dao.ConfigDAO;
 import br.com.usinasantafe.pmm.model.dao.EquipDAO;
-import br.com.usinasantafe.pmm.model.dao.FuncDAO;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.model.dao.OSDAO;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
@@ -27,11 +26,6 @@ public class ConfigCTR {
         return configDAO.hasElements();
     }
 
-    public ConfigBean getConfig(){
-        ConfigDAO configDAO = new ConfigDAO();
-        return configDAO.getConfig();
-    }
-
     public boolean verSenha(String senha){
         ConfigDAO configDAO = new ConfigDAO();
         return configDAO.verSenha(senha);
@@ -41,6 +35,19 @@ public class ConfigCTR {
         ConfigDAO configDAO = new ConfigDAO();
         configDAO.salvarConfig(senha);
     }
+
+    public ConfigBean getConfig(){
+        ConfigDAO configDAO = new ConfigDAO();
+        return configDAO.getConfig();
+    }
+
+    public void clearDadosFert(){
+        setBocalConfig(0L);
+        setVelocConfig(0L);
+        setPressaoConfig(0D);
+    }
+
+    /////////////////////////////////////// SET //////////////////////////////////////////////////
 
     public void setEquipConfig(EquipBean equipBean){
         ConfigDAO configDAO = new ConfigDAO();
@@ -97,6 +104,56 @@ public class ConfigCTR {
         configDAO.setCheckListConfig(idTurno);
     }
 
+    public void setPosFluxoViagem(Long posFluxoViagem){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setPosFluxoViagem(posFluxoViagem);
+    }
+
+    public void setDifDthrConfig(Long status){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setDifDthrConfig(status);
+    }
+
+    public void setPosicaoTela(Long posicaoTela){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setPosicaoTela(posicaoTela);
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////// OS ////////////////////////////////////////////////////
+
+    public boolean verTipoOS(){
+        ConfigDAO configDAO = new ConfigDAO();
+        OSDAO osDAO = new OSDAO();
+        return osDAO.verTipoOS(configDAO.getConfig().getOsConfig());
+    }
+
+    public boolean verOS(Long nroOS){
+        OSDAO osDAO = new OSDAO();
+        AtividadeDAO atividadeDAO = new AtividadeDAO();
+        return (osDAO.verOS(nroOS) && atividadeDAO.verROSAtiv(nroOS));
+    }
+
+    public OSBean getOSBean(){
+        OSDAO osDAO = new OSDAO();
+        return osDAO.getOSBean(getConfig().getOsConfig());
+    }
+
+    public void osDelAll(){
+        OSDAO osDAO = new OSDAO();
+        osDAO.osDelAll();
+    }
+
+    public void rOSAtivDelAll(){
+        OSDAO osDAO = new OSDAO();
+        osDAO.rOSAtivDelAll();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////// EQUIP ///////////////////////////////////////////////////
+
     public void verEquipConfig(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
         EquipDAO equipDAO = new EquipDAO();
         equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog);
@@ -107,6 +164,10 @@ public class ConfigCTR {
         return equipDAO.getEquip();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////// ATUALIZAR DADOS ////////////////////////////////////////
+
     public void atualTodasTabelas(Context tela, ProgressDialog progressDialog){
         AtualDadosServ.getInstance().atualTodasTabBD(tela, progressDialog);
     }
@@ -114,6 +175,10 @@ public class ConfigCTR {
     public void atualTodasTabelas(){
         AtualDadosServ.getInstance().atualTodasTabBD();
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////// INFORMAÇÃO /////////////////////////////////////////////
 
     public void atualVerInforConfig(Long tipo){
         ConfigDAO configDAO = new ConfigDAO();
@@ -125,21 +190,9 @@ public class ConfigCTR {
         return configDAO.getVerInforConfig();
     }
 
-    public boolean verTipoOS(){
-        ConfigDAO configDAO = new ConfigDAO();
-        OSDAO osDAO = new OSDAO();
-        return osDAO.verTipoOS(configDAO.getConfig().getOsConfig());
-    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void setDifDthrConfig(Long status){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setDifDthrConfig(status);
-    }
-
-    public boolean verOS(Long nroOS){
-        OSDAO osDAO = new OSDAO();
-        return osDAO.verOS(nroOS);
-    }
+    /////////////////////////////////////// LOG ERRO //////////////////////////////////////////////
 
     public boolean verEnvioLogErro(){
         LogErroDAO logErroDAO = new LogErroDAO();
@@ -156,33 +209,7 @@ public class ConfigCTR {
         logErroDAO.updLogErro(retorno);
     }
 
-    public void clearDadosFert(){
-        setBocalConfig(0L);
-        setVelocConfig(0L);
-        setPressaoConfig(0D);
-    }
 
-    ///////////////////////////// FUNCIONARIO ////////////////////////////////////////////
-
-    public boolean verFunc(Long matricFunc){
-        FuncDAO funcDAO = new FuncDAO();
-        return funcDAO.verFunc(matricFunc);
-    }
-
-    public FuncBean getFunc(Long matricColab){
-        FuncDAO funcDAO = new FuncDAO();
-        return funcDAO.getFunc(matricColab);
-    }
-
-    public boolean verEquipMotoMec(){
-        ConfigCTR configCTR = new ConfigCTR();
-        if(configCTR.getEquip().getTipoEquip() == 1) {
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
 
     public void recDadosEquip(String result){
 
@@ -238,6 +265,5 @@ public class ConfigCTR {
         AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
         return atualAplicDAO.dadosVerAtualAplicBean(equipBean.getNroEquip(), equipBean.getIdCheckList(), versaoAplic);
     }
-
 
 }

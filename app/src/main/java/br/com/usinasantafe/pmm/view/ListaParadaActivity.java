@@ -39,9 +39,9 @@ public class ListaParadaActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonAtualParada = (Button) findViewById(R.id.buttonAtualParada);
-        Button buttonRetMenuParada = (Button) findViewById(R.id.buttonRetMenuParada);
-        EditText editPesqListParada = (EditText) findViewById(R.id.editPesqListParada);
+        Button buttonAtualParada = findViewById(R.id.buttonAtualParada);
+        Button buttonRetMenuParada = findViewById(R.id.buttonRetMenuParada);
+        EditText editPesqListParada = findViewById(R.id.editPesqListParada);
 
         paradaList = pmmContext.getMotoMecFertCTR().getListParada();
 
@@ -53,7 +53,7 @@ public class ListaParadaActivity extends ActivityGeneric {
         }
 
         adapter = new ArrayAdapter<String>(this, R.layout.activity_item_lista, R.id.textViewItemList, itens);
-        paradaListView = (ListView) findViewById(R.id.listViewMotParada);
+        paradaListView = findViewById(R.id.listViewMotParada);
         paradaListView.setAdapter(adapter);
 
         editPesqListParada.addTextChangedListener(new TextWatcher() {

@@ -14,18 +14,18 @@ public class CarretaDAO {
     public CarretaDAO() {
     }
 
-    public boolean hasElements(){
+    public boolean hasElemCarreta(){
         CarretaBean carretaBean = new CarretaBean();
         return carretaBean.hasElements();
     }
 
-    public int verCarr(Long nroCarreta){
+    public int verCarreta(Long nroCarreta){
         int retorno; //1 - CARRETA CORRETA; 2 - NÃO EXISTE NA BASE DE DADOS; 3 - CARRETA REPETIDA; 4 - CARRETA INVERTIDA;
-        if(verCarretaBD(nroCarreta)){
-            if(!verCarreta(nroCarreta)){
+        if(verCarretaEquipSeg(nroCarreta)){
+            if(!verCarretaBD(nroCarreta)){
                 ConfigCTR configCTR = new ConfigCTR();
                 EquipBean equipBean = configCTR.getEquip();
-                EquipSegBean carreta = getCarretaBD(nroCarreta);
+                EquipSegBean carreta = getCarretaEquipSeg(nroCarreta);
                 if(equipBean.getCodClasseEquip() == 1){ //CAMINHÃO CANAVIEIRO
                     if(carreta.getCodClasseEquip() != 21){//REBOQUE
                         retorno = 1;
@@ -95,28 +95,28 @@ public class CarretaDAO {
         carretaBean.deleteAll();
     }
 
-    public boolean verCarretaBD(Long nroCarreta){
-        List carretaList = carretaBDList(nroCarreta);
+    public boolean verCarretaEquipSeg(Long nroCarreta){
+        List carretaList = carretaEquipSegList(nroCarreta);
         boolean ver = carretaList.size() > 0;
         carretaList.clear();
         return ver;
     }
 
-    public boolean verCarreta(Long nroCarreta){
+    public boolean verCarretaBD(Long nroCarreta){
         List carretaList = carretaList(nroCarreta);
         boolean ver = carretaList.size() > 0;
         carretaList.clear();
         return ver;
     }
 
-    public EquipSegBean getCarretaBD(Long nroCarreta){
-        List carretaList = carretaBDList(nroCarreta);
+    public EquipSegBean getCarretaEquipSeg(Long nroCarreta){
+        List carretaList = carretaEquipSegList(nroCarreta);
         EquipSegBean equipSegBean = (EquipSegBean) carretaList.get(0);
         carretaList.clear();
         return equipSegBean;
     }
 
-    private List carretaBDList(Long nroCarreta){
+    private List carretaEquipSegList(Long nroCarreta){
         EquipSegBean equipSegBean = new EquipSegBean();
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqNroEquip(nroCarreta));
@@ -188,7 +188,7 @@ public class CarretaDAO {
     private EspecificaPesquisa getPesqTipoCarreta(){
         EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
         especificaPesquisa.setCampo("tipoEquip");
-        especificaPesquisa.setValor(2L);
+        especificaPesquisa.setValor(6L);
         especificaPesquisa.setTipo(1);
         return especificaPesquisa;
     }

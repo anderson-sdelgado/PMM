@@ -45,8 +45,8 @@ public class AdapterListRend extends BaseAdapter {
     public View getView(int position, View view, ViewGroup parent) {
         view = layoutInflater.inflate(R.layout.activity_item_rend, null);
 
-        TextView textViewRendNroOS = (TextView) view.findViewById(R.id.textViewRendNroOS);
-        TextView textViewRendValor = (TextView) view.findViewById(R.id.textViewRendValor);
+        TextView textViewRendNroOS = view.findViewById(R.id.textViewRendNroOS);
+        TextView textViewRendValor = view.findViewById(R.id.textViewRendValor);
 
         RendMMBean rendMMBean = (RendMMBean) itens.get(position);
 

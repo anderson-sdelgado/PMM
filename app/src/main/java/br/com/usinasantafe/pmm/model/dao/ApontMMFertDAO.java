@@ -20,7 +20,7 @@ public class ApontMMFertDAO {
     public ApontMMFertDAO() {
     }
 
-    public void salvarApont(Long idBol, Long parada
+    public void salvarApont(Long idBol, Long idMotoMec, Long parada
                                         , Long os, Long atividade
                                         , Double latitude, Double longitude
                                         , Long statusConBol, String dthr
@@ -29,6 +29,7 @@ public class ApontMMFertDAO {
 
         ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
         apontMMFertBean.setIdBolMMFert(idBol);
+        apontMMFertBean.setIdMotoMec(idMotoMec);
         apontMMFertBean.setOsApontMMFert(os);
         apontMMFertBean.setAtivApontMMFert(atividade);
         apontMMFertBean.setLatitudeApontMMFert(latitude);
@@ -52,6 +53,19 @@ public class ApontMMFertDAO {
         apontMMFertBean.setStatusApontMMFert(1L);
         apontMMFertBean.insert();
 
+    }
+
+    public boolean verifBackupApont(Long idBol, Long idMotoMec) {
+        boolean v = false;
+        List<ApontMMFertBean> apontMMFertList = apontMMFertList(idBol);
+        if(apontMMFertList.size() > 0){
+            ApontMMFertBean apontMMFertBean = apontMMFertList.get(apontMMFertList.size() - 1);
+            if ((idMotoMec.equals(apontMMFertBean.getIdMotoMec()))) {
+                v = true;
+            }
+        }
+        apontMMFertList.clear();
+        return v;
     }
 
     public boolean verifBackupApont(Long idBol, Long os, Long atividade, Long idParada) {
@@ -90,13 +104,6 @@ public class ApontMMFertDAO {
         ApontMMFertBean apontMMFertBean = apontaMMFertList.get(0);
         apontaMMFertList.clear();
         return apontMMFertBean;
-    }
-
-    public boolean verApont(ApontMMFertBean apontMMFertBean) {
-        List<ApontMMFertBean> apontaMMList = apontListBolList(apontMMFertBean);
-        boolean ret = (apontaMMList.size() == 0);
-        apontaMMList.clear();
-        return ret;
     }
 
     public List<ApontMMFertBean> apontMMFertList(Long idBol){
@@ -305,5 +312,6 @@ public class ApontMMFertDAO {
         apontMMFertList.clear();
 
     }
+
 
 }

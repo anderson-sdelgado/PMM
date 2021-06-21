@@ -22,10 +22,10 @@ public class EquipActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        textViewCodEquip = (TextView) findViewById(R.id.textViewCodEquip);
-        textViewDescEquip = (TextView) findViewById(R.id.textViewDescEquip);
-        Button buttonOkEquip = (Button) findViewById(R.id.buttonOkEquip);
-        Button buttonCancEquip = (Button) findViewById(R.id.buttonCancEquip);
+        textViewCodEquip = findViewById(R.id.textViewCodEquip);
+        textViewDescEquip = findViewById(R.id.textViewDescEquip);
+        Button buttonOkEquip = findViewById(R.id.buttonOkEquip);
+        Button buttonCancEquip = findViewById(R.id.buttonCancEquip);
 
         textViewCodEquip.setText(String.valueOf(pmmContext.getConfigCTR().getEquip().getNroEquip()));
         textViewDescEquip.setText(pmmContext.getConfigCTR().getEquip().getDescrClasseEquip());
@@ -35,10 +35,27 @@ public class EquipActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setIdEquipBolMMFert(pmmContext.getConfigCTR().getEquip().getIdEquip());
-                Intent it = new Intent(EquipActivity.this, ListaTurnoActivity.class);
-                startActivity(it);
-                finish();
+                if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){
+
+                    pmmContext.getMotoMecFertCTR().delCarreta();
+
+                    if(pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L){
+                        pmmContext.getCecCTR().setLib(pmmContext.getCecCTR().getOSTipoAtiv().getIdLibOS());
+                    }
+
+                    Intent it = new Intent(EquipActivity.this, MsgNumCarretaActivity.class);
+                    startActivity(it);
+                    finish();
+
+                }
+                else {
+
+                    pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setIdEquipBolMMFert(pmmContext.getConfigCTR().getEquip().getIdEquip());
+                    Intent it = new Intent(EquipActivity.this, ListaTurnoActivity.class);
+                    startActivity(it);
+                    finish();
+
+                }
 
             }
         });

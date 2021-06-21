@@ -29,12 +29,12 @@ public class BackupPreCECActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        textViewBkpViagemCana = (TextView) findViewById(R.id.textViewBkpViagemCana);
-        Button buttonAntBkpViagemCana = (Button) findViewById(R.id.buttonAntBkpViagemCana);
-        Button buttonProxBkpViagemCana = (Button) findViewById(R.id.buttonProxBkpViagemCana);
-        Button buttonRetornarBkpViagemCana = (Button) findViewById(R.id.buttonRetornarBkpViagemCana);
+        textViewBkpViagemCana = findViewById(R.id.textViewBkpViagemCana);
+        Button buttonAntBkpViagemCana = findViewById(R.id.buttonAntBkpViagemCana);
+        Button buttonProxBkpViagemCana = findViewById(R.id.buttonProxBkpViagemCana);
+        Button buttonRetornarBkpViagemCana = findViewById(R.id.buttonRetornarBkpViagemCana);
 
-        precCECList = pmmContext.getCecCTR().getPreCECFechadoList();
+        precCECList = pmmContext.getCecCTR().preCECTerminadoList();
 
         contador = precCECList.size() - 1;
 

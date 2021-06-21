@@ -15,6 +15,8 @@ public class ApontMMFertBean extends Entidade {
     @DatabaseField
     private Long idBolMMFert;
     @DatabaseField
+    private Long idMotoMec;
+    @DatabaseField
     private Long osApontMMFert;
     @DatabaseField
     private Long ativApontMMFert;
@@ -56,6 +58,14 @@ public class ApontMMFertBean extends Entidade {
 
     public void setIdBolMMFert(Long idBolMMFert) {
         this.idBolMMFert = idBolMMFert;
+    }
+
+    public Long getIdMotoMec() {
+        return idMotoMec;
+    }
+
+    public void setIdMotoMec(Long idMotoMec) {
+        this.idMotoMec = idMotoMec;
     }
 
     public Long getOsApontMMFert() {

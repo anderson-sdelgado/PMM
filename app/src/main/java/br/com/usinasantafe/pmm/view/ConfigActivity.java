@@ -25,11 +25,11 @@ public class ConfigActivity extends ActivityGeneric {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
 
-        Button btOkConfig =  (Button) findViewById(R.id.buttonSalvarConfig );
-        Button btCancConfig = (Button) findViewById(R.id.buttonCancConfig);
-        Button btAtualBDConfig = (Button) findViewById(R.id.buttonAtualizarBD);
-        editTextEquipConfig = (EditText)  findViewById(R.id.editTextEquipConfig);
-        editTextSenhaConfig = (EditText)  findViewById(R.id.editTextSenhaConfig);
+        Button btOkConfig =  findViewById(R.id.buttonSalvarConfig );
+        Button btCancConfig = findViewById(R.id.buttonCancConfig);
+        Button btAtualBDConfig = findViewById(R.id.buttonAtualizarBD);
+        editTextEquipConfig = findViewById(R.id.editTextEquipConfig);
+        editTextSenhaConfig = findViewById(R.id.editTextSenhaConfig);
 
         pmmContext = (PMMContext) getApplication();
 

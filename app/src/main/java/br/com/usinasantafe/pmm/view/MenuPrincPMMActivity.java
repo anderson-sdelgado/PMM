@@ -39,8 +39,8 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
         setContentView(R.layout.activity_menu_princ_pmm);
 
         pmmContext = (PMMContext) getApplication();
-        textViewProcessoNormal = (TextView) findViewById(R.id.textViewProcessoNormal);
-        textViewDataHora = (TextView) findViewById(R.id.textViewDataHora);
+        textViewProcessoNormal = findViewById(R.id.textViewProcessoNormal);
+        textViewDataHora = findViewById(R.id.textViewDataHora);
 
         customHandler.postDelayed(updateTimerThread, 0);
 
@@ -50,9 +50,9 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
             pmmContext.getConfigCTR().setDifDthrConfig(0L);
         }
         else {
-            if ((pmmContext.getConfigCTR().getConfig().getDifDthrConfig() == 0) && (pmmContext.getVerPosTela() == 8)) {
+            if ((pmmContext.getConfigCTR().getConfig().getDifDthrConfig() == 0) && (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 8L)) {
                 pmmContext.setContDataHora(1);
-                pmmContext.setVerPosTela(5);
+                pmmContext.getConfigCTR().setPosicaoTela(5L);
                 Intent it = new Intent(MenuPrincPMMActivity.this, MsgDataHoraActivity.class);
                 startActivity(it);
                 finish();
@@ -107,7 +107,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
-                        pmmContext.setVerPosTela(2);
+                        pmmContext.getConfigCTR().setPosicaoTela(2L);
                         customHandler.removeCallbacks(updateTimerThread);
                         Intent it = new Intent(MenuPrincPMMActivity.this, OSActivity.class);
                         startActivity(it);
@@ -118,7 +118,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
-                        pmmContext.setVerPosTela(3);
+                        pmmContext.getConfigCTR().setPosicaoTela(3L);
                         customHandler.removeCallbacks(updateTimerThread);
                         Intent it = new Intent(MenuPrincPMMActivity.this, OSActivity.class);
                         startActivity(it);
@@ -129,15 +129,14 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! INSIRA OS APONTAMENTOS AO BOLETIM!",
                                 Toast.LENGTH_LONG).show();
                     } else {
-                        pmmContext.setVerPosTela(4);
-                        pmmContext.setTextoHorimetro("HORÍMETRO FINAL:");
+                        pmmContext.getConfigCTR().setPosicaoTela(4L);
                         customHandler.removeCallbacks(updateTimerThread);
                         Intent it = new Intent(MenuPrincPMMActivity.this, HorimetroActivity.class);
                         startActivity(it);
                         finish();
                     }
                 } else if (text.equals("HISTORICO")) {
-                    Intent it = new Intent(MenuPrincPMMActivity.this, ListaHistApontaActivity.class);
+                    Intent it = new Intent(MenuPrincPMMActivity.this, ListaHistApontActivity.class);
                     startActivity(it);
                     finish();
                 } else if (text.equals("NOVO TRANSBORDO")) {
@@ -149,14 +148,14 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 10 MINUTO PARA TROCAR DE TRANSBORDO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
-                        pmmContext.setVerPosTela(6);
+                        pmmContext.getConfigCTR().setPosicaoTela(6L);
                         customHandler.removeCallbacks(updateTimerThread);
                         Intent it = new Intent(MenuPrincPMMActivity.this, TransbordoActivity.class);
                         startActivity(it);
                         finish();
                     }
                 } else if (text.equals("RENDIMENTO")) {
-                    pmmContext.setVerPosTela(7);
+                    pmmContext.getConfigCTR().setPosicaoTela(7L);
                     customHandler.removeCallbacks(updateTimerThread);
                     Intent it = new Intent(MenuPrincPMMActivity.this, ListaOSRendActivity.class);
                     startActivity(it);
@@ -187,9 +186,9 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                     }
 
                 } else if (text.equals("RECOLHIMENTO MANGUEIRA")) {
-                    pmmContext.setVerPosTela(14);
+                    pmmContext.getConfigCTR().setPosicaoTela(9L);
                     customHandler.removeCallbacks(updateTimerThread);
-                    Intent it = new Intent(MenuPrincPMMActivity.this, ListaOSRecolActivity.class);
+                    Intent it = new Intent(MenuPrincPMMActivity.this, ListaOSRecolhActivity.class);
                     startActivity(it);
                     finish();
                 } else if (text.equals("REENVIO DE DADOS")) {
@@ -204,7 +203,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                                     Toast.LENGTH_LONG).show();
                         } else {
                             pmmContext.getMotoMecFertCTR().inserirParadaImplemento();
-                            pmmContext.setVerPosTela(19);
+                            pmmContext.getConfigCTR().setPosicaoTela(10L);
                             pmmContext.setContImplemento(1L);
                             customHandler.removeCallbacks(updateTimerThread);
                             Intent it = new Intent(MenuPrincPMMActivity.this, ImplementoActivity.class);
@@ -228,7 +227,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                     }
                     else{
                         pmmContext.setContDataHora(1);
-                        pmmContext.setVerPosTela(5);
+                        pmmContext.getConfigCTR().setPosicaoTela(5L);
                         Intent it = new Intent(MenuPrincPMMActivity.this, DataHoraActivity.class);
                         startActivity(it);
                         finish();

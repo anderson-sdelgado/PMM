@@ -37,8 +37,8 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonRetVelocidade = (Button) findViewById(R.id.buttonRetVelocidade);
-        Button buttonAtualVelocidade = (Button) findViewById(R.id.buttonAtualVelocidade);
+        Button buttonRetVelocidade = findViewById(R.id.buttonRetVelocidade);
+        Button buttonAtualVelocidade = findViewById(R.id.buttonAtualVelocidade);
 
         buttonAtualVelocidade.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +99,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
         });
 
         AdapterList adapterList = new AdapterList(this, pmmContext.getMotoMecFertCTR().velocArrayList());
-        velocListView = (ListView) findViewById(R.id.listVelocidade);
+        velocListView = findViewById(R.id.listVelocidade);
         velocListView.setAdapter(adapterList);
 
         velocListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

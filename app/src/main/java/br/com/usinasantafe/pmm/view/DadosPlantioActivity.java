@@ -24,13 +24,13 @@ public class DadosPlantioActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        TextView textViewTituloPlantio = (TextView) findViewById(R.id.textViewTituloPlantio);
-        TextView textViewValorDM = (TextView) findViewById(R.id.textViewValorDM);
-        TextView textViewMetaAP = (TextView) findViewById(R.id.textViewMetaAP);
-        TextView textViewValorAP = (TextView) findViewById(R.id.textViewValorAP);
-        TextView textViewMetaMP = (TextView) findViewById(R.id.textViewMetaMP);
-        TextView textViewValorMP = (TextView) findViewById(R.id.textViewValorMP);
-        Button buttonSair = (Button) findViewById(R.id.buttonSair);
+        TextView textViewTituloPlantio = findViewById(R.id.textViewTituloPlantio);
+        TextView textViewValorDM = findViewById(R.id.textViewValorDM);
+        TextView textViewMetaAP = findViewById(R.id.textViewMetaAP);
+        TextView textViewValorAP = findViewById(R.id.textViewValorAP);
+        TextView textViewMetaMP = findViewById(R.id.textViewMetaMP);
+        TextView textViewValorMP = findViewById(R.id.textViewValorMP);
+        Button buttonSair = findViewById(R.id.buttonSair);
 
         InfPlantioBean infPlantioBean = pmmContext.getInformativoCTR().getInfPlantio();
 
@@ -46,9 +46,21 @@ public class DadosPlantioActivity extends ActivityGeneric {
         buttonSair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(DadosPlantioActivity.this, MenuPrincPMMActivity.class);
-                startActivity(it);
-                finish();
+                if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+                    Intent it = new Intent(DadosPlantioActivity.this, MenuPrincPMMActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
+                    Intent it = new Intent(DadosPlantioActivity.this, MenuPrincECMActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+                    Intent it = new Intent(DadosPlantioActivity.this, MenuPrincPCOMPActivity.class);
+                    startActivity(it);
+                    finish();
+                }
             }
         });
 

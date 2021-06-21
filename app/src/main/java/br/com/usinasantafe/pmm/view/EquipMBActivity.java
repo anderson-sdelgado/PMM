@@ -24,9 +24,9 @@ public class EquipMBActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonOkMotoBomba = (Button) findViewById(R.id.buttonOkPadrao);
-        Button buttonCancMotoBomba = (Button) findViewById(R.id.buttonCancPadrao);
-        Button buttonAtualPadrao = (Button) findViewById(R.id.buttonAtualPadrao);
+        Button buttonOkMotoBomba = findViewById(R.id.buttonOkPadrao);
+        Button buttonCancMotoBomba = findViewById(R.id.buttonCancPadrao);
+        Button buttonAtualPadrao = findViewById(R.id.buttonAtualPadrao);
 
         buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +148,7 @@ public class EquipMBActivity extends ActivityGeneric {
             }
         }
         else{
+            pmmContext.getConfigCTR().setPosicaoTela(11L);
             Intent it = new Intent(EquipMBActivity.this, EsperaInforActivity.class);
             startActivity(it);
             finish();

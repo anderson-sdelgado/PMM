@@ -36,9 +36,9 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonAtualAtividade = (Button) findViewById(R.id.buttonAtualAtividade);
-        Button buttonRetAtividade = (Button) findViewById(R.id.buttonRetAtividade);
-        TextView textViewTituloAtividade = (TextView) findViewById(R.id.textViewTituloAtividade);
+        Button buttonAtualAtividade = findViewById(R.id.buttonAtualAtividade);
+        Button buttonRetAtividade = findViewById(R.id.buttonRetAtividade);
+        TextView textViewTituloAtividade = findViewById(R.id.textViewTituloAtividade);
 
         nroOS =  pmmContext.getConfigCTR().getConfig().getOsConfig();
 
@@ -56,7 +56,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                     progressBar.setMessage("Atualizando Atividades...");
                     progressBar.show();
 
-                    pmmContext.getMotoMecFertCTR().verAtiv( String.valueOf(nroOS), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
+                    pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(nroOS), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
 
                 } else {
 
@@ -86,7 +86,8 @@ public class ListaAtividadeActivity extends ActivityGeneric {
             }
         });
 
-        if (pmmContext.getVerPosTela() == 1) {
+        if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L)
+                || (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L)) {
             textViewTituloAtividade.setText("ATIVIDADE PRINCIPAL");
         } else {
             textViewTituloAtividade.setText("ATIVIDADE");
@@ -101,7 +102,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
         }
 
         AdapterList adapterList = new AdapterList(this, itens);
-        atividadeListView = (ListView) findViewById(R.id.listAtividade);
+        atividadeListView = findViewById(R.id.listAtividade);
         atividadeListView.setAdapter(adapterList);
 
         atividadeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -133,15 +134,14 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                     pmmContext.getConfigCTR().setAtivConfig(atividadeBean.getIdAtiv());
 
-                    if (pmmContext.getVerPosTela() == 1) {
-
-                        pmmContext.setTextoHorimetro("HORÍMETRO INICIAL:");
+                    if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L)
+                            || (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L)) {
 
                         Intent it = new Intent(ListaAtividadeActivity.this, HorimetroActivity.class);
                         startActivity(it);
                         finish();
 
-                    } else if ((pmmContext.getVerPosTela() == 2)) {
+                    } else if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L)) {
 
                         if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
 
@@ -151,9 +151,21 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
-                                    startActivity(it);
-                                    finish();
+                                    if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
+                                        startActivity(it);
+                                        finish();
+                                    }
+                                    else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
+                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);
+                                        startActivity(it);
+                                        finish();
+                                    }
+                                    else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);
+                                        startActivity(it);
+                                        finish();
+                                    }
                                 }
                             });
                             alerta.show();
@@ -204,9 +216,21 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                             pmmContext.getMotoMecFertCTR().insRendBD(nroOS);
                                         }
 
-                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
-                                        startActivity(it);
-                                        finish();
+                                        if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+                                            Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
+                                            startActivity(it);
+                                            finish();
+                                        }
+                                        else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
+                                            Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);
+                                            startActivity(it);
+                                            finish();
+                                        }
+                                        else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+                                            Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);
+                                            startActivity(it);
+                                            finish();
+                                        }
 
                                     }
 
@@ -220,7 +244,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                         }
 
-                    } else if (pmmContext.getVerPosTela() == 3) {
+                    } else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 3L) {
 
                         Intent it = new Intent(ListaAtividadeActivity.this, ListaParadaActivity.class);
                         startActivity(it);

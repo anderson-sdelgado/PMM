@@ -57,7 +57,7 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/buttonAlterarCabecalho"
+            android:id="@+id/buttonAlterarMotorista"
             style="@style/BotaoAvulso"
             android:layout_weight="1"
             android:layout_width="fill_parent"

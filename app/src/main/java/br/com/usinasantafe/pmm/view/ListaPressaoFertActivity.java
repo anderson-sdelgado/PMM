@@ -35,8 +35,8 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonRetPressao = (Button) findViewById(R.id.buttonRetPressao);
-        Button buttonAtualPressao = (Button) findViewById(R.id.buttonAtualPressao);
+        Button buttonRetPressao = findViewById(R.id.buttonRetPressao);
+        Button buttonAtualPressao = findViewById(R.id.buttonAtualPressao);
 
         buttonAtualPressao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +111,7 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
         Collections.sort(itens);
 
         AdapterList adapterList = new AdapterList(this, itens);
-        pressaoBocalListView = (ListView) findViewById(R.id.listPressao);
+        pressaoBocalListView = findViewById(R.id.listPressao);
         pressaoBocalListView.setAdapter(adapterList);
 
         pressaoBocalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

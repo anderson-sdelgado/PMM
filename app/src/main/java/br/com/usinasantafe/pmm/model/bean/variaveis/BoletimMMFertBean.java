@@ -5,7 +5,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import br.com.usinasantafe.pmm.model.pst.Entidade;
 
-@DatabaseTable(tableName="tbbolmmfertvar")
+@DatabaseTable(tableName="tbboletimmmfertvar")
 public class BoletimMMFertBean extends Entidade {
 
     private static final long serialVersionUID = 1L;

@@ -25,18 +25,18 @@ public class DadosColheitaActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        TextView textViewTituloPerda = (TextView) findViewById(R.id.textViewTituloPerda);
-        TextView textViewToleteDadoPerda = (TextView) findViewById(R.id.textViewToleteDadoPerda);
-        TextView textViewLascaDadoPerda = (TextView) findViewById(R.id.textViewLascaDadoPerda);
-        TextView textViewTocoDadoPerda = (TextView) findViewById(R.id.textViewTocoDadoPerda);
-        TextView textViewPonteiroDadoPerda = (TextView) findViewById(R.id.textViewPonteiroDadoPerda);
-        TextView textViewCanaInteiraDadoPerda = (TextView) findViewById(R.id.textViewCanaInteiraDadoPerda);
-        TextView textViewPedacoDadoPerda = (TextView) findViewById(R.id.textViewPedacoDadoPerda);
-        TextView textViewRepiqueDadoPerda = (TextView) findViewById(R.id.textViewRepiqueDadoPerda);
-        TextView textViewSoqueiraDadoPerda = (TextView) findViewById(R.id.textViewSoqueiraDadoPerda);
-        TextView textViewNroSoqueiraDadoPerda = (TextView) findViewById(R.id.textViewNroSoqueiraDadoPerda);
-        TextView textViewTotalDadoPerda = (TextView) findViewById(R.id.textViewTotalDadoPerda);
-        Button buttonSair = (Button) findViewById(R.id.buttonSair);
+        TextView textViewTituloPerda = findViewById(R.id.textViewTituloPerda);
+        TextView textViewToleteDadoPerda = findViewById(R.id.textViewToleteDadoPerda);
+        TextView textViewLascaDadoPerda = findViewById(R.id.textViewLascaDadoPerda);
+        TextView textViewTocoDadoPerda = findViewById(R.id.textViewTocoDadoPerda);
+        TextView textViewPonteiroDadoPerda = findViewById(R.id.textViewPonteiroDadoPerda);
+        TextView textViewCanaInteiraDadoPerda = findViewById(R.id.textViewCanaInteiraDadoPerda);
+        TextView textViewPedacoDadoPerda = findViewById(R.id.textViewPedacoDadoPerda);
+        TextView textViewRepiqueDadoPerda = findViewById(R.id.textViewRepiqueDadoPerda);
+        TextView textViewSoqueiraDadoPerda = findViewById(R.id.textViewSoqueiraDadoPerda);
+        TextView textViewNroSoqueiraDadoPerda = findViewById(R.id.textViewNroSoqueiraDadoPerda);
+        TextView textViewTotalDadoPerda = findViewById(R.id.textViewTotalDadoPerda);
+        Button buttonSair = findViewById(R.id.buttonSair);
 
         InfColheitaBean infColheitaBean = pmmContext.getInformativoCTR().getInfColheita();
 
@@ -58,9 +58,21 @@ public class DadosColheitaActivity extends ActivityGeneric {
         buttonSair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(DadosColheitaActivity.this, MenuPrincPMMActivity.class);
-                startActivity(it);
-                finish();
+                if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+                    Intent it = new Intent(DadosColheitaActivity.this, MenuPrincPMMActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
+                    Intent it = new Intent(DadosColheitaActivity.this, MenuPrincECMActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+                    Intent it = new Intent(DadosColheitaActivity.this, MenuPrincPCOMPActivity.class);
+                    startActivity(it);
+                    finish();
+                }
             }
         });
 

@@ -52,7 +52,10 @@ public class ConfigDAO {
         configBean.setPressaoConfig(0D);
         configBean.setVelocConfig(0L);
         configBean.setBocalConfig(0L);
+        configBean.setAplic(2L);  // 1 - PMM; 2 - ECM; 3 - PCOMP
         configBean.setSenhaConfig(senha);
+        configBean.setPosFluxoViagem(0L);
+        configBean.setPosicaoTela(0L);
         configBean.insert();
         configBean.commit();
     }
@@ -140,6 +143,18 @@ public class ConfigDAO {
     public void setDifDthrConfig(Long status){
         ConfigBean configBean = getConfig();
         configBean.setDifDthrConfig(status);
+        configBean.update();
+    }
+
+    public void setPosFluxoViagem(Long posFluxoViagem){
+        ConfigBean configBean = getConfig();
+        configBean.setPosFluxoViagem(posFluxoViagem);
+        configBean.update();
+    }
+
+    public void setPosicaoTela(Long posicaoTela){
+        ConfigBean configBean = getConfig();
+        configBean.setPosicaoTela(posicaoTela);
         configBean.update();
     }
 

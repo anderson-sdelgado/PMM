@@ -27,11 +27,11 @@ public class OSActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonOkOS = (Button) findViewById(R.id.buttonOkPadrao);
-        Button buttonCancOS = (Button) findViewById(R.id.buttonCancPadrao);
-        EditText editText = (EditText) findViewById(R.id.editTextPadrao);
+        Button buttonOkOS = findViewById(R.id.buttonOkPadrao);
+        Button buttonCancOS = findViewById(R.id.buttonCancPadrao);
+        EditText editText = findViewById(R.id.editTextPadrao);
 
-        if (pmmContext.getVerPosTela() == 1) {
+        if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
             editText.setText("");
         } else {
             editText.setText(String.valueOf(pmmContext.getConfigCTR().getConfig().getOsConfig()));
@@ -105,14 +105,26 @@ public class OSActivity extends ActivityGeneric {
     }
 
     public void onBackPressed()  {
-        if (pmmContext.getVerPosTela() == 1) {
+        if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
             Intent it = new Intent(OSActivity.this, ListaTurnoActivity.class);
             startActivity(it);
             finish();
         } else {
-            Intent it = new Intent(OSActivity.this, MenuPrincPMMActivity.class);
-            startActivity(it);
-            finish();
+            if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+                Intent it = new Intent(OSActivity.this, MenuPrincPMMActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
+                Intent it = new Intent(OSActivity.this, FrenteActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+                Intent it = new Intent(OSActivity.this, MenuPrincPCOMPActivity.class);
+                startActivity(it);
+                finish();
+            }
         }
     }
 

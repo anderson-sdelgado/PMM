@@ -1,6 +1,12 @@
 package br.com.usinasantafe.pmm.util.conHttp;
 
+import android.content.Intent;
+
 import br.com.usinasantafe.pmm.PMMContext;
+import br.com.usinasantafe.pmm.control.ConfigCTR;
+import br.com.usinasantafe.pmm.view.MenuInicialActivity;
+import br.com.usinasantafe.pmm.view.MenuPrincECMActivity;
+import br.com.usinasantafe.pmm.view.MenuPrincPMMActivity;
 
 public class UrlsConexaoHttp {
 
@@ -15,27 +21,43 @@ public class UrlsConexaoHttp {
     public static String AtividadeBean = urlPrincipal + "atividade.php" + put;
     public static String BocalBean = urlPrincipal + "bocal.php" + put;
     public static String EquipSegBean = urlPrincipal + "equipseg.php" + put;
-    public static String ItemCheckListBean = urlPrincipal + "itemchecklist.php" + put;
+    public static String FrenteBean = urlPrincipal + "frente.php" + put;
     public static String FuncBean = urlPrincipal + "funcionario.php" + put;
+    public static String ItemCheckListBean = urlPrincipal + "itemchecklist.php" + put;
+    public static String LeiraBean = urlPrincipal + "leira.php" + put;
+    public static String MotoMecBean = urlPrincipal + "motomec.php" + put;
+    public static String OSBean = urlPrincipal + "osecm.php" + put;
     public static String ParadaBean = urlPrincipal + "parada.php" + put;
     public static String PressaoBocalBean = urlPrincipal + "pressaobocal.php" + put;
+    public static String ProdutoBean = urlPrincipal + "produto.php" + put;
     public static String RAtivParadaBean = urlPrincipal + "rativparada.php" + put;
     public static String RFuncaoAtivParBean = urlPrincipal + "rfuncaoativpar.php" + put;
     public static String TurnoBean = urlPrincipal + "turno.php" + put;
-    public static String LeiraBean = urlPrincipal + "leira.php" + put;
 
     public UrlsConexaoHttp() {
+    }
+
+    public String getsInsertCarregInsumo() {
+        return urlPrincEnvio + "inserircarreginsumo.php" + put;
+    }
+
+    public String getsInsertLeiraDescarreg() {
+        return urlPrincEnvio + "inserirleiradescarreg.php" + put;
     }
 
     public String getsInserirCheckList() {
         return urlPrincEnvio + "inserirchecklist.php" + put;
     }
 
-    public String getsInsertBolAbertoMM() {
+    public String getsInsertPreCEC() {
+        return urlPrincEnvio + "inserirprecec.php" + put;
+    }
+
+    public String getsInsertBolAbertoMMFert() {
         return urlPrincEnvio + "inserirbolabertommfert.php" + put;
     }
 
-    public String getsInsertBolFechadoMM() {
+    public String getsInsertBolFechadoMMFert() {
         return urlPrincEnvio + "inserirbolfechadommfert.php" + put;
     }
 
@@ -48,7 +70,13 @@ public class UrlsConexaoHttp {
         if (classe.equals("Equip")) {
             retorno = urlPrincipal + "equip.php" + put;
         } else if (classe.equals("OS")) {
-            retorno = urlPrincipal + "os.php" + put;
+            ConfigCTR configCTR = new ConfigCTR();
+            if(configCTR.getConfig().getAplic() == 1L){
+                retorno = urlPrincipal + "os.php" + put;
+            }
+            else if(configCTR.getConfig().getAplic() == 2L){
+                retorno = urlPrincipal + "verosecm.php" + put;
+            }
         } else if (classe.equals("Atividade")) {
             retorno = urlPrincipal + "atualativ.php" + put;
         } else if (classe.equals("AtualParada")) {
@@ -67,6 +95,12 @@ public class UrlsConexaoHttp {
             retorno = urlPrincipal + "pneu.php" + put;
         } else if (classe.equals("Informativo")) {
             retorno = urlPrincipal + "informativo.php" + put;
+        } else if(classe.equals("OrdCarregProduto")){
+            retorno = urlPrincipal + "retcarregprod.php" + put;
+        } else if(classe.equals("OrdCarregComposto")){
+            retorno = urlPrincipal + "retcarregcomp.php" + put;
+        } else if (classe.equals("CEC")) {
+            retorno = urlPrincEnvio + "retcec.php" + put;
         }
         return retorno;
     }

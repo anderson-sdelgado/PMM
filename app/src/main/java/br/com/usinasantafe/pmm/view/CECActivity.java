@@ -26,8 +26,8 @@ public class CECActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        TextView textViewBoletim = (TextView) findViewById(R.id.textViewBoletim);
-        Button buttonOkBoletim = (Button) findViewById(R.id.buttonOkBoletim);
+        TextView textViewBoletim = findViewById(R.id.textViewBoletim);
+        Button buttonOkBoletim = findViewById(R.id.buttonOkBoletim);
 
         pmmContext.getCecCTR().delCEC();
 
@@ -69,8 +69,6 @@ public class CECActivity extends ActivityGeneric {
             String CEC1 = "";
             String CEC2 = "";
             String CEC3 = "";
-
-            retorno = retorno + "CARGAS SORTEADAS \n";
 
             if(cecBean.getUnidadeSorteada1CEC() != 0){
                 CEC1 = "CARRETA " + cecBean.getUnidadeSorteada1CEC() + "-> N. CEC = " + cecBean.getCecSorteado1CEC() + "\n";

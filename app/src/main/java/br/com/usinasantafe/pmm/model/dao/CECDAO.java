@@ -45,12 +45,13 @@ public class CECDAO {
     }
 
     public void delCEC(){
-        List cecList = cecListCresc();
+        List<CECBean> cecList = cecListCresc();
         int qtdeCEC = cecList.size();
         if (qtdeCEC > 10) {
-            CECBean cecBeanDel = (CECBean) cecList.get(0);
-            cecBeanDel.delete();
+            CECBean cecBean = (CECBean) cecList.get(0);
+            cecBean.delete();
         }
+        cecList.clear();
     }
 
     public void verCEC(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){

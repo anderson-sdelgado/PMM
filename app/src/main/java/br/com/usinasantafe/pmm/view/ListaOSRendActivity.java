@@ -19,11 +19,11 @@ public class ListaOSRendActivity extends ActivityGeneric {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_os_rend);
 
-        Button buttonRetOSRend = (Button) findViewById(R.id.buttonRetOSRend);
+        Button buttonRetOSRend = findViewById(R.id.buttonRetOSRend);
 
         pmmContext = (PMMContext) getApplication();
 
-        ListView listaOSRend = (ListView) findViewById(R.id.listaOSRend);
+        ListView listaOSRend = findViewById(R.id.listaOSRend);
         AdapterListRend adapterListRend = new AdapterListRend(this, pmmContext.getMotoMecFertCTR().rendList());
         listaOSRend.setAdapter(adapterListRend);
 

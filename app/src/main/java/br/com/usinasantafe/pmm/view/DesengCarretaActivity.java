@@ -1,7 +1,5 @@
 package br.com.usinasantafe.pmm.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,10 +21,10 @@ public class DesengCarretaActivity extends ActivityGeneric {
         setContentView(R.layout.activity_deseng_carreta);
 
         pmmContext = (PMMContext) getApplication();
-        textViewMsgDesengCarreta = (TextView) findViewById(R.id.textViewMsgDesengCarreta);
+        textViewMsgDesengCarreta = findViewById(R.id.textViewMsgDesengCarreta);
 
-        Button buttonSimDesengate = (Button) findViewById(R.id.buttonSimDesengate);
-        Button buttonNaoDesengate = (Button) findViewById(R.id.buttonNaoDesengate);
+        Button buttonSimDesengate = findViewById(R.id.buttonSimDesengate);
+        Button buttonNaoDesengate = findViewById(R.id.buttonNaoDesengate);
 
         textViewMsgDesengCarreta.setText(pmmContext.getMotoMecFertCTR().getDescrCarreta());
 
@@ -36,17 +34,6 @@ public class DesengCarretaActivity extends ActivityGeneric {
 
                 pmmContext.getMotoMecFertCTR().delCarreta();
 
-                if (pmmContext.getVerPosTela() == 3){
-                    Intent it = new Intent(DesengCarretaActivity.this, MenuPrincECMActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-                else if(pmmContext.getVerPosTela() == 6){
-                    Intent it = new Intent(DesengCarretaActivity.this, MenuParadaECMActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-
                 ConexaoWeb conexaoWeb = new ConexaoWeb();
                 if (conexaoWeb.verificaConexao(DesengCarretaActivity.this)) {
                     pmmContext.getConfigCTR().setStatusConConfig(1L);
@@ -55,7 +42,18 @@ public class DesengCarretaActivity extends ActivityGeneric {
                     pmmContext.getConfigCTR().setStatusConConfig(0L);
                 }
 
-                pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude());
+                pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());
+
+                if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 19L){
+                    Intent it = new Intent(DesengCarretaActivity.this, MenuPrincECMActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 21L){
+                    Intent it = new Intent(DesengCarretaActivity.this, MenuParadaECMActivity.class);
+                    startActivity(it);
+                    finish();
+                }
 
             }
         });
@@ -63,12 +61,12 @@ public class DesengCarretaActivity extends ActivityGeneric {
         buttonNaoDesengate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pmmContext.getVerPosTela() == 3){
+                if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 19L){
                     Intent it = new Intent(DesengCarretaActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if(pmmContext.getVerPosTela() == 6){
+                else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 21L){
                     Intent it = new Intent(DesengCarretaActivity.this, MenuParadaECMActivity.class);
                     startActivity(it);
                     finish();

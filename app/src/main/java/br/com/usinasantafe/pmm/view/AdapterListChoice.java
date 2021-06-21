@@ -51,7 +51,7 @@ public class AdapterListChoice extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.activity_item_lista_choice, null, true);
 
-            viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.checkBoxItemList);
+            viewHolder.checkBox = convertView.findViewById(R.id.checkBoxItemList);
             convertView.setTag(viewHolder);
 
         }else {
@@ -68,7 +68,7 @@ public class AdapterListChoice extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                Integer pos = (Integer)  viewHolder.checkBox.getTag();
+                Integer pos = (Integer) viewHolder.checkBox.getTag();
 
                 if(itens.get(pos).isSelected()){
                     itens.get(pos).setSelected(false);

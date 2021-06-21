@@ -14,7 +14,7 @@ import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 
-public class MsgNumCarretaActivity extends AppCompatActivity {
+public class MsgNumCarretaActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private int numCarreta;
@@ -26,27 +26,29 @@ public class MsgNumCarretaActivity extends AppCompatActivity {
 
         pmmContext = (PMMContext) getApplication();
 
-        TextView textViewMsgNumCarreta = (TextView) findViewById(R.id.textViewMsgNumCarreta);
+        TextView textViewMsgNumCarreta = findViewById(R.id.textViewMsgNumCarreta);
 
         numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;
-        if (pmmContext.getVerPosTela() == 5){
+        if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){
             textViewMsgNumCarreta.setText("DESEJA INSERIR A CARRETA " + numCarreta +"?");
         }
         else{
             textViewMsgNumCarreta.setText("DESEJA ENGATAR A CARRETA " + numCarreta + "?");
         }
 
-        Button buttonOkMsgNumCarreta = (Button) findViewById(R.id.buttonOkMsgNumCarreta);
-        Button buttonCancMsgNumCarreta = (Button) findViewById(R.id.buttonCancMsgNumCarreta);
+        Button buttonOkMsgNumCarreta = findViewById(R.id.buttonOkMsgNumCarreta);
+        Button buttonCancMsgNumCarreta = findViewById(R.id.buttonCancMsgNumCarreta);
 
         buttonOkMsgNumCarreta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (numCarreta < 4) {
+
                     Intent it = new Intent(MsgNumCarretaActivity.this, CarretaActivity.class);
                     startActivity(it);
                     finish();
+
                 } else {
 
                     AlertDialog.Builder alerta = new AlertDialog.Builder(MsgNumCarretaActivity.this);
@@ -68,23 +70,32 @@ public class MsgNumCarretaActivity extends AppCompatActivity {
         buttonCancMsgNumCarreta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pmmContext.getVerPosTela() == 4){
+                if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 20L){
                     if(numCarreta < 1){
-                        Long statusCon;
                         ConexaoWeb conexaoWeb = new ConexaoWeb();
                         if (conexaoWeb.verificaConexao(MsgNumCarretaActivity.this)) {
-                            statusCon = 1L;
+                            pmmContext.getConfigCTR().setStatusConConfig(1L);
                         }
                         else{
-                            statusCon = 0L;
+                            pmmContext.getConfigCTR().setStatusConConfig(0L);
                         }
-//                        ecmContext.getMotoMecCTR().insApontMM(getLongitude(), getLatitude(), statusCon);
+                        pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());
                     }
                     Intent it = new Intent(MsgNumCarretaActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if (pmmContext.getVerPosTela() == 7){
+                else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 22L){
+                    if(numCarreta < 1){
+                        ConexaoWeb conexaoWeb = new ConexaoWeb();
+                        if (conexaoWeb.verificaConexao(MsgNumCarretaActivity.this)) {
+                            pmmContext.getConfigCTR().setStatusConConfig(1L);
+                        }
+                        else{
+                            pmmContext.getConfigCTR().setStatusConConfig(0L);
+                        }
+                        pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());
+                    }
                     Intent it = new Intent(MsgNumCarretaActivity.this, MenuParadaECMActivity.class);
                     startActivity(it);
                     finish();

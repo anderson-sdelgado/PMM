@@ -32,7 +32,7 @@ public class PergFinalPreCECActivity extends ActivityGeneric {
         itens.add("DESFAZER CERTIFICADO");
 
         AdapterList adapterList = new AdapterList(this, itens);
-        finalizarListView = (ListView) findViewById(R.id.listViewFinalizaApont);
+        finalizarListView = findViewById(R.id.listViewFinalizaApont);
         finalizarListView.setAdapter(adapterList);
 
         finalizarListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -18,8 +18,10 @@ import com.j256.ormlite.table.DatabaseTable;
 public class OSBean extends Entidade {
 
 	private static final long serialVersionUID = 1L;
-	
-	@DatabaseField(id=true)
+
+	@DatabaseField(generatedId=true)
+	private Long idRegistro;
+	@DatabaseField
 	private Long idOS;
 	@DatabaseField
     private Long nroOS;
@@ -44,6 +46,14 @@ public class OSBean extends Entidade {
 
     public OSBean() {
     }
+
+	public Long getIdRegistro() {
+		return idRegistro;
+	}
+
+	public void setIdRegistro(Long idRegistro) {
+		this.idRegistro = idRegistro;
+	}
 
 	public Long getIdOS() {
 		return idOS;

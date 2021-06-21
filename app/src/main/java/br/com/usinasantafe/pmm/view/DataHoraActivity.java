@@ -30,9 +30,9 @@ public class DataHoraActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonOkDataHora = (Button) findViewById(R.id.buttonOkPadrao);
-        Button buttonCancDataHora = (Button) findViewById(R.id.buttonCancPadrao);
-        TextView textViewDataHora = (TextView) findViewById(R.id.textViewPadrao);
+        Button buttonOkDataHora = findViewById(R.id.buttonOkPadrao);
+        Button buttonCancDataHora = findViewById(R.id.buttonCancPadrao);
+        TextView textViewDataHora = findViewById(R.id.textViewPadrao);
 
         switch (pmmContext.getContDataHora()) {
             case 1:
@@ -197,15 +197,27 @@ public class DataHoraActivity extends ActivityGeneric {
                                 configBean.setDifDthrConfig(dif);
                                 configBean.update();
 
-                                if (pmmContext.getVerPosTela() == 1) {
+                                if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
                                     it = new Intent(DataHoraActivity.this, OSActivity.class);
                                     startActivity(it);
                                     finish();
                                 }
                                 else {
-                                    it = new Intent(DataHoraActivity.this, MenuPrincPMMActivity.class);
-                                    startActivity(it);
-                                    finish();
+                                    if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+                                        it = new Intent(DataHoraActivity.this, MenuPrincPMMActivity.class);
+                                        startActivity(it);
+                                        finish();
+                                    }
+                                    else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
+                                        it = new Intent(DataHoraActivity.this, MenuPrincECMActivity.class);
+                                        startActivity(it);
+                                        finish();
+                                    }
+                                    else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+                                        it = new Intent(DataHoraActivity.this, MenuPrincPCOMPActivity.class);
+                                        startActivity(it);
+                                        finish();
+                                    }
                                 }
                             }
                             else{

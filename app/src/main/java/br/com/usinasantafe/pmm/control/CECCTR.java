@@ -28,7 +28,7 @@ public class CECCTR {
 
     public void clearPreCECAberto(){
         PreCECDAO preCECDAO = new PreCECDAO();
-        preCECDAO.delPreCECAberto();
+        preCECDAO.clearPreCECAberto();
     }
 
     public void fechaPreCEC(){
@@ -94,12 +94,6 @@ public class CECCTR {
         OSDAO osDAO = new OSDAO();
         ConfigCTR configCTR = new ConfigCTR();
         return osDAO.verAtivOS(idAtivOS, configCTR.getConfig().getOsConfig());
-    }
-
-    public boolean verLibOS(Long idLibOS){
-        OSDAO osDAO = new OSDAO();
-        ConfigCTR configCTR = new ConfigCTR();
-        return osDAO.verLibOS(idLibOS, configCTR.getConfig().getOsConfig());
     }
 
     public boolean verCEC(){
@@ -171,32 +165,17 @@ public class CECCTR {
         return osDAO.getOSTipoAtiv(tipo, configCTR.getConfig().getOsConfig());
     }
 
-    public OSBean getOSIdAtiv(){
-        OSDAO osDAO = new OSDAO();
-        ConfigCTR configCTR = new ConfigCTR();
-        return osDAO.getOSIdAtiv(getPreCECAberto().getAtivOS(), configCTR.getConfig().getOsConfig());
-    }
-
-    public OSBean getOSLib(){
-        OSDAO osDAO = new OSDAO();
-        ConfigCTR configCTR = new ConfigCTR();
-        return osDAO.getOSLib(getLib(), configCTR.getConfig().getOsConfig());
-    }
-
-    public List getPreCECFechadoList(){
+    public boolean verPreCECTerminadoList(){
         PreCECDAO preCECDAO = new PreCECDAO();
-        return preCECDAO.getPreCECListFechado();
+        List<PreCECBean> preCECTerminadoList = preCECDAO.preCECListTerminado();
+        boolean verTerminado = preCECTerminadoList.size() > 0;
+        preCECTerminadoList.clear();
+        return verTerminado;
     }
 
-    public Long getLib(){
+    public List<PreCECBean> preCECTerminadoList(){
         PreCECDAO preCECDAO = new PreCECDAO();
-        CarretaDAO carretaDAO = new CarretaDAO();
-        return preCECDAO.getLib(carretaDAO.getQtdeCarreta());
-    }
-
-    public List getPreCECListEnviado(){
-        PreCECDAO preCECDAO = new PreCECDAO();
-        return preCECDAO.getPreCECListEnviado();
+        return preCECDAO.preCECListTerminado();
     }
 
     public PreCECBean getPreCECAberto(){

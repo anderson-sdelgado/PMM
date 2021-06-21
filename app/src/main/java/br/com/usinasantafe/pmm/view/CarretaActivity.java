@@ -21,8 +21,8 @@ public class CarretaActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonOkCarreta = (Button) findViewById(R.id.buttonOkPadrao);
-        Button buttonCancCarreta = (Button) findViewById(R.id.buttonCancPadrao);
+        Button buttonOkCarreta = findViewById(R.id.buttonOkPadrao);
+        Button buttonCancCarreta = findViewById(R.id.buttonCancPadrao);
 
         buttonOkCarreta.setOnClickListener(new View.OnClickListener() {
             @SuppressWarnings("rawtypes")
@@ -31,12 +31,12 @@ public class CarretaActivity extends ActivityGeneric {
 
                 if(!editTextPadrao.getText().toString().equals("")){
 
-                    int verCarreta = pmmContext.getMotoMecFertCTR().verCarr(Long.parseLong(editTextPadrao.getText().toString()));
+                    int verCarreta = pmmContext.getMotoMecFertCTR().verCarreta(Long.parseLong(editTextPadrao.getText().toString()));
                     if(verCarreta == 1) {
 
                         pmmContext.getMotoMecFertCTR().insCarreta(Long.parseLong(editTextPadrao.getText().toString()));
 
-                        if (pmmContext.getVerPosTela() == 5){
+                        if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){
 
                             pmmContext.getCecCTR().setCarr(Long.parseLong(editTextPadrao.getText().toString()));
                             pmmContext.getCecCTR().setLib(pmmContext.getCecCTR().getOSTipoAtiv().getIdLibOS());

@@ -76,11 +76,14 @@ public class AtualDadosServ {
 
 			}
 			catch (Exception e) {
+				Log.i("PMM", "ERRO 6 = " + e);
 				LogErroDAO.getInstance().insert(e);
 			}
 
 		}
 		else{
+
+			Log.i("PMM", "CHEGOU AKI 2 ");
 			encerrar();
 		}
 
@@ -115,6 +118,7 @@ public class AtualDadosServ {
 	        getBDGenerico.execute(url);
 	        
 		} catch (Exception e) {
+			Log.i("PMM", "ERRO 1 = " + e);
 			LogErroDAO.getInstance().insert(e);
 		}
         
@@ -199,6 +203,7 @@ public class AtualDadosServ {
 				String[] url = {classe};
 				contAtualBD++;
 
+				Log.i("PMM", "CHEGOU AKI 1 ");
 				GetBDGenerico getBDGenerico = new GetBDGenerico();
 		        getBDGenerico.execute(url);
 		        
@@ -259,7 +264,8 @@ public class AtualDadosServ {
 	}
 
 	public void encerrar(){
-		
+
+		Log.i("PMM", "CHEGOU AKI 3 ");
 		if(this.tipoReceb == 1){
 			
 			this.progressDialog.dismiss();

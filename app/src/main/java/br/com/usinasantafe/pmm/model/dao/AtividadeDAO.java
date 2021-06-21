@@ -23,6 +23,14 @@ public class AtividadeDAO {
     public AtividadeDAO() {
     }
 
+    public boolean verROSAtiv(Long nroOS){
+        ROSAtivBean rOSAtivBean = new ROSAtivBean();
+        List<ROSAtivBean> rOSAtivList = rOSAtivBean.get("nroOS", nroOS);
+        boolean ret = rOSAtivList.size() > 0;
+        rOSAtivList.clear();
+        return ret;
+    }
+
     public void verAtiv(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
         VerifDadosServ.getInstance().setVerTerm(true);
         VerifDadosServ.getInstance().verDados(dado, "Atividade", telaAtual, telaProx, progressDialog);
@@ -120,10 +128,10 @@ public class AtividadeDAO {
         }
 
         AtividadeBean atividadeBean = new AtividadeBean();
-        List atividadeList = atividadeBean.in("idAtiv", rEquipAtivArrayList);
+        List<AtividadeBean> atividadeList = atividadeBean.in("idAtiv", rEquipAtivArrayList);
 
         ROSAtivBean rOSAtivBean = new ROSAtivBean();
-        List rOSAtivList = rOSAtivBean.get("nroOS", nroOS);
+        List<ROSAtivBean> rOSAtivList = rOSAtivBean.get("nroOS", nroOS);
 
         if (rOSAtivList.size() > 0) {
 
