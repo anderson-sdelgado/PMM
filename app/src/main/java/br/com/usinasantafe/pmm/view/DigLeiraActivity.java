@@ -104,7 +104,13 @@ public class DigLeiraActivity extends ActivityGeneric {
                         }
 
                         pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());
-                        pmmContext.getCompostoCTR().salvarLeiraDescarreg(Long.parseLong(editTextPadrao.getText().toString()), DigLeiraActivity.this);
+
+                        if (pmmContext.getConfigCTR().getOSBean().getTipoOS() == 0L) {
+
+                        }
+                        else{
+                            pmmContext.getCompostoCTR().salvarLeiraDescarreg(Long.parseLong(editTextPadrao.getText().toString()), DigLeiraActivity.this);
+                        }
 
                         Intent it = new Intent(DigLeiraActivity.this, MenuPrincPCOMPActivity.class);
                         startActivity(it);

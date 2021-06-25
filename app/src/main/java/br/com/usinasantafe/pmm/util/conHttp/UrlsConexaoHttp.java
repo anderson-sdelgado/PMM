@@ -10,8 +10,8 @@ import br.com.usinasantafe.pmm.view.MenuPrincPMMActivity;
 
 public class UrlsConexaoHttp {
 
-    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmmdev/view/";
-    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmmdev/view/";
+    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmmprod/view/";
+    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmmprod/view/";
 
     public static String localPSTEstatica = "br.com.usinasantafe.pmm.model.bean.estaticas.";
     public static String localUrl = "br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp";
@@ -70,12 +70,11 @@ public class UrlsConexaoHttp {
         if (classe.equals("Equip")) {
             retorno = urlPrincipal + "equip.php" + put;
         } else if (classe.equals("OS")) {
-            ConfigCTR configCTR = new ConfigCTR();
-            if(configCTR.getConfig().getAplic() == 1L){
-                retorno = urlPrincipal + "os.php" + put;
-            }
-            else if(configCTR.getConfig().getAplic() == 2L){
+            if(PMMContext.aplic == 2){
                 retorno = urlPrincipal + "verosecm.php" + put;
+            }
+            else{
+                retorno = urlPrincipal + "os.php" + put;
             }
         } else if (classe.equals("Atividade")) {
             retorno = urlPrincipal + "atualativ.php" + put;

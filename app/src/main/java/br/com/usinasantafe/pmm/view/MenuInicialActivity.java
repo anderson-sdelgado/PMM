@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -27,6 +28,7 @@ import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.ReceberAlarme;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
+import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class MenuInicialActivity extends ActivityGeneric {
@@ -72,18 +74,20 @@ public class MenuInicialActivity extends ActivityGeneric {
             else{
                 startTimer();
                 pmmContext.getConfigCTR().setPosicaoTela(8L);
-                if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+                if(PMMContext.aplic == 1){
                     Intent it = new Intent(MenuInicialActivity.this, MenuPrincPMMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
-                    pmmContext.getCecCTR().delPreCECAberto();
+                else if(PMMContext.aplic == 2){
+                    if(pmmContext.getCecCTR().verPreCECAberto()){
+                        pmmContext.getCecCTR().clearPreCECAberto();
+                    }
                     Intent it = new Intent(MenuInicialActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+                else if(PMMContext.aplic == 3){
                     Intent it = new Intent(MenuInicialActivity.this, MenuPrincPCOMPActivity.class);
                     startActivity(it);
                     finish();
@@ -265,7 +269,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
     public void clearBD() {
 
-        if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+        if(PMMContext.aplic == 1){
             pmmContext.getMotoMecFertCTR().impleMMDelAll();
             pmmContext.getConfigCTR().osDelAll();
             pmmContext.getConfigCTR().rOSAtivDelAll();

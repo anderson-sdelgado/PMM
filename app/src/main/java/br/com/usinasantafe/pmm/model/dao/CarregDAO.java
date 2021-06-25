@@ -1,7 +1,6 @@
 package br.com.usinasantafe.pmm.model.dao;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -97,7 +96,7 @@ public class CarregDAO {
     public void abrirCarregInsumo(Long matricFunc, Long idEquip, Long idProd, Context context){
 
         CarregBean carregBean = new CarregBean();
-        carregBean.setDataCarreg(Tempo.getInstance().dataComHora());
+        carregBean.setDthrCarreg(Tempo.getInstance().dthrSemTZ());
         carregBean.setEquipCarreg(idEquip);
         carregBean.setProdCarreg(idProd);
         carregBean.setMotoCarreg(matricFunc);
@@ -107,6 +106,22 @@ public class CarregDAO {
         carregBean.insert();
 
         EnvioDadosServ.getInstance().envioDados(context);
+
+    }
+
+    public void abrirCarregComposto(Long matricFunc, Long idEquip, Long idLeira, Context context){
+
+        CarregBean carregBean = new CarregBean();
+        carregBean.setDthrCarreg(Tempo.getInstance().dthrSemTZ());
+        carregBean.setEquipCarreg(idEquip);
+        carregBean.setProdCarreg(76271L);
+        carregBean.setMotoCarreg(matricFunc);
+        carregBean.setTipoCarreg(2L);
+        carregBean.setIdLeiraCarreg(idLeira);
+        carregBean.setStatusCarreg(1L);
+        carregBean.insert();
+
+//        EnvioDadosServ.getInstance().envioDados(context);
 
     }
 
@@ -203,7 +218,7 @@ public class CarregDAO {
                         JSONObject objeto = jsonArray.getJSONObject(i);
                         Gson gson = new Gson();
                         CarregBean carregBean = gson.fromJson(objeto.toString(), CarregBean.class);
-                        List<CarregBean> carregList = carregBean.get("dataCarreg", carregBean.getDataCarreg());
+                        List<CarregBean> carregList = carregBean.get("dthrCarreg", carregBean.getDthrCarreg());
                         if(carregList.size() > 0){
                             CarregBean carregBeanBD = carregList.get(0);
                             carregBeanBD.setIdRegCompostoCarreg(carregBean.getIdRegCompostoCarreg());

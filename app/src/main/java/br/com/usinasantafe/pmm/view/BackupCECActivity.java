@@ -95,7 +95,7 @@ public class BackupCECActivity extends ActivityGeneric {
             retorno = retorno + "PARA ANALISE! \n";
             retorno = retorno + "PESO LIQ:  "  + cecBean.getPesoLiquidoCEC() + "\n";
             retorno = retorno + "---------------- \n";
-            retorno = retorno + "" + Tempo.getInstance().dataHoraCTZ(cecBean.getDthrEntradaCEC()) + " \n";
+            retorno = retorno + "" + Tempo.getInstance().dthrSemTZ(cecBean.getDthrEntradaCEC()) + " \n";
 
         }
         else if(analisar == 1){
@@ -109,7 +109,7 @@ public class BackupCECActivity extends ActivityGeneric {
                 retorno = retorno + "CEC: " + cecBean.getCecSorteado1CEC() + "  " + cecBean.getCecSorteado2CEC() + " \n";
                 retorno = retorno + "Frente: " + cecBean.getCodFrenteCEC() + " \n";
                 retorno = retorno + "Peso Liq:  "  + cecBean.getPesoLiquidoCEC() + " \n";
-                retorno = retorno + "" + Tempo.getInstance().dataHoraCTZ(cecBean.getDthrEntradaCEC()) + " \n";
+                retorno = retorno + "" + Tempo.getInstance().dthrSemTZ(cecBean.getDthrEntradaCEC()) + " \n";
 
             }
             else if((cecBean.getUnidadeSorteada1CEC() == 0) &&
@@ -121,7 +121,7 @@ public class BackupCECActivity extends ActivityGeneric {
                 retorno = retorno + "CEC: " + cecBean.getCecSorteado2CEC() + "  " + cecBean.getCecSorteado3CEC() + " \n";
                 retorno = retorno + "Frente: " + cecBean.getCodFrenteCEC() + " \n";
                 retorno = retorno + "Peso Liq:  "  + cecBean.getPesoLiquidoCEC() + " \n";
-                retorno = retorno + "" + Tempo.getInstance().dataHoraCTZ(cecBean.getDthrEntradaCEC()) + " \n";
+                retorno = retorno + "" + Tempo.getInstance().dthrSemTZ(cecBean.getDthrEntradaCEC()) + " \n";
 
             }
             else if((cecBean.getUnidadeSorteada1CEC() != 0) &&
@@ -133,7 +133,7 @@ public class BackupCECActivity extends ActivityGeneric {
                 retorno = retorno + "CEC: " + cecBean.getCecSorteado1CEC() + "  " + cecBean.getCecSorteado3CEC() + " \n";
                 retorno = retorno + "Frente: " + cecBean.getCodFrenteCEC() + " \n";
                 retorno = retorno + "Peso Liq:  "  + cecBean.getPesoLiquidoCEC() + " \n";
-                retorno = retorno + "" + Tempo.getInstance().dataHoraCTZ(cecBean.getDthrEntradaCEC()) + " \n";
+                retorno = retorno + "" + Tempo.getInstance().dthrSemTZ(cecBean.getDthrEntradaCEC()) + " \n";
 
             }
             else if((cecBean.getUnidadeSorteada1CEC() != 0) &&
@@ -145,7 +145,7 @@ public class BackupCECActivity extends ActivityGeneric {
                 retorno = retorno + "CEC: " + cecBean.getCecSorteado1CEC() + "  " + cecBean.getCecSorteado2CEC() + " \n";
                 retorno = retorno + "Frente: " + cecBean.getCodFrenteCEC() + " \n";
                 retorno = retorno + "Peso Liq:  "  + cecBean.getPesoLiquidoCEC() + " \n";
-                retorno = retorno + "" + Tempo.getInstance().dataHoraCTZ(cecBean.getDthrEntradaCEC()) + " \n";
+                retorno = retorno + "" + Tempo.getInstance().dthrSemTZ(cecBean.getDthrEntradaCEC()) + " \n";
 
             }
             else if((cecBean.getUnidadeSorteada1CEC() != 0) &&
@@ -157,7 +157,7 @@ public class BackupCECActivity extends ActivityGeneric {
                 retorno = retorno + "CEC: " + cecBean.getCecSorteado1CEC() + " \n";
                 retorno = retorno + "Frente: " + cecBean.getCodFrenteCEC() + " \n";
                 retorno = retorno + "Peso Liq:  "  + cecBean.getPesoLiquidoCEC() + " \n";
-                retorno = retorno + "" + Tempo.getInstance().dataHoraCTZ(cecBean.getDthrEntradaCEC()) + " \n";
+                retorno = retorno + "" + Tempo.getInstance().dthrSemTZ(cecBean.getDthrEntradaCEC()) + " \n";
 
             }
             else if((cecBean.getUnidadeSorteada1CEC() == 0) &&
@@ -169,7 +169,7 @@ public class BackupCECActivity extends ActivityGeneric {
                 retorno = retorno + "CEC: " + cecBean.getCecSorteado2CEC() + " \n";
                 retorno = retorno + "Frente: " + cecBean.getCodFrenteCEC() + " \n";
                 retorno = retorno + "Peso Liq:  "  + cecBean.getPesoLiquidoCEC() + " \n";
-                retorno = retorno + "" + Tempo.getInstance().dataHoraCTZ(cecBean.getDthrEntradaCEC()) + " \n";
+                retorno = retorno + "" + Tempo.getInstance().dthrSemTZ(cecBean.getDthrEntradaCEC()) + " \n";
 
             }
             else if((cecBean.getUnidadeSorteada1CEC() == 0) &&
@@ -183,7 +183,7 @@ public class BackupCECActivity extends ActivityGeneric {
                 retorno = retorno + "CEC: " + cecBean.getCecSorteado3CEC() + " \n";
                 retorno = retorno + "Frente: " + cecBean.getCodFrenteCEC() + " \n";
                 retorno = retorno + "Peso Liq:  "  + cecBean.getPesoLiquidoCEC() + " \n";
-                retorno = retorno + "" + Tempo.getInstance().dataHoraCTZ(cecBean.getDthrEntradaCEC()) + " \n";
+                retorno = retorno + "" + Tempo.getInstance().dthrSemTZ(cecBean.getDthrEntradaCEC()) + " \n";
 
             }
 

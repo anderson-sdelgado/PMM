@@ -3,7 +3,6 @@ package br.com.usinasantafe.pmm.model.dao;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.util.Tempo;
-import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ItemCheckListBean;
@@ -33,7 +32,7 @@ public class CabecCheckListDAO {
 
     public void createCabecAberto(Long nroEquip, Long matricFunc, Long idTurno){
         CabecCheckListBean cabecCheckListBean = new CabecCheckListBean();
-        cabecCheckListBean.setDtCabCL(Tempo.getInstance().dataComHora());
+        cabecCheckListBean.setDtCabCL(Tempo.getInstance().dthrSemTZ());
         cabecCheckListBean.setEquipCabCL(nroEquip);
         cabecCheckListBean.setFuncCabCL(matricFunc);
         cabecCheckListBean.setTurnoCabCL(idTurno);
@@ -50,7 +49,7 @@ public class CabecCheckListDAO {
         if ((equipBean.getIdCheckList() > 0) &&
                 ((configBean.getUltTurnoCLConfig() != idTurno)
                         || ((configBean.getUltTurnoCLConfig() == idTurno)
-                                    && (!configBean.getDtUltCLConfig().equals(Tempo.getInstance().dataSHora()))))) {
+                                    && (!configBean.getDtUltCLConfig().equals(Tempo.getInstance().dtSemTZ()))))) {
             return true;
         }
         else{

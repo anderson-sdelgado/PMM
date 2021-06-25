@@ -34,7 +34,7 @@ public class LogErroDAO {
                 LogErroBean logErroBean = new LogErroBean();
                 logErroBean.setIdEquip(configBean.getEquipConfig());
                 logErroBean.setException(throwableToString(ex));
-                logErroBean.setDthr(Tempo.getInstance().dataComHoraSTZ());
+                logErroBean.setDthr(Tempo.getInstance().dthrComTZ());
                 logErroBean.setStatus(1L);
                 logErroBean.insert();
             }
@@ -49,7 +49,7 @@ public class LogErroDAO {
                 LogErroBean logErroBean = new LogErroBean();
                 logErroBean.setIdEquip(configBean.getEquipConfig());
                 logErroBean.setException("RETORNO SERVIDOR COM FALHA = " + erro);
-                logErroBean.setDthr(Tempo.getInstance().dataComHoraSTZ());
+                logErroBean.setDthr(Tempo.getInstance().dthrComTZ());
                 logErroBean.setStatus(1L);
                 logErroBean.insert();
             }

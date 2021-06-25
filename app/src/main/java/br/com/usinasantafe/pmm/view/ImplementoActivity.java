@@ -177,7 +177,6 @@ public class ImplementoActivity extends ActivityGeneric {
             }
         }
         else{
-            pmmContext.getConfigCTR().setPosicaoTela(11L);
             Intent it = new Intent(ImplementoActivity.this, EsperaInforActivity.class);
             startActivity(it);
             finish();

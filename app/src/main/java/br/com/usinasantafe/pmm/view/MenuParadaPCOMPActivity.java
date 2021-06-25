@@ -17,7 +17,6 @@ import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.MotoMecBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.util.Tempo;
 
 public class MenuParadaPCOMPActivity extends ActivityGeneric {
 
@@ -55,7 +54,7 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
                 MotoMecBean motoMecBean = paradaList.get(posicao);
                 pmmContext.getMotoMecFertCTR().setMotoMecBean(motoMecBean);
 
-                if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
+                if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
                     Toast.makeText(MenuParadaPCOMPActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                             Toast.LENGTH_LONG).show();
                 }
@@ -108,6 +107,7 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
+
                 ConexaoWeb conexaoWeb = new ConexaoWeb();
                 if (conexaoWeb.verificaConexao(MenuParadaPCOMPActivity.this)) {
                     pmmContext.getConfigCTR().setStatusConConfig(1L);
@@ -115,10 +115,12 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
                 else{
                     pmmContext.getConfigCTR().setStatusConConfig(0L);
                 }
-                pmmContext.getMotoMecFertCTR().inserirVoltaTrabalho(getLongitude(), getLatitude());
+                pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude());
+
                 Intent it = new Intent(MenuParadaPCOMPActivity.this, MenuPrincPCOMPActivity.class);
                 startActivity(it);
                 finish();
+
             }
 
         });

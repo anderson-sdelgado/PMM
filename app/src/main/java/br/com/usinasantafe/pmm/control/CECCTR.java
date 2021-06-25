@@ -118,10 +118,6 @@ public class CECCTR {
         preCECDAO.setDataChegCampo();
     }
 
-    public void setDataSaidaCampo(){
-        PreCECDAO preCECDAO = new PreCECDAO();
-        preCECDAO.setDataSaidaCampo();
-    }
 
     public void setAtivOS(Long ativOS){
         PreCECDAO preCECDAO = new PreCECDAO();
@@ -163,6 +159,11 @@ public class CECCTR {
             tipo = 559L;
         }
         return osDAO.getOSTipoAtiv(tipo, configCTR.getConfig().getOsConfig());
+    }
+
+    public boolean hasPreCEC(){
+        PreCECDAO preCECDAO = new PreCECDAO();
+        return preCECDAO.hasPreCEC();
     }
 
     public boolean verPreCECTerminadoList(){

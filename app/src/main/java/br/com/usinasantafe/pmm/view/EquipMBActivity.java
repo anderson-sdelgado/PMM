@@ -148,7 +148,6 @@ public class EquipMBActivity extends ActivityGeneric {
             }
         }
         else{
-            pmmContext.getConfigCTR().setPosicaoTela(11L);
             Intent it = new Intent(EquipMBActivity.this, EsperaInforActivity.class);
             startActivity(it);
             finish();

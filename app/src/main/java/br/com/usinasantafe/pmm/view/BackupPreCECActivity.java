@@ -1,7 +1,5 @@
 package br.com.usinasantafe.pmm.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -100,7 +98,7 @@ public class BackupPreCECActivity extends ActivityGeneric {
         if(preCECBean.getCarr3() != 0){
             retorno = retorno + "CARRETA 3 = " + preCECBean.getCarr3() + "\n";
         }
-        retorno = retorno + "SAÍDA DO CAMPO = " + Tempo.getInstance().dataHoraCTZ(preCECBean.getDataSaidaCampo()) + "\n";
+        retorno = retorno + "SAÍDA DO CAMPO = " + Tempo.getInstance().dthrSemTZ(preCECBean.getDataSaidaCampo()) + "\n";
 
         return retorno;
 

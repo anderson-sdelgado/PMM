@@ -11,14 +11,14 @@ import android.widget.TextView;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 
-public class VerMotoristaActivity extends ActivityGeneric {
+public class VerifOperadorActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ver_motorista);
+        setContentView(R.layout.activity_verif_operador);
 
         pmmContext = (PMMContext) getApplication();
 
@@ -34,21 +34,9 @@ public class VerMotoristaActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder alerta = new AlertDialog.Builder(VerMotoristaActivity.this);
-                alerta.setTitle("ATENÇÃO");
-                alerta.setMessage("A VIAGEM FOI FINALIZADA E SERÁ ENVIADA AUTOMATICAMENTE. FAVOR ENTREGAR O CELULAR PARA O MOTORISTA.");
-                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        pmmContext.getCecCTR().fechaPreCEC();
-                        Intent it = new Intent(VerMotoristaActivity.this, MenuPrincECMActivity.class);
-                        startActivity(it);
-                        finish();
-
-                    }
-                });
-                alerta.show();
+                Intent it = new Intent(VerifOperadorActivity.this, MsgSaidaCampoActivity.class);
+                startActivity(it);
+                finish();
 
             }
         });
@@ -57,7 +45,7 @@ public class VerMotoristaActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder alerta = new AlertDialog.Builder(VerMotoristaActivity.this);
+                AlertDialog.Builder alerta = new AlertDialog.Builder(VerifOperadorActivity.this);
                 alerta.setTitle("ATENÇÃO");
                 alerta.setMessage("DESEJA REALMENTE TROCA O MOTORISTA? ISSO ENCERRA-LA O BOLETIM.");
 
@@ -65,7 +53,7 @@ public class VerMotoristaActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         pmmContext.getConfigCTR().setPosicaoTela(17L);
-                        Intent it = new Intent(VerMotoristaActivity.this, HorimetroActivity.class);
+                        Intent it = new Intent(VerifOperadorActivity.this, HorimetroActivity.class);
                         startActivity(it);
                         finish();
                     }

@@ -1,7 +1,5 @@
 package br.com.usinasantafe.pmm.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -44,7 +42,7 @@ public class PergFinalPreCECActivity extends ActivityGeneric {
                 String text = textView.getText().toString();
 
                 if (text.equals("FINALIZAR CERTIFICADO")) {
-                    Intent it = new Intent(PergFinalPreCECActivity.this, MsgSaidaCampoActivity.class);
+                    Intent it = new Intent(PergFinalPreCECActivity.this, VerifOperadorActivity.class);
                     startActivity(it);
                     finish();
                 }

@@ -203,17 +203,17 @@ public class DataHoraActivity extends ActivityGeneric {
                                     finish();
                                 }
                                 else {
-                                    if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+                                    if(PMMContext.aplic == 1){
                                         it = new Intent(DataHoraActivity.this, MenuPrincPMMActivity.class);
                                         startActivity(it);
                                         finish();
                                     }
-                                    else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
+                                    else if(PMMContext.aplic == 2){
                                         it = new Intent(DataHoraActivity.this, MenuPrincECMActivity.class);
                                         startActivity(it);
                                         finish();
                                     }
-                                    else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+                                    else if(PMMContext.aplic == 3){
                                         it = new Intent(DataHoraActivity.this, MenuPrincPCOMPActivity.class);
                                         startActivity(it);
                                         finish();

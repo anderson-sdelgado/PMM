@@ -32,7 +32,7 @@ public class ReceberAlarme extends BroadcastReceiver {
 			new DatabaseHelper(context);
 		}
 
-		Log.i("PMM", "DATA HORA = " + Tempo.getInstance().dataComHora());
+		Log.i("PMM", "DATA HORA = " + Tempo.getInstance().dthrSemTZ());
 		teste();
 
 		if (EnvioDadosServ.getInstance().verifDadosEnvio()) {
@@ -60,6 +60,8 @@ public class ReceberAlarme extends BroadcastReceiver {
 			Log.i("PMM", "dthrInicioBoletim = " + boletimMMFertBean.getDthrInicialBolMMFert());
 			Log.i("PMM", "dthrFimBoletim = " + boletimMMFertBean.getDthrFinalBolMMFert());
 			Log.i("PMM", "statusBoletim = " + boletimMMFertBean.getStatusBolMMFert());
+			Log.i("PMM", "longitudeBoletim = " + boletimMMFertBean.getLongitudeBolMMFert());
+			Log.i("PMM", "latitudeBoletim = " + boletimMMFertBean.getLatitudeBolMMFert());
 
 		}
 
@@ -157,7 +159,6 @@ public class ReceberAlarme extends BroadcastReceiver {
 			Log.i("PMM", "equipConfig = " + configBean.getEquipConfig());
 			Log.i("PMM", "senhaConfig = " + configBean.getSenhaConfig());
 			Log.i("PMM", "ultTurnoCLConfig = " + configBean.getUltTurnoCLConfig());
-			Log.i("PMM", "dtUltApontConfig = " + configBean.getDtUltApontConfig());
 			Log.i("PMM", "osConfig = " + configBean.getOsConfig());
 			Log.i("PMM", "horimetroConfig = " + configBean.getHorimetroConfig());
 			Log.i("PMM", "dtServConfig = " + configBean.getDtServConfig());

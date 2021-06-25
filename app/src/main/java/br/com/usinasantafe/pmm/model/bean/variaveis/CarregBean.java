@@ -22,7 +22,7 @@ public class CarregBean extends Entidade {
     @DatabaseField
     private Long prodCarreg;
     @DatabaseField
-    private String dataCarreg;
+    private String dthrCarreg;
     @DatabaseField
     private Long tipoCarreg; //1 - INSUMO; 2 - COMPOSTO;
     @DatabaseField
@@ -77,12 +77,12 @@ public class CarregBean extends Entidade {
         this.prodCarreg = prodCarreg;
     }
 
-    public String getDataCarreg() {
-        return dataCarreg;
+    public String getDthrCarreg() {
+        return dthrCarreg;
     }
 
-    public void setDataCarreg(String dataCarreg) {
-        this.dataCarreg = dataCarreg;
+    public void setDthrCarreg(String dthrCarreg) {
+        this.dthrCarreg = dthrCarreg;
     }
 
     public Long getTipoCarreg() {

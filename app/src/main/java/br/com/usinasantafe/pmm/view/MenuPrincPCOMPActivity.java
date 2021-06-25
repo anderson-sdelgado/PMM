@@ -18,7 +18,6 @@ import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.MotoMecBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.util.Tempo;
 
 public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
@@ -70,7 +69,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                     pmmContext.getConfigCTR().setStatusConConfig(0L);
                 }
 
-                if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
+                if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
                     Toast.makeText(MenuPrincPCOMPActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                             Toast.LENGTH_LONG).show();
                 } else {
@@ -91,7 +90,6 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                     } else {
 
                         if ((motoMecBean.getCodFuncaoOperMotoMec() == 1)
-                                || (motoMecBean.getCodFuncaoOperMotoMec() == 7)
                                 || (motoMecBean.getCodFuncaoOperMotoMec() == 11)) {  // ATIVIDADES NORMAIS
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);
@@ -110,7 +108,8 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                             alerta.show();
 
-                        } else if (motoMecBean.getCodFuncaoOperMotoMec() == 2) {
+                        }
+                        else if (motoMecBean.getCodFuncaoOperMotoMec() == 2) {
 
                             if (pmmContext.getConfigCTR().getConfig().getPosFluxoViagem() == 0) {
 
@@ -155,34 +154,25 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                             }
 
-                        } else if (motoMecBean.getCodFuncaoOperMotoMec() == 6) {
+                        }
+                        else if (motoMecBean.getCodFuncaoOperMotoMec() == 6) {
 
                             pmmContext.getConfigCTR().setPosicaoTela(2L);
                             Intent it = new Intent(MenuPrincPCOMPActivity.this, OSActivity.class);
                             startActivity(it);
                             finish();
 
-                        } else if (motoMecBean.getCodFuncaoOperMotoMec() == 3) {
+                        }
+                        else if (motoMecBean.getCodFuncaoOperMotoMec() == 3) {
 
                             if (pmmContext.getConfigCTR().getConfig().getPosFluxoViagem() == 1) {
 
                                 if (pmmContext.getConfigCTR().getOSBean().getTipoOS() == 0L) {
 
                                     pmmContext.getConfigCTR().setPosFluxoViagem(2L);
-                                    pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());
-
-                                    AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);
-                                    alerta.setTitle("ATENÇÃO");
-                                    alerta.setMessage("FOI DADO ENTRADA NA ATIVIDADE: " + motoMecBean.getDescrOperMotoMec());
-
-                                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            motoMecListView.setSelection(posicao + 1);
-                                        }
-                                    });
-
-                                    alerta.show();
+                                    Intent it = new Intent(MenuPrincPCOMPActivity.this, DigLeiraActivity.class);
+                                    startActivity(it);
+                                    finish();
 
                                 } else if (pmmContext.getConfigCTR().getOSBean().getTipoOS() == 1L) {
 
@@ -216,7 +206,8 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                             }
 
-                        } else if (motoMecBean.getCodFuncaoOperMotoMec() == 4) {
+                        }
+                        else if (motoMecBean.getCodFuncaoOperMotoMec() == 4) {
 
                             if (pmmContext.getConfigCTR().getConfig().getPosFluxoViagem() == 2) {
 
@@ -255,7 +246,24 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                             }
 
-                        } else if (motoMecBean.getCodFuncaoOperMotoMec() == 5) {
+                        }
+                        else if (motoMecBean.getCodFuncaoOperMotoMec() == 7) {
+
+                            pmmContext.getConfigCTR().setPosicaoTela(2L);
+                            Intent it = new Intent(MenuPrincPCOMPActivity.this, OSActivity.class);
+                            startActivity(it);
+                            finish();
+
+                        }
+                        else if (motoMecBean.getCodFuncaoOperMotoMec() == 10) {
+
+                            pmmContext.getConfigCTR().setPosicaoTela(15L);
+                            Intent it = new Intent(MenuPrincPCOMPActivity.this, DigLeiraActivity.class);
+                            startActivity(it);
+                            finish();
+
+                        }
+                        else if (motoMecBean.getCodFuncaoOperMotoMec() == 5) {
 
                             if (pmmContext.getCompostoCTR().pesqLeiraExibir()) {
 
@@ -279,13 +287,6 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                             }
 
-
-                        } else if (motoMecBean.getCodFuncaoOperMotoMec() == 10) {
-
-                            pmmContext.getConfigCTR().setPosicaoTela(15L);
-                            Intent it = new Intent(MenuPrincPCOMPActivity.this, DigLeiraActivity.class);
-                            startActivity(it);
-                            finish();
 
                         }
 

@@ -19,7 +19,6 @@ import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.MotoMecBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.util.Tempo;
 
 public class MenuPrincECMActivity extends ActivityGeneric {
 
@@ -49,6 +48,10 @@ public class MenuPrincECMActivity extends ActivityGeneric {
         textViewCarreta.setText(pmmContext.getMotoMecFertCTR().getDescrCarreta());
         textViewUltimaViagem.setText(pmmContext.getCecCTR().getDataSaidaUlt());
 
+        if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L){
+            pmmContext.getMotoMecFertCTR().inserirApontBolAnterior();
+        }
+
         ArrayList<String> motoMecArrayList = new ArrayList<String>();
         motoMecList = pmmContext.getMotoMecFertCTR().motoMecList();
         for (MotoMecBean motoMecBean : motoMecList) {
@@ -69,7 +72,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                 MotoMecBean motoMecBean = motoMecList.get(position);
                 pmmContext.getMotoMecFertCTR().setMotoMecBean(motoMecBean);
 
-                if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
+                if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
                     Toast.makeText(MenuPrincECMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                             Toast.LENGTH_LONG).show();
                 }
@@ -145,7 +148,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
 
                             } else {
 
-                                pmmContext.getConfigCTR().getConfig().setPosicaoTela(2L);
+                                pmmContext.getConfigCTR().setPosicaoTela(2L);
                                 Intent it = new Intent(MenuPrincECMActivity.this, FrenteActivity.class);
                                 startActivity(it);
                                 finish();
@@ -177,6 +180,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
 
                                     if (pmmContext.getCecCTR().verPreCECAberto()) {
                                         if (pmmContext.getCecCTR().getDataChegCampo().equals("")) {
+
                                             pmmContext.getCecCTR().setDataChegCampo();
 
                                             ConexaoWeb conexaoWeb = new ConexaoWeb();
@@ -311,7 +315,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals("")) {
+                if (!pmmContext.getMotoMecFertCTR().hasApontBolAberto()) {
                     Toast.makeText(MenuPrincECMActivity.this, "POR FAVOR! INSIRA OS APONTAMENTOS AO BOLETIM!",
                             Toast.LENGTH_LONG).show();
                 }

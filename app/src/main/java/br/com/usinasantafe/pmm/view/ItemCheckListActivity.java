@@ -86,10 +86,16 @@ public class ItemCheckListActivity extends ActivityGeneric {
         if(pmmContext.getCheckListCTR().qtdeItemCheckList() == pmmContext.getPosCheckList()){
             pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().getIdTurnoBolMMFert());
             pmmContext.getCheckListCTR().salvarBolFechado();
-            pmmContext.getConfigCTR().setPosicaoTela(11L);
-            Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);
-            startActivity(it);
-            finish();
+            if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
+                Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else{
+                Intent it = new Intent(ItemCheckListActivity.this, VerifOperadorActivity.class);
+                startActivity(it);
+                finish();
+            }
         }
         else{
             pmmContext.setPosCheckList(pmmContext.getPosCheckList() + 1);

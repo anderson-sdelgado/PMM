@@ -46,17 +46,17 @@ public class DadosPlantioActivity extends ActivityGeneric {
         buttonSair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+                if(PMMContext.aplic == 1){
                     Intent it = new Intent(DadosPlantioActivity.this, MenuPrincPMMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
+                else if(PMMContext.aplic == 2){
                     Intent it = new Intent(DadosPlantioActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+                else if(PMMContext.aplic == 3){
                     Intent it = new Intent(DadosPlantioActivity.this, MenuPrincPCOMPActivity.class);
                     startActivity(it);
                     finish();

@@ -68,7 +68,7 @@ public class RendMMDAO {
     }
 
     public void atualRend(RendMMBean rendMMBean){
-        rendMMBean.setDthrRendMM(Tempo.getInstance().dataComHora());
+        rendMMBean.setDthrRendMM(Tempo.getInstance().dthrSemTZ());
         rendMMBean.update();
         rendMMBean.commit();
     }

@@ -9,7 +9,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.model.bean.variaveis.CECBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
 import br.com.usinasantafe.pmm.util.Tempo;
 
@@ -22,7 +21,7 @@ public class PreCECDAO {
 
     public void abrirPreCEC(){
         PreCECBean preCECBean = new PreCECBean();
-        preCECBean.setDataSaidaUsina(Tempo.getInstance().dataComHora());
+        preCECBean.setDataSaidaUsina(Tempo.getInstance().dthrSemTZ());
         preCECBean.setDataChegCampo("");
         preCECBean.setDataSaidaCampo("");
         preCECBean.setAtivOS(0L);
@@ -68,6 +67,7 @@ public class PreCECDAO {
         preCECBean.setMoto(matricFunc);
         preCECBean.setTurno(codTurno);
         preCECBean.setCam(nroEquip);
+        preCECBean.setDataSaidaCampo(Tempo.getInstance().dthrSemTZ());
         preCECBean.setStatus(2L);
         preCECBean.update();
         delPrecCEC();
@@ -143,23 +143,30 @@ public class PreCECDAO {
 
     /////////////////////////////VERIFICAR DADOS////////////////////////////////
 
+    public boolean hasPreCEC(){
+        List<PreCECBean> preCECAbertoList = preCECList();
+        boolean retorno = preCECAbertoList.size() > 0;
+        preCECAbertoList.clear();
+        return retorno;
+    }
+
     public boolean verPreCECFechado(){
-        List preCECFechadoList = preCECListFechado();
+        List<PreCECBean> preCECFechadoList = preCECListFechado();
         boolean retorno = preCECFechadoList.size() > 0;
         preCECFechadoList.clear();
         return retorno;
     }
 
     public boolean verPreCECAberto(){
-        List preCECAbertoList = preCECListAberto();
+        List<PreCECBean> preCECAbertoList = preCECListAberto();
         boolean retorno = preCECAbertoList.size() > 0;
         preCECAbertoList.clear();
         return retorno;
     }
 
     public boolean verDataPreCEC(){
-        List preCECList = preCECListAberto();
-        PreCECBean preCECBean = (PreCECBean) preCECList.get(0);
+        List<PreCECBean> preCECList = preCECListAberto();
+        PreCECBean preCECBean = preCECList.get(0);
         preCECList.clear();
         return ((!preCECBean.getDataSaidaUsina().equals("")) && (!preCECBean.getDataChegCampo().equals("")));
     }
@@ -170,13 +177,7 @@ public class PreCECDAO {
 
     public void setDataChegCampo(){
         PreCECBean preCECBean = getPreCECAberto();
-        preCECBean.setDataChegCampo(Tempo.getInstance().dataComHora());
-        preCECBean.update();
-    }
-
-    public void setDataSaidaCampo(){
-        PreCECBean preCECBean = getPreCECAberto();
-        preCECBean.setDataSaidaCampo(Tempo.getInstance().dataComHora());
+        preCECBean.setDataChegCampo(Tempo.getInstance().dthrSemTZ());
         preCECBean.update();
     }
 
@@ -261,7 +262,7 @@ public class PreCECDAO {
                 retorno = "NÃO POSSUE CARREGAMENTOS";
             }
             else {
-                retorno = "ULT. VIAGEM: " + Tempo.getInstance().dataHoraCTZ(preCECBean.getDataSaidaCampo());
+                retorno = "ULT. VIAGEM: " + Tempo.getInstance().dthrSemTZ(preCECBean.getDataSaidaCampo());
             }
         }
         preCECList.clear();
@@ -271,6 +272,12 @@ public class PreCECDAO {
     /////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////LIST DE PRECEC/////////////////////////////////////////
+
+    private List<PreCECBean> preCECList(){
+        PreCECBean preCECBean = new PreCECBean();
+        List<PreCECBean> preCECList = preCECBean.all();
+        return preCECList;
+    }
 
     private List<PreCECBean> preCECListAberto(){
         PreCECBean preCECBean = new PreCECBean();
@@ -283,12 +290,6 @@ public class PreCECDAO {
         List<PreCECBean> preCECList = preCECBean.get("status", 2L);
         return preCECList;
     }
-
-//    public List getPreCECListEnviado(){
-//        PreCECBean preCECBean = new PreCECBean();
-//        List preCECList = preCECBean.get("status", 3L);
-//        return preCECList;
-//    }
 
     public List<PreCECBean> preCECListTerminado(){
         PreCECBean preCECBean = new PreCECBean();

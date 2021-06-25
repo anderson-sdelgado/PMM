@@ -113,7 +113,7 @@ public class HorimetroActivity extends ActivityGeneric {
     }
 
     public void salvarBoletimAberto() {
-        pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setHodometroInicialBol(horimetroNum, getLongitude(), getLatitude());
+        pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setHodometroInicialBol(horimetroNum,  getLongitude(), getLatitude());
         if(pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1){
             List<RFuncaoAtivParBean> rFuncaoAtividadeList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList();
             boolean implemento = false;
@@ -149,13 +149,12 @@ public class HorimetroActivity extends ActivityGeneric {
                 }
                 else{
                     if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
-                        pmmContext.getConfigCTR().setPosicaoTela(11L);
                         Intent it = new Intent(HorimetroActivity.this, EsperaInforActivity.class);
                         startActivity(it);
                         finish();
                     }
                     else{
-                        Intent it = new Intent(HorimetroActivity.this, VerMotoristaActivity.class);
+                        Intent it = new Intent(HorimetroActivity.this, VerifOperadorActivity.class);
                         startActivity(it);
                         finish();
                     }
@@ -217,17 +216,17 @@ public class HorimetroActivity extends ActivityGeneric {
             startActivity(it);
             finish();
         } else {
-            if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+            if(PMMContext.aplic == 1){
                 Intent it = new Intent(HorimetroActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();
             }
-            else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
+            else if(PMMContext.aplic == 2){
                 Intent it = new Intent(HorimetroActivity.this, MenuPrincECMActivity.class);
                 startActivity(it);
                 finish();
             }
-            else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+            else if(PMMContext.aplic == 3){
                 Intent it = new Intent(HorimetroActivity.this, MenuPrincPCOMPActivity.class);
                 startActivity(it);
                 finish();

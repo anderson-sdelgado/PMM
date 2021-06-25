@@ -3,6 +3,7 @@ package br.com.usinasantafe.pmm.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.PMMContext;
@@ -24,33 +25,35 @@ public class EsperaInforActivity extends ActivityGeneric {
 
         TextView textEspInfor = findViewById(R.id.textEspInfor);
 
-        if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 11L){
+        Log.i("PMM", "posicao tela = " + pmmContext.getConfigCTR().getConfig().getPosicaoTela());
+
+        if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L){
 
             ConexaoWeb conexaoWeb = new ConexaoWeb();
             if (conexaoWeb.verificaConexao(this)) {
-                if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+                if(PMMContext.aplic == 1){
                     pmmContext.getInformativoCTR().verInfor(String.valueOf(pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().getIdEquipBolMMFert()), EsperaInforActivity.this, MenuPrincPMMActivity.class);
                 }
-                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
+                else if(PMMContext.aplic == 2){
                     pmmContext.getInformativoCTR().verInfor(String.valueOf(pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().getIdEquipBolMMFert()), EsperaInforActivity.this, MenuPrincECMActivity.class);
                 }
-                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+                else if(PMMContext.aplic == 3){
                     pmmContext.getInformativoCTR().verInfor(String.valueOf(pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().getIdEquipBolMMFert()), EsperaInforActivity.this, MenuPrincPCOMPActivity.class);
                 }
                 customHandler.postDelayed(runnable, 10000);
             }
             else{
-                if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+                if(PMMContext.aplic == 1){
                     Intent it = new Intent(EsperaInforActivity.this, MenuPrincPMMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
+                else if(PMMContext.aplic == 2){
                     Intent it = new Intent(EsperaInforActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+                else if(PMMContext.aplic == 3){
                     Intent it = new Intent(EsperaInforActivity.this, MenuPrincPCOMPActivity.class);
                     startActivity(it);
                     finish();
@@ -74,17 +77,17 @@ public class EsperaInforActivity extends ActivityGeneric {
     private Runnable runnable = new Runnable(){
         public void run() {
             if(!VerifDadosServ.getInstance().isVerTerm()) {
-                if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+                if(PMMContext.aplic == 1){
                     Intent it = new Intent(EsperaInforActivity.this, MenuPrincPMMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
+                else if(PMMContext.aplic == 2){
                     Intent it = new Intent(EsperaInforActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+                else if(PMMContext.aplic == 3){
                     Intent it = new Intent(EsperaInforActivity.this, MenuPrincPCOMPActivity.class);
                     startActivity(it);
                     finish();

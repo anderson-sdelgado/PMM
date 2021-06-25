@@ -74,6 +74,11 @@ public class ConfigCTR {
         configDAO.setAtivConfig(idAtiv);
     }
 
+    public void setUltParadaBolConfig(Long idParada){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setUltParadaBolConfig(idParada);
+    }
+
     public void setPressaoConfig(Double pressao){
         ConfigDAO configDAO = new ConfigDAO();
         configDAO.setPressaoConfig(pressao);
@@ -87,11 +92,6 @@ public class ConfigCTR {
     public void setBocalConfig(Long bocal){
         ConfigDAO configDAO = new ConfigDAO();
         configDAO.setBocalConfig(bocal);
-    }
-
-    public void setDtUltApontConfig(String data){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setDtUltApontConfig(data);
     }
 
     public void setHorimetroConfig(Double horimetro){

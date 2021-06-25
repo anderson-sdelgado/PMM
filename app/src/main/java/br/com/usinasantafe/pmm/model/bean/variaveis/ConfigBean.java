@@ -21,8 +21,6 @@ public class ConfigBean extends Entidade {
     @DatabaseField
     private String dtUltCLConfig;
 	@DatabaseField
-	private String dtUltApontConfig;
-	@DatabaseField
 	private String dtServConfig;
 	@DatabaseField
 	private Long difDthrConfig;
@@ -30,6 +28,8 @@ public class ConfigBean extends Entidade {
 	private Long osConfig;
 	@DatabaseField
 	private Long ativConfig;
+	@DatabaseField
+	private Long ultParadaBolConfig;
 	@DatabaseField
 	private Double pressaoConfig;
 	@DatabaseField
@@ -49,8 +49,6 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private Long atualCheckList;
 	@DatabaseField
-	private Long aplic; // 1 - PMM; 2 - ECM; 3 - PCOMP
-	@DatabaseField
 	private Long posFluxoViagem;
 	@DatabaseField
 	private Long posicaoTela;
@@ -64,17 +62,15 @@ public class ConfigBean extends Entidade {
 	// 8 - Iniciar na parte de apontamento
 	// 9 - Recolhimento de Mangueira;
 	// 10 - Trocar de implemento
-	// 11 - Informação PMM
 	// 13 - Buscar Ordem Carreg Insumo
 	// 14 - Buscar Ordem Carreg Composto
-	// 15 - Envio Leira Descarreg Insumo
-	// 16 - Menu Certificado ECM - 5
-	// 17 - Trocar Motorista Fechamento de Boletim ECM - 9
-	// 18 - Abertura de Boletim ECM - 10
-	// 19 - Desengate no Menu MotoMec ECM - 3
-	// 20 - Engate no Menu MotoMec ECM - 4
-	// 21 - Desengate no Parada - 6
-	// 22 - Engate no Parada - 7
+	// 16 - Menu Certificado ECM
+	// 17 - Trocar Motorista Fechamento de Boletim ECM
+	// 18 - Abertura de Boletim ECM
+	// 19 - Desengate no Menu MotoMec ECM
+	// 20 - Engate no Menu MotoMec ECM
+	// 21 - Desengate no Parada
+	// 22 - Engate no Parada
 
 	public ConfigBean() {
 	}
@@ -119,14 +115,6 @@ public class ConfigBean extends Entidade {
 		this.dtUltCLConfig = dtUltCLConfig;
 	}
 
-	public String getDtUltApontConfig() {
-		return dtUltApontConfig;
-	}
-
-	public void setDtUltApontConfig(String dtUltApontConfig) {
-		this.dtUltApontConfig = dtUltApontConfig;
-	}
-
 	public String getDtServConfig() {
 		return dtServConfig;
 	}
@@ -157,6 +145,14 @@ public class ConfigBean extends Entidade {
 
 	public void setAtivConfig(Long ativConfig) {
 		this.ativConfig = ativConfig;
+	}
+
+	public Long getUltParadaBolConfig() {
+		return ultParadaBolConfig;
+	}
+
+	public void setUltParadaBolConfig(Long ultParadaBolConfig) {
+		this.ultParadaBolConfig = ultParadaBolConfig;
 	}
 
 	public Double getPressaoConfig() {
@@ -229,14 +225,6 @@ public class ConfigBean extends Entidade {
 
 	public void setAtualCheckList(Long atualCheckList) {
 		this.atualCheckList = atualCheckList;
-	}
-
-	public Long getAplic() {
-		return aplic;
-	}
-
-	public void setAplic(Long aplic) {
-		this.aplic = aplic;
 	}
 
 	public Long getPosFluxoViagem() {

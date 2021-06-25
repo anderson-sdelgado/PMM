@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMFertBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 import br.com.usinasantafe.pmm.util.Tempo;
 
 public class BoletimMMFertDAO {
@@ -74,7 +73,7 @@ public class BoletimMMFertDAO {
             boletimMMFertBean.setOsBolMMFert(os);
             boletimMMFertBean.setAtivPrincBolMMFert(ativ);
             boletimMMFertBean.setStatusConBolMMFert(statusCon);
-            boletimMMFertBean.setDthrInicialBolMMFert(Tempo.getInstance().dataComHora());
+            boletimMMFertBean.setDthrInicialBolMMFert(Tempo.getInstance().dthrSemTZ());
             boletimMMFertBean.insert();
         }
     }
@@ -84,7 +83,7 @@ public class BoletimMMFertDAO {
         List<BoletimMMFertBean> boletimMMList = bolMMFertAbertoList();
 
         for(BoletimMMFertBean boletimMMFertBeanBD : boletimMMList){
-            boletimMMFertBeanBD.setDthrFinalBolMMFert(Tempo.getInstance().dataComHora());
+            boletimMMFertBeanBD.setDthrFinalBolMMFert(Tempo.getInstance().dthrSemTZ());
             boletimMMFertBeanBD.setStatusBolMMFert(2L);
             boletimMMFertBeanBD.setHodometroFinalBolMMFert(boletimMMFertBean.getHodometroFinalBolMMFert());
             boletimMMFertBeanBD.update();

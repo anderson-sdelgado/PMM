@@ -43,16 +43,17 @@ public class ConfigDAO {
         configBean.deleteAll();
         configBean.setUltTurnoCLConfig(0L);
         configBean.setDtUltCLConfig("");
-        configBean.setDtUltApontConfig("");
         configBean.setDtServConfig("");
         configBean.setDifDthrConfig(0L);
         configBean.setVerInforConfig(0L);
         configBean.setFlagLogErro(0L);
         configBean.setFlagLogEnvio(0L);
+        configBean.setOsConfig(0L);
+        configBean.setAtivConfig(0L);
+        configBean.setUltParadaBolConfig(0L);
         configBean.setPressaoConfig(0D);
         configBean.setVelocConfig(0L);
         configBean.setBocalConfig(0L);
-        configBean.setAplic(2L);  // 1 - PMM; 2 - ECM; 3 - PCOMP
         configBean.setSenhaConfig(senha);
         configBean.setPosFluxoViagem(0L);
         configBean.setPosicaoTela(0L);
@@ -91,6 +92,12 @@ public class ConfigDAO {
         configBean.update();
     }
 
+    public void setUltParadaBolConfig(Long idParada){
+        ConfigBean configBean = getConfig();
+        configBean.setUltParadaBolConfig(idParada);
+        configBean.update();
+    }
+
     public void setPressaoConfig(Double pressao){
         ConfigBean configBean = getConfig();
         configBean.setPressaoConfig(pressao);
@@ -109,23 +116,16 @@ public class ConfigDAO {
         configBean.update();
     }
 
-    public void setDtUltApontConfig(String data){
-        ConfigBean configBean = getConfig();
-        configBean.setDtUltApontConfig(data);
-        configBean.update();
-    }
-
     public void setHorimetroConfig(Double horimetro){
         ConfigBean configBean = getConfig();
         configBean.setHorimetroConfig(horimetro);
-        configBean.setDtUltApontConfig("");
         configBean.update();
     }
 
     public void setCheckListConfig(Long idTurno){
         ConfigBean configBean = getConfig();
         configBean.setUltTurnoCLConfig(idTurno);
-        configBean.setDtUltCLConfig(Tempo.getInstance().dataSHora());
+        configBean.setDtUltCLConfig(Tempo.getInstance().dtSemTZ());
         configBean.update();
     }
 

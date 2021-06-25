@@ -110,17 +110,17 @@ public class OSActivity extends ActivityGeneric {
             startActivity(it);
             finish();
         } else {
-            if(pmmContext.getConfigCTR().getConfig().getAplic() == 1L){
+            if(PMMContext.aplic == 1){
                 Intent it = new Intent(OSActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();
             }
-            else if(pmmContext.getConfigCTR().getConfig().getAplic() == 2L){
+            else if(PMMContext.aplic == 2){
                 Intent it = new Intent(OSActivity.this, FrenteActivity.class);
                 startActivity(it);
                 finish();
             }
-            else if(pmmContext.getConfigCTR().getConfig().getAplic() == 3L){
+            else if(PMMContext.aplic == 3){
                 Intent it = new Intent(OSActivity.this, MenuPrincPCOMPActivity.class);
                 startActivity(it);
                 finish();

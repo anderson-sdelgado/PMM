@@ -33,6 +33,7 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfColheitaBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfPlantioBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.MovLeiraBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
@@ -100,6 +101,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, InfColheitaBean.class);
 			TableUtils.createTable(cs, InfPlantioBean.class);
 			TableUtils.createTable(cs, LogErroBean.class);
+			TableUtils.createTable(cs, MovLeiraBean.class);
 			TableUtils.createTable(cs, PreCECBean.class);
 			TableUtils.createTable(cs, RecolhFertBean.class);
 			TableUtils.createTable(cs, RendMMBean.class);

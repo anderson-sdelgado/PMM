@@ -68,7 +68,7 @@ public class RecolhFertDAO {
     }
 
     public void atualRecolh(RecolhFertBean recolhFertBean){
-        recolhFertBean.setDthrRecolhFert(Tempo.getInstance().dataComHora());
+        recolhFertBean.setDthrRecolhFert(Tempo.getInstance().dthrSemTZ());
         recolhFertBean.update();
         recolhFertBean.commit();
     }

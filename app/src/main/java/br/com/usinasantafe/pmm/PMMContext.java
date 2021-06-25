@@ -27,12 +27,14 @@ public class PMMContext extends Application {
 
     private Long contImplemento;
     public static String versaoAplic = "4.00";
+    public static int aplic = 2;   // 1 - PMM; 2 - ECM; 3 - PCOMP
     private int contRend;
     private int posRend;
     private int contRecolh;
     private int posRecolh;
     private int contDataHora;
     private int posCheckList;
+    private int tipoMovComp;
     private boolean verTelaLeira;
 
     private int dia;
@@ -193,5 +195,13 @@ public class PMMContext extends Application {
 
     public void setVerTelaLeira(boolean verTelaLeira) {
         this.verTelaLeira = verTelaLeira;
+    }
+
+    public int getTipoMovComp() {
+        return tipoMovComp;
+    }
+
+    public void setTipoMovComp(int tipoMovComp) {
+        this.tipoMovComp = tipoMovComp;
     }
 }

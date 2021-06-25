@@ -2,6 +2,8 @@ package br.com.usinasantafe.pmm.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -37,12 +39,24 @@ public class MsgSaidaCampoActivity extends ActivityGeneric {
                     pmmContext.getConfigCTR().setStatusConConfig(0L);
                 }
 
-                pmmContext.getCecCTR().setDataSaidaCampo();
 
                 pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLatitude(), getLongitude());
-                Intent it = new Intent(MsgSaidaCampoActivity.this, VerMotoristaActivity.class);
-                startActivity(it);
-                finish();
+
+                AlertDialog.Builder alerta = new AlertDialog.Builder(MsgSaidaCampoActivity.this);
+                alerta.setTitle("ATENÇÃO");
+                alerta.setMessage("A VIAGEM FOI FINALIZADA E SERÁ ENVIADA AUTOMATICAMENTE. FAVOR ENTREGAR O CELULAR PARA O MOTORISTA.");
+                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        pmmContext.getCecCTR().fechaPreCEC();
+                        Intent it = new Intent(MsgSaidaCampoActivity.this, MenuPrincECMActivity.class);
+                        startActivity(it);
+                        finish();
+
+                    }
+                });
+                alerta.show();
 
             }
         });

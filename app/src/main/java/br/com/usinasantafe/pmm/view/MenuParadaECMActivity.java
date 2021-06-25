@@ -18,7 +18,6 @@ import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.MotoMecBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.util.Tempo;
 
 public class MenuParadaECMActivity extends ActivityGeneric {
 
@@ -58,7 +57,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
 
                 Log.i("ECM", "Funcao = " + motoMecBean.getCodFuncaoOperMotoMec());
 
-                if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
+                if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
                     Toast.makeText(MenuParadaECMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                             Toast.LENGTH_LONG).show();
                 }
@@ -201,7 +200,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
+                if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
                     Toast.makeText(MenuParadaECMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                             Toast.LENGTH_LONG).show();
                 }
@@ -214,7 +213,8 @@ public class MenuParadaECMActivity extends ActivityGeneric {
                     else{
                         pmmContext.getConfigCTR().setStatusConConfig(0L);
                     }
-                    pmmContext.getMotoMecFertCTR().inserirVoltaTrabalho(getLongitude(), getLatitude());
+                    pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude());
+
                     Intent it = new Intent(MenuParadaECMActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();

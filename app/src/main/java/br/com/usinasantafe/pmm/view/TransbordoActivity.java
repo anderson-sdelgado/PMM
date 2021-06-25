@@ -15,7 +15,6 @@ import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.util.Tempo;
 
 public class TransbordoActivity extends ActivityGeneric {
 
@@ -101,7 +100,7 @@ public class TransbordoActivity extends ActivityGeneric {
 
                     if(pmmContext.getMotoMecFertCTR().verTransb(idTransb)) {
 
-                        if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
+                        if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);
                             alerta.setTitle("ATENÇÃO");

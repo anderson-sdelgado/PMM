@@ -11,18 +11,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.model.bean.estaticas.PressaoBocalBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.util.Tempo;
 
 public class ListaVelocFertActivity extends ActivityGeneric {
 
@@ -111,7 +105,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
                 pmmContext.getConfigCTR().setVelocConfig(Long.parseLong(textView.getText().toString()));
 
-                if (pmmContext.getConfigCTR().getConfig().getDtUltApontConfig().equals(Tempo.getInstance().dataComHora())) {
+                if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
 
                     AlertDialog.Builder alerta = new AlertDialog.Builder(ListaVelocFertActivity.this);
                     alerta.setTitle("ATENÇÃO");
