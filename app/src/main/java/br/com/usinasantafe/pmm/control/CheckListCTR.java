@@ -11,11 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.dao.CabecCheckListDAO;
+import br.com.usinasantafe.pmm.model.dao.EquipDAO;
 import br.com.usinasantafe.pmm.model.dao.ItemCheckListDAO;
+import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.model.dao.RespItemCheckListDAO;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ItemCheckListBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CabecCheckListBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCheckListBean;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
+import br.com.usinasantafe.pmm.util.Json;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class CheckListCTR {
 
@@ -57,9 +62,35 @@ public class CheckListCTR {
         itemCheckListDAO.atualCheckList(dado, telaAtual, telaProx, progressDialog);
     }
 
-    public void recDadosCheckList(String result) {
-        ItemCheckListDAO itemCheckListDAO = new ItemCheckListDAO();
-        itemCheckListDAO.recDadosCheckList(result);
+    public void receberVerifCheckList(String result) {
+
+        try {
+
+            if (!result.contains("exceeded")) {
+
+                int pos1 = result.indexOf("_") + 1;
+                String objPrinc = result.substring(0, (pos1 - 1));
+                String objSeg = result.substring(pos1);
+
+                Json json = new Json();
+
+                EquipDAO equipDAO = new EquipDAO();
+                equipDAO.recDadosEquip(json.jsonArray(objPrinc));
+
+                ItemCheckListDAO itemCheckListDAO = new ItemCheckListDAO();
+                itemCheckListDAO.recDadosCheckList(json.jsonArray(objSeg));
+
+                VerifDadosServ.getInstance().pulaTela();
+
+            } else {
+                VerifDadosServ.getInstance().pulaTela();
+            }
+
+        } catch (Exception e) {
+            LogErroDAO.getInstance().insert(e);
+            VerifDadosServ.getInstance().pulaTela();
+        }
+
     }
 
     public List<ItemCheckListBean> getItemList(){
@@ -86,25 +117,25 @@ public class CheckListCTR {
         return itemCheckListDAO.qtdeItem(configCTR.getEquip().getIdCheckList());
     }
 
-    public List bolFechList(){
+    public List<CabecCheckListBean> cabecCheckListList(){
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
-        return cabecCheckListDAO.bolFechList();
+        return cabecCheckListDAO.cabecCheckListFechList();
     }
 
     public boolean verEnvioDados(){
-        return bolFechList().size() > 0;
+        return cabecCheckListList().size() > 0;
     }
 
     public String dadosEnvio(){
 
-        List cabecCheckListLista = bolFechList();
+        List cabecCheckListList = cabecCheckListList();
 
         JsonArray jsonArrayCabec = new JsonArray();
         JsonArray jsonArrayItem = new JsonArray();
 
-        for (int i = 0; i < cabecCheckListLista.size(); i++) {
+        for (int i = 0; i < cabecCheckListList.size(); i++) {
 
-            CabecCheckListBean cabecCheckListBean = (CabecCheckListBean) cabecCheckListLista.get(i);
+            CabecCheckListBean cabecCheckListBean = (CabecCheckListBean) cabecCheckListList.get(i);
             Gson gsonCabec = new Gson();
             jsonArrayCabec.add(gsonCabec.toJsonTree(cabecCheckListBean, cabecCheckListBean.getClass()));
 
@@ -121,7 +152,7 @@ public class CheckListCTR {
 
         }
 
-        cabecCheckListLista.clear();
+        cabecCheckListList.clear();
 
         JsonObject jsonCabec = new JsonObject();
         jsonCabec.add("cabecalho", jsonArrayCabec);
@@ -135,27 +166,12 @@ public class CheckListCTR {
 
     public void delChecklist() {
 
-        CabecCheckListBean cabecCheckListBean = new CabecCheckListBean();
-        List cabecCheckList = cabecCheckListBean.get("statusCabCL", 2L);
-        ArrayList<Long> rLista = new ArrayList<Long>();
+        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
+        RespItemCheckListDAO respItemCheckListDAO = new RespItemCheckListDAO();
+        respItemCheckListDAO.delRespItem(cabecCheckListDAO.idCabecCLFechArrayList());
+        cabecCheckListDAO.delCabecCLFech();
 
-        for (int i = 0; i < cabecCheckList.size(); i++) {
-            cabecCheckListBean = (CabecCheckListBean) cabecCheckList.get(i);
-            rLista.add(cabecCheckListBean.getIdCabCL());
-        }
-
-        RespItemCheckListBean respItemCheckListBean = new RespItemCheckListBean();
-        List respItemList = respItemCheckListBean.in("idCabItCL", rLista);
-
-        for (int j = 0; j < respItemList.size(); j++) {
-            respItemCheckListBean = (RespItemCheckListBean) respItemList.get(j);
-            respItemCheckListBean.delete();
-        }
-
-        for (int i = 0; i < cabecCheckList.size(); i++) {
-            cabecCheckListBean = (CabecCheckListBean) cabecCheckList.get(i);
-            cabecCheckListBean.delete();
-        }
+        EnvioDadosServ.getInstance().envioDados(3);
 
     }
 

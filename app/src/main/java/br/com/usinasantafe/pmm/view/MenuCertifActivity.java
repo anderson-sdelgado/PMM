@@ -1,7 +1,5 @@
 package br.com.usinasantafe.pmm.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -17,7 +15,6 @@ import java.util.ArrayList;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 
 public class MenuCertifActivity extends ActivityGeneric {
 
@@ -61,8 +58,7 @@ public class MenuCertifActivity extends ActivityGeneric {
 
                         if (pmmContext.getCecCTR().verDataPreCEC()) {
 
-                            pmmContext.getCecCTR().setAtivOS(pmmContext.getCecCTR().getOSTipoAtiv().getIdAtivOS());
-                            Intent it = new Intent(MenuCertifActivity.this, EquipActivity.class);
+                            Intent it = new Intent(MenuCertifActivity.this, OSActivity.class);
                             startActivity(it);
                             finish();
 
@@ -105,9 +101,7 @@ public class MenuCertifActivity extends ActivityGeneric {
 
                 } else if (text.equals("ATUALIZAR")) {
 
-                    ConexaoWeb conexaoWeb = new ConexaoWeb();
-
-                    if (conexaoWeb.verificaConexao(MenuCertifActivity.this)) {
+                    if (connectNetwork) {
 
                         progressBar = new ProgressDialog(v.getContext());
                         progressBar.setCancelable(true);
@@ -154,7 +148,7 @@ public class MenuCertifActivity extends ActivityGeneric {
 
                 } else if (text.equals("LOG BOLETIM")) {
 
-                    if (pmmContext.getCecCTR().verCEC()) {
+                    if (pmmContext.getCecCTR().hasElemCEC()) {
                         Intent it = new Intent(MenuCertifActivity.this, BackupCECActivity.class);
                         startActivity(it);
                         finish();

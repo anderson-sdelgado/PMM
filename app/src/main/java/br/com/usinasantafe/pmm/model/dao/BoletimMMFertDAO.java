@@ -5,12 +5,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMFertBean;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
 
 public class BoletimMMFertDAO {
@@ -24,7 +26,7 @@ public class BoletimMMFertDAO {
         boletimMMFertBean = new BoletimMMFertBean();
     }
 
-    public BoletimMMFertBean getBoletimMMBean() {
+    public BoletimMMFertBean getBoletimMMFertBean() {
         if (boletimMMFertBean == null)
             boletimMMFertBean = new BoletimMMFertBean();
         return boletimMMFertBean;
@@ -91,6 +93,8 @@ public class BoletimMMFertDAO {
 
         boletimMMList.clear();
 
+        EnvioDadosServ.getInstance().envioDados(10);
+
     }
 
     public void deleteBol(Long idBol){
@@ -113,29 +117,21 @@ public class BoletimMMFertDAO {
         return idBolList;
     }
 
-    public ArrayList<BoletimMMFertBean> boletimArrayList(String objeto){
+    public ArrayList<BoletimMMFertBean> boletimArrayList(String objeto) throws Exception {
 
         ArrayList<BoletimMMFertBean> boletimArrayList = new ArrayList<>();
 
-        try{
+        JSONObject jObjBolMM = new JSONObject(objeto);
+        JSONArray jsonArrayBolMM = jObjBolMM.getJSONArray("boletim");
 
-            JSONObject jObjBolMM = new JSONObject(objeto);
-            JSONArray jsonArrayBolMM = jObjBolMM.getJSONArray("boletim");
+        for (int i = 0; i < jsonArrayBolMM.length(); i++) {
 
-            for (int i = 0; i < jsonArrayBolMM.length(); i++) {
+            JSONObject objBol = jsonArrayBolMM.getJSONObject(i);
+            Gson gsonBol = new Gson();
+            BoletimMMFertBean boletimMMFertBean = gsonBol.fromJson(objBol.toString(), BoletimMMFertBean.class);
 
-                JSONObject objBol = jsonArrayBolMM.getJSONObject(i);
-                Gson gsonBol = new Gson();
-                BoletimMMFertBean boletimMMFertBean = gsonBol.fromJson(objBol.toString(), BoletimMMFertBean.class);
+            boletimArrayList.add(boletimMMFertBean);
 
-                boletimArrayList.add(boletimMMFertBean);
-
-            }
-
-        }
-        catch(Exception e){
-            LogErroDAO.getInstance().insert(e);
-            Tempo.getInstance().setEnvioDado(true);
         }
 
         return boletimArrayList;
@@ -167,33 +163,26 @@ public class BoletimMMFertDAO {
         return jsonBoletim.toString();
     }
 
-    public void updateBolAberto(String objeto) {
+    public void updateBolAberto(String objeto) throws Exception {
 
-        try{
+        JSONObject jObjBolMM = new JSONObject(objeto);
+        JSONArray jsonArrayBolMM = jObjBolMM.getJSONArray("boletim");
 
-            JSONObject jObjBolMM = new JSONObject(objeto);
-            JSONArray jsonArrayBolMM = jObjBolMM.getJSONArray("boletim");
+        for (int i = 0; i < jsonArrayBolMM.length(); i++) {
 
-            for (int i = 0; i < jsonArrayBolMM.length(); i++) {
+            JSONObject objBol = jsonArrayBolMM.getJSONObject(i);
+            Gson gsonBol = new Gson();
+            BoletimMMFertBean boletimMMFertBean = gsonBol.fromJson(objBol.toString(), BoletimMMFertBean.class);
 
-                JSONObject objBol = jsonArrayBolMM.getJSONObject(i);
-                Gson gsonBol = new Gson();
-                BoletimMMFertBean boletimMMFertBean = gsonBol.fromJson(objBol.toString(), BoletimMMFertBean.class);
+            List<BoletimMMFertBean> boletimMMFertList = boletimMMFertBean.get("idBolMMFert", boletimMMFertBean.getIdBolMMFert());
+            BoletimMMFertBean boletimMMFertBD = boletimMMFertList.get(0);
+            boletimMMFertList.clear();
 
-                List<BoletimMMFertBean> boletimMMFertList = boletimMMFertBean.get("idBolMMFert", boletimMMFertBean.getIdBolMMFert());
-                BoletimMMFertBean boletimMMFertBD = boletimMMFertList.get(0);
-                boletimMMFertList.clear();
-
-                boletimMMFertBD.setIdExtBolMMFert(boletimMMFertBean.getIdExtBolMMFert());
-                boletimMMFertBD.update();
-
-            }
+            boletimMMFertBD.setIdExtBolMMFert(boletimMMFertBean.getIdExtBolMMFert());
+            boletimMMFertBD.update();
 
         }
-        catch(Exception e){
-            LogErroDAO.getInstance().insert(e);
-            Tempo.getInstance().setEnvioDado(true);
-        }
+
     }
 
 }

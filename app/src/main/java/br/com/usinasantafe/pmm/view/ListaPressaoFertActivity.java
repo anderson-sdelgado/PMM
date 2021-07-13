@@ -19,7 +19,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.PressaoBocalBean;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
+import br.com.usinasantafe.pmm.util.ConnectNetwork;
 
 public class ListaPressaoFertActivity extends ActivityGeneric {
 
@@ -49,9 +49,9 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        ConexaoWeb conexaoWeb = new ConexaoWeb();
+                        ConnectNetwork connectNetwork = new ConnectNetwork();
 
-                        if (conexaoWeb.verificaConexao(ListaPressaoFertActivity.this)) {
+                        if (connectNetwork.verificaConexao(ListaPressaoFertActivity.this)) {
 
                             progressBar = new ProgressDialog(ListaPressaoFertActivity.this);
                             progressBar.setCancelable(true);

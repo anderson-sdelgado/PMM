@@ -9,7 +9,7 @@ import br.com.usinasantafe.pmm.model.pst.Entidade;
  * Created by anderson on 16/11/2016.
  */
 @DatabaseTable(tableName="tbapontcarregvar")
-public class CarregBean extends Entidade {
+public class CarregCompBean extends Entidade {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,9 +40,9 @@ public class CarregBean extends Entidade {
     @DatabaseField
     private Double pesoLiquidoCarreg;
     @DatabaseField
-    private Long statusCarreg; //1 - Envio Carreg de Insumo; 2 - Recebe Retorno Envio de Insumo; 3 - Recebe Ord Carregamento; 4 - Enviar Leira Descarregamento; 5 - Atual Carreg Leira Descarreg
+    private Long statusCarreg; //1 - Envio Carreg de Insumo e Composto com Leira; 2 - Recebe Retorno Envio de Insumo e Composto com Leira; 3 - Recebe Ord Carregamento; 4 - Enviar Leira Descarregamento; 5 - Atual Carreg Leira Descarreg
 
-    public CarregBean() {
+    public CarregCompBean() {
     }
 
     public Long getIdCarreg() {

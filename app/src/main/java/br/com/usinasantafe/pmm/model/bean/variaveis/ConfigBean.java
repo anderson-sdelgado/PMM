@@ -39,7 +39,7 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private Double horimetroConfig;
 	@DatabaseField
-	private Long verInforConfig; // 0 - Verificar Dados; 1- Dados Recebidos; 2 - Dados Visualizados
+	private Long verRecInformativo; // 0 - Verificar Dados; 1- Dados Recebidos; 2 - Dados Visualizados
 	@DatabaseField
 	private Long statusConConfig;  // 0 - Offline; 1 - Online
 	@DatabaseField
@@ -50,6 +50,8 @@ public class ConfigBean extends Entidade {
 	private Long atualCheckList;
 	@DatabaseField
 	private Long posFluxoViagem;
+	@DatabaseField
+	private Long statusRetVerif; // 0 - Não Verificando; 1 - Verificando
 	@DatabaseField
 	private Long posicaoTela;
 	// 1 - Inicio do Boletim; PMM - ECM - PCOMP
@@ -187,12 +189,12 @@ public class ConfigBean extends Entidade {
 		this.horimetroConfig = horimetroConfig;
 	}
 
-	public Long getVerInforConfig() {
-		return verInforConfig;
+	public Long getVerRecInformativo() {
+		return verRecInformativo;
 	}
 
-	public void setVerInforConfig(Long verInforConfig) {
-		this.verInforConfig = verInforConfig;
+	public void setVerRecInformativo(Long verRecInformativo) {
+		this.verRecInformativo = verRecInformativo;
 	}
 
 	public Long getStatusConConfig() {
@@ -241,5 +243,13 @@ public class ConfigBean extends Entidade {
 
 	public void setPosicaoTela(Long posicaoTela) {
 		this.posicaoTela = posicaoTela;
+	}
+
+	public Long getStatusRetVerif() {
+		return statusRetVerif;
+	}
+
+	public void setStatusRetVerif(Long statusRetVerif) {
+		this.statusRetVerif = statusRetVerif;
 	}
 }

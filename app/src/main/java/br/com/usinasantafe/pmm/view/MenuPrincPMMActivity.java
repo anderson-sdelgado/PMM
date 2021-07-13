@@ -18,7 +18,6 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
@@ -166,8 +165,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                     startActivity(it);
                     finish();
                 } else if (text.equals("ATUALIZAR DADOS")) {
-                    ConexaoWeb conexaoWeb = new ConexaoWeb();
-                    if (conexaoWeb.verificaConexao(MenuPrincPMMActivity.this)) {
+                    if (connectNetwork) {
                         progressBar = new ProgressDialog(v.getContext());
                         progressBar.setCancelable(true);
                         progressBar.setMessage("ATUALIZANDO ...");
@@ -196,8 +194,6 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                     Intent it = new Intent(MenuPrincPMMActivity.this, ListaOSRecolhActivity.class);
                     startActivity(it);
                     finish();
-                } else if (text.equals("REENVIO DE DADOS")) {
-                    EnvioDadosServ.getInstance().envioDados(MenuPrincPMMActivity.this);
                 } else if (text.equals("TROCAR IMPLEMENTO")) {
                     if (!pmmContext.getMotoMecFertCTR().hasApontBolAberto()) {
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! FAÇA ALGUM APONTAMENTO ANTES DE REALIZAR A TROCA DO(S) IMPLEMENTO(S)!",
@@ -256,13 +252,13 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
 
         public void run() {
 
-            if (EnvioDadosServ.getInstance().getStatusEnvio() == 1) {
+            if (EnvioDadosServ.status == 1) {
                 textViewProcessoNormal.setTextColor(Color.YELLOW);
                 textViewProcessoNormal.setText("Enviando e recebendo de dados...");
-            } else if (EnvioDadosServ.getInstance().getStatusEnvio() == 2) {
+            } else if (EnvioDadosServ.status == 2) {
                 textViewProcessoNormal.setTextColor(Color.RED);
                 textViewProcessoNormal.setText("Existem dados para serem enviados e recebidos");
-            } else if (EnvioDadosServ.getInstance().getStatusEnvio() == 3) {
+            } else if (EnvioDadosServ.status == 3) {
                 textViewProcessoNormal.setTextColor(Color.GREEN);
                 textViewProcessoNormal.setText("Todos os Dados já foram enviados e recebidos");
             }
@@ -275,7 +271,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                 textViewDataHora.setTextColor(Color.RED);
             }
 
-            if(pmmContext.getConfigCTR().getConfig().getVerInforConfig() == 2){
+            if(pmmContext.getConfigCTR().getConfig().getVerRecInformativo() == 2){
                 Intent it = new Intent( MenuPrincPMMActivity.this, DadosColheitaActivity.class);
                 startActivity(it);
                 finish();

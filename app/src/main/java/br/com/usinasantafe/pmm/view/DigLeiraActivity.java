@@ -10,7 +10,7 @@ import android.widget.Button;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
+import br.com.usinasantafe.pmm.util.ConnectNetwork;
 
 public class DigLeiraActivity extends ActivityGeneric {
 
@@ -39,9 +39,7 @@ public class DigLeiraActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        ConexaoWeb conexaoWeb = new ConexaoWeb();
-
-                        if (conexaoWeb.verificaConexao(DigLeiraActivity.this)) {
+                        if (connectNetwork) {
 
                             progressBar = new ProgressDialog(DigLeiraActivity.this);
                             progressBar.setCancelable(true);
@@ -95,8 +93,7 @@ public class DigLeiraActivity extends ActivityGeneric {
 
                     if (pmmContext.getCompostoCTR().verLeira(Long.parseLong(editTextPadrao.getText().toString()))) {
 
-                        ConexaoWeb conexaoWeb = new ConexaoWeb();
-                        if (conexaoWeb.verificaConexao(DigLeiraActivity.this)) {
+                        if (connectNetwork) {
                             pmmContext.getConfigCTR().setStatusConConfig(1L);
                         }
                         else{
@@ -106,10 +103,10 @@ public class DigLeiraActivity extends ActivityGeneric {
                         pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());
 
                         if (pmmContext.getConfigCTR().getOSBean().getTipoOS() == 0L) {
-
+                            pmmContext.getCompostoCTR().abrirCarregComposto(Long.parseLong(editTextPadrao.getText().toString()));
                         }
                         else{
-                            pmmContext.getCompostoCTR().salvarLeiraDescarreg(Long.parseLong(editTextPadrao.getText().toString()), DigLeiraActivity.this);
+                            pmmContext.getCompostoCTR().salvarLeiraDescarreg(Long.parseLong(editTextPadrao.getText().toString()));
                         }
 
                         Intent it = new Intent(DigLeiraActivity.this, MenuPrincPCOMPActivity.class);
@@ -124,7 +121,6 @@ public class DigLeiraActivity extends ActivityGeneric {
                         alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
                             }
                         });
 

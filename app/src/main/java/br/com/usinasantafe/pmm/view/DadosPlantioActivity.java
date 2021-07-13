@@ -6,12 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.List;
-
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfPlantioBean;
-import br.com.usinasantafe.pmm.control.ConfigCTR;
 
 public class DadosPlantioActivity extends ActivityGeneric {
 
@@ -41,7 +38,7 @@ public class DadosPlantioActivity extends ActivityGeneric {
         textViewMetaMP.setText(String.valueOf(infPlantioBean.getMediaProdPlanej()).replace(".", ","));
         textViewValorMP.setText(String.valueOf(infPlantioBean.getMediaProdReal()).replace(".", ","));
 
-        pmmContext.getConfigCTR().atualVerInforConfig(3L);
+        pmmContext.getConfigCTR().setVerInforConfig(3L);
 
         buttonSair.setOnClickListener(new View.OnClickListener() {
             @Override

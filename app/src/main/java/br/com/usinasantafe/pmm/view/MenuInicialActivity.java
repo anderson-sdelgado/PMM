@@ -1,9 +1,7 @@
 package br.com.usinasantafe.pmm.view;
 
 import android.Manifest;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -21,14 +18,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.ReceberAlarme;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
-import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class MenuInicialActivity extends ActivityGeneric {
@@ -58,13 +51,27 @@ public class MenuInicialActivity extends ActivityGeneric {
             ActivityCompat.requestPermissions(this, PERMISSIONS, 112);
         }
 
+        if(EnvioDadosServ.getInstance().verifDadosEnvio()){
+            if(connectNetwork){
+                EnvioDadosServ.getInstance().envioDados(17);
+            }
+            else{
+                EnvioDadosServ.status = 1;
+            }
+        }
+        else{
+            EnvioDadosServ.status = 3;
+        }
+
+        VerifDadosServ.status = 3;
+
         verifEnvio();
 
         progressBar = new ProgressDialog(this);
 
         if(pmmContext.getMotoMecFertCTR().verBolAberto()){
             if(pmmContext.getCheckListCTR().verCabecAberto()){
-                startTimer();
+                encerrarBarra();
                 pmmContext.getCheckListCTR().clearRespCabecAberto();
                 pmmContext.setPosCheckList(1);
                 Intent it = new Intent(MenuInicialActivity.this, ItemCheckListActivity.class);
@@ -72,8 +79,17 @@ public class MenuInicialActivity extends ActivityGeneric {
                 finish();
             }
             else{
-                startTimer();
+                encerrarBarra();
                 pmmContext.getConfigCTR().setPosicaoTela(8L);
+                if(VerifDadosServ.getInstance().verifRecInformativo()){
+                    if(connectNetwork){
+                        pmmContext.getInformativoCTR().verifDadosInformativo();
+                    }
+                    else {
+                        VerifDadosServ.status = 1;
+                    }
+                }
+
                 if(PMMContext.aplic == 1){
                     Intent it = new Intent(MenuInicialActivity.this, MenuPrincPMMActivity.class);
                     startActivity(it);
@@ -122,7 +138,7 @@ public class MenuInicialActivity extends ActivityGeneric {
                 if (text.equals("BOLETIM")) {
                     if (pmmContext.getMotoMecFertCTR().hasElemFunc()
                             && pmmContext.getConfigCTR().hasElements()
-                            && VerifDadosServ.getInstance().isVerTerm()) {
+                            && (VerifDadosServ.status == 3)) {
                         pmmContext.getConfigCTR().setPosicaoTela(1L);
                         clearBD();
                         customHandler.removeCallbacks(updateTimerThread);
@@ -141,9 +157,7 @@ public class MenuInicialActivity extends ActivityGeneric {
                     startActivity(intent);
                 } else if (text.equals("ATUALIZAR DADOS")) {
 
-                    ConexaoWeb conexaoWeb = new ConexaoWeb();
-
-                    if (conexaoWeb.verificaConexao(MenuInicialActivity.this)) {
+                    if (connectNetwork) {
                         progressBar = new ProgressDialog(v.getContext());
                         progressBar.setCancelable(true);
                         progressBar.setMessage("ATUALIZANDO ...");
@@ -168,14 +182,9 @@ public class MenuInicialActivity extends ActivityGeneric {
                         alerta.show();
                     }
 
-                } else if (text.equals("REENVIO DE DADOS")) {
-
-                    EnvioDadosServ.getInstance().envioDados(MenuInicialActivity.this);
-
-                } else if (text.equals("ATUALIZAR APLICATIVO")) {
-
+                }
+                else if (text.equals("ATUALIZAR APLICATIVO")) {
                     atualizarAplic();
-
                 }
 
             }
@@ -185,45 +194,27 @@ public class MenuInicialActivity extends ActivityGeneric {
     }
 
     public void atualizarAplic(){
-        ConexaoWeb conexaoWeb = new ConexaoWeb();
-        if (conexaoWeb.verificaConexao(this)) {
+        if (connectNetwork) {
             if (pmmContext.getConfigCTR().hasElements()) {
                 progressBar.setCancelable(true);
                 progressBar.setMessage("BUSCANDO ATUALIZAÇÃO...");
                 progressBar.show();
                 customHandler.postDelayed(updateTimerThread, 10000);
-                VerifDadosServ.getInstance().setVerTerm(false);
-                VerifDadosServ.getInstance().verAtualAplic(pmmContext.versaoAplic, this, progressBar);
+                pmmContext.getConfigCTR().verAtualAplic(pmmContext.versaoAplic, this, progressBar);
+            }
+            else{
+                VerifDadosServ.status = 3;
+                encerrarBarra();
             }
         } else {
-            VerifDadosServ.getInstance().setVerTerm(true);
-            startTimer();
+            VerifDadosServ.status = 3;
         }
     }
 
-    public void startTimer() {
-
-        Intent intent = new Intent(this, ReceberAlarme.class);
-
+    public void encerrarBarra() {
         if (progressBar.isShowing()) {
             progressBar.dismiss();
         }
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0,
-                intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(System.currentTimeMillis());
-        c.add(Calendar.SECOND, 1);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        if (pendingIntent != null && alarmManager != null) {
-            alarmManager.cancel(pendingIntent);
-        }
-
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), 60000, pendingIntent);
-
     }
 
     public boolean checkPermission(String permission) {
@@ -238,12 +229,9 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         public void run() {
             verifEnvio();
-            if(!VerifDadosServ.getInstance().isVerTerm()) {
-                VerifDadosServ.getInstance().cancelVer();
-                if (progressBar.isShowing()) {
-                    progressBar.dismiss();
-                }
-                startTimer();
+            if(VerifDadosServ.status < 3) {
+                VerifDadosServ.getInstance().cancel();
+                encerrarBarra();
             }
             customHandler.postDelayed(this, 10000);
         }
@@ -251,13 +239,14 @@ public class MenuInicialActivity extends ActivityGeneric {
 
     public void verifEnvio(){
         if (pmmContext.getConfigCTR().hasElements()) {
-            if (EnvioDadosServ.getInstance().getStatusEnvio() == 1) {
-                textViewProcesso.setTextColor(Color.YELLOW);
-                textViewProcesso.setText("Enviando Dados...");
-            } else if (EnvioDadosServ.getInstance().getStatusEnvio() == 2) {
+            pmmContext.getConfigCTR().setStatusRetVerif(0L);
+            if (EnvioDadosServ.status == 1) {
                 textViewProcesso.setTextColor(Color.RED);
                 textViewProcesso.setText("Existem Dados para serem Enviados");
-            } else if (EnvioDadosServ.getInstance().getStatusEnvio() == 3) {
+            } else if (EnvioDadosServ.status == 2) {
+                textViewProcesso.setTextColor(Color.YELLOW);
+                textViewProcesso.setText("Enviando Dados...");
+            } else if (EnvioDadosServ.status == 3) {
                 textViewProcesso.setTextColor(Color.GREEN);
                 textViewProcesso.setText("Todos os Dados já foram Enviados");
             }

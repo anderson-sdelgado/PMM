@@ -66,4 +66,11 @@
         android:layout_height="wrap_content"
         android:text="@string/texto_atualizar_bd" />
 
+    <Button
+        android:id="@+id/buttonLimparBD"
+        style="@style/BotaoAvulso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/texto_limpar_dados" />
+
 </LinearLayout>

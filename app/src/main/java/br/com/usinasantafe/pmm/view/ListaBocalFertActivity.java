@@ -16,7 +16,6 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.BocalBean;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 
 public class ListaBocalFertActivity extends ActivityGeneric {
 
@@ -46,9 +45,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        ConexaoWeb conexaoWeb = new ConexaoWeb();
-
-                        if (conexaoWeb.verificaConexao(ListaBocalFertActivity.this)) {
+                        if (connectNetwork) {
 
                             progressBar = new ProgressDialog(ListaBocalFertActivity.this);
                             progressBar.setCancelable(true);

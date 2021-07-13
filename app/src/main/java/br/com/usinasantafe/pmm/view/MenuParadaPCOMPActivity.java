@@ -16,7 +16,6 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.MotoMecBean;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 
 public class MenuParadaPCOMPActivity extends ActivityGeneric {
 
@@ -82,8 +81,7 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
                         alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                ConexaoWeb conexaoWeb = new ConexaoWeb();
-                                if (conexaoWeb.verificaConexao(MenuParadaPCOMPActivity.this)) {
+                                if (connectNetwork) {
                                     pmmContext.getConfigCTR().setStatusConConfig(1L);
                                 } else {
                                     pmmContext.getConfigCTR().setStatusConConfig(0L);
@@ -108,8 +106,7 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                ConexaoWeb conexaoWeb = new ConexaoWeb();
-                if (conexaoWeb.verificaConexao(MenuParadaPCOMPActivity.this)) {
+                if (connectNetwork) {
                     pmmContext.getConfigCTR().setStatusConConfig(1L);
                 }
                 else{

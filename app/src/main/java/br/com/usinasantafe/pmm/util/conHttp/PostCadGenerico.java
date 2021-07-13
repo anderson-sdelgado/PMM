@@ -10,19 +10,16 @@ import java.util.Map;
 
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
-import br.com.usinasantafe.pmm.util.Tempo;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
 public class PostCadGenerico extends AsyncTask<String, Void, String> {
 
-
 	private static PostCadGenerico instance = null;
 	private Map<String, Object> parametrosPost = null;
 
 	public PostCadGenerico() {
-
 	}
 
     public static PostCadGenerico getInstance() {
@@ -69,29 +66,24 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 			connection.disconnect();
 			
 		} catch (Exception e) {
+			EnvioDadosServ.status = 1;
 			LogErroDAO.getInstance().insert(e);
-			EnvioDadosServ.getInstance().setEnviando(false);
-			Tempo.getInstance().setEnvioDado(true);
 			if(bufferedReader != null){
 				try {
 					bufferedReader.close();
 				} catch (Exception er) {
 					LogErroDAO.getInstance().insert(er);
 				}
-				
 			}
 		}
 		finally{
-			
 			if(bufferedReader != null){
 				try {
 					bufferedReader.close();
 				} catch (Exception e) {
 					LogErroDAO.getInstance().insert(e);
 				}
-				
 			}
-			
 		}
 		return resultado;
 		
@@ -100,11 +92,11 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 	protected void onPostExecute(String result) {
 
 		try {
-			Log.i("PMM", "VALOR RECEBIDO --> " + result);
-			EnvioDadosServ.getInstance().setEnviando(false);
+			Log.i("PMM", "VALOR RECEBIDO CAD --> " + result);
 			EnvioDadosServ.getInstance().recDados(result);
 		} catch (Exception e) {
-			EnvioDadosServ.getInstance().setEnviando(false);
+			Log.i("ECM", "ERRO 1 ");
+			EnvioDadosServ.status = 1;
 			LogErroDAO.getInstance().insert(e);
 		}
 		

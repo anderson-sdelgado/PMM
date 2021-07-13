@@ -52,9 +52,26 @@ public class RespItemCheckListDAO {
         respList.clear();
     }
 
-    public List respItemList(Long idCabCL){
+    public List<RespItemCheckListBean> respItemList(Long idCabCL){
         RespItemCheckListBean respItemCheckListBean = new RespItemCheckListBean();
         return respItemCheckListBean.get("idCabItCL", idCabCL);
+    }
+
+    public List<RespItemCheckListBean> respItemList(ArrayList<Long> idCabCLongArrayList){
+        RespItemCheckListBean respItemCheckListBean = new RespItemCheckListBean();
+        return respItemCheckListBean.in("idCabItCL", idCabCLongArrayList);
+    }
+
+    public void delRespItem(ArrayList<Long> idCabCLongArrayList){
+
+        List<RespItemCheckListBean> respItemCheckListList = respItemList(idCabCLongArrayList);
+
+        for(RespItemCheckListBean respItemCheckListBean : respItemCheckListList){
+            respItemCheckListBean.delete();
+        }
+
+        respItemCheckListList.clear();
+
     }
 
 }

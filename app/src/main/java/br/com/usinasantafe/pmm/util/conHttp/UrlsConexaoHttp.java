@@ -37,8 +37,8 @@ public class UrlsConexaoHttp {
     public UrlsConexaoHttp() {
     }
 
-    public String getsInsertCarregInsumo() {
-        return urlPrincEnvio + "inserircarreginsumo.php" + put;
+    public String getsInsertCarreg() {
+        return urlPrincEnvio + "inserircarreg.php" + put;
     }
 
     public String getsInsertLeiraDescarreg() {
@@ -94,10 +94,8 @@ public class UrlsConexaoHttp {
             retorno = urlPrincipal + "pneu.php" + put;
         } else if (classe.equals("Informativo")) {
             retorno = urlPrincipal + "informativo.php" + put;
-        } else if(classe.equals("OrdCarregProduto")){
-            retorno = urlPrincipal + "retcarregprod.php" + put;
-        } else if(classe.equals("OrdCarregComposto")){
-            retorno = urlPrincipal + "retcarregcomp.php" + put;
+        } else if(classe.equals("OrdCarreg")){
+            retorno = urlPrincipal + "retcarreg.php" + put;
         } else if (classe.equals("CEC")) {
             retorno = urlPrincEnvio + "retcec.php" + put;
         }

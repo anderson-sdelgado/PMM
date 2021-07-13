@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 /**
@@ -35,19 +36,27 @@ public class PostVerGenerico extends AsyncTask<String, Void, String> {
 
         try {
 
+            Log.i("ECM", "VERIF CHEGOU AKI 1");
+
             String parametros = getQueryString(parametrosPost);
             URL urlCon = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) urlCon.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoInput(true);
             connection.setDoOutput(true);
+            connection.setReadTimeout(150000);
+            connection.setConnectTimeout(150000);
             connection.connect();
+
+            Log.i("ECM", "VERIF CHEGOU AKI 2");
 
             OutputStream out = connection.getOutputStream();
             byte[] bytes = parametros.getBytes("UTF8");
             out.write(bytes);
             out.flush();
             out.close();
+
+            Log.i("ECM", "VERIF CHEGOU AKI 3");
 
             bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuffer stringBuffer = new StringBuffer("");
@@ -57,11 +66,20 @@ public class PostVerGenerico extends AsyncTask<String, Void, String> {
                 stringBuffer.append(line + LS);
             }
             bufferedReader.close();
+
+            Log.i("ECM", "VERIF CHEGOU AKI 4");
+
             resultado = stringBuffer.toString();
+
+            Log.i("ECM", "VERIF CHEGOU AKI 5");
 
             connection.disconnect();
 
+            Log.i("ECM", "VERIF CHEGOU AKI 6");
+
         } catch (Exception e) {
+            Log.i("ECM", "VERIF ERRO 1 = " + e);
+            VerifDadosServ.status = 1;
             LogErroDAO.getInstance().insert(e);
             if(bufferedReader != null){
                 try {
@@ -73,7 +91,7 @@ public class PostVerGenerico extends AsyncTask<String, Void, String> {
             }
         }
         finally{
-
+            Log.i("ECM", "VERIF FINAL 1");
             if(bufferedReader != null){
                 try {
                     bufferedReader.close();
@@ -82,17 +100,22 @@ public class PostVerGenerico extends AsyncTask<String, Void, String> {
                 }
 
             }
-
         }
+
+        Log.i("ECM", "VERIF FINAL 2");
         return resultado;
+
     }
 
     protected void onPostExecute(String result) {
 
         try {
+
             Log.i("ECM", "VALOR RECEBIDO --> " + result);
             VerifDadosServ.getInstance().manipularDadosHttp(result);
+
         } catch (Exception e) {
+            VerifDadosServ.status = 1;
             LogErroDAO.getInstance().insert(e);
         }
 

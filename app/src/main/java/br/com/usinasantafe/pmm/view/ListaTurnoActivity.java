@@ -16,7 +16,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.TurnoBean;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
+import br.com.usinasantafe.pmm.util.ConnectNetwork;
 import br.com.usinasantafe.pmm.util.Tempo;
 
 public class ListaTurnoActivity extends ActivityGeneric {
@@ -47,9 +47,9 @@ public class ListaTurnoActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        ConexaoWeb conexaoWeb = new ConexaoWeb();
+                        ConnectNetwork connectNetwork = new ConnectNetwork();
 
-                        if (conexaoWeb.verificaConexao(ListaTurnoActivity.this)) {
+                        if (connectNetwork.verificaConexao(ListaTurnoActivity.this)) {
 
                             progressBar = new ProgressDialog(ListaTurnoActivity.this);
                             progressBar.setCancelable(true);
@@ -115,7 +115,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
                 TurnoBean turnoBean = turnoList.get(position);
                 turnoList.clear();
 
-                pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setIdTurnoBolMMFert(turnoBean.getIdTurno());
+                pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().setIdTurnoBolMMFert(turnoBean.getIdTurno());
 
                 if(Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())){
                     pmmContext.getConfigCTR().setDifDthrConfig(0L);

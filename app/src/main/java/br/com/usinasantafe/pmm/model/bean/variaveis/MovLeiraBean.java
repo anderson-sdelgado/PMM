@@ -11,53 +11,53 @@ public class MovLeiraBean extends Entidade {
     private static final long serialVersionUID = 1L;
 
     @DatabaseField(generatedId=true)
-    private Long idMovLeiraMM;
+    private Long idMovLeira;
     @DatabaseField
     private Long idBolMMFert;
     @DatabaseField
     private Long idExtBolMMFert;
     @DatabaseField
-    private Long idLeiraMovLeiraMM;
+    private Long idLeiraMovLeira;
     @DatabaseField
-    private Long tipoMovLeiraMM;
+    private Long tipoMovLeira;
     @DatabaseField
-    private String dthrMovLeiraMM;
+    private String dthrMovLeira;
     @DatabaseField
-    private Long statusMovLeiraMM;  //1 - Enviar; 2 - Enviado
+    private Long statusMovLeira;  //1 - Enviar; 2 - Enviado
 
     public MovLeiraBean() {
     }
 
-    public Long getIdMovLeiraMM() {
-        return idMovLeiraMM;
+    public Long getIdMovLeira() {
+        return idMovLeira;
     }
 
-    public void setIdMovLeiraMM(Long idMovLeiraMM) {
-        this.idMovLeiraMM = idMovLeiraMM;
+    public void setIdMovLeira(Long idMovLeira) {
+        this.idMovLeira = idMovLeira;
     }
 
-    public Long getIdLeiraMovLeiraMM() {
-        return idLeiraMovLeiraMM;
+    public Long getIdLeiraMovLeira() {
+        return idLeiraMovLeira;
     }
 
-    public void setIdLeiraMovLeiraMM(Long idLeiraMovLeiraMM) {
-        this.idLeiraMovLeiraMM = idLeiraMovLeiraMM;
+    public void setIdLeiraMovLeira(Long idLeiraMovLeira) {
+        this.idLeiraMovLeira = idLeiraMovLeira;
     }
 
-    public Long getTipoMovLeiraMM() {
-        return tipoMovLeiraMM;
+    public Long getTipoMovLeira() {
+        return tipoMovLeira;
     }
 
-    public void setTipoMovLeiraMM(Long tipoMovLeiraMM) {
-        this.tipoMovLeiraMM = tipoMovLeiraMM;
+    public void setTipoMovLeira(Long tipoMovLeira) {
+        this.tipoMovLeira = tipoMovLeira;
     }
 
-    public String getDthrMovLeiraMM() {
-        return dthrMovLeiraMM;
+    public String getDthrMovLeira() {
+        return dthrMovLeira;
     }
 
-    public void setDthrMovLeiraMM(String dthrMovLeiraMM) {
-        this.dthrMovLeiraMM = dthrMovLeiraMM;
+    public void setDthrMovLeira(String dthrMovLeira) {
+        this.dthrMovLeira = dthrMovLeira;
     }
 
     public Long getIdBolMMFert() {
@@ -76,11 +76,11 @@ public class MovLeiraBean extends Entidade {
         this.idExtBolMMFert = idExtBolMMFert;
     }
 
-    public Long getStatusMovLeiraMM() {
-        return statusMovLeiraMM;
+    public Long getStatusMovLeira() {
+        return statusMovLeira;
     }
 
-    public void setStatusMovLeiraMM(Long statusMovLeiraMM) {
-        this.statusMovLeiraMM = statusMovLeiraMM;
+    public void setStatusMovLeira(Long statusMovLeira) {
+        this.statusMovLeira = statusMovLeira;
     }
 }

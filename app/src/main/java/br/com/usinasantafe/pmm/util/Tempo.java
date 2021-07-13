@@ -13,7 +13,6 @@ import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 public class Tempo {
 
     private static Tempo instance = null;
-    private boolean envioDado;
 	
 	public Tempo() {
 	}
@@ -28,14 +27,14 @@ public class Tempo {
         TimeZone tz = TimeZone.getDefault();
         Date dataHora = new Date();
         Date d = new Date();
-        return dataHora.getTime() - tz.getOffset(d.getTime());// + dif();
+        return dataHora.getTime() - tz.getOffset(d.getTime()) + dif();
     }
 
     public String dthrSemTZ(){
         TimeZone tz = TimeZone.getDefault();
         Date dataHora = new Date();
         Date date = new Date();
-        Long dthrLong =  dataHora.getTime() - tz.getOffset(date.getTime());// + dif();
+        Long dthrLong =  dataHora.getTime() - tz.getOffset(date.getTime()) + dif();
         return longParaDthrString(dthrLong);
     }
 
@@ -53,17 +52,16 @@ public class Tempo {
         return longParaDtString(dthrLong);
     }
 
-    public Long dthrAddMinutoLong(String dthrString, int minuto){
-        Calendar cal = stringParaCalendar(dthrString);
-        cal.add(Calendar.MINUTE, +minuto);
-        return cal.getTimeInMillis();
+    public Long dthrAddMinutoLong(Long dthrLong, int minuto){
+        dthrLong = dthrLong + (minuto * 60 * 1000);
+        return dthrLong;
     }
 
     public String dthrSemTZ(String dthrString){
         Date date = stringParaCalendar(dthrString).getTime();
         TimeZone tz = TimeZone.getDefault();
-        Date date1 = new Date();
-        Long dthrLong =  date.getTime() + tz.getOffset(date1.getTime());
+        Date dt = new Date();
+        Long dthrLong =  date.getTime() + tz.getOffset(dt.getTime());
         return longParaDthrString(dthrLong);
     }
 
@@ -260,14 +258,6 @@ public class Tempo {
 
         return calendar;
 
-    }
-
-    public boolean isEnvioDado() {
-        return envioDado;
-    }
-
-    public void setEnvioDado(boolean envioDado) {
-        this.envioDado = envioDado;
     }
 
 }

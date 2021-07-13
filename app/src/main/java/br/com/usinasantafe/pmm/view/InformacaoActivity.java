@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.model.bean.variaveis.CarregBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.CarregCompBean;
 
 public class InformacaoActivity extends ActivityGeneric {
 
@@ -25,18 +25,18 @@ public class InformacaoActivity extends ActivityGeneric {
         Button buttonRetMenuPesq = findViewById(R.id.buttonRetMenuPesq);
 
         if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 13L){
-            CarregBean carregBean = pmmContext.getCompostoCTR().getOrdCarreg();
-            textViewDescrInfor.setText("COD. ORD. CARREG. = " + carregBean.getIdOrdCarreg() + "\n" +
-                    "PESO ENTRADA = " + carregBean.getPesoEntradaCarreg() + "\n" +
-                    "PESO SAÍDA = " + carregBean.getPesoSaidaCarreg() + "\n" +
-                    "PESO LÍQUIDO = " + carregBean.getPesoLiquidoCarreg() + "\n");
+            CarregCompBean carregCompBean = pmmContext.getCompostoCTR().getOrdCarreg();
+            textViewDescrInfor.setText("COD. ORD. CARREG. = " + carregCompBean.getIdOrdCarreg() + "\n" +
+                    "PESO ENTRADA = " + carregCompBean.getPesoEntradaCarreg() + "\n" +
+                    "PESO SAÍDA = " + carregCompBean.getPesoSaidaCarreg() + "\n" +
+                    "PESO LÍQUIDO = " + carregCompBean.getPesoLiquidoCarreg() + "\n");
         }
         else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 14L){
-            CarregBean carregBean = pmmContext.getCompostoCTR().getOrdCarreg();
-            textViewDescrInfor.setText("COD. ORD. CARREG. = " + carregBean.getIdOrdCarreg() + "\n" +
-                    "PESO ENTRADA = " + carregBean.getPesoEntradaCarreg() + "\n" +
-                    "PESO SAÍDA = " + carregBean.getPesoSaidaCarreg() + "\n" +
-                    "PESO LÍQUIDO = " + carregBean.getPesoLiquidoCarreg() + "\n");
+            CarregCompBean carregCompBean = pmmContext.getCompostoCTR().getOrdCarreg();
+            textViewDescrInfor.setText("COD. ORD. CARREG. = " + carregCompBean.getIdOrdCarreg() + "\n" +
+                    "PESO ENTRADA = " + carregCompBean.getPesoEntradaCarreg() + "\n" +
+                    "PESO SAÍDA = " + carregCompBean.getPesoSaidaCarreg() + "\n" +
+                    "PESO LÍQUIDO = " + carregCompBean.getPesoLiquidoCarreg() + "\n");
         }
 
         pmmContext.setVerTelaLeira(false);

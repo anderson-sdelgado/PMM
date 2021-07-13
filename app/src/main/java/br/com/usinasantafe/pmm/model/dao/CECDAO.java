@@ -6,6 +6,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -55,36 +56,21 @@ public class CECDAO {
     }
 
     public void verCEC(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
-        VerifDadosServ.getInstance().setVerTerm(false);
-        VerifDadosServ.getInstance().verDados(dado, "CEC", telaAtual, telaProx, progressDialog);
+        VerifDadosServ.getInstance().verifDados(dado, "CEC", telaAtual, telaProx, progressDialog);
     }
 
-    public void recDadosCEC(String result){
+    public void recDadosCEC(String cec) throws JSONException {
 
-        try {
+        JSONObject jsonObj = new JSONObject(cec);
+        JSONArray jsonArray = jsonObj.getJSONArray("cec");
 
-            if (!result.contains("exceeded")) {
+        for (int i = 0; i < jsonArray.length(); i++) {
 
-                JSONObject jObj = new JSONObject(result.trim());
-                JSONArray jsonArray = jObj.getJSONArray("cec");
+            JSONObject objeto = jsonArray.getJSONObject(i);
+            Gson gson = new Gson();
+            CECBean cecBean = gson.fromJson(objeto.toString(), CECBean.class);
+            cecBean.insert();
 
-                for (int i = 0; i < jsonArray.length(); i++) {
-
-                    JSONObject objeto = jsonArray.getJSONObject(i);
-                    Gson gson = new Gson();
-                    CECBean cecBean = gson.fromJson(objeto.toString(), CECBean.class);
-                    cecBean.insert();
-
-                }
-
-                VerifDadosServ.getInstance().pulaTelaComTerm();
-
-            } else {
-                VerifDadosServ.getInstance().envioDados();
-            }
-
-        } catch (Exception e) {
-            VerifDadosServ.getInstance().envioDados();
         }
 
     }

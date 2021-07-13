@@ -1,5 +1,11 @@
 package br.com.usinasantafe.pmm.model.dao;
 
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +15,22 @@ import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 public class RFuncaoAtivParDAO {
 
     public RFuncaoAtivParDAO() {
+    }
+
+    public void recDadosRFuncaoAtivPar(JSONArray jsonArray) throws JSONException {
+
+        RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
+        rFuncaoAtivParBean.deleteAll();
+
+        for (int j = 0; j < jsonArray.length(); j++) {
+
+            JSONObject objeto = jsonArray.getJSONObject(j);
+            Gson gson = new Gson();
+            RFuncaoAtivParBean rFuncaoAtivPar = gson.fromJson(objeto.toString(), RFuncaoAtivParBean.class);
+            rFuncaoAtivPar.insert();
+
+        }
+
     }
 
     public List<RFuncaoAtivParBean> getListFuncaoAtividade(Long idAtiv){

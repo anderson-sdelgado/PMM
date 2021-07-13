@@ -2,19 +2,32 @@ package br.com.usinasantafe.pmm.control;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
+
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.AtualAplicBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.OSBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
 import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
 import br.com.usinasantafe.pmm.model.dao.AtualAplicDAO;
 import br.com.usinasantafe.pmm.model.dao.ConfigDAO;
 import br.com.usinasantafe.pmm.model.dao.EquipDAO;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.model.dao.OSDAO;
-import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
+import br.com.usinasantafe.pmm.model.dao.RFuncaoAtivParDAO;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
+import br.com.usinasantafe.pmm.util.Json;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
+import br.com.usinasantafe.pmm.view.MenuInicialActivity;
 
 public class ConfigCTR {
 
@@ -119,6 +132,11 @@ public class ConfigCTR {
         configDAO.setPosicaoTela(posicaoTela);
     }
 
+    public void setStatusRetVerif(Long statusRetVerif){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setStatusRetVerif(statusRetVerif);
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////// OS ////////////////////////////////////////////////////
@@ -154,6 +172,10 @@ public class ConfigCTR {
 
     ///////////////////////////////////// EQUIP ///////////////////////////////////////////////////
 
+    public void verAtualAplic(String versaoAplic, MenuInicialActivity menuInicialActivity, ProgressDialog progressDialog) {
+        VerifDadosServ.getInstance().verifAtualAplic(dadosVerAtualAplicBean(versaoAplic), menuInicialActivity, progressDialog);
+    }
+
     public void verEquipConfig(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
         EquipDAO equipDAO = new EquipDAO();
         equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog);
@@ -180,14 +202,19 @@ public class ConfigCTR {
 
     ////////////////////////////////////// INFORMAÇÃO /////////////////////////////////////////////
 
-    public void atualVerInforConfig(Long tipo){
+    public void setVerInforConfig(Long tipo){
         ConfigDAO configDAO = new ConfigDAO();
         configDAO.setVerInforConfig(tipo);
     }
 
-    public Long getVerInforConfig(){
+    public Long getVerRecInformativo(){
         ConfigDAO configDAO = new ConfigDAO();
-        return configDAO.getVerInforConfig();
+        return configDAO.getVerRecInformativo();
+    }
+
+    public Long getStatusRetVerif(){
+        ConfigDAO configDAO = new ConfigDAO();
+        return configDAO.getStatusRetVerif();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -205,58 +232,170 @@ public class ConfigCTR {
     }
 
     public void updLogErro(String retorno){
-        LogErroDAO logErroDAO = new LogErroDAO();
-        logErroDAO.updLogErro(retorno);
+
+        try{
+
+            int pos1 = retorno.indexOf("_") + 1;
+            String objPrinc = retorno.substring(pos1);
+
+            Json json = new Json();
+            LogErroDAO logErroDAO = new LogErroDAO();
+            logErroDAO.updLogErro(json.jsonArray(objPrinc));
+            logErroDAO.delLogErroFechado();
+
+            EnvioDadosServ.getInstance().envioDados(6);
+
+        }
+        catch(Exception e){
+            EnvioDadosServ.status = 1;
+            LogErroDAO.getInstance().insert(e);
+        }
+
+
     }
 
+    public void receberVerifEquip(String result){
 
+        try {
 
-    public void recDadosEquip(String result){
+            if (!result.contains("exceeded")) {
 
-        int pos1 = result.indexOf("#") + 1;
-        int pos2 = result.indexOf("_") + 1;
-        String objPrinc = result.substring(0, (pos1 - 1));
-        String objSeg = result.substring(pos1, (pos2 - 1));
+                int pos1 = result.indexOf("#") + 1;
+                int pos2 = result.indexOf("_") + 1;
 
-        EquipDAO equipDAO = new EquipDAO();
-        equipDAO.recDadosEquip(objPrinc, objSeg);
+                String objPrinc = result.substring(0, (pos1 - 1));
+                String objSeg = result.substring(pos1, (pos2 - 1));
+
+                Json json = new Json();
+                JSONArray jsonArray = json.jsonArray(objPrinc);
+
+                if (jsonArray.length() > 0) {
+
+                    EquipDAO equipDAO = new EquipDAO();
+                    EquipBean equipBean = equipDAO.recDadosEquip(jsonArray);
+                    equipDAO.recDadosREquipAtiv(json.jsonArray(objSeg));
+
+                    setEquipConfig(equipBean);
+
+                    VerifDadosServ.getInstance().pulaTela();
+
+                } else {
+                    VerifDadosServ.getInstance().msg("EQUIPAMENTO INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
+                }
+
+            } else {
+                VerifDadosServ.getInstance().msg("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
+            }
+
+        } catch (Exception e) {
+            LogErroDAO.getInstance().insert(e);
+            VerifDadosServ.getInstance().msg("FALHA DE PESQUISA DE EQUIPAMENTO! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
+        }
 
     }
 
-    public void recDadosOS(String result){
-        if (!result.contains("exceeded")) {
-            OSDAO osDAO = new OSDAO();
-            osDAO.recDadosOS(result);
-        } else {
-            VerifDadosServ.getInstance().msgSemTerm("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
+    public void receberVerifOS(String result){
+
+        try {
+            if (!result.contains("exceeded")) {
+
+                int posicao = result.indexOf("#") + 1;
+                String objPrinc = result.substring(0, result.indexOf("#"));
+                String objSeg = result.substring(posicao);
+
+                Json json = new Json();
+                JSONArray jsonArray = json.jsonArray(objPrinc);
+
+                if (jsonArray.length() > 0) {
+
+                    OSDAO osDAO = new OSDAO();
+                    osDAO.recDadosOS(jsonArray);
+                    osDAO.recDadosROSAtiv(json.jsonArray(objSeg));
+
+                    setStatusConConfig(1L);
+                    VerifDadosServ.getInstance().pulaTela();
+
+                } else {
+                    setStatusConConfig(0L);
+                    VerifDadosServ.getInstance().msg("OS INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
+                }
+
+            }
+            else{
+                setStatusConConfig(0L);
+                VerifDadosServ.getInstance().msg("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
+            }
+
+        } catch (Exception e) {
+            setStatusConConfig(0L);
+            LogErroDAO.getInstance().insert(e);
+            VerifDadosServ.getInstance().msg("FALHA DE PESQUISA DE OS! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
     }
 
-    public void recDadosAtiv(String result){
+    public void receberVerifAtiv(String result){
 
-        if (!result.contains("exceeded")) {
+        try {
 
-            int pos1 = result.indexOf("_") + 1;
-            int pos2 = result.indexOf("|") + 1;
-            int pos3 = result.indexOf("#") + 1;
+            if (!result.contains("exceeded")) {
 
-            String objPrim = result.substring(0, (pos1 - 1));
-            String objSeg = result.substring(pos1, (pos2 - 1));
-            String objTerc = result.substring(pos2, (pos3 - 1));
-            String objQuart = result.substring(pos3);
+                int pos1 = result.indexOf("_") + 1;
+                int pos2 = result.indexOf("|") + 1;
+                int pos3 = result.indexOf("#") + 1;
 
-            AtividadeDAO atividadeDAO = new AtividadeDAO();
-            atividadeDAO.recDadosAtiv(objPrim, objSeg, objTerc, objQuart);
+                String objPrim = result.substring(0, (pos1 - 1));
+                String objSeg = result.substring(pos1, (pos2 - 1));
+                String objTerc = result.substring(pos2, (pos3 - 1));
+                String objQuart = result.substring(pos3);
 
-        } else {
-            VerifDadosServ.getInstance().msgSemTerm("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
+                Json json = new Json();
+
+                EquipDAO equipDAO = new EquipDAO();
+                equipDAO.recDadosREquipAtiv(json.jsonArray(objPrim));
+
+                JSONArray jsonArray = json.jsonArray(objSeg);
+
+                if (jsonArray.length() > 0) {
+                    OSDAO osDAO = new OSDAO();
+                    osDAO.recDadosROSAtiv(jsonArray);
+                }
+
+                AtividadeDAO atividadeDAO = new AtividadeDAO();
+                atividadeDAO.recDadosAtiv(json.jsonArray(objTerc));
+
+                RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
+                rFuncaoAtivParDAO.recDadosRFuncaoAtivPar(json.jsonArray(objQuart));
+
+                VerifDadosServ.getInstance().pulaTela();
+
+            } else {
+                VerifDadosServ.getInstance().msg("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
+            }
+        } catch (Exception e) {
+            LogErroDAO.getInstance().insert(e);
+            VerifDadosServ.getInstance().msg("FALHA DE PESQUISA DE ATIVIDADE! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
-
     }
 
     public AtualAplicBean recAtual(String result) {
-        ConfigDAO configDAO = new ConfigDAO();
-        return configDAO.recAtual(result);
+
+        AtualAplicBean atualAplicBean = new AtualAplicBean();
+
+        try {
+
+            JSONObject jObj = new JSONObject(result);
+            JSONArray jsonArray = jObj.getJSONArray("dados");
+
+            if (jsonArray.length() > 0) {
+                ConfigDAO configDAO = new ConfigDAO();
+                atualAplicBean = configDAO.recAtual(jsonArray);
+            }
+
+        } catch (Exception e) {
+            VerifDadosServ.status = 1;
+            LogErroDAO.getInstance().insert(e);
+        }
+        return atualAplicBean;
     }
 
     public String dadosVerAtualAplicBean(String versaoAplic){

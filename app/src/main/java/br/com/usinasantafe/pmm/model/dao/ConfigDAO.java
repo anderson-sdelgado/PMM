@@ -3,6 +3,7 @@ package br.com.usinasantafe.pmm.model.dao;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -45,7 +46,7 @@ public class ConfigDAO {
         configBean.setDtUltCLConfig("");
         configBean.setDtServConfig("");
         configBean.setDifDthrConfig(0L);
-        configBean.setVerInforConfig(0L);
+        configBean.setVerRecInformativo(0L);
         configBean.setFlagLogErro(0L);
         configBean.setFlagLogEnvio(0L);
         configBean.setOsConfig(0L);
@@ -57,6 +58,7 @@ public class ConfigDAO {
         configBean.setSenhaConfig(senha);
         configBean.setPosFluxoViagem(0L);
         configBean.setPosicaoTela(0L);
+        configBean.setStatusRetVerif(0L);
         configBean.insert();
         configBean.commit();
     }
@@ -131,13 +133,18 @@ public class ConfigDAO {
 
     public void setVerInforConfig(Long tipo){
         ConfigBean configBean = getConfig();
-        configBean.setVerInforConfig(tipo);
+        configBean.setVerRecInformativo(tipo);
         configBean.update();
     }
 
-    public Long getVerInforConfig(){
+    public Long getVerRecInformativo(){
         ConfigBean configBean = getConfig();
-        return configBean.getVerInforConfig();
+        return configBean.getVerRecInformativo();
+    }
+
+    public Long getStatusRetVerif(){
+        ConfigBean configBean = getConfig();
+        return configBean.getStatusRetVerif();
     }
 
     public void setDifDthrConfig(Long status){
@@ -158,33 +165,26 @@ public class ConfigDAO {
         configBean.update();
     }
 
-    public AtualAplicBean recAtual(String result) {
+    public void setStatusRetVerif(Long statusRetVerif){
+        ConfigBean configBean = getConfig();
+        configBean.setStatusRetVerif(statusRetVerif);
+        configBean.update();
+    }
+
+    public AtualAplicBean recAtual(JSONArray jsonArray) throws JSONException {
 
         AtualAplicBean atualAplicBean = new AtualAplicBean();
 
-        try {
+        JSONObject objeto = jsonArray.getJSONObject(0);
+        Gson gson = new Gson();
+        atualAplicBean = gson.fromJson(objeto.toString(), AtualAplicBean.class);
 
-            JSONObject jObj = new JSONObject(result);
-            JSONArray jsonArray = jObj.getJSONArray("dados");
-
-            if (jsonArray.length() > 0) {
-
-                JSONObject objeto = jsonArray.getJSONObject(0);
-                Gson gson = new Gson();
-                atualAplicBean = gson.fromJson(objeto.toString(), AtualAplicBean.class);
-
-                ConfigBean configBean = getConfig();
-                configBean.setFlagLogEnvio(atualAplicBean.getFlagLogEnvio());
-                configBean.setFlagLogErro(atualAplicBean.getFlagLogErro());
-                configBean.setDtServConfig(atualAplicBean.getDthr());
-                configBean.setAtualCheckList(atualAplicBean.getFlagAtualCheckList());
-                configBean.update();
-
-            }
-
-        } catch (Exception e) {
-            LogErroDAO.getInstance().insert(e);
-        }
+        ConfigBean configBean = getConfig();
+        configBean.setFlagLogEnvio(atualAplicBean.getFlagLogEnvio());
+        configBean.setFlagLogErro(atualAplicBean.getFlagLogErro());
+        configBean.setDtServConfig(atualAplicBean.getDthr());
+        configBean.setAtualCheckList(atualAplicBean.getFlagAtualCheckList());
+        configBean.update();
 
         return atualAplicBean;
 

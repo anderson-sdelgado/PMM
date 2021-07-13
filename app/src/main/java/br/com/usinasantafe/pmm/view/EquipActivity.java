@@ -50,7 +50,7 @@ public class EquipActivity extends ActivityGeneric {
                 }
                 else {
 
-                    pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setIdEquipBolMMFert(pmmContext.getConfigCTR().getEquip().getIdEquip());
+                    pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().setIdEquipBolMMFert(pmmContext.getConfigCTR().getEquip().getIdEquip());
                     Intent it = new Intent(EquipActivity.this, ListaTurnoActivity.class);
                     startActivity(it);
                     finish();
@@ -64,9 +64,16 @@ public class EquipActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(EquipActivity.this, OperadorActivity.class);
-                startActivity(it);
-                finish();
+                if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){
+                    Intent it = new Intent(EquipActivity.this, ListaAtividadeActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else{
+                    Intent it = new Intent(EquipActivity.this, OperadorActivity.class);
+                    startActivity(it);
+                    finish();
+                }
             }
 
         });

@@ -17,7 +17,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.MotoMecBean;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
+import br.com.usinasantafe.pmm.util.ConnectNetwork;
 
 public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
@@ -61,8 +61,8 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                 MotoMecBean motoMecBean = motoMecList.get(position);
                 pmmContext.getMotoMecFertCTR().setMotoMecBean(motoMecBean);
 
-                ConexaoWeb conexaoWeb = new ConexaoWeb();
-                if (conexaoWeb.verificaConexao(MenuPrincPCOMPActivity.this)) {
+                ConnectNetwork connectNetwork = new ConnectNetwork();
+                if (connectNetwork.verificaConexao(MenuPrincPCOMPActivity.this)) {
                     pmmContext.getConfigCTR().setStatusConConfig(1L);
                 }
                 else{
@@ -211,12 +211,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                             if (pmmContext.getConfigCTR().getConfig().getPosFluxoViagem() == 2) {
 
-                                if (pmmContext.getConfigCTR().getOSBean().getTipoOS() == 0L) {
-                                    pmmContext.getConfigCTR().setPosicaoTela(14L);
-                                } else if (pmmContext.getConfigCTR().getOSBean().getTipoOS() == 1L) {
-                                    pmmContext.getConfigCTR().setPosicaoTela(13L);
-                                }
-
+                                pmmContext.getConfigCTR().setPosicaoTela(13L);
                                 pmmContext.getConfigCTR().setPosFluxoViagem(0L);
                                 Intent it = new Intent(MenuPrincPCOMPActivity.this, EsperaInforActivity.class);
                                 startActivity(it);

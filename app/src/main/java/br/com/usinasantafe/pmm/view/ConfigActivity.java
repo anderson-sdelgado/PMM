@@ -5,13 +5,48 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
+import br.com.usinasantafe.pmm.model.bean.estaticas.AtividadeBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.BocalBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.EquipSegBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.FrenteBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.FuncBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.ItemCheckListBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.LeiraBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.MotoMecBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.OSBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.PressaoBocalBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.ProdutoBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.RAtivParadaBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.REquipAtivBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.ROSAtivBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.TurnoBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontImpleMMBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.CECBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.CabecCheckListBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.CarregCompBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.CarretaBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.InfColheitaBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.InfPlantioBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.MovLeiraBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCheckListBean;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class ConfigActivity extends ActivityGeneric {
 
@@ -25,9 +60,10 @@ public class ConfigActivity extends ActivityGeneric {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
 
-        Button btOkConfig =  findViewById(R.id.buttonSalvarConfig );
-        Button btCancConfig = findViewById(R.id.buttonCancConfig);
-        Button btAtualBDConfig = findViewById(R.id.buttonAtualizarBD);
+        Button buttonSalvarConfig =  findViewById(R.id.buttonSalvarConfig);
+        Button buttonCancConfig = findViewById(R.id.buttonCancConfig);
+        Button buttonAtualizarBD = findViewById(R.id.buttonAtualizarBD);
+        Button buttonLimparBD = (Button) findViewById(R.id.buttonLimparBD);
         editTextEquipConfig = findViewById(R.id.editTextEquipConfig);
         editTextSenhaConfig = findViewById(R.id.editTextSenhaConfig);
 
@@ -38,27 +74,27 @@ public class ConfigActivity extends ActivityGeneric {
             editTextSenhaConfig.setText(pmmContext.getConfigCTR().getConfig().getSenhaConfig());
         }
 
-        btOkConfig.setOnClickListener(new View.OnClickListener() {
+        buttonSalvarConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(!editTextEquipConfig.getText().toString().equals("") &&
                         !editTextSenhaConfig.getText().toString().equals("")){
 
-                        progressBar = new ProgressDialog(v.getContext());
-                        progressBar.setCancelable(true);
-                        progressBar.setMessage("Pequisando o Equipamento...");
-                        progressBar.show();
+                    progressBar = new ProgressDialog(v.getContext());
+                    progressBar.setCancelable(true);
+                    progressBar.setMessage("Pequisando o Equipamento...");
+                    progressBar.show();
 
-                        pmmContext.getConfigCTR().salvarConfig(editTextSenhaConfig.getText().toString());
-                        pmmContext.getConfigCTR().verEquipConfig(editTextEquipConfig.getText().toString(), ConfigActivity.this ,MenuInicialActivity.class, progressBar);
+                    pmmContext.getConfigCTR().salvarConfig(editTextSenhaConfig.getText().toString());
+                    pmmContext.getConfigCTR().verEquipConfig(editTextEquipConfig.getText().toString(), ConfigActivity.this ,MenuInicialActivity.class, progressBar);
 
                 }
 
             }
         });
 
-        btCancConfig.setOnClickListener(new View.OnClickListener() {
+        buttonCancConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -69,13 +105,12 @@ public class ConfigActivity extends ActivityGeneric {
             }
         });
 
-        btAtualBDConfig.setOnClickListener(new View.OnClickListener() {
+        buttonAtualizarBD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                ConexaoWeb conexaoWeb = new ConexaoWeb();
+                if(connectNetwork){
 
-                if(conexaoWeb.verificaConexao(ConfigActivity.this)){
                     progressBar = new ProgressDialog(v.getContext());
                     progressBar.setCancelable(true);
                     progressBar.setMessage("ATUALIZANDO ...");
@@ -103,5 +138,128 @@ public class ConfigActivity extends ActivityGeneric {
             }
         });
 
+
+        buttonLimparBD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AtividadeBean atividadeBean = new AtividadeBean();
+                atividadeBean.deleteAll();
+
+                BocalBean bocalBean = new BocalBean();
+                bocalBean.deleteAll();
+
+                EquipBean equipBean = new EquipBean();
+                equipBean.deleteAll();
+
+                EquipSegBean equipSegBean = new EquipSegBean();
+                equipSegBean.deleteAll();
+
+                FrenteBean frenteBean = new FrenteBean();
+                frenteBean.deleteAll();
+
+                FuncBean funcBean = new FuncBean();
+                funcBean.deleteAll();
+
+                ItemCheckListBean itemCheckListBean = new ItemCheckListBean();
+                itemCheckListBean.deleteAll();
+
+                LeiraBean leiraBean = new LeiraBean();
+                leiraBean.deleteAll();
+
+                MotoMecBean motoMecBean = new MotoMecBean();
+                motoMecBean.deleteAll();
+
+                OSBean osBean = new OSBean();
+                osBean.deleteAll();
+
+                ParadaBean paradaBean = new ParadaBean();
+                paradaBean.deleteAll();
+
+                PressaoBocalBean pressaoBocalBean = new PressaoBocalBean();
+                pressaoBocalBean.deleteAll();
+
+                ProdutoBean produtoBean = new ProdutoBean();
+                produtoBean.deleteAll();
+
+                RAtivParadaBean rAtivParadaBean = new RAtivParadaBean();
+                rAtivParadaBean.deleteAll();
+
+                REquipAtivBean rEquipAtivBean = new REquipAtivBean();
+                rEquipAtivBean.deleteAll();
+
+                RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
+                rFuncaoAtivParBean.deleteAll();
+
+                ROSAtivBean rosAtivBean = new ROSAtivBean();
+                rosAtivBean.deleteAll();
+
+                TurnoBean turnoBean = new TurnoBean();
+                turnoBean.deleteAll();
+
+                ApontImpleMMBean apontImpleMMBean = new ApontImpleMMBean();
+                apontImpleMMBean.deleteAll();
+
+                ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
+                apontMMFertBean.deleteAll();
+
+                BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
+                boletimMMFertBean.deleteAll();
+
+                CabecCheckListBean cabecCLBean = new CabecCheckListBean();
+                cabecCLBean.deleteAll();
+
+                CarregCompBean carregCompBean = new CarregCompBean();
+                carregCompBean.deleteAll();
+
+                CarretaBean carretaBean = new CarretaBean();
+                carretaBean.deleteAll();
+
+                CECBean cecBean = new CECBean();
+                cecBean.deleteAll();
+
+                ConfigBean configBean = new ConfigBean();
+                configBean.deleteAll();
+
+                InfColheitaBean infColheitaBean = new InfColheitaBean();
+                infColheitaBean.deleteAll();
+
+                InfPlantioBean infPlantioBean = new InfPlantioBean();
+                infPlantioBean.deleteAll();
+
+                LogErroBean logErroBean = new LogErroBean();
+                logErroBean.deleteAll();
+
+                MovLeiraBean movLeiraBean = new MovLeiraBean();
+                movLeiraBean.deleteAll();
+
+                PreCECBean preCECBean = new PreCECBean();
+                preCECBean.deleteAll();
+
+                RecolhFertBean recolhFertBean = new RecolhFertBean();
+                recolhFertBean.deleteAll();
+
+                RendMMBean rendMMBean = new RendMMBean();
+                rendMMBean.deleteAll();
+
+                RespItemCheckListBean respItemCLBean = new RespItemCheckListBean();
+                respItemCLBean.deleteAll();
+
+                AlertDialog.Builder alerta = new AlertDialog.Builder(ConfigActivity.this);
+                alerta.setTitle("ATENÇÃO");
+                alerta.setMessage("TODOS OS DADOS FORAM APAGADOS!");
+                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                alerta.show();
+
+            }
+        });
+
     }
+
 }

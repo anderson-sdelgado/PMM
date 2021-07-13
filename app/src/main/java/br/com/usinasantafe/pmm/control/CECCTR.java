@@ -2,6 +2,7 @@ package br.com.usinasantafe.pmm.control;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 
 import java.util.List;
 
@@ -11,8 +12,12 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
 import br.com.usinasantafe.pmm.model.dao.CECDAO;
 import br.com.usinasantafe.pmm.model.dao.CarretaDAO;
 import br.com.usinasantafe.pmm.model.dao.EquipDAO;
+import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.model.dao.OSDAO;
 import br.com.usinasantafe.pmm.model.dao.PreCECDAO;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
+import br.com.usinasantafe.pmm.util.Json;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class CECCTR {
 
@@ -45,21 +50,59 @@ public class CECCTR {
         return preCECDAO.dadosEnvioPreCEC();
     }
 
-    public void atualPreCEC(String result){
-        PreCECDAO preCECDAO = new PreCECDAO();
-        preCECDAO.updatePreCEC(result);
+    public void updPreCEC(String result){
+
+        try{
+
+            int pos1 = result.indexOf("_") + 1;
+            String objPrinc = result.substring(pos1);
+
+            PreCECDAO preCECDAO = new PreCECDAO();
+            preCECDAO.atualPreCEC(objPrinc);
+
+            EnvioDadosServ.getInstance().envioDados(2);
+
+        }
+        catch (Exception e){
+            EnvioDadosServ.status = 1;
+            LogErroDAO.getInstance().insert(e);
+        }
+
     }
 
-    public void recDados(String result){
+    public void receberVerifCEC(String result){
 
-        int pos1 = result.indexOf("_") + 1;
-        String precec = result.substring(0, (pos1 - 1));
-        String cec = result.substring(pos1);
-        PreCECDAO preCECDAO = new PreCECDAO();
-        preCECDAO.atualPreCEC(precec);
+        try{
 
-        CECDAO cecDAO = new CECDAO();
-        cecDAO.recDadosCEC(cec);
+            if (!result.contains("exceeded")) {
+
+                Log.i("PMM", "CHEGOU AKI 1 RECDADOS");
+
+                int pos1 = result.indexOf("_") + 1;
+                String precec = result.substring(0, (pos1 - 1));
+                String cec = result.substring(pos1);
+
+                PreCECDAO preCECDAO = new PreCECDAO();
+                preCECDAO.atualPreCEC(precec);
+
+                CECDAO cecDAO = new CECDAO();
+                cecDAO.recDadosCEC(cec);
+
+                ConfigCTR configCTR = new ConfigCTR();
+                configCTR.setStatusRetVerif(0L);
+
+                VerifDadosServ.getInstance().pulaTela();
+
+            } else {
+                VerifDadosServ.status = 1;
+            }
+
+        }
+        catch(Exception e){
+            Log.i("ECM", "ERRO REC = " + e);
+            EnvioDadosServ.status = 1;
+            LogErroDAO.getInstance().insert(e);
+        }
 
     }
 
@@ -96,15 +139,20 @@ public class CECCTR {
         return osDAO.verAtivOS(idAtivOS, configCTR.getConfig().getOsConfig());
     }
 
-    public boolean verCEC(){
+    public boolean hasElemCEC(){
         CECDAO cecDAO = new CECDAO();
         return cecDAO.verCEC();
     }
 
-    public void verCECServ(Context telaAtual, Class telaProx, ProgressDialog progressDialog){
+    public void verCEC(Context telaAtual, Class telaProx, ProgressDialog progressDialog){
+
+        ConfigCTR configCTR = new ConfigCTR();
+        configCTR.setStatusRetVerif(1L);
+
         CECDAO cecDAO = new CECDAO();
         EquipDAO equipDAO = new EquipDAO();
         PreCECDAO preCECDAO = new PreCECDAO();
+
         String dados = equipDAO.dadosEnvioEquip() + "_" + preCECDAO.dadosEnvioPreCEC();
         cecDAO.verCEC(dados, telaAtual, telaProx, progressDialog);
     }
@@ -117,7 +165,6 @@ public class CECCTR {
         PreCECDAO preCECDAO = new PreCECDAO();
         preCECDAO.setDataChegCampo();
     }
-
 
     public void setAtivOS(Long ativOS){
         PreCECDAO preCECDAO = new PreCECDAO();

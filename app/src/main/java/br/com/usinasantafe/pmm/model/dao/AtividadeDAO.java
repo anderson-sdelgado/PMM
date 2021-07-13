@@ -6,6 +6,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -32,83 +33,21 @@ public class AtividadeDAO {
     }
 
     public void verAtiv(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
-        VerifDadosServ.getInstance().setVerTerm(true);
-        VerifDadosServ.getInstance().verDados(dado, "Atividade", telaAtual, telaProx, progressDialog);
+        VerifDadosServ.getInstance().verifDados(dado, "Atividade", telaAtual, telaProx, progressDialog);
     }
 
-    public void recDadosAtiv(String objPrim, String objSeg, String objTerc, String objQuart) {
+    public void recDadosAtiv(JSONArray jsonArray) throws JSONException {
 
-        try {
+        AtividadeBean atividadeBean = new AtividadeBean();
+        atividadeBean.deleteAll();
 
-            JSONObject jObj = new JSONObject(objPrim);
-            JSONArray jsonArray = jObj.getJSONArray("dados");
+        for (int j = 0; j < jsonArray.length(); j++) {
 
-            REquipAtivBean rEquipAtivBean = new REquipAtivBean();
-            rEquipAtivBean.deleteAll();
+            JSONObject objeto = jsonArray.getJSONObject(j);
+            Gson gson = new Gson();
+            AtividadeBean atividade = gson.fromJson(objeto.toString(), AtividadeBean.class);
+            atividade.insert();
 
-            for (int j = 0; j < jsonArray.length(); j++) {
-
-                JSONObject objeto = jsonArray.getJSONObject(j);
-                Gson gson = new Gson();
-                REquipAtivBean rEquipAtiv = gson.fromJson(objeto.toString(), REquipAtivBean.class);
-                rEquipAtiv.insert();
-
-            }
-
-            jObj = new JSONObject(objSeg);
-            jsonArray = jObj.getJSONArray("dados");
-
-            if (jsonArray.length() > 0) {
-
-                ROSAtivBean rosAtivBean = new ROSAtivBean();
-                rosAtivBean.deleteAll();
-
-                for (int j = 0; j < jsonArray.length(); j++) {
-
-                    JSONObject objeto = jsonArray.getJSONObject(j);
-                    Gson gson = new Gson();
-                    ROSAtivBean rosAtiv = gson.fromJson(objeto.toString(), ROSAtivBean.class);
-                    rosAtiv.insert();
-
-                }
-
-            }
-
-            jObj = new JSONObject(objTerc);
-            jsonArray = jObj.getJSONArray("dados");
-
-            AtividadeBean atividadeBean = new AtividadeBean();
-            atividadeBean.deleteAll();
-
-            for (int j = 0; j < jsonArray.length(); j++) {
-
-                JSONObject objeto = jsonArray.getJSONObject(j);
-                Gson gson = new Gson();
-                AtividadeBean atividade = gson.fromJson(objeto.toString(), AtividadeBean.class);
-                atividade.insert();
-
-            }
-
-            jObj = new JSONObject(objQuart);
-            jsonArray = jObj.getJSONArray("dados");
-
-            RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
-            rFuncaoAtivParBean.deleteAll();
-
-            for (int j = 0; j < jsonArray.length(); j++) {
-
-                JSONObject objeto = jsonArray.getJSONObject(j);
-                Gson gson = new Gson();
-                RFuncaoAtivParBean rFuncaoAtivPar = gson.fromJson(objeto.toString(), RFuncaoAtivParBean.class);
-                rFuncaoAtivPar.insert();
-
-            }
-
-            VerifDadosServ.getInstance().pulaTelaSemTerm();
-
-        } catch (Exception e) {
-            LogErroDAO.getInstance().insert(e);
-            VerifDadosServ.getInstance().msgSemTerm("FALHA DE PESQUISA DE OS! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
 
     }
@@ -136,9 +75,9 @@ public class AtividadeDAO {
         if (rOSAtivList.size() > 0) {
 
             for (int i = 0; i < atividadeList.size(); i++) {
-                atividadeBean = (AtividadeBean) atividadeList.get(i);
+                atividadeBean = atividadeList.get(i);
                 for (int j = 0; j < rOSAtivList.size(); j++) {
-                    rOSAtivBean = (ROSAtivBean) rOSAtivList.get(j);
+                    rOSAtivBean = rOSAtivList.get(j);
                     if (Objects.equals(atividadeBean.getIdAtiv(), rOSAtivBean.getIdAtiv())) {
                         atividadeArrayList.add(atividadeBean);
                     }
@@ -147,7 +86,7 @@ public class AtividadeDAO {
 
         } else {
             for (int i = 0; i < atividadeList.size(); i++) {
-                atividadeBean = (AtividadeBean) atividadeList.get(i);
+                atividadeBean = atividadeList.get(i);
                 atividadeArrayList.add(atividadeBean);
             }
         }

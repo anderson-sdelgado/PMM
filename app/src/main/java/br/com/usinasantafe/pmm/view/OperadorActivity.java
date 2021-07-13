@@ -10,7 +10,6 @@ import android.widget.Button;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 
 public class OperadorActivity extends ActivityGeneric {
 
@@ -39,9 +38,7 @@ public class OperadorActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        ConexaoWeb conexaoWeb = new ConexaoWeb();
-
-                        if (conexaoWeb.verificaConexao(OperadorActivity.this)) {
+                        if (connectNetwork) {
 
                             progressBar = new ProgressDialog(OperadorActivity.this);
                             progressBar.setCancelable(true);
@@ -95,8 +92,8 @@ public class OperadorActivity extends ActivityGeneric {
 
                     if (pmmContext.getMotoMecFertCTR().verFunc(Long.parseLong(editTextPadrao.getText().toString()))) {
 
-                        pmmContext.getMotoMecFertCTR().getBoletimMMDAO().setBoletimMMBean();
-                        pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setMatricFuncBolMMFert(Long.parseLong(editTextPadrao.getText().toString()));
+                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().setBoletimMMBean();
+                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().setMatricFuncBolMMFert(Long.parseLong(editTextPadrao.getText().toString()));
 
                         Intent it = new Intent(OperadorActivity.this, EquipActivity.class);
                         startActivity(it);

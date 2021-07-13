@@ -3,7 +3,6 @@ package br.com.usinasantafe.pmm.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.content.Context;
 import android.util.Log;
 
 import br.com.usinasantafe.pmm.control.CECCTR;
@@ -14,13 +13,13 @@ import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp;
+import br.com.usinasantafe.pmm.view.ActivityGeneric;
 
 public class EnvioDadosServ {
 
     private static EnvioDadosServ instance = null;
     private UrlsConexaoHttp urlsConexaoHttp;
-    private int statusEnvio; //1 - Enviando; 2 - Existe Dados para Enviar; 3 - Todos os Dados Enviados
-    private boolean enviando = false;
+    public static int status; //1 - Existe Dados para Enviar; 2 - Enviado; 3 - Todos os Dados Foram Enviados;
 
     public EnvioDadosServ() {
         urlsConexaoHttp = new UrlsConexaoHttp();
@@ -54,12 +53,12 @@ public class EnvioDadosServ {
 
     }
 
-    public void envioCarregInsumo() {
+    public void envioCarreg() {
 
         CompostoCTR compostoCTR = new CompostoCTR();
-        String dados = compostoCTR.dadosEnvioCarregInsumo();
+        String dados = compostoCTR.dadosEnvioCarreg();
 
-        String[] url = {urlsConexaoHttp.getsInsertCarregInsumo()};
+        String[] url = {urlsConexaoHttp.getsInsertCarreg()};
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
@@ -171,14 +170,14 @@ public class EnvioDadosServ {
         return checkListCTR.verEnvioDados();
     }
 
-    public boolean verifEnviaCarregInsumo() {
+    public boolean verifEnvioCarreg() {
         CompostoCTR compostoCTR = new CompostoCTR();
-        return compostoCTR.verEnviaCarregInsumo();
+        return compostoCTR.verifEnvioCarreg();
     }
 
     public boolean verifEnvioLeiraDescarreg() {
         CompostoCTR compostoCTR = new CompostoCTR();
-        return compostoCTR.verEnvioLeiraDescarreg();
+        return compostoCTR.verifEnvioLeiraDescarreg();
     }
 
     public boolean verifPreCEC() {
@@ -191,9 +190,9 @@ public class EnvioDadosServ {
         return motoMecFertCTR.verEnvioBolFech();
     }
 
-    public Boolean verifApontMMFert() {
+    public Boolean verifApontMMMovLeiraFert() {
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
-        return motoMecFertCTR.verEnvioApont();
+        return motoMecFertCTR.verEnvioApont() || motoMecFertCTR.verEnvioMovLeira();
     }
 
     public Boolean verifLogErro() {
@@ -201,60 +200,38 @@ public class EnvioDadosServ {
         return configCTR.verEnvioLogErro();
     }
 
-    public Boolean verifInfor() {
-        boolean ret = false;
-        ConfigCTR configCTR = new ConfigCTR();
-        if(configCTR.hasElements()){
-            if(configCTR.getVerInforConfig() == 1){
-                ret = true;
-            }
-        }
-        return ret;
-    }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////MECANISMO DE ENVIO/////////////////////////////////////////
 
-    public void envioDados(Context context) {
-        enviando = true;
-        ConexaoWeb conexaoWeb = new ConexaoWeb();
-        if (conexaoWeb.verificaConexao(context)) {
-            envioDadosPrinc();
-        }
-        else{
-            enviando = false;
-        }
-
-    }
-
-    public void envioDadosPrinc() {
-
-        if (verifLogErro()) {
-            envioLogErro();
-        }
-        else {
-            if(verifInfor()){
-                VerifDadosServ.getInstance().verDadosInfor();
+    public void envioDados(int lugar) {
+        Log.i("PMM", "ENVIANDO 1 = " + lugar);
+        status = 1;
+        if(ActivityGeneric.connectNetwork) {
+            Log.i("PMM", "ENVIANDO 2");
+            status = 2;
+            if (verifChecklist()) {
+                enviarChecklist();
             } else {
-                if (verifChecklist()) {
-                    enviarChecklist();
+                if (verifEnvioCarreg()) {
+                    envioCarreg();
                 } else {
-                    if (verifEnviaCarregInsumo()) {
-                        envioCarregInsumo();
+                    if (verifEnvioLeiraDescarreg()) {
+                        envioLeiraDescarreg();
                     } else {
-                        if (verifEnvioLeiraDescarreg()) {
-                            envioLeiraDescarreg();
+                        if (verifPreCEC()) {
+                            envioPreCEC();
                         } else {
-                            if (verifPreCEC()) {
-                                envioPreCEC();
-                            }
-                            else {
-                                if (verifBolFechadoMMFert()) {
-                                    enviarBolFechadoMMFert();
+                            if (verifBolFechadoMMFert()) {
+                                enviarBolFechadoMMFert();
+                            } else {
+                                if (verifApontMMMovLeiraFert()) {
+                                    enviarBolAbertoMMFert();
                                 } else {
-                                    if (verifApontMMFert()) {
-                                        enviarBolAbertoMMFert();
+                                    if (verifLogErro()) {
+                                        envioLogErro();
+                                    } else {
+                                        status = 3;
                                     }
                                 }
                             }
@@ -266,32 +243,17 @@ public class EnvioDadosServ {
     }
 
     public boolean verifDadosEnvio() {
-        if ((!verifInfor())
-                && (!verifBolFechadoMMFert())
-                && (!verifEnviaCarregInsumo())
+        if ((!verifBolFechadoMMFert())
+                && (!verifEnvioCarreg())
                 && (!verifEnvioLeiraDescarreg())
                 && (!verifPreCEC())
-                && (!verifApontMMFert())
+                && (!verifApontMMMovLeiraFert())
                 && (!verifChecklist())
                 && (!verifLogErro())){
-            enviando = false;
             return false;
         } else {
             return true;
         }
-    }
-
-    public int getStatusEnvio() {
-        if (enviando) {
-            statusEnvio = 1;
-        } else {
-            if (!verifDadosEnvio()) {
-                statusEnvio = 3;
-            } else {
-                statusEnvio = 2;
-            }
-        }
-        return statusEnvio;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -302,37 +264,38 @@ public class EnvioDadosServ {
         if(result.trim().startsWith("GRAVOU-CHECKLIST")){
             CheckListCTR checkListCTR = new CheckListCTR();
             checkListCTR.delChecklist();
-        } else if (result.trim().startsWith("BOLABERTOMM")) {
+        }
+        else if (result.trim().startsWith("BOLABERTOMM")) {
             MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
-            motoMecFertCTR.updateBolAberto(result);
-        } else if (result.trim().startsWith("BOLFECHADOMM")) {
+            motoMecFertCTR.updBolAberto(result);
+        }
+        else if (result.trim().startsWith("BOLFECHADOMM")) {
             MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
-            motoMecFertCTR.deleteBolFechado(result);
-        } else if (result.trim().startsWith("LOGERRO")) {
+            motoMecFertCTR.delBolFechado(result);
+        }
+        else if (result.trim().startsWith("LOGERRO")) {
             ConfigCTR configCTR = new ConfigCTR();
             configCTR.updLogErro(result);
-        } else if (result.trim().startsWith("GRAVOU-CARREGINSUMO")) {
+        }
+        else if (result.trim().startsWith("GRAVOU-CARREGINSUMO")) {
             CompostoCTR compostoCTR = new CompostoCTR();
-            compostoCTR.updateCarregInsumo(result);
-        } else if (result.trim().startsWith("GRAVOU-LEIRADESCARREG")) {
+            compostoCTR.updCarregInsumo(result);
+        }
+        else if (result.trim().startsWith("GRAVOU-LEIRADESCARREG")) {
             CompostoCTR compostoCTR = new CompostoCTR();
             compostoCTR.updCarregLeiraDescarreg(result);
-        } else if(result.trim().startsWith("PRECEC")){
+        }
+        else if(result.trim().startsWith("PRECEC")){
             CECCTR cecCTR = new CECCTR();
-            cecCTR.atualPreCEC(result);
-        } else{
+            cecCTR.updPreCEC(result);
+        }
+        else {
+            status = 1;
+            Log.i("ECM", "ERRO 2");
             LogErroDAO.getInstance().insert(result);
         }
-
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void setEnviando(boolean enviando) {
-        this.enviando = enviando;
-    }
-
-    public void setStatusEnvio(int statusEnvio) {
-        this.statusEnvio = statusEnvio;
-    }
 }

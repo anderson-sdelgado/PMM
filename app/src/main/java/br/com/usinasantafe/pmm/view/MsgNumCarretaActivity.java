@@ -1,7 +1,5 @@
 package br.com.usinasantafe.pmm.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,7 +10,6 @@ import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 
 public class MsgNumCarretaActivity extends ActivityGeneric {
 
@@ -72,8 +69,7 @@ public class MsgNumCarretaActivity extends ActivityGeneric {
             public void onClick(View v) {
                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 20L){
                     if(numCarreta < 1){
-                        ConexaoWeb conexaoWeb = new ConexaoWeb();
-                        if (conexaoWeb.verificaConexao(MsgNumCarretaActivity.this)) {
+                        if (connectNetwork) {
                             pmmContext.getConfigCTR().setStatusConConfig(1L);
                         }
                         else{
@@ -87,8 +83,7 @@ public class MsgNumCarretaActivity extends ActivityGeneric {
                 }
                 else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 22L){
                     if(numCarreta < 1){
-                        ConexaoWeb conexaoWeb = new ConexaoWeb();
-                        if (conexaoWeb.verificaConexao(MsgNumCarretaActivity.this)) {
+                        if (connectNetwork) {
                             pmmContext.getConfigCTR().setStatusConConfig(1L);
                         }
                         else{

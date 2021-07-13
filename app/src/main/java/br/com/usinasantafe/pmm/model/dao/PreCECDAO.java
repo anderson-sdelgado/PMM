@@ -5,11 +5,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
+import br.com.usinasantafe.pmm.util.Json;
 import br.com.usinasantafe.pmm.util.Tempo;
 
 public class PreCECDAO {
@@ -71,6 +74,7 @@ public class PreCECDAO {
         preCECBean.setStatus(2L);
         preCECBean.update();
         delPrecCEC();
+        EnvioDadosServ.getInstance().envioDados(16);
     }
 
     public String dadosEnvioPreCEC(){
@@ -95,38 +99,25 @@ public class PreCECDAO {
 
     }
 
-    public void updatePreCEC(String retorno) {
-        int pos1 = retorno.indexOf("_") + 1;
-        String objPrinc = retorno.substring(pos1);
-        atualPreCEC(objPrinc);
-    }
+    public void atualPreCEC(String objeto) throws JSONException {
 
-    public void atualPreCEC(String retorno) {
+        JSONObject jsonObj = new JSONObject(objeto);
+        JSONArray preCECJsonArray = jsonObj.getJSONArray("precec");
 
-        try{
+        for (int i = 0; i < preCECJsonArray.length(); i++) {
 
-            JSONObject preCECJsonObj = new JSONObject(retorno);
-            JSONArray preCECJsonArray = preCECJsonObj.getJSONArray("precec");
+            JSONObject objApont = preCECJsonArray.getJSONObject(i);
+            Gson gsonApont = new Gson();
+            PreCECBean preCECBean = gsonApont.fromJson(objApont.toString(), PreCECBean.class);
 
-            for (int i = 0; i < preCECJsonArray.length(); i++) {
+            List<PreCECBean> preCECList = preCECBean.get("idPreCEC", preCECBean.getIdPreCEC());
 
-                JSONObject objApont = preCECJsonArray.getJSONObject(i);
-                Gson gsonApont = new Gson();
-                PreCECBean preCECBean = gsonApont.fromJson(objApont.toString(), PreCECBean.class);
-
-                List preCECList = preCECBean.get("idPreCEC", preCECBean.getIdPreCEC());
-
-                if(preCECList.size() > 0){
-                    PreCECBean preCECBDBean = (PreCECBean) preCECList.get(i);
-                    preCECBDBean.setStatus(3L);
-                    preCECBDBean.update();
-                }
-
+            if(preCECList.size() > 0){
+                PreCECBean preCECBDBean = preCECList.get(i);
+                preCECBDBean.setStatus(3L);
+                preCECBDBean.update();
             }
 
-        }
-        catch(Exception e){
-            Tempo.getInstance().setEnvioDado(true);
         }
 
     }

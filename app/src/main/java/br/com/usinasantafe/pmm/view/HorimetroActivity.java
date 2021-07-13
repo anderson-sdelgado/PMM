@@ -113,7 +113,7 @@ public class HorimetroActivity extends ActivityGeneric {
     }
 
     public void salvarBoletimAberto() {
-        pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setHodometroInicialBol(horimetroNum,  getLongitude(), getLatitude());
+        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().setHodometroInicialBol(horimetroNum,  getLongitude(), getLatitude());
         if(pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1){
             List<RFuncaoAtivParBean> rFuncaoAtividadeList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList();
             boolean implemento = false;
@@ -133,7 +133,7 @@ public class HorimetroActivity extends ActivityGeneric {
             else{
                 pmmContext.getConfigCTR().setHorimetroConfig(horimetroNum);
                 pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto();
-                if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().getIdTurnoBolMMFert())){
+                if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().getIdTurnoBolMMFert())){
                     pmmContext.getMotoMecFertCTR().inserirParadaCheckList();
                     pmmContext.setPosCheckList(1);
                     pmmContext.getCheckListCTR().createCabecAberto();
@@ -171,7 +171,7 @@ public class HorimetroActivity extends ActivityGeneric {
 
     public void salvarBoletimFechado() {
         pmmContext.getConfigCTR().setHorimetroConfig(horimetroNum);
-        pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().setHodometroFinalBolMMFert(horimetroNum);
+        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().setHodometroFinalBolMMFert(horimetroNum);
         if(pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1){
             if (pmmContext.getMotoMecFertCTR().verRendMM()) {
                 pmmContext.setContRend(1);

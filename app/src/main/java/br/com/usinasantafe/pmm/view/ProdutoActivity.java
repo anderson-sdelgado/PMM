@@ -9,7 +9,6 @@ import android.widget.TextView;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ProdutoBean;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 
 public class ProdutoActivity extends ActivityGeneric {
 
@@ -37,8 +36,7 @@ public class ProdutoActivity extends ActivityGeneric {
 
                 if(!txtResult.getText().equals("PRODUTO:")) {
 
-                    ConexaoWeb conexaoWeb = new ConexaoWeb();
-                    if (conexaoWeb.verificaConexao(ProdutoActivity.this)) {
+                    if (connectNetwork) {
                         pmmContext.getConfigCTR().setStatusConConfig(1L);
                     }
                     else{
@@ -47,7 +45,7 @@ public class ProdutoActivity extends ActivityGeneric {
 
                     pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());
                     pmmContext.getConfigCTR().setPosFluxoViagem(2L);
-                    pmmContext.getCompostoCTR().abrirCarregInsumo(ProdutoActivity.this, produtoBean);
+                    pmmContext.getCompostoCTR().abrirCarregInsumo(produtoBean);
 
                     Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);
                     startActivity(it);

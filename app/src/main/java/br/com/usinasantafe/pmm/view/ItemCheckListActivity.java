@@ -81,26 +81,38 @@ public class ItemCheckListActivity extends ActivityGeneric {
         RespItemCheckListBean respItemCheckListBean = new RespItemCheckListBean();
         respItemCheckListBean.setIdItBDItCL(itemCheckListBean.getIdItemCheckList());
         respItemCheckListBean.setOpItCL(opcao);
-        pmmContext.getCheckListCTR().setRespCheckList(respItemCheckListBean);
 
-        if(pmmContext.getCheckListCTR().qtdeItemCheckList() == pmmContext.getPosCheckList()){
-            pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().getIdTurnoBolMMFert());
-            pmmContext.getCheckListCTR().salvarBolFechado();
+        if(pmmContext.getCheckListCTR().verCabecAberto()) {
+            pmmContext.getCheckListCTR().setRespCheckList(respItemCheckListBean);
+
+            if (pmmContext.getCheckListCTR().qtdeItemCheckList() == pmmContext.getPosCheckList()) {
+                pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().getIdTurnoBolMMFert());
+                pmmContext.getCheckListCTR().salvarBolFechado();
+                if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
+                    Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);
+                    startActivity(it);
+                    finish();
+                } else {
+                    Intent it = new Intent(ItemCheckListActivity.this, VerifOperadorActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+            } else {
+                pmmContext.setPosCheckList(pmmContext.getPosCheckList() + 1);
+                itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getPosCheckList() - 1);
+                textViewItemChecklist.setText(pmmContext.getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
+            }
+        }
+        else{
             if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
                 Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);
                 startActivity(it);
                 finish();
-            }
-            else{
+            } else {
                 Intent it = new Intent(ItemCheckListActivity.this, VerifOperadorActivity.class);
                 startActivity(it);
                 finish();
             }
-        }
-        else{
-            pmmContext.setPosCheckList(pmmContext.getPosCheckList() + 1);
-            itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getPosCheckList() - 1);
-            textViewItemChecklist.setText(pmmContext.getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
         }
 
     }

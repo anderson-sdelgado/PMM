@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -22,12 +23,12 @@ public class LeiraDAO {
 
     public void inserirMovLeira(Long idLeira, Long tipo, Long idBol, Long idExtBol){
         MovLeiraBean movLeiraBean = new MovLeiraBean();
-        movLeiraBean.setTipoMovLeiraMM(tipo);
-        movLeiraBean.setIdLeiraMovLeiraMM(idLeira);
-        movLeiraBean.setDthrMovLeiraMM(Tempo.getInstance().dthrSemTZ());
+        movLeiraBean.setTipoMovLeira(tipo);
+        movLeiraBean.setIdLeiraMovLeira(idLeira);
+        movLeiraBean.setDthrMovLeira(Tempo.getInstance().dthrSemTZ());
         movLeiraBean.setIdBolMMFert(idBol);
         movLeiraBean.setIdExtBolMMFert(idExtBol);
-        movLeiraBean.setStatusMovLeiraMM(1L);
+        movLeiraBean.setStatusMovLeira(1L);
         movLeiraBean.insert();
     }
 
@@ -37,7 +38,7 @@ public class LeiraDAO {
 
         for (int i = 0; i < movLeiraList.size(); i++) {
             MovLeiraBean movLeiraBean = movLeiraList.get(i);
-            movLeiraBean.setStatusMovLeiraMM(2L);
+            movLeiraBean.setStatusMovLeira(2L);
             movLeiraBean.update();
         }
 
@@ -80,12 +81,17 @@ public class LeiraDAO {
 
     public List<MovLeiraBean> movLeiraList(Long idBol){
         MovLeiraBean movLeiraBean = new MovLeiraBean();
-        return movLeiraBean.getAndOrderBy("idBolMMFert", idBol, "idMovLeiraMM", true);
+        return movLeiraBean.getAndOrderBy("idBolMMFert", idBol, "idMovLeira", true);
     }
 
     public List<MovLeiraBean> movLeiraList(ArrayList<Long> idMovLeiraArrayList){
         MovLeiraBean movLeiraBean = new MovLeiraBean();
-        return movLeiraBean.in("idMovLeiraMM", idMovLeiraArrayList);
+        return movLeiraBean.in("idMovLeira", idMovLeiraArrayList);
+    }
+
+    public List<MovLeiraBean> movLeiraEnvioList() {
+        MovLeiraBean movLeiraBean = new MovLeiraBean();
+        return movLeiraBean.get("statusMovLeira", 1L);
     }
 
     public List<MovLeiraBean> movLeiraEnvioList(ArrayList<Long> idBolList){
@@ -94,7 +100,7 @@ public class LeiraDAO {
 
         ArrayList pesqArrayList = new ArrayList();
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-        pesquisa.setCampo("statusMovLeiraMM");
+        pesquisa.setCampo("statusMovLeira");
         pesquisa.setValor(1L);
         pesquisa.setTipo(1);
         pesqArrayList.add(pesquisa);
@@ -106,34 +112,26 @@ public class LeiraDAO {
     public ArrayList<Long> idMovLeiraArrayList(List<MovLeiraBean> movLeiraList){
         ArrayList<Long> idMovLeiraList = new ArrayList<Long>();
         for (MovLeiraBean movLeiraBean : movLeiraList) {
-            idMovLeiraList.add(movLeiraBean.getIdMovLeiraMM());
+            idMovLeiraList.add(movLeiraBean.getIdMovLeira());
         }
         return idMovLeiraList;
     }
 
-    public ArrayList<Long> idMovLeiraArrayList(String objeto){
+    public ArrayList<Long> idMovLeiraArrayList(String objeto) throws Exception {
 
         ArrayList<Long> idMovLeiraArrayList = new ArrayList<Long>();
 
-        try{
+        JSONObject jObjMovLeira = new JSONObject(objeto);
+        JSONArray jsonArrayMovLeira = jObjMovLeira.getJSONArray("movleira");
 
-            JSONObject jObjMovLeira = new JSONObject(objeto);
-            JSONArray jsonArrayMovLeira = jObjMovLeira.getJSONArray("movleira");
+        for (int i = 0; i < jsonArrayMovLeira.length(); i++) {
 
-            for (int i = 0; i < jsonArrayMovLeira.length(); i++) {
+            JSONObject objMovLeira = jsonArrayMovLeira.getJSONObject(i);
+            Gson gson = new Gson();
+            MovLeiraBean movLeiraBean = gson.fromJson(objMovLeira.toString(), MovLeiraBean.class);
 
-                JSONObject objMovLeira = jsonArrayMovLeira.getJSONObject(i);
-                Gson gson = new Gson();
-                MovLeiraBean movLeiraBean = gson.fromJson(objMovLeira.toString(), MovLeiraBean.class);
+            idMovLeiraArrayList.add(movLeiraBean.getIdMovLeira());
 
-                idMovLeiraArrayList.add(movLeiraBean.getIdMovLeiraMM());
-
-            }
-
-        }
-        catch(Exception e){
-            LogErroDAO.getInstance().insert(e);
-            Tempo.getInstance().setEnvioDado(true);
         }
 
         return idMovLeiraArrayList;

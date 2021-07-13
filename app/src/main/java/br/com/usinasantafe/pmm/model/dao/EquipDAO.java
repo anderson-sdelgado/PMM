@@ -8,6 +8,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -36,58 +37,41 @@ public class EquipDAO {
     }
 
     public void verEquip(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
-        VerifDadosServ.getInstance().setVerTerm(true);
-        VerifDadosServ.getInstance().verDados(dado, "Equip", telaAtual, telaProx, progressDialog);
+        VerifDadosServ.getInstance().verifDados(dado, "Equip", telaAtual, telaProx, progressDialog);
     }
 
-    public void recDadosEquip(String objPrinc, String objSeg){
-        try {
+    public EquipBean recDadosEquip(JSONArray jsonArray) throws JSONException {
 
-            JSONObject jObj = new JSONObject(objPrinc);
-            JSONArray jsonArray = jObj.getJSONArray("dados");
+        EquipBean equipBean = new EquipBean();
+        equipBean.deleteAll();
 
-            if (jsonArray.length() > 0) {
+        for (int i = 0; i < jsonArray.length(); i++) {
 
-                EquipBean equipBean = new EquipBean();
-                equipBean.deleteAll();
+            JSONObject objeto = jsonArray.getJSONObject(i);
+            Gson gson = new Gson();
+            equipBean = gson.fromJson(objeto.toString(), EquipBean.class);
+            equipBean.insert();
 
-                for (int i = 0; i < jsonArray.length(); i++) {
-
-                    JSONObject objeto = jsonArray.getJSONObject(i);
-                    Gson gson = new Gson();
-                    equipBean = gson.fromJson(objeto.toString(), EquipBean.class);
-                    equipBean.insert();
-
-                }
-
-                jObj = new JSONObject(objSeg);
-                jsonArray = jObj.getJSONArray("dados");
-
-                REquipAtivBean rEquipAtivBean = new REquipAtivBean();
-                rEquipAtivBean.deleteAll();
-
-                for (int j = 0; j < jsonArray.length(); j++) {
-
-                    JSONObject objeto = jsonArray.getJSONObject(j);
-                    Gson gson = new Gson();
-                    REquipAtivBean rEquipAtiv = gson.fromJson(objeto.toString(), REquipAtivBean.class);
-                    rEquipAtiv.insert();
-
-                }
-
-                ConfigCTR configCTR = new ConfigCTR();
-                configCTR.setEquipConfig(equipBean);
-
-                VerifDadosServ.getInstance().pulaTelaSemTerm();
-
-            } else {
-                VerifDadosServ.getInstance().msgSemTerm("EQUIPAMENTO INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
-            }
-
-        } catch (Exception e) {
-            LogErroDAO.getInstance().insert(e);
-            VerifDadosServ.getInstance().msgSemTerm("FALHA DE PESQUISA DE EQUIPAMENTO! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
+
+        return equipBean;
+
+    }
+
+    public void recDadosREquipAtiv(JSONArray jsonArray) throws JSONException {
+
+        REquipAtivBean rEquipAtivBean = new REquipAtivBean();
+        rEquipAtivBean.deleteAll();
+
+        for (int j = 0; j < jsonArray.length(); j++) {
+
+            JSONObject objeto = jsonArray.getJSONObject(j);
+            Gson gson = new Gson();
+            REquipAtivBean rEquipAtiv = gson.fromJson(objeto.toString(), REquipAtivBean.class);
+            rEquipAtiv.insert();
+
+        }
+
     }
 
     public String dadosEnvioEquip(){

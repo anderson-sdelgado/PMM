@@ -33,6 +33,8 @@ public class ApontMMFertBean extends Entidade {
     @DatabaseField
     private String dthrApontMMFert;
     @DatabaseField
+    private Long dthrApontLongMMFert;
+    @DatabaseField
     private Double latitudeApontMMFert;
     @DatabaseField
     private Double longitudeApontMMFert;
@@ -162,5 +164,13 @@ public class ApontMMFertBean extends Entidade {
 
     public void setStatusApontMMFert(Long statusApontMMFert) {
         this.statusApontMMFert = statusApontMMFert;
+    }
+
+    public Long getDthrApontLongMMFert() {
+        return dthrApontLongMMFert;
+    }
+
+    public void setDthrApontLongMMFert(Long dthrApontLongMMFert) {
+        this.dthrApontLongMMFert = dthrApontLongMMFert;
     }
 }

@@ -1,7 +1,5 @@
 package br.com.usinasantafe.pmm.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +9,6 @@ import android.widget.Button;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 
 public class MsgSaidaCampoActivity extends ActivityGeneric {
 
@@ -31,8 +28,7 @@ public class MsgSaidaCampoActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                ConexaoWeb conexaoWeb = new ConexaoWeb();
-                if (conexaoWeb.verificaConexao(MsgSaidaCampoActivity.this)) {
+                if (connectNetwork) {
                     pmmContext.getConfigCTR().setStatusConConfig(1L);
                 }
                 else{

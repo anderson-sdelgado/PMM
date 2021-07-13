@@ -5,19 +5,19 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
-import br.com.usinasantafe.pmm.control.CheckListCTR;
-import br.com.usinasantafe.pmm.control.ConfigCTR;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class PergAtualCheckListActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private ProgressDialog progressBar;
+    private Handler customHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,18 +47,16 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                ConexaoWeb conexaoWeb = new ConexaoWeb();
-
-                if (conexaoWeb.verificaConexao(PergAtualCheckListActivity.this)) {
+                if (connectNetwork) {
 
                     progressBar = new ProgressDialog(PergAtualCheckListActivity.this);
                     progressBar.setCancelable(true);
                     progressBar.setMessage("ATUALIZANDO CHECKLIST...");
                     progressBar.show();
 
-                    ConfigCTR configCTR = new ConfigCTR();
-                    CheckListCTR checkListCTR = new CheckListCTR();
-                    checkListCTR.atualCheckList(String.valueOf(configCTR.getEquip().getNroEquip()), PergAtualCheckListActivity.this, ItemCheckListActivity.class, progressBar);
+                    customHandler.postDelayed(updateTimerThread, 10000);
+
+                    pmmContext.getCheckListCTR().atualCheckList(String.valueOf(pmmContext.getConfigCTR().getEquip().getNroEquip()), PergAtualCheckListActivity.this, ItemCheckListActivity.class, progressBar);
 
                 } else {
 
@@ -84,5 +82,32 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
 
     public void onBackPressed()  {
     }
+
+    private Runnable updateTimerThread = new Runnable() {
+
+        public void run() {
+
+            if(VerifDadosServ.status < 3) {
+
+                VerifDadosServ.getInstance().cancel();
+
+                if (progressBar.isShowing()) {
+                    progressBar.dismiss();
+                }
+
+                AlertDialog.Builder alerta = new AlertDialog.Builder(PergAtualCheckListActivity.this);
+                alerta.setTitle("ATENÇÃO");
+                alerta.setMessage("FALHA NA ATUALIZAÇÃO DE CHECKLIST! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
+                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                alerta.show();
+
+            }
+
+        }
+    };
 
 }

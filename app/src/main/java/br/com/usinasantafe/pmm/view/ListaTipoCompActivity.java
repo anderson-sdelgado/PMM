@@ -19,14 +19,14 @@ import br.com.usinasantafe.pmm.R;
 public class ListaTipoCompActivity extends ActivityGeneric {
 
     private ListView tipoCompListView;
-    private List turnoList;
     private PMMContext pmmContext;
-    private ProgressDialog progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_tipo_comp);
+
+        pmmContext = (PMMContext) getApplication();
 
         Button buttonRetTipoComp = (Button) findViewById(R.id.buttonRetTipoComp);
 

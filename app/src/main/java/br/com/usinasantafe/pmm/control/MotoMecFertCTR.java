@@ -19,7 +19,6 @@ import br.com.usinasantafe.pmm.model.bean.estaticas.TurnoBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.MovLeiraBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.model.dao.ApontMMFertDAO;
@@ -31,6 +30,7 @@ import br.com.usinasantafe.pmm.model.dao.EquipSegDAO;
 import br.com.usinasantafe.pmm.model.dao.FuncDAO;
 import br.com.usinasantafe.pmm.model.dao.ImpleMMDAO;
 import br.com.usinasantafe.pmm.model.dao.LeiraDAO;
+import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.model.dao.MotoMecDAO;
 import br.com.usinasantafe.pmm.model.dao.OSDAO;
 import br.com.usinasantafe.pmm.model.dao.ParadaDAO;
@@ -40,6 +40,7 @@ import br.com.usinasantafe.pmm.model.dao.RecolhFertDAO;
 import br.com.usinasantafe.pmm.model.dao.RendMMDAO;
 import br.com.usinasantafe.pmm.model.dao.TurnoDAO;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
 
 public class MotoMecFertCTR {
@@ -50,7 +51,7 @@ public class MotoMecFertCTR {
     public MotoMecFertCTR() {
     }
 
-    public BoletimMMFertDAO getBoletimMMDAO(){
+    public BoletimMMFertDAO getBoletimMMFertDAO(){
         if (boletimMMFertDAO == null)
             boletimMMFertDAO = new BoletimMMFertDAO();
         return boletimMMFertDAO;
@@ -98,6 +99,11 @@ public class MotoMecFertCTR {
         return apontMMFertDAO.apontEnvioList().size() > 0;
     }
 
+    public Boolean verEnvioMovLeira() {
+        LeiraDAO leiraDAO = new LeiraDAO();
+        return leiraDAO.movLeiraEnvioList().size() > 0;
+    }
+
     public boolean verEnvioBolFech() {
         BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
         return boletimMMFertDAO.verBolMMFechado();
@@ -143,68 +149,86 @@ public class MotoMecFertCTR {
         return dadosEnvioBoletim + "_" + dadosEnvioApont + "|" + dadosEnvioApontImpl + "#" + dadosEnvioMovLeira + "?" + dadosEnvioRend + "=" + dadosEnvioRecolh;
     }
 
-    public void updateBolAberto(String retorno){
+    public void updBolAberto(String retorno){
 
-        Log.i("PMM", "RETORNO NA FUNCAO = " + retorno);
+        try {
 
-        int pos1 = retorno.indexOf("_") + 1;
-        int pos2 = retorno.indexOf("|") + 1;
-        int pos3 = retorno.indexOf("#") + 1;
+            int pos1 = retorno.indexOf("_") + 1;
+            int pos2 = retorno.indexOf("|") + 1;
+            int pos3 = retorno.indexOf("#") + 1;
 
-        String objPrinc = retorno.substring(pos1, pos2);
-        String objSeg = retorno.substring(pos2, pos3);
-        String objTerc = retorno.substring(pos3);
+            String objPrinc = retorno.substring(pos1, pos2);
+            String objSeg = retorno.substring(pos2, pos3);
+            String objTerc = retorno.substring(pos3);
 
-        BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
-        boletimMMFertDAO.updateBolAberto(objPrinc);
+            BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
+            boletimMMFertDAO.updateBolAberto(objPrinc);
 
-        ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
-        ArrayList<Long> idApontArrayList = apontMMFertDAO.idApontArrayList(objSeg);
-        apontMMFertDAO.updateApont(idApontArrayList);
+            ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
+            ArrayList<Long> idApontArrayList = apontMMFertDAO.idApontArrayList(objSeg);
+            apontMMFertDAO.updateApont(idApontArrayList);
 
-        LeiraDAO leiraDAO = new LeiraDAO();
-        ArrayList<Long> idMovLeiraArrayList = leiraDAO.idMovLeiraArrayList(objTerc);
-        leiraDAO.updateMovLeira(idMovLeiraArrayList);
+            LeiraDAO leiraDAO = new LeiraDAO();
+            ArrayList<Long> idMovLeiraArrayList = leiraDAO.idMovLeiraArrayList(objTerc);
+            leiraDAO.updateMovLeira(idMovLeiraArrayList);
 
-        ImpleMMDAO impleMMDAO = new ImpleMMDAO();
-        impleMMDAO.deleteImple(idApontArrayList);
+            ImpleMMDAO impleMMDAO = new ImpleMMDAO();
+            impleMMDAO.deleteImple(idApontArrayList);
+
+            EnvioDadosServ.getInstance().envioDados(7);
+
+        }
+        catch (Exception e){
+            EnvioDadosServ.status = 1;
+            LogErroDAO.getInstance().insert(e);
+        }
 
     }
 
-    public void deleteBolFechado(String retorno){
+    public void delBolFechado(String retorno){
 
-        int pos1 = retorno.indexOf("_") + 1;
-        String objPrinc = retorno.substring(pos1);
+        try {
 
-        BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
-        ArrayList<BoletimMMFertBean> boletimArrayList = boletimMMFertDAO.boletimArrayList(objPrinc);
+            int pos1 = retorno.indexOf("_") + 1;
+            String objPrinc = retorno.substring(pos1);
 
-        for(BoletimMMFertBean boletimMMFertBean : boletimArrayList){
+            BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
+            ArrayList<BoletimMMFertBean> boletimArrayList = boletimMMFertDAO.boletimArrayList(objPrinc);
 
-            ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
-            List<ApontMMFertBean> apontMMFertList = apontMMFertDAO.apontMMFertList(boletimMMFertBean.getIdBolMMFert());
+            for (BoletimMMFertBean boletimMMFertBean : boletimArrayList) {
 
-            if(apontMMFertList.size() == boletimMMFertBean.getQtdeApontBolMMFert()){
+                ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
+                List<ApontMMFertBean> apontMMFertList = apontMMFertDAO.apontMMFertList(boletimMMFertBean.getIdBolMMFert());
 
-                ArrayList<Long> idApontArrayList = apontMMFertDAO.idApontArrayList(apontMMFertList);
-                apontMMFertDAO.deleteApont(idApontArrayList);
+                if (apontMMFertList.size() == boletimMMFertBean.getQtdeApontBolMMFert()) {
 
-                ImpleMMDAO impleMMDAO = new ImpleMMDAO();
-                impleMMDAO.deleteImple(idApontArrayList);
+                    ArrayList<Long> idApontArrayList = apontMMFertDAO.idApontArrayList(apontMMFertList);
+                    apontMMFertDAO.deleteApont(idApontArrayList);
 
-                LeiraDAO leiraDAO = new LeiraDAO();
-                leiraDAO.deleteMovLeira(leiraDAO.idMovLeiraArrayList(leiraDAO.movLeiraList(boletimMMFertBean.getIdBolMMFert())));
+                    ImpleMMDAO impleMMDAO = new ImpleMMDAO();
+                    impleMMDAO.deleteImple(idApontArrayList);
 
-                RendMMDAO rendMMDAO = new RendMMDAO();
-                rendMMDAO.deleteRend(boletimMMFertBean.getIdBolMMFert());
+                    LeiraDAO leiraDAO = new LeiraDAO();
+                    leiraDAO.deleteMovLeira(leiraDAO.idMovLeiraArrayList(leiraDAO.movLeiraList(boletimMMFertBean.getIdBolMMFert())));
 
-                RecolhFertDAO recolhFertDAO = new RecolhFertDAO();
-                recolhFertDAO.deleteRecolh(boletimMMFertBean.getIdBolMMFert());
+                    RendMMDAO rendMMDAO = new RendMMDAO();
+                    rendMMDAO.deleteRend(boletimMMFertBean.getIdBolMMFert());
 
-                boletimMMFertDAO.deleteBol(boletimMMFertBean.getIdBolMMFert());
+                    RecolhFertDAO recolhFertDAO = new RecolhFertDAO();
+                    recolhFertDAO.deleteRecolh(boletimMMFertBean.getIdBolMMFert());
+
+                    boletimMMFertDAO.deleteBol(boletimMMFertBean.getIdBolMMFert());
+
+                }
 
             }
 
+            EnvioDadosServ.getInstance().envioDados(8);
+
+        }
+        catch (Exception e){
+            EnvioDadosServ.status = 1;
+            LogErroDAO.getInstance().insert(e);
         }
 
     }
@@ -598,13 +622,8 @@ public class MotoMecFertCTR {
         if(((configCTR.getConfig().getUltParadaBolConfig() == 0L)
                 || (configCTR.getConfig().getUltParadaBolConfig() == 72L)) && cecCTR.hasPreCEC()) {
 
-            if(apontMMFertDAO.hasApontBol(boletimMMFertBean.getIdBolMMFert())){
-                if(!apontMMFertDAO.verDataHoraApont(boletimMMFertBean.getIdBolMMFert())){
-                    salvarApont(configCTR.getConfig().getUltParadaBolConfig(), 0L, Tempo.getInstance().longParaDthrString(Tempo.getInstance().dthrAddMinutoLong(apontMMFertDAO.getUltApont(boletimMMFertBean.getIdBolMMFert()).getDthrApontMMFert(), 1)));
-                }
-                else{
-                    salvarApont(configCTR.getConfig().getUltParadaBolConfig(), 0L);
-                }
+            if(apontMMFertDAO.verDataHoraApont(boletimMMFertBean.getIdBolMMFert())){
+                salvarApont(configCTR.getConfig().getUltParadaBolConfig(), 0L, Tempo.getInstance().dthrAddMinutoLong(apontMMFertDAO.getUltApont(boletimMMFertBean.getIdBolMMFert()).getDthrApontLongMMFert(), 1));
             }
             else{
                 salvarApont(configCTR.getConfig().getUltParadaBolConfig(), 0L);
@@ -630,7 +649,7 @@ public class MotoMecFertCTR {
 
     public void inserirVoltaTrabalho(Double latitude, Double longitude){
 
-        String dthr = Tempo.getInstance().dthrSemTZ();
+        Long dthrLong = Tempo.getInstance().dtHrSemTZLong();
         ConfigCTR configCTR = new ConfigCTR();
         BoletimMMFertBean boletimMMFertBean = getBoletimMMFertAberto();
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
@@ -656,15 +675,15 @@ public class MotoMecFertCTR {
 
         apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada
                 , configCTR.getConfig().getOsConfig(), configCTR.getConfig().getAtivConfig()
-                , latitude, longitude, boletimMMFertBean.getStatusConBolMMFert(), dthr, 0L
-                , configCTR.getConfig().getPressaoConfig(), configCTR.getConfig().getVelocConfig()
+                , latitude, longitude, boletimMMFertBean.getStatusConBolMMFert(), Tempo.getInstance().longParaDthrString(dthrLong)
+                , dthrLong, 0L, configCTR.getConfig().getPressaoConfig(), configCTR.getConfig().getVelocConfig()
                 , configCTR.getConfig().getBocalConfig(), 2);
 
-        salvarAltCompApont(dthr);
+        salvarAltCompApont(Tempo.getInstance().longParaDthrString(dthrLong));
 
     }
 
-    private void salvarApont(Long idParada, Long idTransb, String dthr){
+    private void salvarApont(Long idParada, Long idTransb, Long dthrLong){
 
         ConfigCTR configCTR = new ConfigCTR();
         BoletimMMFertBean boletimMMFertBean = getBoletimMMFertAberto();
@@ -672,50 +691,50 @@ public class MotoMecFertCTR {
         apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada
                 , boletimMMFertBean.getOsBolMMFert(), boletimMMFertBean.getAtivPrincBolMMFert()
                 , boletimMMFertBean.getLatitudeBolMMFert(), boletimMMFertBean.getLongitudeBolMMFert()
-                , boletimMMFertBean.getStatusConBolMMFert(), dthr, idTransb
-                , configCTR.getConfig().getPressaoConfig(), configCTR.getConfig().getVelocConfig()
+                , boletimMMFertBean.getStatusConBolMMFert(), Tempo.getInstance().longParaDthrString(dthrLong)
+                , dthrLong, idTransb, configCTR.getConfig().getPressaoConfig(), configCTR.getConfig().getVelocConfig()
                 , configCTR.getConfig().getBocalConfig(), 1);
 
-        salvarAltCompApont(dthr);
+        salvarAltCompApont(Tempo.getInstance().longParaDthrString(dthrLong));
 
     }
 
     private void salvarApont(Long idParada, Long idTransb){
 
-        String dthr = Tempo.getInstance().dthrSemTZ();
+        Long dthrLong = Tempo.getInstance().dtHrSemTZLong();
         ConfigCTR configCTR = new ConfigCTR();
         BoletimMMFertBean boletimMMFertBean = getBoletimMMFertAberto();
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
         apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada
                 , boletimMMFertBean.getOsBolMMFert(), boletimMMFertBean.getAtivPrincBolMMFert()
                 , boletimMMFertBean.getLatitudeBolMMFert(), boletimMMFertBean.getLongitudeBolMMFert()
-                , boletimMMFertBean.getStatusConBolMMFert(), dthr, idTransb
-                , configCTR.getConfig().getPressaoConfig(), configCTR.getConfig().getVelocConfig()
+                , boletimMMFertBean.getStatusConBolMMFert(), Tempo.getInstance().longParaDthrString(dthrLong)
+                , dthrLong, idTransb, configCTR.getConfig().getPressaoConfig(), configCTR.getConfig().getVelocConfig()
                 , configCTR.getConfig().getBocalConfig(), 1);
 
-        salvarAltCompApont(dthr);
+        salvarAltCompApont(Tempo.getInstance().longParaDthrString(dthrLong));
 
     }
 
     public void salvarApont(Long idParada, Long idTransb, Double longitude, Double latitude){
 
-        String dthr = Tempo.getInstance().dthrSemTZ();
+        Long dthrLong = Tempo.getInstance().dtHrSemTZLong();
         ConfigCTR configCTR = new ConfigCTR();
         BoletimMMFertBean boletimMMFertBean = getBoletimMMFertAberto();
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
         apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada
                 , configCTR.getConfig().getOsConfig(), configCTR.getConfig().getAtivConfig()
-                , latitude, longitude, boletimMMFertBean.getStatusConBolMMFert(), dthr, idTransb
-                , configCTR.getConfig().getPressaoConfig(), configCTR.getConfig().getVelocConfig()
+                , latitude, longitude, boletimMMFertBean.getStatusConBolMMFert(), Tempo.getInstance().longParaDthrString(dthrLong)
+                , dthrLong, idTransb, configCTR.getConfig().getPressaoConfig(), configCTR.getConfig().getVelocConfig()
                 , configCTR.getConfig().getBocalConfig(), 2);
 
-        salvarAltCompApont(dthr);
+        salvarAltCompApont(Tempo.getInstance().longParaDthrString(dthrLong));
 
     }
 
     public void salvarApont(Double longitude, Double latitude){
 
-        String dthr = Tempo.getInstance().dthrSemTZ();
+        Long dthrLong = Tempo.getInstance().dtHrSemTZLong();
         ConfigCTR configCTR = new ConfigCTR();
         BoletimMMFertBean boletimMMFertBean = getBoletimMMFertAberto();
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
@@ -733,16 +752,18 @@ public class MotoMecFertCTR {
         }
 
         apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), motoMecBean.getIdMotoMec()
-                , parada, configCTR.getConfig().getOsConfig(), ativ
-                , latitude, longitude, boletimMMFertBean.getStatusConBolMMFert(), dthr, 0L
-                , configCTR.getConfig().getPressaoConfig(), configCTR.getConfig().getVelocConfig()
+                , parada, configCTR.getConfig().getOsConfig(), ativ, latitude
+                , longitude, boletimMMFertBean.getStatusConBolMMFert(), Tempo.getInstance().longParaDthrString(dthrLong)
+                , dthrLong, 0L, configCTR.getConfig().getPressaoConfig(), configCTR.getConfig().getVelocConfig()
                 , configCTR.getConfig().getBocalConfig(), 2);
 
-        salvarAltCompApont(dthr);
+        salvarAltCompApont(Tempo.getInstance().longParaDthrString(dthrLong));
 
     }
 
     private void salvarAltCompApont(String dthr){
+
+        EnvioDadosServ.getInstance().envioDados(9);
 
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
         ImpleMMDAO impleMMDAO = new ImpleMMDAO();

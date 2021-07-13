@@ -273,4 +273,5 @@
     <string name="texto_titulo_leira">LEIRA</string>
     <string name="texto_final_boletim">FINALIZAR BOLETIM</string>
     <string name="texto_titulo_cec">CEC</string>
+    <string name="texto_limpar_dados">LIMPAR DADOS</string>
 </resources>

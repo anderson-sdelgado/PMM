@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,8 +19,8 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.model.bean.estaticas.AtividadeBean;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class ListaAtividadeActivity extends ActivityGeneric {
 
@@ -28,6 +29,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
     private ProgressDialog progressBar;
     private ArrayList ativArrayList;
     private Long nroOS = 0L;
+    private Handler customHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +49,14 @@ public class ListaAtividadeActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                ConexaoWeb conexaoWeb = new ConexaoWeb();
-
-                if (conexaoWeb.verificaConexao(ListaAtividadeActivity.this)) {
+                if (connectNetwork) {
 
                     progressBar = new ProgressDialog(v.getContext());
                     progressBar.setCancelable(true);
                     progressBar.setMessage("Atualizando Atividades...");
                     progressBar.show();
+
+                    customHandler.postDelayed(updateTimerThread, 10000);
 
                     pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(nroOS), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
 
@@ -253,6 +255,13 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                         startActivity(it);
                         finish();
 
+                    } else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {
+
+                        pmmContext.getCecCTR().setAtivOS(pmmContext.getCecCTR().getOSTipoAtiv().getIdAtivOS());
+                        Intent it = new Intent(ListaAtividadeActivity.this, EquipActivity.class);
+                        startActivity(it);
+                        finish();
+
                     }
 
                 }
@@ -264,5 +273,32 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
     public void onBackPressed() {
     }
+
+    private Runnable updateTimerThread = new Runnable() {
+
+        public void run() {
+
+            if(VerifDadosServ.status < 3) {
+
+                VerifDadosServ.getInstance().cancel();
+
+                if (progressBar.isShowing()) {
+                    progressBar.dismiss();
+                }
+
+                AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
+                alerta.setTitle("ATENÇÃO");
+                alerta.setMessage("FALHA DE PESQUISA DE ATIVIDADE! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
+                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                alerta.show();
+
+            }
+
+        }
+    };
 
 }

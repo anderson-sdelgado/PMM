@@ -6,6 +6,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -128,84 +129,93 @@ public class OSDAO {
     }
 
     public void verOS(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
-        VerifDadosServ.getInstance().setVerTerm(false);
-        VerifDadosServ.getInstance().verDados(dado, "OS", telaAtual, telaProx, progressDialog);
+        VerifDadosServ.getInstance().verifDados(dado, "OS", telaAtual, telaProx, progressDialog);
     }
 
-    public void recDadosOS(String result){
+    public void recDadosOS(JSONArray jsonArray) throws JSONException {
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+
+            JSONObject objeto = jsonArray.getJSONObject(i);
+            Gson gson = new Gson();
+            OSBean osBean = gson.fromJson(objeto.toString(), OSBean.class);
+            osBean.insert();
+
+        }
+
+    }
+
+    public void recDadosROSAtiv(JSONArray jsonArray) throws JSONException {
+
+        for (int j = 0; j < jsonArray.length(); j++) {
+
+            JSONObject objeto = jsonArray.getJSONObject(j);
+            Gson gson = new Gson();
+            ROSAtivBean rosAtivBean = gson.fromJson(objeto.toString(), ROSAtivBean.class);
+            rosAtivBean.insert();
+
+        }
+
+    }
+
+    public void recDadosOS(String result) throws JSONException {
 
         ConfigCTR configCTR = new ConfigCTR();
 
-        try {
+        int posicao = result.indexOf("#") + 1;
+        String objPrinc = result.substring(0, result.indexOf("#"));
+        String objSeg = result.substring(posicao);
 
-            if (!result.contains("exceeded")) {
+        JSONObject jObj = new JSONObject(objPrinc);
+        JSONArray jsonArray = jObj.getJSONArray("dados");
 
-                int posicao = result.indexOf("#") + 1;
-                String objPrinc = result.substring(0, result.indexOf("#"));
-                String objSeg = result.substring(posicao);
+        if (jsonArray.length() > 0) {
 
-                JSONObject jObj = new JSONObject(objPrinc);
-                JSONArray jsonArray = jObj.getJSONArray("dados");
+            for (int i = 0; i < jsonArray.length(); i++) {
 
-                if (jsonArray.length() > 0) {
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(i);
-                        Gson gson = new Gson();
-                        OSBean osBean = gson.fromJson(objeto.toString(), OSBean.class);
-                        osBean.insert();
-
-                    }
-
-                    jObj = new JSONObject(objSeg);
-                    jsonArray = jObj.getJSONArray("dados");
-
-                    for (int j = 0; j < jsonArray.length(); j++) {
-
-                        JSONObject objeto = jsonArray.getJSONObject(j);
-                        Gson gson = new Gson();
-                        ROSAtivBean rosAtivBean = gson.fromJson(objeto.toString(), ROSAtivBean.class);
-                        rosAtivBean.insert();
-
-                    }
-
-                    configCTR.setStatusConConfig(1L);
-                    VerifDadosServ.getInstance().pulaTelaComTerm();
-
-                } else {
-
-                    configCTR.setStatusConConfig(0L);
-                    VerifDadosServ.getInstance().msgComTerm("OS INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
-
-                }
-
-            } else {
-
-                configCTR.setStatusConConfig(0L);
-                VerifDadosServ.getInstance().msgComTerm("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
+                JSONObject objeto = jsonArray.getJSONObject(i);
+                Gson gson = new Gson();
+                OSBean osBean = gson.fromJson(objeto.toString(), OSBean.class);
+                osBean.insert();
 
             }
 
-        } catch (Exception e) {
-            LogErroDAO.getInstance().insert(e);
+            jObj = new JSONObject(objSeg);
+            jsonArray = jObj.getJSONArray("dados");
+
+            for (int j = 0; j < jsonArray.length(); j++) {
+
+                JSONObject objeto = jsonArray.getJSONObject(j);
+                Gson gson = new Gson();
+                ROSAtivBean rosAtivBean = gson.fromJson(objeto.toString(), ROSAtivBean.class);
+                rosAtivBean.insert();
+
+            }
+
+            configCTR.setStatusConConfig(1L);
+            VerifDadosServ.getInstance().pulaTela();
+
+        } else {
+
             configCTR.setStatusConConfig(0L);
-            VerifDadosServ.getInstance().msgComTerm("FALHA DE PESQUISA DE OS! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
+            VerifDadosServ.getInstance().msg("OS INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
+
         }
 
     }
 
     public boolean verTipoOS(Long nroOS){
         boolean ret = true;
-        OSBean osTO = new OSBean();
-        if(osTO.hasElements()){
-            List osList = osTO.get("nroOS", nroOS);
+        OSBean osBean = new OSBean();
+        if(osBean.hasElements()){
+            List<OSBean> osList = osBean.get("nroOS", nroOS);
             if(osList.size() > 0){
-                osTO = (OSBean) osList.get(0);
-                if(osTO.getTipoOS() == 0){
+                osBean = osList.get(0);
+                if(osBean.getTipoOS() == 0){
                     ret = false;
                 }
             }
+            osList.clear();
         }
         return ret;
     }

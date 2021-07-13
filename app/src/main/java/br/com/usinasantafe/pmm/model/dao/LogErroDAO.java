@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
 
 public class LogErroDAO {
@@ -109,6 +111,26 @@ public class LogErroDAO {
 
     }
 
+    public void updLogErro(JSONArray jsonArray) throws JSONException {
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+
+            JSONObject objLogErro = jsonArray.getJSONObject(i);
+            Gson gsonBol = new Gson();
+            LogErroBean logErroBean = gsonBol.fromJson(objLogErro.toString(), LogErroBean.class);
+
+            List<LogErroBean> logErroList = logErroBean.get("idLog", logErroBean.getIdLog());
+            LogErroBean logErroBD = logErroList.get(0);
+            logErroBD.setStatus(2L);
+            logErroBD.update();
+
+            logErroList.clear();
+
+        }
+    }
+
+
+
     public void updLogErro(String retorno){
 
         try{
@@ -138,8 +160,8 @@ public class LogErroDAO {
 
         }
         catch(Exception e){
+            EnvioDadosServ.status = 1;
             LogErroDAO.getInstance().insert(e);
-            Tempo.getInstance().setEnvioDado(true);
         }
 
     }

@@ -1,7 +1,14 @@
 package br.com.usinasantafe.pmm.model.dao;
 
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
@@ -75,11 +82,33 @@ public class CabecCheckListDAO {
         CabecCheckListBean cabecCheckListBean = getCabecAberto();
         cabecCheckListBean.setStatusCabCL(2L);
         cabecCheckListBean.update();
+        EnvioDadosServ.getInstance().envioDados(11);
     }
 
-    public List bolFechList(){
+    public List<CabecCheckListBean> cabecCheckListFechList(){
         CabecCheckListBean cabecCheckListBean = new CabecCheckListBean();
         return cabecCheckListBean.get("statusCabCL", 2L);
+    }
+
+    public ArrayList<Long> idCabecCLFechArrayList() {
+
+        List<CabecCheckListBean> cabecCheckListList = cabecCheckListFechList();
+        ArrayList<Long> idCabecCheckListLongs = new ArrayList<Long>();
+
+        for (CabecCheckListBean cabecCheckListBean : cabecCheckListList) {
+            idCabecCheckListLongs.add(cabecCheckListBean.getIdCabCL());
+        }
+
+        return idCabecCheckListLongs;
+
+    }
+
+    public void delCabecCLFech(){
+        List<CabecCheckListBean> cabecCheckListList = cabecCheckListFechList();
+        for(CabecCheckListBean cabecCheckListBean : cabecCheckListList){
+            cabecCheckListBean.delete();
+        }
+        cabecCheckListList.clear();
     }
 
 }

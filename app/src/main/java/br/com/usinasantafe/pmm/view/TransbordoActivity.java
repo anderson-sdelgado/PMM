@@ -13,7 +13,6 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 
 public class TransbordoActivity extends ActivityGeneric {
@@ -43,9 +42,7 @@ public class TransbordoActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        ConexaoWeb conexaoWeb = new ConexaoWeb();
-
-                        if (conexaoWeb.verificaConexao(TransbordoActivity.this)) {
+                        if (connectNetwork) {
 
                             progressBar = new ProgressDialog(TransbordoActivity.this);
                             progressBar.setCancelable(true);

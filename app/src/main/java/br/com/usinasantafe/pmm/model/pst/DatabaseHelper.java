@@ -26,7 +26,7 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CECBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CabecCheckListBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.CarregBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.CarregCompBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CarretaBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
@@ -93,7 +93,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, ApontMMFertBean.class);
 			TableUtils.createTable(cs, BoletimMMFertBean.class);
 			TableUtils.createTable(cs, CabecCheckListBean.class);
-			TableUtils.createTable(cs, CarregBean.class);
+			TableUtils.createTable(cs, CarregCompBean.class);
 			TableUtils.createTable(cs, CarretaBean.class);
 			TableUtils.createTable(cs, CECBean.class);
 			TableUtils.createTable(cs, ConfigBean.class);

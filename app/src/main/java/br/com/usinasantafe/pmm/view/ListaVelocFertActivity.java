@@ -16,7 +16,6 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 
 public class ListaVelocFertActivity extends ActivityGeneric {
 
@@ -45,9 +44,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        ConexaoWeb conexaoWeb = new ConexaoWeb();
-
-                        if (conexaoWeb.verificaConexao(ListaVelocFertActivity.this)) {
+                        if (connectNetwork) {
 
                             progressBar = new ProgressDialog(ListaVelocFertActivity.this);
                             progressBar.setCancelable(true);

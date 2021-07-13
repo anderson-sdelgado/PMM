@@ -10,7 +10,6 @@ import android.widget.EditText;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class OSActivity extends ActivityGeneric {
@@ -31,7 +30,8 @@ public class OSActivity extends ActivityGeneric {
         Button buttonCancOS = findViewById(R.id.buttonCancPadrao);
         EditText editText = findViewById(R.id.editTextPadrao);
 
-        if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
+        if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L)
+            || (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L)){
             editText.setText("");
         } else {
             editText.setText(String.valueOf(pmmContext.getConfigCTR().getConfig().getOsConfig()));
@@ -46,18 +46,14 @@ public class OSActivity extends ActivityGeneric {
                     Long nroOS = Long.parseLong(editTextPadrao.getText().toString());
                     pmmContext.getConfigCTR().setOsConfig(nroOS);
 
-                    ConexaoWeb conexaoWeb = new ConexaoWeb();
-
                     if (pmmContext.getConfigCTR().verOS(nroOS)) {
 
-                        if (conexaoWeb.verificaConexao(OSActivity.this)) {
+                        if (connectNetwork) {
                             pmmContext.getConfigCTR().setStatusConConfig(1L);
                         }
                         else{
                             pmmContext.getConfigCTR().setStatusConConfig(0L);
                         }
-
-                        VerifDadosServ.getInstance().setVerTerm(true);
 
                         Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                         startActivity(it);
@@ -65,7 +61,7 @@ public class OSActivity extends ActivityGeneric {
 
                     } else {
 
-                        if (conexaoWeb.verificaConexao(OSActivity.this)) {
+                        if (connectNetwork) {
 
                             progressBar = new ProgressDialog(v.getContext());
                             progressBar.setCancelable(true);
@@ -109,6 +105,10 @@ public class OSActivity extends ActivityGeneric {
             Intent it = new Intent(OSActivity.this, ListaTurnoActivity.class);
             startActivity(it);
             finish();
+        } else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {
+            Intent it = new Intent(OSActivity.this, MenuCertifActivity.class);
+            startActivity(it);
+            finish();
         } else {
             if(PMMContext.aplic == 1){
                 Intent it = new Intent(OSActivity.this, MenuPrincPMMActivity.class);
@@ -132,9 +132,9 @@ public class OSActivity extends ActivityGeneric {
 
         public void run() {
 
-            if(!VerifDadosServ.getInstance().isVerTerm()) {
+            if(VerifDadosServ.status < 3) {
 
-                VerifDadosServ.getInstance().cancelVer();
+                VerifDadosServ.getInstance().cancel();
 
                 if (progressBar.isShowing()) {
                     progressBar.dismiss();

@@ -42,7 +42,6 @@ public class CECActivity extends ActivityGeneric {
                 startActivity(it);
 
                 pmmContext.getConfigCTR().atualTodasTabelas();
-                Tempo.getInstance().setEnvioDado(true);
 
             }
         });

@@ -3,8 +3,10 @@ package br.com.usinasantafe.pmm.view;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +28,7 @@ import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
 
 import java.util.ArrayList;
 
+import br.com.usinasantafe.pmm.NetworkChangeListerner;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.pst.DatabaseHelper;
 
@@ -37,6 +40,8 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
 
     public EditText editTextPadrao;
 
+    public static boolean connectNetwork;
+
     private Location location;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
@@ -46,6 +51,8 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
     private ArrayList<String> permissionsRejected = new ArrayList<>();
     private ArrayList<String> permissions = new ArrayList<>();
     private static final int ALL_PERMISSIONS_RESULT = 1011;
+
+    NetworkChangeListerner networkChangeListerner = new NetworkChangeListerner();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +106,10 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
 
     @Override
     protected void onStart() {
+
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListerner, intentFilter);
+
         super.onStart();
 
         if (googleApiClient != null) {
@@ -111,12 +122,17 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
     protected void onPause() {
         super.onPause();
 
-        // stop location updates
         if (googleApiClient != null  &&  googleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
             googleApiClient.disconnect();
         }
 
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListerner);
+        super.onStop();
     }
 
     @Override

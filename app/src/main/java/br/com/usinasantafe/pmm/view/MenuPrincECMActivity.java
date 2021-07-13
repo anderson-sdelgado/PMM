@@ -18,7 +18,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.MotoMecBean;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
+import br.com.usinasantafe.pmm.util.ConnectNetwork;
 
 public class MenuPrincECMActivity extends ActivityGeneric {
 
@@ -105,8 +105,8 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
-                                    ConexaoWeb conexaoWeb = new ConexaoWeb();
-                                    if (conexaoWeb.verificaConexao(MenuPrincECMActivity.this)) {
+                                    ConnectNetwork connectNetwork = new ConnectNetwork();
+                                    if (connectNetwork.verificaConexao(MenuPrincECMActivity.this)) {
                                         pmmContext.getConfigCTR().setStatusConConfig(1L);
                                     } else {
                                         pmmContext.getConfigCTR().setStatusConConfig(0L);
@@ -183,8 +183,8 @@ public class MenuPrincECMActivity extends ActivityGeneric {
 
                                             pmmContext.getCecCTR().setDataChegCampo();
 
-                                            ConexaoWeb conexaoWeb = new ConexaoWeb();
-                                            if (conexaoWeb.verificaConexao(MenuPrincECMActivity.this)) {
+                                            ConnectNetwork connectNetwork = new ConnectNetwork();
+                                            if (connectNetwork.verificaConexao(MenuPrincECMActivity.this)) {
                                                 pmmContext.getConfigCTR().setStatusConConfig(1L);
                                             } else {
                                                 pmmContext.getConfigCTR().setStatusConConfig(0L);
@@ -200,8 +200,8 @@ public class MenuPrincECMActivity extends ActivityGeneric {
 
                         } else if (motoMecBean.getCodFuncaoOperMotoMec() == 6) { // PESAGEM
 
-                            ConexaoWeb conexaoWeb = new ConexaoWeb();
-                            if (conexaoWeb.verificaConexao(MenuPrincECMActivity.this)) {
+                            ConnectNetwork connectNetwork = new ConnectNetwork();
+                            if (connectNetwork.verificaConexao(MenuPrincECMActivity.this)) {
                                 pmmContext.getConfigCTR().setStatusConConfig(1L);
                             } else {
                                 pmmContext.getConfigCTR().setStatusConConfig(0L);
@@ -214,7 +214,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                             progressBar.show();
 
                             pmmContext.getCecCTR().delPreCECAberto();
-                            pmmContext.getCecCTR().verCECServ(MenuPrincECMActivity.this, CECActivity.class, progressBar);
+                            pmmContext.getCecCTR().verCEC(MenuPrincECMActivity.this, CECActivity.class, progressBar);
 
                         } else if ((motoMecBean.getCodFuncaoOperMotoMec() == 8)
                                 || (motoMecBean.getCodFuncaoOperMotoMec() == 19)) { // DESENGATE

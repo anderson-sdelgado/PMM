@@ -20,7 +20,6 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 
 public class ListaParadaActivity extends ActivityGeneric {
 
@@ -79,9 +78,7 @@ public class ListaParadaActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                ConexaoWeb conexaoWeb = new ConexaoWeb();
-
-                if (conexaoWeb.verificaConexao(ListaParadaActivity.this)) {
+                if (connectNetwork) {
 
                     progressBar = new ProgressDialog(ListaParadaActivity.this);
                     progressBar.setCancelable(true);

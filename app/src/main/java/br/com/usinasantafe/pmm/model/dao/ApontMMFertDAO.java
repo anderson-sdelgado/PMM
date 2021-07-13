@@ -24,7 +24,7 @@ public class ApontMMFertDAO {
     public void salvarApont(Long idBol, Long idMotoMec, Long parada
                                         , Long os, Long atividade
                                         , Double latitude, Double longitude
-                                        , Long statusConBol, String dthr
+                                        , Long statusConBol, String dthr, Long dthrLong
                                         , Long idTransb, Double pressao
                                         , Long veloc, Long bocal, int tipo){
 
@@ -47,6 +47,7 @@ public class ApontMMFertDAO {
 
         apontMMFertBean.setParadaApontMMFert(parada);
         apontMMFertBean.setDthrApontMMFert(dthr);
+        apontMMFertBean.setDthrApontLongMMFert(dthrLong);
         apontMMFertBean.setTransbApontMMFert(idTransb);
         apontMMFertBean.setPressaoApontMMFert(pressao);
         apontMMFertBean.setVelocApontMMFert(veloc);
@@ -164,14 +165,9 @@ public class ApontMMFertDAO {
                 retorno = 1;
             }
             else{
-
-                Long dthrBDLong = Tempo.getInstance().dthrAddMinutoLong(apontMMFertBean.getDthrApontMMFert(), 9);
-                Long dthrAtualLong = Tempo.getInstance().dtHrSemTZLong();
-
-                if (dthrBDLong > dthrAtualLong) {
+                if (Tempo.getInstance().dthrAddMinutoLong(apontMMFertBean.getDthrApontLongMMFert(), 10) > Tempo.getInstance().dtHrSemTZLong()) {
                     retorno = 2;
                 }
-
             }
         }
 
@@ -186,12 +182,7 @@ public class ApontMMFertDAO {
             ret = false;
         }
         else{
-
-            ApontMMFertBean apontMMFertBean = getUltApont(idBol);
-            Long dthrBDLong = Tempo.getInstance().stringParaLong(apontMMFertBean.getDthrApontMMFert());
-            Long dthrAtualLong = Tempo.getInstance().dtHrSemTZLong();
-
-            if (dthrBDLong < dthrAtualLong) {
+            if ((Tempo.getInstance().dthrAddMinutoLong(getUltApont(idBol).getDthrApontLongMMFert(), 1) < Tempo.getInstance().dtHrSemTZLong())) {
                 ret = false;
             }
         }
@@ -223,29 +214,21 @@ public class ApontMMFertDAO {
         return idApontList;
     }
 
-    public ArrayList<Long> idApontArrayList(String objeto){
+    public ArrayList<Long> idApontArrayList(String objeto) throws Exception {
 
         ArrayList<Long> idApontArrayList = new ArrayList<Long>();
 
-        try{
+        JSONObject jObjApont = new JSONObject(objeto);
+        JSONArray jsonArrayApont = jObjApont.getJSONArray("apont");
 
-            JSONObject jObjApont = new JSONObject(objeto);
-            JSONArray jsonArrayApont = jObjApont.getJSONArray("apont");
+        for (int i = 0; i < jsonArrayApont.length(); i++) {
 
-            for (int i = 0; i < jsonArrayApont.length(); i++) {
+            JSONObject objApont = jsonArrayApont.getJSONObject(i);
+            Gson gsonApont = new Gson();
+            ApontMMFertBean apontMMFertBean = gsonApont.fromJson(objApont.toString(), ApontMMFertBean.class);
 
-                JSONObject objApont = jsonArrayApont.getJSONObject(i);
-                Gson gsonApont = new Gson();
-                ApontMMFertBean apontMMFertBean = gsonApont.fromJson(objApont.toString(), ApontMMFertBean.class);
+            idApontArrayList.add(apontMMFertBean.getIdApontMMFert());
 
-                idApontArrayList.add(apontMMFertBean.getIdApontMMFert());
-
-            }
-
-        }
-        catch(Exception e){
-            LogErroDAO.getInstance().insert(e);
-            Tempo.getInstance().setEnvioDado(true);
         }
 
         return idApontArrayList;

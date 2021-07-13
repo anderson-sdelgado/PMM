@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 
 public class ImplementoActivity extends ActivityGeneric {
 
@@ -41,9 +40,7 @@ public class ImplementoActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        ConexaoWeb conexaoWeb = new ConexaoWeb();
-
-                        if (conexaoWeb.verificaConexao(ImplementoActivity.this)) {
+                        if (connectNetwork) {
 
                             progressBar = new ProgressDialog(ImplementoActivity.this);
                             progressBar.setCancelable(true);
@@ -162,7 +159,7 @@ public class ImplementoActivity extends ActivityGeneric {
 
     public void salvarBoletimAberto() {
         pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto();
-        if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMDAO().getBoletimMMBean().getIdTurnoBolMMFert())){
+        if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().getIdTurnoBolMMFert())){
             pmmContext.getMotoMecFertCTR().inserirParadaCheckList();
             pmmContext.setPosCheckList(1);
             pmmContext.getCheckListCTR().createCabecAberto();

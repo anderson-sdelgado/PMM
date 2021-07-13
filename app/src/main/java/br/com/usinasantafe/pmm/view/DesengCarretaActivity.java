@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.util.ConexaoWeb;
 
 public class DesengCarretaActivity extends ActivityGeneric {
 
@@ -34,8 +33,7 @@ public class DesengCarretaActivity extends ActivityGeneric {
 
                 pmmContext.getMotoMecFertCTR().delCarreta();
 
-                ConexaoWeb conexaoWeb = new ConexaoWeb();
-                if (conexaoWeb.verificaConexao(DesengCarretaActivity.this)) {
+                if (connectNetwork) {
                     pmmContext.getConfigCTR().setStatusConConfig(1L);
                 }
                 else{
