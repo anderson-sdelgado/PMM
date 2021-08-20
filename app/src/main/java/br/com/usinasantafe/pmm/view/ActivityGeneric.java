@@ -254,7 +254,7 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
 
         if ((Button) findViewById(R.id.buttonNum0) != null) {
             Button buttonNum0 = (Button) findViewById(R.id.buttonNum0);
-            buttonNum0.setOnClickListener(new EventoBotao("0"));
+            buttonNum0. setOnClickListener(new EventoBotao("0"));
         }
 
         if ((Button) findViewById(R.id.buttonNum1) != null) {

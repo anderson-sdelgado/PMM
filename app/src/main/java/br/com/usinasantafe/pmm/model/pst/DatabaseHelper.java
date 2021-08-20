@@ -70,6 +70,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		
 		try{
 
+
 			TableUtils.createTable(cs, AtividadeBean.class);
 			TableUtils.createTable(cs, BocalBean.class);
 			TableUtils.createTable(cs, EquipBean.class);
@@ -123,6 +124,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			int newVersion) {
 		
 		try {
+
 //
 //			if((oldVersion <= 5) && (newVersion > 5)){
 //

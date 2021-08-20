@@ -147,7 +147,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                     } else if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L)) {
 
-                        if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
+                        if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
                             alerta.setTitle("ATENÇÃO");

@@ -23,6 +23,8 @@ public class MovLeiraBean extends Entidade {
     @DatabaseField
     private String dthrMovLeira;
     @DatabaseField
+    private Long dthrLongMovLeira;
+    @DatabaseField
     private Long statusMovLeira;  //1 - Enviar; 2 - Enviado
 
     public MovLeiraBean() {
@@ -34,6 +36,22 @@ public class MovLeiraBean extends Entidade {
 
     public void setIdMovLeira(Long idMovLeira) {
         this.idMovLeira = idMovLeira;
+    }
+
+    public Long getIdBolMMFert() {
+        return idBolMMFert;
+    }
+
+    public void setIdBolMMFert(Long idBolMMFert) {
+        this.idBolMMFert = idBolMMFert;
+    }
+
+    public Long getIdExtBolMMFert() {
+        return idExtBolMMFert;
+    }
+
+    public void setIdExtBolMMFert(Long idExtBolMMFert) {
+        this.idExtBolMMFert = idExtBolMMFert;
     }
 
     public Long getIdLeiraMovLeira() {
@@ -60,20 +78,12 @@ public class MovLeiraBean extends Entidade {
         this.dthrMovLeira = dthrMovLeira;
     }
 
-    public Long getIdBolMMFert() {
-        return idBolMMFert;
+    public Long getDthrLongMovLeira() {
+        return dthrLongMovLeira;
     }
 
-    public void setIdBolMMFert(Long idBolMMFert) {
-        this.idBolMMFert = idBolMMFert;
-    }
-
-    public Long getIdExtBolMMFert() {
-        return idExtBolMMFert;
-    }
-
-    public void setIdExtBolMMFert(Long idExtBolMMFert) {
-        this.idExtBolMMFert = idExtBolMMFert;
+    public void setDthrLongMovLeira(Long dthrLongMovLeira) {
+        this.dthrLongMovLeira = dthrLongMovLeira;
     }
 
     public Long getStatusMovLeira() {

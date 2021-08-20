@@ -20,7 +20,6 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 	private UrlsConexaoHttp urlsConexaoHttp;
 
 	public GetBDGenerico() {
-
 	}
 
     public static GetBDGenerico getInstance() {

@@ -16,7 +16,7 @@ import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.Tempo;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
+//import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 
 public class DataHoraActivity extends ActivityGeneric {
 
@@ -188,14 +188,8 @@ public class DataHoraActivity extends ActivityGeneric {
                         case 5:
                             if(valor <= 59){
                                 pmmContext.setMinuto(valor);
-                                Long dif = Tempo.getInstance().difDthr(pmmContext.getDia(), pmmContext.getMes(), pmmContext.getAno()
-                                        , pmmContext.getHora(), pmmContext.getMinuto());
-
-                                ConfigCTR configCTR = new ConfigCTR();
-
-                                ConfigBean configBean = configCTR.getConfig();
-                                configBean.setDifDthrConfig(dif);
-                                configBean.update();
+                                pmmContext.getConfigCTR().setDifDthrConfig(Tempo.getInstance().difDthr(pmmContext.getDia(), pmmContext.getMes(), pmmContext.getAno()
+                                        , pmmContext.getHora(), pmmContext.getMinuto()));
 
                                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
                                     it = new Intent(DataHoraActivity.this, OSActivity.class);

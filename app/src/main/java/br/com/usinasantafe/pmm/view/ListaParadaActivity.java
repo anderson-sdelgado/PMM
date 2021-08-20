@@ -141,7 +141,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
+                        if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
                             alerta.setTitle("ATENÇÃO");

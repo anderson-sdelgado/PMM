@@ -102,7 +102,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
                 pmmContext.getConfigCTR().setVelocConfig(Long.parseLong(textView.getText().toString()));
 
-                if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
+                if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
 
                     AlertDialog.Builder alerta = new AlertDialog.Builder(ListaVelocFertActivity.this);
                     alerta.setTitle("ATENÇÃO");

@@ -97,7 +97,7 @@ public class TransbordoActivity extends ActivityGeneric {
 
                     if(pmmContext.getMotoMecFertCTR().verTransb(idTransb)) {
 
-                        if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
+                        if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);
                             alerta.setTitle("ATENÇÃO");

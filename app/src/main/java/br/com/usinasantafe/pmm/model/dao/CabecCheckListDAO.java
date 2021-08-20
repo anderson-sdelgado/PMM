@@ -1,13 +1,8 @@
 package br.com.usinasantafe.pmm.model.dao;
 
-import com.google.gson.Gson;
-
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
@@ -39,7 +34,7 @@ public class CabecCheckListDAO {
 
     public void createCabecAberto(Long nroEquip, Long matricFunc, Long idTurno){
         CabecCheckListBean cabecCheckListBean = new CabecCheckListBean();
-        cabecCheckListBean.setDtCabCL(Tempo.getInstance().dthrSemTZ());
+        cabecCheckListBean.setDtCabCL(Tempo.getInstance().dthr());
         cabecCheckListBean.setEquipCabCL(nroEquip);
         cabecCheckListBean.setFuncCabCL(matricFunc);
         cabecCheckListBean.setTurnoCabCL(idTurno);
@@ -56,7 +51,7 @@ public class CabecCheckListDAO {
         if ((equipBean.getIdCheckList() > 0) &&
                 ((configBean.getUltTurnoCLConfig() != idTurno)
                         || ((configBean.getUltTurnoCLConfig() == idTurno)
-                                    && (!configBean.getDtUltCLConfig().equals(Tempo.getInstance().dtSemTZ()))))) {
+                                    && (!configBean.getDtUltCLConfig().equals(Tempo.getInstance().dt()))))) {
             return true;
         }
         else{

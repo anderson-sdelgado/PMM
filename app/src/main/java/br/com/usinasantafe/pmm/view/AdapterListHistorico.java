@@ -97,7 +97,7 @@ public class AdapterListHistorico extends BaseAdapter {
     }
 
     public void horarioApont(String dataHora){
-        textViewHistHorario.setText("HORÁRIO: " + Tempo.getInstance().dthrSemTZ(dataHora).substring(11));
+        textViewHistHorario.setText("HORÁRIO: " + dataHora.substring(11));
     }
 
 }

@@ -1,8 +1,5 @@
 package br.com.usinasantafe.pmm.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,14 +8,13 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 
-public class ListaTipoCompActivity extends ActivityGeneric {
+public class ListaTipoMovLeiraActivity extends ActivityGeneric {
 
-    private ListView tipoCompListView;
+    private ListView tipoFuncaoLeiraListView;
     private PMMContext pmmContext;
 
     @Override
@@ -38,18 +34,18 @@ public class ListaTipoCompActivity extends ActivityGeneric {
         itens.add("FINALIZAR CARREGAMENTO NA(S) LEIRA(S)");
 
         AdapterList adapterList = new AdapterList(this, itens);
-        tipoCompListView = (ListView) findViewById(R.id.listTipoComp);
-        tipoCompListView.setAdapter(adapterList);
+        tipoFuncaoLeiraListView = (ListView) findViewById(R.id.listTipoComp);
+        tipoFuncaoLeiraListView.setAdapter(adapterList);
 
-        tipoCompListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        tipoFuncaoLeiraListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                pmmContext.setTipoMovComp(position + 1);
+                pmmContext.setTipoMovLeira((long) (position + 1));
 
-                Intent it = new Intent(ListaTipoCompActivity.this, ListaLeiraActivity.class);
+                Intent it = new Intent(ListaTipoMovLeiraActivity.this, ListaLeiraActivity.class);
                 startActivity(it);
                 finish();
 
@@ -60,7 +56,7 @@ public class ListaTipoCompActivity extends ActivityGeneric {
         buttonRetTipoComp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(ListaTipoCompActivity.this, MenuPrincPMMActivity.class);
+                Intent it = new Intent(ListaTipoMovLeiraActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();
             }

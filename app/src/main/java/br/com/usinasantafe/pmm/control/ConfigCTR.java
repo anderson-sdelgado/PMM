@@ -122,9 +122,9 @@ public class ConfigCTR {
         configDAO.setPosFluxoViagem(posFluxoViagem);
     }
 
-    public void setDifDthrConfig(Long status){
+    public void setDifDthrConfig(Long difDthrConfig){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setDifDthrConfig(status);
+        configDAO.setDifDthrConfig(difDthrConfig);
     }
 
     public void setPosicaoTela(Long posicaoTela){
@@ -141,19 +141,13 @@ public class ConfigCTR {
 
     ////////////////////////////////////// OS ////////////////////////////////////////////////////
 
-    public boolean verTipoOS(){
-        ConfigDAO configDAO = new ConfigDAO();
-        OSDAO osDAO = new OSDAO();
-        return osDAO.verTipoOS(configDAO.getConfig().getOsConfig());
-    }
-
     public boolean verOS(Long nroOS){
         OSDAO osDAO = new OSDAO();
         AtividadeDAO atividadeDAO = new AtividadeDAO();
         return (osDAO.verOS(nroOS) && atividadeDAO.verROSAtiv(nroOS));
     }
 
-    public OSBean getOSBean(){
+    public OSBean getOS(){
         OSDAO osDAO = new OSDAO();
         return osDAO.getOSBean(getConfig().getOsConfig());
     }

@@ -53,7 +53,7 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
                 MotoMecBean motoMecBean = paradaList.get(posicao);
                 pmmContext.getMotoMecFertCTR().setMotoMecBean(motoMecBean);
 
-                if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
+                if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
                     Toast.makeText(MenuParadaPCOMPActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                             Toast.LENGTH_LONG).show();
                 }

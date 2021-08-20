@@ -10,7 +10,6 @@ import android.widget.Button;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.util.ConnectNetwork;
 
 public class DigLeiraActivity extends ActivityGeneric {
 
@@ -102,7 +101,7 @@ public class DigLeiraActivity extends ActivityGeneric {
 
                         pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());
 
-                        if (pmmContext.getConfigCTR().getOSBean().getTipoOS() == 0L) {
+                        if (pmmContext.getConfigCTR().getOS().getTipoOS() == 0L) {
                             pmmContext.getCompostoCTR().abrirCarregComposto(Long.parseLong(editTextPadrao.getText().toString()));
                         }
                         else{

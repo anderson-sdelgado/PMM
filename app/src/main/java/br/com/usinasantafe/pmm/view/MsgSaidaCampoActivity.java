@@ -35,24 +35,12 @@ public class MsgSaidaCampoActivity extends ActivityGeneric {
                     pmmContext.getConfigCTR().setStatusConConfig(0L);
                 }
 
-
                 pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLatitude(), getLongitude());
+                pmmContext.getCecCTR().fechaPreCEC();
 
-                AlertDialog.Builder alerta = new AlertDialog.Builder(MsgSaidaCampoActivity.this);
-                alerta.setTitle("ATENÇÃO");
-                alerta.setMessage("A VIAGEM FOI FINALIZADA E SERÁ ENVIADA AUTOMATICAMENTE. FAVOR ENTREGAR O CELULAR PARA O MOTORISTA.");
-                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        pmmContext.getCecCTR().fechaPreCEC();
-                        Intent it = new Intent(MsgSaidaCampoActivity.this, MenuPrincECMActivity.class);
-                        startActivity(it);
-                        finish();
-
-                    }
-                });
-                alerta.show();
+                Intent it = new Intent(MsgSaidaCampoActivity.this, MenuPrincECMActivity.class);
+                startActivity(it);
+                finish();
 
             }
         });

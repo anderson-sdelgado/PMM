@@ -19,6 +19,7 @@ import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.MotoMecBean;
 import br.com.usinasantafe.pmm.util.ConnectNetwork;
+import br.com.usinasantafe.pmm.util.Tempo;
 
 public class MenuPrincECMActivity extends ActivityGeneric {
 
@@ -52,6 +53,19 @@ public class MenuPrincECMActivity extends ActivityGeneric {
             pmmContext.getMotoMecFertCTR().inserirApontBolAnterior();
         }
 
+        if (Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())) {
+            pmmContext.getConfigCTR().setDifDthrConfig(0L);
+        }
+        else {
+            if ((pmmContext.getConfigCTR().getConfig().getDifDthrConfig() == 0) && (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 8L)) {
+                pmmContext.setContDataHora(1);
+                pmmContext.getConfigCTR().setPosicaoTela(5L);
+                Intent it = new Intent(MenuPrincECMActivity.this, MsgDataHoraActivity.class);
+                startActivity(it);
+                finish();
+            }
+        }
+
         ArrayList<String> motoMecArrayList = new ArrayList<String>();
         motoMecList = pmmContext.getMotoMecFertCTR().motoMecList();
         for (MotoMecBean motoMecBean : motoMecList) {
@@ -72,7 +86,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                 MotoMecBean motoMecBean = motoMecList.get(position);
                 pmmContext.getMotoMecFertCTR().setMotoMecBean(motoMecBean);
 
-                if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
+                if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
                     Toast.makeText(MenuPrincECMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                             Toast.LENGTH_LONG).show();
                 }

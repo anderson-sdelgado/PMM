@@ -69,7 +69,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                     pmmContext.getConfigCTR().setStatusConConfig(0L);
                 }
 
-                if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
+                if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
                     Toast.makeText(MenuPrincPCOMPActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                             Toast.LENGTH_LONG).show();
                 } else {
@@ -167,14 +167,14 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                             if (pmmContext.getConfigCTR().getConfig().getPosFluxoViagem() == 1) {
 
-                                if (pmmContext.getConfigCTR().getOSBean().getTipoOS() == 0L) {
+                                if (pmmContext.getConfigCTR().getOS().getTipoOS() == 0L) {
 
                                     pmmContext.getConfigCTR().setPosFluxoViagem(2L);
                                     Intent it = new Intent(MenuPrincPCOMPActivity.this, DigLeiraActivity.class);
                                     startActivity(it);
                                     finish();
 
-                                } else if (pmmContext.getConfigCTR().getOSBean().getTipoOS() == 1L) {
+                                } else if (pmmContext.getConfigCTR().getOS().getTipoOS() == 1L) {
 
                                     Intent it = new Intent(MenuPrincPCOMPActivity.this, ProdutoActivity.class);
                                     startActivity(it);

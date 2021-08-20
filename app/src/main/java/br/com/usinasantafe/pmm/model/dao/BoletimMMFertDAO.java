@@ -5,7 +5,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -75,7 +74,7 @@ public class BoletimMMFertDAO {
             boletimMMFertBean.setOsBolMMFert(os);
             boletimMMFertBean.setAtivPrincBolMMFert(ativ);
             boletimMMFertBean.setStatusConBolMMFert(statusCon);
-            boletimMMFertBean.setDthrInicialBolMMFert(Tempo.getInstance().dthrSemTZ());
+            boletimMMFertBean.setDthrInicialBolMMFert(Tempo.getInstance().dthr());
             boletimMMFertBean.insert();
         }
     }
@@ -85,7 +84,7 @@ public class BoletimMMFertDAO {
         List<BoletimMMFertBean> boletimMMList = bolMMFertAbertoList();
 
         for(BoletimMMFertBean boletimMMFertBeanBD : boletimMMList){
-            boletimMMFertBeanBD.setDthrFinalBolMMFert(Tempo.getInstance().dthrSemTZ());
+            boletimMMFertBeanBD.setDthrFinalBolMMFert(Tempo.getInstance().dthr());
             boletimMMFertBeanBD.setStatusBolMMFert(2L);
             boletimMMFertBeanBD.setHodometroFinalBolMMFert(boletimMMFertBean.getHodometroFinalBolMMFert());
             boletimMMFertBeanBD.update();

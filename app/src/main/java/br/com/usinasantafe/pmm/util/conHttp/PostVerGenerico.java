@@ -44,8 +44,6 @@ public class PostVerGenerico extends AsyncTask<String, Void, String> {
             connection.setRequestMethod("POST");
             connection.setDoInput(true);
             connection.setDoOutput(true);
-            connection.setReadTimeout(150000);
-            connection.setConnectTimeout(150000);
             connection.connect();
 
             Log.i("ECM", "VERIF CHEGOU AKI 2");

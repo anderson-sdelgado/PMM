@@ -127,7 +127,7 @@ public class ConfigDAO {
     public void setCheckListConfig(Long idTurno){
         ConfigBean configBean = getConfig();
         configBean.setUltTurnoCLConfig(idTurno);
-        configBean.setDtUltCLConfig(Tempo.getInstance().dtSemTZ());
+        configBean.setDtUltCLConfig(Tempo.getInstance().dt());
         configBean.update();
     }
 
@@ -135,16 +135,6 @@ public class ConfigDAO {
         ConfigBean configBean = getConfig();
         configBean.setVerRecInformativo(tipo);
         configBean.update();
-    }
-
-    public Long getVerRecInformativo(){
-        ConfigBean configBean = getConfig();
-        return configBean.getVerRecInformativo();
-    }
-
-    public Long getStatusRetVerif(){
-        ConfigBean configBean = getConfig();
-        return configBean.getStatusRetVerif();
     }
 
     public void setDifDthrConfig(Long status){
@@ -169,6 +159,21 @@ public class ConfigDAO {
         ConfigBean configBean = getConfig();
         configBean.setStatusRetVerif(statusRetVerif);
         configBean.update();
+    }
+
+
+    public void set(){
+
+    }
+
+    public Long getVerRecInformativo(){
+        ConfigBean configBean = getConfig();
+        return configBean.getVerRecInformativo();
+    }
+
+    public Long getStatusRetVerif(){
+        ConfigBean configBean = getConfig();
+        return configBean.getStatusRetVerif();
     }
 
     public AtualAplicBean recAtual(JSONArray jsonArray) throws JSONException {

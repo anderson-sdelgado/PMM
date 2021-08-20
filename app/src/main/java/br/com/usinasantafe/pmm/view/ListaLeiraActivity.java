@@ -14,6 +14,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.LeiraBean;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 
 public class ListaLeiraActivity extends ActivityGeneric {
 
@@ -21,7 +22,7 @@ public class ListaLeiraActivity extends ActivityGeneric {
     private PMMContext pmmContext;
     private AdapterListChoice adapterListChoice;
     private ListView leiraListView;
-    private List leiraList;
+    private List<LeiraBean> leiraList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,23 +35,9 @@ public class ListaLeiraActivity extends ActivityGeneric {
         Button buttonRetListaLeira = (Button) findViewById(R.id.buttonRetListaLeira);
         Button buttonSalvarListaLeira = (Button) findViewById(R.id.buttonSalvarListaLeira);
 
-        Long status;
+        leiraList = pmmContext.getCompostoCTR().leiraStatusList(pmmContext.getTipoMovLeira());
 
-        if(pmmContext.getTipoMovComp() == 2){
-            status = 1L;
-        }
-        else if(pmmContext.getTipoMovComp() == 4){
-            status = 2L;
-        }
-        else{
-            status = 0L;
-        }
-
-        LeiraBean leiraBean = new LeiraBean();
-        leiraList = leiraBean.getAndOrderBy("statusLeira", status, "codLeira", true);
-
-        for (int i = 0; i < leiraList.size(); i++) {
-            leiraBean = (LeiraBean) leiraList.get(i);
+        for (LeiraBean leiraBean : leiraList) {
             ViewHolderChoice viewHolderChoice = new ViewHolderChoice();
             viewHolderChoice.setSelected(false);
             viewHolderChoice.setDescrCheckBox(String.valueOf(leiraBean.getCodLeira()));
@@ -85,18 +72,8 @@ public class ListaLeiraActivity extends ActivityGeneric {
                     ViewHolderChoice viewHolderChoice = itens.get(i);
 
                     if(viewHolderChoice.isSelected()){
-                        LeiraBean leiraBean = (LeiraBean) leiraList.get(i);
-                        leiraSelectedList.add(leiraBean.getIdLeira());
-                        if(pmmContext.getTipoMovComp() == 1){
-                            leiraBean.setStatusLeira(1L);
-                        }
-                        else if(pmmContext.getTipoMovComp() == 3){
-                            leiraBean.setStatusLeira(2L);
-                        }
-                        else{
-                            leiraBean.setStatusLeira(0L);
-                        }
-                        leiraBean.update();
+                        pmmContext.getCompostoCTR().updateLeira(leiraList.get(i), pmmContext.getTipoMovLeira());
+                        leiraSelectedList.add(leiraList.get(i).getIdLeira());
                     }
 
                 }
@@ -104,9 +81,10 @@ public class ListaLeiraActivity extends ActivityGeneric {
                 if(leiraSelectedList.size() > 0){
 
                     for (int i = 0; i < leiraSelectedList.size(); i++) {
-                        pmmContext.getMotoMecFertCTR().inserirMovLeira(leiraSelectedList.get(i), pmmContext.getTipoMovComp());
+                        pmmContext.getMotoMecFertCTR().inserirMovLeira(leiraSelectedList.get(i), pmmContext.getTipoMovLeira());
                     }
 
+                    EnvioDadosServ.getInstance().envioDados(18);
                     Intent it = new Intent(ListaLeiraActivity.this, MenuPrincPMMActivity.class);
                     startActivity(it);
                     finish();

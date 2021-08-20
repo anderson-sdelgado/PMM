@@ -170,12 +170,12 @@ public class EnvioDadosServ {
         return checkListCTR.verEnvioDados();
     }
 
-    public boolean verifEnvioCarreg() {
+    public boolean verifEnvioCarregInsumo() {
         CompostoCTR compostoCTR = new CompostoCTR();
-        return compostoCTR.verifEnvioCarreg();
+        return compostoCTR.verifEnvioCarregInsumo();
     }
 
-    public boolean verifEnvioLeiraDescarreg() {
+    public boolean verifEnvioCarregComposto() {
         CompostoCTR compostoCTR = new CompostoCTR();
         return compostoCTR.verifEnvioLeiraDescarreg();
     }
@@ -213,10 +213,10 @@ public class EnvioDadosServ {
             if (verifChecklist()) {
                 enviarChecklist();
             } else {
-                if (verifEnvioCarreg()) {
+                if (verifEnvioCarregInsumo()) {
                     envioCarreg();
                 } else {
-                    if (verifEnvioLeiraDescarreg()) {
+                    if (verifEnvioCarregComposto()) {
                         envioLeiraDescarreg();
                     } else {
                         if (verifPreCEC()) {
@@ -244,8 +244,8 @@ public class EnvioDadosServ {
 
     public boolean verifDadosEnvio() {
         if ((!verifBolFechadoMMFert())
-                && (!verifEnvioCarreg())
-                && (!verifEnvioLeiraDescarreg())
+                && (!verifEnvioCarregInsumo())
+                && (!verifEnvioCarregComposto())
                 && (!verifPreCEC())
                 && (!verifApontMMMovLeiraFert())
                 && (!verifChecklist())
@@ -281,9 +281,10 @@ public class EnvioDadosServ {
             CompostoCTR compostoCTR = new CompostoCTR();
             compostoCTR.updCarregInsumo(result);
         }
-        else if (result.trim().startsWith("GRAVOU-LEIRADESCARREG")) {
+        else if (result.trim().startsWith("GRAVOU-CARREGCOMPOSTO")) {
             CompostoCTR compostoCTR = new CompostoCTR();
-            compostoCTR.updCarregLeiraDescarreg(result);
+            Log.i("ECM", "RECEBIMENTO 1 ");
+            compostoCTR.updCarregComposto(result);
         }
         else if(result.trim().startsWith("PRECEC")){
             CECCTR cecCTR = new CECCTR();

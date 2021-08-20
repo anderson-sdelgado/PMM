@@ -1,11 +1,9 @@
 package br.com.usinasantafe.pmm.control;
 
 import android.content.Context;
-
-import com.google.gson.Gson;
+import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -35,6 +33,11 @@ public class CompostoCTR {
         return leiraDAO.getLeiraCod(codLeira);
     }
 
+    public List<LeiraBean> leiraStatusList(Long tipoMovLeira){
+        LeiraDAO leiraDAO = new LeiraDAO();
+        return leiraDAO.leiraStatusList(tipoMovLeira);
+    }
+
     public boolean pesqLeiraExibir(){
         CarregCompDAO carregCompDAO = new CarregCompDAO();
         return carregCompDAO.verLeiraExibir();
@@ -51,7 +54,12 @@ public class CompostoCTR {
         MotoMecFertCTR motoMecFuncCTR = new MotoMecFertCTR();
         ConfigCTR configCTR = new ConfigCTR();
         CarregCompDAO carregCompDAO = new CarregCompDAO();
-        carregCompDAO.abrirCarregComposto(motoMecFuncCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert(), configCTR.getConfig().getEquipConfig(), getLeiraCod(codLeira).getIdLeira());
+        carregCompDAO.abrirCarregComposto(motoMecFuncCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert(), configCTR.getConfig().getEquipConfig(), getLeiraCod(codLeira).getIdLeira(), configCTR.getOS().getIdOS());
+    }
+
+    public void updateLeira(LeiraBean leiraBean, Long tipoMovLeira){
+        LeiraDAO leiraDAO = new LeiraDAO();
+        leiraDAO.updateLeira(leiraBean, tipoMovLeira);
     }
 
     public void salvarLeiraDescarreg(Long codLeira){
@@ -61,12 +69,12 @@ public class CompostoCTR {
 
     public String dadosEnvioCarreg(){
         CarregCompDAO carregCompDAO = new CarregCompDAO();
-        return carregCompDAO.dadosEnvioCarreg();
+        return carregCompDAO.dadosEnvioCarregInsumo();
     }
 
     public String dadosEnvioLeiraDescarreg(){
         CarregCompDAO carregCompDAO = new CarregCompDAO();
-        return carregCompDAO.dadosEnvioLeiraDescarreg();
+        return carregCompDAO.dadosEnvioCarregComposto();
     }
 
     public boolean verProduto(String codProduto){
@@ -87,20 +95,28 @@ public class CompostoCTR {
     public void verifDadosCarreg(Context telaAtual, Class telaProx){
         CarregCompDAO carregCompDAO = new CarregCompDAO();
         ConfigCTR configCTR = new ConfigCTR();
+        configCTR.setStatusRetVerif(1L);
         carregCompDAO.verifDadosCarreg(configCTR.getConfig().getEquipConfig(), telaAtual, telaProx);
     }
 
     public void receberVerifOrdCarreg(String result) {
         try {
 
+            Log.i("ECM", "RECEBIMENTO 1 ");
             if (!result.contains("exceeded")) {
-
+                Log.i("ECM", "RECEBIMENTO 2 ");
                 Json json = new Json();
                 JSONArray jsonArray = json.jsonArray(result);
 
                 if (jsonArray.length() > 0) {
+
+                    Log.i("ECM", "RECEBIMENTO 2 ");
                     CarregCompDAO carregCompDAO = new CarregCompDAO();
                     carregCompDAO.recebOrdCarreg(jsonArray);
+
+                    ConfigCTR configCTR = new ConfigCTR();
+                    configCTR.setStatusRetVerif(0L);
+
                 }
                 else{
                     VerifDadosServ.status = 1;
@@ -111,6 +127,7 @@ public class CompostoCTR {
             }
 
         } catch (Exception e) {
+            Log.i("ECM", "ERRO DENTRO RECEBIMENTO = " + e);
             VerifDadosServ.status = 1;
             LogErroDAO.getInstance().insert(e);
         }
@@ -122,7 +139,6 @@ public class CompostoCTR {
         try{
 
             int pos1 = retorno.indexOf("_") + 1;
-
             String obj = retorno.substring(pos1);
 
             Json json = new Json();
@@ -133,25 +149,28 @@ public class CompostoCTR {
 
         }
         catch(Exception e){
+            Log.i("PMM", "ERRO = " + e);
             EnvioDadosServ.status = 1;
             LogErroDAO.getInstance().insert(e);
         }
 
     }
 
-    public void updCarregLeiraDescarreg(String result) {
+    public void updCarregComposto(String result) {
 
         try {
-
+            Log.i("ECM", "RECEBIMENTO 2 ");
             if (!result.contains("exceeded")) {
 
+                int pos1 = result.indexOf("_") + 1;
+                String obj = result.substring(pos1);
                 Json json = new Json();
-                JSONArray jsonArray = json.jsonArray(result);
-
+                JSONArray jsonArray = json.jsonArray(obj);
+                Log.i("ECM", "RECEBIMENTO 3 ");
                 if (jsonArray.length() > 0) {
-
+                    Log.i("ECM", "RECEBIMENTO 4 ");
                     CarregCompDAO carregCompDAO = new CarregCompDAO();
-                    carregCompDAO.updCarregLeiraDescarreg(jsonArray);
+                    carregCompDAO.updCarregComposto(jsonArray);
 
                 }
 
@@ -162,13 +181,14 @@ public class CompostoCTR {
             }
 
         } catch (Exception e) {
+            Log.i("ECM", "ERRO RECEBIMENTO = " + e);
             EnvioDadosServ.status = 1;
             LogErroDAO.getInstance().insert(e);
         }
 
     }
 
-    public boolean verifEnvioCarreg(){
+    public boolean verifEnvioCarregInsumo(){
         CarregCompDAO carregCompDAO = new CarregCompDAO();
         return carregCompDAO.verEnvioCarreg();
     }

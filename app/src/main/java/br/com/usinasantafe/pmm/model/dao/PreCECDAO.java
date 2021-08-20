@@ -12,7 +12,6 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
-import br.com.usinasantafe.pmm.util.Json;
 import br.com.usinasantafe.pmm.util.Tempo;
 
 public class PreCECDAO {
@@ -24,7 +23,7 @@ public class PreCECDAO {
 
     public void abrirPreCEC(){
         PreCECBean preCECBean = new PreCECBean();
-        preCECBean.setDataSaidaUsina(Tempo.getInstance().dthrSemTZ());
+        preCECBean.setDataSaidaUsina(Tempo.getInstance().dthr());
         preCECBean.setDataChegCampo("");
         preCECBean.setDataSaidaCampo("");
         preCECBean.setAtivOS(0L);
@@ -70,7 +69,7 @@ public class PreCECDAO {
         preCECBean.setMoto(matricFunc);
         preCECBean.setTurno(codTurno);
         preCECBean.setCam(nroEquip);
-        preCECBean.setDataSaidaCampo(Tempo.getInstance().dthrSemTZ());
+        preCECBean.setDataSaidaCampo(Tempo.getInstance().dthr());
         preCECBean.setStatus(2L);
         preCECBean.update();
         delPrecCEC();
@@ -168,7 +167,7 @@ public class PreCECDAO {
 
     public void setDataChegCampo(){
         PreCECBean preCECBean = getPreCECAberto();
-        preCECBean.setDataChegCampo(Tempo.getInstance().dthrSemTZ());
+        preCECBean.setDataChegCampo(Tempo.getInstance().dthr());
         preCECBean.update();
     }
 
@@ -253,7 +252,7 @@ public class PreCECDAO {
                 retorno = "NÃO POSSUE CARREGAMENTOS";
             }
             else {
-                retorno = "ULT. VIAGEM: " + Tempo.getInstance().dthrSemTZ(preCECBean.getDataSaidaCampo());
+                retorno = "ULT. VIAGEM: " + preCECBean.getDataSaidaCampo();
             }
         }
         preCECList.clear();

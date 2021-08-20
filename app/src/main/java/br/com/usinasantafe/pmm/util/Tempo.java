@@ -3,9 +3,6 @@ package br.com.usinasantafe.pmm.util;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
-
-import android.util.Log;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
@@ -23,33 +20,17 @@ public class Tempo {
         return instance;
     }
 
-    public Long dtHrSemTZLong(){
-        TimeZone tz = TimeZone.getDefault();
+    public Long dtHr(){
         Date dataHora = new Date();
-        Date d = new Date();
-        return dataHora.getTime() - tz.getOffset(d.getTime()) + dif();
+        return dataHora.getTime() + dif();
     }
 
-    public String dthrSemTZ(){
-        TimeZone tz = TimeZone.getDefault();
-        Date dataHora = new Date();
-        Date date = new Date();
-        Long dthrLong =  dataHora.getTime() - tz.getOffset(date.getTime()) + dif();
-        return longParaDthrString(dthrLong);
+    public String dthr(){
+        return dthrLongToString(dtHr());
     }
 
-    public String dthrComTZ(){
-        Date dataHora = new Date();
-        Long dthrLong =  dataHora.getTime() + dif();
-        return longParaDthrString(dthrLong);
-    }
-
-    public String dtSemTZ(){
-        TimeZone tz = TimeZone.getDefault();
-        Date dataHora = new Date();
-        Date date = new Date();
-        Long dthrLong =  dataHora.getTime() - tz.getOffset(date.getTime()) + dif();
-        return longParaDtString(dthrLong);
+    public String dt(){
+        return dtLongToString(dtHr());
     }
 
     public Long dthrAddMinutoLong(Long dthrLong, int minuto){
@@ -57,17 +38,9 @@ public class Tempo {
         return dthrLong;
     }
 
-    public String dthrSemTZ(String dthrString){
-        Date date = stringParaCalendar(dthrString).getTime();
-        TimeZone tz = TimeZone.getDefault();
-        Date dt = new Date();
-        Long dthrLong =  date.getTime() + tz.getOffset(dt.getTime());
-        return longParaDthrString(dthrLong);
-    }
-
     public boolean verDthrServ(String dthrServ){
 
-        Date dataHoraServ = stringParaCalendar(dthrServ).getTime();
+        Date dataHoraServ = dthrStringToCalendar(dthrServ).getTime();
         Long longDtServ =  dataHoraServ.getTime();
 
         Date dataHoraCel = new Date();
@@ -131,10 +104,7 @@ public class Tempo {
         Date dataHoraDig = cal.getTime();
         Long longDtDig =  dataHoraDig.getTime();
 
-        Date dataHoraCel = new Date();
-        Long longDtCel =  dataHoraCel.getTime();
-
-        Long dif = longDtDig - longDtCel;
+        Long dif = longDtDig - dtHr();
 
         return dif;
 
@@ -148,7 +118,7 @@ public class Tempo {
         return configBean.getDifDthrConfig();
     }
 
-    public String longParaDthrString(Long dthrLong){
+    public String dthrLongToString(Long dthrLong){
 
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(dthrLong);
@@ -196,7 +166,7 @@ public class Tempo {
 
     }
 
-    public String longParaDtString(Long dthrLong){
+    public String dtLongToString(Long dthrLong){
 
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(dthrLong);
@@ -227,11 +197,11 @@ public class Tempo {
     }
 
 
-    public Long stringParaLong(String dthrString){
-        return stringParaCalendar(dthrString).getTimeInMillis();
+    public Long dthrStringToLong(String dthrString){
+        return dthrStringToCalendar(dthrString).getTimeInMillis();
     }
 
-    public Calendar stringParaCalendar(String dthrString){
+    public Calendar dthrStringToCalendar(String dthrString){
 
         Calendar calendar = Calendar.getInstance();
 

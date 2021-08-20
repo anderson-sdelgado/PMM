@@ -5,7 +5,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -21,15 +20,34 @@ public class LeiraDAO {
     public LeiraDAO() {
     }
 
+    public void updateLeira(LeiraBean leiraBean, Long tipoMovLeira){
+        if(tipoMovLeira == 1){
+            leiraBean.setStatusLeira(1L);
+        }
+        else if(tipoMovLeira == 3){
+            leiraBean.setStatusLeira(2L);
+        }
+        else{
+            leiraBean.setStatusLeira(0L);
+        }
+        leiraBean.update();
+    }
+
     public void inserirMovLeira(Long idLeira, Long tipo, Long idBol, Long idExtBol){
+
+        String dthrString = Tempo.getInstance().dthr();
+        Long dthrLong = Tempo.getInstance().dthrStringToLong(dthrString);
+
         MovLeiraBean movLeiraBean = new MovLeiraBean();
         movLeiraBean.setTipoMovLeira(tipo);
         movLeiraBean.setIdLeiraMovLeira(idLeira);
-        movLeiraBean.setDthrMovLeira(Tempo.getInstance().dthrSemTZ());
+        movLeiraBean.setDthrMovLeira(dthrString);
+        movLeiraBean.setDthrLongMovLeira(dthrLong);
         movLeiraBean.setIdBolMMFert(idBol);
         movLeiraBean.setIdExtBolMMFert(idExtBol);
         movLeiraBean.setStatusMovLeira(1L);
         movLeiraBean.insert();
+
     }
 
     public void updateMovLeira(ArrayList<Long> idMovLeiraArrayList){
@@ -67,6 +85,31 @@ public class LeiraDAO {
         return ret;
     }
 
+
+    public boolean verDataHoraMovLeira(Long idBol){
+
+        boolean ret = true;
+
+        if(!hasMovLeiraBol(idBol)){
+            ret = false;
+        }
+        else{
+            if ((Tempo.getInstance().dthrAddMinutoLong(getUltMovLeira(idBol).getDthrLongMovLeira(), 1) < Tempo.getInstance().dtHr())) {
+                ret = false;
+            }
+        }
+
+        return ret;
+
+    }
+
+    public MovLeiraBean getUltMovLeira(Long idBol){
+        List<MovLeiraBean> movLeiraList = movLeiraList(idBol);
+        MovLeiraBean movLeiraBean = movLeiraList.get(movLeiraList.size() - 1);
+        movLeiraList.clear();
+        return movLeiraBean;
+    }
+
     public LeiraBean getLeiraCod(Long codLeira){
         List<LeiraBean> leiraList = leiraCodList(codLeira);
         LeiraBean leiraBean = (LeiraBean) leiraList.get(0);
@@ -79,6 +122,21 @@ public class LeiraDAO {
         return leiraBean.get("codLeira", codLeira);
     }
 
+    public List<LeiraBean> leiraStatusList(Long tipoMov){
+        Long statusLeira;
+        if(tipoMov == 2){
+            statusLeira = 1L;
+        }
+        else if(tipoMov == 4){
+            statusLeira = 2L;
+        }
+        else{
+            statusLeira = 0L;
+        }
+        LeiraBean leiraBean = new LeiraBean();
+        return leiraBean.getAndOrderBy("statusLeira", statusLeira, "codLeira", true);
+    }
+
     public List<MovLeiraBean> movLeiraList(Long idBol){
         MovLeiraBean movLeiraBean = new MovLeiraBean();
         return movLeiraBean.getAndOrderBy("idBolMMFert", idBol, "idMovLeira", true);
@@ -87,6 +145,13 @@ public class LeiraDAO {
     public List<MovLeiraBean> movLeiraList(ArrayList<Long> idMovLeiraArrayList){
         MovLeiraBean movLeiraBean = new MovLeiraBean();
         return movLeiraBean.in("idMovLeira", idMovLeiraArrayList);
+    }
+
+    public boolean hasMovLeiraBol(Long idBol){
+        List<MovLeiraBean> apontMMFertList = movLeiraList(idBol);
+        boolean ret = apontMMFertList.size() > 0;
+        apontMMFertList.clear();
+        return ret;
     }
 
     public List<MovLeiraBean> movLeiraEnvioList() {

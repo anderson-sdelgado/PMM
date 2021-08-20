@@ -34,7 +34,7 @@ public class PMMContext extends Application {
     private int posRecolh;
     private int contDataHora;
     private int posCheckList;
-    private int tipoMovComp;
+    private Long tipoMovLeira;
     private boolean verTelaLeira;
 
     private int dia;
@@ -197,12 +197,11 @@ public class PMMContext extends Application {
         this.verTelaLeira = verTelaLeira;
     }
 
-    public int getTipoMovComp() {
-        return tipoMovComp;
+    public Long getTipoMovLeira() {
+        return tipoMovLeira;
     }
 
-    public void setTipoMovComp(int tipoMovComp) {
-        this.tipoMovComp = tipoMovComp;
+    public void setTipoMovLeira(Long tipoMovLeira) {
+        this.tipoMovLeira = tipoMovLeira;
     }
-
 }

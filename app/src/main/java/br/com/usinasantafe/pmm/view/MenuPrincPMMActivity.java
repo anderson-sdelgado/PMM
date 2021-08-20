@@ -43,8 +43,6 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
 
         customHandler.postDelayed(updateTimerThread, 0);
 
-        ArrayList<String> itens = new ArrayList<String>();
-
         if (Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())) {
             pmmContext.getConfigCTR().setDifDthrConfig(0L);
         }
@@ -57,6 +55,8 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                 finish();
             }
         }
+
+        ArrayList<String> itens = new ArrayList<String>();
 
         itens.add("TRABALHANDO");
         itens.add("PARADO");
@@ -77,7 +77,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                     itens.add("TROCAR IMPLEMENTO");
                 }
                 if(rFuncaoAtivParBean.getCodFuncao() == 5){
-                    if(pmmContext.getConfigCTR().verTipoOS()){
+                    if(pmmContext.getConfigCTR().getOS().getTipoOS() == 1){
                         itens.add("COMPOSTAGEM");
                     }
                 }
@@ -107,7 +107,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                 String text = textView.getText().toString();
 
                 if (text.equals("TRABALHANDO")) {
-                    if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
+                    if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
@@ -118,7 +118,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         finish();
                     }
                 } else if (text.equals("PARADO")) {
-                    if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
+                    if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
@@ -199,7 +199,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! FAÇA ALGUM APONTAMENTO ANTES DE REALIZAR A TROCA DO(S) IMPLEMENTO(S)!",
                                 Toast.LENGTH_LONG).show();
                     } else {
-                        if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
+                        if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
                             Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                     Toast.LENGTH_LONG).show();
                         } else {
@@ -215,9 +215,14 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                     }
                 }
                 else if (text.equals("COMPOSTAGEM")) {
-                    Intent it = new Intent(MenuPrincPMMActivity.this, ListaTipoCompActivity.class);
-                    startActivity(it);
-                    finish();
+                    if (pmmContext.getMotoMecFertCTR().verDataHoraInsMovLeira()) {
+                        Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Intent it = new Intent(MenuPrincPMMActivity.this, ListaTipoMovLeiraActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
                 }
                 else if (text.equals("DATA/HORA")) {
                     if(Tempo.getInstance().dif() == 0){
@@ -263,7 +268,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                 textViewProcessoNormal.setText("Todos os Dados já foram enviados e recebidos");
             }
 
-            textViewDataHora.setText(Tempo.getInstance().dthrComTZ());
+            textViewDataHora.setText(Tempo.getInstance().dthr());
             if(Tempo.getInstance().dif() == 0){
                 textViewDataHora.setTextColor(Color.GREEN);
             }

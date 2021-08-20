@@ -98,7 +98,7 @@ public class BackupPreCECActivity extends ActivityGeneric {
         if(preCECBean.getCarr3() != 0){
             retorno = retorno + "CARRETA 3 = " + preCECBean.getCarr3() + "\n";
         }
-        retorno = retorno + "SAÍDA DO CAMPO = " + Tempo.getInstance().dthrSemTZ(preCECBean.getDataSaidaCampo()) + "\n";
+        retorno = retorno + "SAÍDA DO CAMPO = " + preCECBean.getDataSaidaCampo() + "\n";
 
         return retorno;
 

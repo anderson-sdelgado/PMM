@@ -27,8 +27,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.ListaLeiraActivity"></activity>
-        <activity android:name=".view.ListaTipoCompActivity" />
+        <activity
+            android:name=".view.ListaLeiraActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".view.ListaTipoMovLeiraActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".view.ProdutoActivity"
             android:screenOrientation="portrait"

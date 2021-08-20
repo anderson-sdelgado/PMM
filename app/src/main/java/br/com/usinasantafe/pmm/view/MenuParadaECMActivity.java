@@ -56,7 +56,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
 
                 Log.i("ECM", "Funcao = " + motoMecBean.getCodFuncaoOperMotoMec());
 
-                if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
+                if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
                     Toast.makeText(MenuParadaECMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                             Toast.LENGTH_LONG).show();
                 }
@@ -198,7 +198,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                if (pmmContext.getMotoMecFertCTR().verDataHoraParaInserirApont()) {
+                if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
                     Toast.makeText(MenuParadaECMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                             Toast.LENGTH_LONG).show();
                 }

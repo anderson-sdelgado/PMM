@@ -134,26 +134,24 @@ public class OSDAO {
 
     public void recDadosOS(JSONArray jsonArray) throws JSONException {
 
+        osDelAll();
         for (int i = 0; i < jsonArray.length(); i++) {
-
             JSONObject objeto = jsonArray.getJSONObject(i);
             Gson gson = new Gson();
             OSBean osBean = gson.fromJson(objeto.toString(), OSBean.class);
             osBean.insert();
-
         }
 
     }
 
     public void recDadosROSAtiv(JSONArray jsonArray) throws JSONException {
 
+        rOSAtivDelAll();
         for (int j = 0; j < jsonArray.length(); j++) {
-
             JSONObject objeto = jsonArray.getJSONObject(j);
             Gson gson = new Gson();
             ROSAtivBean rosAtivBean = gson.fromJson(objeto.toString(), ROSAtivBean.class);
             rosAtivBean.insert();
-
         }
 
     }
@@ -202,22 +200,6 @@ public class OSDAO {
 
         }
 
-    }
-
-    public boolean verTipoOS(Long nroOS){
-        boolean ret = true;
-        OSBean osBean = new OSBean();
-        if(osBean.hasElements()){
-            List<OSBean> osList = osBean.get("nroOS", nroOS);
-            if(osList.size() > 0){
-                osBean = osList.get(0);
-                if(osBean.getTipoOS() == 0){
-                    ret = false;
-                }
-            }
-            osList.clear();
-        }
-        return ret;
     }
 
     public boolean verOS(Long nroOS){

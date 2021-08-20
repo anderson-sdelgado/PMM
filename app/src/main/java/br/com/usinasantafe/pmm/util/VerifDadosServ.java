@@ -83,6 +83,7 @@ public class VerifDadosServ {
         } else if (this.tipo.equals("Informativo")) {
             informativoCTR.receberVerifInformativo(result);
         } else if(this.tipo.equals("OrdCarreg")) {
+            Log.i("ECM", "CHEGOU AKI RECEBIDO 1 ");
             compostoCTR.receberVerifOrdCarreg(result);
         } else if (this.tipo.equals("CEC")) {
             cecCTR.receberVerifCEC(result);
