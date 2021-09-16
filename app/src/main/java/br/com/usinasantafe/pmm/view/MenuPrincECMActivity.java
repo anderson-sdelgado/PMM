@@ -28,6 +28,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
     private TextView textViewMotorista;
     private TextView textViewCarreta;
     private TextView textViewUltimaViagem;
+    private TextView textViewPropriedade;
     private ProgressDialog progressBar;
     private List<MotoMecBean> motoMecList;
     private int posicao;
@@ -44,6 +45,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
         textViewMotorista = findViewById(R.id.textViewMotorista);
         textViewCarreta = findViewById(R.id.textViewCarreta);
         textViewUltimaViagem = findViewById(R.id.textViewUltimaViagem);
+        textViewPropriedade = findViewById(R.id.textViewPropriedade);
 
         textViewMotorista.setText(pmmContext.getMotoMecFertCTR().getMatricFunc().getMatricFunc() + " - " + pmmContext.getMotoMecFertCTR().getMatricFunc().getNomeFunc());
         textViewCarreta.setText(pmmContext.getMotoMecFertCTR().getDescrCarreta());
@@ -58,7 +60,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
         }
         else {
             if ((pmmContext.getConfigCTR().getConfig().getDifDthrConfig() == 0) && (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 8L)) {
-                pmmContext.setContDataHora(1);
+                pmmContext.getConfigCTR().setContDataHora(1);
                 pmmContext.getConfigCTR().setPosicaoTela(5L);
                 Intent it = new Intent(MenuPrincECMActivity.this, MsgDataHoraActivity.class);
                 startActivity(it);

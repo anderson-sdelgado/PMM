@@ -24,8 +24,17 @@ import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class CheckListCTR {
 
+    private int posCheckList;
 
     public CheckListCTR() {
+    }
+
+    public int getPosCheckList() {
+        return posCheckList;
+    }
+
+    public void setPosCheckList(int posCheckList) {
+        this.posCheckList = posCheckList;
     }
 
     public boolean verCabecAberto(){
@@ -171,7 +180,7 @@ public class CheckListCTR {
         respItemCheckListDAO.delRespItem(cabecCheckListDAO.idCabecCLFechArrayList());
         cabecCheckListDAO.delCabecCLFech();
 
-        EnvioDadosServ.getInstance().envioDados(3);
+        EnvioDadosServ.getInstance().envioDados();
 
     }
 

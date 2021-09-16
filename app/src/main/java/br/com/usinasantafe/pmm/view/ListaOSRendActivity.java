@@ -33,7 +33,7 @@ public class ListaOSRendActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                pmmContext.setPosRend(position);
+                pmmContext.getMotoMecFertCTR().setPosRend(position);
                 Intent it = new Intent(ListaOSRendActivity.this, RendimentoActivity.class);
                 startActivity(it);
                 finish();

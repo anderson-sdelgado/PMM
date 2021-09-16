@@ -199,10 +199,6 @@ public abstract class Entidade implements Serializable {
 		return all().size() > 0;
 	}
 
-	public int count() {
-		return all().size();
-	}
-
 	public List in(String campo, List valores){
 		try {
 			QueryBuilder<String, Object> queryBuilder =

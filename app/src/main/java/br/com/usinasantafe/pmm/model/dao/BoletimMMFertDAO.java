@@ -92,7 +92,7 @@ public class BoletimMMFertDAO {
 
         boletimMMList.clear();
 
-        EnvioDadosServ.getInstance().envioDados(10);
+        EnvioDadosServ.getInstance().envioDados();
 
     }
 

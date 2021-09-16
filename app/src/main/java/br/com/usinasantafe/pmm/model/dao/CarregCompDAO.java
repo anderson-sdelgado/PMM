@@ -100,7 +100,7 @@ public class CarregCompDAO {
         carregCompBean.setStatusCarreg(1L);
         carregCompBean.insert();
 
-        EnvioDadosServ.getInstance().envioDados(12);
+        EnvioDadosServ.getInstance().envioDados();
 
     }
 
@@ -116,7 +116,7 @@ public class CarregCompDAO {
         carregCompBean.setStatusCarreg(1L);
         carregCompBean.insert();
 
-        EnvioDadosServ.getInstance().envioDados(13);
+        EnvioDadosServ.getInstance().envioDados();
 
     }
 
@@ -127,7 +127,7 @@ public class CarregCompDAO {
         carregCompBean.setStatusCarreg(4L);
         carregCompBean.update();
 
-        EnvioDadosServ.getInstance().envioDados(14);
+        EnvioDadosServ.getInstance().envioDados();
 
     }
 

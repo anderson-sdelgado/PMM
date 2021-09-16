@@ -48,7 +48,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
         }
         else {
             if ((pmmContext.getConfigCTR().getConfig().getDifDthrConfig() == 0) && (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 8L)) {
-                pmmContext.setContDataHora(1);
+                pmmContext.getConfigCTR().setContDataHora(1);
                 pmmContext.getConfigCTR().setPosicaoTela(5L);
                 Intent it = new Intent(MenuPrincPMMActivity.this, MsgDataHoraActivity.class);
                 startActivity(it);
@@ -205,7 +205,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         } else {
                             pmmContext.getMotoMecFertCTR().inserirParadaImplemento();
                             pmmContext.getConfigCTR().setPosicaoTela(10L);
-                            pmmContext.setContImplemento(1L);
+                            pmmContext.getMotoMecFertCTR().setContImplemento(1L);
                             customHandler.removeCallbacks(updateTimerThread);
                             Intent it = new Intent(MenuPrincPMMActivity.this, ImplementoActivity.class);
                             startActivity(it);
@@ -237,7 +237,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         alerta.show();
                     }
                     else{
-                        pmmContext.setContDataHora(1);
+                        pmmContext.getConfigCTR().setContDataHora(1);
                         pmmContext.getConfigCTR().setPosicaoTela(5L);
                         Intent it = new Intent(MenuPrincPMMActivity.this, DataHoraActivity.class);
                         startActivity(it);

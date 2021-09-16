@@ -39,7 +39,7 @@ public class InformacaoActivity extends ActivityGeneric {
                     "PESO LÍQUIDO = " + carregCompBean.getPesoLiquidoCarreg() + "\n");
         }
 
-        pmmContext.setVerTelaLeira(false);
+        pmmContext.getCompostoCTR().setVerTelaLeira(false);
 
         buttonRetMenuPesq.setOnClickListener(new View.OnClickListener() {
 

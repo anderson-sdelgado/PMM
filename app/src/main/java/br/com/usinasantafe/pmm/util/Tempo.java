@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 
@@ -228,6 +229,15 @@ public class Tempo {
 
         return calendar;
 
+    }
+
+    public void zerarDifTempo(){
+        ConfigCTR configCTR = new ConfigCTR();
+        if (configCTR.hasElemConfig()) {
+            if (verDthrServ(configCTR.getConfig().getDtServConfig())) {
+                configCTR.setDifDthrConfig(0L);
+            }
+        }
     }
 
 }

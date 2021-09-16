@@ -2,26 +2,23 @@ package br.com.usinasantafe.pmm.control;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
-
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.List;
-
 import br.com.usinasantafe.pmm.model.bean.AtualAplicBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.OSBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.PropriedadeBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
 import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
 import br.com.usinasantafe.pmm.model.dao.AtualAplicDAO;
 import br.com.usinasantafe.pmm.model.dao.ConfigDAO;
 import br.com.usinasantafe.pmm.model.dao.EquipDAO;
+import br.com.usinasantafe.pmm.model.dao.FrenteDAO;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.model.dao.OSDAO;
+import br.com.usinasantafe.pmm.model.dao.PropriedadeDAO;
 import br.com.usinasantafe.pmm.model.dao.RFuncaoAtivParDAO;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
@@ -31,22 +28,25 @@ import br.com.usinasantafe.pmm.view.MenuInicialActivity;
 
 public class ConfigCTR {
 
+    private int contDataHora;
+
+    private int dia;
+    private int mes;
+    private int ano;
+    private int hora;
+    private int minuto;
+
+    private Long idPropriedade;
+    private Long idFrente;
+
     public ConfigCTR() {
     }
 
-    public boolean hasElements(){
+    /////////////////////////////////////// CONFIG ///////////////////////////////////////////////
+
+    public boolean hasElemConfig(){
         ConfigDAO configDAO = new ConfigDAO();
         return configDAO.hasElements();
-    }
-
-    public boolean verSenha(String senha){
-        ConfigDAO configDAO = new ConfigDAO();
-        return configDAO.verSenha(senha);
-    }
-
-    public void salvarConfig(String senha){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.salvarConfig(senha);
     }
 
     public ConfigBean getConfig(){
@@ -54,77 +54,19 @@ public class ConfigCTR {
         return configDAO.getConfig();
     }
 
-    public void clearDadosFert(){
-        setBocalConfig(0L);
-        setVelocConfig(0L);
-        setPressaoConfig(0D);
+    public void salvarConfig(String senha){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.salvarConfig(senha);
     }
 
-    /////////////////////////////////////// SET //////////////////////////////////////////////////
-
-    public void setEquipConfig(EquipBean equipBean){
+    public boolean verSenha(String senha){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setEquipConfig(equipBean);
-    }
-
-    public void setDtServConfig(String data){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setDtServConfig(data);
+        return configDAO.verSenha(senha);
     }
 
     public void setStatusConConfig(Long status){
         ConfigDAO configDAO = new ConfigDAO();
         configDAO.setStatusConConfig(status);
-    }
-
-    public void setOsConfig(Long nroOS){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setOsConfig(nroOS);
-    }
-
-    public void setAtivConfig(Long idAtiv){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setAtivConfig(idAtiv);
-    }
-
-    public void setUltParadaBolConfig(Long idParada){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setUltParadaBolConfig(idParada);
-    }
-
-    public void setPressaoConfig(Double pressao){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setPressaoConfig(pressao);
-    }
-
-    public void setVelocConfig(Long veloc){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setVelocConfig(veloc);
-    }
-
-    public void setBocalConfig(Long bocal){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setBocalConfig(bocal);
-    }
-
-    public void setHorimetroConfig(Double horimetro){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setHorimetroConfig(horimetro);
-    }
-
-    public void setCheckListConfig(Long idTurno){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setCheckListConfig(idTurno);
-    }
-
-    public void setPosFluxoViagem(Long posFluxoViagem){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setPosFluxoViagem(posFluxoViagem);
-    }
-
-    public void setDifDthrConfig(Long difDthrConfig){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setDifDthrConfig(difDthrConfig);
     }
 
     public void setPosicaoTela(Long posicaoTela){
@@ -137,37 +79,75 @@ public class ConfigCTR {
         configDAO.setStatusRetVerif(statusRetVerif);
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////
-
-    ////////////////////////////////////// OS ////////////////////////////////////////////////////
-
-    public boolean verOS(Long nroOS){
-        OSDAO osDAO = new OSDAO();
-        AtividadeDAO atividadeDAO = new AtividadeDAO();
-        return (osDAO.verOS(nroOS) && atividadeDAO.verROSAtiv(nroOS));
-    }
-
-    public OSBean getOS(){
-        OSDAO osDAO = new OSDAO();
-        return osDAO.getOSBean(getConfig().getOsConfig());
-    }
-
-    public void osDelAll(){
-        OSDAO osDAO = new OSDAO();
-        osDAO.osDelAll();
-    }
-
-    public void rOSAtivDelAll(){
-        OSDAO osDAO = new OSDAO();
-        osDAO.rOSAtivDelAll();
+    public Long getStatusRetVerif(){
+        ConfigDAO configDAO = new ConfigDAO();
+        return configDAO.getStatusRetVerif();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    ///////////////////////////////////// DATA HORA ///////////////////////////////////////////////
+
+    public int getContDataHora() {
+        return contDataHora;
+    }
+
+    public void setContDataHora(int contDataHora) {
+        this.contDataHora = contDataHora;
+    }
+
+    public int getDia() {
+        return dia;
+    }
+
+    public void setDia(int dia) {
+        this.dia = dia;
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public int getHora() {
+        return hora;
+    }
+
+    public void setHora(int hora) {
+        this.hora = hora;
+    }
+
+    public int getMinuto() {
+        return minuto;
+    }
+
+    public void setMinuto(int minuto) {
+        this.minuto = minuto;
+    }
+
+    public void setDifDthrConfig(Long difDthr){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setDifDthrConfig(difDthr);
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+
     ///////////////////////////////////// EQUIP ///////////////////////////////////////////////////
 
-    public void verAtualAplic(String versaoAplic, MenuInicialActivity menuInicialActivity, ProgressDialog progressDialog) {
-        VerifDadosServ.getInstance().verifAtualAplic(dadosVerAtualAplicBean(versaoAplic), menuInicialActivity, progressDialog);
+    public void setEquipConfig(EquipBean equipBean){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setEquipConfig(equipBean);
     }
 
     public void verEquipConfig(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
@@ -178,74 +158,6 @@ public class ConfigCTR {
     public EquipBean getEquip(){
         EquipDAO equipDAO = new EquipDAO();
         return equipDAO.getEquip();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    ////////////////////////////////////// ATUALIZAR DADOS ////////////////////////////////////////
-
-    public void atualTodasTabelas(Context tela, ProgressDialog progressDialog){
-        AtualDadosServ.getInstance().atualTodasTabBD(tela, progressDialog);
-    }
-
-    public void atualTodasTabelas(){
-        AtualDadosServ.getInstance().atualTodasTabBD();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    ////////////////////////////////////// INFORMAÇÃO /////////////////////////////////////////////
-
-    public void setVerInforConfig(Long tipo){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setVerInforConfig(tipo);
-    }
-
-    public Long getVerRecInformativo(){
-        ConfigDAO configDAO = new ConfigDAO();
-        return configDAO.getVerRecInformativo();
-    }
-
-    public Long getStatusRetVerif(){
-        ConfigDAO configDAO = new ConfigDAO();
-        return configDAO.getStatusRetVerif();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    /////////////////////////////////////// LOG ERRO //////////////////////////////////////////////
-
-    public boolean verEnvioLogErro(){
-        LogErroDAO logErroDAO = new LogErroDAO();
-        return logErroDAO.verEnvioLogErro();
-    }
-
-    public String dadosEnvioLogErro(){
-        LogErroDAO logErroDAO = new LogErroDAO();
-        return logErroDAO.dadosEnvio();
-    }
-
-    public void updLogErro(String retorno){
-
-        try{
-
-            int pos1 = retorno.indexOf("_") + 1;
-            String objPrinc = retorno.substring(pos1);
-
-            Json json = new Json();
-            LogErroDAO logErroDAO = new LogErroDAO();
-            logErroDAO.updLogErro(json.jsonArray(objPrinc));
-            logErroDAO.delLogErroFechado();
-
-            EnvioDadosServ.getInstance().envioDados(6);
-
-        }
-        catch(Exception e){
-            EnvioDadosServ.status = 1;
-            LogErroDAO.getInstance().insert(e);
-        }
-
-
     }
 
     public void receberVerifEquip(String result){
@@ -287,6 +199,45 @@ public class ConfigCTR {
         }
 
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////// OS - ATIVIDADE /////////////////////////////////////////////
+
+    public void clearOSAtiv(){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setOsConfig(0L);
+        configDAO.setAtivConfig(0L);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////// OS ////////////////////////////////////////////////////
+
+    public void setOsConfig(Long nroOS){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setOsConfig(nroOS);
+    }
+
+    public boolean verOS(Long nroOS){
+        OSDAO osDAO = new OSDAO();
+        AtividadeDAO atividadeDAO = new AtividadeDAO();
+        return (osDAO.verOS(nroOS) && atividadeDAO.verROSAtiv(nroOS));
+    }
+
+    public OSBean getOS(){
+        OSDAO osDAO = new OSDAO();
+        return osDAO.getOSBean(getConfig().getOsConfig());
+    }
+
+    public void osDelAll(){
+        OSDAO osDAO = new OSDAO();
+        osDAO.osDelAll();
+    }
+
+    public void rOSAtivDelAll(){
+        OSDAO osDAO = new OSDAO();
+        osDAO.rOSAtivDelAll();
+    }
 
     public void receberVerifOS(String result){
 
@@ -325,6 +276,15 @@ public class ConfigCTR {
             LogErroDAO.getInstance().insert(e);
             VerifDadosServ.getInstance().msg("FALHA DE PESQUISA DE OS! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////// ATIVIDADE //////////////////////////////////////////////
+
+    public void setAtivConfig(Long idAtiv){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setAtivConfig(idAtiv);
     }
 
     public void receberVerifAtiv(String result){
@@ -371,6 +331,155 @@ public class ConfigCTR {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////// PARADA ///////////////////////////////////////////////
+
+    public void setUltParadaBolConfig(Long idParada){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setUltParadaBolConfig(idParada);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////// HORIMETRO /////////////////////////////////////////////
+
+    public void setHorimetroConfig(Double horimetro){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setHorimetroConfig(horimetro);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////// CHECKLIST /////////////////////////////////////////////
+
+    public void setCheckListConfig(Long idTurno){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setCheckListConfig(idTurno);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////// FERTIRRIGAÇÃO ///////////////////////////////////////////
+
+    public void clearDadosFert(){
+        setBocalConfig(0L);
+        setVelocConfig(0L);
+        setPressaoConfig(0D);
+    }
+
+    public void setPressaoConfig(Double pressao){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setPressaoConfig(pressao);
+    }
+
+    public void setVelocConfig(Long veloc){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setVelocConfig(veloc);
+    }
+
+    public void setBocalConfig(Long bocal){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setBocalConfig(bocal);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////// COMPOSTAGEM ////////////////////////////////////////////
+
+    public void setPosFluxoCarregComposto(Long posFluxoCarregComposto){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setPosFluxoCarregComposto(posFluxoCarregComposto);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////// ECM (FRENTE - PROPRIEDADE) ////////////////////////////////////
+
+    public void setIdFrente(Long codFrente) {
+        FrenteDAO frenteDAO = new FrenteDAO();
+        this.idFrente = frenteDAO.getFrente(codFrente).getIdFrente();
+    }
+
+    public boolean verFrente(Long codFrente){
+        FrenteDAO frenteDAO = new FrenteDAO();
+        return frenteDAO.verFrente(codFrente);
+    }
+
+    public void setIdPropriedade(Long idPropriedade) {
+        this.idPropriedade = idPropriedade;
+    }
+
+    public boolean verPropriedade(Long idPropriedade){
+        PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
+        return propriedadeDAO.verPropriedade(idPropriedade);
+    }
+
+    public PropriedadeBean getPropriedade(){
+        PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
+        return propriedadeDAO.getPropriedade(idPropriedade);
+    }
+
+    public void setFrentePropriedade(){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setFrentePropriedade(idFrente, idPropriedade);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////// INFORMATIVO ////////////////////////////////////////////
+
+    public void setVerInforConfig(Long tipo){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setVerInforConfig(tipo);
+    }
+
+    public Long getVerRecInformativo(){
+        ConfigDAO configDAO = new ConfigDAO();
+        return configDAO.getVerRecInformativo();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////// LOG ERRO //////////////////////////////////////////////
+
+    public boolean verEnvioLogErro(){
+        LogErroDAO logErroDAO = new LogErroDAO();
+        return logErroDAO.verEnvioLogErro();
+    }
+
+    public String dadosEnvioLogErro(){
+        LogErroDAO logErroDAO = new LogErroDAO();
+        return logErroDAO.dadosEnvio();
+    }
+
+    public void updLogErro(String retorno){
+
+        try{
+
+            int pos1 = retorno.indexOf("_") + 1;
+            String objPrinc = retorno.substring(pos1);
+
+            Json json = new Json();
+            LogErroDAO logErroDAO = new LogErroDAO();
+            logErroDAO.updLogErro(json.jsonArray(objPrinc));
+            logErroDAO.delLogErroFechado();
+
+            EnvioDadosServ.getInstance().envioDados();
+
+        }
+        catch(Exception e){
+            EnvioDadosServ.status = 1;
+            LogErroDAO.getInstance().insert(e);
+        }
+
+
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////// ATUALIZAR APLIC /////////////////////////////////////////
+
     public AtualAplicBean recAtual(String result) {
 
         AtualAplicBean atualAplicBean = new AtualAplicBean();
@@ -392,11 +501,26 @@ public class ConfigCTR {
         return atualAplicBean;
     }
 
-    public String dadosVerAtualAplicBean(String versaoAplic){
+    public void verAtualAplic(String versaoAplic, MenuInicialActivity menuInicialActivity, ProgressDialog progressDialog) {
         EquipDAO equipDAO = new EquipDAO();
         EquipBean equipBean = equipDAO.getEquip();
         AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
-        return atualAplicDAO.dadosVerAtualAplicBean(equipBean.getNroEquip(), equipBean.getIdCheckList(), versaoAplic);
+        VerifDadosServ.getInstance().verifAtualAplic(atualAplicDAO.dadosVerAtualAplicBean(equipBean.getNroEquip(), equipBean.getIdCheckList(), versaoAplic)
+                , menuInicialActivity, progressDialog);
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////// ATUALIZAR DADOS ////////////////////////////////////////
+
+    public void atualTodasTabelas(Context tela, ProgressDialog progressDialog){
+        AtualDadosServ.getInstance().atualTodasTabBD(tela, progressDialog);
+    }
+
+    public void atualTodasTabelas(){
+        AtualDadosServ.getInstance().atualTodasTabBD();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
 }

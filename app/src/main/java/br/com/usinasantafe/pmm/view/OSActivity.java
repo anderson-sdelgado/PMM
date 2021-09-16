@@ -73,7 +73,8 @@ public class OSActivity extends ActivityGeneric {
                             pmmContext.getMotoMecFertCTR().verOS(editTextPadrao.getText().toString()
                                     , OSActivity.this, ListaAtividadeActivity.class, progressBar);
 
-                        } else {
+                        }
+                        else {
 
                             pmmContext.getConfigCTR().setStatusConConfig(0L);
 
@@ -112,11 +113,6 @@ public class OSActivity extends ActivityGeneric {
         } else {
             if(PMMContext.aplic == 1){
                 Intent it = new Intent(OSActivity.this, MenuPrincPMMActivity.class);
-                startActivity(it);
-                finish();
-            }
-            else if(PMMContext.aplic == 2){
-                Intent it = new Intent(OSActivity.this, FrenteActivity.class);
                 startActivity(it);
                 finish();
             }

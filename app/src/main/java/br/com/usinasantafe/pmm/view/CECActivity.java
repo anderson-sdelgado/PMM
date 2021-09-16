@@ -40,6 +40,7 @@ public class CECActivity extends ActivityGeneric {
 
                 Intent it = new Intent(CECActivity.this, MenuPrincECMActivity.class);
                 startActivity(it);
+                finish();
 
                 pmmContext.getConfigCTR().atualTodasTabelas();
 

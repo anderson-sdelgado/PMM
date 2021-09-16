@@ -34,7 +34,7 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                pmmContext.setPosCheckList(1);
+                pmmContext.getCheckListCTR().setPosCheckList(1);
                 Intent it = new Intent(PergAtualCheckListActivity.this, ItemCheckListActivity.class);
                 startActivity(it);
                 finish();

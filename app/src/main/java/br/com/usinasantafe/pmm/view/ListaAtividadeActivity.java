@@ -113,8 +113,6 @@ public class ListaAtividadeActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                Log.i("PMM", "Posicao Tela = " + pmmContext.getConfigCTR().getConfig().getPosicaoTela());
-
                 if(ativArrayList.size() == 0){
 
                     AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
@@ -223,11 +221,6 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                                         if(PMMContext.aplic == 1){
                                             Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
-                                            startActivity(it);
-                                            finish();
-                                        }
-                                        else if(PMMContext.aplic == 2){
-                                            Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);
                                             startActivity(it);
                                             finish();
                                         }

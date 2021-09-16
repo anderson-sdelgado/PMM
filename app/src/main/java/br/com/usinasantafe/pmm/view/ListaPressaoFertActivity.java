@@ -61,7 +61,7 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getMotoMecFertCTR().atualDadosPressao(ListaPressaoFertActivity.this, ListaPressaoFertActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDados(ListaPressaoFertActivity.this, ListaPressaoFertActivity.class, progressBar, "Pressao");
 
                         } else {
 

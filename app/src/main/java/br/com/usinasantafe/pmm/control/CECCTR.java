@@ -60,7 +60,7 @@ public class CECCTR {
             PreCECDAO preCECDAO = new PreCECDAO();
             preCECDAO.atualPreCEC(objPrinc);
 
-            EnvioDadosServ.getInstance().envioDados(2);
+            EnvioDadosServ.getInstance().envioDados();
 
         }
         catch (Exception e){
@@ -75,8 +75,6 @@ public class CECCTR {
         try{
 
             if (!result.contains("exceeded")) {
-
-                Log.i("PMM", "CHEGOU AKI 1 RECDADOS");
 
                 int pos1 = result.indexOf("_") + 1;
                 String precec = result.substring(0, (pos1 - 1));
@@ -99,7 +97,6 @@ public class CECCTR {
 
         }
         catch(Exception e){
-            Log.i("ECM", "ERRO REC = " + e);
             EnvioDadosServ.status = 1;
             LogErroDAO.getInstance().insert(e);
         }
@@ -116,6 +113,8 @@ public class CECCTR {
         cecDAO.delCEC();
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     /////////////////////////////VERIFICAR DADOS////////////////////////////////
 
     public boolean verPreCECAberto(){
@@ -131,12 +130,6 @@ public class CECCTR {
     public boolean verDataPreCEC(){
         PreCECDAO preCECDAO = new PreCECDAO();
         return preCECDAO.verDataPreCEC();
-    }
-
-    public boolean verAtivOS(Long idAtivOS){
-        OSDAO osDAO = new OSDAO();
-        ConfigCTR configCTR = new ConfigCTR();
-        return osDAO.verAtivOS(idAtivOS, configCTR.getConfig().getOsConfig());
     }
 
     public boolean hasElemCEC(){
@@ -224,11 +217,6 @@ public class CECCTR {
     public List<PreCECBean> preCECTerminadoList(){
         PreCECDAO preCECDAO = new PreCECDAO();
         return preCECDAO.preCECListTerminado();
-    }
-
-    public PreCECBean getPreCECAberto(){
-        PreCECDAO preCECDAO = new PreCECDAO();
-        return preCECDAO.getPreCECAberto();
     }
 
     public CECBean getCEC(){

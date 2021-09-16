@@ -30,6 +30,7 @@ public class UrlsConexaoHttp {
     public static String ParadaBean = urlPrincipal + "parada.php" + put;
     public static String PressaoBocalBean = urlPrincipal + "pressaobocal.php" + put;
     public static String ProdutoBean = urlPrincipal + "produto.php" + put;
+    public static String PropriedadeBean = urlPrincipal + "propriedade.php" + put;
     public static String RAtivParadaBean = urlPrincipal + "rativparada.php" + put;
     public static String RFuncaoAtivParBean = urlPrincipal + "rfuncaoativpar.php" + put;
     public static String TurnoBean = urlPrincipal + "turno.php" + put;

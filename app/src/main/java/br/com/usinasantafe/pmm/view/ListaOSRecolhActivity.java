@@ -33,7 +33,7 @@ public class ListaOSRecolhActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                pmmContext.setContRecolh(position);
+                pmmContext.getMotoMecFertCTR().setContRecolh(position);
                 Intent it = new Intent(ListaOSRecolhActivity.this, RecolhimentoActivity.class);
                 startActivity(it);
                 finish();

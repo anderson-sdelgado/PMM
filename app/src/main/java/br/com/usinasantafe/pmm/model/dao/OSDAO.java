@@ -41,13 +41,6 @@ public class OSDAO {
         rOSAtivBean.deleteAll();
     }
 
-    public boolean verLibOS(Long idLibOS, Long nroOS){
-        List<OSBean> osList = libOSList(idLibOS, nroOS);
-        boolean retorno = osList.size() > 0;
-        osList.clear();
-        return retorno;
-    }
-
     public boolean verAtivOS(Long idAtivOS, Long nroOS){
         List<OSBean> osList = ativOSList(idAtivOS, nroOS);
         boolean retorno = osList.size() > 0;
@@ -67,32 +60,10 @@ public class OSDAO {
         return retOSBean;
     }
 
-    public OSBean getOSIdAtiv(Long idAtivOS, Long nroOS){
-        List<OSBean> osList = ativOSList(idAtivOS, nroOS);
-        OSBean osBean = osList.get(0);
-        osList.clear();
-        return osBean;
-    }
-
-    public OSBean getOSLib(Long idLibOS, Long nroOS){
-        List<OSBean> osList = libOSList(idLibOS, nroOS);
-        OSBean osBean = osList.get(0);
-        osList.clear();
-        return osBean;
-    }
-
     private List<OSBean> ativOSList(Long idAtivOS, Long nroOS){
         OSBean osBean = new OSBean();
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqAtiv(idAtivOS));
-        pesqArrayList.add(getPesqNroOS(nroOS));
-        return osBean.get(pesqArrayList);
-    }
-
-    private List<OSBean> libOSList(Long idLibOS, Long nroOS){
-        OSBean osBean = new OSBean();
-        ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqLib(idLibOS));
         pesqArrayList.add(getPesqNroOS(nroOS));
         return osBean.get(pesqArrayList);
     }
@@ -152,52 +123,6 @@ public class OSDAO {
             Gson gson = new Gson();
             ROSAtivBean rosAtivBean = gson.fromJson(objeto.toString(), ROSAtivBean.class);
             rosAtivBean.insert();
-        }
-
-    }
-
-    public void recDadosOS(String result) throws JSONException {
-
-        ConfigCTR configCTR = new ConfigCTR();
-
-        int posicao = result.indexOf("#") + 1;
-        String objPrinc = result.substring(0, result.indexOf("#"));
-        String objSeg = result.substring(posicao);
-
-        JSONObject jObj = new JSONObject(objPrinc);
-        JSONArray jsonArray = jObj.getJSONArray("dados");
-
-        if (jsonArray.length() > 0) {
-
-            for (int i = 0; i < jsonArray.length(); i++) {
-
-                JSONObject objeto = jsonArray.getJSONObject(i);
-                Gson gson = new Gson();
-                OSBean osBean = gson.fromJson(objeto.toString(), OSBean.class);
-                osBean.insert();
-
-            }
-
-            jObj = new JSONObject(objSeg);
-            jsonArray = jObj.getJSONArray("dados");
-
-            for (int j = 0; j < jsonArray.length(); j++) {
-
-                JSONObject objeto = jsonArray.getJSONObject(j);
-                Gson gson = new Gson();
-                ROSAtivBean rosAtivBean = gson.fromJson(objeto.toString(), ROSAtivBean.class);
-                rosAtivBean.insert();
-
-            }
-
-            configCTR.setStatusConConfig(1L);
-            VerifDadosServ.getInstance().pulaTela();
-
-        } else {
-
-            configCTR.setStatusConConfig(0L);
-            VerifDadosServ.getInstance().msg("OS INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
-
         }
 
     }

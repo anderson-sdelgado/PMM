@@ -21,16 +21,20 @@ public class ApontMMFertDAO {
 
     public void salvarApont(Long idBol, Long idMotoMec, Long parada
                                         , Long os, Long atividade
+                                        , Long frente, Long idPropriedade
                                         , Double latitude, Double longitude
-                                        , Long statusConBol, String dthr, Long dthrLong
+                                        , String dthr, Long dthrLong
                                         , Long idTransb, Double pressao
-                                        , Long veloc, Long bocal, int tipo){
+                                        , Long veloc, Long bocal
+                                        , Long statusConBol, int tipo){
 
         ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
         apontMMFertBean.setIdBolMMFert(idBol);
         apontMMFertBean.setIdMotoMec(idMotoMec);
         apontMMFertBean.setOsApontMMFert(os);
         apontMMFertBean.setAtivApontMMFert(atividade);
+        apontMMFertBean.setIdFrenteApontMMFert(frente);
+        apontMMFertBean.setIdProprApontMMFert(idPropriedade);
         apontMMFertBean.setLatitudeApontMMFert(latitude);
         apontMMFertBean.setLongitudeApontMMFert(longitude);
         apontMMFertBean.setStatusConApontMMFert(statusConBol);
@@ -209,7 +213,7 @@ public class ApontMMFertDAO {
         pesquisa.setTipo(1);
         pesqArrayList.add(pesquisa);
 
-        return apontMMFertBean.inAndGet("idBolMMFert", idBolList, pesqArrayList);
+        return apontMMFertBean.inAndGetAndOrderBy("idBolMMFert", idBolList, pesqArrayList, "idApontMMFert", true);
 
     }
 

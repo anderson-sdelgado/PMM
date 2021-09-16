@@ -11,7 +11,7 @@ import android.widget.Button;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 
-public class DigLeiraActivity extends ActivityGeneric {
+public class LeiraActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
     private ProgressDialog progressBar;
@@ -19,7 +19,7 @@ public class DigLeiraActivity extends ActivityGeneric {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dig_leira);
+        setContentView(R.layout.activity_leira);
 
         pmmContext = (PMMContext) getApplication();
 
@@ -31,7 +31,7 @@ public class DigLeiraActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder alerta = new AlertDialog.Builder(DigLeiraActivity.this);
+                AlertDialog.Builder alerta = new AlertDialog.Builder(LeiraActivity.this);
                 alerta.setTitle("ATENÇÃO");
                 alerta.setMessage("DESEJA REALMENTE ATUALIZAR BASE DE DADOS?");
                 alerta.setNegativeButton("SIM", new DialogInterface.OnClickListener() {
@@ -40,7 +40,7 @@ public class DigLeiraActivity extends ActivityGeneric {
 
                         if (connectNetwork) {
 
-                            progressBar = new ProgressDialog(DigLeiraActivity.this);
+                            progressBar = new ProgressDialog(LeiraActivity.this);
                             progressBar.setCancelable(true);
                             progressBar.setMessage("ATUALIZANDO ...");
                             progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -48,11 +48,11 @@ public class DigLeiraActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getMotoMecFertCTR().atualDadosLeira(DigLeiraActivity.this, DigLeiraActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDados(LeiraActivity.this, LeiraActivity.class, progressBar, "Leira");
 
                         } else {
 
-                            AlertDialog.Builder alerta = new AlertDialog.Builder(DigLeiraActivity.this);
+                            AlertDialog.Builder alerta = new AlertDialog.Builder(LeiraActivity.this);
                             alerta.setTitle("ATENÇÃO");
                             alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -108,13 +108,13 @@ public class DigLeiraActivity extends ActivityGeneric {
                             pmmContext.getCompostoCTR().salvarLeiraDescarreg(Long.parseLong(editTextPadrao.getText().toString()));
                         }
 
-                        Intent it = new Intent(DigLeiraActivity.this, MenuPrincPCOMPActivity.class);
+                        Intent it = new Intent(LeiraActivity.this, MenuPrincPCOMPActivity.class);
                         startActivity(it);
                         finish();
 
                     } else {
 
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(DigLeiraActivity.this);
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(LeiraActivity.this);
                         alerta.setTitle("ATENÇÃO");
                         alerta.setMessage("NUMERAÇÃO DO LEIRA INEXISTENTE! FAVOR VERIFICA A MESMA.");
                         alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -146,7 +146,7 @@ public class DigLeiraActivity extends ActivityGeneric {
     }
 
     public void onBackPressed() {
-        Intent it = new Intent(DigLeiraActivity.this, MenuPrincPCOMPActivity.class);
+        Intent it = new Intent(LeiraActivity.this, MenuPrincPCOMPActivity.class);
         startActivity(it);
         finish();
     }

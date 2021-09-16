@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package br.com.usinasantafe.pmm.model.bean.estaticas;
 
@@ -21,37 +17,36 @@ public class FrenteBean extends Entidade {
 	private static final long serialVersionUID = 1L;
 	
 	@DatabaseField(id=true)
-    private Long codigoFrente;
+	private Long idFrente;
 	@DatabaseField
-    private String nomeFrente;
+    private Long codFrente;
 	@DatabaseField
-    private Long tipoFrente;
+    private String descrFrente;
 
     public FrenteBean() {
     }
 
-	public Long getCodigoFrente() {
-		return codigoFrente;
+	public Long getIdFrente() {
+		return idFrente;
 	}
 
-	public void setCodigoFrente(Long codigofrente) {
-		this.codigoFrente = codigofrente;
+	public void setIdFrente(Long idFrente) {
+		this.idFrente = idFrente;
 	}
 
-	public String getNomeFrente() {
-		return nomeFrente;
+	public Long getCodFrente() {
+		return codFrente;
 	}
 
-	public void setNomeFrente(String nomefrente) {
-		this.nomeFrente = nomefrente;
+	public void setCodFrente(Long codFrente) {
+		this.codFrente = codFrente;
 	}
 
-	public Long getTipoFrente() {
-		return tipoFrente;
+	public String getDescrFrente() {
+		return descrFrente;
 	}
 
-	public void setTipoFrente(Long tipofrente) {
-		this.tipoFrente = tipofrente;
+	public void setDescrFrente(String descrFrente) {
+		this.descrFrente = descrFrente;
 	}
-	
 }

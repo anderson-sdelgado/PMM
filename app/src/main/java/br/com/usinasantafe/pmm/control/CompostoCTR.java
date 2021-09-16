@@ -20,7 +20,26 @@ import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class CompostoCTR {
 
+    private Long tipoMovLeira;
+    private boolean verTelaLeira;
+
     public CompostoCTR() {
+    }
+
+    public Long getTipoMovLeira() {
+        return tipoMovLeira;
+    }
+
+    public void setTipoMovLeira(Long tipoMovLeira) {
+        this.tipoMovLeira = tipoMovLeira;
+    }
+
+    public boolean isVerTelaLeira() {
+        return verTelaLeira;
+    }
+
+    public void setVerTelaLeira(boolean verTelaLeira) {
+        this.verTelaLeira = verTelaLeira;
     }
 
     public boolean verLeira(Long codLeira){
@@ -145,7 +164,7 @@ public class CompostoCTR {
             CarregCompDAO carregCompDAO = new CarregCompDAO();
             carregCompDAO.updCarregInsumo(json.jsonArray(obj));
 
-            EnvioDadosServ.getInstance().envioDados(4);
+            EnvioDadosServ.getInstance().envioDados();
 
         }
         catch(Exception e){
@@ -174,7 +193,7 @@ public class CompostoCTR {
 
                 }
 
-                EnvioDadosServ.getInstance().envioDados(5);
+                EnvioDadosServ.getInstance().envioDados();
 
             } else {
                 EnvioDadosServ.status = 1;

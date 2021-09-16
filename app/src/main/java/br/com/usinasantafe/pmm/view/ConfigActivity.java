@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,7 +45,6 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCheckListBean;
-import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class ConfigActivity extends ActivityGeneric {
 
@@ -69,7 +67,7 @@ public class ConfigActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        if (pmmContext.getConfigCTR().hasElements()) {
+        if (pmmContext.getConfigCTR().hasElemConfig()) {
             editTextEquipConfig.setText(String.valueOf(pmmContext.getConfigCTR().getEquip().getNroEquip()));
             editTextSenhaConfig.setText(pmmContext.getConfigCTR().getConfig().getSenhaConfig());
         }

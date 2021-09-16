@@ -88,7 +88,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                     progressBar.setMax(100);
                     progressBar.show();
 
-                    pmmContext.getMotoMecFertCTR().atualDadosParada(ListaParadaActivity.this, ListaParadaActivity.class, progressBar);
+                    pmmContext.getMotoMecFertCTR().atualDados(ListaParadaActivity.this, ListaParadaActivity.class, progressBar, "Parada");
 
                 } else {
 

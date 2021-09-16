@@ -47,7 +47,7 @@ public class ImplementoActivity extends ActivityGeneric {
                             progressBar.setMessage("Atualizando Implemento...");
                             progressBar.show();
 
-                            pmmContext.getMotoMecFertCTR().atualDadosEquipSeg(ImplementoActivity.this, ImplementoActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDados(ImplementoActivity.this, ImplementoActivity.class, progressBar, "EquipSeg");
 
                         } else {
 
@@ -82,18 +82,18 @@ public class ImplementoActivity extends ActivityGeneric {
 
         });
 
-        textViewImplemento.setText("IMPLEMENTO " + pmmContext.getContImplemento() + ":");
+        textViewImplemento.setText("IMPLEMENTO " + pmmContext.getMotoMecFertCTR().getContImplemento() + ":");
 
         buttonOkImplemento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(pmmContext.getContImplemento() == 1L){
+                if(pmmContext.getMotoMecFertCTR().getContImplemento() == 1L){
                     if (!editTextPadrao.getText().toString().equals("")) {
                         Long impl = Long.parseLong(editTextPadrao.getText().toString());
                         if(pmmContext.getMotoMecFertCTR().verImplemento(impl)){
-                            pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getContImplemento(), impl);
-                            pmmContext.setContImplemento(2L);
+                            pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getMotoMecFertCTR().getContImplemento(), impl);
+                            pmmContext.getMotoMecFertCTR().setContImplemento(2L);
                             Intent it = new Intent(ImplementoActivity.this, ImplementoActivity.class);
                             startActivity(it);
                             finish();
@@ -107,7 +107,7 @@ public class ImplementoActivity extends ActivityGeneric {
                     if (!editTextPadrao.getText().toString().equals("")) {
                         Long impl = Long.parseLong(editTextPadrao.getText().toString());
                         if(pmmContext.getMotoMecFertCTR().verImplemento(impl) && (pmmContext.getMotoMecFertCTR().verDuplicImpleMM(impl))){
-                            pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getContImplemento(), impl);
+                            pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getMotoMecFertCTR().getContImplemento(), impl);
                             verTela();
                         }
                         else{
@@ -161,7 +161,7 @@ public class ImplementoActivity extends ActivityGeneric {
         pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto();
         if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().getIdTurnoBolMMFert())){
             pmmContext.getMotoMecFertCTR().inserirParadaCheckList();
-            pmmContext.setPosCheckList(1);
+            pmmContext.getCheckListCTR().setPosCheckList(1);
             pmmContext.getCheckListCTR().createCabecAberto();
             if (pmmContext.getConfigCTR().getConfig().getAtualCheckList().equals(1L)) {
                 Intent it = new Intent(ImplementoActivity.this, PergAtualCheckListActivity.class);
@@ -181,7 +181,7 @@ public class ImplementoActivity extends ActivityGeneric {
     }
 
     public void onBackPressed() {
-        if (pmmContext.getContImplemento() == 1) {
+        if (pmmContext.getMotoMecFertCTR().getContImplemento() == 1) {
             if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
                 Intent it = new Intent(ImplementoActivity.this, HorimetroActivity.class);
                 startActivity(it);
@@ -192,7 +192,7 @@ public class ImplementoActivity extends ActivityGeneric {
                 finish();
             }
         } else {
-            pmmContext.setContImplemento(pmmContext.getContImplemento() - 1);
+            pmmContext.getMotoMecFertCTR().setContImplemento(pmmContext.getMotoMecFertCTR().getContImplemento() - 1);
             Intent it = new Intent(ImplementoActivity.this, ImplementoActivity.class);
             startActivity(it);
             finish();

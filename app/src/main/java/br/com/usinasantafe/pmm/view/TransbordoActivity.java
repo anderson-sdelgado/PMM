@@ -52,7 +52,7 @@ public class TransbordoActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getMotoMecFertCTR().atualDadosEquipSeg(TransbordoActivity.this, TransbordoActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDados(TransbordoActivity.this, TransbordoActivity.class, progressBar, "EquipSeg");
 
                         } else {
 

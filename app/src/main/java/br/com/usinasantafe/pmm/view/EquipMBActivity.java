@@ -48,7 +48,7 @@ public class EquipMBActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getMotoMecFertCTR().atualDadosEquipSeg(EquipMBActivity.this, EquipMBActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDados(EquipMBActivity.this, EquipMBActivity.class, progressBar, "EquipSeg");
 
                         } else {
 
@@ -132,7 +132,7 @@ public class EquipMBActivity extends ActivityGeneric {
         pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto();
         if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().getIdTurnoBolMMFert())){
             pmmContext.getMotoMecFertCTR().inserirParadaCheckList();
-            pmmContext.setPosCheckList(1);
+            pmmContext.getCheckListCTR().setPosCheckList(1);
             pmmContext.getCheckListCTR().createCabecAberto();
             if (pmmContext.getConfigCTR().getConfig().getAtualCheckList().equals(1L)) {
                 Intent it = new Intent(EquipMBActivity.this, PergAtualCheckListActivity.class);
@@ -152,7 +152,6 @@ public class EquipMBActivity extends ActivityGeneric {
     }
 
     public void onBackPressed() {
-        pmmContext.setContImplemento(pmmContext.getContImplemento() - 1);
         Intent it = new Intent(EquipMBActivity.this, HorimetroActivity.class);
         startActivity(it);
         finish();

@@ -37,6 +37,10 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private Long bocalConfig;
 	@DatabaseField
+	private Long idFrenteConfig;
+	@DatabaseField
+	private Long idPropriedadeConfig;
+	@DatabaseField
 	private Double horimetroConfig;
 	@DatabaseField
 	private Long verRecInformativo; // 0 - Verificar Dados; 1- Dados Recebidos; 2 - Dados Visualizados
@@ -49,7 +53,7 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private Long atualCheckList;
 	@DatabaseField
-	private Long posFluxoViagem;
+	private Long posFluxoCarregComposto;
 	@DatabaseField
 	private Long statusRetVerif; // 0 - Não Verificando; 1 - Verificando
 	@DatabaseField
@@ -229,12 +233,12 @@ public class ConfigBean extends Entidade {
 		this.atualCheckList = atualCheckList;
 	}
 
-	public Long getPosFluxoViagem() {
-		return posFluxoViagem;
+	public Long getPosFluxoCarregComposto() {
+		return posFluxoCarregComposto;
 	}
 
-	public void setPosFluxoViagem(Long posFluxoViagem) {
-		this.posFluxoViagem = posFluxoViagem;
+	public void setPosFluxoCarregComposto(Long posFluxoCarregComposto) {
+		this.posFluxoCarregComposto = posFluxoCarregComposto;
 	}
 
 	public Long getPosicaoTela() {
@@ -251,5 +255,21 @@ public class ConfigBean extends Entidade {
 
 	public void setStatusRetVerif(Long statusRetVerif) {
 		this.statusRetVerif = statusRetVerif;
+	}
+
+	public Long getIdFrenteConfig() {
+		return idFrenteConfig;
+	}
+
+	public void setIdFrenteConfig(Long idFrenteConfig) {
+		this.idFrenteConfig = idFrenteConfig;
+	}
+
+	public Long getIdPropriedadeConfig() {
+		return idPropriedadeConfig;
+	}
+
+	public void setIdPropriedadeConfig(Long idPropriedadeConfig) {
+		this.idPropriedadeConfig = idPropriedadeConfig;
 	}
 }

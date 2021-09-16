@@ -77,7 +77,7 @@ public class CabecCheckListDAO {
         CabecCheckListBean cabecCheckListBean = getCabecAberto();
         cabecCheckListBean.setStatusCabCL(2L);
         cabecCheckListBean.update();
-        EnvioDadosServ.getInstance().envioDados(11);
+        EnvioDadosServ.getInstance().envioDados();
     }
 
     public List<CabecCheckListBean> cabecCheckListFechList(){

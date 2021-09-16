@@ -33,8 +33,8 @@ public class ItemCheckListActivity extends ActivityGeneric {
         Button buttonCancChecklist = findViewById(R.id.buttonCancChecklist);
 
         itemCheckListList = pmmContext.getCheckListCTR().getItemList();
-        ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getPosCheckList() - 1);
-        textViewItemChecklist.setText(pmmContext.getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
+        ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);
+        textViewItemChecklist.setText(pmmContext.getCheckListCTR().getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
 
         buttonConforme.setOnClickListener(new View.OnClickListener() {
 
@@ -77,7 +77,7 @@ public class ItemCheckListActivity extends ActivityGeneric {
 
     public void proximaTela(Long opcao){
 
-        ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getPosCheckList() - 1);
+        ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);
         RespItemCheckListBean respItemCheckListBean = new RespItemCheckListBean();
         respItemCheckListBean.setIdItBDItCL(itemCheckListBean.getIdItemCheckList());
         respItemCheckListBean.setOpItCL(opcao);
@@ -85,7 +85,7 @@ public class ItemCheckListActivity extends ActivityGeneric {
         if(pmmContext.getCheckListCTR().verCabecAberto()) {
             pmmContext.getCheckListCTR().setRespCheckList(respItemCheckListBean);
 
-            if (pmmContext.getCheckListCTR().qtdeItemCheckList() == pmmContext.getPosCheckList()) {
+            if (pmmContext.getCheckListCTR().qtdeItemCheckList() == pmmContext.getCheckListCTR().getPosCheckList()) {
                 pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().getIdTurnoBolMMFert());
                 pmmContext.getCheckListCTR().salvarBolFechado();
                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
@@ -98,9 +98,9 @@ public class ItemCheckListActivity extends ActivityGeneric {
                     finish();
                 }
             } else {
-                pmmContext.setPosCheckList(pmmContext.getPosCheckList() + 1);
-                itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getPosCheckList() - 1);
-                textViewItemChecklist.setText(pmmContext.getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
+                pmmContext.getCheckListCTR().setPosCheckList(pmmContext.getCheckListCTR().getPosCheckList() + 1);
+                itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);
+                textViewItemChecklist.setText(pmmContext.getCheckListCTR().getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
             }
         }
         else{
@@ -118,10 +118,10 @@ public class ItemCheckListActivity extends ActivityGeneric {
     }
 
     public void retornoTela(){
-        if(pmmContext.getPosCheckList() > 1){
-            pmmContext.setPosCheckList(pmmContext.getPosCheckList() - 1);
-            ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getPosCheckList() - 1);
-            textViewItemChecklist.setText(pmmContext.getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
+        if(pmmContext.getCheckListCTR().getPosCheckList() > 1){
+            pmmContext.getCheckListCTR().setPosCheckList(pmmContext.getCheckListCTR().getPosCheckList() - 1);
+            ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);
+            textViewItemChecklist.setText(pmmContext.getCheckListCTR().getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
         }
     }
 

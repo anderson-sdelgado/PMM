@@ -44,7 +44,7 @@ public class ProdutoActivity extends ActivityGeneric {
                     }
 
                     pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());
-                    pmmContext.getConfigCTR().setPosFluxoViagem(2L);
+                    pmmContext.getConfigCTR().setPosFluxoCarregComposto(2L);
                     pmmContext.getCompostoCTR().abrirCarregInsumo(produtoBean);
 
                     Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);

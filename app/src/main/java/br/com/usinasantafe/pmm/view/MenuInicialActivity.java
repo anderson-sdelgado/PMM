@@ -13,12 +13,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import java.util.ArrayList;
-
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
@@ -53,7 +50,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         if(EnvioDadosServ.getInstance().verifDadosEnvio()){
             if(connectNetwork){
-                EnvioDadosServ.getInstance().envioDados(17);
+                EnvioDadosServ.getInstance().envioDados();
             }
             else{
                 EnvioDadosServ.status = 1;
@@ -73,7 +70,7 @@ public class MenuInicialActivity extends ActivityGeneric {
             if(pmmContext.getCheckListCTR().verCabecAberto()){
                 encerrarBarra();
                 pmmContext.getCheckListCTR().clearRespCabecAberto();
-                pmmContext.setPosCheckList(1);
+                pmmContext.getCheckListCTR().setPosCheckList(1);
                 Intent it = new Intent(MenuInicialActivity.this, ItemCheckListActivity.class);
                 startActivity(it);
                 finish();
@@ -137,7 +134,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
                 if (text.equals("BOLETIM")) {
                     if (pmmContext.getMotoMecFertCTR().hasElemFunc()
-                            && pmmContext.getConfigCTR().hasElements()
+                            && pmmContext.getConfigCTR().hasElemConfig()
                             && (VerifDadosServ.status == 3)) {
                         pmmContext.getConfigCTR().setPosicaoTela(1L);
                         clearBD();
@@ -195,7 +192,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
     public void atualizarAplic(){
         if (connectNetwork) {
-            if (pmmContext.getConfigCTR().hasElements()) {
+            if (pmmContext.getConfigCTR().hasElemConfig()) {
                 progressBar.setCancelable(true);
                 progressBar.setMessage("BUSCANDO ATUALIZAÇÃO...");
                 progressBar.show();
@@ -238,7 +235,7 @@ public class MenuInicialActivity extends ActivityGeneric {
     };
 
     public void verifEnvio(){
-        if (pmmContext.getConfigCTR().hasElements()) {
+        if (pmmContext.getConfigCTR().hasElemConfig()) {
             pmmContext.getConfigCTR().setStatusRetVerif(0L);
             if (EnvioDadosServ.status == 1) {
                 textViewProcesso.setTextColor(Color.RED);

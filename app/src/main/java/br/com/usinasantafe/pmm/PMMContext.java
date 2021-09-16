@@ -25,23 +25,8 @@ public class PMMContext extends Application {
     private ConfigCTR configCTR;
     private CompostoCTR compostoCTR;
 
-    private Long contImplemento;
     public static String versaoAplic = "4.00";
     public static int aplic = 2;   // 1 - PMM; 2 - ECM; 3 - PCOMP
-    private int contRend;
-    private int posRend;
-    private int contRecolh;
-    private int posRecolh;
-    private int contDataHora;
-    private int posCheckList;
-    private Long tipoMovLeira;
-    private boolean verTelaLeira;
-
-    private int dia;
-    private int mes;
-    private int ano;
-    private int hora;
-    private int minuto;
 
     @Override
     public void onCreate() {
@@ -86,102 +71,6 @@ public class PMMContext extends Application {
         return compostoCTR;
     }
 
-    public Long getContImplemento() {
-        return contImplemento;
-    }
-
-    public void setContImplemento(Long contImplemento) {
-        this.contImplemento = contImplemento;
-    }
-
-    public int getPosCheckList() {
-        return posCheckList;
-    }
-
-    public void setPosCheckList(int posCheckList) {
-        this.posCheckList = posCheckList;
-    }
-
-    public int getContRend() {
-        return contRend;
-    }
-
-    public void setContRend(int contRend) {
-        this.contRend = contRend;
-    }
-
-    public int getPosRend() {
-        return posRend;
-    }
-
-    public void setPosRend(int posRend) {
-        this.posRend = posRend;
-    }
-
-    public int getContRecolh() {
-        return contRecolh;
-    }
-
-    public void setContRecolh(int contRecolh) {
-        this.contRecolh = contRecolh;
-    }
-
-    public int getPosRecolh() {
-        return posRecolh;
-    }
-
-    public void setPosRecolh(int posRecolh) {
-        this.posRecolh = posRecolh;
-    }
-
-    public int getContDataHora() {
-        return contDataHora;
-    }
-
-    public void setContDataHora(int contDataHora) {
-        this.contDataHora = contDataHora;
-    }
-
-    public int getDia() {
-        return dia;
-    }
-
-    public void setDia(int dia) {
-        this.dia = dia;
-    }
-
-    public int getMes() {
-        return mes;
-    }
-
-    public void setMes(int mes) {
-        this.mes = mes;
-    }
-
-    public int getAno() {
-        return ano;
-    }
-
-    public void setAno(int ano) {
-        this.ano = ano;
-    }
-
-    public int getHora() {
-        return hora;
-    }
-
-    public void setHora(int hora) {
-        this.hora = hora;
-    }
-
-    public int getMinuto() {
-        return minuto;
-    }
-
-    public void setMinuto(int minuto) {
-        this.minuto = minuto;
-    }
-
     private Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() {
         public void uncaughtException(Thread thread, Throwable ex) {
             LogErroDAO.getInstance().insert(ex);
@@ -189,19 +78,4 @@ public class PMMContext extends Application {
         }
     };
 
-    public boolean isVerTelaLeira() {
-        return verTelaLeira;
-    }
-
-    public void setVerTelaLeira(boolean verTelaLeira) {
-        this.verTelaLeira = verTelaLeira;
-    }
-
-    public Long getTipoMovLeira() {
-        return tipoMovLeira;
-    }
-
-    public void setTipoMovLeira(Long tipoMovLeira) {
-        this.tipoMovLeira = tipoMovLeira;
-    }
 }

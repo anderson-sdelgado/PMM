@@ -10,20 +10,15 @@ import android.util.Log;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.control.CECCTR;
 import br.com.usinasantafe.pmm.control.CompostoCTR;
 import br.com.usinasantafe.pmm.control.InformativoCTR;
-import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
-import br.com.usinasantafe.pmm.view.EsperaInforActivity;
 import br.com.usinasantafe.pmm.view.MenuInicialActivity;
 import br.com.usinasantafe.pmm.util.conHttp.PostVerGenerico;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.AtualAplicBean;
 import br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp;
-import br.com.usinasantafe.pmm.view.MenuPrincECMActivity;
-import br.com.usinasantafe.pmm.view.MenuPrincPCOMPActivity;
 
 import android.os.AsyncTask;
 
@@ -96,7 +91,7 @@ public class VerifDadosServ {
     public Boolean verifRecInformativo() {
         boolean ret = false;
         ConfigCTR configCTR = new ConfigCTR();
-        if(configCTR.hasElements()){
+        if(configCTR.hasElemConfig()){
             if(configCTR.getVerRecInformativo() == 1){
                 ret = true;
             }
@@ -107,7 +102,7 @@ public class VerifDadosServ {
     public Boolean statusRetVerif() {
         boolean ret = false;
         ConfigCTR configCTR = new ConfigCTR();
-        if(configCTR.hasElements()){
+        if(configCTR.hasElemConfig()){
             if(configCTR.getStatusRetVerif() == 1){
                 ret = true;
             }

@@ -59,7 +59,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getMotoMecFertCTR().atualDadosTurno(ListaTurnoActivity.this, ListaTurnoActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDados(ListaTurnoActivity.this, ListaTurnoActivity.class, progressBar, "Turno");
 
                         } else {
 
@@ -119,22 +119,28 @@ public class ListaTurnoActivity extends ActivityGeneric {
 
                 if(Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())){
                     pmmContext.getConfigCTR().setDifDthrConfig(0L);
-                    Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-                else{
-                    if(pmmContext.getConfigCTR().getConfig().getDifDthrConfig() == 0){
-                        pmmContext.setContDataHora(1);
-                        Intent it = new Intent(ListaTurnoActivity.this, MsgDataHoraActivity.class);
+                    if(PMMContext.aplic == 2){
+                        if (connectNetwork) {
+                            pmmContext.getConfigCTR().setStatusConConfig(1L);
+                        }
+                        else{
+                            pmmContext.getConfigCTR().setStatusConConfig(0L);
+                        }
+                        Intent it = new Intent(ListaTurnoActivity.this, HorimetroActivity.class);
                         startActivity(it);
                         finish();
                     }
-                    else{
+                    else {
                         Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
                         startActivity(it);
                         finish();
                     }
+                }
+                else{
+                    pmmContext.getConfigCTR().setContDataHora(1);
+                    Intent it = new Intent(ListaTurnoActivity.this, MsgDataHoraActivity.class);
+                    startActivity(it);
+                    finish();
                 }
 
             }

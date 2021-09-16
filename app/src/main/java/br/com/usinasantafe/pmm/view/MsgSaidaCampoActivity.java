@@ -35,7 +35,7 @@ public class MsgSaidaCampoActivity extends ActivityGeneric {
                     pmmContext.getConfigCTR().setStatusConConfig(0L);
                 }
 
-                pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLatitude(), getLongitude());
+                pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude());
                 pmmContext.getCecCTR().fechaPreCEC();
 
                 Intent it = new Intent(MsgSaidaCampoActivity.this, MenuPrincECMActivity.class);

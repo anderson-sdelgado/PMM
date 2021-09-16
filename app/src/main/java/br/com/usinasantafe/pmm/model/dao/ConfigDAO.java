@@ -25,9 +25,9 @@ public class ConfigDAO {
 
     public ConfigBean getConfig(){
         ConfigBean configBean = new ConfigBean();
-        List listConfigTO = configBean.all();
-        configBean = (ConfigBean) listConfigTO.get(0);
-        listConfigTO.clear();
+        List<ConfigBean> configList = configBean.all();
+        configBean = configList.get(0);
+        configList.clear();
         return configBean;
     }
 
@@ -56,9 +56,11 @@ public class ConfigDAO {
         configBean.setVelocConfig(0L);
         configBean.setBocalConfig(0L);
         configBean.setSenhaConfig(senha);
-        configBean.setPosFluxoViagem(0L);
+        configBean.setPosFluxoCarregComposto(0L);
         configBean.setPosicaoTela(0L);
         configBean.setStatusRetVerif(0L);
+        configBean.setIdFrenteConfig(0L);
+        configBean.setIdPropriedadeConfig(0L);
         configBean.insert();
         configBean.commit();
     }
@@ -67,12 +69,6 @@ public class ConfigDAO {
         ConfigBean configBean = getConfig();
         configBean.setEquipConfig(equipBean.getIdEquip());
         configBean.setHorimetroConfig(equipBean.getHorimetroEquip());
-        configBean.update();
-    }
-
-    public void setDtServConfig(String data){
-        ConfigBean configBean = getConfig();
-        configBean.setDtServConfig(data);
         configBean.update();
     }
 
@@ -137,15 +133,15 @@ public class ConfigDAO {
         configBean.update();
     }
 
-    public void setDifDthrConfig(Long status){
+    public void setDifDthrConfig(Long difDthr){
         ConfigBean configBean = getConfig();
-        configBean.setDifDthrConfig(status);
+        configBean.setDifDthrConfig(difDthr);
         configBean.update();
     }
 
-    public void setPosFluxoViagem(Long posFluxoViagem){
+    public void setPosFluxoCarregComposto(Long posFluxoCarregComposto){
         ConfigBean configBean = getConfig();
-        configBean.setPosFluxoViagem(posFluxoViagem);
+        configBean.setPosFluxoCarregComposto(posFluxoCarregComposto);
         configBean.update();
     }
 
@@ -161,9 +157,11 @@ public class ConfigDAO {
         configBean.update();
     }
 
-
-    public void set(){
-
+    public void setFrentePropriedade(Long idFrente, Long idPropriedade){
+        ConfigBean configBean = getConfig();
+        configBean.setIdFrenteConfig(idFrente);
+        configBean.setIdPropriedadeConfig(idPropriedade);
+        configBean.update();
     }
 
     public Long getVerRecInformativo(){
@@ -178,11 +176,9 @@ public class ConfigDAO {
 
     public AtualAplicBean recAtual(JSONArray jsonArray) throws JSONException {
 
-        AtualAplicBean atualAplicBean = new AtualAplicBean();
-
         JSONObject objeto = jsonArray.getJSONObject(0);
         Gson gson = new Gson();
-        atualAplicBean = gson.fromJson(objeto.toString(), AtualAplicBean.class);
+        AtualAplicBean atualAplicBean = gson.fromJson(objeto.toString(), AtualAplicBean.class);
 
         ConfigBean configBean = getConfig();
         configBean.setFlagLogEnvio(atualAplicBean.getFlagLogEnvio());

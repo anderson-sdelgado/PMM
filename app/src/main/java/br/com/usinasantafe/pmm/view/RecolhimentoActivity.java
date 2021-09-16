@@ -35,9 +35,9 @@ public class RecolhimentoActivity extends ActivityGeneric {
         int cont = 0;
 
         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {
-            cont = pmmContext.getContRecolh() - 1;
+            cont = pmmContext.getMotoMecFertCTR().getContRecolh() - 1;
         } else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 9L) {
-            cont = pmmContext.getPosRecolh();
+            cont = pmmContext.getMotoMecFertCTR().getPosRecolh();
         }
 
         recolhFertBean =  motoMecFertCTR.getRecolh(cont);
@@ -83,8 +83,8 @@ public class RecolhimentoActivity extends ActivityGeneric {
 
     public void onBackPressed() {
         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {
-            if(pmmContext.getPosRecolh() > 1){
-                pmmContext.setPosRecolh(pmmContext.getPosRecolh() - 1);
+            if(pmmContext.getMotoMecFertCTR().getPosRecolh() > 1){
+                pmmContext.getMotoMecFertCTR().setPosRecolh(pmmContext.getMotoMecFertCTR().getPosRecolh() - 1);
                 Intent it = new Intent(RecolhimentoActivity.this, RecolhimentoActivity.class);
                 startActivity(it);
                 finish();
@@ -108,13 +108,13 @@ public class RecolhimentoActivity extends ActivityGeneric {
         pmmContext.getMotoMecFertCTR().atualRecolh(recolhFertBean);
 
         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {
-            if (pmmContext.getMotoMecFertCTR().qtdeRecolh() == pmmContext.getContRecolh()) {
+            if (pmmContext.getMotoMecFertCTR().qtdeRecolh() == pmmContext.getMotoMecFertCTR().getContRecolh()) {
                 pmmContext.getMotoMecFertCTR().salvarBolMMFertFechado();
                 Intent it = new Intent(RecolhimentoActivity.this, MenuInicialActivity.class);
                 startActivity(it);
                 finish();
             } else {
-                pmmContext.setContRecolh(pmmContext.getContRecolh() + 1);
+                pmmContext.getMotoMecFertCTR().setContRecolh(pmmContext.getMotoMecFertCTR().getContRecolh() + 1);
                 Intent it = new Intent(RecolhimentoActivity.this, RecolhimentoActivity.class);
                 startActivity(it);
                 finish();

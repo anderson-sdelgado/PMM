@@ -255,11 +255,13 @@
     <string name="texto_carreta">N. CARRETA:</string>
     <string name="texto_desengate_carreta">DESEJA DESENGATAR AS CARRETAS:</string>
     <string name="texto_frente">NUM. FRENTE:</string>
+    <string name="texto_fazenda">COD. FAZENDA:</string>
     <string name="texto_lista_certificado">CERTIFICADO</string>
     <string name="texto_menu_titulo_motorista">MOTORISTA</string>
     <string name="texto_menu_motorista">1 - FUNCIONARIO FICTICIO</string>
     <string name="texto_menu_titulo_carreta">CARRETA(S): 715 - 720</string>
     <string name="texto_menu_ultima_viagem">NÃO POSSUE CARREGAMENTOS</string>
+    <string name="texto_menu_propriedade">60 - ITAQUERE</string>
     <string name="texto_enc_boletim">ENCERRA BOLETIM</string>
     <string name="texto_cam">1</string>
     <string name="texto_saida_campo">DESEJA REALMENTE DAR SAÍDA DO CAMPO?</string>
@@ -274,4 +276,6 @@
     <string name="texto_final_boletim">FINALIZAR BOLETIM</string>
     <string name="texto_titulo_cec">CEC</string>
     <string name="texto_limpar_dados">LIMPAR DADOS</string>
+    <string name="texto_msg_titulo_propriedade">FAZENDA</string>
+    <string name="texto_msg_descr_propriedade">60 - ITAQUERE</string>
 </resources>

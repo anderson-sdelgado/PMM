@@ -30,7 +30,7 @@ public class LogErroDAO {
 
     public void insert(Throwable ex){
         ConfigCTR configCTR = new ConfigCTR();
-        if(configCTR.hasElements()){
+        if(configCTR.hasElemConfig()){
             if(configCTR.getConfig().getFlagLogErro().equals(1L)) {
                 ConfigBean configBean = configCTR.getConfig();
                 LogErroBean logErroBean = new LogErroBean();
@@ -45,7 +45,7 @@ public class LogErroDAO {
 
     public void insert(String erro){
         ConfigCTR configCTR = new ConfigCTR();
-        if(configCTR.hasElements()){
+        if(configCTR.hasElemConfig()){
             if(configCTR.getConfig().getFlagLogErro().equals(1L)) {
                 ConfigBean configBean = configCTR.getConfig();
                 LogErroBean logErroBean = new LogErroBean();

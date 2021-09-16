@@ -31,6 +31,10 @@ public class ApontMMFertBean extends Entidade {
     @DatabaseField
     private Long bocalApontMMFert;
     @DatabaseField
+    private Long idFrenteApontMMFert;
+    @DatabaseField
+    private Long idProprApontMMFert;
+    @DatabaseField
     private String dthrApontMMFert;
     @DatabaseField
     private Long dthrApontLongMMFert;
@@ -172,5 +176,21 @@ public class ApontMMFertBean extends Entidade {
 
     public void setDthrApontLongMMFert(Long dthrApontLongMMFert) {
         this.dthrApontLongMMFert = dthrApontLongMMFert;
+    }
+
+    public Long getIdFrenteApontMMFert() {
+        return idFrenteApontMMFert;
+    }
+
+    public void setIdFrenteApontMMFert(Long idFrenteApontMMFert) {
+        this.idFrenteApontMMFert = idFrenteApontMMFert;
+    }
+
+    public Long getIdProprApontMMFert() {
+        return idProprApontMMFert;
+    }
+
+    public void setIdProprApontMMFert(Long idProprApontMMFert) {
+        this.idProprApontMMFert = idProprApontMMFert;
     }
 }

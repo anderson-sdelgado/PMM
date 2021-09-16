@@ -125,7 +125,7 @@ public class HorimetroActivity extends ActivityGeneric {
             }
             rFuncaoAtividadeList.clear();
             if(implemento){
-                pmmContext.setContImplemento(1L);
+                pmmContext.getMotoMecFertCTR().setContImplemento(1L);
                 Intent it = new Intent(HorimetroActivity.this, ImplementoActivity.class);
                 startActivity(it);
                 finish();
@@ -135,7 +135,7 @@ public class HorimetroActivity extends ActivityGeneric {
                 pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto();
                 if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().getIdTurnoBolMMFert())){
                     pmmContext.getMotoMecFertCTR().inserirParadaCheckList();
-                    pmmContext.setPosCheckList(1);
+                    pmmContext.getCheckListCTR().setPosCheckList(1);
                     pmmContext.getCheckListCTR().createCabecAberto();
                     if (pmmContext.getConfigCTR().getConfig().getAtualCheckList().equals(1L)) {
                         Intent it = new Intent(HorimetroActivity.this, PergAtualCheckListActivity.class);
@@ -174,7 +174,7 @@ public class HorimetroActivity extends ActivityGeneric {
         pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().setHodometroFinalBolMMFert(horimetroNum);
         if(pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1){
             if (pmmContext.getMotoMecFertCTR().verRendMM()) {
-                pmmContext.setContRend(1);
+                pmmContext.getMotoMecFertCTR().setContRend(1);
                 Intent it = new Intent(HorimetroActivity.this, RendimentoActivity.class);
                 startActivity(it);
                 finish();
@@ -196,7 +196,7 @@ public class HorimetroActivity extends ActivityGeneric {
         }
         else{
             if (pmmContext.getMotoMecFertCTR().verRecolh()) {
-                pmmContext.setContRecolh(1);
+                pmmContext.getMotoMecFertCTR().setContRecolh(1);
                 Intent it = new Intent(HorimetroActivity.this, RecolhimentoActivity.class);
                 startActivity(it);
                 finish();

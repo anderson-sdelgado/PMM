@@ -16,6 +16,7 @@ import br.com.usinasantafe.pmm.model.bean.estaticas.OSBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.PressaoBocalBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ProdutoBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.PropriedadeBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RAtivParadaBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.REquipAtivBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
@@ -70,7 +71,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		
 		try{
 
-
 			TableUtils.createTable(cs, AtividadeBean.class);
 			TableUtils.createTable(cs, BocalBean.class);
 			TableUtils.createTable(cs, EquipBean.class);
@@ -84,6 +84,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, ParadaBean.class);
 			TableUtils.createTable(cs, PressaoBocalBean.class);
 			TableUtils.createTable(cs, ProdutoBean.class);
+			TableUtils.createTable(cs, PropriedadeBean.class);
 			TableUtils.createTable(cs, RAtivParadaBean.class);
 			TableUtils.createTable(cs, REquipAtivBean.class);
 			TableUtils.createTable(cs, RFuncaoAtivParBean.class);

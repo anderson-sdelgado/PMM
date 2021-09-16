@@ -48,7 +48,7 @@ public class OperadorActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getMotoMecFertCTR().atualDadosOperador(OperadorActivity.this, OperadorActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDados(OperadorActivity.this, OperadorActivity.class, progressBar, "Operador");
 
                         } else {
 

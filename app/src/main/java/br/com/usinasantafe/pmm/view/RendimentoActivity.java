@@ -36,10 +36,10 @@ public class RendimentoActivity extends ActivityGeneric {
         int cont = 0;
 
         if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L){
-            cont = pmmContext.getContRend() - 1;
+            cont = pmmContext.getMotoMecFertCTR().getContRend() - 1;
         }
         else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 7L){
-            cont = pmmContext.getPosRend();
+            cont = pmmContext.getMotoMecFertCTR().getPosRend();
         }
 
         rendMMBean =  pmmContext.getMotoMecFertCTR().getRend(cont);
@@ -82,8 +82,8 @@ public class RendimentoActivity extends ActivityGeneric {
 
     public void onBackPressed()  {
         if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L){
-            if(pmmContext.getPosRend() > 1){
-                pmmContext.setPosRend(pmmContext.getPosRend() - 1);
+            if(pmmContext.getMotoMecFertCTR().getPosRend() > 1){
+                pmmContext.getMotoMecFertCTR().setPosRend(pmmContext.getMotoMecFertCTR().getPosRend() - 1);
                 Intent it = new Intent(RendimentoActivity.this, RendimentoActivity.class);
                 startActivity(it);
                 finish();
@@ -107,13 +107,13 @@ public class RendimentoActivity extends ActivityGeneric {
         pmmContext.getMotoMecFertCTR().atualRend(rendMMBean);
 
         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {
-            if (pmmContext.getMotoMecFertCTR().qtdeRend() == pmmContext.getContRend()) {
+            if (pmmContext.getMotoMecFertCTR().qtdeRend() == pmmContext.getMotoMecFertCTR().getContRend()) {
                 pmmContext.getMotoMecFertCTR().salvarBolMMFertFechado();
                 Intent it = new Intent(RendimentoActivity.this, MenuInicialActivity.class);
                 startActivity(it);
                 finish();
             } else {
-                pmmContext.setContRend(pmmContext.getContRend() + 1);
+                pmmContext.getMotoMecFertCTR().setContRend(pmmContext.getMotoMecFertCTR().getContRend() + 1);
                 Intent it = new Intent(RendimentoActivity.this, RendimentoActivity.class);
                 startActivity(it);
                 finish();

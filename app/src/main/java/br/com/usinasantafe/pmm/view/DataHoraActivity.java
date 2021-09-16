@@ -34,7 +34,7 @@ public class DataHoraActivity extends ActivityGeneric {
         Button buttonCancDataHora = findViewById(R.id.buttonCancPadrao);
         TextView textViewDataHora = findViewById(R.id.textViewPadrao);
 
-        switch (pmmContext.getContDataHora()) {
+        switch (pmmContext.getConfigCTR().getContDataHora()) {
             case 1:
                 textViewDataHora.setText("DIA:");
                 break;
@@ -59,7 +59,7 @@ public class DataHoraActivity extends ActivityGeneric {
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
 
-                switch (pmmContext.getContDataHora()) {
+                switch (pmmContext.getConfigCTR().getContDataHora()) {
                     case 1:
                         editPadrao.setFilters(new InputFilter[] { new InputFilter.LengthFilter(2) });
                         break;
@@ -99,11 +99,11 @@ public class DataHoraActivity extends ActivityGeneric {
                     int valor = Integer.parseInt(editTextPadrao.getText().toString());
 
                     Intent it;
-                    switch (pmmContext.getContDataHora()) {
+                    switch (pmmContext.getConfigCTR().getContDataHora()) {
                         case 1:
                             if((valor <= 31)){
-                                pmmContext.setDia(valor);
-                                pmmContext.setContDataHora(pmmContext.getContDataHora() + 1);
+                                pmmContext.getConfigCTR().setDia(valor);
+                                pmmContext.getConfigCTR().setContDataHora(pmmContext.getConfigCTR().getContDataHora() + 1);
                                 it = new Intent(DataHoraActivity.this, DataHoraActivity.class);
                                 startActivity(it);
                                 finish();
@@ -123,8 +123,8 @@ public class DataHoraActivity extends ActivityGeneric {
                             break;
                         case 2:
                             if((valor <= 12)){
-                                pmmContext.setMes(valor);
-                                pmmContext.setContDataHora(pmmContext.getContDataHora() + 1);
+                                pmmContext.getConfigCTR().setMes(valor);
+                                pmmContext.getConfigCTR().setContDataHora(pmmContext.getConfigCTR().getContDataHora() + 1);
                                 it = new Intent(DataHoraActivity.this, DataHoraActivity.class);
                                 startActivity(it);
                                 finish();
@@ -144,8 +144,8 @@ public class DataHoraActivity extends ActivityGeneric {
                             break;
                         case 3:
                             if((valor >= 2020) && (valor <= 3000)){
-                                pmmContext.setAno(valor);
-                                pmmContext.setContDataHora(pmmContext.getContDataHora() + 1);
+                                pmmContext.getConfigCTR().setAno(valor);
+                                pmmContext.getConfigCTR().setContDataHora(pmmContext.getConfigCTR().getContDataHora() + 1);
                                 it = new Intent(DataHoraActivity.this, DataHoraActivity.class);
                                 startActivity(it);
                                 finish();
@@ -165,8 +165,8 @@ public class DataHoraActivity extends ActivityGeneric {
                             break;
                         case 4:
                             if(valor <= 23){
-                                pmmContext.setHora(valor);
-                                pmmContext.setContDataHora(pmmContext.getContDataHora() + 1);
+                                pmmContext.getConfigCTR().setHora(valor);
+                                pmmContext.getConfigCTR().setContDataHora(pmmContext.getConfigCTR().getContDataHora() + 1);
                                 it = new Intent(DataHoraActivity.this, DataHoraActivity.class);
                                 startActivity(it);
                                 finish();
@@ -187,14 +187,21 @@ public class DataHoraActivity extends ActivityGeneric {
                             break;
                         case 5:
                             if(valor <= 59){
-                                pmmContext.setMinuto(valor);
-                                pmmContext.getConfigCTR().setDifDthrConfig(Tempo.getInstance().difDthr(pmmContext.getDia(), pmmContext.getMes(), pmmContext.getAno()
-                                        , pmmContext.getHora(), pmmContext.getMinuto()));
+                                pmmContext.getConfigCTR().setMinuto(valor);
+                                pmmContext.getConfigCTR().setDifDthrConfig(Tempo.getInstance().difDthr(pmmContext.getConfigCTR().getDia(), pmmContext.getConfigCTR().getMes(), pmmContext.getConfigCTR().getAno()
+                                        , pmmContext.getConfigCTR().getHora(), pmmContext.getConfigCTR().getMinuto()));
 
                                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
-                                    it = new Intent(DataHoraActivity.this, OSActivity.class);
-                                    startActivity(it);
-                                    finish();
+                                    if(PMMContext.aplic == 2){
+                                        it = new Intent(DataHoraActivity.this, HorimetroActivity.class);
+                                        startActivity(it);
+                                        finish();
+                                    }
+                                    else {
+                                        it = new Intent(DataHoraActivity.this, OSActivity.class);
+                                        startActivity(it);
+                                        finish();
+                                    }
                                 }
                                 else {
                                     if(PMMContext.aplic == 1){
@@ -247,8 +254,8 @@ public class DataHoraActivity extends ActivityGeneric {
     }
 
     public void onBackPressed()  {
-        if(pmmContext.getContDataHora() > 1){
-            pmmContext.setContDataHora(pmmContext.getContDataHora() - 1);
+        if(pmmContext.getConfigCTR().getContDataHora() > 1){
+            pmmContext.getConfigCTR().setContDataHora(pmmContext.getConfigCTR().getContDataHora() - 1);
             Intent it = new Intent(DataHoraActivity.this, DataHoraActivity.class);
             startActivity(it);
             finish();

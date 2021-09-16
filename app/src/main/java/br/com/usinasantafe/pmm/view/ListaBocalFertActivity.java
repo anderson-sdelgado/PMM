@@ -55,7 +55,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getMotoMecFertCTR().atualDadosBocal(ListaBocalFertActivity.this, ListaBocalFertActivity.class, progressBar);
+                            pmmContext.getMotoMecFertCTR().atualDados(ListaBocalFertActivity.this, ListaBocalFertActivity.class, progressBar, "Bocal");
 
                         } else {
                             AlertDialog.Builder alerta = new AlertDialog.Builder( ListaBocalFertActivity.this);

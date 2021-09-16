@@ -96,7 +96,7 @@ public class EnvioDadosServ {
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
-        Log.i("ECM", "DADOS VIAGEM = " + dados);
+        Log.i("ECM", "PRECEC = " + dados);
 
         PostCadGenerico.getInstance().setParametrosPost(parametrosPost);
 
@@ -111,7 +111,7 @@ public class EnvioDadosServ {
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
         String dados = motoMecFertCTR.dadosEnvioBolFechadoMMFert();
 
-        Log.i("PMM", "FECHADO = " + dados);
+        Log.i("PMM", "BOLETIM FECHADO = " + dados);
 
         UrlsConexaoHttp urlsConexaoHttp = new UrlsConexaoHttp();
 
@@ -130,7 +130,7 @@ public class EnvioDadosServ {
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
         String dados = motoMecFertCTR.dadosEnvioBolAbertoMMFert();
 
-        Log.i("PMM", "ABERTO = " + dados);
+        Log.i("PMM", "BOLETIM ABERTO = " + dados);
 
         UrlsConexaoHttp urlsConexaoHttp = new UrlsConexaoHttp();
 
@@ -204,11 +204,9 @@ public class EnvioDadosServ {
 
     ////////////////////////////////////MECANISMO DE ENVIO/////////////////////////////////////////
 
-    public void envioDados(int lugar) {
-        Log.i("PMM", "ENVIANDO 1 = " + lugar);
+    public void envioDados() {
         status = 1;
         if(ActivityGeneric.connectNetwork) {
-            Log.i("PMM", "ENVIANDO 2");
             status = 2;
             if (verifChecklist()) {
                 enviarChecklist();

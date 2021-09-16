@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.List;
-
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 
@@ -33,7 +31,7 @@ public class SenhaActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                if (!pmmContext.getConfigCTR().hasElements()) {
+                if (!pmmContext.getConfigCTR().hasElemConfig()) {
 
                     Intent it = new Intent(SenhaActivity.this, ConfigActivity.class);
                     startActivity(it);

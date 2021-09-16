@@ -43,7 +43,7 @@ public class ListaTipoMovLeiraActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                pmmContext.setTipoMovLeira((long) (position + 1));
+                pmmContext.getCompostoCTR().setTipoMovLeira((long) (position + 1));
 
                 Intent it = new Intent(ListaTipoMovLeiraActivity.this, ListaLeiraActivity.class);
                 startActivity(it);

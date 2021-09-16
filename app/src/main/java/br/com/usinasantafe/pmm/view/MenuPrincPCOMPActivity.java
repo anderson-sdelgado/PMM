@@ -33,7 +33,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
         setContentView(R.layout.activity_menu_princ_pcomp);
 
         pmmContext = (PMMContext) getApplication();
-        pmmContext.setVerTelaLeira(false);
+        pmmContext.getCompostoCTR().setVerTelaLeira(false);
 
         Button buttonParadaMotoMec = findViewById(R.id.buttonParadaMotoMec);
         Button buttonRetMotoMec = findViewById(R.id.buttonRetMotoMec);
@@ -111,7 +111,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         }
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 2) {
 
-                            if (pmmContext.getConfigCTR().getConfig().getPosFluxoViagem() == 0) {
+                            if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 0) {
 
                                 AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);
                                 alerta.setTitle("ATENÇÃO");
@@ -121,7 +121,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        pmmContext.getConfigCTR().setPosFluxoViagem(1L);
+                                        pmmContext.getConfigCTR().setPosFluxoCarregComposto(1L);
                                         pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());
                                         motoMecListView.setSelection(posicao + 1);
 
@@ -134,9 +134,9 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                                 String msg = "";
 
-                                if (pmmContext.getConfigCTR().getConfig().getPosFluxoViagem() == 1) {
+                                if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 1) {
                                     msg = "POR FAVOR, CARREGUE O EQUIPAMENTO E DEPOIS PASSE NA BALANÇA PARA FAZER A PESAGEM CARREGADO!";
-                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoViagem() == 2) {
+                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 2) {
                                     msg = "POR FAVOR, PASSE NA BALANÇA PARA FAZER A PESAGEM DO EQUIPAMENTO CARREGADO!";
                                 }
 
@@ -165,12 +165,12 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         }
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 3) {
 
-                            if (pmmContext.getConfigCTR().getConfig().getPosFluxoViagem() == 1) {
+                            if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 1) {
 
                                 if (pmmContext.getConfigCTR().getOS().getTipoOS() == 0L) {
 
-                                    pmmContext.getConfigCTR().setPosFluxoViagem(2L);
-                                    Intent it = new Intent(MenuPrincPCOMPActivity.this, DigLeiraActivity.class);
+                                    pmmContext.getConfigCTR().setPosFluxoCarregComposto(2L);
+                                    Intent it = new Intent(MenuPrincPCOMPActivity.this, LeiraActivity.class);
                                     startActivity(it);
                                     finish();
 
@@ -186,9 +186,9 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                                 String msg = "";
 
-                                if (pmmContext.getConfigCTR().getConfig().getPosFluxoViagem() == 0) {
+                                if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 0) {
                                     msg = "POR FAVOR, TIRE A PESAGEM TARA DO EQUIPAMENTO!";
-                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoViagem() == 2) {
+                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 2) {
                                     msg = "POR FAVOR, PASSE NA BALANÇA PARA FAZER A PESAGEM DO EQUIPAMENTO CARREGADO!";
                                 }
 
@@ -209,10 +209,10 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         }
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 4) {
 
-                            if (pmmContext.getConfigCTR().getConfig().getPosFluxoViagem() == 2) {
+                            if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 2) {
 
                                 pmmContext.getConfigCTR().setPosicaoTela(13L);
-                                pmmContext.getConfigCTR().setPosFluxoViagem(0L);
+                                pmmContext.getConfigCTR().setPosFluxoCarregComposto(0L);
                                 Intent it = new Intent(MenuPrincPCOMPActivity.this, EsperaInforActivity.class);
                                 startActivity(it);
                                 finish();
@@ -221,9 +221,9 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                                 String msg = "";
 
-                                if (pmmContext.getConfigCTR().getConfig().getPosFluxoViagem() == 0) {
+                                if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 0) {
                                     msg = "POR FAVOR, TIRE A PESAGEM TARA DO EQUIPAMENTO!";
-                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoViagem() == 1) {
+                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 1) {
                                     msg = "POR FAVOR, CARREGUE O EQUIPAMENTO E DEPOIS PASSE NA BALANÇA PARA FAZER A PESAGEM CARREGADO!";
                                 }
 
@@ -253,7 +253,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 10) {
 
                             pmmContext.getConfigCTR().setPosicaoTela(15L);
-                            Intent it = new Intent(MenuPrincPCOMPActivity.this, DigLeiraActivity.class);
+                            Intent it = new Intent(MenuPrincPCOMPActivity.this, LeiraActivity.class);
                             startActivity(it);
                             finish();
 

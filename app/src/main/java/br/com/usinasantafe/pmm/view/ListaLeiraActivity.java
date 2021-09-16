@@ -35,7 +35,7 @@ public class ListaLeiraActivity extends ActivityGeneric {
         Button buttonRetListaLeira = (Button) findViewById(R.id.buttonRetListaLeira);
         Button buttonSalvarListaLeira = (Button) findViewById(R.id.buttonSalvarListaLeira);
 
-        leiraList = pmmContext.getCompostoCTR().leiraStatusList(pmmContext.getTipoMovLeira());
+        leiraList = pmmContext.getCompostoCTR().leiraStatusList(pmmContext.getCompostoCTR().getTipoMovLeira());
 
         for (LeiraBean leiraBean : leiraList) {
             ViewHolderChoice viewHolderChoice = new ViewHolderChoice();
@@ -72,7 +72,7 @@ public class ListaLeiraActivity extends ActivityGeneric {
                     ViewHolderChoice viewHolderChoice = itens.get(i);
 
                     if(viewHolderChoice.isSelected()){
-                        pmmContext.getCompostoCTR().updateLeira(leiraList.get(i), pmmContext.getTipoMovLeira());
+                        pmmContext.getCompostoCTR().updateLeira(leiraList.get(i), pmmContext.getCompostoCTR().getTipoMovLeira());
                         leiraSelectedList.add(leiraList.get(i).getIdLeira());
                     }
 
@@ -81,10 +81,10 @@ public class ListaLeiraActivity extends ActivityGeneric {
                 if(leiraSelectedList.size() > 0){
 
                     for (int i = 0; i < leiraSelectedList.size(); i++) {
-                        pmmContext.getMotoMecFertCTR().inserirMovLeira(leiraSelectedList.get(i), pmmContext.getTipoMovLeira());
+                        pmmContext.getMotoMecFertCTR().inserirMovLeira(leiraSelectedList.get(i), pmmContext.getCompostoCTR().getTipoMovLeira());
                     }
 
-                    EnvioDadosServ.getInstance().envioDados(18);
+                    EnvioDadosServ.getInstance().envioDados();
                     Intent it = new Intent(ListaLeiraActivity.this, MenuPrincPMMActivity.class);
                     startActivity(it);
                     finish();
