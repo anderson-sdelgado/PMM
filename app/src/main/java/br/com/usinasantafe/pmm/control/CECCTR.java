@@ -2,7 +2,6 @@ package br.com.usinasantafe.pmm.control;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
 
 import java.util.List;
 
@@ -16,7 +15,6 @@ import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.model.dao.OSDAO;
 import br.com.usinasantafe.pmm.model.dao.PreCECDAO;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
-import br.com.usinasantafe.pmm.util.Json;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class CECCTR {
@@ -185,20 +183,10 @@ public class CECCTR {
         return preCECDAO.getDataChegCampo();
     }
 
-    public OSBean getOSTipoAtiv(){
+    public OSBean getOS(){
         OSDAO osDAO = new OSDAO();
         ConfigCTR configCTR = new ConfigCTR();
-        Long tipo;
-        if(configCTR.getEquip().getClassifEquip() == 1){
-            tipo = 557L;
-        }
-        else if(configCTR.getEquip().getClassifEquip() == 2){
-            tipo = 558L;
-        }
-        else{
-            tipo = 559L;
-        }
-        return osDAO.getOSTipoAtiv(tipo, configCTR.getConfig().getOsConfig());
+        return osDAO.getOS(configCTR.getConfig().getIdAtivConfig(), configCTR.getConfig().getNroOSConfig());
     }
 
     public boolean hasPreCEC(){

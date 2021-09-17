@@ -25,9 +25,9 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private Long difDthrConfig;
 	@DatabaseField
-	private Long osConfig;
+	private Long nroOSConfig;
 	@DatabaseField
-	private Long ativConfig;
+	private Long idAtivConfig;
 	@DatabaseField
 	private Long ultParadaBolConfig;
 	@DatabaseField
@@ -137,20 +137,20 @@ public class ConfigBean extends Entidade {
 		this.difDthrConfig = difDthrConfig;
 	}
 
-	public Long getOsConfig() {
-		return osConfig;
+	public Long getNroOSConfig() {
+		return nroOSConfig;
 	}
 
-	public void setOsConfig(Long osConfig) {
-		this.osConfig = osConfig;
+	public void setNroOSConfig(Long nroOSConfig) {
+		this.nroOSConfig = nroOSConfig;
 	}
 
-	public Long getAtivConfig() {
-		return ativConfig;
+	public Long getIdAtivConfig() {
+		return idAtivConfig;
 	}
 
-	public void setAtivConfig(Long ativConfig) {
-		this.ativConfig = ativConfig;
+	public void setIdAtivConfig(Long idAtivConfig) {
+		this.idAtivConfig = idAtivConfig;
 	}
 
 	public Long getUltParadaBolConfig() {

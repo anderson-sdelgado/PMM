@@ -12,7 +12,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.estaticas.OSBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ROSAtivBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
@@ -21,14 +20,6 @@ import br.com.usinasantafe.pmm.util.VerifDadosServ;
 public class OSDAO {
 
     public OSDAO() {
-    }
-
-    public OSBean getOSBean(Long nroOS){
-        OSBean osBean = new OSBean();
-        List<OSBean> osList = osBean.get("nroOS", nroOS);
-        osBean = osList.get(0);
-        osList.clear();
-        return osBean;
     }
 
     public void osDelAll(){
@@ -41,31 +32,29 @@ public class OSDAO {
         rOSAtivBean.deleteAll();
     }
 
-    public boolean verAtivOS(Long idAtivOS, Long nroOS){
-        List<OSBean> osList = ativOSList(idAtivOS, nroOS);
-        boolean retorno = osList.size() > 0;
+    public OSBean getOS(Long nroOS){
+        OSBean osBean = new OSBean();
+        List<OSBean> osList = osBean.get("nroOS", nroOS);
+        osBean = osList.get(0);
         osList.clear();
-        return retorno;
+        return osBean;
     }
 
-    public OSBean getOSTipoAtiv(Long idAtiv, Long nroOS){
+    public OSBean getOS(Long idAtiv, Long nroOS){
+        List<OSBean> osList = osList(idAtiv, nroOS);
+        OSBean osBean = osList.get(0);
+        osList.clear();
+        return osBean;
+    }
+
+    public ArrayList<Long> idAtivArrayList(Long nroOS){
+        ArrayList<Long> idAtivArrayList = new ArrayList<Long>();
         List<OSBean> osList = osList(nroOS);
-        OSBean retOSBean = new OSBean();
-        for(OSBean osBean : osList){
-            if(idAtiv.equals(osBean.getIdAtiv())){
-                retOSBean = osBean;
-            }
+        for (OSBean osBean : osList) {
+            idAtivArrayList.add(osBean.getIdAtiv());
         }
         osList.clear();
-        return retOSBean;
-    }
-
-    private List<OSBean> ativOSList(Long idAtivOS, Long nroOS){
-        OSBean osBean = new OSBean();
-        ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqAtiv(idAtivOS));
-        pesqArrayList.add(getPesqNroOS(nroOS));
-        return osBean.get(pesqArrayList);
+        return idAtivArrayList;
     }
 
     private List<OSBean> osList(Long nroOS){
@@ -75,28 +64,12 @@ public class OSDAO {
         return osBean.get(pesqArrayList);
     }
 
-    private EspecificaPesquisa getPesqAtiv(Long idAtivOS){
-        EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
-        especificaPesquisa.setCampo("idAtivOS");
-        especificaPesquisa.setValor(idAtivOS);
-        especificaPesquisa.setTipo(1);
-        return especificaPesquisa;
-    }
-
-    private EspecificaPesquisa getPesqLib(Long idLibOS){
-        EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
-        especificaPesquisa.setCampo("idLibOS");
-        especificaPesquisa.setValor(idLibOS);
-        especificaPesquisa.setTipo(1);
-        return especificaPesquisa;
-    }
-
-    private EspecificaPesquisa getPesqNroOS(Long nroOS){
-        EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
-        especificaPesquisa.setCampo("nroOS");
-        especificaPesquisa.setValor(nroOS);
-        especificaPesquisa.setTipo(1);
-        return especificaPesquisa;
+    private List<OSBean> osList(Long idAtiv, Long nroOS){
+        OSBean osBean = new OSBean();
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqNroOS(nroOS));
+        pesqArrayList.add(getPesqIdAtiv(idAtiv));
+        return osBean.get(pesqArrayList);
     }
 
     public void verOS(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
@@ -133,6 +106,22 @@ public class OSDAO {
         boolean ret = osList.size() > 0;
         osList.clear();
         return ret;
+    }
+
+    private EspecificaPesquisa getPesqNroOS(Long nroOS){
+        EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
+        especificaPesquisa.setCampo("nroOS");
+        especificaPesquisa.setValor(nroOS);
+        especificaPesquisa.setTipo(1);
+        return especificaPesquisa;
+    }
+
+    private EspecificaPesquisa getPesqIdAtiv(Long idAtiv){
+        EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
+        especificaPesquisa.setCampo("idAtiv");
+        especificaPesquisa.setValor(idAtiv);
+        especificaPesquisa.setTipo(1);
+        return especificaPesquisa;
     }
 
 }

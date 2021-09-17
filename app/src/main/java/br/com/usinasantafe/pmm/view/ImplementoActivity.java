@@ -47,7 +47,7 @@ public class ImplementoActivity extends ActivityGeneric {
                             progressBar.setMessage("Atualizando Implemento...");
                             progressBar.show();
 
-                            pmmContext.getMotoMecFertCTR().atualDados(ImplementoActivity.this, ImplementoActivity.class, progressBar, "EquipSeg");
+                            pmmContext.getMotoMecFertCTR().atualDados(ImplementoActivity.this, ImplementoActivity.class, progressBar, "EquipSeg", 1);
 
                         } else {
 

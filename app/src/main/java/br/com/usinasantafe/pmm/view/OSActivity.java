@@ -1,6 +1,8 @@
 package br.com.usinasantafe.pmm.view;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,7 +36,7 @@ public class OSActivity extends ActivityGeneric {
             || (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L)){
             editText.setText("");
         } else {
-            editText.setText(String.valueOf(pmmContext.getConfigCTR().getConfig().getOsConfig()));
+            editText.setText(String.valueOf(pmmContext.getConfigCTR().getConfig().getNroOSConfig()));
         }
 
         buttonOkOS.setOnClickListener(new View.OnClickListener() {
@@ -46,45 +48,80 @@ public class OSActivity extends ActivityGeneric {
                     Long nroOS = Long.parseLong(editTextPadrao.getText().toString());
                     pmmContext.getConfigCTR().setOsConfig(nroOS);
 
-                    if (pmmContext.getConfigCTR().verOS(nroOS)) {
+                    if(PMMContext.aplic == 2) {
 
-                        if (connectNetwork) {
-                            pmmContext.getConfigCTR().setStatusConConfig(1L);
-                        }
-                        else{
-                            pmmContext.getConfigCTR().setStatusConConfig(0L);
-                        }
+                        if (pmmContext.getConfigCTR().verOS(nroOS)) {
 
-                        Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
-                        startActivity(it);
-                        finish();
-
-                    } else {
-
-                        if (connectNetwork) {
-
-                            progressBar = new ProgressDialog(v.getContext());
-                            progressBar.setCancelable(true);
-                            progressBar.setMessage("PESQUISANDO OS...");
-                            progressBar.show();
-
-                            customHandler.postDelayed(updateTimerThread, 10000);
-
-                            pmmContext.getMotoMecFertCTR().verOS(editTextPadrao.getText().toString()
-                                    , OSActivity.this, ListaAtividadeActivity.class, progressBar);
-
-                        }
-                        else {
-
-                            pmmContext.getConfigCTR().setStatusConConfig(0L);
+                            if (connectNetwork) {
+                                pmmContext.getConfigCTR().setStatusConConfig(1L);
+                            }
+                            else{
+                                pmmContext.getConfigCTR().setStatusConConfig(0L);
+                            }
 
                             Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                             startActivity(it);
                             finish();
 
                         }
+                        else {
+
+                            AlertDialog.Builder alerta = new AlertDialog.Builder(OSActivity.this);
+                            alerta.setTitle("ATENÇÃO");
+                            alerta.setMessage("ORDEM SERVIÇO INCORRETA! POR FAVOR, VERIFIQUE A NUMERAÇÃO DIGITADA DA ORDEM SERVIÇO.");
+                            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+                            alerta.show();
+
+                        }
 
                     }
+                    else {
+
+                        if (pmmContext.getConfigCTR().verROSAtiv(nroOS)) {
+
+                            if (connectNetwork) {
+                                pmmContext.getConfigCTR().setStatusConConfig(1L);
+                            }
+                            else{
+                                pmmContext.getConfigCTR().setStatusConConfig(0L);
+                            }
+
+                            Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
+                            startActivity(it);
+                            finish();
+
+                        } else {
+
+                            if (connectNetwork) {
+
+                                progressBar = new ProgressDialog(v.getContext());
+                                progressBar.setCancelable(true);
+                                progressBar.setMessage("PESQUISANDO OS...");
+                                progressBar.show();
+
+                                customHandler.postDelayed(updateTimerThread, 10000);
+
+                                pmmContext.getMotoMecFertCTR().verOS(editTextPadrao.getText().toString()
+                                        , OSActivity.this, ListaAtividadeActivity.class, progressBar);
+
+                            } else {
+
+                                pmmContext.getConfigCTR().setStatusConConfig(0L);
+
+                                Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
+                                startActivity(it);
+                                finish();
+
+                            }
+
+                        }
+
+                    }
+
                 }
             }
         });

@@ -52,7 +52,7 @@ public class TransbordoActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getMotoMecFertCTR().atualDados(TransbordoActivity.this, TransbordoActivity.class, progressBar, "EquipSeg");
+                            pmmContext.getMotoMecFertCTR().atualDados(TransbordoActivity.this, TransbordoActivity.class, progressBar, "EquipSeg", 1);
 
                         } else {
 
@@ -150,7 +150,7 @@ public class TransbordoActivity extends ActivityGeneric {
 
                                 if (rendimento) {
                                     ConfigCTR configCTR = new ConfigCTR();
-                                    pmmContext.getMotoMecFertCTR().insRendBD(configCTR.getConfig().getOsConfig());
+                                    pmmContext.getMotoMecFertCTR().insRendBD(configCTR.getConfig().getNroOSConfig());
                                 }
 
                                 Intent it = new Intent(TransbordoActivity.this, MenuPrincPMMActivity.class);

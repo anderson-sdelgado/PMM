@@ -42,7 +42,7 @@ public class CECActivity extends ActivityGeneric {
                 startActivity(it);
                 finish();
 
-                pmmContext.getConfigCTR().atualTodasTabelas();
+                pmmContext.getMotoMecFertCTR().atualDados(null, null, null, "OS", 2);
 
             }
         });

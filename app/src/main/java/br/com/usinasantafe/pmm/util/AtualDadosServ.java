@@ -124,11 +124,11 @@ public class AtualDadosServ {
         
 	}
 
-	public void atualGenericoBD(Context telaAtual, Class telaProx, ProgressDialog progressDialog, ArrayList classeArrayList){
+	public void atualGenericoBD(Context telaAtual, Class telaProx, ProgressDialog progressDialog, ArrayList classeArrayList, int tipoReceb){
 
 		try {
 
-			this.tipoReceb = 1;
+			this.tipoReceb = tipoReceb;
 			this.telaAtual = telaAtual;
 			this.telaProx = telaProx;
 			this.progressDialog = progressDialog;
@@ -159,6 +159,7 @@ public class AtualDadosServ {
 		}
 
 	}
+
 	public void atualTodasTabBD(){
 
 		try {
@@ -203,7 +204,6 @@ public class AtualDadosServ {
 				String[] url = {classe};
 				contAtualBD++;
 
-				Log.i("PMM", "CHEGOU AKI 1 ");
 				GetBDGenerico getBDGenerico = new GetBDGenerico();
 		        getBDGenerico.execute(url);
 		        

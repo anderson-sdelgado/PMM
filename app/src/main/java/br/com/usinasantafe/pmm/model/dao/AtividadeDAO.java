@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.AtividadeBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.REquipAtivBean;
@@ -67,27 +68,56 @@ public class AtividadeDAO {
         }
 
         AtividadeBean atividadeBean = new AtividadeBean();
-        List<AtividadeBean> atividadeList = atividadeBean.in("idAtiv", rEquipAtivArrayList);
+        List<AtividadeBean> atividadeEquipList = atividadeBean.in("idAtiv", rEquipAtivArrayList);
 
         ROSAtivBean rOSAtivBean = new ROSAtivBean();
         List<ROSAtivBean> rOSAtivList = rOSAtivBean.get("nroOS", nroOS);
 
         if (rOSAtivList.size() > 0) {
 
-            for (int i = 0; i < atividadeList.size(); i++) {
-                atividadeBean = atividadeList.get(i);
-                for (int j = 0; j < rOSAtivList.size(); j++) {
-                    rOSAtivBean = rOSAtivList.get(j);
-                    if (Objects.equals(atividadeBean.getIdAtiv(), rOSAtivBean.getIdAtiv())) {
-                        atividadeArrayList.add(atividadeBean);
+            for (AtividadeBean atividadeBeanBD : atividadeEquipList) {
+                for (ROSAtivBean rOSAtivBeanBD : rOSAtivList) {
+                    if (Objects.equals(atividadeBeanBD.getIdAtiv(), rOSAtivBeanBD.getIdAtiv())) {
+                        atividadeArrayList.add(atividadeBeanBD);
                     }
                 }
             }
 
         } else {
-            for (int i = 0; i < atividadeList.size(); i++) {
-                atividadeBean = atividadeList.get(i);
-                atividadeArrayList.add(atividadeBean);
+            for (AtividadeBean atividadeBeanBD : atividadeEquipList) {
+                atividadeArrayList.add(atividadeBeanBD);
+            }
+        }
+
+        return atividadeArrayList;
+
+    }
+
+    public ArrayList retAtivArrayList(Long equip, ArrayList<Long> idAtivOSArrayList){
+
+        ArrayList atividadeArrayList = new ArrayList();
+
+        REquipAtivBean rEquipAtivBean = new REquipAtivBean();
+        List rEquipAtivList = rEquipAtivBean.get("idEquip", equip);
+
+        ArrayList<Long> rEquipAtivArrayList = new ArrayList<Long>();
+
+        for (int i = 0; i < rEquipAtivList.size(); i++) {
+            rEquipAtivBean = (REquipAtivBean) rEquipAtivList.get(i);
+            rEquipAtivArrayList.add(rEquipAtivBean.getIdAtiv());
+        }
+
+        AtividadeBean atividadeEquipBean = new AtividadeBean();
+        List<AtividadeBean> atividadeEquipList = atividadeEquipBean.in("idAtiv", rEquipAtivArrayList);
+
+        AtividadeBean atividadeOSBean = new AtividadeBean();
+        List<AtividadeBean> atividadeOSList = atividadeOSBean.in("idAtiv", idAtivOSArrayList);
+
+        for (AtividadeBean atividadeEquipBD : atividadeEquipList) {
+            for (AtividadeBean atividadeOSBD : atividadeOSList) {
+                if (Objects.equals(atividadeEquipBD.getIdAtiv(), atividadeOSBD.getIdAtiv())) {
+                    atividadeArrayList.add(atividadeEquipBD);
+                }
             }
         }
 

@@ -40,7 +40,7 @@ public class EquipActivity extends ActivityGeneric {
                     pmmContext.getMotoMecFertCTR().delCarreta();
 
                     if(pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L){
-                        pmmContext.getCecCTR().setLib(pmmContext.getCecCTR().getOSTipoAtiv().getIdLibOS());
+                        pmmContext.getCecCTR().setLib(pmmContext.getCecCTR().getOS().getIdLibOS());
                     }
 
                     Intent it = new Intent(EquipActivity.this, MsgNumCarretaActivity.class);

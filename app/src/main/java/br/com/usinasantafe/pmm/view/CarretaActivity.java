@@ -39,7 +39,7 @@ public class CarretaActivity extends ActivityGeneric {
                         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){
 
                             pmmContext.getCecCTR().setCarr(Long.parseLong(editTextPadrao.getText().toString()));
-                            pmmContext.getCecCTR().setLib(pmmContext.getCecCTR().getOSTipoAtiv().getIdLibOS());
+                            pmmContext.getCecCTR().setLib(pmmContext.getCecCTR().getOS().getIdLibOS());
 
                             int numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;
 

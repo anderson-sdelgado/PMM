@@ -41,7 +41,7 @@ public class FrenteActivity extends ActivityGeneric {
                     progressBar.setMax(100);
                     progressBar.show();
 
-                    pmmContext.getMotoMecFertCTR().atualDados(FrenteActivity.this, FrenteActivity.class, progressBar, "Leira");
+                    pmmContext.getMotoMecFertCTR().atualDados(FrenteActivity.this, FrenteActivity.class, progressBar, "Leira", 1);
 
                 }
                 else {

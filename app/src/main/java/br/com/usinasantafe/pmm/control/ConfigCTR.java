@@ -218,15 +218,20 @@ public class ConfigCTR {
         configDAO.setOsConfig(nroOS);
     }
 
-    public boolean verOS(Long nroOS){
+    public boolean verROSAtiv(Long nroOS){
         OSDAO osDAO = new OSDAO();
         AtividadeDAO atividadeDAO = new AtividadeDAO();
         return (osDAO.verOS(nroOS) && atividadeDAO.verROSAtiv(nroOS));
     }
 
+    public boolean verOS(Long nroOS){
+        OSDAO osDAO = new OSDAO();
+        return osDAO.verOS(nroOS);
+    }
+
     public OSBean getOS(){
         OSDAO osDAO = new OSDAO();
-        return osDAO.getOSBean(getConfig().getOsConfig());
+        return osDAO.getOS(getConfig().getNroOSConfig());
     }
 
     public void osDelAll(){
@@ -425,6 +430,25 @@ public class ConfigCTR {
         configDAO.setFrentePropriedade(idFrente, idPropriedade);
     }
 
+    public String getMsgPropriedade(){
+        String retorno = "";
+        if((getConfig().getNroOSConfig() == 0L) && (getConfig().getIdPropriedadeConfig() == 0L)){
+            retorno = "NÃO POSSUE FAZENDA AINDA";
+        }
+        else if(getConfig().getNroOSConfig() == 0L){
+            PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
+            PropriedadeBean propriedadeBean = propriedadeDAO.getPropriedade(getConfig().getIdPropriedadeConfig());
+            retorno = "FAZENDA = " + propriedadeBean.getIdPropriedade() + " - " + propriedadeBean.getDescrPropriedade();
+        }
+        else{
+            OSDAO osDAO = new OSDAO();
+            PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
+            PropriedadeBean propriedadeBean = propriedadeDAO.getPropriedade(osDAO.getOS(getConfig().getNroOSConfig()).getIdProprAgr());
+            retorno = "FAZENDA = " + propriedadeBean.getIdPropriedade() + " - " + propriedadeBean.getDescrPropriedade();
+        }
+        return retorno;
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////// INFORMATIVO ////////////////////////////////////////////
@@ -515,10 +539,6 @@ public class ConfigCTR {
 
     public void atualTodasTabelas(Context tela, ProgressDialog progressDialog){
         AtualDadosServ.getInstance().atualTodasTabBD(tela, progressDialog);
-    }
-
-    public void atualTodasTabelas(){
-        AtualDadosServ.getInstance().atualTodasTabBD();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

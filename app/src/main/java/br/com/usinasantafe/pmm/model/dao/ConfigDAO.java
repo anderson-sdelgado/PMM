@@ -49,8 +49,8 @@ public class ConfigDAO {
         configBean.setVerRecInformativo(0L);
         configBean.setFlagLogErro(0L);
         configBean.setFlagLogEnvio(0L);
-        configBean.setOsConfig(0L);
-        configBean.setAtivConfig(0L);
+        configBean.setNroOSConfig(0L);
+        configBean.setIdAtivConfig(0L);
         configBean.setUltParadaBolConfig(0L);
         configBean.setPressaoConfig(0D);
         configBean.setVelocConfig(0L);
@@ -80,13 +80,13 @@ public class ConfigDAO {
 
     public void setOsConfig(Long nroOS){
         ConfigBean configBean = getConfig();
-        configBean.setOsConfig(nroOS);
+        configBean.setNroOSConfig(nroOS);
         configBean.update();
     }
 
     public void setAtivConfig(Long idAtiv){
         ConfigBean configBean = getConfig();
-        configBean.setAtivConfig(idAtiv);
+        configBean.setIdAtivConfig(idAtiv);
         configBean.update();
     }
 

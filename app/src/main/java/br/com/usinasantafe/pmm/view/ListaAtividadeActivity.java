@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -42,7 +41,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
         Button buttonRetAtividade = findViewById(R.id.buttonRetAtividade);
         TextView textViewTituloAtividade = findViewById(R.id.textViewTituloAtividade);
 
-        nroOS =  pmmContext.getConfigCTR().getConfig().getOsConfig();
+        nroOS =  pmmContext.getConfigCTR().getConfig().getNroOSConfig();
 
         buttonAtualAtividade.setOnClickListener(new View.OnClickListener() {
 
@@ -51,14 +50,32 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                 if (connectNetwork) {
 
-                    progressBar = new ProgressDialog(v.getContext());
-                    progressBar.setCancelable(true);
-                    progressBar.setMessage("Atualizando Atividades...");
-                    progressBar.show();
+                    if(PMMContext.aplic != 2) {
 
-                    customHandler.postDelayed(updateTimerThread, 10000);
+                        progressBar = new ProgressDialog(v.getContext());
+                        progressBar.setCancelable(true);
+                        progressBar.setMessage("Atualizando Atividades...");
+                        progressBar.show();
 
-                    pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(nroOS), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
+                        customHandler.postDelayed(updateTimerThread, 10000);
+
+                        pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(nroOS), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
+
+                    }
+                    else {
+
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
+                        alerta.setTitle("ATENÇÃO");
+                        alerta.setMessage("A ATIVIDADES SÃO ATUALIZADAS AUTOMATICAMENTE APENAS DEPOIS DA PESAGEM NA BALANÇA.");
+                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        alerta.show();
+
+                    }
 
                 } else {
 
@@ -250,7 +267,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                     } else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {
 
-                        pmmContext.getCecCTR().setAtivOS(pmmContext.getCecCTR().getOSTipoAtiv().getIdAtivOS());
+                        pmmContext.getCecCTR().setAtivOS(pmmContext.getCecCTR().getOS().getIdAtivOS());
                         Intent it = new Intent(ListaAtividadeActivity.this, EquipActivity.class);
                         startActivity(it);
                         finish();

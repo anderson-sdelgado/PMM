@@ -50,6 +50,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
         textViewMotorista.setText(pmmContext.getMotoMecFertCTR().getMatricFunc().getMatricFunc() + " - " + pmmContext.getMotoMecFertCTR().getMatricFunc().getNomeFunc());
         textViewCarreta.setText(pmmContext.getMotoMecFertCTR().getDescrCarreta());
         textViewUltimaViagem.setText(pmmContext.getCecCTR().getDataSaidaUlt());
+        textViewPropriedade.setText(pmmContext.getConfigCTR().getMsgPropriedade());
 
         if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L){
             pmmContext.getMotoMecFertCTR().inserirApontBolAnterior();
