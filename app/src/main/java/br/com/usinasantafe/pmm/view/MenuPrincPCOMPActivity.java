@@ -17,6 +17,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.MotoMecBean;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.ConnectNetwork;
 
 public class MenuPrincPCOMPActivity extends ActivityGeneric {
@@ -39,6 +40,16 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
         Button buttonRetMotoMec = findViewById(R.id.buttonRetMotoMec);
         textViewMotorista = findViewById(R.id.textViewMotorista);
 
+        LogProcessoDAO.getInstance().insert("textViewMotorista.setText(pmmContext.getMotoMecFertCTR().getMatricFunc().getMatricFunc() + \" - \" + pmmContext.getMotoMecFertCTR().getMatricFunc().getNomeFunc());\n" +
+                "        ArrayList<String> motoMecArrayList = new ArrayList<String>();\n" +
+                "        motoMecList = pmmContext.getMotoMecFertCTR().motoMecList();\n" +
+                "        for (MotoMecBean motoMecBean : motoMecList) {\n" +
+                "            motoMecArrayList.add(motoMecBean.getDescrOperMotoMec());\n" +
+                "        }\n" +
+                "        AdapterList adapterList = new AdapterList(this, motoMecArrayList);\n" +
+                "        motoMecListView = findViewById(R.id.motoMecListView);\n" +
+                "        motoMecListView.setAdapter(adapterList);", getLocalClassName());
+
         textViewMotorista.setText(pmmContext.getMotoMecFertCTR().getMatricFunc().getMatricFunc() + " - " + pmmContext.getMotoMecFertCTR().getMatricFunc().getNomeFunc());
 
         ArrayList<String> motoMecArrayList = new ArrayList<String>();
@@ -57,12 +68,25 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
+                LogProcessoDAO.getInstance().insert("motoMecListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
+                        "                                    long id) {\n" +
+                        "                posicao = position;\n" +
+                        "                MotoMecBean motoMecBean = motoMecList.get(position);\n" +
+                        "                pmmContext.getMotoMecFertCTR().setMotoMecBean(motoMecBean);\n" +
+                        "                if (connectNetwork) {\n" +
+                        "                    pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
+                        "                }\n" +
+                        "                else{\n" +
+                        "                    pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
+                        "                }", getLocalClassName());
+
                 posicao = position;
                 MotoMecBean motoMecBean = motoMecList.get(position);
                 pmmContext.getMotoMecFertCTR().setMotoMecBean(motoMecBean);
 
-                ConnectNetwork connectNetwork = new ConnectNetwork();
-                if (connectNetwork.verificaConexao(MenuPrincPCOMPActivity.this)) {
+                if (connectNetwork) {
                     pmmContext.getConfigCTR().setStatusConConfig(1L);
                 }
                 else{
@@ -70,11 +94,26 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                 }
 
                 if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
+                    LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
+                            "                    Toast.makeText(MenuPrincPCOMPActivity.this, \"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\",\n" +
+                            "                            Toast.LENGTH_LONG).show();", getLocalClassName());
                     Toast.makeText(MenuPrincPCOMPActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                             Toast.LENGTH_LONG).show();
                 } else {
 
+                    LogProcessoDAO.getInstance().insert("} else {", getLocalClassName());
                     if (pmmContext.getMotoMecFertCTR().verifBackupApont()) {
+
+                        LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verifBackupApont()) {\n" +
+                                "                        AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);\n" +
+                                "                        alerta.setTitle(\"ATENÇÃO\");\n" +
+                                "                        alerta.setMessage(\"OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!\");\n" +
+                                "                        alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                "                            @Override\n" +
+                                "                            public void onClick(DialogInterface dialog, int which) {\n" +
+                                "                            }\n" +
+                                "                        });\n" +
+                                "                        alerta.show();", getLocalClassName());
 
                         AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);
                         alerta.setTitle("ATENÇÃO");
@@ -89,18 +128,28 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                     } else {
 
+                        LogProcessoDAO.getInstance().insert("} else {", getLocalClassName());
                         if ((motoMecBean.getCodFuncaoOperMotoMec() == 1)
                                 || (motoMecBean.getCodFuncaoOperMotoMec() == 11)) {  // ATIVIDADES NORMAIS
 
+                            LogProcessoDAO.getInstance().insert("if ((motoMecBean.getCodFuncaoOperMotoMec() == 1)\n" +
+                                    "                                || (motoMecBean.getCodFuncaoOperMotoMec() == 11)) {  // ATIVIDADES NORMAIS\n" +
+                                    "                            AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);\n" +
+                                    "                            alerta.setTitle(\"ATENÇÃO\");\n" +
+                                    "                            alerta.setMessage(\"FOI DADO ENTRADA NA ATIVIDADE: \" + motoMecBean.getDescrOperMotoMec());", getLocalClassName());
                             AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);
                             alerta.setTitle("ATENÇÃO");
                             alerta.setMessage("FOI DADO ENTRADA NA ATIVIDADE: " + motoMecBean.getDescrOperMotoMec());
-
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
-                                    pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());
+                                    LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                            "                                @Override\n" +
+                                            "                                public void onClick(DialogInterface dialog, int which) {\n" +
+                                            "                                    pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
+                                            "                                    motoMecListView.setSelection(posicao + 1);", getLocalClassName());
+                                    pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
                                     motoMecListView.setSelection(posicao + 1);
 
                                 }
@@ -111,18 +160,28 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         }
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 2) {
 
+                            LogProcessoDAO.getInstance().insert("else if (motoMecBean.getCodFuncaoOperMotoMec() == 2) {", getLocalClassName());
                             if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 0) {
 
+                                LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 0) {\n" +
+                                        "                                AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);\n" +
+                                        "                                alerta.setTitle(\"ATENÇÃO\");\n" +
+                                        "                                alerta.setMessage(\"FOI DADO ENTRADA NA ATIVIDADE: \" + motoMecBean.getDescrOperMotoMec());", getLocalClassName());
                                 AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);
                                 alerta.setTitle("ATENÇÃO");
                                 alerta.setMessage("FOI DADO ENTRADA NA ATIVIDADE: " + motoMecBean.getDescrOperMotoMec());
-
                                 alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
+                                        LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                                "                                    @Override\n" +
+                                                "                                    public void onClick(DialogInterface dialog, int which) {\n" +
+                                                "                                        pmmContext.getConfigCTR().setPosFluxoCarregComposto(1L);\n" +
+                                                "                                        pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
+                                                "                                        motoMecListView.setSelection(posicao + 1);", getLocalClassName());
                                         pmmContext.getConfigCTR().setPosFluxoCarregComposto(1L);
-                                        pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());
+                                        pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
                                         motoMecListView.setSelection(posicao + 1);
 
                                     }
@@ -132,6 +191,23 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                             } else {
 
+                                LogProcessoDAO.getInstance().insert("} else {\n" +
+                                        "String msg = \"\";\n" +
+                                        "                                if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 1) {\n" +
+                                        "                                    msg = \"POR FAVOR, CARREGUE O EQUIPAMENTO E DEPOIS PASSE NA BALANÇA PARA FAZER A PESAGEM CARREGADO!\";\n" +
+                                        "                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 2) {\n" +
+                                        "                                    msg = \"POR FAVOR, PASSE NA BALANÇA PARA FAZER A PESAGEM DO EQUIPAMENTO CARREGADO!\";\n" +
+                                        "                                }\n" +
+                                        "                                AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);\n" +
+                                        "                                alerta.setTitle(\"ATENÇÃO\");\n" +
+                                        "                                alerta.setMessage(msg);\n" +
+                                        "                                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                        "                                    @Override\n" +
+                                        "                                    public void onClick(DialogInterface dialog, int which) {\n" +
+                                        "                                        motoMecListView.setSelection(posicao + 1);\n" +
+                                        "                                    }\n" +
+                                        "                                });\n" +
+                                        "                                alerta.show();", getLocalClassName());
                                 String msg = "";
 
                                 if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 1) {
@@ -157,6 +233,9 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         }
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 6) {
 
+                            LogProcessoDAO.getInstance().insert("else if (motoMecBean.getCodFuncaoOperMotoMec() == 6) {\n" +
+                                    "                            pmmContext.getConfigCTR().setPosicaoTela(2L);\n" +
+                                    "                            Intent it = new Intent(MenuPrincPCOMPActivity.this, OSActivity.class);", getLocalClassName());
                             pmmContext.getConfigCTR().setPosicaoTela(2L);
                             Intent it = new Intent(MenuPrincPCOMPActivity.this, OSActivity.class);
                             startActivity(it);
@@ -165,17 +244,24 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         }
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 3) {
 
+                            LogProcessoDAO.getInstance().insert("else if (motoMecBean.getCodFuncaoOperMotoMec() == 3) {", getLocalClassName());
                             if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 1) {
 
+                                LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 1) {", getLocalClassName());
                                 if (pmmContext.getConfigCTR().getOS().getTipoOS() == 0L) {
 
+                                    LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getOS().getTipoOS() == 0L) {\n" +
+                                            "                                    pmmContext.getConfigCTR().setPosFluxoCarregComposto(2L);\n" +
+                                            "                                    Intent it = new Intent(MenuPrincPCOMPActivity.this, LeiraActivity.class);", getLocalClassName());
                                     pmmContext.getConfigCTR().setPosFluxoCarregComposto(2L);
                                     Intent it = new Intent(MenuPrincPCOMPActivity.this, LeiraActivity.class);
                                     startActivity(it);
                                     finish();
 
-                                } else if (pmmContext.getConfigCTR().getOS().getTipoOS() == 1L) {
+                                } else {
 
+                                    LogProcessoDAO.getInstance().insert("} else {\n" +
+                                            "                                    Intent it = new Intent(MenuPrincPCOMPActivity.this, ProdutoActivity.class);", getLocalClassName());
                                     Intent it = new Intent(MenuPrincPCOMPActivity.this, ProdutoActivity.class);
                                     startActivity(it);
                                     finish();
@@ -184,11 +270,29 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                             } else {
 
+                                LogProcessoDAO.getInstance().insert("} else {\n" +
+                                        "                                String msg = \"\";\n" +
+                                        "                                if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 0) {\n" +
+                                        "                                    msg = \"POR FAVOR, TIRE A PESAGEM TARA DO EQUIPAMENTO!\";\n" +
+                                        "                                } else {\n" +
+                                        "                                    msg = \"POR FAVOR, PASSE NA BALANÇA PARA FAZER A PESAGEM DO EQUIPAMENTO CARREGADO!\";\n" +
+                                        "                                }\n" +
+                                        "                                AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);\n" +
+                                        "                                alerta.setTitle(\"ATENÇÃO\");\n" +
+                                        "                                alerta.setMessage(msg);\n" +
+                                        "                                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                        "                                    @Override\n" +
+                                        "                                    public void onClick(DialogInterface dialog, int which) {\n" +
+                                        "                                        motoMecListView.setSelection(posicao + 1);\n" +
+                                        "                                    }\n" +
+                                        "                                });\n" +
+                                        "                                alerta.show();", getLocalClassName());
+
                                 String msg = "";
 
                                 if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 0) {
                                     msg = "POR FAVOR, TIRE A PESAGEM TARA DO EQUIPAMENTO!";
-                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 2) {
+                                } else {
                                     msg = "POR FAVOR, PASSE NA BALANÇA PARA FAZER A PESAGEM DO EQUIPAMENTO CARREGADO!";
                                 }
 
@@ -209,8 +313,13 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         }
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 4) {
 
+                            LogProcessoDAO.getInstance().insert("else if (motoMecBean.getCodFuncaoOperMotoMec() == 4) {", getLocalClassName());
                             if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 2) {
 
+                                LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 2) {\n" +
+                                        "                                pmmContext.getConfigCTR().setPosicaoTela(13L);\n" +
+                                        "                                pmmContext.getConfigCTR().setPosFluxoCarregComposto(0L);\n" +
+                                        "                                Intent it = new Intent(MenuPrincPCOMPActivity.this, EsperaInforActivity.class);", getLocalClassName());
                                 pmmContext.getConfigCTR().setPosicaoTela(13L);
                                 pmmContext.getConfigCTR().setPosFluxoCarregComposto(0L);
                                 Intent it = new Intent(MenuPrincPCOMPActivity.this, EsperaInforActivity.class);
@@ -218,6 +327,24 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                                 finish();
 
                             } else {
+
+                                LogProcessoDAO.getInstance().insert("} else {\n" +
+                                        "                                String msg = \"\";\n" +
+                                        "                                if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 0) {\n" +
+                                        "                                    msg = \"POR FAVOR, TIRE A PESAGEM TARA DO EQUIPAMENTO!\";\n" +
+                                        "                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 1) {\n" +
+                                        "                                    msg = \"POR FAVOR, CARREGUE O EQUIPAMENTO E DEPOIS PASSE NA BALANÇA PARA FAZER A PESAGEM CARREGADO!\";\n" +
+                                        "                                }\n" +
+                                        "                                AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);\n" +
+                                        "                                alerta.setTitle(\"ATENÇÃO\");\n" +
+                                        "                                alerta.setMessage(msg);\n" +
+                                        "                                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                        "                                    @Override\n" +
+                                        "                                    public void onClick(DialogInterface dialog, int which) {\n" +
+                                        "                                        motoMecListView.setSelection(posicao + 1);\n" +
+                                        "                                    }\n" +
+                                        "                                });\n" +
+                                        "                                alerta.show();", getLocalClassName());
 
                                 String msg = "";
 
@@ -244,6 +371,9 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         }
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 7) {
 
+                            LogProcessoDAO.getInstance().insert("else if (motoMecBean.getCodFuncaoOperMotoMec() == 7) {\n" +
+                                    "                            pmmContext.getConfigCTR().setPosicaoTela(2L);\n" +
+                                    "                            Intent it = new Intent(MenuPrincPCOMPActivity.this, OSActivity.class);", getLocalClassName());
                             pmmContext.getConfigCTR().setPosicaoTela(2L);
                             Intent it = new Intent(MenuPrincPCOMPActivity.this, OSActivity.class);
                             startActivity(it);
@@ -252,6 +382,9 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         }
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 10) {
 
+                            LogProcessoDAO.getInstance().insert("else if (motoMecBean.getCodFuncaoOperMotoMec() == 10) {\n" +
+                                    "                            pmmContext.getConfigCTR().setPosicaoTela(15L);\n" +
+                                    "                            Intent it = new Intent(MenuPrincPCOMPActivity.this, LeiraActivity.class);", getLocalClassName());
                             pmmContext.getConfigCTR().setPosicaoTela(15L);
                             Intent it = new Intent(MenuPrincPCOMPActivity.this, LeiraActivity.class);
                             startActivity(it);
@@ -260,8 +393,12 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         }
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 5) {
 
+                            LogProcessoDAO.getInstance().insert("else if (motoMecBean.getCodFuncaoOperMotoMec() == 5) {", getLocalClassName());
                             if (pmmContext.getCompostoCTR().pesqLeiraExibir()) {
 
+                                LogProcessoDAO.getInstance().insert("if (pmmContext.getCompostoCTR().pesqLeiraExibir()) {\n" +
+                                        "                                pmmContext.getConfigCTR().setPosicaoTela(5L);\n" +
+                                        "                                Intent it = new Intent(MenuPrincPCOMPActivity.this, InformacaoActivity.class);", getLocalClassName());
                                 pmmContext.getConfigCTR().setPosicaoTela(5L);
                                 Intent it = new Intent(MenuPrincPCOMPActivity.this, InformacaoActivity.class);
                                 startActivity(it);
@@ -269,6 +406,16 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                             } else {
 
+                                LogProcessoDAO.getInstance().insert("} else {\n" +
+                                        "                                AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);\n" +
+                                        "                                alerta.setTitle(\"ATENÇÃO\");\n" +
+                                        "                                alerta.setMessage(\"NÃO CONTÉM NENHUMA LEIRA PARA CARREGAMENTO OU DESCARREGAMENTO.\");\n" +
+                                        "                                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                        "                                    @Override\n" +
+                                        "                                    public void onClick(DialogInterface dialog, int which) {\n" +
+                                        "                                    }\n" +
+                                        "                                });\n" +
+                                        "                                alerta.show();", getLocalClassName());
                                 AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);
                                 alerta.setTitle("ATENÇÃO");
                                 alerta.setMessage("NÃO CONTÉM NENHUMA LEIRA PARA CARREGAMENTO OU DESCARREGAMENTO.");
@@ -295,6 +442,10 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
+                LogProcessoDAO.getInstance().insert("buttonParadaMotoMec.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                Intent it = new Intent(MenuPrincPCOMPActivity.this, MenuParadaPCOMPActivity.class);", getLocalClassName());
                 Intent it = new Intent(MenuPrincPCOMPActivity.this, MenuParadaPCOMPActivity.class);
                 startActivity(it);
                 finish();
@@ -306,6 +457,11 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
+                LogProcessoDAO.getInstance().insert("buttonRetMotoMec.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                pmmContext.getConfigCTR().setPosicaoTela(8L);\n" +
+                        "                Intent it = new Intent(MenuPrincPCOMPActivity.this, HorimetroActivity.class);", getLocalClassName());
                 pmmContext.getConfigCTR().setPosicaoTela(8L);
                 Intent it = new Intent(MenuPrincPCOMPActivity.this, HorimetroActivity.class);
                 startActivity(it);

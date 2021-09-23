@@ -38,8 +38,8 @@ public class InformativoDAO {
         return infColheitaBean;
     }
 
-    public void verifDadosInformativo(String dado, Context telaAtual, Class telaProx){
-        VerifDadosServ.getInstance().verifDados(dado, "Informativo", telaAtual, telaProx);
+    public void verifDadosInformativo(String dado, Context telaAtual, Class telaProx, String activity){
+        VerifDadosServ.getInstance().verifDados(dado, "Informativo", telaAtual, telaProx, activity);
     }
 
     public void recDadosInfColheita(JSONArray jsonArray) throws JSONException {

@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class PergAtualCheckListActivity extends ActivityGeneric {
@@ -34,6 +35,11 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("        buttonNaoAtualCL.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                pmmContext.getCheckListCTR().setPosCheckList(1);\n" +
+                        "                Intent it = new Intent(PergAtualCheckListActivity.this, ItemCheckListActivity.class);", getLocalClassName());
                 pmmContext.getCheckListCTR().setPosCheckList(1);
                 Intent it = new Intent(PergAtualCheckListActivity.this, ItemCheckListActivity.class);
                 startActivity(it);
@@ -47,7 +53,19 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonSimAtualCL.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {", getLocalClassName());
+
                 if (connectNetwork) {
+
+                    LogProcessoDAO.getInstance().insert("                if (connectNetwork) {\n" +
+                            "                    progressBar = new ProgressDialog(PergAtualCheckListActivity.this);\n" +
+                            "                    progressBar.setCancelable(true);\n" +
+                            "                    progressBar.setMessage(\"ATUALIZANDO CHECKLIST...\");\n" +
+                            "                    progressBar.show();\n" +
+                            "                    customHandler.postDelayed(updateTimerThread, 10000);\n" +
+                            "                    pmmContext.getCheckListCTR().atualCheckList(String.valueOf(pmmContext.getConfigCTR().getEquip().getNroEquip()), PergAtualCheckListActivity.this, ItemCheckListActivity.class, progressBar);", getLocalClassName());
 
                     progressBar = new ProgressDialog(PergAtualCheckListActivity.this);
                     progressBar.setCancelable(true);
@@ -56,9 +74,20 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
 
                     customHandler.postDelayed(updateTimerThread, 10000);
 
-                    pmmContext.getCheckListCTR().atualCheckList(String.valueOf(pmmContext.getConfigCTR().getEquip().getNroEquip()), PergAtualCheckListActivity.this, ItemCheckListActivity.class, progressBar);
+                    pmmContext.getCheckListCTR().atualCheckList(String.valueOf(pmmContext.getConfigCTR().getEquip().getNroEquip()), PergAtualCheckListActivity.this, ItemCheckListActivity.class, progressBar, getLocalClassName());
 
                 } else {
+
+                    LogProcessoDAO.getInstance().insert("} else {\n" +
+                            "AlertDialog.Builder alerta = new AlertDialog.Builder( PergAtualCheckListActivity.this);\n" +
+                            "                    alerta.setTitle(\"ATENÇÃO\");\n" +
+                            "                    alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
+                            "                    alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                            "                        @Override\n" +
+                            "                        public void onClick(DialogInterface dialog, int which) {\n" +
+                            "                        }\n" +
+                            "                    });\n" +
+                            "                    alerta.show();", getLocalClassName());
 
                     AlertDialog.Builder alerta = new AlertDialog.Builder( PergAtualCheckListActivity.this);
                     alerta.setTitle("ATENÇÃO");
@@ -66,10 +95,8 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
                     alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
                         }
                     });
-
                     alerta.show();
 
                 }
@@ -87,13 +114,29 @@ public class PergAtualCheckListActivity extends ActivityGeneric {
 
         public void run() {
 
+            LogProcessoDAO.getInstance().insert("private Runnable updateTimerThread = new Runnable() {\n" +
+                    "        public void run() {", getLocalClassName());
             if(VerifDadosServ.status < 3) {
 
+                LogProcessoDAO.getInstance().insert("if(VerifDadosServ.status < 3) {\n" +
+                        "                VerifDadosServ.getInstance().cancel();", getLocalClassName());
                 VerifDadosServ.getInstance().cancel();
 
                 if (progressBar.isShowing()) {
+                    LogProcessoDAO.getInstance().insert("if (progressBar.isShowing()) {\n" +
+                            "                    progressBar.dismiss();", getLocalClassName());
                     progressBar.dismiss();
                 }
+
+                LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder(PergAtualCheckListActivity.this);\n" +
+                        "                alerta.setTitle(\"ATENÇÃO\");\n" +
+                        "                alerta.setMessage(\"FALHA NA ATUALIZAÇÃO DE CHECKLIST! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.\");\n" +
+                        "                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                        "                    @Override\n" +
+                        "                    public void onClick(DialogInterface dialog, int which) {\n" +
+                        "                    }\n" +
+                        "                });\n" +
+                        "                alerta.show();", getLocalClassName());
 
                 AlertDialog.Builder alerta = new AlertDialog.Builder(PergAtualCheckListActivity.this);
                 alerta.setTitle("ATENÇÃO");

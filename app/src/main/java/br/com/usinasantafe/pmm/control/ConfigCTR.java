@@ -6,22 +6,34 @@ import android.content.Context;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.usinasantafe.pmm.model.bean.AtualAplicBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.OSBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.PropriedadeBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.LogProcessoBean;
+import br.com.usinasantafe.pmm.model.dao.ApontMMFertDAO;
 import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
 import br.com.usinasantafe.pmm.model.dao.AtualAplicDAO;
+import br.com.usinasantafe.pmm.model.dao.BoletimMMFertDAO;
+import br.com.usinasantafe.pmm.model.dao.CabecCheckListDAO;
 import br.com.usinasantafe.pmm.model.dao.ConfigDAO;
 import br.com.usinasantafe.pmm.model.dao.EquipDAO;
 import br.com.usinasantafe.pmm.model.dao.FrenteDAO;
+import br.com.usinasantafe.pmm.model.dao.ImpleMMDAO;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.model.dao.OSDAO;
 import br.com.usinasantafe.pmm.model.dao.PropriedadeDAO;
 import br.com.usinasantafe.pmm.model.dao.RFuncaoAtivParDAO;
+import br.com.usinasantafe.pmm.model.dao.RecolhFertDAO;
+import br.com.usinasantafe.pmm.model.dao.RendMMDAO;
+import br.com.usinasantafe.pmm.model.dao.RespItemCheckListDAO;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
-import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Json;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.view.MenuInicialActivity;
@@ -150,9 +162,10 @@ public class ConfigCTR {
         configDAO.setEquipConfig(equipBean);
     }
 
-    public void verEquipConfig(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
+    public void verEquipConfig(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
         EquipDAO equipDAO = new EquipDAO();
-        equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog);
+        LogProcessoDAO.getInstance().insert("equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog);", activity);
+        equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog, activity);
     }
 
     public EquipBean getEquip(){
@@ -465,43 +478,6 @@ public class ConfigCTR {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    /////////////////////////////////////// LOG ERRO //////////////////////////////////////////////
-
-    public boolean verEnvioLogErro(){
-        LogErroDAO logErroDAO = new LogErroDAO();
-        return logErroDAO.verEnvioLogErro();
-    }
-
-    public String dadosEnvioLogErro(){
-        LogErroDAO logErroDAO = new LogErroDAO();
-        return logErroDAO.dadosEnvio();
-    }
-
-    public void updLogErro(String retorno){
-
-        try{
-
-            int pos1 = retorno.indexOf("_") + 1;
-            String objPrinc = retorno.substring(pos1);
-
-            Json json = new Json();
-            LogErroDAO logErroDAO = new LogErroDAO();
-            logErroDAO.updLogErro(json.jsonArray(objPrinc));
-            logErroDAO.delLogErroFechado();
-
-            EnvioDadosServ.getInstance().envioDados();
-
-        }
-        catch(Exception e){
-            EnvioDadosServ.status = 1;
-            LogErroDAO.getInstance().insert(e);
-        }
-
-
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
     ///////////////////////////////////// ATUALIZAR APLIC /////////////////////////////////////////
 
     public AtualAplicBean recAtual(String result) {
@@ -525,22 +501,59 @@ public class ConfigCTR {
         return atualAplicBean;
     }
 
-    public void verAtualAplic(String versaoAplic, MenuInicialActivity menuInicialActivity, ProgressDialog progressDialog) {
+    public void verAtualAplic(String versaoAplic, MenuInicialActivity menuInicialActivity, ProgressDialog progressDialog, String activity) {
         EquipDAO equipDAO = new EquipDAO();
         EquipBean equipBean = equipDAO.getEquip();
         AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
+        LogProcessoDAO.getInstance().insert("VerifDadosServ.getInstance().verifAtualAplic(atualAplicDAO.dadosVerAtualAplicBean(equipBean.getNroEquip(), equipBean.getIdCheckList(), versaoAplic)\n" +
+                "                , menuInicialActivity, progressDialog);", activity);
         VerifDadosServ.getInstance().verifAtualAplic(atualAplicDAO.dadosVerAtualAplicBean(equipBean.getNroEquip(), equipBean.getIdCheckList(), versaoAplic)
-                , menuInicialActivity, progressDialog);
+                , menuInicialActivity, progressDialog, activity);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////// ATUALIZAR DADOS ////////////////////////////////////////
 
-    public void atualTodasTabelas(Context tela, ProgressDialog progressDialog){
-        AtualDadosServ.getInstance().atualTodasTabBD(tela, progressDialog);
+    public void atualTodasTabelas(Context tela, ProgressDialog progressDialog, String activity){
+        LogProcessoDAO.getInstance().insert("AtualDadosServ.getInstance().atualTodasTabBD(tela, progressDialog, activity);", activity);
+        AtualDadosServ.getInstance().atualTodasTabBD(tela, progressDialog, activity);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////// LOG ///////////////////////////////////////////////
+
+    public List<LogProcessoBean> logProcessoList(){
+        LogProcessoDAO logProcessoDAO = new LogProcessoDAO();
+        return logProcessoDAO.logProcessoList();
+    }
+
+    public ArrayList<String> logBaseDadoList(){
+        ArrayList<String> dadosArrayList = new ArrayList<>();
+        BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
+        ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
+        ImpleMMDAO impleMMDAO = new ImpleMMDAO();
+        RecolhFertDAO recolhFertDAO = new RecolhFertDAO();
+        RendMMDAO rendMMDAO = new RendMMDAO();
+        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
+        RespItemCheckListDAO respItemCheckListDAO = new RespItemCheckListDAO();
+        dadosArrayList = boletimMMFertDAO.boletimAllArrayList(dadosArrayList);
+        dadosArrayList = apontMMFertDAO.apontAllArrayList(dadosArrayList);
+        dadosArrayList = impleMMDAO.impleAllArrayList(dadosArrayList);
+        dadosArrayList = recolhFertDAO.recolAllArrayList(dadosArrayList);
+        dadosArrayList = rendMMDAO.rendAllArrayList(dadosArrayList);
+        dadosArrayList = cabecCheckListDAO.cabecCheckListAllArrayList(dadosArrayList);
+        dadosArrayList = respItemCheckListDAO.respCheckListAllArrayList(dadosArrayList);
+        return dadosArrayList;
+    }
+
+    public List<LogErroBean> logErroList(){
+        LogErroDAO logErroDAO = new LogErroDAO();
+        return logErroDAO.logErroBeanList();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
 
 }

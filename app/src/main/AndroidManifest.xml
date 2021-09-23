@@ -28,6 +28,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.LogBaseDadoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.LogProcessoActivity"
+            android:exported="true" />
+        <activity
             android:name=".view.MsgPropriedadeActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
@@ -141,6 +147,7 @@
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -11,6 +11,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.Tempo;
 
 public class BackupPreCECActivity extends ActivityGeneric {
@@ -34,6 +35,10 @@ public class BackupPreCECActivity extends ActivityGeneric {
 
         precCECList = pmmContext.getCecCTR().preCECTerminadoList();
 
+        LogProcessoDAO.getInstance().insert("contador = precCECList.size() - 1;\n" +
+                "        PreCECBean preCECBean = (PreCECBean) precCECList.get(contador);\n" +
+                "        textViewBkpViagemCana.setText(exibirPreCEC(preCECBean));", getLocalClassName());
+
         contador = precCECList.size() - 1;
 
         PreCECBean preCECBean = (PreCECBean) precCECList.get(contador);
@@ -43,6 +48,12 @@ public class BackupPreCECActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
+
+                LogProcessoDAO.getInstance().insert("                if(contador < precCECList.size() - 1){\n" +
+                        "                    contador = contador + 1;\n" +
+                        "                }\n" +
+                        "                PreCECBean preCECBean = (PreCECBean) precCECList.get(contador);\n" +
+                        "                textViewBkpViagemCana.setText(exibirPreCEC(preCECBean));", getLocalClassName());
 
                 if(contador < precCECList.size() - 1){
                     contador = contador + 1;
@@ -59,6 +70,12 @@ public class BackupPreCECActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("                if(contador < precCECList.size() - 1){\n" +
+                        "                    contador = contador + 1;\n" +
+                        "                }\n" +
+                        "                PreCECBean preCECBean = (PreCECBean) precCECList.get(contador);\n" +
+                        "                textViewBkpViagemCana.setText(exibirPreCEC(preCECBean));", getLocalClassName());
+
                 if(contador > 0){
                     contador = contador - 1;
                 }
@@ -74,6 +91,10 @@ public class BackupPreCECActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonRetornarBkpViagemCana.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                Intent it = new Intent(BackupPreCECActivity.this, MenuCertifActivity.class);", getLocalClassName());
                 Intent it = new Intent(BackupPreCECActivity.this, MenuCertifActivity.class);
                 startActivity(it);
                 finish();
@@ -84,6 +105,8 @@ public class BackupPreCECActivity extends ActivityGeneric {
     }
 
     public String exibirPreCEC(PreCECBean preCECBean){
+
+        LogProcessoDAO.getInstance().insert("public String exibirPreCEC(PreCECBean preCECBean){", getLocalClassName());
 
         String retorno = "";
 

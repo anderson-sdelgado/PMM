@@ -34,7 +34,7 @@ public class AtividadeDAO {
     }
 
     public void verAtiv(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
-        VerifDadosServ.getInstance().verifDados(dado, "Atividade", telaAtual, telaProx, progressDialog);
+        VerifDadosServ.getInstance().verifDados(dado, "Atividade", telaAtual, telaProx, progressDialog, null);
     }
 
     public void recDadosAtiv(JSONArray jsonArray) throws JSONException {

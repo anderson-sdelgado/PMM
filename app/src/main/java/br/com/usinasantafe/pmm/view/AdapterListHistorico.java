@@ -14,7 +14,6 @@ import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.model.bean.estaticas.BocalBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
-import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.model.bean.estaticas.AtividadeBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
 
@@ -67,7 +66,7 @@ public class AdapterListHistorico extends BaseAdapter {
             textViewHistDetalhes.setText("TRANSBORDO: " + apontMMFertBean.getTransbApontMMFert());
         }
         else if(apontMMFertBean.getBocalApontMMFert() > 0){
-            BocalBean bocalBean = motoMecFertCTR.getBocalBean(apontMMFertBean.getBocalApontMMFert());
+            BocalBean bocalBean = motoMecFertCTR.getBocal(apontMMFertBean.getBocalApontMMFert());
             textViewHistDetalhes.setText("BOCAL: " + bocalBean.getDescrBocal() + "\n" +
                     "PRESSÃO: " + apontMMFertBean.getPressaoApontMMFert() + "\n" +
                     "VELOCIDADE: " + apontMMFertBean.getVelocApontMMFert());

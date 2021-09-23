@@ -19,6 +19,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.PressaoBocalBean;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.ConnectNetwork;
 
 public class ListaPressaoFertActivity extends ActivityGeneric {
@@ -42,6 +43,12 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonAtualPressao.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                AlertDialog.Builder alerta = new AlertDialog.Builder(  ListaPressaoFertActivity.this);\n" +
+                        "                alerta.setTitle(\"ATENÇÃO\");\n" +
+                        "                alerta.setMessage(\"DESEJA REALMENTE ATUALIZAR BASE DE DADOS?\");", getLocalClassName());
                 AlertDialog.Builder alerta = new AlertDialog.Builder(  ListaPressaoFertActivity.this);
                 alerta.setTitle("ATENÇÃO");
                 alerta.setMessage("DESEJA REALMENTE ATUALIZAR BASE DE DADOS?");
@@ -49,9 +56,19 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        ConnectNetwork connectNetwork = new ConnectNetwork();
+                        LogProcessoDAO.getInstance().insert("alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                                "                    @Override\n" +
+                                "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
+                        if (connectNetwork) {
 
-                        if (connectNetwork.verificaConexao(ListaPressaoFertActivity.this)) {
+                            LogProcessoDAO.getInstance().insert("if (connectNetwork) {\n" +
+                                    "                            progressBar = new ProgressDialog(ListaPressaoFertActivity.this);\n" +
+                                    "                            progressBar.setCancelable(true);\n" +
+                                    "                            progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
+                                    "                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);\n" +
+                                    "                            progressBar.setProgress(0);\n" +
+                                    "                            progressBar.setMax(100);\n" +
+                                    "                            progressBar.show();", getLocalClassName());
 
                             progressBar = new ProgressDialog(ListaPressaoFertActivity.this);
                             progressBar.setCancelable(true);
@@ -61,20 +78,28 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getMotoMecFertCTR().atualDados(ListaPressaoFertActivity.this, ListaPressaoFertActivity.class, progressBar, "Pressao", 1);
+                            LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().atualDados(ListaPressaoFertActivity.this, ListaPressaoFertActivity.class, progressBar, \"Pressao\", 1, getLocalClassName());", getLocalClassName());
+                            pmmContext.getMotoMecFertCTR().atualDados(ListaPressaoFertActivity.this, ListaPressaoFertActivity.class, progressBar, "Pressao", 1, getLocalClassName());
 
                         } else {
 
+                            LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder( ListaPressaoFertActivity.this);\n" +
+                                    "                            alerta.setTitle(\"ATENÇÃO\");\n" +
+                                    "                            alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
+                                    "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                    "                                @Override\n" +
+                                    "                                public void onClick(DialogInterface dialog, int which) {\n" +
+                                    "                                }\n" +
+                                    "                            });\n" +
+                                    "                            alerta.show();", getLocalClassName());
                             AlertDialog.Builder alerta = new AlertDialog.Builder( ListaPressaoFertActivity.this);
                             alerta.setTitle("ATENÇÃO");
                             alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
                                 }
                             });
-
                             alerta.show();
 
                         }
@@ -86,7 +111,9 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
                 alerta.setPositiveButton("NÃO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                                "                    @Override\n" +
+                                "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                     }
                 });
 
@@ -96,8 +123,21 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
 
         });
 
+        LogProcessoDAO.getInstance().insert("pressaoBocalList = pmmContext.getMotoMecFertCTR().pressaoBocalList();", getLocalClassName());
         pressaoBocalList = pmmContext.getMotoMecFertCTR().pressaoBocalList();
 
+        LogProcessoDAO.getInstance().insert("ArrayList<String> itens = new ArrayList<String>();\n" +
+                "        for(int i = 0; i < pressaoBocalList.size(); i++){\n" +
+                "            PressaoBocalBean pressaoBocalBean = (PressaoBocalBean) pressaoBocalList.get(i);\n" +
+                "            itens.add(\"\" + pressaoBocalBean.getValorPressao());\n" +
+                "        }\n" +
+                "        HashSet<String> hashSet = new HashSet<String>(itens);\n" +
+                "        itens.clear();\n" +
+                "        itens.addAll(hashSet);\n" +
+                "        Collections.sort(itens);\n" +
+                "        AdapterList adapterList = new AdapterList(this, itens);\n" +
+                "        pressaoBocalListView = findViewById(R.id.listPressao);\n" +
+                "        pressaoBocalListView.setAdapter(adapterList);", getLocalClassName());
         ArrayList<String> itens = new ArrayList<String>();
 
         for(int i = 0; i < pressaoBocalList.size(); i++){
@@ -120,12 +160,22 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
+                LogProcessoDAO.getInstance().insert("pressaoBocalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
+                        "                                    long id) {\n" +
+                        "                TextView textView = (TextView) v.findViewById(R.id.textViewItemList);\n" +
+                        "                pmmContext.getConfigCTR().setPressaoConfig(Double.parseDouble(textView.getText().toString()));\n" +
+                        "                pressaoBocalList.clear();\n" +
+                        "                Intent it = new Intent(ListaPressaoFertActivity.this, ListaVelocFertActivity.class);", getLocalClassName());
+
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
                 pmmContext.getConfigCTR().setPressaoConfig(Double.parseDouble(textView.getText().toString()));
                 pressaoBocalList.clear();
 
                 Intent it = new Intent(ListaPressaoFertActivity.this, ListaVelocFertActivity.class);
                 startActivity(it);
+                finish();
 
             }
 
@@ -134,8 +184,14 @@ public class ListaPressaoFertActivity extends ActivityGeneric {
         buttonRetPressao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogProcessoDAO.getInstance().insert("buttonRetPressao.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                Intent it = new Intent(ListaPressaoFertActivity.this, ListaBocalFertActivity.class);", getLocalClassName());
                 Intent it = new Intent(ListaPressaoFertActivity.this, ListaBocalFertActivity.class);
                 startActivity(it);
+                finish();
+
             }
         });
 

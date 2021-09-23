@@ -12,6 +12,7 @@ import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ItemCheckListBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCheckListBean;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class ItemCheckListActivity extends ActivityGeneric {
 
@@ -32,42 +33,54 @@ public class ItemCheckListActivity extends ActivityGeneric {
         Button buttonReparo = findViewById(R.id.buttonReparo);
         Button buttonCancChecklist = findViewById(R.id.buttonCancChecklist);
 
+        LogProcessoDAO.getInstance().insert("        itemCheckListList = pmmContext.getCheckListCTR().getItemList();\n" +
+                "        ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);\n" +
+                "        textViewItemChecklist.setText(pmmContext.getCheckListCTR().getPosCheckList() + \" - \" + itemCheckListBean.getDescrItemCheckList());", getLocalClassName());
+
         itemCheckListList = pmmContext.getCheckListCTR().getItemList();
         ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);
         textViewItemChecklist.setText(pmmContext.getCheckListCTR().getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
 
         buttonConforme.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
+                LogProcessoDAO.getInstance().insert("buttonConforme.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                proximaTela(1L);", getLocalClassName());
                 proximaTela(1L);
-
             }
-
         });
 
         buttonNaoConforme.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
+                LogProcessoDAO.getInstance().insert("buttonNaoConforme.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                proximaTela(2L);", getLocalClassName());
                 proximaTela(2L);
             }
-
         });
 
         buttonReparo.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
+                LogProcessoDAO.getInstance().insert("buttonReparo.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                proximaTela(3L);", getLocalClassName());
                 proximaTela(3L);
             }
-
         });
 
         buttonCancChecklist.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
+                LogProcessoDAO.getInstance().insert("buttonCancChecklist.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                retornoTela();", getLocalClassName());
                 retornoTela();
             }
 
@@ -77,27 +90,45 @@ public class ItemCheckListActivity extends ActivityGeneric {
 
     public void proximaTela(Long opcao){
 
+        LogProcessoDAO.getInstance().insert("ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);", getLocalClassName());
+
         ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);
+        LogProcessoDAO.getInstance().insert("ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);\n" +
+                "        RespItemCheckListBean respItemCheckListBean = new RespItemCheckListBean();\n" +
+                "        respItemCheckListBean.setIdItBDItCL(" + itemCheckListBean.getIdItemCheckList() + ");\n" +
+                "        respItemCheckListBean.setOpItCL(" + opcao + ");", getLocalClassName());
+
         RespItemCheckListBean respItemCheckListBean = new RespItemCheckListBean();
         respItemCheckListBean.setIdItBDItCL(itemCheckListBean.getIdItemCheckList());
         respItemCheckListBean.setOpItCL(opcao);
 
         if(pmmContext.getCheckListCTR().verCabecAberto()) {
+            LogProcessoDAO.getInstance().insert("if(pmmContext.getCheckListCTR().verCabecAberto()) {\n" +
+                    "            pmmContext.getCheckListCTR().setRespCheckList(respItemCheckListBean);", getLocalClassName());
             pmmContext.getCheckListCTR().setRespCheckList(respItemCheckListBean);
-
             if (pmmContext.getCheckListCTR().qtdeItemCheckList() == pmmContext.getCheckListCTR().getPosCheckList()) {
-                pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().getIdTurnoBolMMFert());
-                pmmContext.getCheckListCTR().salvarBolFechado();
+                LogProcessoDAO.getInstance().insert("if (pmmContext.getCheckListCTR().qtdeItemCheckList() == pmmContext.getCheckListCTR().getPosCheckList()) {\n" +
+                        "                pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getIdTurnoBolMMFert());\n" +
+                        "                pmmContext.getCheckListCTR().salvarBolFechado();", getLocalClassName());
+                pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getIdTurnoBolMMFert());
+                pmmContext.getCheckListCTR().salvarBolFechado(getLocalClassName());
                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
+                    LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
+                            "                    Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);", getLocalClassName());
                     Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);
                     startActivity(it);
                     finish();
                 } else {
+                    LogProcessoDAO.getInstance().insert("} else {\n" +
+                            "                    Intent it = new Intent(ItemCheckListActivity.this, VerifOperadorActivity.class);", getLocalClassName());
                     Intent it = new Intent(ItemCheckListActivity.this, VerifOperadorActivity.class);
                     startActivity(it);
                     finish();
                 }
             } else {
+                LogProcessoDAO.getInstance().insert("pmmContext.getCheckListCTR().setPosCheckList(pmmContext.getCheckListCTR().getPosCheckList() + 1);\n" +
+                        "                itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);\n" +
+                        "                textViewItemChecklist.setText(pmmContext.getCheckListCTR().getPosCheckList() + \" - \" + itemCheckListBean.getDescrItemCheckList());", getLocalClassName());
                 pmmContext.getCheckListCTR().setPosCheckList(pmmContext.getCheckListCTR().getPosCheckList() + 1);
                 itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);
                 textViewItemChecklist.setText(pmmContext.getCheckListCTR().getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
@@ -105,10 +136,14 @@ public class ItemCheckListActivity extends ActivityGeneric {
         }
         else{
             if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
+                LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
+                        "                Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);", getLocalClassName());
                 Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);
                 startActivity(it);
                 finish();
             } else {
+                LogProcessoDAO.getInstance().insert("} else {\n" +
+                        "                Intent it = new Intent(ItemCheckListActivity.this, VerifOperadorActivity.class);", getLocalClassName());
                 Intent it = new Intent(ItemCheckListActivity.this, VerifOperadorActivity.class);
                 startActivity(it);
                 finish();
@@ -118,7 +153,12 @@ public class ItemCheckListActivity extends ActivityGeneric {
     }
 
     public void retornoTela(){
+        LogProcessoDAO.getInstance().insert("public void retornoTela(){", getLocalClassName());
         if(pmmContext.getCheckListCTR().getPosCheckList() > 1){
+            LogProcessoDAO.getInstance().insert("if(pmmContext.getCheckListCTR().getPosCheckList() > 1){\n" +
+                    "            pmmContext.getCheckListCTR().setPosCheckList(pmmContext.getCheckListCTR().getPosCheckList() - 1);\n" +
+                    "            ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);\n" +
+                    "            textViewItemChecklist.setText(pmmContext.getCheckListCTR().getPosCheckList() + \" - \" + itemCheckListBean.getDescrItemCheckList());", getLocalClassName());
             pmmContext.getCheckListCTR().setPosCheckList(pmmContext.getCheckListCTR().getPosCheckList() - 1);
             ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);
             textViewItemChecklist.setText(pmmContext.getCheckListCTR().getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());

@@ -56,7 +56,7 @@ public class CECDAO {
     }
 
     public void verCEC(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
-        VerifDadosServ.getInstance().verifDados(dado, "CEC", telaAtual, telaProx, progressDialog);
+        VerifDadosServ.getInstance().verifDados(dado, "CEC", telaAtual, telaProx, progressDialog, null);
     }
 
     public void recDadosCEC(String cec) throws JSONException {

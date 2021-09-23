@@ -48,7 +48,7 @@ public class CECCTR {
         return preCECDAO.dadosEnvioPreCEC();
     }
 
-    public void updPreCEC(String result){
+    public void updPreCEC(String result, String activity){
 
         try{
 
@@ -58,7 +58,7 @@ public class CECCTR {
             PreCECDAO preCECDAO = new PreCECDAO();
             preCECDAO.atualPreCEC(objPrinc);
 
-            EnvioDadosServ.getInstance().envioDados();
+            EnvioDadosServ.getInstance().envioDados(activity);
 
         }
         catch (Exception e){

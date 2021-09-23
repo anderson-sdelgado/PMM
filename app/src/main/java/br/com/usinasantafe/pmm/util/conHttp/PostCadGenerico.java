@@ -18,6 +18,7 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 
 	private static PostCadGenerico instance = null;
 	private Map<String, Object> parametrosPost = null;
+	private String activity;
 
 	public PostCadGenerico() {
 	}
@@ -28,7 +29,6 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
         return instance;
     }
 
-
 	@Override
 	protected String doInBackground(String... arg) {
 		
@@ -36,7 +36,8 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 		String resultado = null;
 		
 		String url = arg[0];
-		
+		this.activity = arg[1];
+
 		try {
 
 			String parametros = getQueryString(parametrosPost);
@@ -93,9 +94,8 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 
 		try {
 			Log.i("PMM", "VALOR RECEBIDO CAD --> " + result);
-			EnvioDadosServ.getInstance().recDados(result);
+			EnvioDadosServ.getInstance().recDados(result, activity);
 		} catch (Exception e) {
-			Log.i("ECM", "ERRO 1 ");
 			EnvioDadosServ.status = 1;
 			LogErroDAO.getInstance().insert(e);
 		}
@@ -106,7 +106,7 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 		this.parametrosPost = parametrosPost;
 	}
 
-	private String getQueryString(Map<String, Object> params) throws Exception {
+	private String getQueryString(Map<String, Object> params){
 		if (params == null || params.size() == 0) {
 			return null;
 		}

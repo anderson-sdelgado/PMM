@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.ConnectNetwork;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
@@ -15,20 +16,27 @@ import br.com.usinasantafe.pmm.view.ActivityGeneric;
 public class NetworkChangeListerner extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+
         if(ConnectNetwork.isConnected(context)){
-//            Log.i("PMM", "CONECTA RECEIVER - STATUS ENVIO = " + EnvioDadosServ.status + " - STATUS VERIF = " + VerifDadosServ.status);
             ActivityGeneric.connectNetwork = true;
+            LogProcessoDAO.getInstance().insert("if(ConnectNetwork.isConnected(context)){\n" +
+                    "            ActivityGeneric.connectNetwork = true;\n" +
+                    "Tempo.getInstance().zerarDifTempo()", context.getClass().getName());
             Tempo.getInstance().zerarDifTempo();
             if(VerifDadosServ.status == 1){
-                VerifDadosServ.getInstance().reenvioVerif();
+                LogProcessoDAO.getInstance().insert("if(VerifDadosServ.status == 1){\n" +
+                        "VerifDadosServ.getInstance().reenvioVerif(context.getClass().getName());", context.getClass().getName());
+                VerifDadosServ.getInstance().reenvioVerif(context.getClass().getName());
             }
             if (EnvioDadosServ.status == 1) {
-//                Log.i("PMM", "ENVIANDO PELO TIMER");
-			    EnvioDadosServ.getInstance().envioDados();
+                LogProcessoDAO.getInstance().insert("if (EnvioDadosServ.status == 1) {\n" +
+                        "EnvioDadosServ.getInstance().envioDados(context.getClass().getName());", context.getClass().getName());
+                EnvioDadosServ.getInstance().envioDados(context.getClass().getName());
             }
         }
         else{
-//            Log.i("PMM", "NÃO CONECTA RECEIVER");
+            LogProcessoDAO.getInstance().insert("else{\n" +
+                    "            ActivityGeneric.connectNetwork = false;", context.getClass().getName());
             ActivityGeneric.connectNetwork = false;
         }
     }

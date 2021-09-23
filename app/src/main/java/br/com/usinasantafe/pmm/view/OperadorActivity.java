@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class OperadorActivity extends ActivityGeneric {
 
@@ -31,6 +32,9 @@ public class OperadorActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder( OperadorActivity.this);\n" +
+                        "                alerta.setTitle(\"ATENÇÃO\");\n" +
+                        "                alerta.setMessage(\"DESEJA REALMENTE ATUALIZAR BASE DE DADOS?\");", getLocalClassName());
                 AlertDialog.Builder alerta = new AlertDialog.Builder( OperadorActivity.this);
                 alerta.setTitle("ATENÇÃO");
                 alerta.setMessage("DESEJA REALMENTE ATUALIZAR BASE DE DADOS?");
@@ -38,8 +42,20 @@ public class OperadorActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+                        LogProcessoDAO.getInstance().insert("alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                                "                    @Override\n" +
+                                "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
+
                         if (connectNetwork) {
 
+                            LogProcessoDAO.getInstance().insert("if (connectNetwork) {\n" +
+                                    "progressBar = new ProgressDialog(OperadorActivity.this);\n" +
+                                    "                            progressBar.setCancelable(true);\n" +
+                                    "                            progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
+                                    "                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);\n" +
+                                    "                            progressBar.setProgress(0);\n" +
+                                    "                            progressBar.setMax(100);\n" +
+                                    "                            progressBar.show();", getLocalClassName());
                             progressBar = new ProgressDialog(OperadorActivity.this);
                             progressBar.setCancelable(true);
                             progressBar.setMessage("ATUALIZANDO ...");
@@ -48,20 +64,28 @@ public class OperadorActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getMotoMecFertCTR().atualDados(OperadorActivity.this, OperadorActivity.class, progressBar, "Operador", 1);
+                            LogProcessoDAO.getInstance().insert("customHandler.removeCallbacks(updateTimerThread)", getLocalClassName());
+                            pmmContext.getMotoMecFertCTR().atualDados(OperadorActivity.this, OperadorActivity.class, progressBar, "Operador", 1, getLocalClassName());
 
                         } else {
 
+                            LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder( OperadorActivity.this);\n" +
+                                    "                            alerta.setTitle(\"ATENÇÃO\");\n" +
+                                    "                            alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
+                                    "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                    "                                @Override\n" +
+                                    "                                public void onClick(DialogInterface dialog, int which) {\n" +
+                                    "                                }\n" +
+                                    "                            });\n" +
+                                    "                            alerta.show();", getLocalClassName());
                             AlertDialog.Builder alerta = new AlertDialog.Builder( OperadorActivity.this);
                             alerta.setTitle("ATENÇÃO");
                             alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
                                 }
                             });
-
                             alerta.show();
 
                         }
@@ -73,10 +97,11 @@ public class OperadorActivity extends ActivityGeneric {
                 alerta.setPositiveButton("NÃO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                                "                    @Override\n" +
+                                "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                     }
                 });
-
                 alerta.show();
 
             }
@@ -88,29 +113,46 @@ public class OperadorActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonOkMotorista.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @SuppressWarnings(\"rawtypes\")\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {", getLocalClassName());
                 if (!editTextPadrao.getText().toString().equals("")) {
 
+                    LogProcessoDAO.getInstance().insert("if (!editTextPadrao.getText().toString().equals(\"\")) {", getLocalClassName());
                     if (pmmContext.getMotoMecFertCTR().verFunc(Long.parseLong(editTextPadrao.getText().toString()))) {
 
-                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().setBoletimMMBean();
-                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().setMatricFuncBolMMFert(Long.parseLong(editTextPadrao.getText().toString()));
+                        LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verFunc(Long.parseLong(editTextPadrao.getText().toString()))) {\n" +
+                                "pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().setBoletimMMBean();\n" +
+                                "                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().setMatricFuncBolMMFert(Long.parseLong(editTextPadrao.getText().toString()));", getLocalClassName());
+                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().setBolMMFert();
+                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().setMatricFuncBolMMFert(Long.parseLong(editTextPadrao.getText().toString()));
 
+                        LogProcessoDAO.getInstance().insert("Intent it = new Intent(OperadorActivity.this, EquipActivity.class);", getLocalClassName());
                         Intent it = new Intent(OperadorActivity.this, EquipActivity.class);
                         startActivity(it);
                         finish();
 
                     } else {
 
+                        LogProcessoDAO.getInstance().insert("} else {\n" +
+                                "AlertDialog.Builder alerta = new AlertDialog.Builder(OperadorActivity.this);\n" +
+                                "                        alerta.setTitle(\"ATENÇÃO\");\n" +
+                                "                        alerta.setMessage(\"NUMERAÇÃO DO OPERADOR INEXISTENTE! FAVOR VERIFICA A MESMA.\");\n" +
+                                "                        alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                "                            @Override\n" +
+                                "                            public void onClick(DialogInterface dialog, int which) {\n" +
+                                "                            }\n" +
+                                "                        });\n" +
+                                "                        alerta.show();", getLocalClassName());
                         AlertDialog.Builder alerta = new AlertDialog.Builder(OperadorActivity.this);
                         alerta.setTitle("ATENÇÃO");
                         alerta.setMessage("NUMERAÇÃO DO OPERADOR INEXISTENTE! FAVOR VERIFICA A MESMA.");
                         alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
                             }
                         });
-
                         alerta.show();
 
                     }
@@ -125,6 +167,12 @@ public class OperadorActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonCancMotorista.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "if (editTextPadrao.getText().toString().length() > 0) {\n" +
+                        "                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));\n" +
+                        "                }", getLocalClassName());
                 if (editTextPadrao.getText().toString().length() > 0) {
                     editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
                 }
@@ -134,6 +182,8 @@ public class OperadorActivity extends ActivityGeneric {
     }
 
     public void onBackPressed() {
+        LogProcessoDAO.getInstance().insert("public void onBackPressed() {\n" +
+                "Intent it = new Intent(OperadorActivity.this, MenuInicialActivity.class);", getLocalClassName());
         Intent it = new Intent(OperadorActivity.this, MenuInicialActivity.class);
         startActivity(it);
         finish();

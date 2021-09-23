@@ -20,8 +20,8 @@ public class ItemCheckListDAO {
     public ItemCheckListDAO() {
     }
 
-    public void atualCheckList(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
-        VerifDadosServ.getInstance().verifDados(dado, "CheckList", telaAtual, telaProx, progressDialog);
+    public void atualCheckList(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
+        VerifDadosServ.getInstance().verifDados(dado, "CheckList", telaAtual, telaProx, progressDialog, activity);
     }
 
     public void recDadosCheckList(JSONArray jsonArray) throws JSONException {

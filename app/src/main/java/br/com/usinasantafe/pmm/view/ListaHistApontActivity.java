@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class ListaHistApontActivity extends ActivityGeneric {
 
@@ -22,6 +23,9 @@ public class ListaHistApontActivity extends ActivityGeneric {
 
         Button buttonRetHistorico = findViewById(R.id.buttonRetHistorico);
 
+        LogProcessoDAO.getInstance().insert("ListView listaHistorico = findViewById(R.id.listaHistorico);\n" +
+                "        AdapterListHistorico adapterListHistorico = new AdapterListHistorico(this, pmmContext.getMotoMecFertCTR().apontList());\n" +
+                "        listaHistorico.setAdapter(adapterListHistorico);", getLocalClassName());
         ListView listaHistorico = findViewById(R.id.listaHistorico);
         AdapterListHistorico adapterListHistorico = new AdapterListHistorico(this, pmmContext.getMotoMecFertCTR().apontList());
         listaHistorico.setAdapter(adapterListHistorico);
@@ -31,17 +35,26 @@ public class ListaHistApontActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonRetHistorico.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {", getLocalClassName());
                 if(PMMContext.aplic == 1){
+                    LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 1){\n" +
+                            "                    Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                     Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPMMActivity.class);
                     startActivity(it);
                     finish();
                 }
                 else if(PMMContext.aplic == 2){
+                    LogProcessoDAO.getInstance().insert("else if(PMMContext.aplic == 2){\n" +
+                            "                    Intent it = new Intent(ListaHistApontActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                     Intent it = new Intent(ListaHistApontActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();
                 }
                 else if(PMMContext.aplic == 3){
+                    LogProcessoDAO.getInstance().insert("else if(PMMContext.aplic == 3){\n" +
+                            "                    Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                     Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPCOMPActivity.class);
                     startActivity(it);
                     finish();

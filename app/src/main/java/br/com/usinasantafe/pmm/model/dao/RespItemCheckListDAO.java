@@ -1,5 +1,9 @@
 package br.com.usinasantafe.pmm.model.dao;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,34 +18,26 @@ public class RespItemCheckListDAO {
     public void clearRespItem(Long idCabCL){
         RespItemCheckListBean respItemCheckListBean = new RespItemCheckListBean();
         if (respItemCheckListBean.hasElements()) {
-            List respList = respItemCheckListBean.get("idCabItCL", idCabCL);
-            for (int i = 0; i < respList.size(); i++) {
-                respItemCheckListBean = (RespItemCheckListBean) respList.get(i);
-                respItemCheckListBean.delete();
+            ArrayList<EspecificaPesquisa> pesquisaArrayList = new ArrayList();
+            pesquisaArrayList.add(getPesIdCab(idCabCL));
+            List<RespItemCheckListBean> respItemCheckListList = respItemCheckListBean.get(pesquisaArrayList);
+            for (RespItemCheckListBean respItemCheckListBeanBD : respItemCheckListList) {
+                respItemCheckListBeanBD.delete();
             }
-            respList.clear();
+            respItemCheckListList.clear();
         }
     }
 
     public void setRespCheckList(Long idCabCL, RespItemCheckListBean respItemCheckListBean){
 
         ArrayList pesqArrayList = new ArrayList();
-        EspecificaPesquisa pesquisa1 = new EspecificaPesquisa();
-        pesquisa1.setCampo("idCabItCL");
-        pesquisa1.setValor(idCabCL);
-        pesquisa1.setTipo(1);
-        pesqArrayList.add(pesquisa1);
+        pesqArrayList.add(getPesIdCab(idCabCL));
+        pesqArrayList.add(getPesIdItBD(respItemCheckListBean.getIdItBDItCL()));
 
-        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-        pesquisa2.setCampo("idItBDItCL");
-        pesquisa2.setValor(respItemCheckListBean.getIdItBDItCL());
-        pesquisa2.setTipo(1);
-        pesqArrayList.add(pesquisa2);
-
-        List respList = respItemCheckListBean.get(pesqArrayList);
-        if(respList.size() > 0) {
+        List<RespItemCheckListBean> respItemCheckListList = respItemCheckListBean.get(pesqArrayList);
+        if(respItemCheckListList.size() > 0) {
             Long opcao = respItemCheckListBean.getOpItCL();
-            respItemCheckListBean = (RespItemCheckListBean) respList.get(0);
+            respItemCheckListBean = (RespItemCheckListBean) respItemCheckListList.get(0);
             respItemCheckListBean.setOpItCL(opcao);
             respItemCheckListBean.update();
         }
@@ -49,29 +45,72 @@ public class RespItemCheckListDAO {
             respItemCheckListBean.setIdCabItCL(idCabCL);
             respItemCheckListBean.insert();
         }
-        respList.clear();
+        respItemCheckListList.clear();
     }
 
-    public List<RespItemCheckListBean> respItemList(Long idCabCL){
+    public ArrayList<String> respCheckListAllArrayList(ArrayList<String> dadosArrayList){
+        dadosArrayList.add("ITEM CHECKLIST");
         RespItemCheckListBean respItemCheckListBean = new RespItemCheckListBean();
-        return respItemCheckListBean.get("idCabItCL", idCabCL);
+        List<RespItemCheckListBean> respItemCheckListList = respItemCheckListBean.orderBy("idItCL", true);
+        for (RespItemCheckListBean respItemCheckListBeanBD : respItemCheckListList) {
+            dadosArrayList.add(dadosRespCheckList(respItemCheckListBeanBD));
+        }
+        respItemCheckListList.clear();
+        return dadosArrayList;
     }
 
-    public List<RespItemCheckListBean> respItemList(ArrayList<Long> idCabCLongArrayList){
+    public String dadosRespCheckList(RespItemCheckListBean respItemCheckListBean){
+        Gson gsonItemImp = new Gson();
+        return gsonItemImp.toJsonTree(respItemCheckListBean, respItemCheckListBean.getClass()).toString();
+    }
+
+    public String dadosEnvioRespCheckList(List<RespItemCheckListBean> respItemCheckListBeanList){
+
+        JsonArray jsonArrayRespCheckList = new JsonArray();
+
+        for (RespItemCheckListBean respItemCheckListBean : respItemCheckListBeanList) {
+            Gson gsonItemImp = new Gson();
+            jsonArrayRespCheckList.add(gsonItemImp.toJsonTree(respItemCheckListBean, respItemCheckListBean.getClass()));
+        }
+
+        respItemCheckListBeanList.clear();
+
+        JsonObject jsonItem = new JsonObject();
+        jsonItem.add("item", jsonArrayRespCheckList);
+
+        return jsonItem.toString();
+
+    }
+
+    public List<RespItemCheckListBean> respItemList(ArrayList<Long> idCabCLArrayList){
         RespItemCheckListBean respItemCheckListBean = new RespItemCheckListBean();
-        return respItemCheckListBean.in("idCabItCL", idCabCLongArrayList);
+        return respItemCheckListBean.in("idCabItCL", idCabCLArrayList);
     }
 
     public void delRespItem(ArrayList<Long> idCabCLongArrayList){
 
         List<RespItemCheckListBean> respItemCheckListList = respItemList(idCabCLongArrayList);
-
         for(RespItemCheckListBean respItemCheckListBean : respItemCheckListList){
             respItemCheckListBean.delete();
         }
-
         respItemCheckListList.clear();
 
+    }
+
+    private EspecificaPesquisa getPesIdCab(Long idCab){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("idCabItCL");
+        pesquisa.setValor(idCab);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesIdItBD(Long idItBD){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("idItBDItCL");
+        pesquisa.setValor(idItBD);
+        pesquisa.setTipo(1);
+        return pesquisa;
     }
 
 }

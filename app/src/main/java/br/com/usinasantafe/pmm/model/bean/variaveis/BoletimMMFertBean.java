@@ -35,11 +35,9 @@ public class BoletimMMFertBean extends Entidade {
     @DatabaseField
     private String dthrFinalBolMMFert;
     @DatabaseField
-    private Long statusBolMMFert;  //0 - Esta apontando os implementos; 1 - Aberto; 2 - Encerrado
+    private Long statusBolMMFert;  //0 - Esta apontando os implementos; 1 - Aberto; 2 - Encerrado; 3 - Enviado
     @DatabaseField
     private Long statusConBolMMFert;  //0 - OffLine; 1 - OnLine
-    @DatabaseField
-    private Long qtdeApontBolMMFert;
     @DatabaseField
     private Double longitudeBolMMFert;
     @DatabaseField
@@ -51,7 +49,6 @@ public class BoletimMMFertBean extends Entidade {
         this.hodometroFinalBolMMFert = 0D;
         this.idExtBolMMFert = 0L;
         this.statusBolMMFert = 1L;
-        this.qtdeApontBolMMFert = 0L;
     }
 
     public Long getIdBolMMFert() {
@@ -168,28 +165,12 @@ public class BoletimMMFertBean extends Entidade {
         this.statusConBolMMFert = statusConBolMMFert;
     }
 
-    public Long getQtdeApontBolMMFert() {
-        return qtdeApontBolMMFert;
-    }
-
-    public void setQtdeApontBolMMFert(Long qtdeApontBolMMFert) {
-        this.qtdeApontBolMMFert = qtdeApontBolMMFert;
-    }
-
     public Double getLongitudeBolMMFert() {
         return longitudeBolMMFert;
     }
 
-    public void setLongitudeBolMMFert(Double longitudeBolMMFert) {
-        this.longitudeBolMMFert = longitudeBolMMFert;
-    }
-
     public Double getLatitudeBolMMFert() {
         return latitudeBolMMFert;
-    }
-
-    public void setLatitudeBolMMFert(Double latitudeBolMMFert) {
-        this.latitudeBolMMFert = latitudeBolMMFert;
     }
 
     public Long getTipoBolMMFert() {

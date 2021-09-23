@@ -13,6 +13,7 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.CarregCompBean;
 import br.com.usinasantafe.pmm.model.dao.CarregCompDAO;
 import br.com.usinasantafe.pmm.model.dao.LeiraDAO;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.model.dao.ProdutoDAO;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Json;
@@ -111,11 +112,13 @@ public class CompostoCTR {
         return carregCompDAO.getOrdCarreg();
     }
 
-    public void verifDadosCarreg(Context telaAtual, Class telaProx){
+    public void verifDadosCarreg(Context telaAtual, Class telaProx, String activity){
         CarregCompDAO carregCompDAO = new CarregCompDAO();
         ConfigCTR configCTR = new ConfigCTR();
+        LogProcessoDAO.getInstance().insert("configCTR.setStatusRetVerif(1L);\n" +
+                "        carregCompDAO.verifDadosCarreg(configCTR.getConfig().getEquipConfig(), telaAtual, telaProx, activity);", activity);
         configCTR.setStatusRetVerif(1L);
-        carregCompDAO.verifDadosCarreg(configCTR.getConfig().getEquipConfig(), telaAtual, telaProx);
+        carregCompDAO.verifDadosCarreg(configCTR.getConfig().getEquipConfig(), telaAtual, telaProx, activity);
     }
 
     public void receberVerifOrdCarreg(String result) {
@@ -153,7 +156,7 @@ public class CompostoCTR {
 
     }
 
-    public void updCarregInsumo(String retorno) {
+    public void updCarregInsumo(String retorno, String activity) {
 
         try{
 
@@ -164,7 +167,7 @@ public class CompostoCTR {
             CarregCompDAO carregCompDAO = new CarregCompDAO();
             carregCompDAO.updCarregInsumo(json.jsonArray(obj));
 
-            EnvioDadosServ.getInstance().envioDados();
+            EnvioDadosServ.getInstance().envioDados(activity);
 
         }
         catch(Exception e){
@@ -175,32 +178,29 @@ public class CompostoCTR {
 
     }
 
-    public void updCarregComposto(String result) {
+    public void updCarregComposto(String result, String activity) {
 
         try {
-            Log.i("ECM", "RECEBIMENTO 2 ");
+
             if (!result.contains("exceeded")) {
 
                 int pos1 = result.indexOf("_") + 1;
                 String obj = result.substring(pos1);
                 Json json = new Json();
                 JSONArray jsonArray = json.jsonArray(obj);
-                Log.i("ECM", "RECEBIMENTO 3 ");
+
                 if (jsonArray.length() > 0) {
-                    Log.i("ECM", "RECEBIMENTO 4 ");
                     CarregCompDAO carregCompDAO = new CarregCompDAO();
                     carregCompDAO.updCarregComposto(jsonArray);
-
                 }
 
-                EnvioDadosServ.getInstance().envioDados();
+                EnvioDadosServ.getInstance().envioDados(activity);
 
             } else {
                 EnvioDadosServ.status = 1;
             }
 
         } catch (Exception e) {
-            Log.i("ECM", "ERRO RECEBIMENTO = " + e);
             EnvioDadosServ.status = 1;
             LogErroDAO.getInstance().insert(e);
         }

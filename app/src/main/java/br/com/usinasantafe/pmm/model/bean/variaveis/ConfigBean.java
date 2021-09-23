@@ -68,6 +68,8 @@ public class ConfigBean extends Entidade {
 	// 8 - Iniciar na parte de apontamento
 	// 9 - Recolhimento de Mangueira;
 	// 10 - Trocar de implemento
+	// 11 - Senha de Configuração
+	// 12 - Senha de Log
 	// 13 - Buscar Ordem Carreg Insumo
 	// 14 - Buscar Ordem Carreg Composto
 	// 16 - Menu Certificado ECM

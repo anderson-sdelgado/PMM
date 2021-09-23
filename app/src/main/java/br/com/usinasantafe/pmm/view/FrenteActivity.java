@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class FrenteActivity extends ActivityGeneric {
 
@@ -31,7 +32,19 @@ public class FrenteActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonAtualFrente.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {", getLocalClassName());
                 if (connectNetwork) {
+
+                    LogProcessoDAO.getInstance().insert("if (connectNetwork) {\n" +
+                            "                    progressBar = new ProgressDialog(FrenteActivity.this);\n" +
+                            "                    progressBar.setCancelable(true);\n" +
+                            "                    progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
+                            "                    progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);\n" +
+                            "                    progressBar.setProgress(0);\n" +
+                            "                    progressBar.setMax(100);\n" +
+                            "                    progressBar.show();", getLocalClassName());
 
                     progressBar = new ProgressDialog(FrenteActivity.this);
                     progressBar.setCancelable(true);
@@ -41,21 +54,29 @@ public class FrenteActivity extends ActivityGeneric {
                     progressBar.setMax(100);
                     progressBar.show();
 
-                    pmmContext.getMotoMecFertCTR().atualDados(FrenteActivity.this, FrenteActivity.class, progressBar, "Leira", 1);
+                    LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().atualDados(FrenteActivity.this, FrenteActivity.class, progressBar, \"Leira\", 1, getLocalClassName());", getLocalClassName());
+                    pmmContext.getMotoMecFertCTR().atualDados(FrenteActivity.this, FrenteActivity.class, progressBar, "Leira", 1, getLocalClassName());
 
                 }
                 else {
 
+                    LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder(FrenteActivity.this);\n" +
+                            "                    alerta.setTitle(\"ATENÇÃO\");\n" +
+                            "                    alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
+                            "                    alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                            "                        @Override\n" +
+                            "                        public void onClick(DialogInterface dialog, int which) {\n" +
+                            "                        }\n" +
+                            "                    });\n" +
+                            "                    alerta.show();", getLocalClassName());
                     AlertDialog.Builder alerta = new AlertDialog.Builder(FrenteActivity.this);
                     alerta.setTitle("ATENÇÃO");
                     alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
                     alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
                         }
                     });
-
                     alerta.show();
 
                 }
@@ -67,12 +88,19 @@ public class FrenteActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonOkFrente.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {", getLocalClassName());
+
                 if (!editTextPadrao.getText().toString().equals("")) {
 
+                    LogProcessoDAO.getInstance().insert("if (!editTextPadrao.getText().toString().equals(\"\")) {", getLocalClassName());
                     if (pmmContext.getConfigCTR().verFrente(Long.parseLong(editTextPadrao.getText().toString()))) {
 
+                        LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().verFrente(Long.parseLong(editTextPadrao.getText().toString()))) {\n" +
+                                "                        pmmContext.getConfigCTR().setIdFrente(Long.parseLong(editTextPadrao.getText().toString()));\n" +
+                                "                        Intent it = new Intent(FrenteActivity.this, PropriedadeActivity.class);", getLocalClassName());
                         pmmContext.getConfigCTR().setIdFrente(Long.parseLong(editTextPadrao.getText().toString()));
-
                         Intent it = new Intent(FrenteActivity.this, PropriedadeActivity.class);
                         startActivity(it);
                         finish();
@@ -80,16 +108,23 @@ public class FrenteActivity extends ActivityGeneric {
                     }
                     else{
 
+                        LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder(FrenteActivity.this);\n" +
+                                "                        alerta.setTitle(\"ATENÇÃO\");\n" +
+                                "                        alerta.setMessage(\"FRENTE INCORRETA! POR FAVOR, VERIFIQUE A NUMERAÇÃO DA FRENTE E DIGITE NOVAMENTE.\");\n" +
+                                "                        alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                "                            @Override\n" +
+                                "                            public void onClick(DialogInterface dialog, int which) {\n" +
+                                "                            }\n" +
+                                "                        });\n" +
+                                "                        alerta.show();", getLocalClassName());
                         AlertDialog.Builder alerta = new AlertDialog.Builder(FrenteActivity.this);
                         alerta.setTitle("ATENÇÃO");
                         alerta.setMessage("FRENTE INCORRETA! POR FAVOR, VERIFIQUE A NUMERAÇÃO DA FRENTE E DIGITE NOVAMENTE.");
-
                         alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                             }
                         });
-
                         alerta.show();
 
                     }
@@ -102,6 +137,12 @@ public class FrenteActivity extends ActivityGeneric {
         buttonCancFrente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogProcessoDAO.getInstance().insert("buttonCancFrente.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                if (editTextPadrao.getText().toString().length() > 0) {\n" +
+                        "                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));\n" +
+                        "                }", getLocalClassName());
                 if (editTextPadrao.getText().toString().length() > 0) {
                     editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
                 }
@@ -111,6 +152,8 @@ public class FrenteActivity extends ActivityGeneric {
     }
 
     public void onBackPressed()  {
+        LogProcessoDAO.getInstance().insert("public void onBackPressed()  {\n" +
+                "        Intent it = new Intent(FrenteActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
         Intent it = new Intent(FrenteActivity.this, MenuPrincECMActivity.class);
         startActivity(it);
         finish();

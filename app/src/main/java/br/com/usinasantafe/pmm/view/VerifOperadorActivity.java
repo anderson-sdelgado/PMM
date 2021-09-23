@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class VerifOperadorActivity extends ActivityGeneric {
 
@@ -34,6 +35,10 @@ public class VerifOperadorActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonManterMotorista.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                Intent it = new Intent(VerifOperadorActivity.this, MsgSaidaCampoActivity.class);", getLocalClassName());
                 Intent it = new Intent(VerifOperadorActivity.this, MsgSaidaCampoActivity.class);
                 startActivity(it);
                 finish();
@@ -45,13 +50,23 @@ public class VerifOperadorActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonAlterarMotorista.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                AlertDialog.Builder alerta = new AlertDialog.Builder(VerifOperadorActivity.this);\n" +
+                        "                alerta.setTitle(\"ATENÇÃO\");\n" +
+                        "                alerta.setMessage(\"DESEJA REALMENTE TROCA O MOTORISTA? ISSO ENCERRA-LA O BOLETIM.\");", getLocalClassName());
                 AlertDialog.Builder alerta = new AlertDialog.Builder(VerifOperadorActivity.this);
                 alerta.setTitle("ATENÇÃO");
                 alerta.setMessage("DESEJA REALMENTE TROCA O MOTORISTA? ISSO ENCERRA-LA O BOLETIM.");
-
                 alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                                "                    @Override\n" +
+                                "                    public void onClick(DialogInterface dialog, int which) {\n" +
+                                "                        pmmContext.getConfigCTR().setPosicaoTela(17L);\n" +
+                                "                        Intent it = new Intent(VerifOperadorActivity.this, HorimetroActivity.class);", getLocalClassName());
                         pmmContext.getConfigCTR().setPosicaoTela(17L);
                         Intent it = new Intent(VerifOperadorActivity.this, HorimetroActivity.class);
                         startActivity(it);
@@ -62,7 +77,9 @@ public class VerifOperadorActivity extends ActivityGeneric {
                 alerta.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        LogProcessoDAO.getInstance().insert("alerta.setNegativeButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                                "                    @Override\n" +
+                                "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                     }
                 });
 

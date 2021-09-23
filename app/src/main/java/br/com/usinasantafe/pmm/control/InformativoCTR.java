@@ -9,6 +9,7 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.InfColheitaBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfPlantioBean;
 import br.com.usinasantafe.pmm.model.dao.InformativoDAO;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.Json;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.view.DadosColheitaActivity;
@@ -29,16 +30,18 @@ public class InformativoCTR {
         return informativoDAO.getInfPlantio();
     }
 
-    public void verifDadosInformativo(String dados, Context telaAtual, Class telaProx){
+    public void verifDadosInformativo(String dados, Context telaAtual, Class telaProx, String activity){
         ConfigCTR configCTR = new ConfigCTR();
         configCTR.setVerInforConfig(0L);
         InformativoDAO informativoDAO = new InformativoDAO();
-        informativoDAO.verifDadosInformativo(dados ,telaAtual, telaProx);
+        LogProcessoDAO.getInstance().insert("informativoDAO.verifDadosInformativo(dados ,telaAtual, telaProx, activity);", activity);
+        informativoDAO.verifDadosInformativo(dados ,telaAtual, telaProx, activity);
     }
 
-    public void verifDadosInformativo() {
+    public void verifDadosInformativo(String activity) {
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
-        VerifDadosServ.getInstance().verifDadosInformativo(String.valueOf(motoMecFertCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert()), "Informativo");
+        LogProcessoDAO.getInstance().insert("VerifDadosServ.getInstance().verifDadosInformativo()", activity);
+        VerifDadosServ.getInstance().verifDadosInformativo(String.valueOf(motoMecFertCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert()), "Informativo", activity);
     }
 
     public void receberVerifInformativo(String retorno){

@@ -146,12 +146,15 @@ public class ApontMMFertDAO {
         return apontMMFertBeanBD.get(pesqArrayList);
     }
 
-    private EspecificaPesquisa getPesqDthrApont(String dthrApontMM){
-        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-        pesquisa.setCampo("dthrApontMMFert");
-        pesquisa.setValor(dthrApontMM);
-        pesquisa.setTipo(1);
-        return pesquisa;
+    public ArrayList<String> apontAllArrayList(ArrayList<String> dadosArrayList){
+        dadosArrayList.add("APONTAMENTO");
+        ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
+        List<ApontMMFertBean> apontMMFertList = apontMMFertBean.orderBy("idApontMMFert", true);
+        for (ApontMMFertBean apontMMFertBeanBD : apontMMFertList) {
+            dadosArrayList.add(dadosApont(apontMMFertBeanBD));
+        }
+        apontMMFertList.clear();
+        return dadosArrayList;
     }
 
     public int verTransbordo(Long idBol) {
@@ -204,15 +207,10 @@ public class ApontMMFertDAO {
 
     public List<ApontMMFertBean> apontEnvioList(ArrayList<Long> idBolList){
 
-        ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
-
         ArrayList pesqArrayList = new ArrayList();
-        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-        pesquisa.setCampo("statusApontMMFert");
-        pesquisa.setValor(1L);
-        pesquisa.setTipo(1);
-        pesqArrayList.add(pesquisa);
+        pesqArrayList.add(getPesqStatusApont());
 
+        ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
         return apontMMFertBean.inAndGetAndOrderBy("idBolMMFert", idBolList, pesqArrayList, "idApontMMFert", true);
 
     }
@@ -244,6 +242,11 @@ public class ApontMMFertDAO {
 
         return idApontArrayList;
 
+    }
+
+    private String dadosApont(ApontMMFertBean apontMMFert){
+        Gson gsonItemImp = new Gson();
+        return gsonItemImp.toJsonTree(apontMMFert, apontMMFert.getClass()).toString();
     }
 
     public String dadosEnvioApont(List<ApontMMFertBean> apontMMFertList){
@@ -293,5 +296,20 @@ public class ApontMMFertDAO {
 
     }
 
+    private EspecificaPesquisa getPesqDthrApont(String dthrApont){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("dthrApontMMFert");
+        pesquisa.setValor(dthrApont);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqStatusApont(){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("statusApontMMFert");
+        pesquisa.setValor(1L);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
 
 }

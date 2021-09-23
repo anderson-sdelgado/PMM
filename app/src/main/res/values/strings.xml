@@ -278,4 +278,8 @@
     <string name="texto_limpar_dados">LIMPAR DADOS</string>
     <string name="texto_msg_titulo_propriedade">FAZENDA</string>
     <string name="texto_msg_descr_propriedade">60 - ITAQUERE</string>
+    <string name="texto_avancar">AVANÇAR</string>
+    <string name="texto_titulo_log_proc">LOG - PROCESSO</string>
+    <string name="texto_titulo_log_base_dado">LOG - BASE DADO</string>
+    <string name="texto_titulo_log_erro">LOG - ERRO</string>
 </resources>

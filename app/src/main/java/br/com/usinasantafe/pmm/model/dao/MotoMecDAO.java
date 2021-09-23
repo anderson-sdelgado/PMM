@@ -23,50 +23,6 @@ public class MotoMecDAO {
 
     }
 
-    public Long getDesengateCarreta(){
-
-        MotoMecBean motoMecBean = new MotoMecBean();
-        ArrayList pesqArrayList = new ArrayList();
-
-        pesqArrayList.add(getPesqBeanAplic(1L));
-        pesqArrayList.add(getPesqBeanMotoMec());
-
-        EspecificaPesquisa especificaPesquisa3 = new EspecificaPesquisa();
-        especificaPesquisa3.setCampo("codFuncaoOperMotoMec");
-        especificaPesquisa3.setValor(11L);
-        especificaPesquisa3.setTipo(1);
-        pesqArrayList.add(especificaPesquisa3);
-
-        List motoMecList = motoMecBean.get(pesqArrayList);
-        motoMecBean = (MotoMecBean) motoMecList.get(0);
-        motoMecList.clear();
-
-        return motoMecBean.getIdOperMotoMec();
-
-    }
-
-    public MotoMecBean getSaidaCampo(){
-
-        MotoMecBean motoMecBean = new MotoMecBean();
-        ArrayList pesqArrayList = new ArrayList();
-
-        pesqArrayList.add(getPesqBeanAplic(1L));
-        pesqArrayList.add(getPesqBeanInvisivel());
-
-        EspecificaPesquisa especificaPesquisa3 = new EspecificaPesquisa();
-        especificaPesquisa3.setCampo("codFuncaoOperMotoMec");
-        especificaPesquisa3.setValor(13L);
-        especificaPesquisa3.setTipo(1);
-        pesqArrayList.add(especificaPesquisa3);
-
-        List motoMecList = motoMecBean.get(pesqArrayList);
-        motoMecBean = (MotoMecBean) motoMecList.get(0);
-        motoMecList.clear();
-
-        return motoMecBean;
-
-    }
-
     public List<MotoMecBean> paradaList(Long aplic){
 
         ArrayList pesqArrayList = new ArrayList();

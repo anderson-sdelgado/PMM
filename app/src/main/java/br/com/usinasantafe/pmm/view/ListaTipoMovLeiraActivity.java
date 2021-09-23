@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class ListaTipoMovLeiraActivity extends ActivityGeneric {
 
@@ -33,6 +34,9 @@ public class ListaTipoMovLeiraActivity extends ActivityGeneric {
         itens.add("INICIAR CARREGAMENTO NA(S) LEIRA(S)");
         itens.add("FINALIZAR CARREGAMENTO NA(S) LEIRA(S)");
 
+        LogProcessoDAO.getInstance().insert("AdapterList adapterList = new AdapterList(this, itens);\n" +
+                "        tipoFuncaoLeiraListView = (ListView) findViewById(R.id.listTipoComp);\n" +
+                "        tipoFuncaoLeiraListView.setAdapter(adapterList);", getLocalClassName());
         AdapterList adapterList = new AdapterList(this, itens);
         tipoFuncaoLeiraListView = (ListView) findViewById(R.id.listTipoComp);
         tipoFuncaoLeiraListView.setAdapter(adapterList);
@@ -43,8 +47,13 @@ public class ListaTipoMovLeiraActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
+                LogProcessoDAO.getInstance().insert("tipoFuncaoLeiraListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
+                        "                                    long id) {\n" +
+                        "                pmmContext.getCompostoCTR().setTipoMovLeira((long) (position + 1));\n" +
+                        "                Intent it = new Intent(ListaTipoMovLeiraActivity.this, ListaLeiraActivity.class);", getLocalClassName());
                 pmmContext.getCompostoCTR().setTipoMovLeira((long) (position + 1));
-
                 Intent it = new Intent(ListaTipoMovLeiraActivity.this, ListaLeiraActivity.class);
                 startActivity(it);
                 finish();
@@ -56,6 +65,10 @@ public class ListaTipoMovLeiraActivity extends ActivityGeneric {
         buttonRetTipoComp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogProcessoDAO.getInstance().insert("buttonRetTipoComp.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                Intent it = new Intent(ListaTipoMovLeiraActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                 Intent it = new Intent(ListaTipoMovLeiraActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();

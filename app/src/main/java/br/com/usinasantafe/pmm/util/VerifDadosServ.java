@@ -13,6 +13,7 @@ import java.util.Map;
 import br.com.usinasantafe.pmm.control.CECCTR;
 import br.com.usinasantafe.pmm.control.CompostoCTR;
 import br.com.usinasantafe.pmm.control.InformativoCTR;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.view.MenuInicialActivity;
 import br.com.usinasantafe.pmm.util.conHttp.PostVerGenerico;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
@@ -47,42 +48,64 @@ public class VerifDadosServ {
         return instance;
     }
 
-    public void manipularDadosHttp(String result) {
-
-        Log.i("ECM", "RETORNO  = " + result);
-        Log.i("ECM", "TIPO  = " + this.tipo);
+    public void manipularDadosHttp(String result, String activity) {
 
         ConfigCTR configCTR = new ConfigCTR();
         CheckListCTR checkListCTR = new CheckListCTR();
         InformativoCTR informativoCTR = new InformativoCTR();
         CompostoCTR compostoCTR = new CompostoCTR();
         CECCTR cecCTR = new CECCTR();
+        LogProcessoDAO.getInstance().insert("public void manipularDadosHttp(String result) {", activity);
         if (this.tipo.equals("Equip")) {
+            LogProcessoDAO.getInstance().insert("if (this.tipo.equals(\"Equip\")) {\n" +
+                    "            configCTR.receberVerifEquip(" + result + ");", activity);
             configCTR.receberVerifEquip(result);
         } else if (this.tipo.equals("OS")) {
+            LogProcessoDAO.getInstance().insert("} else if (this.tipo.equals(\"OS\")) {\n" +
+                    "            configCTR.receberVerifOS(" + result + ");", activity);
             configCTR.receberVerifOS(result);
         } else if (this.tipo.equals("Atividade")) {
+            LogProcessoDAO.getInstance().insert("} else if (this.tipo.equals(\"Atividade\")) {\n" +
+                    "            configCTR.receberVerifAtiv(" + result + ");", activity);
             configCTR.receberVerifAtiv(result);
         } else if (this.tipo.equals("Atualiza")) {
+            LogProcessoDAO.getInstance().insert("} else if (this.tipo.equals(\"Atualiza\")) {\n" +
+                    "            AtualAplicBean atualAplicBean = configCTR.recAtual(result.trim());\n" +
+                    "            status = 3;", activity);
             AtualAplicBean atualAplicBean = configCTR.recAtual(result.trim());
             status = 3;
             if (atualAplicBean.getFlagAtualApp().equals(1L)) {
+                LogProcessoDAO.getInstance().insert("if (atualAplicBean.getFlagAtualApp().equals(1L)) {\n" +
+                        "                AtualizarAplicativo atualizarAplicativo = new AtualizarAplicativo();\n" +
+                        "                atualizarAplicativo.setContext(this.menuInicialActivity);\n" +
+                        "                atualizarAplicativo.execute();", activity);
                 AtualizarAplicativo atualizarAplicativo = new AtualizarAplicativo();
                 atualizarAplicativo.setContext(this.menuInicialActivity);
                 atualizarAplicativo.execute();
             } else {
+                LogProcessoDAO.getInstance().insert("} else {\n" +
+                        "                this.menuInicialActivity.encerrarBarra();", activity);
                 this.menuInicialActivity.encerrarBarra();
             }
         } else if (this.tipo.equals("CheckList")) {
+            LogProcessoDAO.getInstance().insert("} else if (this.tipo.equals(\"CheckList\")) {\n" +
+                    "            checkListCTR.receberVerifCheckList(" + result + ");", activity);
             checkListCTR.receberVerifCheckList(result);
         } else if (this.tipo.equals("Informativo")) {
+            LogProcessoDAO.getInstance().insert("} else if (this.tipo.equals(\"Informativo\")) {\n" +
+                    "            informativoCTR.receberVerifInformativo(" + result + ");", activity);
             informativoCTR.receberVerifInformativo(result);
         } else if(this.tipo.equals("OrdCarreg")) {
-            Log.i("ECM", "CHEGOU AKI RECEBIDO 1 ");
+            LogProcessoDAO.getInstance().insert("} else if(this.tipo.equals(\"OrdCarreg\")) {\n" +
+                    "            compostoCTR.receberVerifOrdCarreg(" + result + ");", activity);
             compostoCTR.receberVerifOrdCarreg(result);
         } else if (this.tipo.equals("CEC")) {
+            LogProcessoDAO.getInstance().insert("} else if (this.tipo.equals(\"CEC\")) {\n" +
+                    "            cecCTR.receberVerifCEC(" + result + ");", activity);
             cecCTR.receberVerifCEC(result);
         } else {
+            LogProcessoDAO.getInstance().insert("} else {\n" +
+                    "            status = 1;", activity);
             status = 1;
         }
 
@@ -110,17 +133,17 @@ public class VerifDadosServ {
         return ret;
     }
 
-    public void verifDadosInformativo(String dados,  String tipo) {
+    public void verifDadosInformativo(String dados,  String tipo, String activity) {
 
         urlsConexaoHttp = new UrlsConexaoHttp();
         this.tipo = tipo;
         this.dados = dados;
 
-        envioVerif();
+        envioVerif(activity);
 
     }
 
-    public void verifAtualAplic(String dados, MenuInicialActivity menuInicialActivity, ProgressDialog progressDialog) {
+    public void verifAtualAplic(String dados, MenuInicialActivity menuInicialActivity, ProgressDialog progressDialog, String activity) {
 
         urlsConexaoHttp = new UrlsConexaoHttp();
         this.progressDialog = progressDialog;
@@ -128,11 +151,11 @@ public class VerifDadosServ {
         this.dados = dados;
         this.menuInicialActivity = menuInicialActivity;
 
-        envioVerif();
+        envioVerif(activity);
 
     }
 
-    public void verifDados(String dados, String tipo, Context telaAtual, Class telaProx, ProgressDialog progressDialog) {
+    public void verifDados(String dados, String tipo, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity) {
 
         this.urlsConexaoHttp = new UrlsConexaoHttp();
         this.telaAtual = telaAtual;
@@ -141,11 +164,11 @@ public class VerifDadosServ {
         this.tipo = tipo;
         this.dados = dados;
 
-        envioVerif();
+        envioVerif(activity);
 
     }
 
-    public void verifDados(String dados, String tipo, Context telaAtual, Class telaProx) {
+    public void verifDados(String dados, String tipo, Context telaAtual, Class telaProx, String activity) {
 
         this.urlsConexaoHttp = new UrlsConexaoHttp();
         this.telaAtual = telaAtual;
@@ -153,34 +176,37 @@ public class VerifDadosServ {
         this.tipo = tipo;
         this.dados = dados;
 
-        envioVerif();
+        envioVerif(activity);
 
     }
 
-    public void envioVerif() {
+    public void envioVerif(String activity) {
 
         status = 2;
         this.urlsConexaoHttp = new UrlsConexaoHttp();
-        String[] url = {urlsConexaoHttp.urlVerifica(tipo)};
+        String[] url = {urlsConexaoHttp.urlVerifica(tipo), activity};
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", this.dados);
 
-        Log.i("PMM", "VERIFICA = " + this.dados);
-
+        LogProcessoDAO.getInstance().insert("postVerGenerico.execute('" + urlsConexaoHttp.urlVerifica(tipo) + "'); - Dados de Envio = " + this.dados, activity);
         postVerGenerico = new PostVerGenerico();
         postVerGenerico.setParametrosPost(parametrosPost);
         postVerGenerico.execute(url);
 
     }
 
-    public void reenvioVerif(){
+    public void reenvioVerif(String activity){
+        LogProcessoDAO.getInstance().insert("statusRetVerif()", activity);
         if(statusRetVerif()){
-            envioVerif();
+            LogProcessoDAO.getInstance().insert("envioVerif()", activity);
+            envioVerif(activity);
         }
         else {
+            LogProcessoDAO.getInstance().insert("verifRecInformativo()", activity);
             if (verifRecInformativo()) {
                 InformativoCTR informativoCTR = new InformativoCTR();
-                informativoCTR.verifDadosInformativo();
+                LogProcessoDAO.getInstance().insert("informativoCTR.verifDadosInformativo()", activity);
+                informativoCTR.verifDadosInformativo(activity);
             }
         }
     }
@@ -193,7 +219,6 @@ public class VerifDadosServ {
     }
 
     public void pulaTela(){
-        Log.i("ECM", "CHEGOU MUDANÇA TELA");
         if(status < 3){
             status = 3;
             this.progressDialog.dismiss();

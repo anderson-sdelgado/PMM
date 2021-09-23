@@ -100,7 +100,7 @@ public class CarregCompDAO {
         carregCompBean.setStatusCarreg(1L);
         carregCompBean.insert();
 
-        EnvioDadosServ.getInstance().envioDados();
+        EnvioDadosServ.getInstance().envioDados(null);
 
     }
 
@@ -116,7 +116,7 @@ public class CarregCompDAO {
         carregCompBean.setStatusCarreg(1L);
         carregCompBean.insert();
 
-        EnvioDadosServ.getInstance().envioDados();
+        EnvioDadosServ.getInstance().envioDados(null);
 
     }
 
@@ -127,13 +127,13 @@ public class CarregCompDAO {
         carregCompBean.setStatusCarreg(4L);
         carregCompBean.update();
 
-        EnvioDadosServ.getInstance().envioDados();
+        EnvioDadosServ.getInstance().envioDados(null);
 
     }
 
 
-    public void verifDadosCarreg(Long idEquip, Context telaAtual, Class telaProx){
-        VerifDadosServ.getInstance().verifDados(String.valueOf(idEquip), "OrdCarreg", telaAtual, telaProx);
+    public void verifDadosCarreg(Long idEquip, Context telaAtual, Class telaProx, String activity){
+        VerifDadosServ.getInstance().verifDados(String.valueOf(idEquip), "OrdCarreg", telaAtual, telaProx, activity);
     }
 
     public String dadosEnvioCarregInsumo(){

@@ -16,6 +16,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.TurnoBean;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.ConnectNetwork;
 import br.com.usinasantafe.pmm.util.Tempo;
 
@@ -40,6 +41,13 @@ public class ListaTurnoActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonAtualTurno.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                AlertDialog.Builder alerta = new AlertDialog.Builder(  ListaTurnoActivity.this);\n" +
+                        "                alerta.setTitle(\"ATENÇÃO\");\n" +
+                        "                alerta.setMessage(\"DESEJA REALMENTE ATUALIZAR BASE DE DADOS?\");", getLocalClassName());
+
                 AlertDialog.Builder alerta = new AlertDialog.Builder(  ListaTurnoActivity.this);
                 alerta.setTitle("ATENÇÃO");
                 alerta.setMessage("DESEJA REALMENTE ATUALIZAR BASE DE DADOS?");
@@ -47,10 +55,19 @@ public class ListaTurnoActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        ConnectNetwork connectNetwork = new ConnectNetwork();
+                        LogProcessoDAO.getInstance().insert("alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                                "                    @Override\n" +
+                                "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
+                        if (connectNetwork) {
 
-                        if (connectNetwork.verificaConexao(ListaTurnoActivity.this)) {
-
+                            LogProcessoDAO.getInstance().insert("if (connectNetwork) {\n" +
+                                    "progressBar = new ProgressDialog(ListaTurnoActivity.this);\n" +
+                                    "                            progressBar.setCancelable(true);\n" +
+                                    "                            progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
+                                    "                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);\n" +
+                                    "                            progressBar.setProgress(0);\n" +
+                                    "                            progressBar.setMax(100);\n" +
+                                    "                            progressBar.show();", getLocalClassName());
                             progressBar = new ProgressDialog(ListaTurnoActivity.this);
                             progressBar.setCancelable(true);
                             progressBar.setMessage("ATUALIZANDO ...");
@@ -59,20 +76,29 @@ public class ListaTurnoActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            pmmContext.getMotoMecFertCTR().atualDados(ListaTurnoActivity.this, ListaTurnoActivity.class, progressBar, "Turno", 1);
+                            LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().atualDados(ListaTurnoActivity.this, ListaTurnoActivity.class, progressBar, \"Turno\", 1);", getLocalClassName());
+                            pmmContext.getMotoMecFertCTR().atualDados(ListaTurnoActivity.this, ListaTurnoActivity.class, progressBar, "Turno", 1, getLocalClassName());
 
                         } else {
 
+                            LogProcessoDAO.getInstance().insert("} else {\n" +
+                                    "AlertDialog.Builder alerta = new AlertDialog.Builder( ListaTurnoActivity.this);\n" +
+                                    "                            alerta.setTitle(\"ATENÇÃO\");\n" +
+                                    "                            alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
+                                    "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                    "                                @Override\n" +
+                                    "                                public void onClick(DialogInterface dialog, int which) {\n" +
+                                    "                                }\n" +
+                                    "                            });\n" +
+                                    "                            alerta.show();", getLocalClassName());
                             AlertDialog.Builder alerta = new AlertDialog.Builder( ListaTurnoActivity.this);
                             alerta.setTitle("ATENÇÃO");
                             alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
                                 }
                             });
-
                             alerta.show();
 
                         }
@@ -84,24 +110,32 @@ public class ListaTurnoActivity extends ActivityGeneric {
                 alerta.setPositiveButton("NÃO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                                "                    @Override\n" +
+                                "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                     }
                 });
-
                 alerta.show();
 
             }
 
         });
 
-        turnoList = pmmContext.getMotoMecFertCTR().getTurnoCodList();
+        LogProcessoDAO.getInstance().insert("turnoList = pmmContext.getMotoMecFertCTR().getTurnoCodList();", getLocalClassName());
+        turnoList = pmmContext.getMotoMecFertCTR().getTurnoCodList(getLocalClassName());
 
+        LogProcessoDAO.getInstance().insert("ArrayList<String> itens = new ArrayList<String>();\n" +
+                "        for(TurnoBean turnoBean : turnoList){\n" +
+                "            itens.add(turnoBean.getDescTurno());\n" +
+                "        }", getLocalClassName());
         ArrayList<String> itens = new ArrayList<String>();
-
         for(TurnoBean turnoBean : turnoList){
             itens.add(turnoBean.getDescTurno());
         }
 
+        LogProcessoDAO.getInstance().insert("AdapterList adapterList = new AdapterList(this, itens);\n" +
+                "        turnoListView = findViewById(R.id.listaTurno);\n" +
+                "        turnoListView.setAdapter(adapterList);", getLocalClassName());
         AdapterList adapterList = new AdapterList(this, itens);
         turnoListView = findViewById(R.id.listaTurno);
         turnoListView.setAdapter(adapterList);
@@ -112,32 +146,51 @@ public class ListaTurnoActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
+                LogProcessoDAO.getInstance().insert("turnoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
+                        "                                    long id) {" +
+                        "TurnoBean turnoBean = turnoList.get(position);\n" +
+                        "                turnoList.clear();", getLocalClassName());
                 TurnoBean turnoBean = turnoList.get(position);
                 turnoList.clear();
 
-                pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().setIdTurnoBolMMFert(turnoBean.getIdTurno());
+                LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().setIdTurnoBolMMFert(" + turnoBean.getIdTurno() + ");", getLocalClassName());
+                pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().setIdTurnoBolMMFert(turnoBean.getIdTurno());
 
                 if(Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())){
+                    LogProcessoDAO.getInstance().insert("if(Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())){\n" +
+                            "pmmContext.getConfigCTR().setDifDthrConfig(0L);", getLocalClassName());
                     pmmContext.getConfigCTR().setDifDthrConfig(0L);
                     if(PMMContext.aplic == 2){
+                        LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 2){", getLocalClassName());
                         if (connectNetwork) {
+                            LogProcessoDAO.getInstance().insert("if (connectNetwork) {\n" +
+                                    "pmmContext.getConfigCTR().setStatusConConfig(1L);", getLocalClassName());
                             pmmContext.getConfigCTR().setStatusConConfig(1L);
                         }
                         else{
+                            LogProcessoDAO.getInstance().insert("else{\n" +
+                                    "pmmContext.getConfigCTR().setStatusConConfig(0L);", getLocalClassName());
                             pmmContext.getConfigCTR().setStatusConConfig(0L);
                         }
+                        LogProcessoDAO.getInstance().insert("Intent it = new Intent(ListaTurnoActivity.this, HorimetroActivity.class);", getLocalClassName());
                         Intent it = new Intent(ListaTurnoActivity.this, HorimetroActivity.class);
                         startActivity(it);
                         finish();
                     }
                     else {
+                        LogProcessoDAO.getInstance().insert("Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);", getLocalClassName());
                         Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
                         startActivity(it);
                         finish();
                     }
                 }
                 else{
+                    LogProcessoDAO.getInstance().insert("else{\n" +
+                            "pmmContext.getConfigCTR().setContDataHora(1);", getLocalClassName());
                     pmmContext.getConfigCTR().setContDataHora(1);
+                    LogProcessoDAO.getInstance().insert("Intent it = new Intent(ListaTurnoActivity.this, MsgDataHoraActivity.class);", getLocalClassName());
                     Intent it = new Intent(ListaTurnoActivity.this, MsgDataHoraActivity.class);
                     startActivity(it);
                     finish();
@@ -150,6 +203,10 @@ public class ListaTurnoActivity extends ActivityGeneric {
         buttonRetTurno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogProcessoDAO.getInstance().insert("buttonRetTurno.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "Intent it = new Intent(ListaTurnoActivity.this, EquipActivity.class);", getLocalClassName());
                 Intent it = new Intent(ListaTurnoActivity.this, EquipActivity.class);
                 startActivity(it);
                 finish();

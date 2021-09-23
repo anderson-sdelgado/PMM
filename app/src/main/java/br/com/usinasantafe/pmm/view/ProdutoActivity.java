@@ -9,6 +9,7 @@ import android.widget.TextView;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ProdutoBean;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class ProdutoActivity extends ActivityGeneric {
 
@@ -34,7 +35,19 @@ public class ProdutoActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonOkOS.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {", getLocalClassName());
+
                 if(!txtResult.getText().equals("PRODUTO:")) {
+
+                    LogProcessoDAO.getInstance().insert("if(!txtResult.getText().equals(\"PRODUTO:\")) {\n" +
+                            "                    if (connectNetwork) {\n" +
+                            "                        pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
+                            "                    }\n" +
+                            "                    else{\n" +
+                            "                        pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
+                            "                    }", getLocalClassName());
 
                     if (connectNetwork) {
                         pmmContext.getConfigCTR().setStatusConConfig(1L);
@@ -43,7 +56,11 @@ public class ProdutoActivity extends ActivityGeneric {
                         pmmContext.getConfigCTR().setStatusConConfig(0L);
                     }
 
-                    pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());
+                    LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
+                            "                    pmmContext.getConfigCTR().setPosFluxoCarregComposto(2L);\n" +
+                            "                    pmmContext.getCompostoCTR().abrirCarregInsumo(produtoBean);\n" +
+                            "                    Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                    pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
                     pmmContext.getConfigCTR().setPosFluxoCarregComposto(2L);
                     pmmContext.getCompostoCTR().abrirCarregInsumo(produtoBean);
 
@@ -61,6 +78,10 @@ public class ProdutoActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonCancOS.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                 Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);
                 startActivity(it);
                 finish();
@@ -73,6 +94,10 @@ public class ProdutoActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("btnCapturaBarra.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                Intent it = new Intent(ProdutoActivity.this, br.com.usinasantafe.pmm.zxing.CaptureActivity.class);", getLocalClassName());
                 Intent it = new Intent(ProdutoActivity.this, br.com.usinasantafe.pmm.zxing.CaptureActivity.class);
                 startActivityForResult(it, REQUEST_CODE);
 
@@ -85,9 +110,13 @@ public class ProdutoActivity extends ActivityGeneric {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
 
         if(REQUEST_CODE == requestCode && RESULT_OK == resultCode){
-
+            LogProcessoDAO.getInstance().insert("if(REQUEST_CODE == requestCode && RESULT_OK == resultCode){\n" +
+                    "            String cod = data.getStringExtra(\"SCAN_RESULT\");", getLocalClassName());
             String cod = data.getStringExtra("SCAN_RESULT");
             if (pmmContext.getCompostoCTR().verProduto(cod)) {
+                LogProcessoDAO.getInstance().insert("if (pmmContext.getCompostoCTR().verProduto(cod)) {\n" +
+                        "                produtoBean = pmmContext.getCompostoCTR().getProduto(cod);\n" +
+                        "                txtResult.setText(\"PRODUTO: \" + produtoBean.getCodProduto() + \"\\n\" + produtoBean.getDescProduto());", getLocalClassName());
                 produtoBean = pmmContext.getCompostoCTR().getProduto(cod);
                 txtResult.setText("PRODUTO: " + produtoBean.getCodProduto() + "\n" + produtoBean.getDescProduto());
             }

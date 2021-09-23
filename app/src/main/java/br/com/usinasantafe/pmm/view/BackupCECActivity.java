@@ -11,6 +11,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CECBean;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.Tempo;
 
 public class BackupCECActivity extends ActivityGeneric {
@@ -32,10 +33,13 @@ public class BackupCECActivity extends ActivityGeneric {
         Button buttonProxBkpBoletim = findViewById(R.id.buttonProxBkpBoletim);
         Button buttonRetornarBkpBoletim = findViewById(R.id.buttonRetornarBkpBoletim);
 
+        LogProcessoDAO.getInstance().insert("cecList = pmmContext.getCecCTR().cecListDesc();\n" +
+                "        contador = cecList.size() - 1;\n" +
+                "        CECBean cecBean = cecList.get(contador);\n" +
+                "        textViewBkpBoletim.setText(visBoletim(cecBean));", getLocalClassName());
+
         cecList = pmmContext.getCecCTR().cecListDesc();
-
         contador = cecList.size() - 1;
-
         CECBean cecBean = cecList.get(contador);
         textViewBkpBoletim.setText(visBoletim(cecBean));
 
@@ -43,6 +47,12 @@ public class BackupCECActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
+
+                LogProcessoDAO.getInstance().insert("if(contador < cecList.size() - 1){\n" +
+                        "                    contador = contador + 1;\n" +
+                        "                }\n" +
+                        "                CECBean cecBean = cecList.get(contador);\n" +
+                        "                textViewBkpBoletim.setText(visBoletim(cecBean));", getLocalClassName());
 
                 if(contador < cecList.size() - 1){
                     contador = contador + 1;
@@ -59,6 +69,12 @@ public class BackupCECActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("if(contador > 0){\n" +
+                        "                    contador = contador - 1;\n" +
+                        "                }\n" +
+                        "                CECBean cecBean = cecList.get(contador);\n" +
+                        "                textViewBkpBoletim.setText(visBoletim(cecBean));", getLocalClassName());
+
                 if(contador > 0){
                     contador = contador - 1;
                 }
@@ -74,6 +90,10 @@ public class BackupCECActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonRetornarBkpBoletim.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                Intent it = new Intent(BackupCECActivity.this, MenuCertifActivity.class);", getLocalClassName());
                 Intent it = new Intent(BackupCECActivity.this, MenuCertifActivity.class);
                 startActivity(it);
                 finish();
@@ -88,6 +108,10 @@ public class BackupCECActivity extends ActivityGeneric {
         String retorno = "";
 
         int analisar = (int) cecBean.getPossuiSorteioCEC().longValue();
+
+        LogProcessoDAO.getInstance().insert("    public String visBoletim(CECBean cecBean){\n" +
+                "        String retorno = \"\";\n" +
+                "        int analisar = (int) cecBean.getPossuiSorteioCEC().longValue();", getLocalClassName());
 
         if(analisar == 0){
 

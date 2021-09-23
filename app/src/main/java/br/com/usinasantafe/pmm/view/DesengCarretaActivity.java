@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class DesengCarretaActivity extends ActivityGeneric {
 
@@ -25,11 +26,23 @@ public class DesengCarretaActivity extends ActivityGeneric {
         Button buttonSimDesengate = findViewById(R.id.buttonSimDesengate);
         Button buttonNaoDesengate = findViewById(R.id.buttonNaoDesengate);
 
+        LogProcessoDAO.getInstance().insert("textViewMsgDesengCarreta.setText(pmmContext.getMotoMecFertCTR().getDescrCarreta());", getLocalClassName());
         textViewMsgDesengCarreta.setText(pmmContext.getMotoMecFertCTR().getDescrCarreta());
 
         buttonSimDesengate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                LogProcessoDAO.getInstance().insert("buttonSimDesengate.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                pmmContext.getMotoMecFertCTR().delCarreta();\n" +
+                        "                if (connectNetwork) {\n" +
+                        "                    pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
+                        "                }\n" +
+                        "                else{\n" +
+                        "                    pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
+                        "                }", getLocalClassName());
 
                 pmmContext.getMotoMecFertCTR().delCarreta();
 
@@ -40,14 +53,19 @@ public class DesengCarretaActivity extends ActivityGeneric {
                     pmmContext.getConfigCTR().setStatusConConfig(0L);
                 }
 
-                pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());
+                LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());", getLocalClassName());
+                pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
 
                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 19L){
+                    LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 19L){\n" +
+                            "                    Intent it = new Intent(DesengCarretaActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                     Intent it = new Intent(DesengCarretaActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 21L){
+                else{
+                    LogProcessoDAO.getInstance().insert("else{\n" +
+                            "                    Intent it = new Intent(DesengCarretaActivity.this, MenuParadaECMActivity.class);", getLocalClassName());
                     Intent it = new Intent(DesengCarretaActivity.this, MenuParadaECMActivity.class);
                     startActivity(it);
                     finish();
@@ -59,12 +77,19 @@ public class DesengCarretaActivity extends ActivityGeneric {
         buttonNaoDesengate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogProcessoDAO.getInstance().insert("buttonNaoDesengate.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {", getLocalClassName());
                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 19L){
+                    LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 19L){\n" +
+                            "                    Intent it = new Intent(DesengCarretaActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                     Intent it = new Intent(DesengCarretaActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 21L){
+                else{
+                    LogProcessoDAO.getInstance().insert("else{\n" +
+                            "                    Intent it = new Intent(DesengCarretaActivity.this, MenuParadaECMActivity.class);", getLocalClassName());
                     Intent it = new Intent(DesengCarretaActivity.this, MenuParadaECMActivity.class);
                     startActivity(it);
                     finish();

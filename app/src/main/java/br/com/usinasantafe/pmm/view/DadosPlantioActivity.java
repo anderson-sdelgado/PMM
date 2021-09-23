@@ -9,6 +9,7 @@ import android.widget.TextView;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfPlantioBean;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class DadosPlantioActivity extends ActivityGeneric {
 
@@ -29,6 +30,7 @@ public class DadosPlantioActivity extends ActivityGeneric {
         TextView textViewValorMP = findViewById(R.id.textViewValorMP);
         Button buttonSair = findViewById(R.id.buttonSair);
 
+        LogProcessoDAO.getInstance().insert("InfPlantioBean infPlantioBean = pmmContext.getInformativoCTR().getInfPlantio();", getLocalClassName());
         InfPlantioBean infPlantioBean = pmmContext.getInformativoCTR().getInfPlantio();
 
         textViewTituloPlantio.setText("DADOS DE PLANTIO\n" + infPlantioBean.getDthrPlantio());
@@ -38,22 +40,32 @@ public class DadosPlantioActivity extends ActivityGeneric {
         textViewMetaMP.setText(String.valueOf(infPlantioBean.getMediaProdPlanej()).replace(".", ","));
         textViewValorMP.setText(String.valueOf(infPlantioBean.getMediaProdReal()).replace(".", ","));
 
+        LogProcessoDAO.getInstance().insert("pmmContext.getConfigCTR().setVerInforConfig(3L);", getLocalClassName());
         pmmContext.getConfigCTR().setVerInforConfig(3L);
 
         buttonSair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogProcessoDAO.getInstance().insert("buttonSair.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {", getLocalClassName());
                 if(PMMContext.aplic == 1){
+                    LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 1){\n" +
+                            "                    Intent it = new Intent(DadosPlantioActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                     Intent it = new Intent(DadosPlantioActivity.this, MenuPrincPMMActivity.class);
                     startActivity(it);
                     finish();
                 }
                 else if(PMMContext.aplic == 2){
+                    LogProcessoDAO.getInstance().insert("else if(PMMContext.aplic == 2){\n" +
+                            "                    Intent it = new Intent(DadosPlantioActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                     Intent it = new Intent(DadosPlantioActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();
                 }
                 else if(PMMContext.aplic == 3){
+                    LogProcessoDAO.getInstance().insert("else if(PMMContext.aplic == 3){\n" +
+                            "                    Intent it = new Intent(DadosPlantioActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                     Intent it = new Intent(DadosPlantioActivity.this, MenuPrincPCOMPActivity.class);
                     startActivity(it);
                     finish();

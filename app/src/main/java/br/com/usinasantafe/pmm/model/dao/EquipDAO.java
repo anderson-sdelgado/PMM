@@ -36,8 +36,9 @@ public class EquipDAO {
         return equipBean;
     }
 
-    public void verEquip(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
-        VerifDadosServ.getInstance().verifDados(dado, "Equip", telaAtual, telaProx, progressDialog);
+    public void verEquip(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
+        LogProcessoDAO.getInstance().insert("VerifDadosServ.getInstance().verifDados(dado, \"Equip\", telaAtual, telaProx, progressDialog, activity);", activity);
+        VerifDadosServ.getInstance().verifDados(dado, "Equip", telaAtual, telaProx, progressDialog, activity);
     }
 
     public EquipBean recDadosEquip(JSONArray jsonArray) throws JSONException {

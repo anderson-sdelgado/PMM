@@ -45,6 +45,7 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCheckListBean;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class ConfigActivity extends ActivityGeneric {
 
@@ -68,6 +69,9 @@ public class ConfigActivity extends ActivityGeneric {
         pmmContext = (PMMContext) getApplication();
 
         if (pmmContext.getConfigCTR().hasElemConfig()) {
+            LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().hasElemConfig()) {", getLocalClassName());
+            LogProcessoDAO.getInstance().insert("editTextEquipConfig.setText(String.valueOf(pmmContext.getConfigCTR().getEquip().getNroEquip()));\n" +
+                    "            editTextSenhaConfig.setText(pmmContext.getConfigCTR().getConfig().getSenhaConfig());", getLocalClassName());
             editTextEquipConfig.setText(String.valueOf(pmmContext.getConfigCTR().getEquip().getNroEquip()));
             editTextSenhaConfig.setText(pmmContext.getConfigCTR().getConfig().getSenhaConfig());
         }
@@ -76,16 +80,26 @@ public class ConfigActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("        buttonSalvarConfig.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {", getLocalClassName());
                 if(!editTextEquipConfig.getText().toString().equals("") &&
                         !editTextSenhaConfig.getText().toString().equals("")){
-
+                    LogProcessoDAO.getInstance().insert("if(!editTextEquipConfig.getText().toString().equals(\"\") &&\n" +
+                            "                        !editTextSenhaConfig.getText().toString().equals(\"\")){", getLocalClassName());
+                    LogProcessoDAO.getInstance().insert("progressBar = new ProgressDialog(v.getContext());\n" +
+                            "                    progressBar.setCancelable(true);\n" +
+                            "                    progressBar.setMessage(\"Pequisando o Equipamento...\");\n" +
+                            "                    progressBar.show();", getLocalClassName());
                     progressBar = new ProgressDialog(v.getContext());
                     progressBar.setCancelable(true);
                     progressBar.setMessage("Pequisando o Equipamento...");
                     progressBar.show();
 
+                    LogProcessoDAO.getInstance().insert("pmmContext.getConfigCTR().salvarConfig(" + editTextSenhaConfig.getText().toString() + ");\n" +
+                            "                    pmmContext.getConfigCTR().verEquipConfig(" + editTextEquipConfig.getText().toString() + ", ConfigActivity.this ,MenuInicialActivity.class, progressBar);", getLocalClassName());
                     pmmContext.getConfigCTR().salvarConfig(editTextSenhaConfig.getText().toString());
-                    pmmContext.getConfigCTR().verEquipConfig(editTextEquipConfig.getText().toString(), ConfigActivity.this ,MenuInicialActivity.class, progressBar);
+                    pmmContext.getConfigCTR().verEquipConfig(editTextEquipConfig.getText().toString(), ConfigActivity.this ,MenuInicialActivity.class, progressBar, getLocalClassName());
 
                 }
 
@@ -96,6 +110,10 @@ public class ConfigActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("        buttonCancConfig.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {", getLocalClassName());
+                LogProcessoDAO.getInstance().insert("Intent it = new Intent(ConfigActivity.this, MenuInicialActivity.class);", getLocalClassName());
                 Intent it = new Intent(ConfigActivity.this, MenuInicialActivity.class);
                 startActivity(it);
                 finish();
@@ -107,8 +125,20 @@ public class ConfigActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("        buttonAtualizarBD.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n", getLocalClassName());
+
                 if(connectNetwork){
 
+                    LogProcessoDAO.getInstance().insert("if(connectNetwork){\n" +
+                            "                    progressBar = new ProgressDialog(v.getContext());\n" +
+                            "                    progressBar.setCancelable(true);\n" +
+                            "                    progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
+                            "                    progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);\n" +
+                            "                    progressBar.setProgress(0);\n" +
+                            "                    progressBar.setMax(100);\n" +
+                            "                    progressBar.show();", getLocalClassName());
                     progressBar = new ProgressDialog(v.getContext());
                     progressBar.setCancelable(true);
                     progressBar.setMessage("ATUALIZANDO ...");
@@ -117,20 +147,29 @@ public class ConfigActivity extends ActivityGeneric {
                     progressBar.setMax(100);
                     progressBar.show();
 
-                    pmmContext.getConfigCTR().atualTodasTabelas(ConfigActivity.this, progressBar);
+                    LogProcessoDAO.getInstance().insert("pmmContext.getConfigCTR().atualTodasTabelas(ConfigActivity.this, progressBar);", getLocalClassName());
+                    pmmContext.getConfigCTR().atualTodasTabelas(ConfigActivity.this, progressBar, getLocalClassName());
 
                 }
                 else{
+
+                    LogProcessoDAO.getInstance().insert("} else {\n" +
+                            "                    AlertDialog.Builder alerta = new AlertDialog.Builder(ConfigActivity.this);\n" +
+                            "                    alerta.setTitle(\"ATENÇÃO\");\n" +
+                            "                    alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
+                            "                    alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                            "                        @Override\n" +
+                            "                        public void onClick(DialogInterface dialog, int which) {\n" +
+                            "                    });\n" +
+                            "                    alerta.show();", getLocalClassName());
                     AlertDialog.Builder alerta = new AlertDialog.Builder(ConfigActivity.this);
                     alerta.setTitle("ATENÇÃO");
                     alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
                     alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
                         }
                     });
-
                     alerta.show();
                 }
             }

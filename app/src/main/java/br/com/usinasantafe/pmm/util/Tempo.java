@@ -114,9 +114,13 @@ public class Tempo {
     public Long dif(){
         ConfigBean configBean = new ConfigBean();
         List<ConfigBean> configList = configBean.all();
-        configBean = configList.get(0);
+        Long dif = 0L;
+        if(configList.size() > 0){
+            configBean = configList.get(0);
+            dif = configBean.getDifDthrConfig();
+        }
         configList.clear();
-        return configBean.getDifDthrConfig();
+        return dif;
     }
 
     public String dthrLongToString(Long dthrLong){

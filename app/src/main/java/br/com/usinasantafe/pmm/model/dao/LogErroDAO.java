@@ -1,13 +1,5 @@
 package br.com.usinasantafe.pmm.model.dao;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -15,7 +7,6 @@ import java.util.List;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
-import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
 
 public class LogErroDAO {
@@ -72,106 +63,10 @@ public class LogErroDAO {
 
     }
 
-    public boolean verEnvioLogErro(){
-        List<LogErroBean> logErroList = logErroAbertList();
-        boolean ret = logErroList.size() > 0;
-        logErroList.clear();
-        return ret;
-    }
-
-    public List<LogErroBean> logErroAbertList(){
+    public List<LogErroBean> logErroBeanList(){
         LogErroBean logErroBean = new LogErroBean();
-        return logErroBean.get("status", 1L);
+        return logErroBean.orderBy("idLogErro", true);
     }
 
-    public List<LogErroBean> logErroFechList(){
-        LogErroBean logErroBean = new LogErroBean();
-        return logErroBean.get("status", 2L);
-    }
-
-    public String dadosEnvio(){
-
-        JsonArray jsonArrayLogErro = new JsonArray();
-
-        List<LogErroBean> logErroList = logErroAbertList();
-        for (int i = 0; i < logErroList.size(); i++) {
-
-            LogErroBean logErroBean = logErroList.get(i);
-            Gson gson = new Gson();
-            jsonArrayLogErro.add(gson.toJsonTree(logErroBean, logErroBean.getClass()));
-
-        }
-
-        logErroList.clear();
-
-        JsonObject jsonLogErro = new JsonObject();
-        jsonLogErro.add("logerro", jsonArrayLogErro);
-
-        return jsonLogErro.toString();
-
-    }
-
-    public void updLogErro(JSONArray jsonArray) throws JSONException {
-
-        for (int i = 0; i < jsonArray.length(); i++) {
-
-            JSONObject objLogErro = jsonArray.getJSONObject(i);
-            Gson gsonBol = new Gson();
-            LogErroBean logErroBean = gsonBol.fromJson(objLogErro.toString(), LogErroBean.class);
-
-            List<LogErroBean> logErroList = logErroBean.get("idLog", logErroBean.getIdLog());
-            LogErroBean logErroBD = logErroList.get(0);
-            logErroBD.setStatus(2L);
-            logErroBD.update();
-
-            logErroList.clear();
-
-        }
-    }
-
-
-
-    public void updLogErro(String retorno){
-
-        try{
-
-            int pos1 = retorno.indexOf("_") + 1;
-            String objPrinc = retorno.substring(pos1);
-
-            JSONObject jObjLogErro = new JSONObject(objPrinc);
-            JSONArray jsonArrayLogErro = jObjLogErro.getJSONArray("logerro");
-
-            for (int i = 0; i < jsonArrayLogErro.length(); i++) {
-
-                JSONObject objLogErro = jsonArrayLogErro.getJSONObject(i);
-                Gson gsonBol = new Gson();
-                LogErroBean logErroBean = gsonBol.fromJson(objLogErro.toString(), LogErroBean.class);
-
-                List<LogErroBean> logErroList = logErroBean.get("idLog", logErroBean.getIdLog());
-                LogErroBean logErroBD = logErroList.get(0);
-                logErroBD.setStatus(2L);
-                logErroBD.update();
-
-                logErroList.clear();
-
-            }
-
-            delLogErroFechado();
-
-        }
-        catch(Exception e){
-            EnvioDadosServ.status = 1;
-            LogErroDAO.getInstance().insert(e);
-        }
-
-    }
-
-    public void delLogErroFechado(){
-        List<LogErroBean> logErroList = logErroFechList();
-        for(LogErroBean logErroBean : logErroList){
-            logErroBean.delete();
-        }
-        logErroList.clear();
-    }
 
 }

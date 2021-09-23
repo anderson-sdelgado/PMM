@@ -16,26 +16,18 @@ public class RendMMDAO {
     public RendMMDAO() {
     }
 
-    public void insRend(Long idBol, Long nroOS){
+    public void insRend(Long idBol, Long nroOS, String activity){
 
         RendMMBean rendMMBean = new RendMMBean();
+
         ArrayList<EspecificaPesquisa> pesquisaArrayList = new ArrayList();
-
-        EspecificaPesquisa pesq1 = new EspecificaPesquisa();
-        pesq1.setCampo("idBolMMFert");
-        pesq1.setValor(idBol);
-        pesq1.setTipo(1);
-        pesquisaArrayList.add(pesq1);
-
-        EspecificaPesquisa pesq2 = new EspecificaPesquisa();
-        pesq2.setCampo("nroOSRendMM");
-        pesq2.setValor(nroOS);
-        pesq2.setTipo(1);
-        pesquisaArrayList.add(pesq2);
+        pesquisaArrayList.add(getPesqIdBol(idBol));
+        pesquisaArrayList.add(getPesqNroOS(nroOS));
 
         List<RendMMBean> rendList = rendMMBean.get(pesquisaArrayList);
 
         if (rendList.size() == 0) {
+            LogProcessoDAO.getInstance().insert("if (rendList.size() == 0) {", activity);
             rendMMBean.setIdBolMMFert(idBol);
             rendMMBean.setNroOSRendMM(nroOS);
             rendMMBean.setValorRendMM(0D);
@@ -46,23 +38,22 @@ public class RendMMDAO {
     }
 
     public boolean verRend(Long idBol){
-        RendMMBean rendMMBean = new RendMMBean();
-        List<RendMMBean> rendList = rendMMBean.get("idBolMMFert", idBol);
+        List<RendMMBean> rendList = rendList(idBol);
         Boolean ret = (rendList.size() > 0);
         rendList.clear();
         return ret;
     }
 
     public int qtdeRend(Long idBol){
-        RendMMBean rendMMBean = new RendMMBean();
-        List rendList = rendMMBean.get("idBolMMFert", idBol);
-        return rendList.size();
+        List<RendMMBean> rendList = rendList(idBol);
+        int qtde = rendList.size();
+        rendList.clear();
+        return qtde;
     }
 
     public RendMMBean getRend(Long idBol, int pos){
-        RendMMBean rendMMBean = new RendMMBean();
-        List rendList = rendMMBean.getAndOrderBy("idBolMMFert", idBol, "idRendMM", true);
-        rendMMBean = (RendMMBean) rendList.get(pos);
+        List<RendMMBean> rendList = rendList(idBol);
+        RendMMBean rendMMBean = rendList.get(pos);
         rendList.clear();
         return rendMMBean;
     }
@@ -81,6 +72,22 @@ public class RendMMDAO {
     public List<RendMMBean> rendEnvioList(ArrayList<Long> idBolList){
         RendMMBean rendMMBean = new RendMMBean();
         return rendMMBean.in("idBolMMFert", idBolList);
+    }
+
+    public ArrayList<String> rendAllArrayList(ArrayList<String> dadosArrayList){
+        dadosArrayList.add("RENDIMENTO");
+        RendMMBean rendMMBean = new RendMMBean();
+        List<RendMMBean> rendMMList = rendMMBean.orderBy("idRendMM", true);
+        for (RendMMBean rendMMBeanBD : rendMMList) {
+            dadosArrayList.add(dadosRendMM(rendMMBeanBD));
+        }
+        rendMMList.clear();
+        return dadosArrayList;
+    }
+
+    public String dadosRendMM(RendMMBean rendMMBean){
+        Gson gsonRend = new Gson();
+        return gsonRend.toJsonTree(rendMMBean, rendMMBean.getClass()).toString();
     }
 
     public String dadosEnvioRendMM(List<RendMMBean> rendMMList){
@@ -103,8 +110,11 @@ public class RendMMDAO {
 
     public void deleteRend(Long idBol){
 
+        ArrayList<EspecificaPesquisa> pesquisaArrayList = new ArrayList();
+        pesquisaArrayList.add(getPesqIdBol(idBol));
+
         RendMMBean rendMMBean = new RendMMBean();
-        List<RendMMBean> rendList = rendMMBean.get("idBolMMFert", idBol);
+        List<RendMMBean> rendList = rendMMBean.get(pesquisaArrayList);
 
         for (int j = 0; j < rendList.size(); j++) {
             rendMMBean = rendList.get(j);
@@ -113,6 +123,22 @@ public class RendMMDAO {
 
         rendList.clear();
 
+    }
+
+    private EspecificaPesquisa getPesqIdBol(Long idBol){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("idBolMMFert");
+        pesquisa.setValor(idBol);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqNroOS(Long nroOS){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("nroOSRendMM");
+        pesquisa.setValor(nroOS);
+        pesquisa.setTipo(1);
+        return pesquisa;
     }
 
 }

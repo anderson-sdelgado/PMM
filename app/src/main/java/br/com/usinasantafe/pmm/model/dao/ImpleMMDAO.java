@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontImpleMMBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 
 public class ImpleMMDAO {
@@ -25,21 +26,43 @@ public class ImpleMMDAO {
         return apontImpleMMBean.in("idApontMMFert", idApontList);
     }
 
-    public void salvarApontImple(Long idApont, String dthr){
+    public ArrayList<String> impleAllArrayList(ArrayList<String> dadosArrayList){
+        dadosArrayList.add("APONT. IMPLEMENTO");
+        ApontImpleMMBean apontImpleMMBean = new ApontImpleMMBean();
+        List<ApontImpleMMBean> apontMMFertList = apontImpleMMBean.orderBy("idApontImpleMM", true);
+        for (ApontImpleMMBean apontImpleMMBeanBD : apontMMFertList) {
+            dadosArrayList.add(dadosApontImpleMM(apontImpleMMBeanBD));
+        }
+        apontMMFertList.clear();
+        return dadosArrayList;
+    }
+
+    public void salvarApontImple(Long idApont, String dthr, String activity){
 
         ImpleMMBean impleMMBean = new ImpleMMBean();
-        List impleList = impleMMBean.all();
-
-        for (int i = 0; i < impleList.size(); i++) {
-            impleMMBean = (ImpleMMBean) impleList.get(i);
+        List<ImpleMMBean> impleList = impleMMBean.all();
+        for (ImpleMMBean impleMMBeanBD : impleList) {
+            LogProcessoDAO.getInstance().insert("ImpleMMBean impleMMBean = new ImpleMMBean();\n" +
+                    "        List<ImpleMMBean> impleList = impleMMBean.all();\n" +
+                    "        for (ImpleMMBean impleMMBeanBD : impleList) {\n" +
+                    "            ApontImpleMMBean apontImpleMMBean = new ApontImpleMMBean();\n" +
+                    "            apontImpleMMBean.setIdApontMMFert(" + idApont + ");\n" +
+                    "            apontImpleMMBean.setCodEquipImpleMM(" + impleMMBeanBD.getCodEquipImpleMM() + ");\n" +
+                    "            apontImpleMMBean.setPosImpleMM(" + impleMMBeanBD.getPosImpleMM() + ");\n" +
+                    "            apontImpleMMBean.setDthrImpleMM(" + dthr + ");", activity);
             ApontImpleMMBean apontImpleMMBean = new ApontImpleMMBean();
             apontImpleMMBean.setIdApontMMFert(idApont);
-            apontImpleMMBean.setCodEquipImpleMM(impleMMBean.getCodEquipImpleMM());
-            apontImpleMMBean.setPosImpleMM(impleMMBean.getPosImpleMM());
+            apontImpleMMBean.setCodEquipImpleMM(impleMMBeanBD.getCodEquipImpleMM());
+            apontImpleMMBean.setPosImpleMM(impleMMBeanBD.getPosImpleMM());
             apontImpleMMBean.setDthrImpleMM(dthr);
             apontImpleMMBean.insert();
         }
 
+    }
+
+    private String dadosApontImpleMM(ApontImpleMMBean apontImpleMMBean){
+        Gson gsonItemImp = new Gson();
+        return gsonItemImp.toJsonTree(apontImpleMMBean, apontImpleMMBean.getClass()).toString();
     }
 
     public String dadosEnvioApontImpleMM(List<ApontImpleMMBean> apontImpleMMList){

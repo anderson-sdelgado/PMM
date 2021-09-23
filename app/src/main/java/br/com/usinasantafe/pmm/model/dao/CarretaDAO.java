@@ -86,8 +86,6 @@ public class CarretaDAO {
             carretaBean4.setNroEquip(carreta);
             carretaBean4.insert();
         }
-
-
     }
 
     public void delCarreta(){

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.PropriedadeBean;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class MsgPropriedadeActivity extends ActivityGeneric {
 
@@ -25,6 +26,7 @@ public class MsgPropriedadeActivity extends ActivityGeneric {
         Button buttonMsgPropriedadeCanc = findViewById(R.id.buttonMsgPropriedadeCanc);
         TextView textViewMsgDescrPropriedade = findViewById(R.id.textViewMsgDescrPropriedade);
 
+        LogProcessoDAO.getInstance().insert("PropriedadeBean propriedadeBean = pmmContext.getConfigCTR().getPropriedade();", getLocalClassName());
         PropriedadeBean propriedadeBean = pmmContext.getConfigCTR().getPropriedade();
 
         textViewMsgDescrPropriedade.setText(propriedadeBean.getIdPropriedade() + " - " + propriedadeBean.getDescrPropriedade());
@@ -33,12 +35,22 @@ public class MsgPropriedadeActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonMsgPropriedadeOk.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                pmmContext.getConfigCTR().setFrentePropriedade();\n" +
+                        "                pmmContext.getConfigCTR().clearOSAtiv();\n" +
+                        "                pmmContext.getCecCTR().salvarPrecCECAberto();", getLocalClassName());
+
                 pmmContext.getConfigCTR().setFrentePropriedade();
                 pmmContext.getConfigCTR().clearOSAtiv();
 
                 pmmContext.getCecCTR().salvarPrecCECAberto();
-                pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude());
 
+                LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+                pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
+
+                LogProcessoDAO.getInstance().insert("Intent it = new Intent(MsgPropriedadeActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                 Intent it = new Intent(MsgPropriedadeActivity.this, MenuPrincECMActivity.class);
                 startActivity(it);
                 finish();
@@ -50,6 +62,10 @@ public class MsgPropriedadeActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonMsgPropriedadeCanc.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                Intent it = new Intent(MsgPropriedadeActivity.this, PropriedadeActivity.class);", getLocalClassName());
                 Intent it = new Intent(MsgPropriedadeActivity.this, PropriedadeActivity.class);
                 startActivity(it);
                 finish();

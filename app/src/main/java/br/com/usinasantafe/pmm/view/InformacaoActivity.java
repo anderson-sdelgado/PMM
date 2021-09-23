@@ -9,6 +9,7 @@ import android.widget.TextView;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CarregCompBean;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class InformacaoActivity extends ActivityGeneric {
 
@@ -25,13 +26,25 @@ public class InformacaoActivity extends ActivityGeneric {
         Button buttonRetMenuPesq = findViewById(R.id.buttonRetMenuPesq);
 
         if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 13L){
+            LogProcessoDAO.getInstance().insert("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 13L){\n" +
+                    "            CarregCompBean carregCompBean = pmmContext.getCompostoCTR().getOrdCarreg();\n" +
+                    "            textViewDescrInfor.setText(\"COD. ORD. CARREG. = \" + carregCompBean.getIdOrdCarreg() + \"\\n\" +\n" +
+                    "                    \"PESO ENTRADA = \" + carregCompBean.getPesoEntradaCarreg() + \"\\n\" +\n" +
+                    "                    \"PESO SAÍDA = \" + carregCompBean.getPesoSaidaCarreg() + \"\\n\" +\n" +
+                    "                    \"PESO LÍQUIDO = \" + carregCompBean.getPesoLiquidoCarreg() + \"\\n\");", getLocalClassName());
             CarregCompBean carregCompBean = pmmContext.getCompostoCTR().getOrdCarreg();
             textViewDescrInfor.setText("COD. ORD. CARREG. = " + carregCompBean.getIdOrdCarreg() + "\n" +
                     "PESO ENTRADA = " + carregCompBean.getPesoEntradaCarreg() + "\n" +
                     "PESO SAÍDA = " + carregCompBean.getPesoSaidaCarreg() + "\n" +
                     "PESO LÍQUIDO = " + carregCompBean.getPesoLiquidoCarreg() + "\n");
         }
-        else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 14L){
+        else {
+            LogProcessoDAO.getInstance().insert("else {\n" +
+                    "            CarregCompBean carregCompBean = pmmContext.getCompostoCTR().getOrdCarreg();\n" +
+                    "            textViewDescrInfor.setText(\"COD. ORD. CARREG. = \" + carregCompBean.getIdOrdCarreg() + \"\\n\" +\n" +
+                    "                    \"PESO ENTRADA = \" + carregCompBean.getPesoEntradaCarreg() + \"\\n\" +\n" +
+                    "                    \"PESO SAÍDA = \" + carregCompBean.getPesoSaidaCarreg() + \"\\n\" +\n" +
+                    "                    \"PESO LÍQUIDO = \" + carregCompBean.getPesoLiquidoCarreg() + \"\\n\");", getLocalClassName());
             CarregCompBean carregCompBean = pmmContext.getCompostoCTR().getOrdCarreg();
             textViewDescrInfor.setText("COD. ORD. CARREG. = " + carregCompBean.getIdOrdCarreg() + "\n" +
                     "PESO ENTRADA = " + carregCompBean.getPesoEntradaCarreg() + "\n" +
@@ -39,13 +52,17 @@ public class InformacaoActivity extends ActivityGeneric {
                     "PESO LÍQUIDO = " + carregCompBean.getPesoLiquidoCarreg() + "\n");
         }
 
+        LogProcessoDAO.getInstance().insert("pmmContext.getCompostoCTR().setVerTelaLeira(false);", getLocalClassName());
         pmmContext.getCompostoCTR().setVerTelaLeira(false);
 
         buttonRetMenuPesq.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
+                LogProcessoDAO.getInstance().insert("buttonRetMenuPesq.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                Intent it = new Intent(InformacaoActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                 Intent it = new Intent(InformacaoActivity.this, MenuPrincPCOMPActivity.class);
                 startActivity(it);
                 finish();

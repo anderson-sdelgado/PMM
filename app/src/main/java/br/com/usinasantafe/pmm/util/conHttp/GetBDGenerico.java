@@ -9,6 +9,7 @@ import java.net.URL;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 
@@ -16,6 +17,7 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 
 	private static GetBDGenerico instance = null;
 	private String tipo = null;
+	private String activity;
 	
 	private UrlsConexaoHttp urlsConexaoHttp;
 
@@ -34,18 +36,19 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 		String resultado = "";
 		BufferedReader bufferedReader = null;
 		
-		tipo = arg[0];
+		this.tipo = arg[0];
+		this.activity = arg[1];
 		String url = "";
 		
 		try {
 			
-			Object o = new Object();
+			Object object = new Object();
             Class<?> retClasse = Class.forName(urlsConexaoHttp.localUrl); 
 			
             for (Field field : retClasse.getDeclaredFields()) {
                 String campo = field.getName();
                 if(campo.equals(tipo)){
-                	url = "" + retClasse.getField(campo).get(o);
+                	url = "" + retClasse.getField(campo).get(object);
                }
             }
 
@@ -96,7 +99,8 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 	protected void onPostExecute(String result) {
 
 		try {
-			AtualDadosServ.getInstance().manipularDadosHttp(tipo, result);
+			LogProcessoDAO.getInstance().insert("AtualDadosServ.getInstance().manipularDadosHttp('" + tipo + "', '" + result + "');", activity);
+			AtualDadosServ.getInstance().manipularDadosHttp(tipo, result, activity);
 		} catch (Exception e) {
 			LogErroDAO.getInstance().insert(e);
 		}

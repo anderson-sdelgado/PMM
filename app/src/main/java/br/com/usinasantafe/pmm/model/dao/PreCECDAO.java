@@ -73,7 +73,7 @@ public class PreCECDAO {
         preCECBean.setStatus(2L);
         preCECBean.update();
         delPrecCEC();
-        EnvioDadosServ.getInstance().envioDados();
+        EnvioDadosServ.getInstance().envioDados(null);
     }
 
     public String dadosEnvioPreCEC(){

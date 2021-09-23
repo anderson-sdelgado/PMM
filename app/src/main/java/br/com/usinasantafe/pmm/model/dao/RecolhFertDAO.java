@@ -16,26 +16,28 @@ public class RecolhFertDAO {
     public RecolhFertDAO() {
     }
 
-    public void insRecolh(Long idBol, Long nroOS){
+    public void insRecolh(Long idBol, Long nroOS, String activity){
 
         RecolhFertBean recolhFertBean = new RecolhFertBean();
+
         ArrayList<EspecificaPesquisa> pesquisaArrayList = new ArrayList();
-
-        EspecificaPesquisa pesq1 = new EspecificaPesquisa();
-        pesq1.setCampo("idBolMMFert");
-        pesq1.setValor(idBol);
-        pesq1.setTipo(1);
-        pesquisaArrayList.add(pesq1);
-
-        EspecificaPesquisa pesq2 = new EspecificaPesquisa();
-        pesq2.setCampo("nroOSRecolhFert");
-        pesq2.setValor(nroOS);
-        pesq2.setTipo(1);
-        pesquisaArrayList.add(pesq2);
+        pesquisaArrayList.add(getPesqIdBol(idBol));
+        pesquisaArrayList.add(getPesqNroOS(nroOS));
 
         List<RecolhFertBean> rendList = recolhFertBean.get(pesquisaArrayList);
 
         if (rendList.size() == 0) {
+            LogProcessoDAO.getInstance().insert("RecolhFertBean recolhFertBean = new RecolhFertBean();\n" +
+                    "        \n" +
+                    "        ArrayList<EspecificaPesquisa> pesquisaArrayList = new ArrayList();\n" +
+                    "        pesquisaArrayList.add(getPesqIdBol(idBol));\n" +
+                    "        pesquisaArrayList.add(getPesqNroOS(nroOS));\n" +
+                    "        \n" +
+                    "        List<RecolhFertBean> rendList = recolhFertBean.get(pesquisaArrayList);\n" +
+                    "        if (rendList.size() == 0) {\n" +
+                    "            recolhFertBean.setIdBolMMFert(" + idBol + ");\n" +
+                    "            recolhFertBean.setNroOSRecolhFert(" + nroOS + ");\n" +
+                    "            recolhFertBean.setValorRecolhFert(" + 0L + ");", activity);
             recolhFertBean.setIdBolMMFert(idBol);
             recolhFertBean.setNroOSRecolhFert(nroOS);
             recolhFertBean.setValorRecolhFert(0L);
@@ -51,6 +53,17 @@ public class RecolhFertDAO {
         Boolean ret = (recolhList.size() > 0);
         recolhList.clear();
         return ret;
+    }
+
+    public ArrayList<String> recolAllArrayList(ArrayList<String> dadosArrayList){
+        dadosArrayList.add("RECOLHIMENTO");
+        RecolhFertBean recolhFertBean = new RecolhFertBean();
+        List<RecolhFertBean> recolhMMFertList = recolhFertBean.orderBy("idRecolhFert", true);
+        for (RecolhFertBean recolhFertBeanBD : recolhMMFertList) {
+            dadosArrayList.add(dadosRecolh(recolhFertBeanBD));
+        }
+        recolhMMFertList.clear();
+        return dadosArrayList;
     }
 
     public RecolhFertBean getRecolh(Long idBol, int pos){
@@ -83,6 +96,11 @@ public class RecolhFertDAO {
         return recolhFertBean.in("idBolMMFert", idBolList);
     }
 
+    public String dadosRecolh(RecolhFertBean recolhFertBean){
+        Gson gsonRecol = new Gson();
+        return gsonRecol.toJsonTree(recolhFertBean, recolhFertBean.getClass()).toString();
+    }
+
     public String dadosEnvioRecolh(List<RecolhFertBean> recolhimentoList){
 
         JsonArray jsonArrayRecolhimento = new JsonArray();
@@ -103,8 +121,11 @@ public class RecolhFertDAO {
 
     public void deleteRecolh(Long idBol){
 
+        ArrayList<EspecificaPesquisa> pesquisaArrayList = new ArrayList();
+        pesquisaArrayList.add(getPesqIdBol(idBol));
+
         RecolhFertBean recolhFertBean = new RecolhFertBean();
-        List<RecolhFertBean> recolhFertList = recolhFertBean.get("idBolMMFert", idBol);
+        List<RecolhFertBean> recolhFertList = recolhFertBean.get(pesquisaArrayList);
 
         for (int j = 0; j < recolhFertList.size(); j++) {
             recolhFertBean = recolhFertList.get(j);
@@ -113,6 +134,22 @@ public class RecolhFertDAO {
 
         recolhFertList.clear();
 
+    }
+
+    private EspecificaPesquisa getPesqIdBol(Long idBol){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("idBolMMFert");
+        pesquisa.setValor(idBol);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqNroOS(Long nroOS){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("nroOSRecolhFert");
+        pesquisa.setValor(nroOS);
+        pesquisa.setTipo(1);
+        return pesquisa;
     }
 
 }

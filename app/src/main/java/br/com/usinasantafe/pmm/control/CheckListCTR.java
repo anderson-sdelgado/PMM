@@ -3,17 +3,13 @@ package br.com.usinasantafe.pmm.control;
 import android.app.ProgressDialog;
 import android.content.Context;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.dao.CabecCheckListDAO;
 import br.com.usinasantafe.pmm.model.dao.EquipDAO;
 import br.com.usinasantafe.pmm.model.dao.ItemCheckListDAO;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.model.dao.RespItemCheckListDAO;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ItemCheckListBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CabecCheckListBean;
@@ -44,31 +40,35 @@ public class CheckListCTR {
 
     public void clearRespCabecAberto(){
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
-        CabecCheckListBean cabecCheckListBean = cabecCheckListDAO.getCabecAberto();
+        CabecCheckListBean cabecCheckListBean = cabecCheckListDAO.getCabecCheckListAberto();
         RespItemCheckListDAO respItemCheckListDAO = new RespItemCheckListDAO();
         respItemCheckListDAO.clearRespItem(cabecCheckListBean.getIdCabCL());
     }
 
-    public void createCabecAberto(){
+    public void createCabecAberto(String activity){
         ConfigCTR configCTR = new ConfigCTR();
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
+        LogProcessoDAO.getInstance().insert("cabecCheckListDAO.createCabecAberto(" + configCTR.getEquip().getNroEquip() + " , " + motoMecFertCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert() + ", " + motoMecFertCTR.getBoletimMMFertAberto().getIdTurnoBolMMFert() + ");", activity);
         cabecCheckListDAO.createCabecAberto(configCTR.getEquip().getNroEquip() , motoMecFertCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert(), motoMecFertCTR.getBoletimMMFertAberto().getIdTurnoBolMMFert());
     }
 
-    public void salvarBolFechado(){
+    public void salvarBolFechado(String activity){
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
-        cabecCheckListDAO.salvarFechCheckList();
+        cabecCheckListDAO.salvarFechCheckList(activity);
     }
 
     public boolean verAberturaCheckList(Long turno){
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
-        return cabecCheckListDAO.verAberturaCheckList(turno);
+        ConfigCTR configCTR = new ConfigCTR();
+        configCTR.getConfig();
+        return cabecCheckListDAO.verAberturaCheckList(turno, configCTR.getEquip().getIdCheckList()
+                , configCTR.getConfig().getUltTurnoCLConfig(), configCTR.getConfig().getDtUltCLConfig());
     }
 
-    public void atualCheckList(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
+    public void atualCheckList(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
         ItemCheckListDAO itemCheckListDAO = new ItemCheckListDAO();
-        itemCheckListDAO.atualCheckList(dado, telaAtual, telaProx, progressDialog);
+        itemCheckListDAO.atualCheckList(dado, telaAtual, telaProx, progressDialog, activity);
     }
 
     public void receberVerifCheckList(String result) {
@@ -109,15 +109,10 @@ public class CheckListCTR {
         return itemCheckListList;
     }
 
-    public ItemCheckListBean getItemCheckList(int pos){
-        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
-        return cabecCheckListDAO.getItemCheckList(pos);
-    }
-
     public void setRespCheckList(RespItemCheckListBean respItemCheckListBean){
         RespItemCheckListDAO respItemCheckListDAO = new RespItemCheckListDAO();
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
-        respItemCheckListDAO.setRespCheckList(cabecCheckListDAO.getCabecAberto().getIdCabCL(), respItemCheckListBean);
+        respItemCheckListDAO.setRespCheckList(cabecCheckListDAO.getCabecCheckListAberto().getIdCabCL(), respItemCheckListBean);
     }
 
     public int qtdeItemCheckList(){
@@ -137,50 +132,26 @@ public class CheckListCTR {
 
     public String dadosEnvio(){
 
-        List cabecCheckListList = cabecCheckListList();
+        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
+        String dadosEnvioCabecCheckList = cabecCheckListDAO.dadosEnvioCabecCheckList();
 
-        JsonArray jsonArrayCabec = new JsonArray();
-        JsonArray jsonArrayItem = new JsonArray();
+        RespItemCheckListDAO respItemCheckListDAO = new RespItemCheckListDAO();
+        String dadosEnvioRespItemCheckList = respItemCheckListDAO.dadosEnvioRespCheckList(respItemCheckListDAO.respItemList(cabecCheckListDAO.idCabecCheckListArrayList(cabecCheckListDAO.cabecCheckListFechList())));
 
-        for (int i = 0; i < cabecCheckListList.size(); i++) {
-
-            CabecCheckListBean cabecCheckListBean = (CabecCheckListBean) cabecCheckListList.get(i);
-            Gson gsonCabec = new Gson();
-            jsonArrayCabec.add(gsonCabec.toJsonTree(cabecCheckListBean, cabecCheckListBean.getClass()));
-
-            RespItemCheckListDAO respItemCheckListDAO = new RespItemCheckListDAO();
-            List respItemList = respItemCheckListDAO.respItemList(cabecCheckListBean.getIdCabCL());
-
-            for (int j = 0; j < respItemList.size(); j++) {
-                RespItemCheckListBean respItemCheckListBean = (RespItemCheckListBean) respItemList.get(j);
-                Gson gsonItem = new Gson();
-                jsonArrayItem.add(gsonItem.toJsonTree(respItemCheckListBean, respItemCheckListBean.getClass()));
-            }
-
-            respItemList.clear();
-
-        }
-
-        cabecCheckListList.clear();
-
-        JsonObject jsonCabec = new JsonObject();
-        jsonCabec.add("cabecalho", jsonArrayCabec);
-
-        JsonObject jsonItem = new JsonObject();
-        jsonItem.add("item", jsonArrayItem);
-
-        return jsonCabec.toString() + "_" + jsonItem.toString();
+        return dadosEnvioCabecCheckList + "_" + dadosEnvioRespItemCheckList;
 
     }
 
-    public void delChecklist() {
+    public void delChecklist(String activity) {
+
+        LogProcessoDAO.getInstance().insert("        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();\n" +
+                "        cabecCheckListDAO.updateCabecCLEnviado();\n" +
+                "        EnvioDadosServ.getInstance().envioDados(activity);", activity);
 
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
-        RespItemCheckListDAO respItemCheckListDAO = new RespItemCheckListDAO();
-        respItemCheckListDAO.delRespItem(cabecCheckListDAO.idCabecCLFechArrayList());
-        cabecCheckListDAO.delCabecCLFech();
+        cabecCheckListDAO.updateCabecCLEnviado();
 
-        EnvioDadosServ.getInstance().envioDados();
+        EnvioDadosServ.getInstance().envioDados(activity);
 
     }
 

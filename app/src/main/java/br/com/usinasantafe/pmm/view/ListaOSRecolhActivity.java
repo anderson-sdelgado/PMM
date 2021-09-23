@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class ListaOSRecolhActivity extends ActivityGeneric {
 
@@ -23,6 +24,10 @@ public class ListaOSRecolhActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
+        LogProcessoDAO.getInstance().insert("ListView listaRecMang = findViewById(R.id.listaRecMang);\n" +
+                "        AdapterListRecolh adapterListRecolh = new AdapterListRecolh(this, pmmContext.getMotoMecFertCTR().recolhList());\n" +
+                "        listaRecMang.setAdapter(adapterListRecolh);", getLocalClassName());
+
         ListView listaRecMang = findViewById(R.id.listaRecMang);
         AdapterListRecolh adapterListRecolh = new AdapterListRecolh(this, pmmContext.getMotoMecFertCTR().recolhList());
         listaRecMang.setAdapter(adapterListRecolh);
@@ -33,6 +38,12 @@ public class ListaOSRecolhActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
+                LogProcessoDAO.getInstance().insert("listaRecMang.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
+                        "                                    long id) {\n" +
+                        "                pmmContext.getMotoMecFertCTR().setContRecolh(position);\n" +
+                        "                Intent it = new Intent(ListaOSRecolhActivity.this, RecolhimentoActivity.class);", getLocalClassName());
                 pmmContext.getMotoMecFertCTR().setContRecolh(position);
                 Intent it = new Intent(ListaOSRecolhActivity.this, RecolhimentoActivity.class);
                 startActivity(it);
@@ -46,6 +57,10 @@ public class ListaOSRecolhActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
+                LogProcessoDAO.getInstance().insert("buttonRetRecMang.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                Intent it = new Intent(ListaOSRecolhActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                 Intent it = new Intent(ListaOSRecolhActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();

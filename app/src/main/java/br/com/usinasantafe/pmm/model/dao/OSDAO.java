@@ -57,6 +57,19 @@ public class OSDAO {
         return idAtivArrayList;
     }
 
+    public Double rendOS(Long nroOS){
+        OSBean osBean = new OSBean();
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqNroOS(nroOS));
+        List<OSBean> osList = osBean.get("nroOS", nroOS);
+        if (osList.size() > 0) {
+            osBean = (OSBean) osList.get(0);
+        } else {
+            osBean.setAreaProgrOS(150D);
+        }
+        return osBean.getAreaProgrOS();
+    }
+
     private List<OSBean> osList(Long nroOS){
         OSBean osBean = new OSBean();
         ArrayList pesqArrayList = new ArrayList();
@@ -72,8 +85,8 @@ public class OSDAO {
         return osBean.get(pesqArrayList);
     }
 
-    public void verOS(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
-        VerifDadosServ.getInstance().verifDados(dado, "OS", telaAtual, telaProx, progressDialog);
+    public void verOS(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
+        VerifDadosServ.getInstance().verifDados(dado, "OS", telaAtual, telaProx, progressDialog, activity);
     }
 
     public void recDadosOS(JSONArray jsonArray) throws JSONException {

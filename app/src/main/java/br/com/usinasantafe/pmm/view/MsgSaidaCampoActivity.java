@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
+import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class MsgSaidaCampoActivity extends ActivityGeneric {
 
@@ -28,6 +29,15 @@ public class MsgSaidaCampoActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
+                LogProcessoDAO.getInstance().insert("buttonSimSaidaCampo.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {\n" +
+                        "                if (connectNetwork) {\n" +
+                        "                    pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
+                        "                }\n" +
+                        "                else{\n" +
+                        "                    pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
+                        "                }", getLocalClassName());
                 if (connectNetwork) {
                     pmmContext.getConfigCTR().setStatusConConfig(1L);
                 }
@@ -35,9 +45,12 @@ public class MsgSaidaCampoActivity extends ActivityGeneric {
                     pmmContext.getConfigCTR().setStatusConConfig(0L);
                 }
 
-                pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude());
+                LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());\n" +
+                        "                pmmContext.getCecCTR().fechaPreCEC();", getLocalClassName());
+                pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
                 pmmContext.getCecCTR().fechaPreCEC();
 
+                LogProcessoDAO.getInstance().insert("Intent it = new Intent(MsgSaidaCampoActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                 Intent it = new Intent(MsgSaidaCampoActivity.this, MenuPrincECMActivity.class);
                 startActivity(it);
                 finish();
@@ -48,7 +61,9 @@ public class MsgSaidaCampoActivity extends ActivityGeneric {
         buttonNaoSaidaCampo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                LogProcessoDAO.getInstance().insert("buttonNaoSaidaCampo.setOnClickListener(new View.OnClickListener() {\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {", getLocalClassName());
             }
         });
 
