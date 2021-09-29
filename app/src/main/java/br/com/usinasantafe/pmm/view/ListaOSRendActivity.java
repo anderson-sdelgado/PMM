@@ -24,7 +24,7 @@ public class ListaOSRendActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        LogProcessoDAO.getInstance().insert("ListView listaOSRend = findViewById(R.id.listaOSRend);\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("ListView listaOSRend = findViewById(R.id.listaOSRend);\n" +
                 "        AdapterListRend adapterListRend = new AdapterListRend(this, pmmContext.getMotoMecFertCTR().rendList());\n" +
                 "        listaOSRend.setAdapter(adapterListRend);", getLocalClassName());
 
@@ -38,7 +38,7 @@ public class ListaOSRendActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                LogProcessoDAO.getInstance().insert("listaOSRend.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("listaOSRend.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
                         "                                    long id) {\n" +
@@ -57,7 +57,7 @@ public class ListaOSRendActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonRetOSRend.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetOSRend.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(ListaOSRendActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());

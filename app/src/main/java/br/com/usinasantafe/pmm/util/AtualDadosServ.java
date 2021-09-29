@@ -48,7 +48,7 @@ public class AtualDadosServ {
 	@SuppressWarnings("unchecked")
 	public void manipularDadosHttp(String tipo, String result, String activity){
 
-		LogProcessoDAO.getInstance().insert("if(!result.equals(\"\")){", activity);
+		LogProcessoDAO.getInstance().insertLogProcesso("if(!result.equals(\"\")){", activity);
 		if(!result.equals("")){
 
 			try{
@@ -60,7 +60,7 @@ public class AtualDadosServ {
 				JSONArray jsonArray = jObj.getJSONArray("dados");
 				Class classe = Class.forName(manipLocalClasse(tipo));
 
-				LogProcessoDAO.getInstance().insert("genericRecordable.deleteAll('" + classe + "');", activity);
+				LogProcessoDAO.getInstance().insertLogProcesso("genericRecordable.deleteAll('" + classe + "');", activity);
 				genericRecordable.deleteAll(classe);
 
 				for(int i = 0; i < jsonArray.length(); i++){
@@ -69,20 +69,20 @@ public class AtualDadosServ {
 					genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
 				}
 
-				LogProcessoDAO.getInstance().insert("Terminou atualização da tabela = '" + classe + "'", activity);
+				LogProcessoDAO.getInstance().insertLogProcesso("Terminou atualização da tabela = '" + classe + "'", activity);
 				if(contAtualBD > 0){
-					LogProcessoDAO.getInstance().insert("atualizandoBD();", activity);
+					LogProcessoDAO.getInstance().insertLogProcesso("atualizandoBD();", activity);
 					atualizandoBD(activity);
 				}
 
 			}
 			catch (Exception e) {
-				LogErroDAO.getInstance().insert(e);
+				LogErroDAO.getInstance().insertLogErro(e);
 			}
 
 		}
 		else{
-			LogProcessoDAO.getInstance().insert("encerrar();", activity);
+			LogProcessoDAO.getInstance().insertLogProcesso("encerrar();", activity);
 			encerrar(activity);
 		}
 
@@ -111,12 +111,12 @@ public class AtualDadosServ {
 	        String[] url = {classe, activity};
 		    contAtualBD++;
 
-			LogProcessoDAO.getInstance().insert("getBDGenerico.execute('" + classe + "');", activity);
+			LogProcessoDAO.getInstance().insertLogProcesso("getBDGenerico.execute('" + classe + "');", activity);
 			GetBDGenerico getBDGenerico = new GetBDGenerico();
 	        getBDGenerico.execute(url);
 	        
 		} catch (Exception e) {
-			LogErroDAO.getInstance().insert(e);
+			LogErroDAO.getInstance().insertLogErro(e);
 		}
         
 	}
@@ -148,12 +148,12 @@ public class AtualDadosServ {
 			String[] url = {classe, activity};
 			contAtualBD++;
 
-			LogProcessoDAO.getInstance().insert("getBDGenerico.execute('" + classe + "');", activity);
+			LogProcessoDAO.getInstance().insertLogProcesso("getBDGenerico.execute('" + classe + "');", activity);
 			GetBDGenerico getBDGenerico = new GetBDGenerico();
 			getBDGenerico.execute(url);
 
 		} catch (Exception e) {
-			LogErroDAO.getInstance().insert(e);
+			LogErroDAO.getInstance().insertLogErro(e);
 		}
 
 	}
@@ -161,12 +161,12 @@ public class AtualDadosServ {
 
 	public void atualizandoBD(String activity){
 
-		LogProcessoDAO.getInstance().insert("if(this.tipoReceb == 1){", activity);
+		LogProcessoDAO.getInstance().insertLogProcesso("if(this.tipoReceb == 1){", activity);
 		if(this.tipoReceb == 1){
 		
 			qtdeBD = tabAtualArrayList.size();
 
-			LogProcessoDAO.getInstance().insert("if(contAtualBD < tabAtualArrayList.size()){", activity);
+			LogProcessoDAO.getInstance().insertLogProcesso("if(contAtualBD < tabAtualArrayList.size()){", activity);
 			if(contAtualBD < tabAtualArrayList.size()){
 				
 				this.progressDialog.setProgress((contAtualBD * 100) / qtdeBD);
@@ -174,13 +174,13 @@ public class AtualDadosServ {
 				String[] url = {classe, activity};
 				contAtualBD++;
 
-				LogProcessoDAO.getInstance().insert("getBDGenerico.execute('" + classe + "');", activity);
+				LogProcessoDAO.getInstance().insertLogProcesso("getBDGenerico.execute('" + classe + "');", activity);
 				GetBDGenerico getBDGenerico = new GetBDGenerico();
 		        getBDGenerico.execute(url);
 		        
 			} else {
 				contAtualBD = 0;
-				LogProcessoDAO.getInstance().insert("this.progressDialog.dismiss();\n" +
+				LogProcessoDAO.getInstance().insertLogProcesso("this.progressDialog.dismiss();\n" +
 						"\t\t\t\tAlertDialog.Builder alerta = new AlertDialog.Builder(this.telaAtual);\n" +
 						"\t\t\t\talerta.setTitle(\"ATENCAO\");\n" +
 						"\t\t\t\talerta.setMessage(\"ATUALIZAÇÃO REALIZADA COM SUCESSO OS DADOS.\");\n" +
@@ -211,21 +211,21 @@ public class AtualDadosServ {
 			
 			qtdeBD = tabAtualArrayList.size();
 
-			LogProcessoDAO.getInstance().insert("if(contAtualBD < tabAtualArrayList.size()){", activity);
+			LogProcessoDAO.getInstance().insertLogProcesso("if(contAtualBD < tabAtualArrayList.size()){", activity);
 			if(contAtualBD < tabAtualArrayList.size()){
 				
 		        classe = (String) tabAtualArrayList.get(contAtualBD);
 				String[] url = {classe, activity};
 				contAtualBD++;
 
-				LogProcessoDAO.getInstance().insert("getBDGenerico.execute('" + classe + "');", activity);
+				LogProcessoDAO.getInstance().insertLogProcesso("getBDGenerico.execute('" + classe + "');", activity);
 				GetBDGenerico getBDGenerico = new GetBDGenerico();
 		        getBDGenerico.execute(url);
 		        
 			} else {
 
 				contAtualBD = 0;
-				LogProcessoDAO.getInstance().insert("this.progressDialog.dismiss();\n" +
+				LogProcessoDAO.getInstance().insertLogProcesso("this.progressDialog.dismiss();\n" +
 						"\t\t\t\tAlertDialog.Builder alerta = new AlertDialog.Builder(this.telaAtual);\n" +
 						"\t\t\t\talerta.setTitle(\"ATENCAO\");\n" +
 						"\t\t\t\talerta.setMessage(\"ATUALIZAÇÃO REALIZADA COM SUCESSO OS DADOS.\");\n" +
@@ -262,10 +262,10 @@ public class AtualDadosServ {
 
 	public void encerrar(String activity){
 
-		LogProcessoDAO.getInstance().insert("if(this.tipoReceb == 1){", activity);
+		LogProcessoDAO.getInstance().insertLogProcesso("if(this.tipoReceb == 1){", activity);
 		if(this.tipoReceb == 1){
 
-			LogProcessoDAO.getInstance().insert("this.progressDialog.dismiss();\n" +
+			LogProcessoDAO.getInstance().insertLogProcesso("this.progressDialog.dismiss();\n" +
 					"\t\t\tAlertDialog.Builder alerta = new AlertDialog.Builder(this.telaAtual);\n" +
 					"\t\t\talerta.setTitle(\"ATENCAO\");\n" +
 					"\t\t\talerta.setMessage(\"FALHA NA CONEXAO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +

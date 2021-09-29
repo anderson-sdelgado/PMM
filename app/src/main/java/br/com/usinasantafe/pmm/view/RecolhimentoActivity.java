@@ -35,7 +35,7 @@ public class RecolhimentoActivity extends ActivityGeneric {
 
         int cont = 0;
 
-        LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {\n" +
                 "            cont = pmmContext.getMotoMecFertCTR().getContRecolh() - 1;\n" +
                 "        } else {\n" +
                 "            cont = pmmContext.getMotoMecFertCTR().getPosRecolh();\n" +
@@ -46,12 +46,12 @@ public class RecolhimentoActivity extends ActivityGeneric {
             cont = pmmContext.getMotoMecFertCTR().getPosRecolh();
         }
 
-        LogProcessoDAO.getInstance().insert("recolhFertBean =  motoMecFertCTR.getRecolh(" + cont + ");", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("recolhFertBean =  motoMecFertCTR.getRecolh(" + cont + ");", getLocalClassName());
         recolhFertBean =  motoMecFertCTR.getRecolh(cont);
 
         textViewRecolMang.setText("OS: " + recolhFertBean.getNroOSRecolhFert() + " \nRECOL. MANGUEIRA:");
 
-        LogProcessoDAO.getInstance().insert("if (recolhFertBean.getValorRecolhFert() > 0) {\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("if (recolhFertBean.getValorRecolhFert() > 0) {\n" +
                 "            editText.setText(String.valueOf(recolhFertBean.getValorRecolhFert()));\n" +
                 "        } else {\n" +
                 "            editText.setText(\"\");\n" +
@@ -66,18 +66,18 @@ public class RecolhimentoActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonOkRecolMang.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkRecolMang.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
                 if (!editTextPadrao.getText().toString().equals("")) {
-                    LogProcessoDAO.getInstance().insert("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
                             "                    verTela();", getLocalClassName());
                     verTela();
                 }
                 else{
-                    LogProcessoDAO.getInstance().insert("else{", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("else{", getLocalClassName());
                     if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 9L){
-                        LogProcessoDAO.getInstance().insert("else{\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                                 "                    if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 9L){\n" +
                                 "                        Intent it = new Intent(RecolhimentoActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                         Intent it = new Intent(RecolhimentoActivity.this, MenuPrincPMMActivity.class);
@@ -94,7 +94,7 @@ public class RecolhimentoActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonCancRecolMang.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancRecolMang.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "if (editTextPadrao.getText().toString().length() > 0) {\n" +
@@ -110,11 +110,11 @@ public class RecolhimentoActivity extends ActivityGeneric {
     }
 
     public void onBackPressed() {
-        LogProcessoDAO.getInstance().insert("public void onBackPressed() {", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("public void onBackPressed() {", getLocalClassName());
         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {
-            LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {", getLocalClassName());
             if(pmmContext.getMotoMecFertCTR().getPosRecolh() > 1){
-                LogProcessoDAO.getInstance().insert("if(pmmContext.getMotoMecFertCTR().getPosRecolh() > 1){\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().getPosRecolh() > 1){\n" +
                         "                pmmContext.getMotoMecFertCTR().setPosRecolh(pmmContext.getMotoMecFertCTR().getPosRecolh() - 1);\n" +
                         "                Intent it = new Intent(RecolhimentoActivity.this, RecolhimentoActivity.class);", getLocalClassName());
                 pmmContext.getMotoMecFertCTR().setPosRecolh(pmmContext.getMotoMecFertCTR().getPosRecolh() - 1);
@@ -123,14 +123,14 @@ public class RecolhimentoActivity extends ActivityGeneric {
                 finish();
             }
             else{
-                LogProcessoDAO.getInstance().insert("else{\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                         "                Intent it = new Intent(RecolhimentoActivity.this, HorimetroActivity.class);", getLocalClassName());
                 Intent it = new Intent(RecolhimentoActivity.this, HorimetroActivity.class);
                 startActivity(it);
                 finish();
             }
         } else {
-            LogProcessoDAO.getInstance().insert("} else {\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                     "            Intent it = new Intent(RecolhimentoActivity.this, ListaOSRendActivity.class);", getLocalClassName());
             Intent it = new Intent(RecolhimentoActivity.this, ListaOSRendActivity.class);
             startActivity(it);
@@ -140,24 +140,24 @@ public class RecolhimentoActivity extends ActivityGeneric {
 
     public void verTela(){
 
-        LogProcessoDAO.getInstance().insert("Long valorRecolMang = Long.parseLong(editTextPadrao.getText().toString());\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("Long valorRecolMang = Long.parseLong(editTextPadrao.getText().toString());\n" +
                 "        recolhFertBean.setValorRecolhFert(valorRecolMang);\n" +
                 "pmmContext.getMotoMecFertCTR().atualRecolh(recolhFertBean);", getLocalClassName());
         Long valorRecolMang = Long.parseLong(editTextPadrao.getText().toString());
         recolhFertBean.setValorRecolhFert(valorRecolMang);
         pmmContext.getMotoMecFertCTR().atualRecolh(recolhFertBean);
         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {
-            LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {", getLocalClassName());
             if (pmmContext.getMotoMecFertCTR().qtdeRecolh() == pmmContext.getMotoMecFertCTR().getContRecolh()) {
-                LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().qtdeRecolh() == pmmContext.getMotoMecFertCTR().getContRecolh()) {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().qtdeRecolh() == pmmContext.getMotoMecFertCTR().getContRecolh()) {\n" +
                         "                pmmContext.getMotoMecFertCTR().salvarBolMMFertFechado();", getLocalClassName());
                 pmmContext.getMotoMecFertCTR().salvarBolMMFertFechado(getLocalClassName());
-                LogProcessoDAO.getInstance().insert("Intent it = new Intent(RecolhimentoActivity.this, MenuInicialActivity.class);", getLocalClassName());
-                Intent it = new Intent(RecolhimentoActivity.this, MenuInicialActivity.class);
+                LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(RecolhimentoActivity.this, TelaInicialActivity.class);", getLocalClassName());
+                Intent it = new Intent(RecolhimentoActivity.this, TelaInicialActivity.class);
                 startActivity(it);
                 finish();
             } else {
-                LogProcessoDAO.getInstance().insert("} else {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                         "                pmmContext.getMotoMecFertCTR().setContRecolh(pmmContext.getMotoMecFertCTR().getContRecolh() + 1);\n" +
                         "                Intent it = new Intent(RecolhimentoActivity.this, RecolhimentoActivity.class);", getLocalClassName());
                 pmmContext.getMotoMecFertCTR().setContRecolh(pmmContext.getMotoMecFertCTR().getContRecolh() + 1);
@@ -167,7 +167,7 @@ public class RecolhimentoActivity extends ActivityGeneric {
             }
         }
         else {
-            LogProcessoDAO.getInstance().insert("else {\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                     "            Intent it = new Intent(RecolhimentoActivity.this, ListaOSRecolhActivity.class);", getLocalClassName());
             Intent it = new Intent(RecolhimentoActivity.this, ListaOSRecolhActivity.class);
             startActivity(it);

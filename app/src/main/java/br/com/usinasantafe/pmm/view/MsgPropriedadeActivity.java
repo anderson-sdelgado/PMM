@@ -26,7 +26,7 @@ public class MsgPropriedadeActivity extends ActivityGeneric {
         Button buttonMsgPropriedadeCanc = findViewById(R.id.buttonMsgPropriedadeCanc);
         TextView textViewMsgDescrPropriedade = findViewById(R.id.textViewMsgDescrPropriedade);
 
-        LogProcessoDAO.getInstance().insert("PropriedadeBean propriedadeBean = pmmContext.getConfigCTR().getPropriedade();", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("PropriedadeBean propriedadeBean = pmmContext.getConfigCTR().getPropriedade();", getLocalClassName());
         PropriedadeBean propriedadeBean = pmmContext.getConfigCTR().getPropriedade();
 
         textViewMsgDescrPropriedade.setText(propriedadeBean.getIdPropriedade() + " - " + propriedadeBean.getDescrPropriedade());
@@ -35,7 +35,7 @@ public class MsgPropriedadeActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonMsgPropriedadeOk.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonMsgPropriedadeOk.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                pmmContext.getConfigCTR().setFrentePropriedade();\n" +
@@ -47,10 +47,10 @@ public class MsgPropriedadeActivity extends ActivityGeneric {
 
                 pmmContext.getCecCTR().salvarPrecCECAberto();
 
-                LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
                 pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
 
-                LogProcessoDAO.getInstance().insert("Intent it = new Intent(MsgPropriedadeActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MsgPropriedadeActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                 Intent it = new Intent(MsgPropriedadeActivity.this, MenuPrincECMActivity.class);
                 startActivity(it);
                 finish();
@@ -62,7 +62,7 @@ public class MsgPropriedadeActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonMsgPropriedadeCanc.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonMsgPropriedadeCanc.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(MsgPropriedadeActivity.this, PropriedadeActivity.class);", getLocalClassName());

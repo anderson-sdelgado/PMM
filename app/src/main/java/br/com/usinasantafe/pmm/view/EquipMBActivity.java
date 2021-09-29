@@ -32,7 +32,7 @@ public class EquipMBActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                AlertDialog.Builder alerta = new AlertDialog.Builder(EquipMBActivity.this);\n" +
@@ -46,14 +46,14 @@ public class EquipMBActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        LogProcessoDAO.getInstance().insert("alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {\n" +
                                 "                        if (connectNetwork) {", getLocalClassName());
 
                         if (connectNetwork) {
 
-                            LogProcessoDAO.getInstance().insert("progressBar = new ProgressDialog(EquipMBActivity.this);\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("progressBar = new ProgressDialog(EquipMBActivity.this);\n" +
                                     "                            progressBar.setCancelable(true);\n" +
                                     "                            progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
                                     "                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);\n" +
@@ -69,12 +69,12 @@ public class EquipMBActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().atualDados(EquipMBActivity.this, EquipMBActivity.class, progressBar, \"EquipSeg\", 1);", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(EquipMBActivity.this, EquipMBActivity.class, progressBar, \"EquipSeg\", 1);", getLocalClassName());
                             pmmContext.getMotoMecFertCTR().atualDados(EquipMBActivity.this, EquipMBActivity.class, progressBar, "EquipSeg", 1, getLocalClassName());
 
                         } else {
 
-                            LogProcessoDAO.getInstance().insert("} else {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                     "                            AlertDialog.Builder alerta = new AlertDialog.Builder(EquipMBActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
                                     "                            alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
@@ -102,7 +102,7 @@ public class EquipMBActivity extends ActivityGeneric {
                 alerta.setPositiveButton("NÃO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                     }
@@ -117,19 +117,19 @@ public class EquipMBActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonOkMotoBomba.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkMotoBomba.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
 
                 if (!editTextPadrao.getText().toString().equals("")) {
 
-                    LogProcessoDAO.getInstance().insert("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
                             "                    Long motoBomba = Long.parseLong(editTextPadrao.getText().toString());", getLocalClassName());
                     Long motoBomba = Long.parseLong(editTextPadrao.getText().toString());
 
                     if (pmmContext.getMotoMecFertCTR().verMotoBomba(motoBomba)) {
 
-                        LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verMotoBomba(motoBomba)) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verMotoBomba(motoBomba)) {\n" +
                                 "                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().setIdEquipBombaBolMMFert(pmmContext.getMotoMecFertCTR().getEquipSeg(motoBomba).getIdEquip());\n" +
                                 "                        salvarBoletimAberto();", getLocalClassName());
                         pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().setIdEquipBombaBolMMFert(pmmContext.getMotoMecFertCTR().getEquipSeg(motoBomba).getIdEquip());
@@ -137,7 +137,7 @@ public class EquipMBActivity extends ActivityGeneric {
 
                     } else {
 
-                        LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder(EquipMBActivity.this);\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(EquipMBActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENCAO\");\n" +
                                 "                        alerta.setMessage(\"NUMERAÇÃO DA MOTO BOMBA INCORRETA. FAVOR, VERIFICAR A NUMERAÇÃO OU ATUALIZAR A BASE DE DADOS NOVAMENTE!\");\n" +
                                 "                        alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
@@ -167,7 +167,7 @@ public class EquipMBActivity extends ActivityGeneric {
         buttonCancMotoBomba.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonCancMotoBomba.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancMotoBomba.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "           if (editTextPadrao.getText().toString().length() > 0) {\n" +
@@ -182,11 +182,11 @@ public class EquipMBActivity extends ActivityGeneric {
     }
 
     public void salvarBoletimAberto() {
-        LogProcessoDAO.getInstance().insert("public void salvarBoletimAberto() {\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("public void salvarBoletimAberto() {\n" +
                 "        pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());", getLocalClassName());
         pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());
         if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getIdTurnoBolMMFert())){
-            LogProcessoDAO.getInstance().insert("if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getIdTurnoBolMMFert())){\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getIdTurnoBolMMFert())){\n" +
                     "            pmmContext.getMotoMecFertCTR().inserirParadaCheckList(getLocalClassName());\n" +
                     "            pmmContext.getCheckListCTR().setPosCheckList(1);\n" +
                     "            pmmContext.getCheckListCTR().createCabecAberto(getLocalClassName());", getLocalClassName());
@@ -194,13 +194,13 @@ public class EquipMBActivity extends ActivityGeneric {
             pmmContext.getCheckListCTR().setPosCheckList(1);
             pmmContext.getCheckListCTR().createCabecAberto(getLocalClassName());
             if (pmmContext.getConfigCTR().getConfig().getAtualCheckList().equals(1L)) {
-                LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getAtualCheckList().equals(1L)) {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getAtualCheckList().equals(1L)) {\n" +
                         "                Intent it = new Intent(EquipMBActivity.this, PergAtualCheckListActivity.class);", getLocalClassName());
                 Intent it = new Intent(EquipMBActivity.this, PergAtualCheckListActivity.class);
                 startActivity(it);
                 finish();
             } else {
-                LogProcessoDAO.getInstance().insert("} else {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                         "                Intent it = new Intent(EquipMBActivity.this, ItemCheckListActivity.class);", getLocalClassName());
                 Intent it = new Intent(EquipMBActivity.this, ItemCheckListActivity.class);
                 startActivity(it);
@@ -208,7 +208,7 @@ public class EquipMBActivity extends ActivityGeneric {
             }
         }
         else{
-            LogProcessoDAO.getInstance().insert("else{\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                     "            Intent it = new Intent(EquipMBActivity.this, EsperaInforActivity.class);", getLocalClassName());
             Intent it = new Intent(EquipMBActivity.this, EsperaInforActivity.class);
             startActivity(it);
@@ -217,7 +217,7 @@ public class EquipMBActivity extends ActivityGeneric {
     }
 
     public void onBackPressed() {
-        LogProcessoDAO.getInstance().insert("public void onBackPressed() {\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("public void onBackPressed() {\n" +
                 "        Intent it = new Intent(EquipMBActivity.this, HorimetroActivity.class);", getLocalClassName());
         Intent it = new Intent(EquipMBActivity.this, HorimetroActivity.class);
         startActivity(it);

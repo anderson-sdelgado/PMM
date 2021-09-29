@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontImpleMMBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
 
 public class ImpleMMDAO {
@@ -42,7 +41,7 @@ public class ImpleMMDAO {
         ImpleMMBean impleMMBean = new ImpleMMBean();
         List<ImpleMMBean> impleList = impleMMBean.all();
         for (ImpleMMBean impleMMBeanBD : impleList) {
-            LogProcessoDAO.getInstance().insert("ImpleMMBean impleMMBean = new ImpleMMBean();\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("ImpleMMBean impleMMBean = new ImpleMMBean();\n" +
                     "        List<ImpleMMBean> impleList = impleMMBean.all();\n" +
                     "        for (ImpleMMBean impleMMBeanBD : impleList) {\n" +
                     "            ApontImpleMMBean apontImpleMMBean = new ApontImpleMMBean();\n" +

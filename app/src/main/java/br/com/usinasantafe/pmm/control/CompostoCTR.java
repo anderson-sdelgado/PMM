@@ -115,7 +115,7 @@ public class CompostoCTR {
     public void verifDadosCarreg(Context telaAtual, Class telaProx, String activity){
         CarregCompDAO carregCompDAO = new CarregCompDAO();
         ConfigCTR configCTR = new ConfigCTR();
-        LogProcessoDAO.getInstance().insert("configCTR.setStatusRetVerif(1L);\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("configCTR.setStatusRetVerif(1L);\n" +
                 "        carregCompDAO.verifDadosCarreg(configCTR.getConfig().getEquipConfig(), telaAtual, telaProx, activity);", activity);
         configCTR.setStatusRetVerif(1L);
         carregCompDAO.verifDadosCarreg(configCTR.getConfig().getEquipConfig(), telaAtual, telaProx, activity);
@@ -151,7 +151,7 @@ public class CompostoCTR {
         } catch (Exception e) {
             Log.i("ECM", "ERRO DENTRO RECEBIMENTO = " + e);
             VerifDadosServ.status = 1;
-            LogErroDAO.getInstance().insert(e);
+            LogErroDAO.getInstance().insertLogErro(e);
         }
 
     }
@@ -173,7 +173,7 @@ public class CompostoCTR {
         catch(Exception e){
             Log.i("PMM", "ERRO = " + e);
             EnvioDadosServ.status = 1;
-            LogErroDAO.getInstance().insert(e);
+            LogErroDAO.getInstance().insertLogErro(e);
         }
 
     }
@@ -202,7 +202,7 @@ public class CompostoCTR {
 
         } catch (Exception e) {
             EnvioDadosServ.status = 1;
-            LogErroDAO.getInstance().insert(e);
+            LogErroDAO.getInstance().insertLogErro(e);
         }
 
     }

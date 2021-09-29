@@ -35,13 +35,13 @@ public class ProdutoActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonOkOS.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkOS.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
 
                 if(!txtResult.getText().equals("PRODUTO:")) {
 
-                    LogProcessoDAO.getInstance().insert("if(!txtResult.getText().equals(\"PRODUTO:\")) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(!txtResult.getText().equals(\"PRODUTO:\")) {\n" +
                             "                    if (connectNetwork) {\n" +
                             "                        pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
                             "                    }\n" +
@@ -56,7 +56,7 @@ public class ProdutoActivity extends ActivityGeneric {
                         pmmContext.getConfigCTR().setStatusConConfig(0L);
                     }
 
-                    LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
                             "                    pmmContext.getConfigCTR().setPosFluxoCarregComposto(2L);\n" +
                             "                    pmmContext.getCompostoCTR().abrirCarregInsumo(produtoBean);\n" +
                             "                    Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
@@ -78,7 +78,7 @@ public class ProdutoActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonCancOS.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancOS.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
@@ -94,7 +94,7 @@ public class ProdutoActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("btnCapturaBarra.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("btnCapturaBarra.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(ProdutoActivity.this, br.com.usinasantafe.pmm.zxing.CaptureActivity.class);", getLocalClassName());
@@ -110,11 +110,11 @@ public class ProdutoActivity extends ActivityGeneric {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
 
         if(REQUEST_CODE == requestCode && RESULT_OK == resultCode){
-            LogProcessoDAO.getInstance().insert("if(REQUEST_CODE == requestCode && RESULT_OK == resultCode){\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("if(REQUEST_CODE == requestCode && RESULT_OK == resultCode){\n" +
                     "            String cod = data.getStringExtra(\"SCAN_RESULT\");", getLocalClassName());
             String cod = data.getStringExtra("SCAN_RESULT");
             if (pmmContext.getCompostoCTR().verProduto(cod)) {
-                LogProcessoDAO.getInstance().insert("if (pmmContext.getCompostoCTR().verProduto(cod)) {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getCompostoCTR().verProduto(cod)) {\n" +
                         "                produtoBean = pmmContext.getCompostoCTR().getProduto(cod);\n" +
                         "                txtResult.setText(\"PRODUTO: \" + produtoBean.getCodProduto() + \"\\n\" + produtoBean.getDescProduto());", getLocalClassName());
                 produtoBean = pmmContext.getCompostoCTR().getProduto(cod);

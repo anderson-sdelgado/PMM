@@ -17,14 +17,14 @@ public class MsgDataHoraActivity extends ActivityGeneric {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_msg_data_hora);
 
-        LogProcessoDAO.getInstance().insert("handler.postDelayed(runnable, interval);", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("handler.postDelayed(runnable, interval);", getLocalClassName());
         handler.postDelayed(runnable, interval);
 
     }
 
     private Runnable runnable = new Runnable(){
         public void run() {
-            LogProcessoDAO.getInstance().insert("private Runnable runnable = new Runnable(){\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("private Runnable runnable = new Runnable(){\n" +
                     "        public void run() {\n" +
                     "            Intent it = new Intent( MsgDataHoraActivity.this, DataHoraActivity.class);", getLocalClassName());
             Intent it = new Intent( MsgDataHoraActivity.this, DataHoraActivity.class);

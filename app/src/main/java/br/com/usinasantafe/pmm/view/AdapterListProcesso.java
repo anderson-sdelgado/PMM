@@ -28,6 +28,7 @@ public class AdapterListProcesso extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private TextView textViewProcId;
     private TextView textViewProcDthr;
+    private TextView textViewProcTela;
     private TextView textViewProcDescr;
 
     public AdapterListProcesso(Context context, List itens) {
@@ -56,13 +57,14 @@ public class AdapterListProcesso extends BaseAdapter {
         view = layoutInflater.inflate(R.layout.activity_item_log_processo, null);
         textViewProcId = view.findViewById(R.id.textViewProcId);
         textViewProcDthr = view.findViewById(R.id.textViewProcDthr);
+        textViewProcTela = view.findViewById(R.id.textViewProcTela);
         textViewProcDescr = view.findViewById(R.id.textViewProcDescr);
 
         LogProcessoBean logProcessoBean = (LogProcessoBean) itens.get(position);
 
         textViewProcId.setText("ID: " + logProcessoBean.getIdLogProcesso());
         textViewProcDthr.setText("DTHR: " + logProcessoBean.getDthr());
-        textViewProcDescr.setText("TELA: " + logProcessoBean.getActivity());
+        textViewProcTela.setText("TELA: " + logProcessoBean.getActivity());
         textViewProcDescr.setText(logProcessoBean.getProcesso());
 
         return view;

@@ -30,26 +30,26 @@ public class CarretaActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("        buttonOkCarreta.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("        buttonOkCarreta.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @SuppressWarnings(\"rawtypes\")\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
 
                 if(!editTextPadrao.getText().toString().equals("")){
 
-                    LogProcessoDAO.getInstance().insert("                if(!editTextPadrao.getText().toString().equals(\"\")){\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("                if(!editTextPadrao.getText().toString().equals(\"\")){\n" +
                             "                    int verCarreta = pmmContext.getMotoMecFertCTR().verCarreta(Long.parseLong(editTextPadrao.getText().toString()));", getLocalClassName());
                     int verCarreta = pmmContext.getMotoMecFertCTR().verCarreta(Long.parseLong(editTextPadrao.getText().toString()));
 
                     if(verCarreta == 1) {
 
-                        LogProcessoDAO.getInstance().insert("if(verCarreta == 1) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(verCarreta == 1) {\n" +
                                 "                        pmmContext.getMotoMecFertCTR().insCarreta(Long.parseLong(" + editTextPadrao.getText().toString() + "));", getLocalClassName());
                         pmmContext.getMotoMecFertCTR().insCarreta(Long.parseLong(editTextPadrao.getText().toString()));
 
                         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){
 
-                            LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){\n" +
                                     "                            pmmContext.getCecCTR().setCarr(Long.parseLong(editTextPadrao.getText().toString()));\n" +
                                     "                            pmmContext.getCecCTR().setLib(pmmContext.getCecCTR().getOS().getIdLibOS());\n" +
                                     "                            int numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;", getLocalClassName());
@@ -60,14 +60,14 @@ public class CarretaActivity extends ActivityGeneric {
                             int numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;
 
                             if (numCarreta < 4) {
-                                LogProcessoDAO.getInstance().insert("if (numCarreta < 4) {\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("if (numCarreta < 4) {\n" +
                                         "                                Intent it = new Intent(CarretaActivity.this, MsgNumCarretaActivity.class);", getLocalClassName());
                                 Intent it = new Intent(CarretaActivity.this, MsgNumCarretaActivity.class);
                                 startActivity(it);
                                 finish();
                             }
                             else{
-                                LogProcessoDAO.getInstance().insert("else{\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                                         "                                Intent it = new Intent(CarretaActivity.this, PergFinalPreCECActivity.class);", getLocalClassName());
                                 Intent it = new Intent(CarretaActivity.this, PergFinalPreCECActivity.class);
                                 startActivity(it);
@@ -75,7 +75,7 @@ public class CarretaActivity extends ActivityGeneric {
                             }
 
                         } else {
-                            LogProcessoDAO.getInstance().insert("} else {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                     "                            Intent it = new Intent(CarretaActivity.this, MsgNumCarretaActivity.class);", getLocalClassName());
                             Intent it = new Intent(CarretaActivity.this, MsgNumCarretaActivity.class);
                             startActivity(it);
@@ -83,7 +83,7 @@ public class CarretaActivity extends ActivityGeneric {
                         }
                     }
                     else{
-                        LogProcessoDAO.getInstance().insert("else{\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                                 "                        String msg = \"\";\n" +
                                 "                        int numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;\n" +
                                 "                        switch(verCarreta){", getLocalClassName());
@@ -102,7 +102,7 @@ public class CarretaActivity extends ActivityGeneric {
                                 break;
                         }
 
-                        LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder(CarretaActivity.this);\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(CarretaActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
                                 "                        alerta.setMessage(msg);\n" +
                                 "                        alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
@@ -131,7 +131,7 @@ public class CarretaActivity extends ActivityGeneric {
         buttonCancCarreta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonCancCarreta.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancCarreta.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                if(editTextPadrao.getText().toString().length() > 0){\n" +
@@ -146,7 +146,7 @@ public class CarretaActivity extends ActivityGeneric {
     }
 
     public void onBackPressed()  {
-        LogProcessoDAO.getInstance().insert("public void onBackPressed()  {\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("public void onBackPressed()  {\n" +
                 "        Intent it = new Intent(CarretaActivity.this, MsgNumCarretaActivity.class);", getLocalClassName());
         Intent it = new Intent(CarretaActivity.this, MsgNumCarretaActivity.class);
         startActivity(it);

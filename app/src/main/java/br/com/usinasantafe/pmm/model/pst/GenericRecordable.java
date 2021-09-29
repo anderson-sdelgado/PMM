@@ -22,7 +22,7 @@ public class GenericRecordable<T> {
 			dao = instance.getDao(classe);
 			dao.create(element);
 		} catch (SQLException e) {
-			LogErroDAO.getInstance().insert(e);
+			LogErroDAO.getInstance().insertLogErro(e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -34,7 +34,7 @@ public class GenericRecordable<T> {
 			DeleteBuilder<String, Object> deleteBuilder = dao.deleteBuilder();
 			deleteBuilder.delete();
 		} catch (SQLException e) {
-			LogErroDAO.getInstance().insert(e);
+			LogErroDAO.getInstance().insertLogErro(e);
 			throw new RuntimeException(e);
 		}
 	}

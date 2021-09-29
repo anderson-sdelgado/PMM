@@ -68,12 +68,12 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 			
 		} catch (Exception e) {
 			EnvioDadosServ.status = 1;
-			LogErroDAO.getInstance().insert(e);
+			LogErroDAO.getInstance().insertLogErro(e);
 			if(bufferedReader != null){
 				try {
 					bufferedReader.close();
 				} catch (Exception er) {
-					LogErroDAO.getInstance().insert(er);
+					LogErroDAO.getInstance().insertLogErro(er);
 				}
 			}
 		}
@@ -82,7 +82,7 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 				try {
 					bufferedReader.close();
 				} catch (Exception e) {
-					LogErroDAO.getInstance().insert(e);
+					LogErroDAO.getInstance().insertLogErro(e);
 				}
 			}
 		}
@@ -97,7 +97,7 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 			EnvioDadosServ.getInstance().recDados(result, activity);
 		} catch (Exception e) {
 			EnvioDadosServ.status = 1;
-			LogErroDAO.getInstance().insert(e);
+			LogErroDAO.getInstance().insertLogErro(e);
 		}
 		
     }

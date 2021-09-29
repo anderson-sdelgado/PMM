@@ -39,7 +39,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonAtualBocal.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonAtualBocal.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "AlertDialog.Builder alerta = new AlertDialog.Builder(  ListaBocalFertActivity.this);\n" +
@@ -52,13 +52,13 @@ public class ListaBocalFertActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        LogProcessoDAO.getInstance().insert("                alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("                alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
 
                         if (connectNetwork) {
 
-                            LogProcessoDAO.getInstance().insert("if (connectNetwork) {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
                                     "progressBar = new ProgressDialog(ListaBocalFertActivity.this);\n" +
                                     "                            progressBar.setCancelable(true);\n" +
                                     "                            progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
@@ -74,12 +74,12 @@ public class ListaBocalFertActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().atualDados(ListaBocalFertActivity.this, ListaBocalFertActivity.class, progressBar, \"Bocal\", 1, getLocalClassName());", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(ListaBocalFertActivity.this, ListaBocalFertActivity.class, progressBar, \"Bocal\", 1, getLocalClassName());", getLocalClassName());
                             pmmContext.getMotoMecFertCTR().atualDados(ListaBocalFertActivity.this, ListaBocalFertActivity.class, progressBar, "Bocal", 1, getLocalClassName());
 
                         } else {
 
-                            LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder( ListaBocalFertActivity.this);\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder( ListaBocalFertActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
                                     "                            alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
                                     "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
@@ -105,7 +105,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
                 alerta.setPositiveButton("NÃO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                     }
@@ -117,7 +117,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
 
         });
 
-        LogProcessoDAO.getInstance().insert("bocalList = pmmContext.getMotoMecFertCTR().bocalList();\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("bocalList = pmmContext.getMotoMecFertCTR().bocalList();\n" +
                 "        ArrayList<String> itens = new ArrayList<>();\n" +
                 "        for(BocalBean bocalBean : bocalList){\n" +
                 "            itens.add(bocalBean.getCodBocal() + \" - \" + bocalBean.getDescrBocal());\n" +
@@ -141,7 +141,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                LogProcessoDAO.getInstance().insert("BocalBean bocalBean = (BocalBean) bocalList.get(position);\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("BocalBean bocalBean = (BocalBean) bocalList.get(position);\n" +
                         "                pmmContext.getConfigCTR().setBocalConfig(bocalBean.getIdBocal());\n" +
                         "                bocalList.clear();\n" +
                         "                Intent it = new Intent(ListaBocalFertActivity.this, ListaPressaoFertActivity.class);\n" +
@@ -163,7 +163,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
         buttonRetBocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonRetBocal.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetBocal.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(ListaBocalFertActivity.this, ListaPressaoFertActivity.class);", getLocalClassName());

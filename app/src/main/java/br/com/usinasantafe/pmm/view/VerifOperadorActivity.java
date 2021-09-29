@@ -35,7 +35,7 @@ public class VerifOperadorActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonManterMotorista.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonManterMotorista.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(VerifOperadorActivity.this, MsgSaidaCampoActivity.class);", getLocalClassName());
@@ -50,7 +50,7 @@ public class VerifOperadorActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonAlterarMotorista.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonAlterarMotorista.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                AlertDialog.Builder alerta = new AlertDialog.Builder(VerifOperadorActivity.this);\n" +
@@ -62,7 +62,7 @@ public class VerifOperadorActivity extends ActivityGeneric {
                 alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {\n" +
                                 "                        pmmContext.getConfigCTR().setPosicaoTela(17L);\n" +
@@ -77,7 +77,7 @@ public class VerifOperadorActivity extends ActivityGeneric {
                 alerta.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        LogProcessoDAO.getInstance().insert("alerta.setNegativeButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                     }

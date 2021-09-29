@@ -19,6 +19,8 @@ public class LogErroBean extends Entidade {
     @DatabaseField
     private String dthr;
     @DatabaseField
+    private Long dthrLong;
+    @DatabaseField
     private Long status;
 
     public LogErroBean() {
@@ -62,5 +64,13 @@ public class LogErroBean extends Entidade {
 
     public void setStatus(Long status) {
         this.status = status;
+    }
+
+    public Long getDthrLong() {
+        return dthrLong;
+    }
+
+    public void setDthrLong(Long dthrLong) {
+        this.dthrLong = dthrLong;
     }
 }

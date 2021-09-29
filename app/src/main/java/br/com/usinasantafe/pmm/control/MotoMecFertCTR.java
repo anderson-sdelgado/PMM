@@ -75,7 +75,7 @@ public class MotoMecFertCTR {
     public void salvarBolMMFertAberto(String activity){
         ConfigCTR configCTR = new ConfigCTR();
         ConfigBean configBean = configCTR.getConfig();
-        LogProcessoDAO.getInstance().insert("boletimMMFertDAO.salvarBolAbertoMMFert(configCTR.getEquip().getTipoEquip(), configBean.getNroOSConfig()\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("boletimMMFertDAO.salvarBolAbertoMMFert(configCTR.getEquip().getTipoEquip(), configBean.getNroOSConfig()\n" +
                 "                                            , configBean.getIdAtivConfig(), configBean.getStatusConConfig(), activity);", activity);
         boletimMMFertDAO.salvarBolAbertoMMFert(configCTR.getEquip().getTipoEquip(), configBean.getNroOSConfig()
                                             , configBean.getIdAtivConfig(), configBean.getStatusConConfig(), activity);
@@ -90,14 +90,14 @@ public class MotoMecFertCTR {
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
 
         ConfigCTR configCTR = new ConfigCTR();
-        LogProcessoDAO.getInstance().insert("if (boletimMMFertDAO == null) {\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("if (boletimMMFertDAO == null) {\n" +
                 "            boletimMMFertDAO = new BoletimMMFertDAO();}\n" +
                 "        ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();\n" +
                 "        ConfigCTR configCTR = new ConfigCTR();\n" +
                 "", activity);
         configCTR.setUltParadaBolConfig(apontMMFertDAO.getUltApont(boletimMMFertDAO.getBolAbertoMMFert().getIdBolMMFert()).getParadaApontMMFert());
 
-        LogProcessoDAO.getInstance().insert("boletimMMFertDAO.salvarBolFechadoMMFert();", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("boletimMMFertDAO.salvarBolFechadoMMFert();", activity);
         boletimMMFertDAO.salvarBolFechadoMMFert(activity);
 
     }
@@ -188,12 +188,12 @@ public class MotoMecFertCTR {
         }
         catch (Exception e){
             EnvioDadosServ.status = 1;
-            LogErroDAO.getInstance().insert(e);
+            LogErroDAO.getInstance().insertLogErro(e);
         }
 
     }
 
-    public void delBolFechado(String retorno, String activity){
+    public void updateBolEnviado(String retorno, String activity){
 
         try {
 
@@ -204,33 +204,7 @@ public class MotoMecFertCTR {
             ArrayList<BoletimMMFertBean> boletimArrayList = boletimMMFertDAO.bolMMFertArrayList(objPrinc);
 
             for (BoletimMMFertBean boletimMMFertBean : boletimArrayList) {
-
-                ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
-                List<ApontMMFertBean> apontMMFertList = apontMMFertDAO.apontMMFertList(boletimMMFertBean.getIdBolMMFert());
-
-//                if (apontMMFertList.size() == boletimMMFertBean.getQtdeApontBolMMFert()) {
-//
-//                    ArrayList<Long> idApontArrayList = apontMMFertDAO.idApontArrayList(apontMMFertList);
-//                    apontMMFertDAO.deleteApont(idApontArrayList);
-//
-//                    ImpleMMDAO impleMMDAO = new ImpleMMDAO();
-//                    impleMMDAO.deleteImple(idApontArrayList);
-//
-//                    LeiraDAO leiraDAO = new LeiraDAO();
-//                    leiraDAO.deleteMovLeira(leiraDAO.idMovLeiraArrayList(leiraDAO.movLeiraList(boletimMMFertBean.getIdBolMMFert())));
-//
-//                    RendMMDAO rendMMDAO = new RendMMDAO();
-//                    rendMMDAO.deleteRend(boletimMMFertBean.getIdBolMMFert());
-//
-//                    RecolhFertDAO recolhFertDAO = new RecolhFertDAO();
-//                    recolhFertDAO.deleteRecolh(boletimMMFertBean.getIdBolMMFert());
-//
-//                    boletimMMFertDAO.deleteBol(boletimMMFertBean.getIdBolMMFert());
-//
-//                }
-
                 boletimMMFertDAO.updateBolMMFertEnvio(boletimMMFertBean.getIdBolMMFert());
-
             }
 
             EnvioDadosServ.getInstance().envioDados(activity);
@@ -238,8 +212,44 @@ public class MotoMecFertCTR {
         }
         catch (Exception e){
             EnvioDadosServ.status = 1;
-            LogErroDAO.getInstance().insert(e);
+            LogErroDAO.getInstance().insertLogErro(e);
         }
+
+    }
+
+    public void deleteBolEnviado(){
+
+        BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
+        ArrayList<BoletimMMFertBean> boletimMMFerArrayList = boletimMMFertDAO.bolEnviadoArrayList();
+
+        for (BoletimMMFertBean boletimMMFertBean : boletimMMFerArrayList) {
+
+            ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
+            List<ApontMMFertBean> apontMMFertList = apontMMFertDAO.apontMMFertList(boletimMMFertBean.getIdBolMMFert());
+
+            ArrayList<Long> idApontArrayList = apontMMFertDAO.idApontArrayList(apontMMFertList);
+            apontMMFertDAO.deleteApont(idApontArrayList);
+
+            ImpleMMDAO impleMMDAO = new ImpleMMDAO();
+            impleMMDAO.deleteImple(idApontArrayList);
+
+            idApontArrayList.clear();
+
+            LeiraDAO leiraDAO = new LeiraDAO();
+            leiraDAO.deleteMovLeira(leiraDAO.idMovLeiraArrayList(leiraDAO.movLeiraList(boletimMMFertBean.getIdBolMMFert())));
+
+            RendMMDAO rendMMDAO = new RendMMDAO();
+            rendMMDAO.deleteRend(boletimMMFertBean.getIdBolMMFert());
+
+            RecolhFertDAO recolhFertDAO = new RecolhFertDAO();
+            recolhFertDAO.deleteRecolh(boletimMMFertBean.getIdBolMMFert());
+
+            boletimMMFertDAO.deleteBolMMFert(boletimMMFertBean.getIdBolMMFert());
+
+        }
+
+        boletimMMFerArrayList.clear();
+
 
     }
 
@@ -251,13 +261,13 @@ public class MotoMecFertCTR {
         ConfigCTR configCTR = new ConfigCTR();
         OSDAO osDAO = new OSDAO();
         AtividadeDAO atividadeDAO = new AtividadeDAO();
-        LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 2){", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2){", activity);
         if(PMMContext.aplic == 2){
-            LogProcessoDAO.getInstance().insert("return atividadeDAO.retAtivArrayList(configCTR.getEquip().getIdEquip(), osDAO.idAtivArrayList(nroOS));", activity);
+            LogProcessoDAO.getInstance().insertLogProcesso("return atividadeDAO.retAtivArrayList(configCTR.getEquip().getIdEquip(), osDAO.idAtivArrayList(nroOS));", activity);
             return atividadeDAO.retAtivArrayList(configCTR.getEquip().getIdEquip(), osDAO.idAtivArrayList(nroOS));
         }
         else {
-            LogProcessoDAO.getInstance().insert("return atividadeDAO.retAtivArrayList(configCTR.getEquip().getIdEquip(), nroOS);", activity);
+            LogProcessoDAO.getInstance().insertLogProcesso("return atividadeDAO.retAtivArrayList(configCTR.getEquip().getIdEquip(), nroOS);", activity);
             return atividadeDAO.retAtivArrayList(configCTR.getEquip().getIdEquip(), nroOS);
         }
     }
@@ -265,7 +275,7 @@ public class MotoMecFertCTR {
     public List<RFuncaoAtivParBean> getFuncaoAtividadeList(String activity){
         RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
         ConfigCTR configCTR = new ConfigCTR();
-        LogProcessoDAO.getInstance().insert("return rFuncaoAtivParDAO.getListFuncaoAtividade(" + configCTR.getConfig().getIdAtivConfig() + ");", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("return rFuncaoAtivParDAO.getListFuncaoAtividade(" + configCTR.getConfig().getIdAtivConfig() + ");", activity);
         return rFuncaoAtivParDAO.getListFuncaoAtividade(configCTR.getConfig().getIdAtivConfig());
     }
 
@@ -311,7 +321,7 @@ public class MotoMecFertCTR {
 
     public void insRendBD(Long nroOS, String activity){
         RendMMDAO rendMMDAO = new RendMMDAO();
-        LogProcessoDAO.getInstance().insert("rendMMDAO.insRend(getBoletimMMFertAberto().getIdBolMMFert(), nroOS, activity);", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("rendMMDAO.insRend(getBoletimMMFertAberto().getIdBolMMFert(), nroOS, activity);", activity);
         rendMMDAO.insRend(getBoletimMMFertAberto().getIdBolMMFert(), nroOS, activity);
     }
 
@@ -428,7 +438,7 @@ public class MotoMecFertCTR {
     public void insRecolh(String activity){
         ConfigCTR configCTR = new ConfigCTR();
         RecolhFertDAO recolhFertDAO = new RecolhFertDAO();
-        LogProcessoDAO.getInstance().insert("recolhFertDAO.insRecolh(" + getBoletimMMFertAberto().getIdBolMMFert() + ", " + configCTR.getConfig().getNroOSConfig() + ");", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("recolhFertDAO.insRecolh(" + getBoletimMMFertAberto().getIdBolMMFert() + ", " + configCTR.getConfig().getNroOSConfig() + ");", activity);
         recolhFertDAO.insRecolh(getBoletimMMFertAberto().getIdBolMMFert(), configCTR.getConfig().getNroOSConfig(), activity);
     }
 
@@ -492,7 +502,7 @@ public class MotoMecFertCTR {
     public List<TurnoBean> getTurnoCodList(String activity){
         ConfigCTR configCTR = new ConfigCTR();
         TurnoDAO turnoDAO = new TurnoDAO();
-        LogProcessoDAO.getInstance().insert("return turnoDAO.getTurnoCodList(configCTR.getEquip().getCodTurno());", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("return turnoDAO.getTurnoCodList(configCTR.getEquip().getCodTurno());", activity);
         return turnoDAO.getTurnoCodList(configCTR.getEquip().getCodTurno());
     }
 
@@ -619,7 +629,7 @@ public class MotoMecFertCTR {
 
     public void atualDados(Context telaAtual, Class telaProx, ProgressDialog progressDialog, String tipoAtual, int tipoReceb, String activity) {
         ArrayList classeArrayList = new ArrayList();
-        LogProcessoDAO.getInstance().insert("ArrayList classeArrayList = new ArrayList();\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("ArrayList classeArrayList = new ArrayList();\n" +
                 "        switch (" + tipoAtual + ") {", activity);
         switch (tipoAtual) {
             case "Leira":
@@ -658,7 +668,7 @@ public class MotoMecFertCTR {
                 classeArrayList.add("MotoMecBean");
                 break;
         }
-        LogProcessoDAO.getInstance().insert("AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, classeArrayList, tipoReceb, activity);", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, classeArrayList, tipoReceb, activity);", activity);
         AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, classeArrayList, tipoReceb, activity);
     }
 
@@ -704,7 +714,7 @@ public class MotoMecFertCTR {
 
     public void inserirParadaCheckList(String activity){
         RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
-        LogProcessoDAO.getInstance().insert("salvarApont(rFuncaoAtivParDAO.idParadaCheckList(), 0L, activity);", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("salvarApont(rFuncaoAtivParDAO.idParadaCheckList(), 0L, activity);", activity);
         salvarApont(rFuncaoAtivParDAO.idParadaCheckList(), 0L, activity);
     }
 
@@ -722,7 +732,7 @@ public class MotoMecFertCTR {
         ConfigCTR configCTR = new ConfigCTR();
         BoletimMMFertBean boletimMMFertBean = getBoletimMMFertAberto();
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
-        LogProcessoDAO.getInstance().insert("apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada\n" +
                 "                , boletimMMFertBean.getOsBolMMFert(), boletimMMFertBean.getAtivPrincBolMMFert()\n" +
                 "                , configCTR.getConfig().getIdFrenteConfig(), configCTR.getConfig().getIdPropriedadeConfig()\n" +
                 "                , boletimMMFertBean.getLatitudeBolMMFert(), boletimMMFertBean.getLongitudeBolMMFert()\n" +
@@ -749,7 +759,7 @@ public class MotoMecFertCTR {
         ConfigCTR configCTR = new ConfigCTR();
         BoletimMMFertBean boletimMMFertBean = getBoletimMMFertAberto();
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
-        LogProcessoDAO.getInstance().insert("apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada\n" +
                 "                , boletimMMFertBean.getOsBolMMFert(), boletimMMFertBean.getAtivPrincBolMMFert()\n" +
                 "                , configCTR.getConfig().getIdFrenteConfig(), configCTR.getConfig().getIdPropriedadeConfig()\n" +
                 "                , boletimMMFertBean.getLatitudeBolMMFert(), boletimMMFertBean.getLongitudeBolMMFert()\n" +
@@ -777,7 +787,7 @@ public class MotoMecFertCTR {
         BoletimMMFertBean boletimMMFertBean = getBoletimMMFertAberto();
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
 
-        LogProcessoDAO.getInstance().insert("apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada\n" +
                 "                , configCTR.getConfig().getNroOSConfig(), configCTR.getConfig().getIdAtivConfig()\n" +
                 "                , configCTR.getConfig().getIdFrenteConfig(), configCTR.getConfig().getIdPropriedadeConfig()\n" +
                 "                , latitude, longitude\n" +
@@ -794,8 +804,8 @@ public class MotoMecFertCTR {
                 , configCTR.getConfig().getVelocConfig(), configCTR.getConfig().getBocalConfig()
                 , boletimMMFertBean.getStatusConBolMMFert(), 2);
 
-        LogProcessoDAO.getInstance().insert("salvarAltCompApont(Tempo.getInstance().dthrLongToString(dthrLong));", activity);
-        salvarAltCompApont(Tempo.getInstance().dthrLongToString(dthrLong), null);
+        LogProcessoDAO.getInstance().insertLogProcesso("salvarAltCompApont(Tempo.getInstance().dthrLongToString(dthrLong));", activity);
+        salvarAltCompApont(Tempo.getInstance().dthrLongToString(dthrLong), activity);
 
     }
 
@@ -806,7 +816,7 @@ public class MotoMecFertCTR {
         BoletimMMFertBean boletimMMFertBean = getBoletimMMFertAberto();
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
 
-        LogProcessoDAO.getInstance().insert("        Long ativ = 0L;\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("        Long ativ = 0L;\n" +
                 "        Long parada = 0L;\n" +
                 "        if(motoMecBean.getFuncaoOperMotoMec() == 1){\n" +
                 "            ativ = motoMecBean.getIdOperMotoMec();\n" +
@@ -829,7 +839,7 @@ public class MotoMecFertCTR {
             parada = motoMecBean.getIdOperMotoMec();
         }
 
-        LogProcessoDAO.getInstance().insert("apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), motoMecBean.getIdMotoMec(), parada\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), motoMecBean.getIdMotoMec(), parada\n" +
                 "                , configCTR.getConfig().getNroOSConfig(), ativ\n" +
                 "                , configCTR.getConfig().getIdFrenteConfig(), configCTR.getConfig().getIdPropriedadeConfig()\n" +
                 "                , latitude, longitude\n" +
@@ -846,7 +856,7 @@ public class MotoMecFertCTR {
                 , configCTR.getConfig().getVelocConfig(), configCTR.getConfig().getBocalConfig()
                 , boletimMMFertBean.getStatusConBolMMFert(), 2);
 
-        LogProcessoDAO.getInstance().insert("salvarAltCompApont(Tempo.getInstance().dthrLongToString(dthrLong), activity);", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("salvarAltCompApont(Tempo.getInstance().dthrLongToString(dthrLong), activity);", activity);
         salvarAltCompApont(Tempo.getInstance().dthrLongToString(dthrLong), activity);
 
     }
@@ -855,10 +865,10 @@ public class MotoMecFertCTR {
 
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
         ImpleMMDAO impleMMDAO = new ImpleMMDAO();
-        LogProcessoDAO.getInstance().insert("impleMMDAO.salvarApontImple(apontMMFertDAO.getApontDthr(dthr).getIdApontMMFert(), dthr);", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("impleMMDAO.salvarApontImple(apontMMFertDAO.getApontDthr(dthr).getIdApontMMFert(), dthr);", activity);
         impleMMDAO.salvarApontImple(apontMMFertDAO.getApontDthr(dthr).getIdApontMMFert(), dthr, activity);
 
-        LogProcessoDAO.getInstance().insert("EnvioDadosServ.getInstance().envioDados(activity);", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().envioDados(activity);", activity);
         EnvioDadosServ.getInstance().envioDados(activity);
 
     }

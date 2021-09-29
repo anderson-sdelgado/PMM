@@ -1,7 +1,5 @@
 package br.com.usinasantafe.pmm.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,11 +8,8 @@ import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CECBean;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
-import br.com.usinasantafe.pmm.util.AtualDadosServ;
-import br.com.usinasantafe.pmm.util.Tempo;
 
 public class CECActivity extends ActivityGeneric {
 
@@ -30,7 +25,7 @@ public class CECActivity extends ActivityGeneric {
         TextView textViewBoletim = findViewById(R.id.textViewBoletim);
         Button buttonOkBoletim = findViewById(R.id.buttonOkBoletim);
 
-        LogProcessoDAO.getInstance().insert("pmmContext.getCecCTR().delCEC();\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCecCTR().delCEC();\n" +
                 "        String boletim = visCEC(pmmContext.getCecCTR().getCEC());\n" +
                 "        textViewBoletim.setText(boletim);", getLocalClassName());
 
@@ -43,7 +38,7 @@ public class CECActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonOkBoletim.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkBoletim.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(CECActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
@@ -52,7 +47,7 @@ public class CECActivity extends ActivityGeneric {
                 startActivity(it);
                 finish();
 
-                LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().atualDados(null, null, null, \"OS\", 2, getLocalClassName());", getLocalClassName());
+                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(null, null, null, \"OS\", 2, getLocalClassName());", getLocalClassName());
                 pmmContext.getMotoMecFertCTR().atualDados(null, null, null, "OS", 2, getLocalClassName());
 
             }
@@ -66,7 +61,7 @@ public class CECActivity extends ActivityGeneric {
 
         int analisar = (int) cecBean.getPossuiSorteioCEC().longValue();
 
-        LogProcessoDAO.getInstance().insert("    public String visCEC(CECBean cecBean){\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("    public String visCEC(CECBean cecBean){\n" +
                 "        String retorno = \"\";\n" +
                 "        int analisar = (int) cecBean.getPossuiSorteioCEC().longValue();", getLocalClassName());
 

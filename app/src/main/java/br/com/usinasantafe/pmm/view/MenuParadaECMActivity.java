@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -35,7 +34,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
 
         Button buttonRetMenuParada = findViewById(R.id.buttonRetMenuParada);
 
-        LogProcessoDAO.getInstance().insert("ArrayList<String> itens = new ArrayList<String>();\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("ArrayList<String> itens = new ArrayList<String>();\n" +
                 "        paradaList = pmmContext.getMotoMecFertCTR().paradaList();\n" +
                 "        for(MotoMecBean motoMecBean : paradaList){\n" +
                 "            itens.add(motoMecBean.getDescrOperMotoMec());\n" +
@@ -59,7 +58,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                LogProcessoDAO.getInstance().insert("paradaListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("paradaListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){\n" +
                         "            @Override\n" +
                         "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
                         "                                    long id) {\n" +
@@ -72,7 +71,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
                 pmmContext.getMotoMecFertCTR().setMotoMecBean(motoMecBean);
 
                 if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
-                    LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
                             "                    Toast.makeText(MenuParadaECMActivity.this, \"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\",\n" +
                             "                            Toast.LENGTH_LONG).show();", getLocalClassName());
                     Toast.makeText(MenuParadaECMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
@@ -80,10 +79,10 @@ public class MenuParadaECMActivity extends ActivityGeneric {
                 }
                 else {
 
-                    LogProcessoDAO.getInstance().insert("else {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("else {", getLocalClassName());
                     if (pmmContext.getMotoMecFertCTR().verifBackupApont()) {
 
-                        LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verifBackupApont()) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verifBackupApont()) {\n" +
                                 "                        AlertDialog.Builder alerta = new AlertDialog.Builder(MenuParadaECMActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
                                 "                        alerta.setMessage(\"OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!\");\n" +
@@ -105,11 +104,11 @@ public class MenuParadaECMActivity extends ActivityGeneric {
 
                     } else {
 
-                        LogProcessoDAO.getInstance().insert("} else {", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
                         if ((motoMecBean.getCodFuncaoOperMotoMec() == 1)
                                 || (motoMecBean.getCodFuncaoOperMotoMec() == 17)) {
 
-                            LogProcessoDAO.getInstance().insert("if ((motoMecBean.getCodFuncaoOperMotoMec() == 1)\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if ((motoMecBean.getCodFuncaoOperMotoMec() == 1)\n" +
                                     "                                || (motoMecBean.getCodFuncaoOperMotoMec() == 17)) {\n" +
                                     "                            AlertDialog.Builder alerta = new AlertDialog.Builder(MenuParadaECMActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
@@ -121,7 +120,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                    LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
                                             "                                @Override\n" +
                                             "                                public void onClick(DialogInterface dialog, int which) {\n" +
                                             "                                    if (connectNetwork) {\n" +
@@ -135,7 +134,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
                                         pmmContext.getConfigCTR().setStatusConConfig(0L);
                                     }
 
-                                    LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
+                                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
                                             "                                    paradaListView.setSelection(posicao + 1);", getLocalClassName());
                                     pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
                                     paradaListView.setSelection(posicao + 1);
@@ -146,10 +145,10 @@ public class MenuParadaECMActivity extends ActivityGeneric {
 
                         } else if (motoMecBean.getCodFuncaoOperMotoMec() == 15) { //DESENGATE
 
-                            LogProcessoDAO.getInstance().insert("} else if (motoMecBean.getCodFuncaoOperMotoMec() == 15) {", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else if (motoMecBean.getCodFuncaoOperMotoMec() == 15) {", getLocalClassName());
                             if (pmmContext.getMotoMecFertCTR().hasElemCarreta()) {
 
-                                LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().hasElemCarreta()) {\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().hasElemCarreta()) {\n" +
                                         "                                AlertDialog.Builder alerta = new AlertDialog.Builder(MenuParadaECMActivity.this);\n" +
                                         "                                alerta.setTitle(\"ATENÇÃO\");\n" +
                                         "                                alerta.setMessage(\"DESEJA REALMENTE DESENGATAR AS CARRETAS?\");", getLocalClassName());
@@ -160,7 +159,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
                                                 "                                    @Override\n" +
                                                 "                                    public void onClick(DialogInterface dialog, int which) {\n" +
                                                 "                                        pmmContext.getConfigCTR().setPosicaoTela(21L);\n" +
@@ -176,7 +175,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
                                 alerta.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        LogProcessoDAO.getInstance().insert("alerta.setNegativeButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
                                                 "                                    @Override\n" +
                                                 "                                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                                     }
@@ -186,7 +185,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
 
                             } else {
 
-                                LogProcessoDAO.getInstance().insert("} else {\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                         "                                AlertDialog.Builder alerta = new AlertDialog.Builder(MenuParadaECMActivity.this);\n" +
                                         "                                alerta.setTitle(\"ATENÇÃO\");\n" +
                                         "                                alerta.setMessage(\"POR FAVOR! ENGATE CARRETA(S) PARA DEPOIS DESENGATÁ-LAS.\");\n" +
@@ -211,10 +210,10 @@ public class MenuParadaECMActivity extends ActivityGeneric {
 
                         } else if (motoMecBean.getCodFuncaoOperMotoMec() == 16) { //ENGATE
 
-                            LogProcessoDAO.getInstance().insert("} else if (motoMecBean.getCodFuncaoOperMotoMec() == 16) {", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else if (motoMecBean.getCodFuncaoOperMotoMec() == 16) {", getLocalClassName());
                             if (!pmmContext.getMotoMecFertCTR().hasElemCarreta()) {
 
-                                LogProcessoDAO.getInstance().insert("if (!pmmContext.getMotoMecFertCTR().hasElemCarreta()) {\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("if (!pmmContext.getMotoMecFertCTR().hasElemCarreta()) {\n" +
                                         "                                AlertDialog.Builder alerta = new AlertDialog.Builder(MenuParadaECMActivity.this);\n" +
                                         "                                alerta.setTitle(\"ATENÇÃO\");\n" +
                                         "                                alerta.setMessage(\"DESEJA REALMENTE ENGATAR AS CARRETAS?\");", getLocalClassName());
@@ -224,7 +223,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
                                 alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
                                                 "                                    @Override\n" +
                                                 "                                    public void onClick(DialogInterface dialog, int which) {\n" +
                                                 "                                        pmmContext.getConfigCTR().setPosicaoTela(22L);\n" +
@@ -239,7 +238,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
                                 alerta.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        LogProcessoDAO.getInstance().insert("alerta.setNegativeButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
                                                 "                                    @Override\n" +
                                                 "                                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                                     }
@@ -249,7 +248,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
 
                             } else {
 
-                                LogProcessoDAO.getInstance().insert("} else {\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                         "                                AlertDialog.Builder alerta = new AlertDialog.Builder(MenuParadaECMActivity.this);\n" +
                                         "                                alerta.setTitle(\"ATENÇÃO\");\n" +
                                         "                                alerta.setMessage(\"POR FAVOR! DESENGATE CARRETA(S) PARA DEPOIS ENGATÁ-LAS.\");\n" +
@@ -287,18 +286,18 @@ public class MenuParadaECMActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonRetMenuParada.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetMenuParada.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
                 if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
-                    LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
                             "                    Toast.makeText(MenuParadaECMActivity.this, \"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\",\n" +
                             "                            Toast.LENGTH_LONG).show();", getLocalClassName());
                     Toast.makeText(MenuParadaECMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                             Toast.LENGTH_LONG).show();
                 }
                 else {
-                    LogProcessoDAO.getInstance().insert("else {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                             "if (connectNetwork) {\n" +
                             "                        pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
                             "                    }\n" +
@@ -312,10 +311,10 @@ public class MenuParadaECMActivity extends ActivityGeneric {
                         pmmContext.getConfigCTR().setStatusConConfig(0L);
                     }
 
-                    LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
                     pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
 
-                    LogProcessoDAO.getInstance().insert("Intent it = new Intent(MenuParadaECMActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MenuParadaECMActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                     Intent it = new Intent(MenuParadaECMActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();

@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.Tempo;
 //import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
@@ -95,7 +94,7 @@ public class DataHoraActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonOkDataHora.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkDataHora.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
 
@@ -103,7 +102,7 @@ public class DataHoraActivity extends ActivityGeneric {
 
                     int valor = Integer.parseInt(editTextPadrao.getText().toString());
 
-                    LogProcessoDAO.getInstance().insert("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
                             "                    int valor = Integer.parseInt(" + editTextPadrao.getText().toString() + ");\n" +
                             "                    Intent it;\n" +
                             "                    switch (" + pmmContext.getConfigCTR().getContDataHora() + ") {", getLocalClassName());
@@ -111,7 +110,7 @@ public class DataHoraActivity extends ActivityGeneric {
                     switch (pmmContext.getConfigCTR().getContDataHora()) {
                         case 1:
                             if((valor <= 31)){
-                                LogProcessoDAO.getInstance().insert("case 1:\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("case 1:\n" +
                                         "                                if((valor <= 31)){\n" +
                                         "                                pmmContext.getConfigCTR().setDia(" + valor + ");\n" +
                                         "                                pmmContext.getConfigCTR().setContDataHora(pmmContext.getConfigCTR().getContDataHora() + 1);\n" +
@@ -123,7 +122,7 @@ public class DataHoraActivity extends ActivityGeneric {
                                 finish();
                             }
                             else{
-                                LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder( DataHoraActivity.this);\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder( DataHoraActivity.this);\n" +
                                         "                                alerta.setTitle(\"ATENÇÃO\");\n" +
                                         "                                alerta.setMessage(\"DIA INCORRETO! FAVOR VERIFICAR.\");\n" +
                                         "                                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
@@ -145,7 +144,7 @@ public class DataHoraActivity extends ActivityGeneric {
                             break;
                         case 2:
                             if((valor <= 12)){
-                                LogProcessoDAO.getInstance().insert("case 2:\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("case 2:\n" +
                                         "                            if((valor <= 12)){\n" +
                                         "                                pmmContext.getConfigCTR().setMes(" + valor + ");\n" +
                                         "                                pmmContext.getConfigCTR().setContDataHora(pmmContext.getConfigCTR().getContDataHora() + 1);\n" +
@@ -157,7 +156,7 @@ public class DataHoraActivity extends ActivityGeneric {
                                 finish();
                             }
                             else{
-                                LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder( DataHoraActivity.this);\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder( DataHoraActivity.this);\n" +
                                         "                                alerta.setTitle(\"ATENÇÃO\");\n" +
                                         "                                alerta.setMessage(\"MÊS INCORRETO! FAVOR VERIFICAR.\");\n" +
                                         "                                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
@@ -179,7 +178,7 @@ public class DataHoraActivity extends ActivityGeneric {
                             break;
                         case 3:
                             if((valor >= 2020) && (valor <= 3000)){
-                                LogProcessoDAO.getInstance().insert("case 3:\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("case 3:\n" +
                                         "                            if((valor >= 2020) && (valor <= 3000)){\n" +
                                         "                                pmmContext.getConfigCTR().setAno(" + valor + ");\n" +
                                         "                                pmmContext.getConfigCTR().setContDataHora(pmmContext.getConfigCTR().getContDataHora() + 1);\n" +
@@ -191,7 +190,7 @@ public class DataHoraActivity extends ActivityGeneric {
                                 finish();
                             }
                             else{
-                                LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder( DataHoraActivity.this);\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder( DataHoraActivity.this);\n" +
                                         "                                alerta.setTitle(\"ATENÇÃO\");\n" +
                                         "                                alerta.setMessage(\"ANO INCORRETO! FAVOR VERIFICAR.\");\n" +
                                         "                                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
@@ -213,7 +212,7 @@ public class DataHoraActivity extends ActivityGeneric {
                             break;
                         case 4:
                             if(valor <= 23){
-                                LogProcessoDAO.getInstance().insert("case 4:\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("case 4:\n" +
                                         "                            if(valor <= 23){\n" +
                                         "                                pmmContext.getConfigCTR().setHora(" + valor + ");\n" +
                                         "                                pmmContext.getConfigCTR().setContDataHora(pmmContext.getConfigCTR().getContDataHora() + 1);\n" +
@@ -225,7 +224,7 @@ public class DataHoraActivity extends ActivityGeneric {
                                 finish();
                             }
                             else{
-                                LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder( DataHoraActivity.this);\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder( DataHoraActivity.this);\n" +
                                         "                                alerta.setTitle(\"ATENÇÃO\");\n" +
                                         "                                alerta.setMessage(\"HORA INCORRETA! FAVOR VERIFICAR.\");\n" +
                                         "                                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
@@ -249,7 +248,7 @@ public class DataHoraActivity extends ActivityGeneric {
                         case 5:
                             if(valor <= 59){
 
-                                LogProcessoDAO.getInstance().insert("case 5:\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("case 5:\n" +
                                         " if(valor <= 59){\n" +
                                         " pmmContext.getConfigCTR().setMinuto(valor);\n" +
                                         " pmmContext.getConfigCTR().setDifDthrConfig(Tempo.getInstance().difDthr(" + pmmContext.getConfigCTR().getDia() + ", " + pmmContext.getConfigCTR().getMes() + ", " + pmmContext.getConfigCTR().getAno() + "\n" +
@@ -259,16 +258,16 @@ public class DataHoraActivity extends ActivityGeneric {
                                         , pmmContext.getConfigCTR().getHora(), pmmContext.getConfigCTR().getMinuto()));
 
                                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
-                                    LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {", getLocalClassName());
+                                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {", getLocalClassName());
                                     if(PMMContext.aplic == 2){
-                                        LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 2){\n" +
+                                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2){\n" +
                                                 "                                        it = new Intent(DataHoraActivity.this, HorimetroActivity.class);", getLocalClassName());
                                         it = new Intent(DataHoraActivity.this, HorimetroActivity.class);
                                         startActivity(it);
                                         finish();
                                     }
                                     else {
-                                        LogProcessoDAO.getInstance().insert("else {\n" +
+                                        LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                                                 "                                        it = new Intent(DataHoraActivity.this, OSActivity.class);", getLocalClassName());
                                         it = new Intent(DataHoraActivity.this, OSActivity.class);
                                         startActivity(it);
@@ -277,7 +276,7 @@ public class DataHoraActivity extends ActivityGeneric {
                                 }
                                 else {
                                     if(PMMContext.aplic == 1){
-                                        LogProcessoDAO.getInstance().insert("else {\n" +
+                                        LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                                                 "                                    if(PMMContext.aplic == 1){\n" +
                                                 "                                        it = new Intent(DataHoraActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                                         it = new Intent(DataHoraActivity.this, MenuPrincPMMActivity.class);
@@ -285,14 +284,14 @@ public class DataHoraActivity extends ActivityGeneric {
                                         finish();
                                     }
                                     else if(PMMContext.aplic == 2){
-                                        LogProcessoDAO.getInstance().insert("else if(PMMContext.aplic == 2){\n" +
+                                        LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
                                                 "                                        it = new Intent(DataHoraActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                                         it = new Intent(DataHoraActivity.this, MenuPrincECMActivity.class);
                                         startActivity(it);
                                         finish();
                                     }
                                     else if(PMMContext.aplic == 3){
-                                        LogProcessoDAO.getInstance().insert("else if(PMMContext.aplic == 3){\n" +
+                                        LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
                                                 "                                        it = new Intent(DataHoraActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                                         it = new Intent(DataHoraActivity.this, MenuPrincPCOMPActivity.class);
                                         startActivity(it);
@@ -301,7 +300,7 @@ public class DataHoraActivity extends ActivityGeneric {
                                 }
                             }
                             else{
-                                LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder( DataHoraActivity.this);\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder( DataHoraActivity.this);\n" +
                                         "                                alerta.setTitle(\"ATENÇÃO\");\n" +
                                         "                                alerta.setMessage(\"MINUTO INCORRETO! FAVOR VERIFICAR.\");\n" +
                                         "                                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
@@ -332,7 +331,7 @@ public class DataHoraActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonCancDataHora.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancDataHora.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {" +
                         "if (editTextPadrao.getText().toString().length() > 0) {\n" +
@@ -347,9 +346,9 @@ public class DataHoraActivity extends ActivityGeneric {
     }
 
     public void onBackPressed()  {
-        LogProcessoDAO.getInstance().insert("public void onBackPressed()  {", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("public void onBackPressed()  {", getLocalClassName());
         if(pmmContext.getConfigCTR().getContDataHora() > 1){
-            LogProcessoDAO.getInstance().insert("if(pmmContext.getConfigCTR().getContDataHora() > 1){\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getContDataHora() > 1){\n" +
                     "            pmmContext.getConfigCTR().setContDataHora(pmmContext.getConfigCTR().getContDataHora() - 1);\n" +
                     "            Intent it = new Intent(DataHoraActivity.this, DataHoraActivity.class);", getLocalClassName());
             pmmContext.getConfigCTR().setContDataHora(pmmContext.getConfigCTR().getContDataHora() - 1);

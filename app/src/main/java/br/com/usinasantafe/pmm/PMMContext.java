@@ -73,7 +73,7 @@ public class PMMContext extends Application {
 
     private Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() {
         public void uncaughtException(Thread thread, Throwable ex) {
-            LogErroDAO.getInstance().insert(ex);
+            LogErroDAO.getInstance().insertLogErro(ex);
             mDefaultExceptionHandler.uncaughtException(thread, ex);
         }
     };

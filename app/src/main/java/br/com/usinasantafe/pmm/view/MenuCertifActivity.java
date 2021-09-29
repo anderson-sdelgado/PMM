@@ -39,7 +39,7 @@ public class MenuCertifActivity extends ActivityGeneric {
         itens.add("LOG VIAGEM");
         itens.add("LOG BOLETIM");
 
-        LogProcessoDAO.getInstance().insert("AdapterList adapterList = new AdapterList(this, itens);\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("AdapterList adapterList = new AdapterList(this, itens);\n" +
                 "        menuCertifListView = findViewById(R.id.listViewMenuInicialApont);\n" +
                 "        menuCertifListView.setAdapter(adapterList);", getLocalClassName());
 
@@ -53,7 +53,7 @@ public class MenuCertifActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                LogProcessoDAO.getInstance().insert("menuCertifListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("menuCertifListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
                         "            @SuppressWarnings(\"rawtypes\")\n" +
                         "            @Override\n" +
                         "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
@@ -66,14 +66,14 @@ public class MenuCertifActivity extends ActivityGeneric {
 
                 if (text.equals("APONTAMENTO")) {
 
-                    LogProcessoDAO.getInstance().insert("if (text.equals(\"APONTAMENTO\")) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (text.equals(\"APONTAMENTO\")) {", getLocalClassName());
 
                     if (pmmContext.getCecCTR().verPreCECAberto()) {
 
-                        LogProcessoDAO.getInstance().insert("if (pmmContext.getCecCTR().verPreCECAberto()) {", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getCecCTR().verPreCECAberto()) {", getLocalClassName());
                         if (pmmContext.getCecCTR().verDataPreCEC()) {
 
-                            LogProcessoDAO.getInstance().insert("if (pmmContext.getCecCTR().verDataPreCEC()) {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getCecCTR().verDataPreCEC()) {\n" +
                                     "                            Intent it = new Intent(MenuCertifActivity.this, OSActivity.class);", getLocalClassName());
                             Intent it = new Intent(MenuCertifActivity.this, OSActivity.class);
                             startActivity(it);
@@ -81,7 +81,7 @@ public class MenuCertifActivity extends ActivityGeneric {
 
                         } else {
 
-                            LogProcessoDAO.getInstance().insert("} else {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                     "                            AlertDialog.Builder alerta = new AlertDialog.Builder(MenuCertifActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
                                     "                            alerta.setMessage(\"É NECESSÁRIO A INSERÇÃO DO HORARIO DE SAÍDA DA USINA E/OU DE CHEGADA AO CAMPO.\");", getLocalClassName());
@@ -91,7 +91,7 @@ public class MenuCertifActivity extends ActivityGeneric {
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                    LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
                                             "                                @Override\n" +
                                             "                                public void onClick(DialogInterface dialog, int which) {\n" +
                                             "                                    Intent it = new Intent(MenuCertifActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
@@ -107,7 +107,7 @@ public class MenuCertifActivity extends ActivityGeneric {
                     }
                     else {
 
-                        LogProcessoDAO.getInstance().insert("else {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                                 "                        AlertDialog.Builder alerta = new AlertDialog.Builder(MenuCertifActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
                                 "                        alerta.setMessage(\"É NECESSÁRIO A INSERÇÃO DO HORARIO DE SAÍDA DA USINA E/OU DE CHEGADA AO CAMPO.\");", getLocalClassName());
@@ -117,7 +117,7 @@ public class MenuCertifActivity extends ActivityGeneric {
                         alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
                                         "                            @Override\n" +
                                         "                            public void onClick(DialogInterface dialog, int which) {\n" +
                                         "                                Intent it = new Intent(MenuCertifActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
@@ -134,10 +134,10 @@ public class MenuCertifActivity extends ActivityGeneric {
 
                 } else if (text.equals("ATUALIZAR")) {
 
-                    LogProcessoDAO.getInstance().insert("} else if (text.equals(\"ATUALIZAR\")) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"ATUALIZAR\")) {", getLocalClassName());
                     if (connectNetwork) {
 
-                        LogProcessoDAO.getInstance().insert("if (connectNetwork) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
                                 "                        progressBar = new ProgressDialog(v.getContext());\n" +
                                 "                        progressBar.setCancelable(true);\n" +
                                 "                        progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
@@ -154,12 +154,12 @@ public class MenuCertifActivity extends ActivityGeneric {
                         progressBar.setMax(100);
                         progressBar.show();
 
-                        LogProcessoDAO.getInstance().insert("pmmContext.getConfigCTR().atualTodasTabelas(MenuCertifActivity.this, progressBar, getLocalClassName());", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().atualTodasTabelas(MenuCertifActivity.this, progressBar, getLocalClassName());", getLocalClassName());
                         pmmContext.getConfigCTR().atualTodasTabelas(MenuCertifActivity.this, progressBar, getLocalClassName());
 
                     } else {
 
-                        LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder(MenuCertifActivity.this);\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(MenuCertifActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
                                 "                        alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
                                 "                        alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
@@ -182,15 +182,15 @@ public class MenuCertifActivity extends ActivityGeneric {
 
                 } else if (text.equals("LOG VIAGEM")) {
 
-                    LogProcessoDAO.getInstance().insert("} else if (text.equals(\"LOG VIAGEM\")) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"LOG VIAGEM\")) {", getLocalClassName());
                     if (pmmContext.getCecCTR().verPreCECTerminadoList()) {
-                        LogProcessoDAO.getInstance().insert("if (pmmContext.getCecCTR().verPreCECTerminadoList()) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getCecCTR().verPreCECTerminadoList()) {\n" +
                                 "                        Intent it = new Intent(MenuCertifActivity.this, BackupPreCECActivity.class);", getLocalClassName());
                         Intent it = new Intent(MenuCertifActivity.this, BackupPreCECActivity.class);
                         startActivity(it);
                         finish();
                     } else {
-                        LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder(MenuCertifActivity.this);\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(MenuCertifActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
                                 "                        alerta.setMessage(\"NÃO TEM NENHUMA VIAGEM SALVA NA BASE DE DADOS.\");\n" +
                                 "                        alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
@@ -212,15 +212,15 @@ public class MenuCertifActivity extends ActivityGeneric {
 
                 } else if (text.equals("LOG BOLETIM")) {
 
-                    LogProcessoDAO.getInstance().insert("} else if (text.equals(\"LOG BOLETIM\")) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"LOG BOLETIM\")) {", getLocalClassName());
                     if (pmmContext.getCecCTR().hasElemCEC()) {
-                        LogProcessoDAO.getInstance().insert("if (pmmContext.getCecCTR().hasElemCEC()) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getCecCTR().hasElemCEC()) {\n" +
                                 "                        Intent it = new Intent(MenuCertifActivity.this, BackupCECActivity.class);", getLocalClassName());
                         Intent it = new Intent(MenuCertifActivity.this, BackupCECActivity.class);
                         startActivity(it);
                         finish();
                     } else {
-                        LogProcessoDAO.getInstance().insert("} else {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                 "                        AlertDialog.Builder alerta = new AlertDialog.Builder(MenuCertifActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
                                 "                        alerta.setMessage(\"NÃO TEM NENHUM BOLETIM SALVO NA BASE DE DADOS.\");\n" +
@@ -251,7 +251,7 @@ public class MenuCertifActivity extends ActivityGeneric {
         buttonRetMenuInicialApont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonRetMenuInicialApont.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetMenuInicialApont.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(MenuCertifActivity.this, MenuPrincECMActivity.class);", getLocalClassName());

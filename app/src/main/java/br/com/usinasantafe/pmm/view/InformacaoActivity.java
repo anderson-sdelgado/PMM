@@ -26,7 +26,7 @@ public class InformacaoActivity extends ActivityGeneric {
         Button buttonRetMenuPesq = findViewById(R.id.buttonRetMenuPesq);
 
         if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 13L){
-            LogProcessoDAO.getInstance().insert("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 13L){\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 13L){\n" +
                     "            CarregCompBean carregCompBean = pmmContext.getCompostoCTR().getOrdCarreg();\n" +
                     "            textViewDescrInfor.setText(\"COD. ORD. CARREG. = \" + carregCompBean.getIdOrdCarreg() + \"\\n\" +\n" +
                     "                    \"PESO ENTRADA = \" + carregCompBean.getPesoEntradaCarreg() + \"\\n\" +\n" +
@@ -39,7 +39,7 @@ public class InformacaoActivity extends ActivityGeneric {
                     "PESO LÍQUIDO = " + carregCompBean.getPesoLiquidoCarreg() + "\n");
         }
         else {
-            LogProcessoDAO.getInstance().insert("else {\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                     "            CarregCompBean carregCompBean = pmmContext.getCompostoCTR().getOrdCarreg();\n" +
                     "            textViewDescrInfor.setText(\"COD. ORD. CARREG. = \" + carregCompBean.getIdOrdCarreg() + \"\\n\" +\n" +
                     "                    \"PESO ENTRADA = \" + carregCompBean.getPesoEntradaCarreg() + \"\\n\" +\n" +
@@ -52,14 +52,14 @@ public class InformacaoActivity extends ActivityGeneric {
                     "PESO LÍQUIDO = " + carregCompBean.getPesoLiquidoCarreg() + "\n");
         }
 
-        LogProcessoDAO.getInstance().insert("pmmContext.getCompostoCTR().setVerTelaLeira(false);", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCompostoCTR().setVerTelaLeira(false);", getLocalClassName());
         pmmContext.getCompostoCTR().setVerTelaLeira(false);
 
         buttonRetMenuPesq.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonRetMenuPesq.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetMenuPesq.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(InformacaoActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());

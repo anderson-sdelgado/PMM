@@ -42,18 +42,18 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
         textViewProcessoNormal = findViewById(R.id.textViewProcessoNormal);
         textViewDataHora = findViewById(R.id.textViewDataHora);
 
-        LogProcessoDAO.getInstance().insert("customHandler.postDelayed(updateTimerThread, 0);", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("customHandler.postDelayed(updateTimerThread, 0);", getLocalClassName());
         customHandler.postDelayed(updateTimerThread, 0);
 
         if (Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())) {
-            LogProcessoDAO.getInstance().insert("if (Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())) {\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("if (Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())) {\n" +
                     "            pmmContext.getConfigCTR().setDifDthrConfig(0L);", getLocalClassName());
             pmmContext.getConfigCTR().setDifDthrConfig(0L);
         }
         else {
-            LogProcessoDAO.getInstance().insert("else {", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("else {", getLocalClassName());
             if ((pmmContext.getConfigCTR().getConfig().getDifDthrConfig() == 0) && (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 8L)) {
-                LogProcessoDAO.getInstance().insert("if ((pmmContext.getConfigCTR().getConfig().getDifDthrConfig() == 0) && (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 8L)) {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if ((pmmContext.getConfigCTR().getConfig().getDifDthrConfig() == 0) && (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 8L)) {\n" +
                         "                pmmContext.getConfigCTR().setContDataHora(1);\n" +
                         "                pmmContext.getConfigCTR().setPosicaoTela(5L);\n" +
                         "                Intent it = new Intent(MenuPrincPMMActivity.this, MsgDataHoraActivity.class);", getLocalClassName());
@@ -72,13 +72,13 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
 
         if(pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1){
 
-            LogProcessoDAO.getInstance().insert("if(pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1){\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1){\n" +
                     "            List<RFuncaoAtivParBean> rFuncaoAtividadeList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());", getLocalClassName());
             List<RFuncaoAtivParBean> rFuncaoAtividadeList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());
 
             for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtividadeList) {
 
-                LogProcessoDAO.getInstance().insert("for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtividadeList) {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtividadeList) {\n" +
                         "if(" + rFuncaoAtivParBean.getCodFuncao() + " == 2){\n" +
                         "                    itens.add(\"NOVO TRANSBORDO\");\n" +
                         "                }\n" +
@@ -112,15 +112,16 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
             rFuncaoAtividadeList.clear();
         }
         else{
-            LogProcessoDAO.getInstance().insert("else{\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                     "            itens.add(\"RECOLHIMENTO MANGUEIRA\");", getLocalClassName());
             itens.add("RECOLHIMENTO MANGUEIRA");
         }
 
-        LogProcessoDAO.getInstance().insert("itens.add(\"FINALIZAR BOLETIM\");\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("itens.add(\"FINALIZAR BOLETIM\");\n" +
                 "        itens.add(\"HISTORICO\");\n" +
                 "        itens.add(\"REENVIO DE DADOS\");\n" +
                 "        itens.add(\"DATA/HORA\");\n" +
+                "itens.add(\"LOG\");\n" +
                 "        AdapterList adapterList = new AdapterList(this, itens);\n" +
                 "        listViewAtiv = (ListView) findViewById(R.id.listViewMenuPrinc);\n" +
                 "        listViewAtiv.setAdapter(adapterList);", getLocalClassName());
@@ -129,6 +130,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
         itens.add("HISTORICO");
         itens.add("REENVIO DE DADOS");
         itens.add("DATA/HORA");
+        itens.add("LOG");
 
         AdapterList adapterList = new AdapterList(this, itens);
         listViewAtiv = (ListView) findViewById(R.id.listViewMenuPrinc);
@@ -140,7 +142,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                LogProcessoDAO.getInstance().insert("listViewAtiv.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("listViewAtiv.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
                         "                                    long id) {\n" +
@@ -150,15 +152,15 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                 String text = textView.getText().toString();
 
                 if (text.equals("TRABALHANDO")) {
-                    LogProcessoDAO.getInstance().insert("if (text.equals(\"TRABALHANDO\")) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (text.equals(\"TRABALHANDO\")) {", getLocalClassName());
                     if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
-                        LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
                                 "                        Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\",\n" +
                                 "                                Toast.LENGTH_LONG).show();", getLocalClassName());
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
-                        LogProcessoDAO.getInstance().insert("} else {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                 "                        pmmContext.getConfigCTR().setPosicaoTela(2L);\n" +
                                 "                        customHandler.removeCallbacks(updateTimerThread);\n" +
                                 "                        Intent it = new Intent(MenuPrincPMMActivity.this, OSActivity.class);", getLocalClassName());
@@ -169,15 +171,15 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         finish();
                     }
                 } else if (text.equals("PARADO")) {
-                    LogProcessoDAO.getInstance().insert("} else if (text.equals(\"PARADO\")) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"PARADO\")) {", getLocalClassName());
                     if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
-                        LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
                                 "                        Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\",\n" +
                                 "                                Toast.LENGTH_LONG).show();", getLocalClassName());
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
-                        LogProcessoDAO.getInstance().insert("} else {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                 "                        pmmContext.getConfigCTR().setPosicaoTela(3L);\n" +
                                 "                        customHandler.removeCallbacks(updateTimerThread);\n" +
                                 "                        Intent it = new Intent(MenuPrincPMMActivity.this, OSActivity.class);", getLocalClassName());
@@ -188,15 +190,15 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         finish();
                     }
                 } else if (text.equals("FINALIZAR BOLETIM")) {
-                    LogProcessoDAO.getInstance().insert("} else if (text.equals(\"FINALIZAR BOLETIM\")) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"FINALIZAR BOLETIM\")) {", getLocalClassName());
                     if (!pmmContext.getMotoMecFertCTR().hasApontBolAberto()) {
-                        LogProcessoDAO.getInstance().insert("if (!pmmContext.getMotoMecFertCTR().hasApontBolAberto()) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (!pmmContext.getMotoMecFertCTR().hasApontBolAberto()) {\n" +
                                 "                        Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR! INSIRA OS APONTAMENTOS AO BOLETIM!\",\n" +
                                 "                                Toast.LENGTH_LONG).show();", getLocalClassName());
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! INSIRA OS APONTAMENTOS AO BOLETIM!",
                                 Toast.LENGTH_LONG).show();
                     } else {
-                        LogProcessoDAO.getInstance().insert("} else {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                 "                        pmmContext.getConfigCTR().setPosicaoTela(4L);\n" +
                                 "                        customHandler.removeCallbacks(updateTimerThread);\n" +
                                 "                        Intent it = new Intent(MenuPrincPMMActivity.this, HorimetroActivity.class);", getLocalClassName());
@@ -207,29 +209,29 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         finish();
                     }
                 } else if (text.equals("HISTORICO")) {
-                    LogProcessoDAO.getInstance().insert("} else if (text.equals(\"HISTORICO\")) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"HISTORICO\")) {\n" +
                             "                    Intent it = new Intent(MenuPrincPMMActivity.this, ListaHistApontActivity.class);", getLocalClassName());
                     Intent it = new Intent(MenuPrincPMMActivity.this, ListaHistApontActivity.class);
                     startActivity(it);
                     finish();
                 } else if (text.equals("NOVO TRANSBORDO")) {
-                    LogProcessoDAO.getInstance().insert("} else if (text.equals(\"NOVO TRANSBORDO\")) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"NOVO TRANSBORDO\")) {\n" +
                             "                    int ver = pmmContext.getMotoMecFertCTR().verTrocaTransb();", getLocalClassName());
                     int ver = pmmContext.getMotoMecFertCTR().verTrocaTransb();
                     if (ver == 1) {
-                        LogProcessoDAO.getInstance().insert("if (ver == 1) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (ver == 1) {\n" +
                                 "                        Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR! APONTE UMA ATIVIDADE ANTES DE TROCAR DE TRANSBORDO.\",\n" +
                                 "                                Toast.LENGTH_LONG).show();", getLocalClassName());
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! APONTE UMA ATIVIDADE ANTES DE TROCAR DE TRANSBORDO.",
                                 Toast.LENGTH_LONG).show();
                     } else if (ver == 2) {
-                        LogProcessoDAO.getInstance().insert("} else if (ver == 2) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else if (ver == 2) {\n" +
                                 "                        Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR! ESPERE 10 MINUTO PARA TROCAR DE TRANSBORDO.\",\n" +
                                 "                                Toast.LENGTH_LONG).show();", getLocalClassName());
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 10 MINUTO PARA TROCAR DE TRANSBORDO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
-                        LogProcessoDAO.getInstance().insert("} else {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                 "                        pmmContext.getConfigCTR().setPosicaoTela(6L);\n" +
                                 "                        customHandler.removeCallbacks(updateTimerThread);\n" +
                                 "                        Intent it = new Intent(MenuPrincPMMActivity.this, TransbordoActivity.class);", getLocalClassName());
@@ -240,7 +242,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         finish();
                     }
                 } else if (text.equals("RENDIMENTO")) {
-                    LogProcessoDAO.getInstance().insert("} else if (text.equals(\"RENDIMENTO\")) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"RENDIMENTO\")) {\n" +
                             "                    pmmContext.getConfigCTR().setPosicaoTela(7L);\n" +
                             "                    customHandler.removeCallbacks(updateTimerThread);\n" +
                             "                    Intent it = new Intent(MenuPrincPMMActivity.this, ListaOSRendActivity.class);", getLocalClassName());
@@ -250,10 +252,10 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                     startActivity(it);
                     finish();
                 } else if (text.equals("ATUALIZAR DADOS")) {
-                    LogProcessoDAO.getInstance().insert("} else if (text.equals(\"ATUALIZAR DADOS\")) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"ATUALIZAR DADOS\")) {", getLocalClassName());
                     if (connectNetwork) {
 
-                        LogProcessoDAO.getInstance().insert("if (connectNetwork) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
                                 "                        progressBar = new ProgressDialog(v.getContext());\n" +
                                 "                        progressBar.setCancelable(true);\n" +
                                 "                        progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
@@ -270,12 +272,12 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         progressBar.setMax(100);
                         progressBar.show();
 
-                        LogProcessoDAO.getInstance().insert("pmmContext.getConfigCTR().atualTodasTabelas(MenuPrincPMMActivity.this, progressBar, null);", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().atualTodasTabelas(MenuPrincPMMActivity.this, progressBar, null);", getLocalClassName());
                         pmmContext.getConfigCTR().atualTodasTabelas(MenuPrincPMMActivity.this, progressBar, getLocalClassName());
 
                     } else {
 
-                        LogProcessoDAO.getInstance().insert("} else {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                 "AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPMMActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
                                 "                        alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
@@ -297,7 +299,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                     }
 
                 } else if (text.equals("RECOLHIMENTO MANGUEIRA")) {
-                    LogProcessoDAO.getInstance().insert("} else if (text.equals(\"RECOLHIMENTO MANGUEIRA\")) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"RECOLHIMENTO MANGUEIRA\")) {\n" +
                             "                    pmmContext.getConfigCTR().setPosicaoTela(9L);\n" +
                             "                    customHandler.removeCallbacks(updateTimerThread);\n" +
                             "                    Intent it = new Intent(MenuPrincPMMActivity.this, ListaOSRecolhActivity.class);", getLocalClassName());
@@ -307,24 +309,24 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                     startActivity(it);
                     finish();
                 } else if (text.equals("TROCAR IMPLEMENTO")) {
-                    LogProcessoDAO.getInstance().insert("} else if (text.equals(\"TROCAR IMPLEMENTO\")) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"TROCAR IMPLEMENTO\")) {", getLocalClassName());
                     if (!pmmContext.getMotoMecFertCTR().hasApontBolAberto()) {
-                        LogProcessoDAO.getInstance().insert("if (!pmmContext.getMotoMecFertCTR().hasApontBolAberto()) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (!pmmContext.getMotoMecFertCTR().hasApontBolAberto()) {\n" +
                                 "                        Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR! FAÇA ALGUM APONTAMENTO ANTES DE REALIZAR A TROCA DO(S) IMPLEMENTO(S)!\",\n" +
                                 "                                Toast.LENGTH_LONG).show();", getLocalClassName());
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! FAÇA ALGUM APONTAMENTO ANTES DE REALIZAR A TROCA DO(S) IMPLEMENTO(S)!",
                                 Toast.LENGTH_LONG).show();
                     } else {
-                        LogProcessoDAO.getInstance().insert("} else {", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
                         if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
-                            LogProcessoDAO.getInstance().insert("} else {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                     "                        if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
                                     "                            Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\",\n" +
                                     "                                    Toast.LENGTH_LONG).show();", getLocalClassName());
                             Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                     Toast.LENGTH_LONG).show();
                         } else {
-                            LogProcessoDAO.getInstance().insert("} else {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                     "                            pmmContext.getMotoMecFertCTR().inserirParadaImplemento(getLocalClassName());\n" +
                                     "                            pmmContext.getConfigCTR().setPosicaoTela(10L);\n" +
                                     "                            pmmContext.getMotoMecFertCTR().setContImplemento(1L);\n" +
@@ -341,15 +343,15 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                     }
                 }
                 else if (text.equals("COMPOSTAGEM")) {
-                    LogProcessoDAO.getInstance().insert("else if (text.equals(\"COMPOSTAGEM\")) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("else if (text.equals(\"COMPOSTAGEM\")) {", getLocalClassName());
                     if (pmmContext.getMotoMecFertCTR().verDataHoraInsMovLeira()) {
-                        LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verDataHoraInsMovLeira()) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsMovLeira()) {\n" +
                                 "                        Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\",\n" +
                                 "                                Toast.LENGTH_LONG).show();", getLocalClassName());
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
-                        LogProcessoDAO.getInstance().insert("} else {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                 "                        Intent it = new Intent(MenuPrincPMMActivity.this, ListaTipoMovLeiraActivity.class);", getLocalClassName());
                         Intent it = new Intent(MenuPrincPMMActivity.this, ListaTipoMovLeiraActivity.class);
                         startActivity(it);
@@ -357,9 +359,9 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                     }
                 }
                 else if (text.equals("DATA/HORA")) {
-                    LogProcessoDAO.getInstance().insert("else if (text.equals(\"DATA/HORA\")) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("else if (text.equals(\"DATA/HORA\")) {", getLocalClassName());
                     if(Tempo.getInstance().dif() == 0){
-                        LogProcessoDAO.getInstance().insert("if(Tempo.getInstance().dif() == 0){\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(Tempo.getInstance().dif() == 0){\n" +
                                 "                        AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPMMActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
                                 "                        alerta.setMessage(\"A DATA/HORA FOI ADQUIRIDA AUTOMATICAMENTO. O SISTEMA NÃO DEIXA ALTERA A MESMA.\");\n" +
@@ -380,7 +382,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         alerta.show();
                     }
                     else{
-                        LogProcessoDAO.getInstance().insert("else{\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                                 "                        pmmContext.getConfigCTR().setContDataHora(1);\n" +
                                 "                        pmmContext.getConfigCTR().setPosicaoTela(5L);\n" +
                                 "                        Intent it = new Intent(MenuPrincPMMActivity.this, DataHoraActivity.class);", getLocalClassName());
@@ -390,6 +392,15 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         startActivity(it);
                         finish();
                     }
+                }
+                else if (text.equals("LOG")) {
+                    LogProcessoDAO.getInstance().insertLogProcesso("else if (text.equals(\"LOG\")) {\n" +
+                            "                    pmmContext.getConfigCTR().setPosicaoTela(23L);\n" +
+                            "                    Intent it = new Intent(MenuPrincPMMActivity.this, SenhaActivity.class);", getLocalClassName());
+                    pmmContext.getConfigCTR().setPosicaoTela(23L);
+                    Intent it = new Intent(MenuPrincPMMActivity.this, SenhaActivity.class);
+                    startActivity(it);
+                    finish();
                 }
             }
 
@@ -404,7 +415,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
 
         public void run() {
 
-            LogProcessoDAO.getInstance().insert("    private Runnable updateTimerThread = new Runnable() {\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("    private Runnable updateTimerThread = new Runnable() {\n" +
                     "        public void run() {", getLocalClassName());
             if (EnvioDadosServ.status == 1) {
                 textViewProcessoNormal.setTextColor(Color.YELLOW);
@@ -426,14 +437,14 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
             }
 
             if(pmmContext.getConfigCTR().getConfig().getVerRecInformativo() == 2){
-                LogProcessoDAO.getInstance().insert("if(pmmContext.getConfigCTR().getConfig().getVerRecInformativo() == 2){\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getVerRecInformativo() == 2){\n" +
                         "                Intent it = new Intent( MenuPrincPMMActivity.this, DadosColheitaActivity.class);", getLocalClassName());
                 Intent it = new Intent( MenuPrincPMMActivity.this, DadosColheitaActivity.class);
                 startActivity(it);
                 finish();
 
             }
-            LogProcessoDAO.getInstance().insert("customHandler.postDelayed(this, 10000);", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("customHandler.postDelayed(this, 10000);", getLocalClassName());
             customHandler.postDelayed(this, 10000);
         }
     };

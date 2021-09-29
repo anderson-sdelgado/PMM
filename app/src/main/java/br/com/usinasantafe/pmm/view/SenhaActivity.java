@@ -31,41 +31,43 @@ public class SenhaActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("btOkSenha.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("btOkSenha.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @SuppressWarnings(\"unchecked\")\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
-                if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 11L){
-                    LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 11L){", getLocalClassName());
-                    if (!pmmContext.getConfigCTR().hasElemConfig()) {
-                        LogProcessoDAO.getInstance().insert("if (!pmmContext.getConfigCTR().hasElemConfig()) {\n" +
-                                "Intent it = new Intent(SenhaActivity.this, ConfigActivity.class);", getLocalClassName());
-                        Intent it = new Intent(SenhaActivity.this, ConfigActivity.class);
-                        startActivity(it);
-                        finish();
-                    } else {
-                        LogProcessoDAO.getInstance().insert("} else {", getLocalClassName());
+                if (!pmmContext.getConfigCTR().hasElemConfig()) {
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (!pmmContext.getConfigCTR().hasElemConfig()) {\n" +
+                            "Intent it = new Intent(SenhaActivity.this, ConfigActivity.class);", getLocalClassName());
+                    Intent it = new Intent(SenhaActivity.this, ConfigActivity.class);
+                    startActivity(it);
+                    finish();
+                } else {
+                    if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 11L){
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 11L){", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
                         if (pmmContext.getConfigCTR().verSenha(editTextSenha.getText().toString())) {
-                            LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().verSenha(editTextSenha.getText().toString())) {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().verSenha(editTextSenha.getText().toString())) {\n" +
                                     "Intent it = new Intent(SenhaActivity.this, ConfigActivity.class);", getLocalClassName());
                             Intent it = new Intent(SenhaActivity.this, ConfigActivity.class);
                             startActivity(it);
                             finish();
 
                         }
+                    }
+                    else{
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
+                        if (editTextSenha.getText().toString().equals("fgbny946")) {
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (editTextSenha.getText().toString().equals(\"fgbny946\")) {\n" +
+                                    "Intent it = new Intent(SenhaActivity.this, LogProcessoActivity.class);", getLocalClassName());
+                            Intent it = new Intent(SenhaActivity.this, LogProcessoActivity.class);
+                            startActivity(it);
+                            finish();
+                        }
+                    }
+                }
 
-                    }
-                }
-                else{
-                    LogProcessoDAO.getInstance().insert("} else {", getLocalClassName());
-                    if (editTextSenha.getText().toString().equals("fgbny946")) {
-                        LogProcessoDAO.getInstance().insert("if (editTextSenha.getText().toString().equals(\"fgbny946\")) {\n" +
-                                "Intent it = new Intent(SenhaActivity.this, LogProcessoActivity.class);", getLocalClassName());
-                        Intent it = new Intent(SenhaActivity.this, LogProcessoActivity.class);
-                        startActivity(it);
-                        finish();
-                    }
-                }
+
+
 
 
             }
@@ -75,7 +77,7 @@ public class SenhaActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("btCancSenha.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("btCancSenha.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "Intent it = new Intent(SenhaActivity.this, MenuInicialActivity.class);", getLocalClassName());

@@ -130,7 +130,7 @@ public class AtualizarAplicativo extends AsyncTask<String ,Integer ,Boolean> {
 
             flag = true;
         } catch (Exception e) {
-            LogErroDAO.getInstance().insert(e);
+            LogErroDAO.getInstance().insertLogErro(e);
             flag = false;
         }
         return flag;

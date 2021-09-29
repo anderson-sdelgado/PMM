@@ -79,6 +79,9 @@ public class ConfigBean extends Entidade {
 	// 20 - Engate no Menu MotoMec ECM
 	// 21 - Desengate no Parada
 	// 22 - Engate no Parada
+	// 23 - Senha de Menu PMM
+	// 24 - Senha de Menu ECM
+	// 25 - Senha de Menu PCOMP
 
 	public ConfigBean() {
 	}

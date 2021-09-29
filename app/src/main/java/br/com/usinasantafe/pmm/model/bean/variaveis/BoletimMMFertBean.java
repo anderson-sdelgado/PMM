@@ -44,6 +44,8 @@ public class BoletimMMFertBean extends Entidade {
     private Double latitudeBolMMFert;
     @DatabaseField
     private Long tipoBolMMFert; //1 - Moto Mec; 2 - Fertirrigacao
+    @DatabaseField
+    private Long dthrLongFinalBolMMFert;
 
     public BoletimMMFertBean() {
         this.hodometroFinalBolMMFert = 0D;
@@ -179,5 +181,13 @@ public class BoletimMMFertBean extends Entidade {
 
     public void setTipoBolMMFert(Long tipoBolMMFert) {
         this.tipoBolMMFert = tipoBolMMFert;
+    }
+
+    public Long getDthrLongFinalBolMMFert() {
+        return dthrLongFinalBolMMFert;
+    }
+
+    public void setDthrLongFinalBolMMFert(Long dthrLongFinalBolMMFert) {
+        this.dthrLongFinalBolMMFert = dthrLongFinalBolMMFert;
     }
 }

@@ -32,7 +32,7 @@ public class LeiraActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                AlertDialog.Builder alerta = new AlertDialog.Builder(LeiraActivity.this);\n" +
@@ -46,13 +46,13 @@ public class LeiraActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        LogProcessoDAO.getInstance().insert("                alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("                alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
 
                         if (connectNetwork) {
 
-                            LogProcessoDAO.getInstance().insert("if (connectNetwork) {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
                                     "                            progressBar = new ProgressDialog(LeiraActivity.this);\n" +
                                     "                            progressBar.setCancelable(true);\n" +
                                     "                            progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
@@ -69,12 +69,12 @@ public class LeiraActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().atualDados(LeiraActivity.this, LeiraActivity.class, progressBar, \"Leira\", 1, getLocalClassName());", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(LeiraActivity.this, LeiraActivity.class, progressBar, \"Leira\", 1, getLocalClassName());", getLocalClassName());
                             pmmContext.getMotoMecFertCTR().atualDados(LeiraActivity.this, LeiraActivity.class, progressBar, "Leira", 1, getLocalClassName());
 
                         } else {
 
-                            LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder(LeiraActivity.this);\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(LeiraActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
                                     "                            alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
                                     "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
@@ -102,7 +102,7 @@ public class LeiraActivity extends ActivityGeneric {
                 alerta.setPositiveButton("NÃO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                     }
@@ -119,16 +119,16 @@ public class LeiraActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonOkMotorista.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkMotorista.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @SuppressWarnings(\"rawtypes\")\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
                 if (!editTextPadrao.getText().toString().equals("")) {
 
-                    LogProcessoDAO.getInstance().insert("if (!editTextPadrao.getText().toString().equals(\"\")) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {", getLocalClassName());
                     if (pmmContext.getCompostoCTR().verLeira(Long.parseLong(editTextPadrao.getText().toString()))) {
 
-                        LogProcessoDAO.getInstance().insert("if (pmmContext.getCompostoCTR().verLeira(Long.parseLong(editTextPadrao.getText().toString())))\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getCompostoCTR().verLeira(Long.parseLong(editTextPadrao.getText().toString())))\n" +
                                 " {if (connectNetwork) {\n" +
                                 "                            pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
                                 "                        }\n" +
@@ -143,28 +143,28 @@ public class LeiraActivity extends ActivityGeneric {
                             pmmContext.getConfigCTR().setStatusConConfig(0L);
                         }
 
-                        LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
                         pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
 
                         if (pmmContext.getConfigCTR().getOS().getTipoOS() == 0L) {
-                            LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getOS().getTipoOS() == 0L) {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getOS().getTipoOS() == 0L) {\n" +
                                     "                            pmmContext.getCompostoCTR().abrirCarregComposto(Long.parseLong(" + editTextPadrao.getText().toString() + "));", getLocalClassName());
                             pmmContext.getCompostoCTR().abrirCarregComposto(Long.parseLong(editTextPadrao.getText().toString()));
                         }
                         else{
-                            LogProcessoDAO.getInstance().insert("else{\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                                     "                            pmmContext.getCompostoCTR().salvarLeiraDescarreg(Long.parseLong(" + editTextPadrao.getText().toString() + "));", getLocalClassName());
                             pmmContext.getCompostoCTR().salvarLeiraDescarreg(Long.parseLong(editTextPadrao.getText().toString()));
                         }
 
-                        LogProcessoDAO.getInstance().insert("Intent it = new Intent(LeiraActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(LeiraActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                         Intent it = new Intent(LeiraActivity.this, MenuPrincPCOMPActivity.class);
                         startActivity(it);
                         finish();
 
                     } else {
 
-                        LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder(LeiraActivity.this);\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(LeiraActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
                                 "                        alerta.setMessage(\"NUMERAÇÃO DO LEIRA INEXISTENTE! FAVOR VERIFICA A MESMA.\");\n" +
                                 "                        alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
@@ -194,7 +194,7 @@ public class LeiraActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonCancMotorista.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancMotorista.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                if (editTextPadrao.getText().toString().length() > 0) {\n" +
@@ -209,7 +209,7 @@ public class LeiraActivity extends ActivityGeneric {
     }
 
     public void onBackPressed() {
-        LogProcessoDAO.getInstance().insert("public void onBackPressed() {\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("public void onBackPressed() {\n" +
                 "        Intent it = new Intent(LeiraActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
         Intent it = new Intent(LeiraActivity.this, MenuPrincPCOMPActivity.class);
         startActivity(it);

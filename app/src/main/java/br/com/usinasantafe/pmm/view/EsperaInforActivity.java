@@ -26,32 +26,32 @@ public class EsperaInforActivity extends ActivityGeneric {
 
         if (connectNetwork) {
 
-            LogProcessoDAO.getInstance().insert("if (connectNetwork) {", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {", getLocalClassName());
             if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L){
 
-                LogProcessoDAO.getInstance().insert("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L){\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L){\n" +
                         "                customHandler.postDelayed(runnable, 10000);", getLocalClassName());
                 customHandler.postDelayed(runnable, 10000);
 
                 if(PMMContext.aplic == 1){
-                    LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 1){\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                             "pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(" + pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getMatricFuncBolMMFert() + "), EsperaInforActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                     pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getMatricFuncBolMMFert()), EsperaInforActivity.this, MenuPrincPMMActivity.class, getLocalClassName());
                 }
                 else if(PMMContext.aplic == 2){
-                    LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 2){\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2){\n" +
                             "pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(" + pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getMatricFuncBolMMFert() + "), EsperaInforActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                     pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getMatricFuncBolMMFert()), EsperaInforActivity.this, MenuPrincECMActivity.class, getLocalClassName());
                 }
                 else if(PMMContext.aplic == 3){
-                    LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 3){\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 3){\n" +
                             "pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(" + pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getMatricFuncBolMMFert() + "), EsperaInforActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                     pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getMatricFuncBolMMFert()), EsperaInforActivity.this, MenuPrincPCOMPActivity.class, getLocalClassName());
                 }
 
             }
             else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 13L){
-                LogProcessoDAO.getInstance().insert("else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 13L){\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 13L){\n" +
                         "                textEspInfor.setText(\"BUSCANDO ORD. CARREGAMENTO...\");\n" +
                         "                pmmContext.getCompostoCTR().verifDadosCarreg(this, InformacaoActivity.class, getLocalClassName());", getLocalClassName());
                 textEspInfor.setText("BUSCANDO ORD. CARREGAMENTO...");
@@ -60,25 +60,25 @@ public class EsperaInforActivity extends ActivityGeneric {
 
         }
         else{
-            LogProcessoDAO.getInstance().insert("else{\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                     "            VerifDadosServ.status = 3;", getLocalClassName());
             VerifDadosServ.status = 3;
             if(PMMContext.aplic == 1){
-                LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 1){\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                         "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                 Intent it = new Intent(EsperaInforActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();
             }
             else if(PMMContext.aplic == 2){
-                LogProcessoDAO.getInstance().insert("else if(PMMContext.aplic == 2){\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
                         "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                 Intent it = new Intent(EsperaInforActivity.this, MenuPrincECMActivity.class);
                 startActivity(it);
                 finish();
             }
             else if(PMMContext.aplic == 3){
-                LogProcessoDAO.getInstance().insert("else if(PMMContext.aplic == 3){\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
                         "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                 Intent it = new Intent(EsperaInforActivity.this, MenuPrincPCOMPActivity.class);
                 startActivity(it);
@@ -90,28 +90,28 @@ public class EsperaInforActivity extends ActivityGeneric {
 
     private Runnable runnable = new Runnable(){
         public void run() {
-            LogProcessoDAO.getInstance().insert("private Runnable runnable = new Runnable(){\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("private Runnable runnable = new Runnable(){\n" +
                     "        public void run() {", getLocalClassName());
             if(VerifDadosServ.status < 3) {
-                LogProcessoDAO.getInstance().insert("if(VerifDadosServ.status < 3) {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if(VerifDadosServ.status < 3) {\n" +
                         "VerifDadosServ.status = 3;", getLocalClassName());
                 VerifDadosServ.status = 3;
                 if(PMMContext.aplic == 1){
-                    LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 1){\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                             "                    Intent it = new Intent(EsperaInforActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                     Intent it = new Intent(EsperaInforActivity.this, MenuPrincPMMActivity.class);
                     startActivity(it);
                     finish();
                 }
                 else if(PMMContext.aplic == 2){
-                    LogProcessoDAO.getInstance().insert("else if(PMMContext.aplic == 2){\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
                             "                    Intent it = new Intent(EsperaInforActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                     Intent it = new Intent(EsperaInforActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();
                 }
                 else if(PMMContext.aplic == 3){
-                    LogProcessoDAO.getInstance().insert("else if(PMMContext.aplic == 3){\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
                             "                    Intent it = new Intent(EsperaInforActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                     Intent it = new Intent(EsperaInforActivity.this, MenuPrincPCOMPActivity.class);
                     startActivity(it);

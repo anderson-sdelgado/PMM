@@ -36,7 +36,7 @@ import br.com.usinasantafe.pmm.model.dao.RespItemCheckListDAO;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
 import br.com.usinasantafe.pmm.util.Json;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
-import br.com.usinasantafe.pmm.view.MenuInicialActivity;
+import br.com.usinasantafe.pmm.view.TelaInicialActivity;
 
 public class ConfigCTR {
 
@@ -164,7 +164,7 @@ public class ConfigCTR {
 
     public void verEquipConfig(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
         EquipDAO equipDAO = new EquipDAO();
-        LogProcessoDAO.getInstance().insert("equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog);", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog);", activity);
         equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog, activity);
     }
 
@@ -207,7 +207,7 @@ public class ConfigCTR {
             }
 
         } catch (Exception e) {
-            LogErroDAO.getInstance().insert(e);
+            LogErroDAO.getInstance().insertLogErro(e);
             VerifDadosServ.getInstance().msg("FALHA DE PESQUISA DE EQUIPAMENTO! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
 
@@ -291,7 +291,7 @@ public class ConfigCTR {
 
         } catch (Exception e) {
             setStatusConConfig(0L);
-            LogErroDAO.getInstance().insert(e);
+            LogErroDAO.getInstance().insertLogErro(e);
             VerifDadosServ.getInstance().msg("FALHA DE PESQUISA DE OS! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
     }
@@ -344,7 +344,7 @@ public class ConfigCTR {
                 VerifDadosServ.getInstance().msg("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
             }
         } catch (Exception e) {
-            LogErroDAO.getInstance().insert(e);
+            LogErroDAO.getInstance().insertLogErro(e);
             VerifDadosServ.getInstance().msg("FALHA DE PESQUISA DE ATIVIDADE! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
         }
     }
@@ -496,19 +496,19 @@ public class ConfigCTR {
 
         } catch (Exception e) {
             VerifDadosServ.status = 1;
-            LogErroDAO.getInstance().insert(e);
+            LogErroDAO.getInstance().insertLogErro(e);
         }
         return atualAplicBean;
     }
 
-    public void verAtualAplic(String versaoAplic, MenuInicialActivity menuInicialActivity, ProgressDialog progressDialog, String activity) {
+    public void verAtualAplic(String versaoAplic, TelaInicialActivity telaInicialActivity, String activity) {
         EquipDAO equipDAO = new EquipDAO();
         EquipBean equipBean = equipDAO.getEquip();
         AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
-        LogProcessoDAO.getInstance().insert("VerifDadosServ.getInstance().verifAtualAplic(atualAplicDAO.dadosVerAtualAplicBean(equipBean.getNroEquip(), equipBean.getIdCheckList(), versaoAplic)\n" +
-                "                , menuInicialActivity, progressDialog);", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().verifAtualAplic(atualAplicDAO.dadosVerAtualAplicBean(equipBean.getNroEquip(), equipBean.getIdCheckList(), versaoAplic)\n" +
+                "                , telaInicialActivity, progressDialog);", activity);
         VerifDadosServ.getInstance().verifAtualAplic(atualAplicDAO.dadosVerAtualAplicBean(equipBean.getNroEquip(), equipBean.getIdCheckList(), versaoAplic)
-                , menuInicialActivity, progressDialog, activity);
+                , telaInicialActivity, activity);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -516,7 +516,7 @@ public class ConfigCTR {
     ////////////////////////////////////// ATUALIZAR DADOS ////////////////////////////////////////
 
     public void atualTodasTabelas(Context tela, ProgressDialog progressDialog, String activity){
-        LogProcessoDAO.getInstance().insert("AtualDadosServ.getInstance().atualTodasTabBD(tela, progressDialog, activity);", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("AtualDadosServ.getInstance().atualTodasTabBD(tela, progressDialog, activity);", activity);
         AtualDadosServ.getInstance().atualTodasTabBD(tela, progressDialog, activity);
     }
 
@@ -551,6 +551,13 @@ public class ConfigCTR {
     public List<LogErroBean> logErroList(){
         LogErroDAO logErroDAO = new LogErroDAO();
         return logErroDAO.logErroBeanList();
+    }
+
+    public void deleteLogs(){
+        LogProcessoDAO logProcessoDAO = new LogProcessoDAO();
+        LogErroDAO logErroDAO = new LogErroDAO();
+        logProcessoDAO.deleteLogProcesso();
+        logErroDAO.deleteLogErro();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

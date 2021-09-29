@@ -33,7 +33,7 @@ public class ImplementoActivity extends ActivityGeneric {
         buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                AlertDialog.Builder alerta = new AlertDialog.Builder(ImplementoActivity.this);\n" +
@@ -45,13 +45,13 @@ public class ImplementoActivity extends ActivityGeneric {
                 alerta.setNegativeButton("SIM", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        LogProcessoDAO.getInstance().insert("alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {\n", getLocalClassName());
 
                         if (connectNetwork) {
 
-                            LogProcessoDAO.getInstance().insert("if (connectNetwork) {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
                                     "progressBar = new ProgressDialog(ImplementoActivity.this);\n" +
                                     "                            progressBar.setCancelable(true);\n" +
                                     "                            progressBar.setMessage(\"Atualizando Implemento...\");\n" +
@@ -62,12 +62,12 @@ public class ImplementoActivity extends ActivityGeneric {
                             progressBar.setMessage("Atualizando Implemento...");
                             progressBar.show();
 
-                            LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().atualDados(ImplementoActivity.this, ImplementoActivity.class, progressBar, \"EquipSeg\", 1, getLocalClassName());", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(ImplementoActivity.this, ImplementoActivity.class, progressBar, \"EquipSeg\", 1, getLocalClassName());", getLocalClassName());
                             pmmContext.getMotoMecFertCTR().atualDados(ImplementoActivity.this, ImplementoActivity.class, progressBar, "EquipSeg", 1, getLocalClassName());
 
                         } else {
 
-                            LogProcessoDAO.getInstance().insert("} else {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                     "AlertDialog.Builder alerta = new AlertDialog.Builder(ImplementoActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
                                     "                            alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
@@ -96,7 +96,7 @@ public class ImplementoActivity extends ActivityGeneric {
                 alerta.setPositiveButton("NÃO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                     }
@@ -108,25 +108,25 @@ public class ImplementoActivity extends ActivityGeneric {
 
         });
 
-        LogProcessoDAO.getInstance().insert("textViewImplemento.setText(\"IMPLEMENTO \" + " + pmmContext.getMotoMecFertCTR().getContImplemento() + " + \":\");", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("textViewImplemento.setText(\"IMPLEMENTO \" + " + pmmContext.getMotoMecFertCTR().getContImplemento() + " + \":\");", getLocalClassName());
         textViewImplemento.setText("IMPLEMENTO " + pmmContext.getMotoMecFertCTR().getContImplemento() + ":");
 
         buttonOkImplemento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonOkImplemento.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkImplemento.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
 
                 if(pmmContext.getMotoMecFertCTR().getContImplemento() == 1L){
-                    LogProcessoDAO.getInstance().insert("if(pmmContext.getMotoMecFertCTR().getContImplemento() == 1L){", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().getContImplemento() == 1L){", getLocalClassName());
                     if (!editTextPadrao.getText().toString().equals("")) {
-                        LogProcessoDAO.getInstance().insert("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
                                 "                        Long impl = Long.parseLong(editTextPadrao.getText().toString());", getLocalClassName());
                         Long impl = Long.parseLong(editTextPadrao.getText().toString());
                         if(pmmContext.getMotoMecFertCTR().verImplemento(impl)){
-                            LogProcessoDAO.getInstance().insert("if(pmmContext.getMotoMecFertCTR().verImplemento(impl)){\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verImplemento(impl)){\n" +
                                     "                            pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getMotoMecFertCTR().getContImplemento(), impl);\n" +
                                     "                            pmmContext.getMotoMecFertCTR().setContImplemento(2L);\n" +
                                     "                            Intent it = new Intent(ImplementoActivity.this, ImplementoActivity.class);", getLocalClassName());
@@ -143,11 +143,11 @@ public class ImplementoActivity extends ActivityGeneric {
                 }
                 else{
                     if (!editTextPadrao.getText().toString().equals("")) {
-                        LogProcessoDAO.getInstance().insert("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
                                 "                        Long impl = Long.parseLong(editTextPadrao.getText().toString());", getLocalClassName());
                         Long impl = Long.parseLong(editTextPadrao.getText().toString());
                         if(pmmContext.getMotoMecFertCTR().verImplemento(impl) && (pmmContext.getMotoMecFertCTR().verDuplicImpleMM(impl))){
-                            LogProcessoDAO.getInstance().insert("if(pmmContext.getMotoMecFertCTR().verImplemento(impl) && (pmmContext.getMotoMecFertCTR().verDuplicImpleMM(impl))){\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verImplemento(impl) && (pmmContext.getMotoMecFertCTR().verDuplicImpleMM(impl))){\n" +
                                     "                            pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getMotoMecFertCTR().getContImplemento(), impl);\n" +
                                     "                            verTela();", getLocalClassName());
                             pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getMotoMecFertCTR().getContImplemento(), impl);
@@ -158,7 +158,7 @@ public class ImplementoActivity extends ActivityGeneric {
                         }
                     }
                     else{
-                        LogProcessoDAO.getInstance().insert("verTela();", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("verTela();", getLocalClassName());
                         verTela();
                     }
                 }
@@ -170,7 +170,7 @@ public class ImplementoActivity extends ActivityGeneric {
         buttonCancImplemento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonCancImplemento.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancImplemento.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "if (editTextPadrao.getText().toString().length() > 0) {\n" +
@@ -186,12 +186,12 @@ public class ImplementoActivity extends ActivityGeneric {
 
     public void verTela(){
         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
-            LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
                     "            salvarBoletimAberto();", getLocalClassName());
             salvarBoletimAberto();
         }
         else{
-            LogProcessoDAO.getInstance().insert("else{\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                     "            Intent it = new Intent(ImplementoActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
             Intent it = new Intent(ImplementoActivity.this, MenuPrincPMMActivity.class);
             startActivity(it);
@@ -200,7 +200,7 @@ public class ImplementoActivity extends ActivityGeneric {
     }
 
     public void msg(String msg){
-        LogProcessoDAO.getInstance().insert("public void msg(String msg){\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("public void msg(String msg){\n" +
                 "AlertDialog.Builder alerta = new AlertDialog.Builder(ImplementoActivity.this);\n" +
                 "        alerta.setTitle(\"ATENÇÃO\");\n" +
                 "        alerta.setMessage(" + msg + ");\n" +
@@ -224,11 +224,11 @@ public class ImplementoActivity extends ActivityGeneric {
 
 
     public void salvarBoletimAberto() {
-        LogProcessoDAO.getInstance().insert("public void salvarBoletimAberto() {\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("public void salvarBoletimAberto() {\n" +
                 "pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());", getLocalClassName());
         pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());
         if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getIdTurnoBolMMFert())){
-            LogProcessoDAO.getInstance().insert("if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getIdTurnoBolMMFert())){\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getIdTurnoBolMMFert())){\n" +
                     "            pmmContext.getMotoMecFertCTR().inserirParadaCheckList(getLocalClassName());\n" +
                     "            pmmContext.getCheckListCTR().setPosCheckList(1);\n" +
                     "            pmmContext.getCheckListCTR().createCabecAberto(getLocalClassName());", getLocalClassName());
@@ -236,13 +236,13 @@ public class ImplementoActivity extends ActivityGeneric {
             pmmContext.getCheckListCTR().setPosCheckList(1);
             pmmContext.getCheckListCTR().createCabecAberto(getLocalClassName());
             if (pmmContext.getConfigCTR().getConfig().getAtualCheckList().equals(1L)) {
-                LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getAtualCheckList().equals(1L)) {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getAtualCheckList().equals(1L)) {\n" +
                         "                Intent it = new Intent(ImplementoActivity.this, PergAtualCheckListActivity.class);", getLocalClassName());
                 Intent it = new Intent(ImplementoActivity.this, PergAtualCheckListActivity.class);
                 startActivity(it);
                 finish();
             } else {
-                LogProcessoDAO.getInstance().insert("} else {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                         "                Intent it = new Intent(ImplementoActivity.this, ItemCheckListActivity.class);", getLocalClassName());
                 Intent it = new Intent(ImplementoActivity.this, ItemCheckListActivity.class);
                 startActivity(it);
@@ -250,7 +250,7 @@ public class ImplementoActivity extends ActivityGeneric {
             }
         }
         else{
-            LogProcessoDAO.getInstance().insert("else{\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                     "            Intent it = new Intent(ImplementoActivity.this, EsperaInforActivity.class);", getLocalClassName());
             Intent it = new Intent(ImplementoActivity.this, EsperaInforActivity.class);
             startActivity(it);
@@ -259,24 +259,24 @@ public class ImplementoActivity extends ActivityGeneric {
     }
 
     public void onBackPressed() {
-        LogProcessoDAO.getInstance().insert("public void onBackPressed() {", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("public void onBackPressed() {", getLocalClassName());
         if (pmmContext.getMotoMecFertCTR().getContImplemento() == 1) {
-            LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().getContImplemento() == 1) {", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().getContImplemento() == 1) {", getLocalClassName());
             if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
-                LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
                         "                Intent it = new Intent(ImplementoActivity.this, HorimetroActivity.class);", getLocalClassName());
                 Intent it = new Intent(ImplementoActivity.this, HorimetroActivity.class);
                 startActivity(it);
                 finish();
             } else {
-                LogProcessoDAO.getInstance().insert("} else {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                         "                Intent it = new Intent(ImplementoActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                 Intent it = new Intent(ImplementoActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();
             }
         } else {
-            LogProcessoDAO.getInstance().insert("} else {\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                     "            pmmContext.getMotoMecFertCTR().setContImplemento(pmmContext.getMotoMecFertCTR().getContImplemento() - 1);\n" +
                     "            Intent it = new Intent(ImplementoActivity.this, ImplementoActivity.class);", getLocalClassName());
             pmmContext.getMotoMecFertCTR().setContImplemento(pmmContext.getMotoMecFertCTR().getContImplemento() - 1);

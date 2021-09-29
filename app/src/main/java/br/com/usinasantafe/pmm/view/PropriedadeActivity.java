@@ -32,13 +32,13 @@ public class PropriedadeActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonAtualPropriedade.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonAtualPropriedade.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
 
                 if (connectNetwork) {
 
-                    LogProcessoDAO.getInstance().insert("if (connectNetwork) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
                             "                    progressBar = new ProgressDialog(PropriedadeActivity.this);\n" +
                             "                    progressBar.setCancelable(true);\n" +
                             "                    progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
@@ -55,13 +55,13 @@ public class PropriedadeActivity extends ActivityGeneric {
                     progressBar.setMax(100);
                     progressBar.show();
 
-                    LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().atualDados(PropriedadeActivity.this, PropriedadeActivity.class, progressBar, \"Propriedade\", 1, getLocalClassName());", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(PropriedadeActivity.this, PropriedadeActivity.class, progressBar, \"Propriedade\", 1, getLocalClassName());", getLocalClassName());
                     pmmContext.getMotoMecFertCTR().atualDados(PropriedadeActivity.this, PropriedadeActivity.class, progressBar, "Propriedade", 1, getLocalClassName());
 
                 }
                 else {
 
-                    LogProcessoDAO.getInstance().insert("else {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                             "                    AlertDialog.Builder alerta = new AlertDialog.Builder(PropriedadeActivity.this);\n" +
                             "                    alerta.setTitle(\"ATENÇÃO\");\n" +
                             "                    alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");", getLocalClassName());
@@ -71,7 +71,7 @@ public class PropriedadeActivity extends ActivityGeneric {
                     alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
                                     "                        @Override\n" +
                                     "                        public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                         }
@@ -88,15 +88,15 @@ public class PropriedadeActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonOkPropriedade.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkPropriedade.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
                 if (!editTextPadrao.getText().toString().equals("")) {
 
-                    LogProcessoDAO.getInstance().insert("if (!editTextPadrao.getText().toString().equals(\"\")) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {", getLocalClassName());
                     if (pmmContext.getConfigCTR().verPropriedade(Long.parseLong(editTextPadrao.getText().toString()))) {
 
-                        LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().verPropriedade(Long.parseLong(editTextPadrao.getText().toString()))) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().verPropriedade(Long.parseLong(editTextPadrao.getText().toString()))) {\n" +
                                 "                        pmmContext.getConfigCTR().setIdPropriedade(Long.parseLong(editTextPadrao.getText().toString()));\n" +
                                 "                        Intent it = new Intent(PropriedadeActivity.this, MsgPropriedadeActivity.class);", getLocalClassName());
                         pmmContext.getConfigCTR().setIdPropriedade(Long.parseLong(editTextPadrao.getText().toString()));
@@ -107,7 +107,7 @@ public class PropriedadeActivity extends ActivityGeneric {
                     }
                     else{
 
-                        LogProcessoDAO.getInstance().insert("else{\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                                 "                        AlertDialog.Builder alerta = new AlertDialog.Builder(PropriedadeActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
                                 "                        alerta.setMessage(\"PROPRIEDADE INCORRETA! POR FAVOR, VERIFIQUE O CÓDIGO DA PROPRIEDADE E DIGITE NOVAMENTE.\");", getLocalClassName());
@@ -117,7 +117,7 @@ public class PropriedadeActivity extends ActivityGeneric {
                         alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
                                         "                            @Override\n" +
                                         "                            public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                             }
@@ -134,7 +134,7 @@ public class PropriedadeActivity extends ActivityGeneric {
         buttonCancPropriedade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonCancPropriedade.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancPropriedade.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                if (editTextPadrao.getText().toString().length() > 0) {\n" +
@@ -149,7 +149,7 @@ public class PropriedadeActivity extends ActivityGeneric {
     }
 
     public void onBackPressed()  {
-        LogProcessoDAO.getInstance().insert("public void onBackPressed()  {\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("public void onBackPressed()  {\n" +
                 "        Intent it = new Intent(PropriedadeActivity.this, FrenteActivity.class);", getLocalClassName());
         Intent it = new Intent(PropriedadeActivity.this, FrenteActivity.class);
         startActivity(it);

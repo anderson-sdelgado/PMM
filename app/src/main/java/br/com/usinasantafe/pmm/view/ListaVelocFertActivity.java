@@ -38,7 +38,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonAtualVelocidade.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonAtualVelocidade.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                AlertDialog.Builder alerta = new AlertDialog.Builder(  ListaVelocFertActivity.this);\n" +
@@ -52,12 +52,12 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        LogProcessoDAO.getInstance().insert("alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                         if (connectNetwork) {
 
-                            LogProcessoDAO.getInstance().insert("if (connectNetwork) {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
                                     "                            progressBar = new ProgressDialog(ListaVelocFertActivity.this);\n" +
                                     "                            progressBar.setCancelable(true);\n" +
                                     "                            progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
@@ -74,12 +74,12 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().atualDados(ListaVelocFertActivity.this, ListaVelocFertActivity.class, progressBar, \"Pressao\", 1, getLocalClassName());", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(ListaVelocFertActivity.this, ListaVelocFertActivity.class, progressBar, \"Pressao\", 1, getLocalClassName());", getLocalClassName());
                             pmmContext.getMotoMecFertCTR().atualDados(ListaVelocFertActivity.this, ListaVelocFertActivity.class, progressBar, "Pressao", 1, getLocalClassName());
 
                         } else {
 
-                            LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder( ListaVelocFertActivity.this);\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder( ListaVelocFertActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
                                     "                            alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
                                     "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
@@ -107,7 +107,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                 alerta.setPositiveButton("NÃO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                     }
@@ -119,7 +119,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
         });
 
-        LogProcessoDAO.getInstance().insert("AdapterList adapterList = new AdapterList(this, pmmContext.getMotoMecFertCTR().velocArrayList());\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("AdapterList adapterList = new AdapterList(this, pmmContext.getMotoMecFertCTR().velocArrayList());\n" +
                 "        velocListView = findViewById(R.id.listVelocidade);\n" +
                 "        velocListView.setAdapter(adapterList);", getLocalClassName());
         AdapterList adapterList = new AdapterList(this, pmmContext.getMotoMecFertCTR().velocArrayList());
@@ -132,7 +132,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                LogProcessoDAO.getInstance().insert("velocListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("velocListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
                         "                                    long id) {\n" +
@@ -144,7 +144,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
                 if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
 
-                    LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
                             "                    AlertDialog.Builder alerta = new AlertDialog.Builder(ListaVelocFertActivity.this);\n" +
                             "                    alerta.setTitle(\"ATENÇÃO\");\n" +
                             "                    alerta.setMessage(\"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\");", getLocalClassName());
@@ -155,7 +155,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                     alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
                                     "                        @Override\n" +
                                     "                        public void onClick(DialogInterface dialog, int which) {\n" +
                                     "                            Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
@@ -168,10 +168,10 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
                 } else {
 
-                    LogProcessoDAO.getInstance().insert("} else {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
                     if (pmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {
 
-                        LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {\n" +
                                 "                        AlertDialog.Builder alerta = new AlertDialog.Builder(ListaVelocFertActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
                                 "                        alerta.setMessage(\"OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!\");", getLocalClassName());
@@ -181,7 +181,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                         alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
                                         "                            @Override\n" +
                                         "                            public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                             }
@@ -191,7 +191,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
 
                     } else {
 
-                        LogProcessoDAO.getInstance().insert("List<RFuncaoAtivParBean> rFuncaoAtivParList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("List<RFuncaoAtivParBean> rFuncaoAtivParList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());\n" +
                                 "                        boolean recolhimento = false;\n" +
                                 "                        for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtivParList) {\n" +
                                 "                            if (rFuncaoAtivParBean.getCodFuncao() == 4) {\n" +
@@ -209,16 +209,16 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                         }
                         rFuncaoAtivParList.clear();
 
-                        LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().salvarApont( 0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont( 0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
                         pmmContext.getMotoMecFertCTR().salvarApont( 0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
 
                         if (recolhimento) {
-                            LogProcessoDAO.getInstance().insert("if (recolhimento) {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (recolhimento) {\n" +
                                     "                            pmmContext.getMotoMecFertCTR().insRecolh();", getLocalClassName());
                             pmmContext.getMotoMecFertCTR().insRecolh(getLocalClassName());
                         }
 
-                        LogProcessoDAO.getInstance().insert("Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                         Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincPMMActivity.class);
                         startActivity(it);
                         finish();
@@ -234,7 +234,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
         buttonRetVelocidade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonRetVelocidade.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetVelocidade.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(ListaVelocFertActivity.this, ListaPressaoFertActivity.class);", getLocalClassName());

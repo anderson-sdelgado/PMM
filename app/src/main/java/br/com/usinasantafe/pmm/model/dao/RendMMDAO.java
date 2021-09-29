@@ -27,7 +27,7 @@ public class RendMMDAO {
         List<RendMMBean> rendList = rendMMBean.get(pesquisaArrayList);
 
         if (rendList.size() == 0) {
-            LogProcessoDAO.getInstance().insert("if (rendList.size() == 0) {", activity);
+            LogProcessoDAO.getInstance().insertLogProcesso("if (rendList.size() == 0) {", activity);
             rendMMBean.setIdBolMMFert(idBol);
             rendMMBean.setNroOSRendMM(nroOS);
             rendMMBean.setValorRendMM(0D);

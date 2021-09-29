@@ -201,6 +201,9 @@ public class Tempo {
 
     }
 
+    public Long dthrLongDia1Menos(){
+        return Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()) - (1*24*60*60*1000);
+    }
 
     public Long dthrStringToLong(String dthrString){
         return dthrStringToCalendar(dthrString).getTimeInMillis();
@@ -228,7 +231,7 @@ public class Tempo {
 
         }
         catch (Exception e) {
-            LogErroDAO.getInstance().insert(e);
+            LogErroDAO.getInstance().insertLogErro(e);
         }
 
         return calendar;

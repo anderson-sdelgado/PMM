@@ -3,6 +3,7 @@ package br.com.usinasantafe.pmm.control;
 import android.app.ProgressDialog;
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.dao.CabecCheckListDAO;
@@ -49,7 +50,7 @@ public class CheckListCTR {
         ConfigCTR configCTR = new ConfigCTR();
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
-        LogProcessoDAO.getInstance().insert("cabecCheckListDAO.createCabecAberto(" + configCTR.getEquip().getNroEquip() + " , " + motoMecFertCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert() + ", " + motoMecFertCTR.getBoletimMMFertAberto().getIdTurnoBolMMFert() + ");", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("cabecCheckListDAO.createCabecAberto(" + configCTR.getEquip().getNroEquip() + " , " + motoMecFertCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert() + ", " + motoMecFertCTR.getBoletimMMFertAberto().getIdTurnoBolMMFert() + ");", activity);
         cabecCheckListDAO.createCabecAberto(configCTR.getEquip().getNroEquip() , motoMecFertCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert(), motoMecFertCTR.getBoletimMMFertAberto().getIdTurnoBolMMFert());
     }
 
@@ -96,7 +97,7 @@ public class CheckListCTR {
             }
 
         } catch (Exception e) {
-            LogErroDAO.getInstance().insert(e);
+            LogErroDAO.getInstance().insertLogErro(e);
             VerifDadosServ.getInstance().pulaTela();
         }
 
@@ -142,9 +143,9 @@ public class CheckListCTR {
 
     }
 
-    public void delChecklist(String activity) {
+    public void updateRecebChecklist(String activity) {
 
-        LogProcessoDAO.getInstance().insert("        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();\n" +
                 "        cabecCheckListDAO.updateCabecCLEnviado();\n" +
                 "        EnvioDadosServ.getInstance().envioDados(activity);", activity);
 
@@ -153,6 +154,14 @@ public class CheckListCTR {
 
         EnvioDadosServ.getInstance().envioDados(activity);
 
+    }
+
+    public void deleteChecklist(){
+        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
+        RespItemCheckListDAO respItemCheckListDAO = new RespItemCheckListDAO();
+        ArrayList<Long> idCabecCheckListArrayList = cabecCheckListDAO.idCabecCheckListEnviadoArrayList();
+        respItemCheckListDAO.deleteRespItemCheckList(idCabecCheckListArrayList);
+        cabecCheckListDAO.deleteCabecCheckListEnviado(idCabecCheckListArrayList);
     }
 
 }

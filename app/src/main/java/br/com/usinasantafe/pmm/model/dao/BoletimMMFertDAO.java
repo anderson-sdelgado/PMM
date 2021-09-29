@@ -79,15 +79,16 @@ public class BoletimMMFertDAO {
     }
 
     public void salvarBolAbertoMMFert(Long tipoEquip, Long os, Long ativ, Long statusCon, String activity){
-        LogProcessoDAO.getInstance().insert("public void salvarBolAbertoMMFert(Long tipoEquip, Long os, Long ativ, Long statusCon, String activity){", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("public void salvarBolAbertoMMFert(Long tipoEquip, Long os, Long ativ, Long statusCon, String activity){", activity);
         if(!verBolAbertoMMFert()){
             String dthr = Tempo.getInstance().dthr();
-            LogProcessoDAO.getInstance().insert("if(!verBolAbertoMMFert()){ + Data Inicial Boletim = " + dthr, activity);
+            LogProcessoDAO.getInstance().insertLogProcesso("if(!verBolAbertoMMFert()){ + Data Inicial Boletim = " + dthr, activity);
             boletimMMFertBean.setTipoBolMMFert(tipoEquip);
             boletimMMFertBean.setOsBolMMFert(os);
             boletimMMFertBean.setAtivPrincBolMMFert(ativ);
             boletimMMFertBean.setStatusConBolMMFert(statusCon);
             boletimMMFertBean.setDthrInicialBolMMFert(dthr);
+            boletimMMFertBean.setDthrLongFinalBolMMFert(0L);
             boletimMMFertBean.insert();
         }
     }
@@ -96,11 +97,14 @@ public class BoletimMMFertDAO {
 
         List<BoletimMMFertBean> boletimMMList = bolAbertoMMFertList();
 
+        LogProcessoDAO.getInstance().insertLogProcesso("public void salvarBolFechadoMMFert(String activity) {\n" +
+                "        List<BoletimMMFertBean> boletimMMList = bolAbertoMMFertList();", activity);
         for(BoletimMMFertBean boletimMMFertBeanBD : boletimMMList){
-            LogProcessoDAO.getInstance().insert("for(BoletimMMFertBean boletimMMFertBeanBD : boletimMMList){ + Boletins = " + boletimMMFertBeanBD.getIdBolMMFert() , activity);
+            LogProcessoDAO.getInstance().insertLogProcesso("for(BoletimMMFertBean boletimMMFertBeanBD : boletimMMList){ + Boletins = " + boletimMMFertBeanBD.getIdBolMMFert() , activity);
             boletimMMFertBeanBD.setDthrFinalBolMMFert(Tempo.getInstance().dthr());
             boletimMMFertBeanBD.setStatusBolMMFert(2L);
             boletimMMFertBeanBD.setHodometroFinalBolMMFert(boletimMMFertBean.getHodometroFinalBolMMFert());
+            boletimMMFertBeanBD.setDthrLongFinalBolMMFert(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
             boletimMMFertBeanBD.update();
         }
 
@@ -110,25 +114,50 @@ public class BoletimMMFertDAO {
 
     }
 
-    public void delBolMMFert(Long idBol){
-        ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqIdBol(idBol));
-        BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
-        List<BoletimMMFertBean> boletimMMFertList = boletimMMFertBean.get(pesqArrayList);
-        boletimMMFertBean = boletimMMFertList.get(0);
-        boletimMMFertBean.delete();
-        boletimMMFertList.clear();
-    }
-
     public void updateBolMMFertEnvio(Long idBol){
+
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqIdBol(idBol));
+
         BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
         List<BoletimMMFertBean> boletimMMFertList = boletimMMFertBean.get(pesqArrayList);
         boletimMMFertBean = boletimMMFertList.get(0);
         boletimMMFertBean.setStatusBolMMFert(3L);
         boletimMMFertBean.update();
         boletimMMFertList.clear();
+
+    }
+
+    public void deleteBolMMFert(Long idBol){
+
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqIdBol(idBol));
+
+        BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
+        List<BoletimMMFertBean> boletimMMFertList = boletimMMFertBean.get(pesqArrayList);
+        boletimMMFertBean = boletimMMFertList.get(0);
+        boletimMMFertBean.delete();
+        boletimMMFertList.clear();
+
+    }
+
+    public ArrayList<BoletimMMFertBean> bolEnviadoArrayList(){
+
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqBolEnviado());
+
+        BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
+        List<BoletimMMFertBean> boletimMMFertList =  boletimMMFertBean.get(pesqArrayList);
+
+        ArrayList<BoletimMMFertBean> boletimMMFertArrayList = new ArrayList<>();
+        for (BoletimMMFertBean boletimMMFertBeanBD : boletimMMFertList) {
+            if(boletimMMFertBeanBD.getDthrLongFinalBolMMFert() < Tempo.getInstance().dthrLongDia1Menos()) {
+                boletimMMFertArrayList.add(boletimMMFertBeanBD);
+            }
+        }
+        boletimMMFertList.clear();
+        return boletimMMFertArrayList;
+
     }
 
     public ArrayList<Long> idBolArrayList(List<BoletimMMFertBean> boletimMMList){
@@ -233,6 +262,14 @@ public class BoletimMMFertDAO {
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("statusBolMMFert");
         pesquisa.setValor(2L);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqBolEnviado(){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("statusBolMMFert");
+        pesquisa.setValor(3L);
         pesquisa.setTipo(1);
         return pesquisa;
     }

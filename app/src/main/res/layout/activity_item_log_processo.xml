@@ -15,6 +15,11 @@
         android:text="@string/texto_hist_horario" />
 
     <TextView
+        android:id="@+id/textViewProcTela"
+        style="@style/TextViewItemList"
+        android:text="@string/texto_hist_impl_transb" />
+
+    <TextView
         android:id="@+id/textViewProcDescr"
         style="@style/TextViewItemList"
         android:text="@string/texto_hist_impl_transb" />

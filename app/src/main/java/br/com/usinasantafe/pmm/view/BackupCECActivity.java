@@ -12,7 +12,6 @@ import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CECBean;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
-import br.com.usinasantafe.pmm.util.Tempo;
 
 public class BackupCECActivity extends ActivityGeneric {
 
@@ -33,7 +32,7 @@ public class BackupCECActivity extends ActivityGeneric {
         Button buttonProxBkpBoletim = findViewById(R.id.buttonProxBkpBoletim);
         Button buttonRetornarBkpBoletim = findViewById(R.id.buttonRetornarBkpBoletim);
 
-        LogProcessoDAO.getInstance().insert("cecList = pmmContext.getCecCTR().cecListDesc();\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("cecList = pmmContext.getCecCTR().cecListDesc();\n" +
                 "        contador = cecList.size() - 1;\n" +
                 "        CECBean cecBean = cecList.get(contador);\n" +
                 "        textViewBkpBoletim.setText(visBoletim(cecBean));", getLocalClassName());
@@ -48,7 +47,7 @@ public class BackupCECActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("if(contador < cecList.size() - 1){\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if(contador < cecList.size() - 1){\n" +
                         "                    contador = contador + 1;\n" +
                         "                }\n" +
                         "                CECBean cecBean = cecList.get(contador);\n" +
@@ -69,7 +68,7 @@ public class BackupCECActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("if(contador > 0){\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if(contador > 0){\n" +
                         "                    contador = contador - 1;\n" +
                         "                }\n" +
                         "                CECBean cecBean = cecList.get(contador);\n" +
@@ -90,7 +89,7 @@ public class BackupCECActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonRetornarBkpBoletim.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetornarBkpBoletim.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(BackupCECActivity.this, MenuCertifActivity.class);", getLocalClassName());
@@ -109,7 +108,7 @@ public class BackupCECActivity extends ActivityGeneric {
 
         int analisar = (int) cecBean.getPossuiSorteioCEC().longValue();
 
-        LogProcessoDAO.getInstance().insert("    public String visBoletim(CECBean cecBean){\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("    public String visBoletim(CECBean cecBean){\n" +
                 "        String retorno = \"\";\n" +
                 "        int analisar = (int) cecBean.getPossuiSorteioCEC().longValue();", getLocalClassName());
 

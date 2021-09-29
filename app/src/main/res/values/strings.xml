@@ -282,4 +282,6 @@
     <string name="texto_titulo_log_proc">LOG - PROCESSO</string>
     <string name="texto_titulo_log_base_dado">LOG - BASE DADO</string>
     <string name="texto_titulo_log_erro">LOG - ERRO</string>
+    <string name="texto_log">LOG</string>
+    <string name="texto_inicio">INICIANDO O APLICATIVO...</string>
 </resources>

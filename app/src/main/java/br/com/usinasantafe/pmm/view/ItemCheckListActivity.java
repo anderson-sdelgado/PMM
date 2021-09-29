@@ -33,7 +33,7 @@ public class ItemCheckListActivity extends ActivityGeneric {
         Button buttonReparo = findViewById(R.id.buttonReparo);
         Button buttonCancChecklist = findViewById(R.id.buttonCancChecklist);
 
-        LogProcessoDAO.getInstance().insert("        itemCheckListList = pmmContext.getCheckListCTR().getItemList();\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("        itemCheckListList = pmmContext.getCheckListCTR().getItemList();\n" +
                 "        ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);\n" +
                 "        textViewItemChecklist.setText(pmmContext.getCheckListCTR().getPosCheckList() + \" - \" + itemCheckListBean.getDescrItemCheckList());", getLocalClassName());
 
@@ -44,7 +44,7 @@ public class ItemCheckListActivity extends ActivityGeneric {
         buttonConforme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonConforme.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonConforme.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                proximaTela(1L);", getLocalClassName());
@@ -55,7 +55,7 @@ public class ItemCheckListActivity extends ActivityGeneric {
         buttonNaoConforme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonNaoConforme.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonNaoConforme.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                proximaTela(2L);", getLocalClassName());
@@ -66,7 +66,7 @@ public class ItemCheckListActivity extends ActivityGeneric {
         buttonReparo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonReparo.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonReparo.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                proximaTela(3L);", getLocalClassName());
@@ -77,7 +77,7 @@ public class ItemCheckListActivity extends ActivityGeneric {
         buttonCancChecklist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonCancChecklist.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancChecklist.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                retornoTela();", getLocalClassName());
@@ -90,10 +90,10 @@ public class ItemCheckListActivity extends ActivityGeneric {
 
     public void proximaTela(Long opcao){
 
-        LogProcessoDAO.getInstance().insert("ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);", getLocalClassName());
 
         ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);
-        LogProcessoDAO.getInstance().insert("ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);\n" +
                 "        RespItemCheckListBean respItemCheckListBean = new RespItemCheckListBean();\n" +
                 "        respItemCheckListBean.setIdItBDItCL(" + itemCheckListBean.getIdItemCheckList() + ");\n" +
                 "        respItemCheckListBean.setOpItCL(" + opcao + ");", getLocalClassName());
@@ -103,30 +103,30 @@ public class ItemCheckListActivity extends ActivityGeneric {
         respItemCheckListBean.setOpItCL(opcao);
 
         if(pmmContext.getCheckListCTR().verCabecAberto()) {
-            LogProcessoDAO.getInstance().insert("if(pmmContext.getCheckListCTR().verCabecAberto()) {\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getCheckListCTR().verCabecAberto()) {\n" +
                     "            pmmContext.getCheckListCTR().setRespCheckList(respItemCheckListBean);", getLocalClassName());
             pmmContext.getCheckListCTR().setRespCheckList(respItemCheckListBean);
             if (pmmContext.getCheckListCTR().qtdeItemCheckList() == pmmContext.getCheckListCTR().getPosCheckList()) {
-                LogProcessoDAO.getInstance().insert("if (pmmContext.getCheckListCTR().qtdeItemCheckList() == pmmContext.getCheckListCTR().getPosCheckList()) {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getCheckListCTR().qtdeItemCheckList() == pmmContext.getCheckListCTR().getPosCheckList()) {\n" +
                         "                pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getIdTurnoBolMMFert());\n" +
                         "                pmmContext.getCheckListCTR().salvarBolFechado();", getLocalClassName());
                 pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getIdTurnoBolMMFert());
                 pmmContext.getCheckListCTR().salvarBolFechado(getLocalClassName());
                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
-                    LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
                             "                    Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);", getLocalClassName());
                     Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);
                     startActivity(it);
                     finish();
                 } else {
-                    LogProcessoDAO.getInstance().insert("} else {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                             "                    Intent it = new Intent(ItemCheckListActivity.this, VerifOperadorActivity.class);", getLocalClassName());
                     Intent it = new Intent(ItemCheckListActivity.this, VerifOperadorActivity.class);
                     startActivity(it);
                     finish();
                 }
             } else {
-                LogProcessoDAO.getInstance().insert("pmmContext.getCheckListCTR().setPosCheckList(pmmContext.getCheckListCTR().getPosCheckList() + 1);\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCheckListCTR().setPosCheckList(pmmContext.getCheckListCTR().getPosCheckList() + 1);\n" +
                         "                itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);\n" +
                         "                textViewItemChecklist.setText(pmmContext.getCheckListCTR().getPosCheckList() + \" - \" + itemCheckListBean.getDescrItemCheckList());", getLocalClassName());
                 pmmContext.getCheckListCTR().setPosCheckList(pmmContext.getCheckListCTR().getPosCheckList() + 1);
@@ -136,13 +136,13 @@ public class ItemCheckListActivity extends ActivityGeneric {
         }
         else{
             if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
-                LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
                         "                Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);", getLocalClassName());
                 Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);
                 startActivity(it);
                 finish();
             } else {
-                LogProcessoDAO.getInstance().insert("} else {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                         "                Intent it = new Intent(ItemCheckListActivity.this, VerifOperadorActivity.class);", getLocalClassName());
                 Intent it = new Intent(ItemCheckListActivity.this, VerifOperadorActivity.class);
                 startActivity(it);
@@ -153,9 +153,9 @@ public class ItemCheckListActivity extends ActivityGeneric {
     }
 
     public void retornoTela(){
-        LogProcessoDAO.getInstance().insert("public void retornoTela(){", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("public void retornoTela(){", getLocalClassName());
         if(pmmContext.getCheckListCTR().getPosCheckList() > 1){
-            LogProcessoDAO.getInstance().insert("if(pmmContext.getCheckListCTR().getPosCheckList() > 1){\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getCheckListCTR().getPosCheckList() > 1){\n" +
                     "            pmmContext.getCheckListCTR().setPosCheckList(pmmContext.getCheckListCTR().getPosCheckList() - 1);\n" +
                     "            ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);\n" +
                     "            textViewItemChecklist.setText(pmmContext.getCheckListCTR().getPosCheckList() + \" - \" + itemCheckListBean.getDescrItemCheckList());", getLocalClassName());

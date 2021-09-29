@@ -13,7 +13,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.estaticas.REquipAtivBean;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
@@ -37,7 +36,7 @@ public class EquipDAO {
     }
 
     public void verEquip(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
-        LogProcessoDAO.getInstance().insert("VerifDadosServ.getInstance().verifDados(dado, \"Equip\", telaAtual, telaProx, progressDialog, activity);", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().verifDados(dado, \"Equip\", telaAtual, telaProx, progressDialog, activity);", activity);
         VerifDadosServ.getInstance().verifDados(dado, "Equip", telaAtual, telaProx, progressDialog, activity);
     }
 

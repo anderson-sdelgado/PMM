@@ -36,7 +36,7 @@ public class TransbordoActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);\n" +
@@ -49,12 +49,12 @@ public class TransbordoActivity extends ActivityGeneric {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        LogProcessoDAO.getInstance().insert("alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                         if (connectNetwork) {
 
-                            LogProcessoDAO.getInstance().insert("if (connectNetwork) {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
                                     "                            progressBar = new ProgressDialog(TransbordoActivity.this);\n" +
                                     "                            progressBar.setCancelable(true);\n" +
                                     "                            progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
@@ -71,12 +71,12 @@ public class TransbordoActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().atualDados(TransbordoActivity.this, TransbordoActivity.class, progressBar, \"EquipSeg\", 1, getLocalClassName());", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(TransbordoActivity.this, TransbordoActivity.class, progressBar, \"EquipSeg\", 1, getLocalClassName());", getLocalClassName());
                             pmmContext.getMotoMecFertCTR().atualDados(TransbordoActivity.this, TransbordoActivity.class, progressBar, "EquipSeg", 1, getLocalClassName());
 
                         } else {
 
-                            LogProcessoDAO.getInstance().insert("} else {" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {" +
                                     "AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
                                     "                            alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
@@ -106,7 +106,7 @@ public class TransbordoActivity extends ActivityGeneric {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                     }
@@ -123,21 +123,21 @@ public class TransbordoActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonOkTransbordo.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkTransbordo.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
 
                 if (!editTextPadrao.getText().toString().equals("")) {
 
-                    LogProcessoDAO.getInstance().insert("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
                             "                    Long idTransb = Long.parseLong(editTextPadrao.getText().toString());", getLocalClassName());
                     Long idTransb = Long.parseLong(editTextPadrao.getText().toString());
                     if(pmmContext.getMotoMecFertCTR().verTransb(idTransb)) {
 
-                        LogProcessoDAO.getInstance().insert("if(pmmContext.getMotoMecFertCTR().verTransb(idTransb)) {", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verTransb(idTransb)) {", getLocalClassName());
                         if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
 
-                            LogProcessoDAO.getInstance().insert("if(pmmContext.getMotoMecFertCTR().verTransb(idTransb)) {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verTransb(idTransb)) {\n" +
                                     "                            AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
                                     "                            alerta.setMessage(\"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\");\n" +
@@ -166,10 +166,10 @@ public class TransbordoActivity extends ActivityGeneric {
 
                         } else {
 
-                            LogProcessoDAO.getInstance().insert("} else {", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
                             if (pmmContext.getMotoMecFertCTR().verifBackupApontTransb(0L, idTransb)) {
 
-                                LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verifBackupApontTransb(0L, idTransb)) {\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verifBackupApontTransb(0L, idTransb)) {\n" +
                                         "AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);\n" +
                                         "                                alerta.setTitle(\"ATENÇÃO\");\n" +
                                         "                                alerta.setMessage(\"NUMERAÇÃO DE TRANSBORDO COM MESMO VALOR DO APONTAMENTO ANTERIOR. FAVOR, VERIFICAR A NUMERAÇÃO DIGITADA!\");\n" +
@@ -192,24 +192,24 @@ public class TransbordoActivity extends ActivityGeneric {
 
                             } else {
 
-                                LogProcessoDAO.getInstance().insert("} else {", getLocalClassName());
+                                LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
                                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L) {
-                                    LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().salvarApont(0L, " + idTransb + ", getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+                                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(0L, " + idTransb + ", getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
                                     pmmContext.getMotoMecFertCTR().salvarApont(0L, idTransb, getLongitude(), getLatitude(), getLocalClassName());
                                 } else {
-                                    LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().inserirApontTransb(" + idTransb + ", getLocalClassName());", getLocalClassName());
+                                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().inserirApontTransb(" + idTransb + ", getLocalClassName());", getLocalClassName());
                                     pmmContext.getMotoMecFertCTR().inserirApontTransb(idTransb, getLocalClassName());
                                 }
 
-                                LogProcessoDAO.getInstance().insert("List<RFuncaoAtivParBean> rFuncaoAtividadeList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());", getLocalClassName());
+                                LogProcessoDAO.getInstance().insertLogProcesso("List<RFuncaoAtivParBean> rFuncaoAtividadeList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());", getLocalClassName());
                                 List<RFuncaoAtivParBean> rFuncaoAtividadeList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());
 
                                 boolean rendimento = false;
 
                                 for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtividadeList) {
-                                    LogProcessoDAO.getInstance().insert("for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtividadeList) {", getLocalClassName());
+                                    LogProcessoDAO.getInstance().insertLogProcesso("for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtividadeList) {", getLocalClassName());
                                     if (rFuncaoAtivParBean.getCodFuncao() == 1) {
-                                        LogProcessoDAO.getInstance().insert("if (rFuncaoAtivParBean.getCodFuncao() == 1) {\n" +
+                                        LogProcessoDAO.getInstance().insertLogProcesso("if (rFuncaoAtivParBean.getCodFuncao() == 1) {\n" +
                                                 "                                        rendimento = true;", getLocalClassName());
                                         rendimento = true;
                                     }
@@ -217,14 +217,14 @@ public class TransbordoActivity extends ActivityGeneric {
                                 rFuncaoAtividadeList.clear();
 
                                 if (rendimento) {
-                                    LogProcessoDAO.getInstance().insert("if (rendimento) {\n" +
+                                    LogProcessoDAO.getInstance().insertLogProcesso("if (rendimento) {\n" +
                                             "                                    ConfigCTR configCTR = new ConfigCTR();\n" +
                                             "                                    pmmContext.getMotoMecFertCTR().insRendBD(configCTR.getConfig().getNroOSConfig(), getLocalClassName());", getLocalClassName());
                                     ConfigCTR configCTR = new ConfigCTR();
                                     pmmContext.getMotoMecFertCTR().insRendBD(configCTR.getConfig().getNroOSConfig(), getLocalClassName());
                                 }
 
-                                LogProcessoDAO.getInstance().insert("Intent it = new Intent(TransbordoActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                                LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(TransbordoActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                                 Intent it = new Intent(TransbordoActivity.this, MenuPrincPMMActivity.class);
                                 startActivity(it);
                                 finish();
@@ -235,7 +235,7 @@ public class TransbordoActivity extends ActivityGeneric {
 
                     }
                     else{
-                        LogProcessoDAO.getInstance().insert("else{\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                                 "AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENCAO\");\n" +
                                 "                        alerta.setMessage(\"NUMERAÇÃO DE TRANSBORDO INCORRETA. FAVOR, VERIFICAR A NUMERAÇÃO OU ATUALIZAR A BASE DE DADOS NOVAMENTE!\");\n" +
@@ -263,7 +263,7 @@ public class TransbordoActivity extends ActivityGeneric {
         buttonCancTransbordo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonCancTransbordo.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancTransbordo.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "if (editTextPadrao.getText().toString().length() > 0) {\n" +
@@ -278,16 +278,16 @@ public class TransbordoActivity extends ActivityGeneric {
     }
 
     public void onBackPressed()  {
-        LogProcessoDAO.getInstance().insert("public void onBackPressed()  {", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("public void onBackPressed()  {", getLocalClassName());
         if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L) {
-            LogProcessoDAO.getInstance().insert("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L) {\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L) {\n" +
                     "            Intent it = new Intent(TransbordoActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
             Intent it = new Intent(TransbordoActivity.this, ListaAtividadeActivity.class);
             startActivity(it);
             finish();
         }
         else{
-            LogProcessoDAO.getInstance().insert("else{\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                     "            Intent it = new Intent(TransbordoActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
             Intent it = new Intent(TransbordoActivity.this, MenuPrincPMMActivity.class);
             startActivity(it);

@@ -1,5 +1,7 @@
 package br.com.usinasantafe.pmm.model.dao;
 
+import android.util.Log;
+
 import java.util.List;
 
 import br.com.usinasantafe.pmm.control.ConfigCTR;
@@ -18,18 +20,28 @@ public class LogProcessoDAO {
         return instance;
     }
 
-    public void insert(String processo, String activity){
+    public void insertLogProcesso(String processo, String activity){
         LogProcessoBean logProcessoBean = new LogProcessoBean();
         logProcessoBean.setProcesso(processo);
         logProcessoBean.setActivity(activity);
         logProcessoBean.setDthr(Tempo.getInstance().dthr());
-        logProcessoBean.setDt(Tempo.getInstance().dt());
+        logProcessoBean.setDthrLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
         logProcessoBean.insert();
     }
 
     public List<LogProcessoBean> logProcessoList(){
         LogProcessoBean logProcessoBean = new LogProcessoBean();
-        return logProcessoBean.orderBy("idLogProcesso", true);
+        return logProcessoBean.orderBy("idLogProcesso", false);
+    }
+
+    public void deleteLogProcesso(){
+        LogProcessoBean logProcessoBean = new LogProcessoBean();
+        List<LogProcessoBean> logProcessoList = logProcessoBean.all();
+        for(LogProcessoBean logProcessoBeanBD : logProcessoList){
+            if(logProcessoBeanBD.getDthrLong() < Tempo.getInstance().dthrLongDia1Menos()){
+                logProcessoBeanBD.delete();
+            }
+        }
     }
 
 }

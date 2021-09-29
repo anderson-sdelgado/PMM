@@ -42,23 +42,23 @@ public class ListaAtividadeActivity extends ActivityGeneric {
         Button buttonRetAtividade = findViewById(R.id.buttonRetAtividade);
         TextView textViewTituloAtividade = findViewById(R.id.textViewTituloAtividade);
 
-        LogProcessoDAO.getInstance().insert("nroOS =  pmmContext.getConfigCTR().getConfig().getNroOSConfig();", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("nroOS =  pmmContext.getConfigCTR().getConfig().getNroOSConfig();", getLocalClassName());
         nroOS =  pmmContext.getConfigCTR().getConfig().getNroOSConfig();
 
         buttonAtualAtividade.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonAtualAtividade.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonAtualAtividade.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
                 if (connectNetwork) {
 
-                    LogProcessoDAO.getInstance().insert("if (connectNetwork) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {", getLocalClassName());
 
                     if(PMMContext.aplic != 2) {
 
-                        LogProcessoDAO.getInstance().insert("if(PMMContext.aplic != 2) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic != 2) {\n" +
                                 "progressBar = new ProgressDialog(v.getContext());\n" +
                                 "                        progressBar.setCancelable(true);\n" +
                                 "                        progressBar.setMessage(\"Atualizando Atividades...\");\n" +
@@ -71,13 +71,13 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                         customHandler.postDelayed(updateTimerThread, 10000);
 
-                        LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(" + nroOS + "), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(" + nroOS + "), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
                         pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(nroOS), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
 
                     }
                     else {
 
-                        LogProcessoDAO.getInstance().insert("else {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                                 "AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
                                 "                        alerta.setMessage(\"A ATIVIDADES SÃO ATUALIZADAS AUTOMATICAMENTE APENAS DEPOIS DA PESAGEM NA BALANÇA.\");\n" +
@@ -101,7 +101,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                 } else {
 
-                    LogProcessoDAO.getInstance().insert("} else {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                             "AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);\n" +
                             "                    alerta.setTitle(\"ATENÇÃO\");\n" +
                             "                    alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
@@ -129,7 +129,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
         buttonRetAtividade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonRetAtividade.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetAtividade.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(ListaAtividadeActivity.this, OSActivity.class);", getLocalClassName());
@@ -146,10 +146,10 @@ public class ListaAtividadeActivity extends ActivityGeneric {
             textViewTituloAtividade.setText("ATIVIDADE");
         }
 
-        LogProcessoDAO.getInstance().insert("ativArrayList = pmmContext.getMotoMecFertCTR().getAtivArrayList("+ nroOS +");", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("ativArrayList = pmmContext.getMotoMecFertCTR().getAtivArrayList("+ nroOS +");", getLocalClassName());
         ativArrayList = pmmContext.getMotoMecFertCTR().getAtivArrayList(nroOS, getLocalClassName());
 
-        LogProcessoDAO.getInstance().insert("ArrayList<String> itens = new ArrayList<String>();\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("ArrayList<String> itens = new ArrayList<String>();\n" +
                 "        for (int i = 0; i < ativArrayList.size(); i++) {\n" +
                 "            AtividadeBean atividadeBean = (AtividadeBean) ativArrayList.get(i);\n" +
                 "            itens.add(atividadeBean.getCodAtiv() + \" - \" + atividadeBean.getDescrAtiv());\n" +
@@ -160,7 +160,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
             itens.add(atividadeBean.getCodAtiv() + " - " + atividadeBean.getDescrAtiv());
         }
 
-        LogProcessoDAO.getInstance().insert("AdapterList adapterList = new AdapterList(this, itens);", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("AdapterList adapterList = new AdapterList(this, itens);", getLocalClassName());
         AdapterList adapterList = new AdapterList(this, itens);
         atividadeListView = findViewById(R.id.listAtividade);
         atividadeListView.setAdapter(adapterList);
@@ -171,7 +171,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                LogProcessoDAO.getInstance().insert("atividadeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("atividadeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
                         "\n" +
                         "            @Override\n" +
                         "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
@@ -179,7 +179,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                 if(ativArrayList.size() == 0){
 
-                    LogProcessoDAO.getInstance().insert("if(ativArrayList.size() == 0){\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(ativArrayList.size() == 0){\n" +
                             "AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);\n" +
                             "                    alerta.setTitle(\"ATENÇÃO\");\n" +
                             "                    alerta.setMessage(\"FALHA NA SELEÇÃO DE ATIVIDADE. POR FAVOR, SELECIONE NOVAMENTE.\");\n" +
@@ -208,32 +208,32 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 }
                 else {
 
-                    LogProcessoDAO.getInstance().insert("else {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                             "AtividadeBean atividadeBean = (AtividadeBean) ativArrayList.get(position);\n" +
                             "                    ativArrayList.clear();", getLocalClassName());
                     AtividadeBean atividadeBean = (AtividadeBean) ativArrayList.get(position);
                     ativArrayList.clear();
 
-                    LogProcessoDAO.getInstance().insert("pmmContext.getConfigCTR().setAtivConfig(" + atividadeBean.getIdAtiv() + ");", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().setAtivConfig(" + atividadeBean.getIdAtiv() + ");", getLocalClassName());
                     pmmContext.getConfigCTR().setAtivConfig(atividadeBean.getIdAtiv());
 
                     if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L)
                             || (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L)) {
 
-                        LogProcessoDAO.getInstance().insert("if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L)\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L)\n" +
                                 "                            || (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L)) {", getLocalClassName());
-                        LogProcessoDAO.getInstance().insert("Intent it = new Intent(ListaAtividadeActivity.this, HorimetroActivity.class);", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(ListaAtividadeActivity.this, HorimetroActivity.class);", getLocalClassName());
                         Intent it = new Intent(ListaAtividadeActivity.this, HorimetroActivity.class);
                         startActivity(it);
                         finish();
 
                     } else if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L)) {
 
-                        LogProcessoDAO.getInstance().insert("} else if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L)) {", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L)) {", getLocalClassName());
                         if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
 
-                            LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {", getLocalClassName());
-                            LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
                                     "                            alerta.setMessage(\"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\");\n" +
                                     "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {", getLocalClassName());
@@ -243,25 +243,25 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                    LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
                                             "                                @Override\n" +
                                             "                                public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
                                     if(PMMContext.aplic == 1){
-                                        LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 1){\n" +
+                                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                                                 "                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                                         Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
                                         startActivity(it);
                                         finish();
                                     }
                                     else if(PMMContext.aplic == 2){
-                                        LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 2){\n" +
+                                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2){\n" +
                                                 "                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                                         Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);
                                         startActivity(it);
                                         finish();
                                     }
                                     else if(PMMContext.aplic == 3){
-                                        LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 3){\n" +
+                                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 3){\n" +
                                                 "                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                                         Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);
                                         startActivity(it);
@@ -273,11 +273,11 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                         } else {
 
-                            LogProcessoDAO.getInstance().insert("} else {", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
 
                             if (pmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {
 
-                                LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {\n" +
                                         "AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);\n" +
                                         "                                alerta.setTitle(\"ATENÇÃO\");\n" +
                                         "                                alerta.setMessage(\"OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!\");\n" +
@@ -300,18 +300,18 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                             } else {
 
-                                LogProcessoDAO.getInstance().insert("} else {", getLocalClassName());
+                                LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
 
                                 if (pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1) {
 
-                                    LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1) {\n" +
+                                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1) {\n" +
                                             "List<RFuncaoAtivParBean> rFuncaoAtivParList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList();", getLocalClassName());
                                     List<RFuncaoAtivParBean> rFuncaoAtivParList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());
 
                                     boolean transbordo = false;
                                     boolean rendimento = false;
 
-                                    LogProcessoDAO.getInstance().insert("for (int i = 0; i < rFuncaoAtivParList.size(); i++) {\n" +
+                                    LogProcessoDAO.getInstance().insertLogProcesso("for (int i = 0; i < rFuncaoAtivParList.size(); i++) {\n" +
                                             "                                        RFuncaoAtivParBean rFuncaoAtivParBean = rFuncaoAtivParList.get(i);\n" +
                                             "                                        if (rFuncaoAtivParBean.getCodFuncao() == 2) {\n" +
                                             "                                            transbordo = true;\n" +
@@ -333,31 +333,31 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                     rFuncaoAtivParList.clear();
 
                                     if (transbordo) {
-                                        LogProcessoDAO.getInstance().insert("if (transbordo) {\n" +
+                                        LogProcessoDAO.getInstance().insertLogProcesso("if (transbordo) {\n" +
                                                 "Intent it = new Intent(ListaAtividadeActivity.this, TransbordoActivity.class);", getLocalClassName());
                                         Intent it = new Intent(ListaAtividadeActivity.this, TransbordoActivity.class);
                                         startActivity(it);
                                         finish();
                                     } else {
-                                        LogProcessoDAO.getInstance().insert("} else {\n" +
+                                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                                 "pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude());", getLocalClassName());
                                         pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
 
                                         if (rendimento) {
-                                            LogProcessoDAO.getInstance().insert("if (rendimento) {\n" +
+                                            LogProcessoDAO.getInstance().insertLogProcesso("if (rendimento) {\n" +
                                                     "pmmContext.getMotoMecFertCTR().insRendBD(" + nroOS + ");", getLocalClassName());
                                             pmmContext.getMotoMecFertCTR().insRendBD(nroOS, getLocalClassName());
                                         }
 
                                         if(PMMContext.aplic == 1){
-                                            LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 1){\n" +
+                                            LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                                                     "Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                                             Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
                                             startActivity(it);
                                             finish();
                                         }
                                         else if(PMMContext.aplic == 3){
-                                            LogProcessoDAO.getInstance().insert("else if(PMMContext.aplic == 3){\n" +
+                                            LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
                                                     "Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                                             Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);
                                             startActivity(it);
@@ -367,7 +367,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                     }
 
                                 } else {
-                                    LogProcessoDAO.getInstance().insert("} else {\n" +
+                                    LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                             "Intent it = new Intent(ListaAtividadeActivity.this, ListaBocalFertActivity.class);", getLocalClassName());
                                     Intent it = new Intent(ListaAtividadeActivity.this, ListaBocalFertActivity.class);
                                     startActivity(it);
@@ -380,7 +380,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                     } else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 3L) {
 
-                        LogProcessoDAO.getInstance().insert("} else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 3L) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 3L) {\n" +
                                 "Intent it = new Intent(ListaAtividadeActivity.this, ListaParadaActivity.class);", getLocalClassName());
                         Intent it = new Intent(ListaAtividadeActivity.this, ListaParadaActivity.class);
                         startActivity(it);
@@ -388,10 +388,10 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                     } else {
 
-                        LogProcessoDAO.getInstance().insert("} else if {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else if {\n" +
                                 " pmmContext.getCecCTR().setAtivOS(" + pmmContext.getCecCTR().getOS().getIdAtivOS() + ");", getLocalClassName());
                         pmmContext.getCecCTR().setAtivOS(pmmContext.getCecCTR().getOS().getIdAtivOS());
-                        LogProcessoDAO.getInstance().insert("Intent it = new Intent(ListaAtividadeActivity.this, EquipActivity.class);", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(ListaAtividadeActivity.this, EquipActivity.class);", getLocalClassName());
                         Intent it = new Intent(ListaAtividadeActivity.this, EquipActivity.class);
                         startActivity(it);
                         finish();
@@ -412,21 +412,21 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
         public void run() {
 
-            LogProcessoDAO.getInstance().insert("    private Runnable updateTimerThread = new Runnable() {\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("    private Runnable updateTimerThread = new Runnable() {\n" +
                     "        public void run() {", getLocalClassName());
             if(VerifDadosServ.status < 3) {
 
-                LogProcessoDAO.getInstance().insert("if(VerifDadosServ.status < 3) {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if(VerifDadosServ.status < 3) {\n" +
                         "VerifDadosServ.getInstance().cancel();", getLocalClassName());
                 VerifDadosServ.getInstance().cancel();
 
                 if (progressBar.isShowing()) {
-                    LogProcessoDAO.getInstance().insert("if (progressBar.isShowing()) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (progressBar.isShowing()) {\n" +
                             "                    progressBar.dismiss();", getLocalClassName());
                     progressBar.dismiss();
                 }
 
-                LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);\n" +
                         "                alerta.setTitle(\"ATENÇÃO\");\n" +
                         "                alerta.setMessage(\"FALHA DE PESQUISA DE ATIVIDADE! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.\");\n" +
                         "                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +

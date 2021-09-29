@@ -34,7 +34,7 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
 
         Button buttonRetMenuParada = findViewById(R.id.buttonRetMenuParada);
 
-        LogProcessoDAO.getInstance().insert("ArrayList<String> itens = new ArrayList<String>();\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("ArrayList<String> itens = new ArrayList<String>();\n" +
                 "        paradaList = pmmContext.getMotoMecFertCTR().paradaList();\n" +
                 "        for(MotoMecBean motoMecBean : paradaList){\n" +
                 "            itens.add(motoMecBean.getDescrOperMotoMec());\n" +
@@ -58,7 +58,7 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
             public void onItemClick(AdapterView<?> l, View v, int position,
                                     long id) {
 
-                LogProcessoDAO.getInstance().insert("paradaListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("paradaListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){\n" +
                         "            @Override\n" +
                         "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
                         "                                    long id) {\n" +
@@ -71,7 +71,7 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
                 pmmContext.getMotoMecFertCTR().setMotoMecBean(motoMecBean);
 
                 if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
-                    LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
                             "                    Toast.makeText(MenuParadaPCOMPActivity.this, \"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\",\n" +
                             "                            Toast.LENGTH_LONG).show();", getLocalClassName());
                     Toast.makeText(MenuParadaPCOMPActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
@@ -79,10 +79,10 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
                 }
                 else {
 
-                    LogProcessoDAO.getInstance().insert("else {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("else {", getLocalClassName());
                     if (pmmContext.getMotoMecFertCTR().verifBackupApont()) {
 
-                        LogProcessoDAO.getInstance().insert("if (pmmContext.getMotoMecFertCTR().verifBackupApont()) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verifBackupApont()) {\n" +
                                 "                        AlertDialog.Builder alerta = new AlertDialog.Builder(MenuParadaPCOMPActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
                                 "                        alerta.setMessage(\"OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!\");\n" +
@@ -105,7 +105,7 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
 
                     } else {
 
-                        LogProcessoDAO.getInstance().insert("} else {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                 "                        AlertDialog.Builder alerta = new AlertDialog.Builder(MenuParadaPCOMPActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
                                 "                        alerta.setMessage(\"FOI DADO ENTRADA NA ATIVIDADE: \" + motoMecBean.getDescrOperMotoMec());", getLocalClassName());
@@ -115,7 +115,7 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
                         alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                LogProcessoDAO.getInstance().insert("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
                                         "                            @Override\n" +
                                         "                            public void onClick(DialogInterface dialog, int which) {\n" +
                                         "                                if (connectNetwork) {\n" +
@@ -128,7 +128,7 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
                                 } else {
                                     pmmContext.getConfigCTR().setStatusConConfig(0L);
                                 }
-                                LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
                                         "                                paradaListView.setSelection(posicao + 1);", getLocalClassName());
                                 pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
                                 paradaListView.setSelection(posicao + 1);
@@ -149,7 +149,7 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonRetMenuParada.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetMenuParada.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                if (connectNetwork) {\n" +
@@ -165,10 +165,10 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
                     pmmContext.getConfigCTR().setStatusConConfig(0L);
                 }
 
-                LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
                 pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
 
-                LogProcessoDAO.getInstance().insert("Intent it = new Intent(MenuParadaPCOMPActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MenuParadaPCOMPActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                 Intent it = new Intent(MenuParadaPCOMPActivity.this, MenuPrincPCOMPActivity.class);
                 startActivity(it);
                 finish();

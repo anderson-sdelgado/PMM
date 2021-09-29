@@ -17,9 +17,9 @@ public class LogProcessoBean extends Entidade {
     @DatabaseField
     private String activity;
     @DatabaseField
-    private String dt;
-    @DatabaseField
     private String dthr;
+    @DatabaseField
+    private Long dthrLong;
 
     public LogProcessoBean() {
     }
@@ -48,19 +48,19 @@ public class LogProcessoBean extends Entidade {
         this.activity = activity;
     }
 
-    public String getDt() {
-        return dt;
-    }
-
-    public void setDt(String dt) {
-        this.dt = dt;
-    }
-
     public String getDthr() {
         return dthr;
     }
 
     public void setDthr(String dthr) {
         this.dthr = dthr;
+    }
+
+    public Long getDthrLong() {
+        return dthrLong;
+    }
+
+    public void setDthrLong(Long dthrLong) {
+        this.dthrLong = dthrLong;
     }
 }

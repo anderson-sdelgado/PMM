@@ -57,4 +57,11 @@
         android:layout_height="wrap_content"
         android:text="@string/texto_enc_boletim" />
 
+    <Button
+        android:id="@+id/buttonLogMotoMec"
+        style="@style/BotaoAvulso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/texto_log" />
+
 </LinearLayout>

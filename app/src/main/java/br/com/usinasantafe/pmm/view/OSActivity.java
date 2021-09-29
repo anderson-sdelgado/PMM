@@ -35,12 +35,12 @@ public class OSActivity extends ActivityGeneric {
 
         if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L)
             || (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L)){
-            LogProcessoDAO.getInstance().insert("if ((" + pmmContext.getConfigCTR().getConfig().getPosicaoTela() + " == 1L)\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("if ((" + pmmContext.getConfigCTR().getConfig().getPosicaoTela() + " == 1L)\n" +
                     "            || (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L)){\n" +
                     "editText.setText(\"\");", getLocalClassName());
             editText.setText("");
         } else {
-            LogProcessoDAO.getInstance().insert("} else {\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                     "editText.setText(String.valueOf(" + pmmContext.getConfigCTR().getConfig().getNroOSConfig() + "));", getLocalClassName());
             editText.setText(String.valueOf(pmmContext.getConfigCTR().getConfig().getNroOSConfig()));
         }
@@ -49,13 +49,13 @@ public class OSActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonOkOS.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkOS.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
 
                 if (!editTextPadrao.getText().toString().equals("")) {
 
-                    LogProcessoDAO.getInstance().insert(" if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso(" if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
                             "Long nroOS = Long.parseLong(" + editTextPadrao.getText().toString() + ");\n" +
                             "                    pmmContext.getConfigCTR().setOsConfig(nroOS);", getLocalClassName());
                     Long nroOS = Long.parseLong(editTextPadrao.getText().toString());
@@ -63,11 +63,11 @@ public class OSActivity extends ActivityGeneric {
 
                     if(PMMContext.aplic == 2) {
 
-                        LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 2) {", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2) {", getLocalClassName());
 
                         if (pmmContext.getConfigCTR().verOS(nroOS)) {
 
-                            LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().verOS(nroOS)) {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().verOS(nroOS)) {\n" +
                                     "if (connectNetwork) {\n" +
                                     "                                pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
                                     "                            }\n" +
@@ -81,7 +81,7 @@ public class OSActivity extends ActivityGeneric {
                                 pmmContext.getConfigCTR().setStatusConConfig(0L);
                             }
 
-                            LogProcessoDAO.getInstance().insert("Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
                             Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                             startActivity(it);
                             finish();
@@ -89,7 +89,7 @@ public class OSActivity extends ActivityGeneric {
                         }
                         else {
 
-                            LogProcessoDAO.getInstance().insert("else {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                                     "AlertDialog.Builder alerta = new AlertDialog.Builder(OSActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
                                     "                            alerta.setMessage(\"ORDEM SERVIÇO INCORRETA! POR FAVOR, VERIFIQUE A NUMERAÇÃO DIGITADA DA ORDEM SERVIÇO.\");\n" +
@@ -114,10 +114,10 @@ public class OSActivity extends ActivityGeneric {
                     }
                     else {
 
-                        LogProcessoDAO.getInstance().insert("else {", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("else {", getLocalClassName());
                         if (pmmContext.getConfigCTR().verROSAtiv(nroOS)) {
 
-                            LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().verROSAtiv(nroOS)) {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().verROSAtiv(nroOS)) {\n" +
                                     "if (connectNetwork) {\n" +
                                     "                                pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
                                     "                            }\n" +
@@ -131,17 +131,17 @@ public class OSActivity extends ActivityGeneric {
                                 pmmContext.getConfigCTR().setStatusConConfig(0L);
                             }
 
-                            LogProcessoDAO.getInstance().insert("Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
                             Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
                             startActivity(it);
                             finish();
 
                         } else {
 
-                            LogProcessoDAO.getInstance().insert("} else {", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
                             if (connectNetwork) {
 
-                                LogProcessoDAO.getInstance().insert("if (connectNetwork) {\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
                                         "progressBar = new ProgressDialog(v.getContext());\n" +
                                         "                                progressBar.setCancelable(true);\n" +
                                         "                                progressBar.setMessage(\"PESQUISANDO OS...\");\n" +
@@ -154,14 +154,14 @@ public class OSActivity extends ActivityGeneric {
 
                                 customHandler.postDelayed(updateTimerThread, 10000);
 
-                                LogProcessoDAO.getInstance().insert("pmmContext.getMotoMecFertCTR().verOS(" + editTextPadrao.getText().toString() + "\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().verOS(" + editTextPadrao.getText().toString() + "\n" +
                                         "                                        , OSActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
                                 pmmContext.getMotoMecFertCTR().verOS(editTextPadrao.getText().toString()
                                         , OSActivity.this, ListaAtividadeActivity.class, progressBar, getLocalClassName());
 
                             } else {
 
-                                LogProcessoDAO.getInstance().insert("} else {\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                         "pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
                                         "Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
 
@@ -184,7 +184,7 @@ public class OSActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insert("buttonCancOS.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancOS.setOnClickListener(new View.OnClickListener() {\n" +
                         "\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
@@ -200,30 +200,30 @@ public class OSActivity extends ActivityGeneric {
     }
 
     public void onBackPressed()  {
-        LogProcessoDAO.getInstance().insert("onBackPressed()", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("onBackPressed()", getLocalClassName());
         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
-            LogProcessoDAO.getInstance().insert("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
                     "Intent it = new Intent(OSActivity.this, ListaTurnoActivity.class);", getLocalClassName());
             Intent it = new Intent(OSActivity.this, ListaTurnoActivity.class);
             startActivity(it);
             finish();
         } else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {
-            LogProcessoDAO.getInstance().insert("} else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("} else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {\n" +
                     "Intent it = new Intent(OSActivity.this, MenuCertifActivity.class);", getLocalClassName());
             Intent it = new Intent(OSActivity.this, MenuCertifActivity.class);
             startActivity(it);
             finish();
         } else {
-            LogProcessoDAO.getInstance().insert("} else {", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
             if(PMMContext.aplic == 1){
-                LogProcessoDAO.getInstance().insert("if(PMMContext.aplic == 1){\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                         "Intent it = new Intent(OSActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                 Intent it = new Intent(OSActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();
             }
             else{
-                LogProcessoDAO.getInstance().insert("else{\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                         "Intent it = new Intent(OSActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                 Intent it = new Intent(OSActivity.this, MenuPrincPCOMPActivity.class);
                 startActivity(it);
@@ -236,21 +236,21 @@ public class OSActivity extends ActivityGeneric {
 
         public void run() {
 
-            LogProcessoDAO.getInstance().insert("    private Runnable updateTimerThread = new Runnable() {\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("    private Runnable updateTimerThread = new Runnable() {\n" +
                     "        public void run() {", getLocalClassName());
             if(VerifDadosServ.status < 3) {
 
-                LogProcessoDAO.getInstance().insert("VerifDadosServ.getInstance().cancel();\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().cancel();\n" +
                         "VerifDadosServ.getInstance().cancel();", getLocalClassName());
                 VerifDadosServ.getInstance().cancel();
 
                 if (progressBar.isShowing()) {
-                    LogProcessoDAO.getInstance().insert("if (progressBar.isShowing()) {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (progressBar.isShowing()) {\n" +
                             "progressBar.dismiss();", getLocalClassName());
                     progressBar.dismiss();
                 }
 
-                LogProcessoDAO.getInstance().insert("pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
                         "                Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
                 pmmContext.getConfigCTR().setStatusConConfig(0L);
                 Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);

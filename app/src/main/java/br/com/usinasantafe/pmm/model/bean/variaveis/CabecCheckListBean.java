@@ -25,6 +25,8 @@ public class CabecCheckListBean extends Entidade {
     private Long turnoCabCL;
     @DatabaseField
     private Long statusCabCL;  //1 - Aberto; 2 - Encerrado; 3 - Enviado
+    @DatabaseField
+    private Long dthrCabCLLong;
 
     public CabecCheckListBean() {
     }
@@ -73,4 +75,11 @@ public class CabecCheckListBean extends Entidade {
         this.statusCabCL = statusCabCL;
     }
 
+    public Long getDthrCabCLLong() {
+        return dthrCabCLLong;
+    }
+
+    public void setDthrCabCLLong(Long dthrCabCLLong) {
+        this.dthrCabCLLong = dthrCabCLLong;
+    }
 }

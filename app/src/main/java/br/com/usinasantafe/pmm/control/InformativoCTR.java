@@ -34,13 +34,13 @@ public class InformativoCTR {
         ConfigCTR configCTR = new ConfigCTR();
         configCTR.setVerInforConfig(0L);
         InformativoDAO informativoDAO = new InformativoDAO();
-        LogProcessoDAO.getInstance().insert("informativoDAO.verifDadosInformativo(dados ,telaAtual, telaProx, activity);", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("informativoDAO.verifDadosInformativo(dados ,telaAtual, telaProx, activity);", activity);
         informativoDAO.verifDadosInformativo(dados ,telaAtual, telaProx, activity);
     }
 
     public void verifDadosInformativo(String activity) {
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
-        LogProcessoDAO.getInstance().insert("VerifDadosServ.getInstance().verifDadosInformativo()", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().verifDadosInformativo()", activity);
         VerifDadosServ.getInstance().verifDadosInformativo(String.valueOf(motoMecFertCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert()), "Informativo", activity);
     }
 
@@ -79,7 +79,7 @@ public class InformativoCTR {
             }
 
         } catch (Exception e) {
-            LogErroDAO.getInstance().insert(e);
+            LogErroDAO.getInstance().insertLogErro(e);
             if(configCTR.getVerRecInformativo() == 0L) {
                 configCTR.setVerInforConfig(1L);
                 VerifDadosServ.getInstance().pulaTelaSemBarra();

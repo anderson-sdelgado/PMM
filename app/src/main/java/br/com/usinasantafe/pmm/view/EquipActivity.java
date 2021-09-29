@@ -28,7 +28,7 @@ public class EquipActivity extends ActivityGeneric {
         Button buttonOkEquip = findViewById(R.id.buttonOkEquip);
         Button buttonCancEquip = findViewById(R.id.buttonCancEquip);
 
-        LogProcessoDAO.getInstance().insert("textViewCodEquip.setText(String.valueOf(" + pmmContext.getConfigCTR().getEquip().getNroEquip() + "));\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("textViewCodEquip.setText(String.valueOf(" + pmmContext.getConfigCTR().getEquip().getNroEquip() + "));\n" +
                 "        textViewDescEquip.setText(pmmContext.getConfigCTR().getEquip().getDescrClasseEquip());", getLocalClassName());
         textViewCodEquip.setText(String.valueOf(pmmContext.getConfigCTR().getEquip().getNroEquip()));
         textViewDescEquip.setText(pmmContext.getConfigCTR().getEquip().getDescrClasseEquip());
@@ -38,23 +38,23 @@ public class EquipActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("        buttonOkEquip.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("        buttonOkEquip.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
 
                 if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){
 
-                    LogProcessoDAO.getInstance().insert("                if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("                if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){\n" +
                             "                    pmmContext.getMotoMecFertCTR().delCarreta();", getLocalClassName());
                     pmmContext.getMotoMecFertCTR().delCarreta();
 
                     if(pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L){
-                        LogProcessoDAO.getInstance().insert("if(pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L){\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L){\n" +
                                 "                        pmmContext.getCecCTR().setLib(pmmContext.getCecCTR().getOS().getIdLibOS());", getLocalClassName());
                         pmmContext.getCecCTR().setLib(pmmContext.getCecCTR().getOS().getIdLibOS());
                     }
 
-                    LogProcessoDAO.getInstance().insert("Intent it = new Intent(EquipActivity.this, MsgNumCarretaActivity.class);", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(EquipActivity.this, MsgNumCarretaActivity.class);", getLocalClassName());
                     Intent it = new Intent(EquipActivity.this, MsgNumCarretaActivity.class);
                     startActivity(it);
                     finish();
@@ -62,11 +62,11 @@ public class EquipActivity extends ActivityGeneric {
                 }
                 else {
 
-                    LogProcessoDAO.getInstance().insert("else {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                             "pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().setIdEquipBolMMFert(" + pmmContext.getConfigCTR().getEquip().getIdEquip() + ");", getLocalClassName());
                     pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().setIdEquipBolMMFert(pmmContext.getConfigCTR().getEquip().getIdEquip());
 
-                    LogProcessoDAO.getInstance().insert("Intent it = new Intent(EquipActivity.this, ListaTurnoActivity.class);" + pmmContext.getConfigCTR().getEquip().getIdEquip() + ");", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(EquipActivity.this, ListaTurnoActivity.class);" + pmmContext.getConfigCTR().getEquip().getIdEquip() + ");", getLocalClassName());
                     Intent it = new Intent(EquipActivity.this, ListaTurnoActivity.class);
                     startActivity(it);
                     finish();
@@ -81,19 +81,19 @@ public class EquipActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("buttonCancEquip.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancEquip.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
 
                 if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){
-                    LogProcessoDAO.getInstance().insert("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){\n" +
                             "                    Intent it = new Intent(EquipActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
                     Intent it = new Intent(EquipActivity.this, ListaAtividadeActivity.class);
                     startActivity(it);
                     finish();
                 }
                 else{
-                    LogProcessoDAO.getInstance().insert("else{ \n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("else{ \n" +
                             "                    Intent it = new Intent(EquipActivity.this, OperadorActivity.class);", getLocalClassName());
                     Intent it = new Intent(EquipActivity.this, OperadorActivity.class);
                     startActivity(it);

@@ -50,6 +50,7 @@ public class CabecCheckListDAO {
         cabecCheckListBean.setFuncCabCL(matricFunc);
         cabecCheckListBean.setTurnoCabCL(idTurno);
         cabecCheckListBean.setStatusCabCL(1L);
+        cabecCheckListBean.setDthrCabCLLong(0L);
         cabecCheckListBean.insert();
     }
 
@@ -71,6 +72,7 @@ public class CabecCheckListDAO {
     public void salvarFechCheckList(String activity) {
         CabecCheckListBean cabecCheckListBean = getCabecCheckListAberto();
         cabecCheckListBean.setStatusCabCL(2L);
+        cabecCheckListBean.setDthrCabCLLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
         cabecCheckListBean.update();
         EnvioDadosServ.getInstance().envioDados(activity);
     }
@@ -120,6 +122,24 @@ public class CabecCheckListDAO {
 
     }
 
+    public ArrayList<Long> idCabecCheckListEnviadoArrayList(){
+
+        ArrayList<EspecificaPesquisa> pesquisaArrayList = new ArrayList();
+        pesquisaArrayList.add(getPesqCabecEnviado());
+
+        CabecCheckListBean cabecCheckListBean = new CabecCheckListBean();
+        List<CabecCheckListBean> cabecCheckListList = cabecCheckListBean.get(pesquisaArrayList);
+
+        ArrayList<Long> idCabecCheckListArrayList = new ArrayList<Long>();
+        for (CabecCheckListBean cabecCheckListBeanBD : cabecCheckListList) {
+            if(cabecCheckListBeanBD.getDthrCabCLLong() < Tempo.getInstance().dthrLongDia1Menos()){
+                idCabecCheckListArrayList.add(cabecCheckListBeanBD.getIdCabCL());
+            }
+        }
+        return idCabecCheckListArrayList;
+
+    }
+
     public ArrayList<Long> idCabecCheckListArrayList(List<CabecCheckListBean> cabecCheckListList) {
         ArrayList<Long> idCabecCheckListArrayList = new ArrayList<Long>();
         for (CabecCheckListBean cabecCheckListBean : cabecCheckListList) {
@@ -127,6 +147,7 @@ public class CabecCheckListDAO {
         }
         return idCabecCheckListArrayList;
     }
+
 
     public void updateCabecCLEnviado(){
         List<CabecCheckListBean> cabecCheckListList = cabecCheckListFechList();
@@ -137,10 +158,11 @@ public class CabecCheckListDAO {
         cabecCheckListList.clear();
     }
 
-    public void delCabecCLFech(){
-        List<CabecCheckListBean> cabecCheckListList = cabecCheckListFechList();
-        for(CabecCheckListBean cabecCheckListBean : cabecCheckListList){
-            cabecCheckListBean.delete();
+    public void deleteCabecCheckListEnviado(ArrayList<Long> idCabecCheckListArrayList){
+        CabecCheckListBean cabecCheckListBean = new CabecCheckListBean();
+        List<CabecCheckListBean> cabecCheckListList = cabecCheckListBean.in("idCabCL", idCabecCheckListArrayList);
+        for(CabecCheckListBean cabecCheckListBeanBD : cabecCheckListList){
+            cabecCheckListBeanBD.delete();
         }
         cabecCheckListList.clear();
     }
@@ -157,6 +179,14 @@ public class CabecCheckListDAO {
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("statusCabCL");
         pesquisa.setValor(2L);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqCabecEnviado(){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("statusCabCL");
+        pesquisa.setValor(3L);
         pesquisa.setTipo(1);
         return pesquisa;
     }

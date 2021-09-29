@@ -87,7 +87,7 @@ public class RespItemCheckListDAO {
         return respItemCheckListBean.in("idCabItCL", idCabCLArrayList);
     }
 
-    public void delRespItem(ArrayList<Long> idCabCLongArrayList){
+    public void deleteRespItemCheckList(ArrayList<Long> idCabCLongArrayList){
 
         List<RespItemCheckListBean> respItemCheckListList = respItemList(idCabCLongArrayList);
         for(RespItemCheckListBean respItemCheckListBean : respItemCheckListList){

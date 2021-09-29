@@ -1,12 +1,6 @@
 package br.com.usinasantafe.pmm.util.conHttp;
 
-import android.content.Intent;
-
 import br.com.usinasantafe.pmm.PMMContext;
-import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.view.MenuInicialActivity;
-import br.com.usinasantafe.pmm.view.MenuPrincECMActivity;
-import br.com.usinasantafe.pmm.view.MenuPrincPMMActivity;
 
 public class UrlsConexaoHttp {
 

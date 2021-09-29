@@ -27,7 +27,7 @@ public class RecolhFertDAO {
         List<RecolhFertBean> rendList = recolhFertBean.get(pesquisaArrayList);
 
         if (rendList.size() == 0) {
-            LogProcessoDAO.getInstance().insert("RecolhFertBean recolhFertBean = new RecolhFertBean();\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("RecolhFertBean recolhFertBean = new RecolhFertBean();\n" +
                     "        \n" +
                     "        ArrayList<EspecificaPesquisa> pesquisaArrayList = new ArrayList();\n" +
                     "        pesquisaArrayList.add(getPesqIdBol(idBol));\n" +

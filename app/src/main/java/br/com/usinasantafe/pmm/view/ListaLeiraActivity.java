@@ -36,10 +36,10 @@ public class ListaLeiraActivity extends ActivityGeneric {
         Button buttonRetListaLeira = (Button) findViewById(R.id.buttonRetListaLeira);
         Button buttonSalvarListaLeira = (Button) findViewById(R.id.buttonSalvarListaLeira);
 
-        LogProcessoDAO.getInstance().insert("leiraList = pmmContext.getCompostoCTR().leiraStatusList(" + pmmContext.getCompostoCTR().getTipoMovLeira() + ");", getLocalClassName());
+        LogProcessoDAO.getInstance().insertLogProcesso("leiraList = pmmContext.getCompostoCTR().leiraStatusList(" + pmmContext.getCompostoCTR().getTipoMovLeira() + ");", getLocalClassName());
         leiraList = pmmContext.getCompostoCTR().leiraStatusList(pmmContext.getCompostoCTR().getTipoMovLeira());
 
-        LogProcessoDAO.getInstance().insert("for (LeiraBean leiraBean : leiraList) {\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("for (LeiraBean leiraBean : leiraList) {\n" +
                 "            ViewHolderChoice viewHolderChoice = new ViewHolderChoice();\n" +
                 "            viewHolderChoice.setSelected(false);\n" +
                 "            viewHolderChoice.setDescrCheckBox(String.valueOf(leiraBean.getCodLeira()));\n" +
@@ -52,7 +52,7 @@ public class ListaLeiraActivity extends ActivityGeneric {
             itens.add(viewHolderChoice);
         }
 
-        LogProcessoDAO.getInstance().insert("adapterListChoice = new AdapterListChoice(this, itens);\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("adapterListChoice = new AdapterListChoice(this, itens);\n" +
                 "        leiraListView = (ListView) findViewById(R.id.listLeira);\n" +
                 "        leiraListView.setAdapter(adapterListChoice);", getLocalClassName());
         adapterListChoice = new AdapterListChoice(this, itens);
@@ -64,7 +64,7 @@ public class ListaLeiraActivity extends ActivityGeneric {
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insert("        buttonRetListaLeira.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("        buttonRetListaLeira.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(ListaLeiraActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
@@ -84,13 +84,13 @@ public class ListaLeiraActivity extends ActivityGeneric {
 
                 for (int i = 0; i < itens.size(); i++) {
 
-                    LogProcessoDAO.getInstance().insert("ArrayList<Long> leiraSelectedList = new ArrayList<Long>();\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("ArrayList<Long> leiraSelectedList = new ArrayList<Long>();\n" +
                             "                for (int i = 0; i < itens.size(); i++) {\n" +
                             "                    ViewHolderChoice viewHolderChoice = itens.get(i);", getLocalClassName());
 
                     ViewHolderChoice viewHolderChoice = itens.get(i);
                     if(viewHolderChoice.isSelected()){
-                        LogProcessoDAO.getInstance().insert("if(viewHolderChoice.isSelected()){\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(viewHolderChoice.isSelected()){\n" +
                                 "                        pmmContext.getCompostoCTR().updateLeira(leiraList.get(i), pmmContext.getCompostoCTR().getTipoMovLeira());\n" +
                                 "                        leiraSelectedList.add(leiraList.get(i).getIdLeira());", getLocalClassName());
                         pmmContext.getCompostoCTR().updateLeira(leiraList.get(i), pmmContext.getCompostoCTR().getTipoMovLeira());
@@ -101,14 +101,14 @@ public class ListaLeiraActivity extends ActivityGeneric {
 
                 if(leiraSelectedList.size() > 0){
 
-                    LogProcessoDAO.getInstance().insert("if(leiraSelectedList.size() > 0){", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(leiraSelectedList.size() > 0){", getLocalClassName());
                     for (int i = 0; i < leiraSelectedList.size(); i++) {
-                        LogProcessoDAO.getInstance().insert("for (int i = 0; i < leiraSelectedList.size(); i++) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("for (int i = 0; i < leiraSelectedList.size(); i++) {\n" +
                                 "                        pmmContext.getMotoMecFertCTR().inserirMovLeira(leiraSelectedList.get(i), pmmContext.getCompostoCTR().getTipoMovLeira());", getLocalClassName());
                         pmmContext.getMotoMecFertCTR().inserirMovLeira(leiraSelectedList.get(i), pmmContext.getCompostoCTR().getTipoMovLeira());
                     }
 
-                    LogProcessoDAO.getInstance().insert("EnvioDadosServ.getInstance().envioDados(null);\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().envioDados(null);\n" +
                             "                    Intent it = new Intent(ListaLeiraActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                     EnvioDadosServ.getInstance().envioDados(getLocalClassName());
                     Intent it = new Intent(ListaLeiraActivity.this, MenuPrincPMMActivity.class);
@@ -117,7 +117,7 @@ public class ListaLeiraActivity extends ActivityGeneric {
 
                 }
                 else{
-                    LogProcessoDAO.getInstance().insert("AlertDialog.Builder alerta = new AlertDialog.Builder(ListaLeiraActivity.this);\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(ListaLeiraActivity.this);\n" +
                             "                    alerta.setTitle(\"ATENÇÃO\");\n" +
                             "                    alerta.setMessage(\"POR FAVOR! SELECIONE A(S) LEIRA(S) QUE SERA(M) ABERTA(S).\");\n" +
                             "                    alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +

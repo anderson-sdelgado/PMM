@@ -63,7 +63,7 @@ public class CECCTR {
         }
         catch (Exception e){
             EnvioDadosServ.status = 1;
-            LogErroDAO.getInstance().insert(e);
+            LogErroDAO.getInstance().insertLogErro(e);
         }
 
     }
@@ -96,7 +96,7 @@ public class CECCTR {
         }
         catch(Exception e){
             EnvioDadosServ.status = 1;
-            LogErroDAO.getInstance().insert(e);
+            LogErroDAO.getInstance().insertLogErro(e);
         }
 
     }
