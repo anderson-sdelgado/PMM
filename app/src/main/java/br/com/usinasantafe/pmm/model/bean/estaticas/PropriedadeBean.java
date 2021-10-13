@@ -13,6 +13,8 @@ public class PropriedadeBean extends Entidade {
     @DatabaseField(id=true)
     private Long idPropriedade;
     @DatabaseField
+    private Long codPropriedade;
+    @DatabaseField
     private String descrPropriedade;
 
     public PropriedadeBean() {
@@ -33,4 +35,13 @@ public class PropriedadeBean extends Entidade {
     public void setDescrPropriedade(String descrPropriedade) {
         this.descrPropriedade = descrPropriedade;
     }
+
+    public Long getCodPropriedade() {
+        return codPropriedade;
+    }
+
+    public void setCodPropriedade(Long codPropriedade) {
+        this.codPropriedade = codPropriedade;
+    }
+
 }

@@ -97,9 +97,10 @@ public class PropriedadeActivity extends ActivityGeneric {
                     if (pmmContext.getConfigCTR().verPropriedade(Long.parseLong(editTextPadrao.getText().toString()))) {
 
                         LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().verPropriedade(Long.parseLong(editTextPadrao.getText().toString()))) {\n" +
-                                "                        pmmContext.getConfigCTR().setIdPropriedade(Long.parseLong(editTextPadrao.getText().toString()));\n" +
-                                "                        Intent it = new Intent(PropriedadeActivity.this, MsgPropriedadeActivity.class);", getLocalClassName());
-                        pmmContext.getConfigCTR().setIdPropriedade(Long.parseLong(editTextPadrao.getText().toString()));
+                                "pmmContext.getConfigCTR().setIdPropriedade(pmmContext.getConfigCTR().getCodPropriedade(Long.parseLong(editTextPadrao.getText().toString())).getIdPropriedade());\n" +
+                                "Intent it = new Intent(PropriedadeActivity.this, MsgPropriedadeActivity.class);", getLocalClassName());
+
+                        pmmContext.getConfigCTR().setIdPropriedade(pmmContext.getConfigCTR().getCodPropriedade(Long.parseLong(editTextPadrao.getText().toString())).getIdPropriedade());
                         Intent it = new Intent(PropriedadeActivity.this, MsgPropriedadeActivity.class);
                         startActivity(it);
                         finish();

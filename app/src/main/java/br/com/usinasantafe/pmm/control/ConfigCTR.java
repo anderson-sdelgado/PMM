@@ -428,14 +428,19 @@ public class ConfigCTR {
         this.idPropriedade = idPropriedade;
     }
 
-    public boolean verPropriedade(Long idPropriedade){
+    public boolean verPropriedade(Long codPropriedade){
         PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
-        return propriedadeDAO.verPropriedade(idPropriedade);
+        return propriedadeDAO.verPropriedade(codPropriedade);
     }
 
-    public PropriedadeBean getPropriedade(){
+    public PropriedadeBean getIdPropriedade(){
         PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
-        return propriedadeDAO.getPropriedade(idPropriedade);
+        return propriedadeDAO.getPropriedadeId(idPropriedade);
+    }
+
+    public PropriedadeBean getCodPropriedade(Long codPropriedade){
+        PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
+        return propriedadeDAO.getPropriedadeCod(codPropriedade);
     }
 
     public void setFrentePropriedade(){
@@ -450,14 +455,14 @@ public class ConfigCTR {
         }
         else if(getConfig().getNroOSConfig() == 0L){
             PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
-            PropriedadeBean propriedadeBean = propriedadeDAO.getPropriedade(getConfig().getIdPropriedadeConfig());
-            retorno = "FAZENDA = " + propriedadeBean.getIdPropriedade() + " - " + propriedadeBean.getDescrPropriedade();
+            PropriedadeBean propriedadeBean = propriedadeDAO.getPropriedadeId(getConfig().getIdPropriedadeConfig());
+            retorno = "FAZENDA = " + propriedadeBean.getCodPropriedade() + " - " + propriedadeBean.getDescrPropriedade();
         }
         else{
             OSDAO osDAO = new OSDAO();
             PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
-            PropriedadeBean propriedadeBean = propriedadeDAO.getPropriedade(osDAO.getOS(getConfig().getNroOSConfig()).getIdProprAgr());
-            retorno = "FAZENDA = " + propriedadeBean.getIdPropriedade() + " - " + propriedadeBean.getDescrPropriedade();
+            PropriedadeBean propriedadeBean = propriedadeDAO.getPropriedadeId(osDAO.getOS(getConfig().getNroOSConfig()).getIdProprAgr());
+            retorno = "FAZENDA = " + propriedadeBean.getCodPropriedade() + " - " + propriedadeBean.getDescrPropriedade();
         }
         return retorno;
     }
