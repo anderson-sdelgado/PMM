@@ -11,18 +11,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:telaAtual=".EsperaDadosOperActivity">
 
-    <ProgressBar
-        android:id="@+id/progressBarEspGraf"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
     <TextView
         android:id="@+id/textEspInfor"
         style="@style/TextViewTituloLista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/texto_esp_graf" />
+
+    <ProgressBar
+        android:id="@+id/progressBarEspGraf"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>

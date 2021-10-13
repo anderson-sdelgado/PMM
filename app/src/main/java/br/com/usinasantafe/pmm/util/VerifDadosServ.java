@@ -69,23 +69,22 @@ public class VerifDadosServ {
             configCTR.receberVerifAtiv(result);
         } else if (this.tipo.equals("Atualiza")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Atualiza\")) {\n" +
-                    "            AtualAplicBean atualAplicBean = configCTR.recAtual(result.trim());\n" +
+                    "            configCTR.recAtual(result.trim());\n" +
                     "            status = 3;", activity);
-            AtualAplicBean atualAplicBean = configCTR.recAtual(result.trim());
+            configCTR.recAtual(result.trim());
             status = 3;
-            if (atualAplicBean.getFlagAtualApp().equals(1L)) {
-                LogProcessoDAO.getInstance().insertLogProcesso("if (atualAplicBean.getFlagAtualApp().equals(1L)) {\n" +
-                        "                AtualizarAplicativo atualizarAplicativo = new AtualizarAplicativo();\n" +
-                        "                atualizarAplicativo.setContext(this.menuInicialActivity);\n" +
-                        "                atualizarAplicativo.execute();", activity);
-                AtualizarAplicativo atualizarAplicativo = new AtualizarAplicativo();
-                atualizarAplicativo.setContext(this.telaInicialActivity);
-                atualizarAplicativo.execute();
-            } else {
-                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                        "                this.menuInicialActivity.encerrarBarra();", activity);
+//            if (atualAplicBean.getFlagAtualApp().equals(1L)) {
+//                LogProcessoDAO.getInstance().insertLogProcesso("if (atualAplicBean.getFlagAtualApp().equals(1L)) {\n" +
+//                        "                AtualizarAplicativo atualizarAplicativo = new AtualizarAplicativo();\n" +
+//                        "                atualizarAplicativo.setContext(this.menuInicialActivity);\n" +
+//                        "                atualizarAplicativo.execute();", activity);
+//                AtualizarAplicativo atualizarAplicativo = new AtualizarAplicativo();
+//                atualizarAplicativo.setContext(this.telaInicialActivity);
+//                atualizarAplicativo.execute();
+//            } else {
+                LogProcessoDAO.getInstance().insertLogProcesso("this.menuInicialActivity.encerrarBarra();", activity);
                 this.telaInicialActivity.goMenuInicial();
-            }
+//            }
         } else if (this.tipo.equals("CheckList")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"CheckList\")) {\n" +
                     "            checkListCTR.receberVerifCheckList(" + result + ");", activity);

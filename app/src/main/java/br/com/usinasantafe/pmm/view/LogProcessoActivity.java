@@ -55,7 +55,7 @@ public class LogProcessoActivity extends ActivityGeneric {
                         "            public void onClick(View v) {", getLocalClassName());
                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 12L){
                     LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 12L){\n" +
-                            "Intent it = new Intent(SenhaActivity.this, TelaInicialActivity.class);", getLocalClassName());
+                            "Intent it = new Intent(LogProcessoActivity.this, TelaInicialActivity.class);", getLocalClassName());
                     Intent it = new Intent(LogProcessoActivity.this, TelaInicialActivity.class);
                     startActivity(it);
                     finish();

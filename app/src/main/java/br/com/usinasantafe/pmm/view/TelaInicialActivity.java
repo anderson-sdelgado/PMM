@@ -1,7 +1,5 @@
 package br.com.usinasantafe.pmm.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,105 +22,14 @@ public class TelaInicialActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        LogProcessoDAO.getInstance().insertLogProcesso("clearBD();", getLocalClassName());
-        clearBD();
-
-        if(EnvioDadosServ.getInstance().verifDadosEnvio()){
-            LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().verifDadosEnvio()", getLocalClassName());
-            if(connectNetwork){
-                LogProcessoDAO.getInstance().insertLogProcesso("if(connectNetwork){\n" +
-                        "EnvioDadosServ.getInstance().envioDados()", getLocalClassName());
-                EnvioDadosServ.getInstance().envioDados(getLocalClassName());
-            }
-            else{
-                LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                        "                EnvioDadosServ.status = 1;", getLocalClassName());
-                EnvioDadosServ.status = 1;
-            }
-        }
-        else{
-            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                    "            EnvioDadosServ.status = 3;", getLocalClassName());
-            EnvioDadosServ.status = 3;
-        }
-
-        LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.status = 3;", getLocalClassName());
-        VerifDadosServ.status = 3;
-
-        if(pmmContext.getMotoMecFertCTR().verBolAberto()){
-            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().verBolAberto()", getLocalClassName());
-            if(pmmContext.getCheckListCTR().verCabecAberto()){
-                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCheckListCTR().verCabecAberto()\n" +
-                        "encerrarBarra()\n" +
-                        "pmmContext.getCheckListCTR().clearRespCabecAberto();\n" +
-                        "                pmmContext.getCheckListCTR().setPosCheckList(1);\n" +
-                        "                Intent it = new Intent(TelaInicialActivity.this, ItemCheckListActivity.class);", getLocalClassName());
-                pmmContext.getCheckListCTR().clearRespCabecAberto();
-                pmmContext.getCheckListCTR().setPosCheckList(1);
-                Intent it = new Intent(TelaInicialActivity.this, ItemCheckListActivity.class);
-                startActivity(it);
-                finish();
-            }
-            else {
-                LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
-                        "encerrarBarra();\n" +
-                        "                pmmContext.getConfigCTR().setPosicaoTela(8L);", getLocalClassName());
-                pmmContext.getConfigCTR().setPosicaoTela(8L);
-                if (connectNetwork) {
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {", getLocalClassName());
-                    if (VerifDadosServ.getInstance().verifRecInformativo()) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().verifRecInformativo()\n" +
-                                "pmmContext.getInformativoCTR().verifDadosInformativo", getLocalClassName());
-                        pmmContext.getInformativoCTR().verifDadosInformativo(getLocalClassName());
-                    } else {
-                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                "                        LogProcessoDAO.getInstance().insert(\"} else {\", getLocalClassName());\n" +
-                                "                        VerifDadosServ.status = 1;", getLocalClassName());
-                        LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
-                        VerifDadosServ.status = 1;
-                    }
-                }
-
-                if(PMMContext.aplic == 1){
-                    LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
-                            "Intent it = new Intent(TelaInicialActivity.this, MenuPrincPMMActivity.class)", getLocalClassName());
-                    Intent it = new Intent(TelaInicialActivity.this, MenuPrincPMMActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-                else if(PMMContext.aplic == 2){
-                    LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){", getLocalClassName());
-                    if(pmmContext.getCecCTR().verPreCECAberto()){
-                        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCecCTR().verPreCECAberto()\n" +
-                                "clearPreCECAberto()", getLocalClassName());
-                        pmmContext.getCecCTR().clearPreCECAberto();
-                    }
-                    LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(TelaInicialActivity.this, MenuPrincECMActivity.class)", getLocalClassName());
-                    Intent it = new Intent(TelaInicialActivity.this, MenuPrincECMActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-                else if(PMMContext.aplic == 3){
-                    LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
-                            "Intent it = new Intent(TelaInicialActivity.this, MenuPrincPCOMPActivity.class)", getLocalClassName());
-                    Intent it = new Intent(TelaInicialActivity.this, MenuPrincPCOMPActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-            }
-        }
-        else{
-            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                    "atualizarAplic()", getLocalClassName());
-            atualizarAplic();
-        }
+        customHandler.postDelayed(excluirBDThread, 0);
 
     }
 
     public void goMenuInicial(){
         LogProcessoDAO.getInstance().insertLogProcesso("customHandler.removeCallbacks(updateTimerThread);\n" +
                 "        Intent it = new Intent(TelaInicialActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
-        customHandler.removeCallbacks(updateTimerThread);
+        customHandler.removeCallbacks(encerraAtualThread);
         Intent it = new Intent(TelaInicialActivity.this, MenuInicialActivity.class);
         startActivity(it);
         finish();
@@ -135,7 +42,7 @@ public class TelaInicialActivity extends ActivityGeneric {
             if (pmmContext.getConfigCTR().hasElemConfig()) {
                 LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().hasElemConfig()\n" +
                         "                customHandler.postDelayed(updateTimerThread, 10000);", getLocalClassName());
-                customHandler.postDelayed(updateTimerThread, 10000);
+                customHandler.postDelayed(encerraAtualThread, 10000);
                 LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().verAtualAplic(pmmContext.versaoAplic, this, getLocalClassName());", getLocalClassName());
                 pmmContext.getConfigCTR().verAtualAplic(pmmContext.versaoAplic, this, getLocalClassName());
             }
@@ -172,7 +79,7 @@ public class TelaInicialActivity extends ActivityGeneric {
         }
     }
 
-    private Runnable updateTimerThread = new Runnable() {
+    private Runnable encerraAtualThread = new Runnable() {
 
         public void run() {
             LogProcessoDAO.getInstance().insertLogProcesso("    private Runnable updateTimerThread = new Runnable() {\n" +
@@ -185,6 +92,105 @@ public class TelaInicialActivity extends ActivityGeneric {
             }
             LogProcessoDAO.getInstance().insertLogProcesso("goMenuInicial();", getLocalClassName());
             goMenuInicial();
+        }
+    };
+
+    private Runnable excluirBDThread = new Runnable() {
+
+        public void run() {
+
+            LogProcessoDAO.getInstance().insertLogProcesso("clearBD();", getLocalClassName());
+            clearBD();
+
+            if(EnvioDadosServ.getInstance().verifDadosEnvio()){
+                LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().verifDadosEnvio()", getLocalClassName());
+                if(connectNetwork){
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(connectNetwork){\n" +
+                            "EnvioDadosServ.getInstance().envioDados()", getLocalClassName());
+                    EnvioDadosServ.getInstance().envioDados(getLocalClassName());
+                }
+                else{
+                    LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                            "                EnvioDadosServ.status = 1;", getLocalClassName());
+                    EnvioDadosServ.status = 1;
+                }
+            }
+            else{
+                LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                        "            EnvioDadosServ.status = 3;", getLocalClassName());
+                EnvioDadosServ.status = 3;
+            }
+
+            LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.status = 3;", getLocalClassName());
+            VerifDadosServ.status = 3;
+
+            if(pmmContext.getMotoMecFertCTR().verBolAberto()){
+                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().verBolAberto()", getLocalClassName());
+                if(pmmContext.getCheckListCTR().verCabecAberto()){
+                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCheckListCTR().verCabecAberto()\n" +
+                            "encerrarBarra()\n" +
+                            "pmmContext.getCheckListCTR().clearRespCabecAberto();\n" +
+                            "                pmmContext.getCheckListCTR().setPosCheckList(1);\n" +
+                            "                Intent it = new Intent(TelaInicialActivity.this, ItemCheckListActivity.class);", getLocalClassName());
+                    pmmContext.getCheckListCTR().clearRespCabecAberto();
+                    pmmContext.getCheckListCTR().setPosCheckList(1);
+                    Intent it = new Intent(TelaInicialActivity.this, ItemCheckListActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else {
+                    LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
+                            "encerrarBarra();\n" +
+                            "                pmmContext.getConfigCTR().setPosicaoTela(8L);", getLocalClassName());
+                    pmmContext.getConfigCTR().setPosicaoTela(8L);
+                    if (connectNetwork) {
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {", getLocalClassName());
+                        if (VerifDadosServ.getInstance().verifRecInformativo()) {
+                            LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().verifRecInformativo()\n" +
+                                    "pmmContext.getInformativoCTR().verifDadosInformativo", getLocalClassName());
+                            pmmContext.getInformativoCTR().verifDadosInformativo(getLocalClassName());
+                        } else {
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                    "                        LogProcessoDAO.getInstance().insert(\"} else {\", getLocalClassName());\n" +
+                                    "                        VerifDadosServ.status = 1;", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
+                            VerifDadosServ.status = 1;
+                        }
+                    }
+
+                    if(PMMContext.aplic == 1){
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
+                                "Intent it = new Intent(TelaInicialActivity.this, MenuPrincPMMActivity.class)", getLocalClassName());
+                        Intent it = new Intent(TelaInicialActivity.this, MenuPrincPMMActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                    else if(PMMContext.aplic == 2){
+                        LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){", getLocalClassName());
+                        if(pmmContext.getCecCTR().verPreCECAberto()){
+                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCecCTR().verPreCECAberto()\n" +
+                                    "clearPreCECAberto()", getLocalClassName());
+                            pmmContext.getCecCTR().clearPreCECAberto();
+                        }
+                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(TelaInicialActivity.this, MenuPrincECMActivity.class)", getLocalClassName());
+                        Intent it = new Intent(TelaInicialActivity.this, MenuPrincECMActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                    else if(PMMContext.aplic == 3){
+                        LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
+                                "Intent it = new Intent(TelaInicialActivity.this, MenuPrincPCOMPActivity.class)", getLocalClassName());
+                        Intent it = new Intent(TelaInicialActivity.this, MenuPrincPCOMPActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                }
+            }
+            else{
+                LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                        "atualizarAplic()", getLocalClassName());
+                atualizarAplic();
+            }
         }
     };
 

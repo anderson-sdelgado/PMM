@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -28,6 +29,7 @@ public class MenuInicialActivity extends ActivityGeneric {
     private ProgressDialog progressBar;
 
     private TextView textViewProcesso;
+    private Handler customHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,9 @@ public class MenuInicialActivity extends ActivityGeneric {
             ActivityCompat.requestPermissions(this, PERMISSIONS, 112);
         }
 
+        LogProcessoDAO.getInstance().insertLogProcesso("customHandler.postDelayed(updateTimerThread, 0);", getLocalClassName());
+        customHandler.postDelayed(updateTimerThread, 0);
+
         LogProcessoDAO.getInstance().insertLogProcesso("        verifEnvio();\n" +
                 "        progressBar = new ProgressDialog(this);\n" +
                 "        ArrayList<String> itens = new ArrayList<>();\n" +
@@ -56,7 +61,6 @@ public class MenuInicialActivity extends ActivityGeneric {
                 "        itens.add(\"REENVIO DE DADOS\");\n" +
                 "        itens.add(\"ATUALIZAR APLICATIVO\");\n" +
                 "        itens.add(\"LOG\");", getLocalClassName());
-        verifEnvio();
 
         progressBar = new ProgressDialog(this);
 
@@ -202,26 +206,37 @@ public class MenuInicialActivity extends ActivityGeneric {
     public void onBackPressed() {
     }
 
-    public void verifEnvio(){
-        if (pmmContext.getConfigCTR().hasElemConfig()) {
-            pmmContext.getConfigCTR().setStatusRetVerif(0L);
-            LogProcessoDAO.getInstance().insertLogProcesso("        if (pmmContext.getConfigCTR().hasElemConfig()) {\n" +
-                    "            pmmContext.getConfigCTR().setStatusRetVerif(0L);\n" +
-                    "EnvioDadosServ.status = " + EnvioDadosServ.status, getLocalClassName());
-            if (EnvioDadosServ.status == 1) {
+    private Runnable updateTimerThread = new Runnable() {
+
+        public void run() {
+
+            if (pmmContext.getConfigCTR().hasElemConfig()) {
+                pmmContext.getConfigCTR().setStatusRetVerif(0L);
+                LogProcessoDAO.getInstance().insertLogProcesso("        if (pmmContext.getConfigCTR().hasElemConfig()) {\n" +
+                        "            pmmContext.getConfigCTR().setStatusRetVerif(0L);\n" +
+                        "EnvioDadosServ.status = " + EnvioDadosServ.status, getLocalClassName());
+                if (EnvioDadosServ.status == 1) {
+                    textViewProcesso.setTextColor(Color.RED);
+                    textViewProcesso.setText("Existem Dados para serem Enviados");
+                } else if (EnvioDadosServ.status == 2) {
+                    textViewProcesso.setTextColor(Color.YELLOW);
+                    textViewProcesso.setText("Enviando Dados...");
+                } else if (EnvioDadosServ.status == 3) {
+                    textViewProcesso.setTextColor(Color.GREEN);
+                    textViewProcesso.setText("Todos os Dados já foram Enviados");
+                }
+            } else {
                 textViewProcesso.setTextColor(Color.RED);
-                textViewProcesso.setText("Existem Dados para serem Enviados");
-            } else if (EnvioDadosServ.status == 2) {
-                textViewProcesso.setTextColor(Color.YELLOW);
-                textViewProcesso.setText("Enviando Dados...");
-            } else if (EnvioDadosServ.status == 3) {
-                textViewProcesso.setTextColor(Color.GREEN);
-                textViewProcesso.setText("Todos os Dados já foram Enviados");
+                textViewProcesso.setText("Aparelho sem Equipamento");
             }
-        } else {
-            textViewProcesso.setTextColor(Color.RED);
-            textViewProcesso.setText("Aparelho sem Equipamento");
+
+            LogProcessoDAO.getInstance().insertLogProcesso("if(EnvioDadosServ.status != 3){\n" +
+                    "                customHandler.postDelayed(this, 10000);\n" +
+                    "            }", getLocalClassName());
+            if(EnvioDadosServ.status != 3){
+                customHandler.postDelayed(this, 10000);
+            }
         }
-    }
+    };
 
 }

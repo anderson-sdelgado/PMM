@@ -444,8 +444,12 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                 finish();
 
             }
-            LogProcessoDAO.getInstance().insertLogProcesso("customHandler.postDelayed(this, 10000);", getLocalClassName());
-            customHandler.postDelayed(this, 10000);
+            LogProcessoDAO.getInstance().insertLogProcesso("if(EnvioDadosServ.status != 3){\n" +
+                    "                customHandler.postDelayed(this, 10000);\n" +
+                    "            }", getLocalClassName());
+            if(EnvioDadosServ.status != 3){
+                customHandler.postDelayed(this, 10000);
+            }
         }
     };
 
