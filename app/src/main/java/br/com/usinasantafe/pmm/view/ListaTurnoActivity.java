@@ -173,8 +173,8 @@ public class ListaTurnoActivity extends ActivityGeneric {
                                     "pmmContext.getConfigCTR().setStatusConConfig(0L);", getLocalClassName());
                             pmmContext.getConfigCTR().setStatusConConfig(0L);
                         }
-                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(ListaTurnoActivity.this, HorimetroActivity.class);", getLocalClassName());
-                        Intent it = new Intent(ListaTurnoActivity.this, HorimetroActivity.class);
+                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(ListaTurnoActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
+                        Intent it = new Intent(ListaTurnoActivity.this, ListaAtividadeActivity.class);
                         startActivity(it);
                         finish();
                     }

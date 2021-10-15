@@ -479,9 +479,9 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                pmmContext.getConfigCTR().setPosicaoTela(25L);\n" +
-                        "                Intent it = new Intent(MenuPrincPCOMPActivity.this, LogProcessoActivity.class);", getLocalClassName());
+                        "                Intent it = new Intent(MenuPrincPCOMPActivity.this, SenhaActivity.class);", getLocalClassName());
                 pmmContext.getConfigCTR().setPosicaoTela(25L);
-                Intent it = new Intent(MenuPrincPCOMPActivity.this, LogProcessoActivity.class);
+                Intent it = new Intent(MenuPrincPCOMPActivity.this, SenhaActivity.class);
                 startActivity(it);
                 finish();
             }

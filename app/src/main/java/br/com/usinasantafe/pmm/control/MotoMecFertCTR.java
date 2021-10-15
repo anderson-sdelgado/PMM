@@ -263,8 +263,8 @@ public class MotoMecFertCTR {
         AtividadeDAO atividadeDAO = new AtividadeDAO();
         LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2){", activity);
         if(PMMContext.aplic == 2){
-            LogProcessoDAO.getInstance().insertLogProcesso("return atividadeDAO.retAtivArrayList(configCTR.getEquip().getIdEquip(), osDAO.idAtivArrayList(nroOS));", activity);
-            return atividadeDAO.retAtivArrayList(configCTR.getEquip().getIdEquip(), osDAO.idAtivArrayList(nroOS));
+            LogProcessoDAO.getInstance().insertLogProcesso("return atividadeDAO.retAtivArrayList(configCTR.getEquip().getIdEquip(), osDAO.idAtivArrayList(nroOS), nroOS);", activity);
+            return atividadeDAO.retAtivArrayList(configCTR.getEquip().getIdEquip(), osDAO.idAtivArrayList(nroOS), nroOS);
         }
         else {
             LogProcessoDAO.getInstance().insertLogProcesso("return atividadeDAO.retAtivArrayList(configCTR.getEquip().getIdEquip(), nroOS);", activity);

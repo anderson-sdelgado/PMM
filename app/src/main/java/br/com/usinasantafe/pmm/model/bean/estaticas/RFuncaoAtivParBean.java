@@ -13,7 +13,7 @@ public class RFuncaoAtivParBean extends Entidade {
     @DatabaseField
     private Long idAtivPar;
     @DatabaseField
-    private Long codFuncao; // ATIVIDADE -> 1 - RENDIMENTO; 2 - TRANSBORDO; 3 - IMPLEMENTO; 4 - CARRETEL
+    private Long codFuncao; // ATIVIDADE -> 1 - RENDIMENTO; 2 - TRANSBORDO; 3 - IMPLEMENTO; 4 - CARRETEL; 5 - LEIRA; 6 - TRANSP. CANA
                             // PARADA -> 1 - CHECKLIST; 2 - IMPLEMENTO; 3 - CALIBRAGEM
     @DatabaseField
     private Long tipoFuncao; // 1 - ATIVIDADE; 2 - PARADA

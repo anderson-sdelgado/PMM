@@ -59,9 +59,7 @@ public class OSDAO {
 
     public Double rendOS(Long nroOS){
         OSBean osBean = new OSBean();
-        ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqNroOS(nroOS));
-        List<OSBean> osList = osBean.get("nroOS", nroOS);
+        List<OSBean> osList = osList(nroOS);
         if (osList.size() > 0) {
             osBean = (OSBean) osList.get(0);
         } else {

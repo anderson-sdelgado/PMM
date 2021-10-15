@@ -50,8 +50,8 @@ public class MsgPropriedadeActivity extends ActivityGeneric {
                 LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
                 pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
 
-                LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MsgPropriedadeActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
-                Intent it = new Intent(MsgPropriedadeActivity.this, MenuPrincECMActivity.class);
+                LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MsgPropriedadeActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
+                Intent it = new Intent(MsgPropriedadeActivity.this, ListaAtividadeActivity.class);
                 startActivity(it);
                 finish();
 
