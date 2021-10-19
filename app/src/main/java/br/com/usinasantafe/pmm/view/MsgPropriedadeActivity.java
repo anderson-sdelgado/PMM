@@ -28,8 +28,7 @@ public class MsgPropriedadeActivity extends ActivityGeneric {
 
         LogProcessoDAO.getInstance().insertLogProcesso("PropriedadeBean propriedadeBean = pmmContext.getConfigCTR().getPropriedade();", getLocalClassName());
         PropriedadeBean propriedadeBean = pmmContext.getConfigCTR().getIdPropriedade();
-
-        textViewMsgDescrPropriedade.setText(propriedadeBean.getIdPropriedade() + " - " + propriedadeBean.getDescrPropriedade());
+        textViewMsgDescrPropriedade.setText(propriedadeBean.getCodPropriedade() + " - " + propriedadeBean.getDescrPropriedade());
 
         buttonMsgPropriedadeOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,8 +46,8 @@ public class MsgPropriedadeActivity extends ActivityGeneric {
 
                 pmmContext.getCecCTR().salvarPrecCECAberto();
 
-                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
+//                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+//                pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
 
                 LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MsgPropriedadeActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
                 Intent it = new Intent(MsgPropriedadeActivity.this, ListaAtividadeActivity.class);

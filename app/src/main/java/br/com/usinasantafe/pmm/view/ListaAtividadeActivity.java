@@ -129,13 +129,35 @@ public class ListaAtividadeActivity extends ActivityGeneric {
         buttonRetAtividade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetAtividade.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                Intent it = new Intent(ListaAtividadeActivity.this, OSActivity.class);", getLocalClassName());
-                Intent it = new Intent(ListaAtividadeActivity.this, OSActivity.class);
-                startActivity(it);
-                finish();
+
+                if(PMMContext.aplic == 2){
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2){", getLocalClassName());
+                    if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L)
+                            || (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L)) {
+                        LogProcessoDAO.getInstance().insertLogProcesso("if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L)\n" +
+                                "                            || (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L)) {\n" +
+                                "Intent it = new Intent(ListaAtividadeActivity.this, ListaTurnoActivity.class);", getLocalClassName());
+                        Intent it = new Intent(ListaAtividadeActivity.this, ListaTurnoActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                    else {
+                        LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
+                                "Intent it = new Intent(ListaAtividadeActivity.this, MsgPropriedadeActivity.class);", getLocalClassName());
+                        Intent it = new Intent(ListaAtividadeActivity.this, MsgPropriedadeActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                }
+                else{
+                    LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                            "                Intent it = new Intent(ListaAtividadeActivity.this, OSActivity.class);", getLocalClassName());
+                    Intent it = new Intent(ListaAtividadeActivity.this, OSActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+
+
             }
         });
 
@@ -353,6 +375,13 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                             LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                                                     "Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                                             Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
+                                            startActivity(it);
+                                            finish();
+                                        }
+                                        else if(PMMContext.aplic == 2){
+                                            LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
+                                                    "Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                                            Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);
                                             startActivity(it);
                                             finish();
                                         }
