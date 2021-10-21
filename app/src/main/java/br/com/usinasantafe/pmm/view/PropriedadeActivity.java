@@ -111,10 +111,10 @@ public class PropriedadeActivity extends ActivityGeneric {
                         LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                                 "                        AlertDialog.Builder alerta = new AlertDialog.Builder(PropriedadeActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
-                                "                        alerta.setMessage(\"PROPRIEDADE INCORRETA! POR FAVOR, VERIFIQUE O CÓDIGO DA PROPRIEDADE E DIGITE NOVAMENTE.\");", getLocalClassName());
+                                "                        alerta.setMessage(\"CÓDIGO DA SEÇÃO INCORRETO, POR FAVOR CERTIFIQUE-SE DE QUE O CÓDIGO REGISTRADO ESTÁ CORRETO OU POSSUI O.S. DE COLHEITA ABERTA E TENTE NOVAMENTE.\");", getLocalClassName());
                         AlertDialog.Builder alerta = new AlertDialog.Builder(PropriedadeActivity.this);
                         alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("PROPRIEDADE INCORRETA! POR FAVOR, VERIFIQUE O CÓDIGO DA PROPRIEDADE E DIGITE NOVAMENTE.");
+                        alerta.setMessage("CÓDIGO DA SEÇÃO INCORRETO, POR FAVOR CERTIFIQUE-SE DE QUE O CÓDIGO REGISTRADO ESTÁ CORRETO OU POSSUI O.S. DE COLHEITA ABERTA E TENTE NOVAMENTE.");
                         alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

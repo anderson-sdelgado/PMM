@@ -59,7 +59,7 @@ public class OSActivity extends ActivityGeneric {
                             "Long nroOS = Long.parseLong(" + editTextPadrao.getText().toString() + ");\n" +
                             "                    pmmContext.getConfigCTR().setOsConfig(nroOS);", getLocalClassName());
                     Long nroOS = Long.parseLong(editTextPadrao.getText().toString());
-                    pmmContext.getConfigCTR().setOsConfig(nroOS);
+                    pmmContext.getConfigCTR().setNroOSConfig(nroOS);
 
                     if(PMMContext.aplic == 2) {
 

@@ -140,7 +140,7 @@ public class TransbordoActivity extends ActivityGeneric {
                             LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verTransb(idTransb)) {\n" +
                                     "                            AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
-                                    "                            alerta.setMessage(\"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\");\n" +
+                                    "                            alerta.setMessage(\"POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.\");\n" +
                                     "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
                                     "                                @Override\n" +
                                     "                                public void onClick(DialogInterface dialog, int which) {\n" +
@@ -153,7 +153,7 @@ public class TransbordoActivity extends ActivityGeneric {
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);
                             alerta.setTitle("ATENÇÃO");
-                            alerta.setMessage("POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.");
+                            alerta.setMessage("POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.");
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {

@@ -218,7 +218,7 @@ public class ConfigCTR {
 
     public void clearOSAtiv(){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setOsConfig(0L);
+        configDAO.setNroOSConfig(0L);
         configDAO.setAtivConfig(0L);
     }
 
@@ -226,9 +226,9 @@ public class ConfigCTR {
 
     ////////////////////////////////////// OS ////////////////////////////////////////////////////
 
-    public void setOsConfig(Long nroOS){
+    public void setNroOSConfig(Long nroOS){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setOsConfig(nroOS);
+        configDAO.setNroOSConfig(nroOS);
     }
 
     public boolean verROSAtiv(Long nroOS){
@@ -451,18 +451,18 @@ public class ConfigCTR {
     public String getMsgPropriedade(){
         String retorno = "";
         if((getConfig().getNroOSConfig() == 0L) && (getConfig().getIdPropriedadeConfig() == 0L)){
-            retorno = "NÃO POSSUE FAZENDA AINDA";
+            retorno = "NÃO POSSUE SEÇÃO AINDA";
         }
         else if(getConfig().getNroOSConfig() == 0L){
             PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
             PropriedadeBean propriedadeBean = propriedadeDAO.getPropriedadeId(getConfig().getIdPropriedadeConfig());
-            retorno = "FAZENDA = " + propriedadeBean.getCodPropriedade() + " - " + propriedadeBean.getDescrPropriedade();
+            retorno = "SEÇÃO " + propriedadeBean.getCodPropriedade() + " - " + propriedadeBean.getDescrPropriedade();
         }
         else{
             OSDAO osDAO = new OSDAO();
             PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
             PropriedadeBean propriedadeBean = propriedadeDAO.getPropriedadeId(osDAO.getOS(getConfig().getNroOSConfig()).getIdProprAgr());
-            retorno = "FAZENDA = " + propriedadeBean.getCodPropriedade() + " - " + propriedadeBean.getDescrPropriedade();
+            retorno = "SEÇÃO " + propriedadeBean.getCodPropriedade() + " - " + propriedadeBean.getDescrPropriedade();
         }
         return retorno;
     }

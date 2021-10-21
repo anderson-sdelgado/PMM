@@ -55,10 +55,10 @@ public class VerifOperadorActivity extends ActivityGeneric {
                         "            public void onClick(View v) {\n" +
                         "                AlertDialog.Builder alerta = new AlertDialog.Builder(VerifOperadorActivity.this);\n" +
                         "                alerta.setTitle(\"ATENÇÃO\");\n" +
-                        "                alerta.setMessage(\"DESEJA REALMENTE TROCA O MOTORISTA? ISSO ENCERRA-LA O BOLETIM.\");", getLocalClassName());
+                        "                alerta.setMessage(\"AO REALIZAR A ALTERAÇÃO O PROCESSO ENCERRARÁ O BOLETIM ATUAL E UM NOVO SERÁ CRIADO. DESEJA REALMENTE ALTERAR O MOTORISTA?\");", getLocalClassName());
                 AlertDialog.Builder alerta = new AlertDialog.Builder(VerifOperadorActivity.this);
                 alerta.setTitle("ATENÇÃO");
-                alerta.setMessage("DESEJA REALMENTE TROCA O MOTORISTA? ISSO ENCERRA-LA O BOLETIM.");
+                alerta.setMessage("AO REALIZAR A ALTERAÇÃO O PROCESSO ENCERRARÁ O BOLETIM ATUAL E UM NOVO SERÁ CRIADO. DESEJA REALMENTE ALTERAR O MOTORISTA?");
                 alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -66,8 +66,10 @@ public class VerifOperadorActivity extends ActivityGeneric {
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {\n" +
                                 "                        pmmContext.getConfigCTR().setPosicaoTela(17L);\n" +
+                                "                        pmmContext.getMotoMecFertCTR().inserirParadaTrocaMotorista(getLocalClassName());\n" +
                                 "                        Intent it = new Intent(VerifOperadorActivity.this, HorimetroActivity.class);", getLocalClassName());
                         pmmContext.getConfigCTR().setPosicaoTela(17L);
+                        pmmContext.getMotoMecFertCTR().inserirParadaTrocaMotorista(getLocalClassName());
                         Intent it = new Intent(VerifOperadorActivity.this, HorimetroActivity.class);
                         startActivity(it);
                         finish();

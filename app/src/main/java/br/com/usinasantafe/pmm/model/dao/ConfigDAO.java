@@ -78,7 +78,7 @@ public class ConfigDAO {
         configBean.update();
     }
 
-    public void setOsConfig(Long nroOS){
+    public void setNroOSConfig(Long nroOS){
         ConfigBean configBean = getConfig();
         configBean.setNroOSConfig(nroOS);
         configBean.update();

@@ -714,150 +714,135 @@ public class MotoMecFertCTR {
 
     public void inserirParadaCheckList(String activity){
         RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
-        LogProcessoDAO.getInstance().insertLogProcesso("salvarApont(rFuncaoAtivParDAO.idParadaCheckList(), 0L, activity);", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("public void inserirParadaCheckList(String activity){\n" +
+                "        RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();\n" +
+                "        salvarApont(rFuncaoAtivParDAO.idParadaCheckList(), 0L, activity);", activity);
         salvarApont(rFuncaoAtivParDAO.idParadaCheckList(), 0L, activity);
     }
 
     public void inserirApontTransb(Long idTransb, String activity){
+        LogProcessoDAO.getInstance().insertLogProcesso("public void inserirApontTransb(Long idTransb, String activity){\n" +
+                "        salvarApont(0L, idTransb, activity);", activity);
         salvarApont(0L, idTransb, activity);
     }
 
     public void inserirParadaImplemento(String activity){
+        LogProcessoDAO.getInstance().insertLogProcesso("    public void inserirParadaImplemento(String activity){\n" +
+                "        RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();\n" +
+                "        salvarApont(rFuncaoAtivParDAO.idParadaImplemento(), 0L, activity);", activity);
         RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
         salvarApont(rFuncaoAtivParDAO.idParadaImplemento(), 0L, activity);
     }
 
+    public void inserirParadaTrocaMotorista(String activity){
+        LogProcessoDAO.getInstance().insertLogProcesso("    public void inserirParadaTrocaMotorista(String activity){\n" +
+                "        RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();\n" +
+                "        salvarApont(rFuncaoAtivParDAO.idParadaImplemento(), 0L, activity);", activity);
+        RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
+        salvarApont(rFuncaoAtivParDAO.idParadaTrocaMotorista(), 0L, activity);
+    }
+
     private void salvarApont(Long idParada, Long idTransb, Long dthrLong, String activity){
-
-        ConfigCTR configCTR = new ConfigCTR();
-        BoletimMMFertBean boletimMMFertBean = getBoletimMMFertAberto();
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
-        LogProcessoDAO.getInstance().insertLogProcesso("apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada\n" +
-                "                , boletimMMFertBean.getOsBolMMFert(), boletimMMFertBean.getAtivPrincBolMMFert()\n" +
-                "                , configCTR.getConfig().getIdFrenteConfig(), configCTR.getConfig().getIdPropriedadeConfig()\n" +
-                "                , boletimMMFertBean.getLatitudeBolMMFert(), boletimMMFertBean.getLongitudeBolMMFert()\n" +
-                "                , Tempo.getInstance().dthrLongToString(dthrLong), dthrLong\n" +
-                "                , idTransb, configCTR.getConfig().getPressaoConfig()\n" +
-                "                , configCTR.getConfig().getVelocConfig(), configCTR.getConfig().getBocalConfig()\n" +
-                "                , boletimMMFertBean.getStatusConBolMMFert(), 1);", activity);
-        apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada
-                , boletimMMFertBean.getOsBolMMFert(), boletimMMFertBean.getAtivPrincBolMMFert()
-                , configCTR.getConfig().getIdFrenteConfig(), configCTR.getConfig().getIdPropriedadeConfig()
-                , boletimMMFertBean.getLatitudeBolMMFert(), boletimMMFertBean.getLongitudeBolMMFert()
-                , Tempo.getInstance().dthrLongToString(dthrLong), dthrLong
-                , idTransb, configCTR.getConfig().getPressaoConfig()
-                , configCTR.getConfig().getVelocConfig(), configCTR.getConfig().getBocalConfig()
-                , boletimMMFertBean.getStatusConBolMMFert(), 1);
-
+        ApontMMFertBean apontMMFertBean = apontMMFertDefault();
+        apontMMFertBean.setParadaApontMMFert(idParada);
+        apontMMFertBean.setTransbApontMMFert(idTransb);
+        apontMMFertBean.setDthrApontMMFert(Tempo.getInstance().dthrLongToString(dthrLong));
+        apontMMFertBean.setDthrApontLongMMFert(dthrLong);
+        LogProcessoDAO.getInstance().insertLogProcesso("ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();\n" +
+                "        ApontMMFertBean apontMMFertBean = apontMMFertDefault();\n" +
+                "        apontMMFertBean.setParadaApontMMFert(idParada);\n" +
+                "        apontMMFertBean.setTransbApontMMFert(idTransb);\n" +
+                "        apontMMFertBean.setDthrApontMMFert(Tempo.getInstance().dthrLongToString(dthrLong));\n" +
+                "        apontMMFertBean.setDthrApontLongMMFert(dthrLong);\n" +
+                "        apontMMFertDAO.salvarApont(apontMMFertBean, 1);", activity);
+        apontMMFertDAO.salvarApont(apontMMFertBean, 1);
+        LogProcessoDAO.getInstance().insertLogProcesso("salvarAltCompApont(Tempo.getInstance().dthrLongToString(dthrLong), activity);", activity);
         salvarAltCompApont(Tempo.getInstance().dthrLongToString(dthrLong), activity);
-
     }
 
     private void salvarApont(Long idParada, Long idTransb, String activity){
-
-        Long dthrLong = Tempo.getInstance().dtHr();
-        ConfigCTR configCTR = new ConfigCTR();
-        BoletimMMFertBean boletimMMFertBean = getBoletimMMFertAberto();
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
-        LogProcessoDAO.getInstance().insertLogProcesso("apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada\n" +
-                "                , boletimMMFertBean.getOsBolMMFert(), boletimMMFertBean.getAtivPrincBolMMFert()\n" +
-                "                , configCTR.getConfig().getIdFrenteConfig(), configCTR.getConfig().getIdPropriedadeConfig()\n" +
-                "                , boletimMMFertBean.getLatitudeBolMMFert(), boletimMMFertBean.getLongitudeBolMMFert()\n" +
-                "                , Tempo.getInstance().dthrLongToString(dthrLong), dthrLong\n" +
-                "                , idTransb, configCTR.getConfig().getPressaoConfig()\n" +
-                "                , configCTR.getConfig().getVelocConfig(), configCTR.getConfig().getBocalConfig()\n" +
-                "                , boletimMMFertBean.getStatusConBolMMFert(), 1);", activity);
-        apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada
-                , boletimMMFertBean.getOsBolMMFert(), boletimMMFertBean.getAtivPrincBolMMFert()
-                , configCTR.getConfig().getIdFrenteConfig(), configCTR.getConfig().getIdPropriedadeConfig()
-                , boletimMMFertBean.getLatitudeBolMMFert(), boletimMMFertBean.getLongitudeBolMMFert()
-                , Tempo.getInstance().dthrLongToString(dthrLong), dthrLong
-                , idTransb, configCTR.getConfig().getPressaoConfig()
-                , configCTR.getConfig().getVelocConfig(), configCTR.getConfig().getBocalConfig()
-                , boletimMMFertBean.getStatusConBolMMFert(), 1);
-
-        salvarAltCompApont(Tempo.getInstance().dthrLongToString(dthrLong), activity);
-
+        ApontMMFertBean apontMMFertBean = apontMMFertDefault();
+        apontMMFertBean.setParadaApontMMFert(idParada);
+        apontMMFertBean.setTransbApontMMFert(idTransb);
+        LogProcessoDAO.getInstance().insertLogProcesso("private void salvarApont(Long idParada, Long idTransb, String activity){\n" +
+                "        ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();\n" +
+                "        ApontMMFertBean apontMMFertBean = apontMMFertDefault();\n" +
+                "        apontMMFertBean.setParadaApontMMFert(idParada);\n" +
+                "        apontMMFertBean.setTransbApontMMFert(idTransb);\n" +
+                "        apontMMFertDAO.salvarApont(apontMMFertBean, 1);", activity);
+        apontMMFertDAO.salvarApont(apontMMFertBean, 1);
+        LogProcessoDAO.getInstance().insertLogProcesso("salvarAltCompApont(Tempo.getInstance().dthrLongToString(apontMMFertBean.getDthrApontLongMMFert()), activity);", activity);
+        salvarAltCompApont(Tempo.getInstance().dthrLongToString(apontMMFertBean.getDthrApontLongMMFert()), activity);
     }
 
     public void salvarApont(Long idParada, Long idTransb, Double longitude, Double latitude, String activity){
-
-        Long dthrLong = Tempo.getInstance().dtHr();
-        ConfigCTR configCTR = new ConfigCTR();
-        BoletimMMFertBean boletimMMFertBean = getBoletimMMFertAberto();
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
-
-        LogProcessoDAO.getInstance().insertLogProcesso("apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada\n" +
-                "                , configCTR.getConfig().getNroOSConfig(), configCTR.getConfig().getIdAtivConfig()\n" +
-                "                , configCTR.getConfig().getIdFrenteConfig(), configCTR.getConfig().getIdPropriedadeConfig()\n" +
-                "                , latitude, longitude\n" +
-                "                , Tempo.getInstance().dthrLongToString(dthrLong), dthrLong\n" +
-                "                , idTransb, configCTR.getConfig().getPressaoConfig()\n" +
-                "                , configCTR.getConfig().getVelocConfig(), configCTR.getConfig().getBocalConfig()\n" +
-                "                , boletimMMFertBean.getStatusConBolMMFert(), 2);", activity);
-        apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), 0L, idParada
-                , configCTR.getConfig().getNroOSConfig(), configCTR.getConfig().getIdAtivConfig()
-                , configCTR.getConfig().getIdFrenteConfig(), configCTR.getConfig().getIdPropriedadeConfig()
-                , latitude, longitude
-                , Tempo.getInstance().dthrLongToString(dthrLong), dthrLong
-                , idTransb, configCTR.getConfig().getPressaoConfig()
-                , configCTR.getConfig().getVelocConfig(), configCTR.getConfig().getBocalConfig()
-                , boletimMMFertBean.getStatusConBolMMFert(), 2);
-
-        LogProcessoDAO.getInstance().insertLogProcesso("salvarAltCompApont(Tempo.getInstance().dthrLongToString(dthrLong));", activity);
-        salvarAltCompApont(Tempo.getInstance().dthrLongToString(dthrLong), activity);
+        ApontMMFertBean apontMMFertBean = apontMMFertDefault();
+        apontMMFertBean.setParadaApontMMFert(idParada);
+        apontMMFertBean.setTransbApontMMFert(idTransb);
+        apontMMFertBean.setLongitudeApontMMFert(longitude);
+        apontMMFertBean.setLatitudeApontMMFert(latitude);
+        LogProcessoDAO.getInstance().insertLogProcesso("public void salvarApont(Long idParada, Long idTransb, Double longitude, Double latitude, String activity){\n" +
+                "        ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();\n" +
+                "        ApontMMFertBean apontMMFertBean = apontMMFertDefault();\n" +
+                "        apontMMFertBean.setParadaApontMMFert(idParada);\n" +
+                "        apontMMFertBean.setTransbApontMMFert(idTransb);\n" +
+                "        apontMMFertBean.setLongitudeApontMMFert(longitude);\n" +
+                "        apontMMFertBean.setLatitudeApontMMFert(latitude);\n" +
+                "apontMMFertDAO.salvarApont(apontMMFertBean, 2);", activity);
+        apontMMFertDAO.salvarApont(apontMMFertBean, 2);
+        LogProcessoDAO.getInstance().insertLogProcesso("salvarAltCompApont(Tempo.getInstance().dthrLongToString(apontMMFertBean.getDthrApontLongMMFert()), activity);", activity);
+        salvarAltCompApont(Tempo.getInstance().dthrLongToString(apontMMFertBean.getDthrApontLongMMFert()), activity);
 
     }
 
     public void salvarApont(Double longitude, Double latitude, String activity){
 
-        Long dthrLong = Tempo.getInstance().dtHr();
         ConfigCTR configCTR = new ConfigCTR();
-        BoletimMMFertBean boletimMMFertBean = getBoletimMMFertAberto();
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
 
-        LogProcessoDAO.getInstance().insertLogProcesso("        Long ativ = 0L;\n" +
-                "        Long parada = 0L;\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("        Long idAtiv = 0L;\n" +
+                "        Long idParada = 0L;\n" +
                 "        if(motoMecBean.getFuncaoOperMotoMec() == 1){\n" +
-                "            ativ = motoMecBean.getIdOperMotoMec();\n" +
-                "            parada = 0L;\n" +
+                "            idAtiv = motoMecBean.getIdOperMotoMec();\n" +
+                "            idParada = 0L;\n" +
                 "        }\n" +
                 "        else if(motoMecBean.getFuncaoOperMotoMec() == 2){\n" +
-                "            ativ = configCTR.getConfig().getIdAtivConfig();\n" +
-                "            parada = motoMecBean.getIdOperMotoMec();\n" +
+                "            idAtiv = configCTR.getConfig().getIdAtivConfig();\n" +
+                "            idParada = motoMecBean.getIdOperMotoMec();\n" +
                 "        }", activity);
 
-        Long ativ = 0L;
-        Long parada = 0L;
+        Long idAtiv = 0L;
+        Long idParada = 0L;
 
         if(motoMecBean.getFuncaoOperMotoMec() == 1){
-            ativ = motoMecBean.getIdOperMotoMec();
-            parada = 0L;
+            idAtiv = motoMecBean.getIdOperMotoMec();
+            idParada = 0L;
         }
         else if(motoMecBean.getFuncaoOperMotoMec() == 2){
-            ativ = configCTR.getConfig().getIdAtivConfig();
-            parada = motoMecBean.getIdOperMotoMec();
+            idAtiv = configCTR.getConfig().getIdAtivConfig();
+            idParada = motoMecBean.getIdOperMotoMec();
         }
 
-        LogProcessoDAO.getInstance().insertLogProcesso("apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), motoMecBean.getIdMotoMec(), parada\n" +
-                "                , configCTR.getConfig().getNroOSConfig(), ativ\n" +
-                "                , configCTR.getConfig().getIdFrenteConfig(), configCTR.getConfig().getIdPropriedadeConfig()\n" +
-                "                , latitude, longitude\n" +
-                "                , Tempo.getInstance().dthrLongToString(dthrLong), dthrLong\n" +
-                "                , 0L, configCTR.getConfig().getPressaoConfig()\n" +
-                "                , configCTR.getConfig().getVelocConfig(), configCTR.getConfig().getBocalConfig()\n" +
-                "                , boletimMMFertBean.getStatusConBolMMFert(), 2);", activity);
-        apontMMFertDAO.salvarApont(boletimMMFertBean.getIdBolMMFert(), motoMecBean.getIdMotoMec(), parada
-                , configCTR.getConfig().getNroOSConfig(), ativ
-                , configCTR.getConfig().getIdFrenteConfig(), configCTR.getConfig().getIdPropriedadeConfig()
-                , latitude, longitude
-                , Tempo.getInstance().dthrLongToString(dthrLong), dthrLong
-                , 0L, configCTR.getConfig().getPressaoConfig()
-                , configCTR.getConfig().getVelocConfig(), configCTR.getConfig().getBocalConfig()
-                , boletimMMFertBean.getStatusConBolMMFert(), 2);
+        ApontMMFertBean apontMMFertBean = apontMMFertDefault();
+        apontMMFertBean.setIdMotoMec(motoMecBean.getIdMotoMec());
+        apontMMFertBean.setParadaApontMMFert(idParada);
+        apontMMFertBean.setAtivApontMMFert(idAtiv);
+        apontMMFertBean.setLongitudeApontMMFert(longitude);
+        apontMMFertBean.setLatitudeApontMMFert(latitude);
+        LogProcessoDAO.getInstance().insertLogProcesso("ApontMMFertBean apontMMFertBean = apontMMFertDefault();\n" +
+                "        apontMMFertBean.setIdMotoMec(motoMecBean.getIdMotoMec());\n" +
+                "        apontMMFertBean.setParadaApontMMFert(idParada);\n" +
+                "        apontMMFertBean.setAtivApontMMFert(idAtiv);\n" +
+                "        apontMMFertBean.setLongitudeApontMMFert(longitude);\n" +
+                "        apontMMFertBean.setLatitudeApontMMFert(latitude);\n" +
+                "        apontMMFertDAO.salvarApont(apontMMFertBean, 2);", activity);
+        apontMMFertDAO.salvarApont(apontMMFertBean, 2);
 
         LogProcessoDAO.getInstance().insertLogProcesso("salvarAltCompApont(Tempo.getInstance().dthrLongToString(dthrLong), activity);", activity);
-        salvarAltCompApont(Tempo.getInstance().dthrLongToString(dthrLong), activity);
+        salvarAltCompApont(Tempo.getInstance().dthrLongToString(apontMMFertBean.getDthrApontLongMMFert()), activity);
 
     }
 
@@ -871,6 +856,30 @@ public class MotoMecFertCTR {
         LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().envioDados(activity);", activity);
         EnvioDadosServ.getInstance().envioDados(activity);
 
+    }
+
+    private ApontMMFertBean apontMMFertDefault(){
+        Long dthrLong = Tempo.getInstance().dtHr();
+        ConfigCTR configCTR = new ConfigCTR();
+        BoletimMMFertBean boletimMMFertBean = getBoletimMMFertAberto();
+        ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
+        apontMMFertBean.setIdBolMMFert(boletimMMFertBean.getIdBolMMFert());
+        apontMMFertBean.setIdMotoMec(0L);
+        apontMMFertBean.setLatitudeApontMMFert(boletimMMFertBean.getLatitudeBolMMFert());
+        apontMMFertBean.setLongitudeApontMMFert(boletimMMFertBean.getLongitudeBolMMFert());
+        apontMMFertBean.setStatusConApontMMFert(boletimMMFertBean.getStatusConBolMMFert());
+        apontMMFertBean.setOsApontMMFert(configCTR.getConfig().getNroOSConfig());
+        apontMMFertBean.setAtivApontMMFert(configCTR.getConfig().getIdAtivConfig());
+        apontMMFertBean.setIdFrenteApontMMFert(configCTR.getConfig().getIdFrenteConfig());
+        apontMMFertBean.setIdProprApontMMFert(configCTR.getConfig().getIdPropriedadeConfig());
+        apontMMFertBean.setParadaApontMMFert(0L);
+        apontMMFertBean.setDthrApontMMFert(Tempo.getInstance().dthrLongToString(dthrLong));
+        apontMMFertBean.setDthrApontLongMMFert(dthrLong);
+        apontMMFertBean.setTransbApontMMFert(0L);
+        apontMMFertBean.setPressaoApontMMFert(configCTR.getConfig().getPressaoConfig());
+        apontMMFertBean.setVelocApontMMFert(configCTR.getConfig().getVelocConfig());
+        apontMMFertBean.setBocalApontMMFert(configCTR.getConfig().getBocalConfig());
+        return apontMMFertBean;
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////

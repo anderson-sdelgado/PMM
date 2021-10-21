@@ -72,9 +72,9 @@ public class MenuParadaECMActivity extends ActivityGeneric {
 
                 if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
                     LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
-                            "                    Toast.makeText(MenuParadaECMActivity.this, \"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\",\n" +
+                            "                    Toast.makeText(MenuParadaECMActivity.this, \"POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.\",\n" +
                             "                            Toast.LENGTH_LONG).show();", getLocalClassName());
-                    Toast.makeText(MenuParadaECMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
+                    Toast.makeText(MenuParadaECMActivity.this, "POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.",
                             Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -116,7 +116,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(MenuParadaECMActivity.this);
                             alerta.setTitle("ATENÇÃO");
-                            alerta.setMessage("FOI DADO ENTRADA NA ATIVIDADE: " + motoMecBean.getDescrOperMotoMec());
+                            alerta.setMessage("INÍCIO DE ATIVIDADE: " + motoMecBean.getDescrOperMotoMec());
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -291,9 +291,9 @@ public class MenuParadaECMActivity extends ActivityGeneric {
                         "            public void onClick(View v) {", getLocalClassName());
                 if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
                     LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
-                            "                    Toast.makeText(MenuParadaECMActivity.this, \"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\",\n" +
+                            "                    Toast.makeText(MenuParadaECMActivity.this, \"POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.\",\n" +
                             "                            Toast.LENGTH_LONG).show();", getLocalClassName());
-                    Toast.makeText(MenuParadaECMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
+                    Toast.makeText(MenuParadaECMActivity.this, "POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.",
                             Toast.LENGTH_LONG).show();
                 }
                 else {

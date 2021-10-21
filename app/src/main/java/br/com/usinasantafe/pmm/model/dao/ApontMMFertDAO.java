@@ -19,41 +19,19 @@ public class ApontMMFertDAO {
     public ApontMMFertDAO() {
     }
 
-    public void salvarApont(Long idBol, Long idMotoMec, Long parada
-                                        , Long os, Long atividade
-                                        , Long frente, Long idPropriedade
-                                        , Double latitude, Double longitude
-                                        , String dthr, Long dthrLong
-                                        , Long idTransb, Double pressao
-                                        , Long veloc, Long bocal
-                                        , Long statusConBol, int tipo){
-
-        ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
-        apontMMFertBean.setIdBolMMFert(idBol);
-        apontMMFertBean.setIdMotoMec(idMotoMec);
-        apontMMFertBean.setOsApontMMFert(os);
-        apontMMFertBean.setAtivApontMMFert(atividade);
-        apontMMFertBean.setIdFrenteApontMMFert(frente);
-        apontMMFertBean.setIdProprApontMMFert(idPropriedade);
-        apontMMFertBean.setLatitudeApontMMFert(latitude);
-        apontMMFertBean.setLongitudeApontMMFert(longitude);
-        apontMMFertBean.setStatusConApontMMFert(statusConBol);
+    public void salvarApont(ApontMMFertBean apontMMFertBean, int tipo){
 
         if(tipo == 1){
-            List<ApontMMFertBean> apontMMFertList = apontMMFertList(idBol);
+            List<ApontMMFertBean> apontMMFertList = apontMMFertList(apontMMFertBean.getIdBolMMFert());
             if (apontMMFertList.size() > 0) {
-                apontMMFertBean = apontMMFertList.get(apontMMFertList.size() - 1);
+                ApontMMFertBean apontMMFertBeanBD = apontMMFertList.get(apontMMFertList.size() - 1);
                 apontMMFertList.clear();
+                apontMMFertBean.setLatitudeApontMMFert(apontMMFertBeanBD.getLatitudeApontMMFert());
+                apontMMFertBean.setLongitudeApontMMFert(apontMMFertBeanBD.getLongitudeApontMMFert());
+                apontMMFertBean.setStatusConApontMMFert(apontMMFertBeanBD.getStatusConApontMMFert());
             }
         }
 
-        apontMMFertBean.setParadaApontMMFert(parada);
-        apontMMFertBean.setDthrApontMMFert(dthr);
-        apontMMFertBean.setDthrApontLongMMFert(dthrLong);
-        apontMMFertBean.setTransbApontMMFert(idTransb);
-        apontMMFertBean.setPressaoApontMMFert(pressao);
-        apontMMFertBean.setVelocApontMMFert(veloc);
-        apontMMFertBean.setBocalApontMMFert(bocal);
         apontMMFertBean.setStatusApontMMFert(1L);
         apontMMFertBean.insert();
 

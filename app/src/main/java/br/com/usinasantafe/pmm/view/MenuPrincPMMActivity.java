@@ -155,9 +155,9 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                     LogProcessoDAO.getInstance().insertLogProcesso("if (text.equals(\"TRABALHANDO\")) {", getLocalClassName());
                     if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
                         LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
-                                "                        Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\",\n" +
+                                "                        Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.\",\n" +
                                 "                                Toast.LENGTH_LONG).show();", getLocalClassName());
-                        Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
+                        Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
                         LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
@@ -174,9 +174,9 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                     LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"PARADO\")) {", getLocalClassName());
                     if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
                         LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
-                                "                        Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\",\n" +
+                                "                        Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.\",\n" +
                                 "                                Toast.LENGTH_LONG).show();", getLocalClassName());
-                        Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
+                        Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
                         LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
@@ -321,9 +321,9 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
                             LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                     "                        if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
-                                    "                            Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\",\n" +
+                                    "                            Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.\",\n" +
                                     "                                    Toast.LENGTH_LONG).show();", getLocalClassName());
-                            Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
+                            Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.",
                                     Toast.LENGTH_LONG).show();
                         } else {
                             LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
@@ -346,9 +346,9 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                     LogProcessoDAO.getInstance().insertLogProcesso("else if (text.equals(\"COMPOSTAGEM\")) {", getLocalClassName());
                     if (pmmContext.getMotoMecFertCTR().verDataHoraInsMovLeira()) {
                         LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsMovLeira()) {\n" +
-                                "                        Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.\",\n" +
+                                "                        Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.\",\n" +
                                 "                                Toast.LENGTH_LONG).show();", getLocalClassName());
-                        Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! ESPERE 1 MINUTO PARA REALIZAR UM NOVO APONTAMENTO.",
+                        Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.",
                                 Toast.LENGTH_LONG).show();
                     } else {
                         LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
