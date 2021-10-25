@@ -90,6 +90,22 @@ public class CarretaActivity extends ActivityGeneric {
 
                         String msg = "";
                         int numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;
+                        String posCarreta = "";
+                        switch(numCarreta){
+                            case 1:
+                                posCarreta = "PRIMEIRA";
+                                break;
+                            case 2:
+                                posCarreta = "SEGUNDA";
+                                break;
+                            case 3:
+                                posCarreta = "TERCEIRA";
+                                break;
+                            case 4:
+                                posCarreta = "QUARTA";
+                                break;
+                        }
+
                         switch(verCarreta){
                             case 2:
                                 msg = "CARRETA INEXISTENTE NA BASE DE DADOS! POR FAVOR, ATUALIZE OS DADOS.";
@@ -98,7 +114,7 @@ public class CarretaActivity extends ActivityGeneric {
                                 msg = "ESSA CARRETA JÁ FOI INSERIDA. VERIFIQUE NOVAMENTE A NUMERAÇÃO DA CARRETA.";
                                 break;
                             case 4:
-                                msg = "A NUMERAÇÃO DIGITADA NÃO CORRESPONDE DA CARRETA " + numCarreta +". VERIFIQUE SE VOCÊ NÃO ESTA INVERTENDO AS CARRETAS.";
+                                msg = "O EQUIPAMENTO REGISTRADO NÃO CORRESPONDE A " + posCarreta + " CARRETA DO CONJUNTO. VERIFIQUE SE A NUMERAÇÃO ESTÁ CORRETA E TENTE NOVAMENTE!";
                                 break;
                         }
 

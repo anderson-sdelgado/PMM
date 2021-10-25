@@ -108,10 +108,10 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
                         LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                 "                        AlertDialog.Builder alerta = new AlertDialog.Builder(MenuParadaPCOMPActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
-                                "                        alerta.setMessage(\"FOI DADO ENTRADA NA ATIVIDADE: \" + motoMecBean.getDescrOperMotoMec());", getLocalClassName());
+                                "                        alerta.setMessage(\"INÍCIO DE ATIVIDADE: \" + motoMecBean.getDescrOperMotoMec());", getLocalClassName());
                         AlertDialog.Builder alerta = new AlertDialog.Builder(MenuParadaPCOMPActivity.this);
                         alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("FOI DADO ENTRADA NA ATIVIDADE: " + motoMecBean.getDescrOperMotoMec());
+                        alerta.setMessage("INÍCIO DE ATIVIDADE: " + motoMecBean.getDescrOperMotoMec());
                         alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

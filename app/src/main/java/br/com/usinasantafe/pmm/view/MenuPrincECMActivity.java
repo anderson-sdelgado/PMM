@@ -158,10 +158,10 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                                     "                                || (motoMecBean.getCodFuncaoOperMotoMec() == 12)) {  // ATIVIDADES NORMAIS\n" +
                                     "                            AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincECMActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
-                                    "                            alerta.setMessage(\"FOI DADO ENTRADA NA ATIVIDADE: \" + motoMecBean.getDescrOperMotoMec());", getLocalClassName());
+                                    "                            alerta.setMessage(\"INÍCIO DE ATIVIDADE: \" + motoMecBean.getDescrOperMotoMec());", getLocalClassName());
                             AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincECMActivity.this);
                             alerta.setTitle("ATENÇÃO");
-                            alerta.setMessage("FOI DADO ENTRADA NA ATIVIDADE: " + motoMecBean.getDescrOperMotoMec());
+                            alerta.setMessage("INÍCIO DE ATIVIDADE: " + motoMecBean.getDescrOperMotoMec());
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -260,8 +260,8 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                                 LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
                                 if (pmmContext.getCecCTR().getDataChegCampo().equals("")) {
                                     LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getCecCTR().getDataChegCampo().equals(\"\")) {\n" +
-                                            "                                    mensagem = \"FOI DADO ENTRADA NA ATIVIDADE: \" + motoMecBean.getDescrOperMotoMec();", getLocalClassName());
-                                    mensagem = "FOI DADO ENTRADA NA ATIVIDADE: " + motoMecBean.getDescrOperMotoMec();
+                                            "                                    mensagem = \"INÍCIO DE ATIVIDADE: \" + motoMecBean.getDescrOperMotoMec();", getLocalClassName());
+                                    mensagem = "INÍCIO DE ATIVIDADE: " + motoMecBean.getDescrOperMotoMec();
                                 } else {
                                     LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                             "                                    mensagem = \"O HORÁRIO DE CHEGADA AO CAMPO JÁ FOI INSERIDO ANTERIORMENTE. \" +\n" +

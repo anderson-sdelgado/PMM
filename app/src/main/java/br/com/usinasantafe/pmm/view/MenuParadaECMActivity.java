@@ -112,7 +112,7 @@ public class MenuParadaECMActivity extends ActivityGeneric {
                                     "                                || (motoMecBean.getCodFuncaoOperMotoMec() == 17)) {\n" +
                                     "                            AlertDialog.Builder alerta = new AlertDialog.Builder(MenuParadaECMActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
-                                    "                            alerta.setMessage(\"FOI DADO ENTRADA NA ATIVIDADE: \" + motoMecBean.getDescrOperMotoMec());", getLocalClassName());
+                                    "                            alerta.setMessage(\"INÍCIO DE ATIVIDADE: \" + motoMecBean.getDescrOperMotoMec());", getLocalClassName());
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(MenuParadaECMActivity.this);
                             alerta.setTitle("ATENÇÃO");

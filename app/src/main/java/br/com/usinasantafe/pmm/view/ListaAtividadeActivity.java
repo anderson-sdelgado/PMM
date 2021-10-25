@@ -80,7 +80,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                         LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                                 "AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
-                                "                        alerta.setMessage(\"A ATIVIDADES SÃO ATUALIZADAS AUTOMATICAMENTE APENAS DEPOIS DA PESAGEM NA BALANÇA.\");\n" +
+                                "                        alerta.setMessage(\"AS ATIVIDADES SERÃO ATUALIZADAS AUTOMATICAMENTE APÓS A PESAGEM NA BALANÇA.\");\n" +
                                 "                        alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
                                 "                            @Override\n" +
                                 "                            public void onClick(DialogInterface dialog, int which) {\n" +
@@ -89,7 +89,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                 "                        alerta.show();", getLocalClassName());
                         AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
                         alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("A ATIVIDADES SÃO ATUALIZADAS AUTOMATICAMENTE APENAS DEPOIS DA PESAGEM NA BALANÇA.");
+                        alerta.setMessage("AS ATIVIDADES SERÃO ATUALIZADAS AUTOMATICAMENTE APÓS A PESAGEM NA BALANÇA.");
                         alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
