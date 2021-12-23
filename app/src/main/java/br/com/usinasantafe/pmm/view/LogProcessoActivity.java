@@ -86,4 +86,8 @@ public class LogProcessoActivity extends ActivityGeneric {
         });
 
     }
+
+    public void onBackPressed() {
+    }
+
 }

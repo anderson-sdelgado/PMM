@@ -62,4 +62,8 @@ public class LogBaseDadoActivity extends ActivityGeneric {
         });
 
     }
+
+    public void onBackPressed() {
+    }
+
 }

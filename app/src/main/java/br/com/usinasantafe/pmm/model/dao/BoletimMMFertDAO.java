@@ -141,7 +141,7 @@ public class BoletimMMFertDAO {
 
     }
 
-    public ArrayList<BoletimMMFertBean> bolEnviadoArrayList(){
+    public ArrayList<BoletimMMFertBean> bolExcluirArrayList(){
 
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqBolEnviado());

@@ -220,9 +220,9 @@ public class MotoMecFertCTR {
     public void deleteBolEnviado(){
 
         BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
-        ArrayList<BoletimMMFertBean> boletimMMFerArrayList = boletimMMFertDAO.bolEnviadoArrayList();
+        ArrayList<BoletimMMFertBean> boletimMMFertArrayList = boletimMMFertDAO.bolExcluirArrayList();
 
-        for (BoletimMMFertBean boletimMMFertBean : boletimMMFerArrayList) {
+        for (BoletimMMFertBean boletimMMFertBean : boletimMMFertArrayList) {
 
             ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
             List<ApontMMFertBean> apontMMFertList = apontMMFertDAO.apontMMFertList(boletimMMFertBean.getIdBolMMFert());
@@ -248,7 +248,7 @@ public class MotoMecFertCTR {
 
         }
 
-        boletimMMFerArrayList.clear();
+        boletimMMFertArrayList.clear();
 
 
     }

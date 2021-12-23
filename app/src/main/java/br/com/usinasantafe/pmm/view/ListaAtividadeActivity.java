@@ -194,7 +194,6 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                     long id) {
 
                 LogProcessoDAO.getInstance().insertLogProcesso("atividadeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
-                        "\n" +
                         "            @Override\n" +
                         "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
                         "                                    long id) {", getLocalClassName());

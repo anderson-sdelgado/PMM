@@ -125,7 +125,7 @@
     <string name="wifi_changing_network">Requesting connection to network\u2026</string>
     <string name="wifi_ssid_label">Network Name</string>
     <string name="wifi_type_label">Type</string>
-    <string name="app_name">ECM</string>
+    <string name="app_name">PCOMP</string>
     <string name="texto_menu_principal">PRINCIPAL - V 4.00</string>
     <string name="texto_item_list">TESTE</string>
     <string name="texto_num1">1</string>
@@ -153,7 +153,7 @@
     <string name="texto_cod_equip">715</string>
     <string name="texto_descr_equip">COLHEDORA</string>
     <string name="texto_turno">TURNO</string>
-    <string name="texto_padrao_retorna">RETORNAR</string>
+    <string name="texto_padrao_retornar">RETORNAR</string>
     <string name="texto_lista_menu_princ">MENU PRINCIPAL</string>
     <string name="texto_motivo_parada">MOTIVOS DE PARADA</string>
     <string name="texto_ret_trabalho">RETORNAR AO TRABALHO</string>
@@ -278,7 +278,7 @@
     <string name="texto_limpar_dados">LIMPAR DADOS</string>
     <string name="texto_msg_titulo_propriedade">FAZENDA</string>
     <string name="texto_msg_descr_propriedade">60 - ITAQUERE</string>
-    <string name="texto_avancar">AVANÇAR</string>
+    <string name="texto_padrao_avancar">AVANÇAR</string>
     <string name="texto_titulo_log_proc">LOG - PROCESSO</string>
     <string name="texto_titulo_log_base_dado">LOG - BASE DADO</string>
     <string name="texto_titulo_log_erro">LOG - ERRO</string>

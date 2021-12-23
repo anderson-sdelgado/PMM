@@ -47,7 +47,7 @@ import com.j256.ormlite.table.TableUtils;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
-	public static final String FORCA_DB_NAME = "motomec_db";
+	public static final String FORCA_DB_NAME = "mm_db";
 	public static final int FORCA_BD_VERSION = 1;
 
 	private static DatabaseHelper instance;
@@ -127,9 +127,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			int newVersion) {
 		
 		try {
-
 //
-//			if((oldVersion <= 5) && (newVersion > 5)){
+//			if((oldVersion <= 6) && (newVersion > 6)){
 //
 //				TableUtils.dropTable(cs, EquipBean.class, true);
 //				TableUtils.dropTable(cs, EquipSegBean.class, true);

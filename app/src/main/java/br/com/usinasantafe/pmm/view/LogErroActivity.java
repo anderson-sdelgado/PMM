@@ -46,4 +46,8 @@ public class LogErroActivity extends ActivityGeneric {
         });
 
     }
+
+    public void onBackPressed() {
+    }
+
 }
