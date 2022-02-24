@@ -161,20 +161,11 @@ public class ApontMMFertDAO {
 
         boolean ret = true;
 
-
-//        Log.i("ECM", "CHEGOU AKI 1");
-
         if(!hasApontBol(idBol)){
-//            Log.i("ECM", "CHEGOU AKI 2");
             ret = false;
         }
         else{
-//            Log.i("ECM", "CHEGOU AKI 3");
-//            Log.i("ECM", "dtHrSemTZLong = " + Tempo.getInstance().dtHrSemTZLong());
-//            Log.i("ECM", "getDthrApontLongMMFert() + 1 = " + Tempo.getInstance().dthrAddMinutoLong(getUltApont(idBol).getDthrApontLongMMFert(), 1));
-//            Log.i("ECM", "getDthrApontLongMMFert() = " + getUltApont(idBol).getDthrApontLongMMFert());
             if ((Tempo.getInstance().dthrAddMinutoLong(getUltApont(idBol).getDthrApontLongMMFert(), 1) < Tempo.getInstance().dtHr())) {
-//                Log.i("ECM", "CHEGOU AKI 4");
                 ret = false;
             }
         }

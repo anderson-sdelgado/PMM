@@ -151,7 +151,7 @@ public class BoletimMMFertDAO {
 
         ArrayList<BoletimMMFertBean> boletimMMFertArrayList = new ArrayList<>();
         for (BoletimMMFertBean boletimMMFertBeanBD : boletimMMFertList) {
-            if(boletimMMFertBeanBD.getDthrLongFinalBolMMFert() < Tempo.getInstance().dthrLongDia1Menos()) {
+            if(boletimMMFertBeanBD.getDthrLongFinalBolMMFert() < Tempo.getInstance().dthrLongDiaMenos(3)) {
                 boletimMMFertArrayList.add(boletimMMFertBeanBD);
             }
         }

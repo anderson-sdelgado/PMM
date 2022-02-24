@@ -152,23 +152,7 @@ public class MenuParadaPCOMPActivity extends ActivityGeneric {
                 LogProcessoDAO.getInstance().insertLogProcesso("buttonRetMenuParada.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
-                        "                if (connectNetwork) {\n" +
-                        "                    pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
-                        "                }\n" +
-                        "                else{\n" +
-                        "                    pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
-                        "                }", getLocalClassName());
-                if (connectNetwork) {
-                    pmmContext.getConfigCTR().setStatusConConfig(1L);
-                }
-                else{
-                    pmmContext.getConfigCTR().setStatusConConfig(0L);
-                }
-
-                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
-
-                LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MenuParadaPCOMPActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                        "                Intent it = new Intent(MenuParadaPCOMPActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                 Intent it = new Intent(MenuParadaPCOMPActivity.this, MenuPrincPCOMPActivity.class);
                 startActivity(it);
                 finish();

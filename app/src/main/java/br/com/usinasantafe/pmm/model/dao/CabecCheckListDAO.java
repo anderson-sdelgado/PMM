@@ -132,7 +132,7 @@ public class CabecCheckListDAO {
 
         ArrayList<Long> idCabecCheckListArrayList = new ArrayList<Long>();
         for (CabecCheckListBean cabecCheckListBeanBD : cabecCheckListList) {
-            if(cabecCheckListBeanBD.getDthrCabCLLong() < Tempo.getInstance().dthrLongDia1Menos()){
+            if(cabecCheckListBeanBD.getDthrCabCLLong() < Tempo.getInstance().dthrLongDiaMenos(3)){
                 idCabecCheckListArrayList.add(cabecCheckListBeanBD.getIdCabCL());
             }
         }

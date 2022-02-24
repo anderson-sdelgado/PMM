@@ -73,18 +73,8 @@ public class VerifDadosServ {
                     "            status = 3;", activity);
             configCTR.recAtual(result.trim());
             status = 3;
-//            if (atualAplicBean.getFlagAtualApp().equals(1L)) {
-//                LogProcessoDAO.getInstance().insertLogProcesso("if (atualAplicBean.getFlagAtualApp().equals(1L)) {\n" +
-//                        "                AtualizarAplicativo atualizarAplicativo = new AtualizarAplicativo();\n" +
-//                        "                atualizarAplicativo.setContext(this.menuInicialActivity);\n" +
-//                        "                atualizarAplicativo.execute();", activity);
-//                AtualizarAplicativo atualizarAplicativo = new AtualizarAplicativo();
-//                atualizarAplicativo.setContext(this.telaInicialActivity);
-//                atualizarAplicativo.execute();
-//            } else {
                 LogProcessoDAO.getInstance().insertLogProcesso("this.menuInicialActivity.encerrarBarra();", activity);
                 this.telaInicialActivity.goMenuInicial();
-//            }
         } else if (this.tipo.equals("CheckList")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"CheckList\")) {\n" +
                     "            checkListCTR.receberVerifCheckList(" + result + ");", activity);
@@ -96,7 +86,7 @@ public class VerifDadosServ {
         } else if(this.tipo.equals("OrdCarreg")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if(this.tipo.equals(\"OrdCarreg\")) {\n" +
                     "            compostoCTR.receberVerifOrdCarreg(" + result + ");", activity);
-            compostoCTR.receberVerifOrdCarreg(result);
+            compostoCTR.receberVerifOrdCarreg(result, activity);
         } else if (this.tipo.equals("CEC")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"CEC\")) {\n" +
                     "            cecCTR.receberVerifCEC(" + result + ");", activity);

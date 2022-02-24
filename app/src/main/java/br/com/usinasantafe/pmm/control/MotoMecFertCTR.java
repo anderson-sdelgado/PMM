@@ -205,6 +205,9 @@ public class MotoMecFertCTR {
 
             for (BoletimMMFertBean boletimMMFertBean : boletimArrayList) {
                 boletimMMFertDAO.updateBolMMFertEnvio(boletimMMFertBean.getIdBolMMFert());
+                ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
+                ArrayList<Long> idApontArrayList = apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontMMFertList(boletimMMFertBean.getIdBolMMFert()));
+                apontMMFertDAO.updateApont(idApontArrayList);
             }
 
             EnvioDadosServ.getInstance().envioDados(activity);
@@ -226,7 +229,6 @@ public class MotoMecFertCTR {
 
             ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
             List<ApontMMFertBean> apontMMFertList = apontMMFertDAO.apontMMFertList(boletimMMFertBean.getIdBolMMFert());
-
             ArrayList<Long> idApontArrayList = apontMMFertDAO.idApontArrayList(apontMMFertList);
             apontMMFertDAO.deleteApont(idApontArrayList);
 
@@ -595,11 +597,11 @@ public class MotoMecFertCTR {
             aplic = 1l;
         }
         else{
-            if(configCTR.getOS().getTipoOS() == 1L){
-                aplic = 2L;
+            if(configCTR.getOS().getTipoOS() == 0L){
+                aplic = 3L;
             }
             else{
-                aplic = 3L;
+                aplic = 2L;
             }
         }
         return motoMecDAO.paradaList(aplic);
@@ -613,11 +615,11 @@ public class MotoMecFertCTR {
             aplic = 1l;
         }
         else{
-            if(configCTR.getOS().getTipoOS() == 1L){
-                aplic = 2L;
+            if(configCTR.getOS().getTipoOS() == 0L){
+                aplic = 3L;
             }
             else{
-                aplic = 3L;
+                aplic = 2L;
             }
         }
         return motoMecDAO.motoMecList(aplic);
@@ -803,33 +805,27 @@ public class MotoMecFertCTR {
         ConfigCTR configCTR = new ConfigCTR();
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
 
-        LogProcessoDAO.getInstance().insertLogProcesso("        Long idAtiv = 0L;\n" +
-                "        Long idParada = 0L;\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("Long idParada = 0L;\n" +
                 "        if(motoMecBean.getFuncaoOperMotoMec() == 1){\n" +
-                "            idAtiv = motoMecBean.getIdOperMotoMec();\n" +
                 "            idParada = 0L;\n" +
                 "        }\n" +
                 "        else if(motoMecBean.getFuncaoOperMotoMec() == 2){\n" +
-                "            idAtiv = configCTR.getConfig().getIdAtivConfig();\n" +
                 "            idParada = motoMecBean.getIdOperMotoMec();\n" +
                 "        }", activity);
 
-        Long idAtiv = 0L;
         Long idParada = 0L;
 
         if(motoMecBean.getFuncaoOperMotoMec() == 1){
-            idAtiv = motoMecBean.getIdOperMotoMec();
             idParada = 0L;
         }
         else if(motoMecBean.getFuncaoOperMotoMec() == 2){
-            idAtiv = configCTR.getConfig().getIdAtivConfig();
             idParada = motoMecBean.getIdOperMotoMec();
         }
 
         ApontMMFertBean apontMMFertBean = apontMMFertDefault();
         apontMMFertBean.setIdMotoMec(motoMecBean.getIdMotoMec());
         apontMMFertBean.setParadaApontMMFert(idParada);
-        apontMMFertBean.setAtivApontMMFert(idAtiv);
+        apontMMFertBean.setAtivApontMMFert(configCTR.getConfig().getIdAtivConfig());
         apontMMFertBean.setLongitudeApontMMFert(longitude);
         apontMMFertBean.setLatitudeApontMMFert(latitude);
         LogProcessoDAO.getInstance().insertLogProcesso("ApontMMFertBean apontMMFertBean = apontMMFertDefault();\n" +
@@ -923,7 +919,12 @@ public class MotoMecFertCTR {
     public boolean verDataHoraInsApontMMFert(){
         ApontMMFertDAO apontMMDAO = new ApontMMFertDAO();
         BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
-        return apontMMDAO.verDataHoraApont(boletimMMFertDAO.getBolAbertoMMFert().getIdBolMMFert());
+        if(Tempo.getInstance().dif() > 0){
+            return false;
+        }
+        else{
+            return apontMMDAO.verDataHoraApont(boletimMMFertDAO.getBolAbertoMMFert().getIdBolMMFert());
+        }
     }
 
     public boolean verDataHoraInsMovLeira(){

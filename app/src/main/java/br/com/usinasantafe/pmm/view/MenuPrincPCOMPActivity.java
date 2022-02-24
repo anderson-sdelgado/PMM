@@ -3,7 +3,9 @@ package br.com.usinasantafe.pmm.view;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -18,6 +20,8 @@ import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.MotoMecBean;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
+import br.com.usinasantafe.pmm.util.Tempo;
 
 public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
@@ -26,6 +30,8 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
     private TextView textViewMotorista;
     private int posicao;
     private List<MotoMecBean> motoMecList;
+    private TextView textViewProcessoNormal;
+    private Handler customHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +39,14 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
         setContentView(R.layout.activity_menu_princ_pcomp);
 
         pmmContext = (PMMContext) getApplication();
-        pmmContext.getCompostoCTR().setVerTelaLeira(false);
 
         Button buttonParadaMotoMec = findViewById(R.id.buttonParadaMotoMec);
         Button buttonRetMotoMec = findViewById(R.id.buttonRetMotoMec);
         Button buttonLogMotoMec = findViewById(R.id.buttonLogMotoMec);
+        textViewProcessoNormal = findViewById(R.id.textViewProcessoNormal);
+
+        LogProcessoDAO.getInstance().insertLogProcesso("customHandler.postDelayed(updateTimerThread, 0);", getLocalClassName());
+        customHandler.postDelayed(updateTimerThread, 0);
 
         textViewMotorista = findViewById(R.id.textViewMotorista);
 
@@ -293,7 +302,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                                 if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 0) {
                                     msg = "POR FAVOR, TIRE A PESAGEM TARA DO EQUIPAMENTO!";
-                                } else {
+                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 2) {
                                     msg = "POR FAVOR, PASSE NA BALANÇA PARA FAZER A PESAGEM DO EQUIPAMENTO CARREGADO!";
                                 }
 
@@ -383,13 +392,43 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         }
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 10) {
 
-                            LogProcessoDAO.getInstance().insertLogProcesso("else if (motoMecBean.getCodFuncaoOperMotoMec() == 10) {\n" +
-                                    "                            pmmContext.getConfigCTR().setPosicaoTela(15L);\n" +
-                                    "                            Intent it = new Intent(MenuPrincPCOMPActivity.this, LeiraActivity.class);", getLocalClassName());
-                            pmmContext.getConfigCTR().setPosicaoTela(15L);
-                            Intent it = new Intent(MenuPrincPCOMPActivity.this, LeiraActivity.class);
-                            startActivity(it);
-                            finish();
+                            LogProcessoDAO.getInstance().insertLogProcesso("else if (motoMecBean.getCodFuncaoOperMotoMec() == 10) {", getLocalClassName());
+
+                            if(pmmContext.getCompostoCTR().verOrdemCarreg()){
+
+                                LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getCompostoCTR().verOrdemCarreg()){\n" +
+                                        "                            pmmContext.getConfigCTR().setPosicaoTela(15L);\n" +
+                                        "                            Intent it = new Intent(MenuPrincPCOMPActivity.this, LeiraActivity.class);", getLocalClassName());
+                                pmmContext.getConfigCTR().setPosicaoTela(15L);
+                                Intent it = new Intent(MenuPrincPCOMPActivity.this, LeiraActivity.class);
+                                startActivity(it);
+                                finish();
+
+                            }
+                            else{
+
+                                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                        "                                AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);\n" +
+                                        "                                alerta.setTitle(\"ATENÇÃO\");\n" +
+                                        "                                alerta.setMessage(\"POR FAVOR! REALIZE O PROCESSO DE CARREGAMENTO DE INSUMO PARA DEPOIS REALIZAR O DESCARREGAMENTO.\");" +
+                                        "                                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                        "                                    @Override\n" +
+                                        "                                    public void onClick(DialogInterface dialog, int which) {\n" +
+                                        "                                    }\n" +
+                                        "                                });\n" +
+                                        "                                alerta.show();", getLocalClassName());
+                                AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);
+                                alerta.setTitle("ATENÇÃO");
+                                alerta.setMessage("POR FAVOR! REALIZE O PROCESSO DE CARREGAMENTO DE INSUMO PARA DEPOIS REALIZAR O DESCARREGAMENTO.");
+                                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                });
+
+                                alerta.show();
+
+                            }
 
                         }
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 5) {
@@ -461,9 +500,9 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                 LogProcessoDAO.getInstance().insertLogProcesso("buttonRetMotoMec.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
-                        "                pmmContext.getConfigCTR().setPosicaoTela(8L);\n" +
+                        "                pmmContext.getConfigCTR().setPosicaoTela(26L);\n" +
                         "                Intent it = new Intent(MenuPrincPCOMPActivity.this, HorimetroActivity.class);", getLocalClassName());
-                pmmContext.getConfigCTR().setPosicaoTela(8L);
+                pmmContext.getConfigCTR().setPosicaoTela(26L);
                 Intent it = new Intent(MenuPrincPCOMPActivity.this, HorimetroActivity.class);
                 startActivity(it);
                 finish();
@@ -492,5 +531,30 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
     public void onBackPressed()  {
     }
+
+    private Runnable updateTimerThread = new Runnable() {
+
+        public void run() {
+
+            LogProcessoDAO.getInstance().insertLogProcesso("    private Runnable updateTimerThread = new Runnable() {\n" +
+                    "        public void run() {", getLocalClassName());
+            if (EnvioDadosServ.status == 1) {
+                textViewProcessoNormal.setTextColor(Color.YELLOW);
+                textViewProcessoNormal.setText("Enviando e recebendo de dados...");
+            } else if (EnvioDadosServ.status == 2) {
+                textViewProcessoNormal.setTextColor(Color.RED);
+                textViewProcessoNormal.setText("Existem dados para serem enviados e recebidos");
+            } else {
+                textViewProcessoNormal.setTextColor(Color.GREEN);
+                textViewProcessoNormal.setText("Todos os Dados já foram enviados e recebidos");
+            }
+            LogProcessoDAO.getInstance().insertLogProcesso("if(EnvioDadosServ.status != 3){\n" +
+                    "                customHandler.postDelayed(this, 10000);\n" +
+                    "            }", getLocalClassName());
+            if(EnvioDadosServ.status != 3){
+                customHandler.postDelayed(this, 10000);
+            }
+        }
+    };
 
 }

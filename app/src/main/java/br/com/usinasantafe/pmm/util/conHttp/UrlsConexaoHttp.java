@@ -4,8 +4,8 @@ import br.com.usinasantafe.pmm.PMMContext;
 
 public class UrlsConexaoHttp {
 
-    public static String urlPrincipal = "http://www.usinasantafe.com.br/pmmqa/view/";
-    public static String urlPrincEnvio = "http://www.usinasantafe.com.br/pmmqa/view/";
+    public static String urlPrincipal = "https://www.usinasantafe.com.br/pmmqa/view/";
+    public static String urlPrincEnvio = "https://www.usinasantafe.com.br/pmmqa/view/";
 
     public static String localPSTEstatica = "br.com.usinasantafe.pmm.model.bean.estaticas.";
     public static String localUrl = "br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp";
@@ -54,10 +54,6 @@ public class UrlsConexaoHttp {
 
     public String getsInsertBolFechadoMMFert() {
         return urlPrincEnvio + "inserirbolfechadommfert.php" + put;
-    }
-
-    public String getsInsertLogErro() {
-        return urlPrincEnvio + "inserirlogerro.php" + put;
     }
 
     public String urlVerifica(String classe) {

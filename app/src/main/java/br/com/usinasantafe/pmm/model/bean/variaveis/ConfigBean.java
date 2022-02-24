@@ -65,9 +65,9 @@ public class ConfigBean extends Entidade {
 	// 5 - Digitar Data e Hora
 	// 6 - Trocar Transbordo;
 	// 7 - Editar Rendimento;
-	// 8 - Iniciar na parte de apontamento
+	// 8 - Iniciar Apontamento(TRALHANDO/PARADO) Moto Mec
 	// 9 - Recolhimento de Mangueira;
-	// 10 - Trocar de implemento
+	// 10 - Trocar de Implemento
 	// 11 - Senha de Configuração
 	// 12 - Senha de Log
 	// 13 - Buscar Ordem Carreg Insumo
@@ -82,6 +82,7 @@ public class ConfigBean extends Entidade {
 	// 23 - Senha de Menu PMM
 	// 24 - Senha de Menu ECM
 	// 25 - Senha de Menu PCOMP
+	// 26 - Finalizar
 
 	public ConfigBean() {
 	}

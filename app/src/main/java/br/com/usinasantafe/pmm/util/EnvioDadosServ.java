@@ -112,7 +112,7 @@ public class EnvioDadosServ {
         return compostoCTR.verifEnvioCarregInsumo();
     }
 
-    public boolean verifEnvioCarregComposto() {
+    public boolean verifEnvioLeiraDescarreg() {
         CompostoCTR compostoCTR = new CompostoCTR();
         return compostoCTR.verifEnvioLeiraDescarreg();
     }
@@ -142,33 +142,33 @@ public class EnvioDadosServ {
             LogProcessoDAO.getInstance().insertLogProcesso("ActivityGeneric.connectNetwork", activity);
             status = 2;
             if (verifChecklist()) {
-                LogProcessoDAO.getInstance().insertLogProcesso("verifChecklist()", activity);
-                LogProcessoDAO.getInstance().insertLogProcesso("enviarChecklist()", activity);
+                LogProcessoDAO.getInstance().insertLogProcesso("verifChecklist()\n" +
+                         "enviarChecklist()", activity);
                 enviarChecklist(activity);
             } else {
                 if (verifEnvioCarregInsumo()) {
-                    LogProcessoDAO.getInstance().insertLogProcesso("verifEnvioCarregInsumo()", activity);
-                    LogProcessoDAO.getInstance().insertLogProcesso("envioCarregInsumo()", activity);
+                    LogProcessoDAO.getInstance().insertLogProcesso("verifEnvioCarregInsumo()\n" +
+                            "envioCarregInsumo()", activity);
                     envioCarregInsumo(activity);
                 } else {
-                    if (verifEnvioCarregComposto()) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("verifEnvioCarregComposto()", activity);
-                        LogProcessoDAO.getInstance().insertLogProcesso("envioLeiraDescarreg()", activity);
+                    if (verifEnvioLeiraDescarreg()) {
+                        LogProcessoDAO.getInstance().insertLogProcesso("verifEnvioCarregComposto()\n" +
+                                "envioLeiraDescarreg()", activity);
                         envioLeiraDescarreg(activity);
                     } else {
                         if (verifPreCEC()) {
-                            LogProcessoDAO.getInstance().insertLogProcesso("verifPreCEC()", activity);
-                            LogProcessoDAO.getInstance().insertLogProcesso("envioPreCEC()", activity);
+                            LogProcessoDAO.getInstance().insertLogProcesso("verifPreCEC()\n" +
+                                    "envioPreCEC()", activity);
                             envioPreCEC(activity);
                         } else {
                             if (verifBolFechadoMMFert()) {
-                                LogProcessoDAO.getInstance().insertLogProcesso("verifBolFechadoMMFert()", activity);
-                                LogProcessoDAO.getInstance().insertLogProcesso("enviarBolFechadoMMFert()", activity);
+                                LogProcessoDAO.getInstance().insertLogProcesso("verifBolFechadoMMFert()\n" +
+                                        "enviarBolFechadoMMFert()", activity);
                                 enviarBolFechadoMMFert(activity);
                             } else {
                                 if (verifApontMMMovLeiraFert()) {
-                                    LogProcessoDAO.getInstance().insertLogProcesso("verifApontMMMovLeiraFert()", activity);
-                                    LogProcessoDAO.getInstance().insertLogProcesso("enviarBolAbertoMMFert()", activity);
+                                    LogProcessoDAO.getInstance().insertLogProcesso("verifApontMMMovLeiraFert()\n" +
+                                            "enviarBolAbertoMMFert()", activity);
                                     enviarBolAbertoMMFert(activity);
                                 } else {
                                     status = 3;
@@ -184,7 +184,7 @@ public class EnvioDadosServ {
     public boolean verifDadosEnvio() {
         if ((!verifBolFechadoMMFert())
                 && (!verifEnvioCarregInsumo())
-                && (!verifEnvioCarregComposto())
+                && (!verifEnvioLeiraDescarreg())
                 && (!verifPreCEC())
                 && (!verifApontMMMovLeiraFert())
                 && (!verifChecklist())){
@@ -233,7 +233,14 @@ public class EnvioDadosServ {
             LogProcessoDAO.getInstance().insertLogProcesso("else if (result.trim().startsWith(\"GRAVOU-CARREGCOMPOSTO\")) {\n" +
                     "            CompostoCTR compostoCTR = new CompostoCTR();\n" +
                     "compostoCTR.updCarregComposto(result)", activity);
-            compostoCTR.updCarregComposto(result, activity);
+            compostoCTR.updCarregCompostoDescarreg(result, activity);
+        }
+        else if (result.trim().startsWith("GRAVOU-LEIRADESCARREG")) {
+            CompostoCTR compostoCTR = new CompostoCTR();
+            LogProcessoDAO.getInstance().insertLogProcesso("else if (result.trim().startsWith(\"GRAVOU-CARREGCOMPOSTO\")) {\n" +
+                    "            CompostoCTR compostoCTR = new CompostoCTR();\n" +
+                    "compostoCTR.updCarregComposto(result)", activity);
+            compostoCTR.updCarregCompostoDescarreg(result, activity);
         }
         else if(result.trim().startsWith("PRECEC")){
             CECCTR cecCTR = new CECCTR();

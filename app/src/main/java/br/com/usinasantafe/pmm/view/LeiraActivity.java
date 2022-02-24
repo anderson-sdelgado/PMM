@@ -24,8 +24,8 @@ public class LeiraActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonOkMotorista = (Button) findViewById(R.id.buttonOkPadrao);
-        Button buttonCancMotorista = (Button) findViewById(R.id.buttonCancPadrao);
+        Button buttonOkLeira = (Button) findViewById(R.id.buttonOkPadrao);
+        Button buttonCancLeira = (Button) findViewById(R.id.buttonCancPadrao);
         Button buttonAtualPadrao = (Button) findViewById(R.id.buttonAtualPadrao);
 
         buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {
@@ -114,12 +114,12 @@ public class LeiraActivity extends ActivityGeneric {
 
         });
 
-        buttonOkMotorista.setOnClickListener(new View.OnClickListener() {
+        buttonOkLeira.setOnClickListener(new View.OnClickListener() {
             @SuppressWarnings("rawtypes")
             @Override
             public void onClick(View v) {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkMotorista.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkLeira.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @SuppressWarnings(\"rawtypes\")\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
@@ -190,11 +190,11 @@ public class LeiraActivity extends ActivityGeneric {
 
         });
 
-        buttonCancMotorista.setOnClickListener(new View.OnClickListener() {
+        buttonCancLeira.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancMotorista.setOnClickListener(new View.OnClickListener() {\n" +
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancLeira.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                if (editTextPadrao.getText().toString().length() > 0) {\n" +

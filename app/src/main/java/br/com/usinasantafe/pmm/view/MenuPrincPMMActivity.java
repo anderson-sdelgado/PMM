@@ -89,7 +89,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         "                    itens.add(\"TROCAR IMPLEMENTO\");\n" +
                         "                }\n" +
                         "                if(" + rFuncaoAtivParBean.getCodFuncao() + " == 5){\n" +
-                        "                    if(" + pmmContext.getConfigCTR().getOS().getTipoOS() + " == 1){\n" +
+                        "                    if(pmmContext.getConfigCTR().getOS().getTipoOS() == 1){\n" +
                         "                        itens.add(\"COMPOSTAGEM\");\n" +
                         "                    }\n" +
                         "                }", getLocalClassName());
@@ -126,6 +126,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                 "        listViewAtiv = (ListView) findViewById(R.id.listViewMenuPrinc);\n" +
                 "        listViewAtiv.setAdapter(adapterList);", getLocalClassName());
 
+        
         itens.add("FINALIZAR BOLETIM");
         itens.add("HISTORICO");
         itens.add("REENVIO DE DADOS");
@@ -133,7 +134,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
         itens.add("LOG");
 
         AdapterList adapterList = new AdapterList(this, itens);
-        listViewAtiv = (ListView) findViewById(R.id.listViewMenuPrinc);
+        listViewAtiv = findViewById(R.id.listViewMenuPrinc);
         listViewAtiv.setAdapter(adapterList);
 
         listViewAtiv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

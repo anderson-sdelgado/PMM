@@ -40,7 +40,7 @@ public class HorimetroActivity extends ActivityGeneric {
         else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 17L) {
             textViewHorimetro.setText("HORIMETRO/HODOMETRO FINAL");
         }
-        else{
+        else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L) {
             textViewHorimetro.setText("HORIMETRO/HODOMETRO INICIAL");
         }
 
@@ -55,7 +55,6 @@ public class HorimetroActivity extends ActivityGeneric {
                 if (!editTextPadrao.getText().toString().equals("")) {
 
                     LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
-                            "                    \n" +
                             "                    String horimetro = editTextPadrao.getText().toString();\n" +
                             "                    horimetroNum = Double.valueOf(horimetro.replace(\",\", \".\"));", getLocalClassName());
                     String horimetro = editTextPadrao.getText().toString();
@@ -136,10 +135,15 @@ public class HorimetroActivity extends ActivityGeneric {
                     "            salvarBoletimFechado();", getLocalClassName());
             salvarBoletimFechado();
         }
-        else{
+        else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L) {
             salvarBoletimAberto();
             LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                     "            salvarBoletimAberto();", getLocalClassName());
+        }
+        else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 26L) {
+            LogProcessoDAO.getInstance().insertLogProcesso("else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {\n" +
+                    "            salvarBoletimFechado();", getLocalClassName());
+            salvarBoletimFechado();
         }
     }
 
@@ -212,7 +216,7 @@ public class HorimetroActivity extends ActivityGeneric {
                         startActivity(it);
                         finish();
                     }
-                    else{
+                    else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L) {
                         LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                                 "                        Intent it = new Intent(HorimetroActivity.this, VerifOperadorActivity.class);", getLocalClassName());
                         Intent it = new Intent(HorimetroActivity.this, VerifOperadorActivity.class);
@@ -259,12 +263,19 @@ public class HorimetroActivity extends ActivityGeneric {
                     startActivity(it);
                     finish();
                 }
-                else{
+                else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 17L) {
                     LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                             "                    pmmContext.getConfigCTR().setPosicaoTela(18L);\n" +
                             "                    Intent it = new Intent(HorimetroActivity.this, OperadorActivity.class);", getLocalClassName());
                     pmmContext.getConfigCTR().setPosicaoTela(18L);
                     Intent it = new Intent(HorimetroActivity.this, OperadorActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 26L) {
+                    LogProcessoDAO.getInstance().insertLogProcesso("else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 26L) {\n" +
+                            "                    Intent it = new Intent(HorimetroActivity.this, TelaInicialActivity.class);", getLocalClassName());
+                    Intent it = new Intent(HorimetroActivity.this, TelaInicialActivity.class);
                     startActivity(it);
                     finish();
                 }

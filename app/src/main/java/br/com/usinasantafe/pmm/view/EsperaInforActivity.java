@@ -88,6 +88,9 @@ public class EsperaInforActivity extends ActivityGeneric {
 
     }
 
+    public void onBackPressed()  {
+    }
+
     private Runnable runnable = new Runnable(){
         public void run() {
             LogProcessoDAO.getInstance().insertLogProcesso("private Runnable runnable = new Runnable(){\n" +

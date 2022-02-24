@@ -211,23 +211,6 @@ public class PreCECDAO {
 
     ///////////////////////////////////GET DADOS/////////////////////////////////
 
-    public Long getLib(int qtde){
-        PreCECBean preCECBean = getPreCECAberto();
-        Long lib = 0L;
-        if(qtde == 0){
-            lib = preCECBean.getLibCam();
-        } else if(qtde == 1){
-            lib = preCECBean.getLibCarr1();
-        } else if(qtde == 2){
-            lib = preCECBean.getLibCarr2();
-        } else if(qtde == 3){
-            lib = preCECBean.getLibCarr3();
-        } else if(qtde == 4){
-            lib = preCECBean.getLibCarr4();
-        }
-        return lib;
-    }
-
     public PreCECBean getPreCECAberto(){
         List preCECList = preCECListAberto();
         PreCECBean preCECBean = (PreCECBean) preCECList.get(0);
@@ -247,7 +230,7 @@ public class PreCECDAO {
         if (preCECList.size() == 0)  {
             retorno = "NÃO POSSUE CARREGAMENTOS";
         } else {
-            preCECBean = (PreCECBean) preCECList.get(preCECList.size() - 1);
+            preCECBean = preCECList.get(preCECList.size() - 1);
             if(preCECBean.getDataSaidaCampo().equals("")){
                 retorno = "NÃO POSSUE CARREGAMENTOS";
             }

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.estaticas.LeiraBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.MovLeiraBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.util.Tempo;
@@ -112,12 +113,24 @@ public class LeiraDAO {
 
     public LeiraBean getLeiraCod(Long codLeira){
         List<LeiraBean> leiraList = leiraCodList(codLeira);
-        LeiraBean leiraBean = (LeiraBean) leiraList.get(0);
+        LeiraBean leiraBean = leiraList.get(0);
         leiraList.clear();
         return leiraBean;
     }
 
-    public List<LeiraBean> leiraCodList(Long codLeira){
+    public LeiraBean getLeiraId(Long idLeira){
+        List<LeiraBean> leiraList = leiraIdList(idLeira);
+        LeiraBean leiraBean = leiraList.get(0);
+        leiraList.clear();
+        return leiraBean;
+    }
+
+    public List<LeiraBean> leiraCodList(Long idLeira){
+        LeiraBean leiraBean = new LeiraBean();
+        return leiraBean.get("idLeira", idLeira);
+    }
+
+    public List<LeiraBean> leiraIdList(Long codLeira){
         LeiraBean leiraBean = new LeiraBean();
         return leiraBean.get("codLeira", codLeira);
     }
@@ -219,6 +232,22 @@ public class LeiraDAO {
 
         return jsonMovLeira.toString();
 
+    }
+
+    private String dadosMovLeira(MovLeiraBean movLeiraBean){
+        Gson gsonItemImp = new Gson();
+        return gsonItemImp.toJsonTree(movLeiraBean, movLeiraBean.getClass()).toString();
+    }
+
+    public ArrayList<String> movLeiraAllArrayList(ArrayList<String> dadosArrayList){
+        dadosArrayList.add("MOV LEIRA");
+        MovLeiraBean movLeiraBean = new MovLeiraBean();
+        List<MovLeiraBean> movLeiraList = movLeiraBean.orderBy("idMovLeira", true);
+        for (MovLeiraBean movLeiraBeanBD : movLeiraList) {
+            dadosArrayList.add(dadosMovLeira(movLeiraBeanBD));
+        }
+        movLeiraList.clear();
+        return dadosArrayList;
     }
 
 }

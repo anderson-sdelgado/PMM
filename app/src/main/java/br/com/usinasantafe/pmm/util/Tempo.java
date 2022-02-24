@@ -104,8 +104,8 @@ public class Tempo {
 
         Date dataHoraDig = cal.getTime();
         Long longDtDig =  dataHoraDig.getTime();
-
-        Long dif = longDtDig - dtHr();
+        Date dataHora = new Date();
+        Long dif = longDtDig - dataHora.getTime();
 
         return dif;
 
@@ -201,8 +201,8 @@ public class Tempo {
 
     }
 
-    public Long dthrLongDia1Menos(){
-        return Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()) - (1*24*60*60*1000);
+    public Long dthrLongDiaMenos(int dia){
+        return Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()) - (dia*24*60*60*1000);
     }
 
     public Long dthrStringToLong(String dthrString){

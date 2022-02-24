@@ -24,7 +24,11 @@ public class CarregCompBean extends Entidade {
     @DatabaseField
     private String dthrCarreg;
     @DatabaseField
-    private Long tipoCarreg; //1 - INSUMO; 2 - COMPOSTO;
+    private Long dthrCarregLong;
+    @DatabaseField
+    private Long tipoCarreg;
+                // 1 - INSUMO;
+                // 2 - COMPOSTO;
     @DatabaseField
     private Long osCarreg;
     @DatabaseField
@@ -40,7 +44,12 @@ public class CarregCompBean extends Entidade {
     @DatabaseField
     private Double pesoLiquidoCarreg;
     @DatabaseField
-    private Long statusCarreg; //1 - Envio Carreg de Insumo e Composto com Leira; 2 - Recebe Retorno Envio de Insumo e Composto com Leira; 3 - Recebe Ord Carregamento; 4 - Enviar Leira Descarregamento; 5 - Atual Carreg Leira Descarreg
+    private Long statusCarreg;
+                // 1 - Envio Carreg de Insumo e Composto com Leira;
+                // 2 - Recebe Retorno Envio de Insumo e Composto com Leira;
+                // 3 - Recebe Ord Carregamento;
+                // 4 - Enviar Leira Descarregamento;
+                // 5 - Atual Carreg Leira Descarregamento;
 
     public CarregCompBean() {
     }
@@ -155,5 +164,13 @@ public class CarregCompBean extends Entidade {
 
     public void setStatusCarreg(Long statusCarreg) {
         this.statusCarreg = statusCarreg;
+    }
+
+    public Long getDthrCarregLong() {
+        return dthrCarregLong;
+    }
+
+    public void setDthrCarregLong(Long dthrCarregLong) {
+        this.dthrCarregLong = dthrCarregLong;
     }
 }

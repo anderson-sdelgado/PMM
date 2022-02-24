@@ -45,15 +45,13 @@ public class InformacaoActivity extends ActivityGeneric {
                     "                    \"PESO ENTRADA = \" + carregCompBean.getPesoEntradaCarreg() + \"\\n\" +\n" +
                     "                    \"PESO SAÍDA = \" + carregCompBean.getPesoSaidaCarreg() + \"\\n\" +\n" +
                     "                    \"PESO LÍQUIDO = \" + carregCompBean.getPesoLiquidoCarreg() + \"\\n\");", getLocalClassName());
-            CarregCompBean carregCompBean = pmmContext.getCompostoCTR().getOrdCarreg();
-            textViewDescrInfor.setText("COD. ORD. CARREG. = " + carregCompBean.getIdOrdCarreg() + "\n" +
+            CarregCompBean carregCompBean = pmmContext.getCompostoCTR().getOrdCarregLeira();
+            textViewDescrInfor.setText("COD. ORD. CARREG. = " + ((carregCompBean.getIdOrdCarreg() == 0L) ? "" : "" + carregCompBean.getIdOrdCarreg()) + "\n" +
                     "PESO ENTRADA = " + carregCompBean.getPesoEntradaCarreg() + "\n" +
                     "PESO SAÍDA = " + carregCompBean.getPesoSaidaCarreg() + "\n" +
-                    "PESO LÍQUIDO = " + carregCompBean.getPesoLiquidoCarreg() + "\n");
+                    "PESO LÍQUIDO = " + carregCompBean.getPesoLiquidoCarreg() + "\n" +
+                    "LEIRA = " + pmmContext.getCompostoCTR().getLeiraId(carregCompBean.getIdLeiraCarreg()).getCodLeira() + "\n");
         }
-
-        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCompostoCTR().setVerTelaLeira(false);", getLocalClassName());
-        pmmContext.getCompostoCTR().setVerTelaLeira(false);
 
         buttonRetMenuPesq.setOnClickListener(new View.OnClickListener() {
 

@@ -35,6 +35,10 @@
         android:layout_weight="1">
     </ListView>
 
+    <TextView
+        android:id="@+id/textViewProcessoNormal"
+        style="@style/TextViewItemList"
+        android:text="@string/texto_item_list" />
 
     <Button
         android:id="@+id/buttonParadaMotoMec"
