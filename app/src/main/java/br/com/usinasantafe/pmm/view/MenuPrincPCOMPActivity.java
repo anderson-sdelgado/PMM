@@ -327,9 +327,11 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                             if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 2) {
 
                                 LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 2) {\n" +
+                                        "                                pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());" +
                                         "                                pmmContext.getConfigCTR().setPosicaoTela(13L);\n" +
                                         "                                pmmContext.getConfigCTR().setPosFluxoCarregComposto(0L);\n" +
                                         "                                Intent it = new Intent(MenuPrincPCOMPActivity.this, EsperaInforActivity.class);", getLocalClassName());
+                                pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
                                 pmmContext.getConfigCTR().setPosicaoTela(13L);
                                 pmmContext.getConfigCTR().setPosFluxoCarregComposto(0L);
                                 Intent it = new Intent(MenuPrincPCOMPActivity.this, EsperaInforActivity.class);
