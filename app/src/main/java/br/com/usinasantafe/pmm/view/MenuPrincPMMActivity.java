@@ -126,7 +126,8 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                 "        listViewAtiv = (ListView) findViewById(R.id.listViewMenuPrinc);\n" +
                 "        listViewAtiv.setAdapter(adapterList);", getLocalClassName());
 
-        
+        itens.add("APONTAR MANUTENÇÃO");
+        itens.add("FINALIZAR MANUTENÇÃO");
         itens.add("FINALIZAR BOLETIM");
         itens.add("HISTORICO");
         itens.add("REENVIO DE DADOS");

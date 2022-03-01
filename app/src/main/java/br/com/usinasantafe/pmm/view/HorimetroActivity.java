@@ -43,6 +43,9 @@ public class HorimetroActivity extends ActivityGeneric {
         else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L) {
             textViewHorimetro.setText("HORIMETRO/HODOMETRO INICIAL");
         }
+        else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 26L) {
+            textViewHorimetro.setText("HORIMETRO/HODOMETRO FINAL");
+        }
 
         buttonOkHorimetro.setOnClickListener(new View.OnClickListener() {
             @Override

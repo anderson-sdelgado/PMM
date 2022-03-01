@@ -219,7 +219,7 @@ public class EnvioDadosServ {
             LogProcessoDAO.getInstance().insertLogProcesso("else if (result.trim().startsWith(\"BOLFECHADOMM\")) {\n" +
                     "            MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();\n" +
                     "motoMecFertCTR.delBolFechado(result)", activity);
-            motoMecFertCTR.updateBolEnviado(result, activity);
+            motoMecFertCTR.updateBolFechado(result, activity);
         }
         else if (result.trim().startsWith("GRAVOU-CARREGINSUMO")) {
             CompostoCTR compostoCTR = new CompostoCTR();

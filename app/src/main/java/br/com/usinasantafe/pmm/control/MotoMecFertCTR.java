@@ -193,7 +193,7 @@ public class MotoMecFertCTR {
 
     }
 
-    public void updateBolEnviado(String retorno, String activity){
+    public void updateBolFechado(String retorno, String activity){
 
         try {
 
