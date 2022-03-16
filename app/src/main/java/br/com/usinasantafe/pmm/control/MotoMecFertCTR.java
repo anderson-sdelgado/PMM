@@ -21,6 +21,7 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.model.dao.ApontMMFertDAO;
+import br.com.usinasantafe.pmm.model.dao.ApontMecanDAO;
 import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
 import br.com.usinasantafe.pmm.model.dao.BocalDAO;
 import br.com.usinasantafe.pmm.model.dao.BoletimMMFertDAO;
@@ -131,7 +132,10 @@ public class MotoMecFertCTR {
         LeiraDAO leiraDAO = new LeiraDAO();
         String dadosEnvioMovLeira = leiraDAO.dadosEnvioMovLeira(leiraDAO.movLeiraEnvioList(boletimMMFertDAO.idBolArrayList(boletimMMFertDAO.bolAbertoMMFertList())));
 
-        return dadosEnvioBoletim + "_" + dadosEnvioApont + "|" + dadosEnvioApontImpl + "#" + dadosEnvioMovLeira;
+        ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
+        String dadosEnvioApontMecan = apontMecanDAO.dadosEnvioApontMecan(apontMecanDAO.apontMecanEnvioList(boletimMMFertDAO.idBolArrayList(boletimMMFertDAO.bolAbertoMMFertList())));
+
+        return dadosEnvioBoletim + "_" + dadosEnvioApont + "_" + dadosEnvioApontImpl + "_" + dadosEnvioMovLeira + "_" + dadosEnvioApontMecan;
     }
 
     public String dadosEnvioBolFechadoMMFert(){
@@ -154,7 +158,10 @@ public class MotoMecFertCTR {
         RecolhFertDAO recolhFertDAO = new RecolhFertDAO();
         String dadosEnvioRecolh = recolhFertDAO.dadosEnvioRecolh(recolhFertDAO.recolhEnvioList(boletimMMFertDAO.idBolArrayList(boletimMMFertDAO.bolFechadoMMFertList())));
 
-        return dadosEnvioBoletim + "_" + dadosEnvioApont + "|" + dadosEnvioApontImpl + "#" + dadosEnvioMovLeira + "?" + dadosEnvioRend + "=" + dadosEnvioRecolh;
+        ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
+        String dadosEnvioApontMecan = apontMecanDAO.dadosEnvioApontMecan(apontMecanDAO.apontMecanEnvioList(boletimMMFertDAO.idBolArrayList(boletimMMFertDAO.bolFechadoMMFertList())));
+
+        return dadosEnvioBoletim + "_" + dadosEnvioApont + "_" + dadosEnvioApontImpl + "_" + dadosEnvioMovLeira + "_" + dadosEnvioApontMecan + "_" + dadosEnvioRend + "_" + dadosEnvioRecolh;
     }
 
     public void updBolAberto(String retorno, String activity){
@@ -164,10 +171,12 @@ public class MotoMecFertCTR {
             int pos1 = retorno.indexOf("_") + 1;
             int pos2 = retorno.indexOf("|") + 1;
             int pos3 = retorno.indexOf("#") + 1;
+            int pos4 = retorno.indexOf("?") + 1;
 
             String objPrinc = retorno.substring(pos1, pos2);
             String objSeg = retorno.substring(pos2, pos3);
-            String objTerc = retorno.substring(pos3);
+            String objTerc = retorno.substring(pos3, pos4);
+            String objQuar = retorno.substring(pos4);
 
             BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
             boletimMMFertDAO.updateBolAbertoMMFert(objPrinc);
@@ -179,6 +188,10 @@ public class MotoMecFertCTR {
             LeiraDAO leiraDAO = new LeiraDAO();
             ArrayList<Long> idMovLeiraArrayList = leiraDAO.idMovLeiraArrayList(objTerc);
             leiraDAO.updateMovLeira(idMovLeiraArrayList);
+
+            ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
+            ArrayList<Long> idApontMecanArrayList = apontMecanDAO.idApontMecanArrayList(objQuar);
+            apontMecanDAO.updateApontMecan(idApontMecanArrayList);
 
             ImpleMMDAO impleMMDAO = new ImpleMMDAO();
             impleMMDAO.deleteImple(idApontArrayList);
@@ -886,6 +899,12 @@ public class MotoMecFertCTR {
         ApontMMFertDAO apontMMDAO = new ApontMMFertDAO();
         BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
         return apontMMDAO.hasApontBol(boletimMMFertDAO.getBolAbertoMMFert().getIdBolMMFert());
+    }
+
+    public boolean verUltApontAtiv() {
+        ApontMMFertDAO apontMMDAO = new ApontMMFertDAO();
+        BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
+        return apontMMDAO.verUltApontAtiv(boletimMMFertDAO.getBolAbertoMMFert().getIdBolMMFert());
     }
 
     public boolean verifBackupApont() {

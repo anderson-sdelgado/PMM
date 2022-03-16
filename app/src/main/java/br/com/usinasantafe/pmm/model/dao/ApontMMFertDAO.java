@@ -157,6 +157,23 @@ public class ApontMMFertDAO {
         return retorno;
     }
 
+    public boolean verUltApontAtiv(Long idBol) {
+
+        boolean retorno = true;
+
+        if(!hasApontBol(idBol)){
+            retorno = false;
+        }
+        else{
+            ApontMMFertBean apontMMFertBean = getUltApont(idBol);
+            if (apontMMFertBean.getParadaApontMMFert() == 0L){
+                retorno = false;
+            }
+        }
+
+        return retorno;
+    }
+
     public boolean verDataHoraApont(Long idBol){
 
         boolean ret = true;

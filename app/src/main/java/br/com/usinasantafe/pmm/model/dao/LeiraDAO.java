@@ -89,17 +89,15 @@ public class LeiraDAO {
 
     public boolean verDataHoraMovLeira(Long idBol){
 
-        boolean ret = true;
-
+        boolean ret = false;
         if(!hasMovLeiraBol(idBol)){
-            ret = false;
+            ret = true;
         }
         else{
             if ((Tempo.getInstance().dthrAddMinutoLong(getUltMovLeira(idBol).getDthrLongMovLeira(), 1) < Tempo.getInstance().dtHr())) {
-                ret = false;
+                ret = true;
             }
         }
-
         return ret;
 
     }
@@ -125,14 +123,14 @@ public class LeiraDAO {
         return leiraBean;
     }
 
-    public List<LeiraBean> leiraCodList(Long idLeira){
-        LeiraBean leiraBean = new LeiraBean();
-        return leiraBean.get("idLeira", idLeira);
-    }
-
-    public List<LeiraBean> leiraIdList(Long codLeira){
+    public List<LeiraBean> leiraCodList(Long codLeira){
         LeiraBean leiraBean = new LeiraBean();
         return leiraBean.get("codLeira", codLeira);
+    }
+
+    public List<LeiraBean> leiraIdList(Long idLeira){
+        LeiraBean leiraBean = new LeiraBean();
+        return leiraBean.get("idLeira", idLeira);
     }
 
     public List<LeiraBean> leiraStatusList(Long tipoMov){

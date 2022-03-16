@@ -246,7 +246,8 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
 
         if (findViewById(R.id.editTextPadrao) != null) {
             editTextPadrao = findViewById(R.id.editTextPadrao);
-            if (!this.getLocalClassName().equals("view.OSActivity") && (!this.getLocalClassName().equals("view.RendimentoActivity"))
+            if (!this.getLocalClassName().equals("view.OSActivity")
+                    && (!this.getLocalClassName().equals("view.RendimentoActivity"))
                     && (!this.getLocalClassName().equals("view.RecolhimentoActivity"))) {
                 editTextPadrao.setText("");
             }

@@ -1,10 +1,13 @@
 package br.com.usinasantafe.pmm.util;
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import br.com.usinasantafe.pmm.control.CECCTR;
 import br.com.usinasantafe.pmm.control.CompostoCTR;
+import br.com.usinasantafe.pmm.control.MecanicoCTR;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.conHttp.PostCadGenerico;
@@ -92,6 +95,8 @@ public class EnvioDadosServ {
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
+        Log.i("PMM", "URL = " + url);
+        Log.i("PMM", "Dados de Envio = " + dados);
         LogProcessoDAO.getInstance().insertLogProcesso("postCadGenerico.execute('" + url + "'); - Dados de Envio = " + dados, activity);
         PostCadGenerico postCadGenerico = new PostCadGenerico();
         postCadGenerico.setParametrosPost(parametrosPost);
@@ -127,9 +132,13 @@ public class EnvioDadosServ {
         return motoMecFertCTR.verEnvioBolFech();
     }
 
-    public Boolean verifApontMMMovLeiraFert() {
+    public Boolean verifApontMMMovLeiraMecanFert() {
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
-        return motoMecFertCTR.verEnvioApont() || motoMecFertCTR.verEnvioMovLeira();
+        MecanicoCTR mecanicoCTR = new MecanicoCTR();
+        return motoMecFertCTR.verEnvioApont()
+                || motoMecFertCTR.verEnvioMovLeira()
+                || mecanicoCTR.verApontMecanAbertoNEnviado()
+                || mecanicoCTR.verApontMecanFechadoNEnviado();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -166,7 +175,7 @@ public class EnvioDadosServ {
                                         "enviarBolFechadoMMFert()", activity);
                                 enviarBolFechadoMMFert(activity);
                             } else {
-                                if (verifApontMMMovLeiraFert()) {
+                                if (verifApontMMMovLeiraMecanFert()) {
                                     LogProcessoDAO.getInstance().insertLogProcesso("verifApontMMMovLeiraFert()\n" +
                                             "enviarBolAbertoMMFert()", activity);
                                     enviarBolAbertoMMFert(activity);
@@ -186,7 +195,7 @@ public class EnvioDadosServ {
                 && (!verifEnvioCarregInsumo())
                 && (!verifEnvioLeiraDescarreg())
                 && (!verifPreCEC())
-                && (!verifApontMMMovLeiraFert())
+                && (!verifApontMMMovLeiraMecanFert())
                 && (!verifChecklist())){
             return false;
         } else {

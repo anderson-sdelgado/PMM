@@ -55,7 +55,7 @@ public class EsperaInforActivity extends ActivityGeneric {
                         "                textEspInfor.setText(\"BUSCANDO ORD. CARREGAMENTO...\");\n" +
                         "                pmmContext.getCompostoCTR().verifDadosCarreg(this, InformacaoActivity.class, getLocalClassName());", getLocalClassName());
                 textEspInfor.setText("BUSCANDO ORD. CARREGAMENTO...");
-                pmmContext.getCompostoCTR().verifDadosCarreg(this, InformacaoActivity.class, getLocalClassName());
+                pmmContext.getCompostoCTR().verifDadosCarreg(this, InforCarregCompActivity.class, getLocalClassName());
             }
 
         }

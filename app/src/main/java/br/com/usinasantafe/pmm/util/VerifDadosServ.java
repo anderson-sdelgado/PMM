@@ -12,11 +12,11 @@ import java.util.Map;
 import br.com.usinasantafe.pmm.control.CECCTR;
 import br.com.usinasantafe.pmm.control.CompostoCTR;
 import br.com.usinasantafe.pmm.control.InformativoCTR;
+import br.com.usinasantafe.pmm.control.MecanicoCTR;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.conHttp.PostVerGenerico;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.model.bean.AtualAplicBean;
 import br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp;
 import br.com.usinasantafe.pmm.view.TelaInicialActivity;
 
@@ -54,6 +54,7 @@ public class VerifDadosServ {
         InformativoCTR informativoCTR = new InformativoCTR();
         CompostoCTR compostoCTR = new CompostoCTR();
         CECCTR cecCTR = new CECCTR();
+        MecanicoCTR mecanicoCTR = new MecanicoCTR();
         LogProcessoDAO.getInstance().insertLogProcesso("public void manipularDadosHttp(String result) {", activity);
         if (this.tipo.equals("Equip")) {
             LogProcessoDAO.getInstance().insertLogProcesso("if (this.tipo.equals(\"Equip\")) {\n" +
@@ -91,6 +92,10 @@ public class VerifDadosServ {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"CEC\")) {\n" +
                     "            cecCTR.receberVerifCEC(" + result + ");", activity);
             cecCTR.receberVerifCEC(result);
+        } else if (this.tipo.equals("OSMecan")) {
+            LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"OS\")) {\n" +
+                    "            configCTR.receberVerifOS(" + result + ");", activity);
+            mecanicoCTR.receberVerifOSMecan(result);
         } else {
             LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                     "            status = 1;", activity);

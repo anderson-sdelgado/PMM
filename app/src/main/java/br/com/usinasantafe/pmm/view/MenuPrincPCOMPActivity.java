@@ -21,7 +21,6 @@ import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.MotoMecBean;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
-import br.com.usinasantafe.pmm.util.Tempo;
 
 public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
@@ -442,7 +441,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                                         "                                pmmContext.getConfigCTR().setPosicaoTela(5L);\n" +
                                         "                                Intent it = new Intent(MenuPrincPCOMPActivity.this, InformacaoActivity.class);", getLocalClassName());
                                 pmmContext.getConfigCTR().setPosicaoTela(5L);
-                                Intent it = new Intent(MenuPrincPCOMPActivity.this, InformacaoActivity.class);
+                                Intent it = new Intent(MenuPrincPCOMPActivity.this, InforCarregCompActivity.class);
                                 startActivity(it);
                                 finish();
 

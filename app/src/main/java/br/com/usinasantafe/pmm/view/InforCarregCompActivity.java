@@ -11,14 +11,14 @@ import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CarregCompBean;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
-public class InformacaoActivity extends ActivityGeneric {
+public class InforCarregCompActivity extends ActivityGeneric {
 
     private PMMContext pmmContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_informacao);
+        setContentView(R.layout.activity_infor_carreg_comp);
 
         pmmContext = (PMMContext) getApplication();
 
@@ -61,7 +61,7 @@ public class InformacaoActivity extends ActivityGeneric {
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(InformacaoActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
-                Intent it = new Intent(InformacaoActivity.this, MenuPrincPCOMPActivity.class);
+                Intent it = new Intent(InforCarregCompActivity.this, MenuPrincPCOMPActivity.class);
                 startActivity(it);
                 finish();
 

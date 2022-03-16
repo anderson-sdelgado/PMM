@@ -4,6 +4,7 @@ import android.app.Application;
 
 import br.com.usinasantafe.pmm.control.CECCTR;
 import br.com.usinasantafe.pmm.control.CompostoCTR;
+import br.com.usinasantafe.pmm.control.MecanicoCTR;
 import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
@@ -24,9 +25,10 @@ public class PMMContext extends Application {
     private CheckListCTR checkListCTR;
     private ConfigCTR configCTR;
     private CompostoCTR compostoCTR;
+    private MecanicoCTR mecanicoCTR;
 
     public static String versaoAplic = "4.00";
-    public static int aplic = 3;   // 1 - PMM; 2 - ECM; 3 - PCOMP
+    public static int aplic = 1;   // 1 - PMM; 2 - ECM; 3 - PCOMP
 
     @Override
     public void onCreate() {
@@ -69,6 +71,12 @@ public class PMMContext extends Application {
         if (compostoCTR == null)
             compostoCTR = new CompostoCTR();
         return compostoCTR;
+    }
+
+    public MecanicoCTR getMecanicoCTR(){
+        if (mecanicoCTR == null)
+            mecanicoCTR = new MecanicoCTR();
+        return mecanicoCTR;
     }
 
     private Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() {

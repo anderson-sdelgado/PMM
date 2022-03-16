@@ -4,8 +4,8 @@ import br.com.usinasantafe.pmm.PMMContext;
 
 public class UrlsConexaoHttp {
 
-    public static String urlPrincipal = "https://www.usinasantafe.com.br/pmmqa/view/";
-    public static String urlPrincEnvio = "https://www.usinasantafe.com.br/pmmqa/view/";
+    public static String urlPrincipal = "https://www.usinasantafe.com.br/pmmdev/view/";
+    public static String urlPrincEnvio = "https://www.usinasantafe.com.br/pmmdev/view/";
 
     public static String localPSTEstatica = "br.com.usinasantafe.pmm.model.bean.estaticas.";
     public static String localUrl = "br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp";
@@ -14,6 +14,7 @@ public class UrlsConexaoHttp {
 
     public static String AtividadeBean = urlPrincipal + "atividade.php" + put;
     public static String BocalBean = urlPrincipal + "bocal.php" + put;
+    public static String ComponenteBean = urlPrincipal + "componente.php" + put;
     public static String EquipSegBean = urlPrincipal + "equipseg.php" + put;
     public static String FrenteBean = urlPrincipal + "frente.php" + put;
     public static String FuncBean = urlPrincipal + "funcionario.php" + put;
@@ -27,6 +28,7 @@ public class UrlsConexaoHttp {
     public static String PropriedadeBean = urlPrincipal + "propriedade.php" + put;
     public static String RAtivParadaBean = urlPrincipal + "rativparada.php" + put;
     public static String RFuncaoAtivParBean = urlPrincipal + "rfuncaoativpar.php" + put;
+    public static String ServicoBean = urlPrincipal + "servico.php" + put;
     public static String TurnoBean = urlPrincipal + "turno.php" + put;
 
     public UrlsConexaoHttp() {
@@ -69,6 +71,8 @@ public class UrlsConexaoHttp {
             }
         } else if (classe.equals("Atividade")) {
             retorno = urlPrincipal + "atualativ.php" + put;
+        } else if (classe.equals("OSMecan")) {
+            retorno = urlPrincipal + "osmecan.php" + put;
         } else if (classe.equals("AtualParada")) {
             retorno = urlPrincipal + "atualparada.php" + put;
         } else if (classe.equals("Atualiza")) {

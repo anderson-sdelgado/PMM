@@ -83,6 +83,8 @@ public class ConfigBean extends Entidade {
 	// 24 - Senha de Menu ECM
 	// 25 - Senha de Menu PCOMP
 	// 26 - Finalizar
+	// 27 - Inicia Apontamento Manutenção
+	// 28 - Interroper/Finalizar Apontamento Manutenção
 
 	public ConfigBean() {
 	}
