@@ -49,7 +49,7 @@ public class RecolhFertDAO {
 
     public boolean verRecolh(Long idBol){
         RecolhFertBean recolhFertBean = new RecolhFertBean();
-        List recolhList = recolhFertBean.get("idBolMMFert", idBol);
+        List<RecolhFertBean> recolhList = recolhFertBean.get("idBolMMFert", idBol);
         Boolean ret = (recolhList.size() > 0);
         recolhList.clear();
         return ret;
@@ -127,9 +127,8 @@ public class RecolhFertDAO {
         RecolhFertBean recolhFertBean = new RecolhFertBean();
         List<RecolhFertBean> recolhFertList = recolhFertBean.get(pesquisaArrayList);
 
-        for (int j = 0; j < recolhFertList.size(); j++) {
-            recolhFertBean = recolhFertList.get(j);
-            recolhFertBean.delete();
+        for (RecolhFertBean recolhFertBeanBD : recolhFertList) {
+            recolhFertBeanBD.delete();
         }
 
         recolhFertList.clear();

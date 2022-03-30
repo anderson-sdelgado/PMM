@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.estaticas.REquipAtivBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.REquipPneuBean;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
 
@@ -24,7 +25,7 @@ public class EquipDAO {
 
     public EquipBean getEquip(){
         EquipBean equipBean = new EquipBean();
-        List equipList = equipBean.all();
+        List<EquipBean> equipList = equipBean.all();
         equipBean = (EquipBean) equipList.get(0);
         equipList.clear();
         if ((equipBean.getTipoEquipFert() == 1) || (equipBean.getTipoEquipFert() == 2)) {
@@ -64,20 +65,33 @@ public class EquipDAO {
         rEquipAtivBean.deleteAll();
 
         for (int j = 0; j < jsonArray.length(); j++) {
-
             JSONObject objeto = jsonArray.getJSONObject(j);
             Gson gson = new Gson();
             REquipAtivBean rEquipAtiv = gson.fromJson(objeto.toString(), REquipAtivBean.class);
             rEquipAtiv.insert();
-
         }
 
     }
 
+    public void recDadosREquipPneu(JSONArray jsonArray) throws JSONException {
+
+        REquipPneuBean rEquipPneuBean = new REquipPneuBean();
+        rEquipPneuBean.deleteAll();
+
+        for (int j = 0; j < jsonArray.length(); j++) {
+            JSONObject objeto = jsonArray.getJSONObject(j);
+            Gson gson = new Gson();
+            REquipPneuBean rEquipPneu = gson.fromJson(objeto.toString(), REquipPneuBean.class);
+            rEquipPneu.insert();
+        }
+
+    }
+
+
     public String dadosEnvioEquip(){
 
         EquipBean equipBean = new EquipBean();
-        List equipList = equipBean.all();
+        List<EquipBean> equipList = equipBean.all();
         JsonArray equipJsonArray = new JsonArray();
 
         equipBean = (EquipBean) equipList.get(0);
@@ -90,6 +104,11 @@ public class EquipDAO {
 
         return equipJsonObj.toString();
 
+    }
+
+    public List<REquipPneuBean> rEquipPneuList(){
+        REquipPneuBean rEquipPneuBean = new REquipPneuBean();
+        return rEquipPneuBean.orderBy("posPneu", true);
     }
 
 }

@@ -126,7 +126,7 @@ public class OperadorActivity extends ActivityGeneric {
                                 "pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().setBoletimMMBean();\n" +
                                 "                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().setMatricFuncBolMMFert(Long.parseLong(editTextPadrao.getText().toString()));", getLocalClassName());
                         pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().setBolMMFert();
-                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().setMatricFuncBolMMFert(Long.parseLong(editTextPadrao.getText().toString()));
+                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().setMatricFuncBolMMFert(Long.parseLong(editTextPadrao.getText().toString()));
 
                         LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(OperadorActivity.this, EquipActivity.class);", getLocalClassName());
                         Intent it = new Intent(OperadorActivity.this, EquipActivity.class);

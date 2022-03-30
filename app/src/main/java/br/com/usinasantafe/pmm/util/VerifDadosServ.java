@@ -13,6 +13,7 @@ import br.com.usinasantafe.pmm.control.CECCTR;
 import br.com.usinasantafe.pmm.control.CompostoCTR;
 import br.com.usinasantafe.pmm.control.InformativoCTR;
 import br.com.usinasantafe.pmm.control.MecanicoCTR;
+import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.conHttp.PostVerGenerico;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
@@ -21,6 +22,7 @@ import br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp;
 import br.com.usinasantafe.pmm.view.TelaInicialActivity;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 /**
  * Created by anderson on 16/11/2015.
@@ -55,6 +57,7 @@ public class VerifDadosServ {
         CompostoCTR compostoCTR = new CompostoCTR();
         CECCTR cecCTR = new CECCTR();
         MecanicoCTR mecanicoCTR = new MecanicoCTR();
+        MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
         LogProcessoDAO.getInstance().insertLogProcesso("public void manipularDadosHttp(String result) {", activity);
         if (this.tipo.equals("Equip")) {
             LogProcessoDAO.getInstance().insertLogProcesso("if (this.tipo.equals(\"Equip\")) {\n" +
@@ -96,6 +99,10 @@ public class VerifDadosServ {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"OS\")) {\n" +
                     "            configCTR.receberVerifOS(" + result + ");", activity);
             mecanicoCTR.receberVerifOSMecan(result);
+        } else if (this.tipo.equals("Pneu")) {
+            LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Pneu\")) {\n" +
+                    "            motoMecFertCTR.receberVerifPneu(" + result + ");", activity);
+            motoMecFertCTR.receberVerifPneu(result);
         } else {
             LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                     "            status = 1;", activity);
@@ -180,6 +187,7 @@ public class VerifDadosServ {
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", this.dados);
 
+        Log.i("PMM", "postVerGenerico.execute('" + urlsConexaoHttp.urlVerifica(tipo) + "'); - Dados de Envio = " + this.dados);
         LogProcessoDAO.getInstance().insertLogProcesso("postVerGenerico.execute('" + urlsConexaoHttp.urlVerifica(tipo) + "'); - Dados de Envio = " + this.dados, activity);
         postVerGenerico = new PostVerGenerico();
         postVerGenerico.setParametrosPost(parametrosPost);

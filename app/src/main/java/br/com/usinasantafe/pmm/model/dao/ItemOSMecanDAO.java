@@ -1,5 +1,8 @@
 package br.com.usinasantafe.pmm.model.dao;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -9,6 +12,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.estaticas.ItemOSMecanBean;
+import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class ItemOSMecanDAO {
 
@@ -25,7 +29,10 @@ public class ItemOSMecanDAO {
         itemOSMecanBean.deleteAll();
     }
 
-    public void recDadosItemOS(JSONArray jsonArray) throws JSONException {
+
+
+
+    public void recDadosItemOSMecan(JSONArray jsonArray) throws JSONException {
 
         itemOSDelAll();
         for (int i = 0; i < jsonArray.length(); i++) {

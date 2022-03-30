@@ -20,13 +20,14 @@ import java.util.List;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class ListaParadaActivity extends ActivityGeneric {
 
     private ListView paradaListView;
     private PMMContext pmmContext;
-    private List paradaList;
+    private List<ParadaBean> paradaList;
     private ProgressDialog progressBar;
     private ArrayAdapter<String> adapter;
     private String paradaString;
@@ -53,7 +54,7 @@ public class ListaParadaActivity extends ActivityGeneric {
         String itens[] = new String[paradaList.size()];
 
         for (int i = 0; i < paradaList.size(); i++) {
-            ParadaBean paradaBean = (ParadaBean) paradaList.get(i);
+            ParadaBean paradaBean = paradaList.get(i);
             itens[i] = paradaBean.getCodParada() + " - " + paradaBean.getDescrParada();
         }
 
@@ -74,7 +75,6 @@ public class ListaParadaActivity extends ActivityGeneric {
             @Override
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
                                           int arg3) {
-
             }
 
             @Override
@@ -235,10 +235,32 @@ public class ListaParadaActivity extends ActivityGeneric {
                                         "                                pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());\n" +
                                         "                                Intent it = new Intent(ListaParadaActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                                 pmmContext.getConfigCTR().clearDadosFert();
-                                pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
-                                Intent it = new Intent(ListaParadaActivity.this, MenuPrincPMMActivity.class);
-                                startActivity(it);
-                                finish();
+
+                                List<RFuncaoAtivParBean> rFuncaoAtivParList = pmmContext.getMotoMecFertCTR().getFuncaoParadaList(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), getLocalClassName());
+
+                                boolean calibragem = false;
+
+                                for (int i = 0; i < rFuncaoAtivParList.size(); i++) {
+                                    RFuncaoAtivParBean rFuncaoAtivParBean = rFuncaoAtivParList.get(i);
+                                    if (rFuncaoAtivParBean.getCodFuncao() == 3) {
+                                        calibragem = true;
+                                    }
+                                }
+                                rFuncaoAtivParList.clear();
+
+                                if(calibragem){
+                                    pmmContext.getMotoMecFertCTR().salvarParadaPneu(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
+                                    pmmContext.getMotoMecFertCTR().salvarBoletimPneu();
+                                    Intent it = new Intent(ListaParadaActivity.this, ListaPosPneuActivity.class);
+                                    startActivity(it);
+                                    finish();
+                                }
+                                else{
+                                    pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
+                                    Intent it = new Intent(ListaParadaActivity.this, MenuPrincPMMActivity.class);
+                                    startActivity(it);
+                                    finish();
+                                }
 
                             }
 

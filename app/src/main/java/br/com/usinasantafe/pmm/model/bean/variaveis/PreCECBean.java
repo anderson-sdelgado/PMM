@@ -13,8 +13,6 @@ public class PreCECBean extends Entidade {
 	@DatabaseField(generatedId=true)
 	private Long idPreCEC;
 	@DatabaseField
-	private Long ativOS;
-	@DatabaseField
 	private Long cam;
 	@DatabaseField
     private Long libCam;
@@ -172,14 +170,6 @@ public class PreCECBean extends Entidade {
 
 	public void setTurno(Long turno) {
 		this.turno = turno;
-	}
-
-	public Long getAtivOS() {
-		return ativOS;
-	}
-
-	public void setAtivOS(Long ativOS) {
-		this.ativOS = ativOS;
 	}
 
 	public Long getStatus() {

@@ -81,7 +81,7 @@ public class OSMecanActivity extends ActivityGeneric {
                                         "                                pmmContext.getMecanicoCTR().verOS(editTextPadrao.getText().toString()\n" +
                                         "                                        , OSMecanActivity.this, ListaItemOSMecanActivity.class, progressBar, getLocalClassName());", getLocalClassName());
                                 pmmContext.getMecanicoCTR().verOSMecan(editTextPadrao.getText().toString()
-                                        , OSMecanActivity.this, ListaItemOSMecanActivity.class, progressBar, getLocalClassName());
+                                        , OSMecanActivity.this, ListaItemOSMecanActivity.class, progressBar);
 
                             } else {
 

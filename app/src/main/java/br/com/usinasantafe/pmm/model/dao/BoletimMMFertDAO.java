@@ -26,43 +26,43 @@ public class BoletimMMFertDAO {
         boletimMMFertBean = new BoletimMMFertBean();
     }
 
-    public BoletimMMFertBean getBolMMFert() {
+    public BoletimMMFertBean getBoletimMMFert() {
         if (boletimMMFertBean == null)
             boletimMMFertBean = new BoletimMMFertBean();
         return boletimMMFertBean;
     }
 
-    public boolean verBolAbertoMMFert(){
-        List<BoletimMMFertBean> boletimMMList = bolAbertoMMFertList();
+    public boolean verBoletimMMFertAberto(){
+        List<BoletimMMFertBean> boletimMMList = boletimMMFertAbertoList();
         boolean ret = (boletimMMList.size() > 0);
         boletimMMList.clear();
         return ret;
     }
 
-    public boolean verBolFechadoMMFert(){
-        List<BoletimMMFertBean> boletimMMList = bolFechadoMMFertList();
+    public boolean verBoletimMMFertFechado(){
+        List<BoletimMMFertBean> boletimMMList = boletimMMFertFechadoList();
         boolean ret = (boletimMMList.size() > 0);
         boletimMMList.clear();
         return ret;
     }
 
-    public BoletimMMFertBean getBolAbertoMMFert(){
-        List<BoletimMMFertBean> boletimMMList = bolAbertoMMFertList();
+    public BoletimMMFertBean getBoletimMMFertAberto(){
+        List<BoletimMMFertBean> boletimMMList = boletimMMFertAbertoList();
         BoletimMMFertBean boletimMMFertBean = boletimMMList.get(0);
         boletimMMList.clear();
         return boletimMMFertBean;
     }
 
-    public List<BoletimMMFertBean> bolAbertoMMFertList(){
+    public List<BoletimMMFertBean> boletimMMFertAbertoList(){
         ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqBolAberto());
+        pesqArrayList.add(getPesqBoletimAberto());
         BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
         return boletimMMFertBean.get(pesqArrayList);
     }
 
-    public List<BoletimMMFertBean> bolFechadoMMFertList(){
+    public List<BoletimMMFertBean> boletimMMFertFechadoList(){
         ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqBolFechado());
+        pesqArrayList.add(getPesqBoletimFechado());
         BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
         return boletimMMFertBean.get(pesqArrayList);
     }
@@ -72,15 +72,15 @@ public class BoletimMMFertDAO {
         BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
         List<BoletimMMFertBean> boletimMMList = boletimMMFertBean.orderBy("idBolMMFert", true);
         for (BoletimMMFertBean boletimMMFertBeanBD : boletimMMList) {
-            dadosArrayList.add(dadosBolMMFert(boletimMMFertBeanBD));
+            dadosArrayList.add(dadosBoletimMMFert(boletimMMFertBeanBD));
         }
         boletimMMList.clear();
         return dadosArrayList;
     }
 
-    public void salvarBolAbertoMMFert(Long tipoEquip, Long os, Long ativ, Long statusCon, String activity){
+    public void salvarBoletimMMFertAberto(Long tipoEquip, Long os, Long ativ, Long statusCon, String activity){
         LogProcessoDAO.getInstance().insertLogProcesso("public void salvarBolAbertoMMFert(Long tipoEquip, Long os, Long ativ, Long statusCon, String activity){", activity);
-        if(!verBolAbertoMMFert()){
+        if(!verBoletimMMFertAberto()){
             String dthr = Tempo.getInstance().dthr();
             LogProcessoDAO.getInstance().insertLogProcesso("if(!verBolAbertoMMFert()){ + Data Inicial Boletim = " + dthr, activity);
             boletimMMFertBean.setTipoBolMMFert(tipoEquip);
@@ -93,9 +93,9 @@ public class BoletimMMFertDAO {
         }
     }
 
-    public void salvarBolFechadoMMFert(String activity) {
+    public void salvarBoletimMMFertFechado(String activity) {
 
-        List<BoletimMMFertBean> boletimMMList = bolAbertoMMFertList();
+        List<BoletimMMFertBean> boletimMMList = boletimMMFertAbertoList();
 
         LogProcessoDAO.getInstance().insertLogProcesso("public void salvarBolFechadoMMFert(String activity) {\n" +
                 "        List<BoletimMMFertBean> boletimMMList = bolAbertoMMFertList();", activity);
@@ -114,10 +114,10 @@ public class BoletimMMFertDAO {
 
     }
 
-    public void updateBolMMFertEnvio(Long idBol){
+    public void updateBoletimMMFertEnvio(Long idBol){
 
         ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqIdBol(idBol));
+        pesqArrayList.add(getPesqIdBoletim(idBol));
 
         BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
         List<BoletimMMFertBean> boletimMMFertList = boletimMMFertBean.get(pesqArrayList);
@@ -128,10 +128,10 @@ public class BoletimMMFertDAO {
 
     }
 
-    public void deleteBolMMFert(Long idBol){
+    public void deleteBoletimMMFert(Long idBol){
 
         ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqIdBol(idBol));
+        pesqArrayList.add(getPesqIdBoletim(idBol));
 
         BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
         List<BoletimMMFertBean> boletimMMFertList = boletimMMFertBean.get(pesqArrayList);
@@ -141,10 +141,10 @@ public class BoletimMMFertDAO {
 
     }
 
-    public ArrayList<BoletimMMFertBean> bolExcluirArrayList(){
+    public ArrayList<BoletimMMFertBean> boletimExcluirArrayList(){
 
         ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqBolEnviado());
+        pesqArrayList.add(getPesqBoletimEnviado());
 
         BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
         List<BoletimMMFertBean> boletimMMFertList =  boletimMMFertBean.get(pesqArrayList);
@@ -160,7 +160,7 @@ public class BoletimMMFertDAO {
 
     }
 
-    public ArrayList<Long> idBolArrayList(List<BoletimMMFertBean> boletimMMList){
+    public ArrayList<Long> idBoletimArrayList(List<BoletimMMFertBean> boletimMMList){
         ArrayList<Long> idBolList = new ArrayList<Long>();
         for (BoletimMMFertBean boletimMMFertBean : boletimMMList) {
             idBolList.add(boletimMMFertBean.getIdBolMMFert());
@@ -169,7 +169,7 @@ public class BoletimMMFertDAO {
         return idBolList;
     }
 
-    public ArrayList<BoletimMMFertBean> bolMMFertArrayList(String objeto) throws Exception {
+    public ArrayList<BoletimMMFertBean> boletimMMFertArrayList(String objeto) throws Exception {
 
         ArrayList<BoletimMMFertBean> boletimArrayList = new ArrayList<>();
 
@@ -190,20 +190,20 @@ public class BoletimMMFertDAO {
 
     }
 
-    public String dadosEnvioBolMMFertAberto(){
-        return dadosBolMMFert(bolAbertoMMFertList());
+    public String dadosEnvioBoletimMMFertAberto(){
+        return dadosBoletimMMFert(boletimMMFertAbertoList());
     }
 
-    public String dadosEnvioBolMMFertFechado(){
-        return dadosBolMMFert(bolFechadoMMFertList());
+    public String dadosEnvioBoletimMMFertFechado(){
+        return dadosBoletimMMFert(boletimMMFertFechadoList());
     }
 
-    private String dadosBolMMFert(BoletimMMFertBean boletimMMFert){
+    private String dadosBoletimMMFert(BoletimMMFertBean boletimMMFert){
         Gson gsonCabec = new Gson();
         return gsonCabec.toJsonTree(boletimMMFert, boletimMMFert.getClass()).toString();
     }
 
-    private String dadosBolMMFert(List<BoletimMMFertBean> boletimMMFertList){
+    private String dadosBoletimMMFert(List<BoletimMMFertBean> boletimMMFertList){
 
         JsonArray jsonArrayBoletim = new JsonArray();
 
@@ -220,7 +220,7 @@ public class BoletimMMFertDAO {
         return jsonBoletim.toString();
     }
 
-    public void updateBolAbertoMMFert(String objeto) throws Exception {
+    public void updateBoletimMMFertAberto(String objeto) throws Exception {
 
         JSONObject jObjBolMM = new JSONObject(objeto);
         JSONArray jsonArrayBolMM = jObjBolMM.getJSONArray("boletim");
@@ -242,7 +242,7 @@ public class BoletimMMFertDAO {
 
     }
 
-    private EspecificaPesquisa getPesqIdBol(Long idBol){
+    private EspecificaPesquisa getPesqIdBoletim(Long idBol){
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("idBolMMFert");
         pesquisa.setValor(idBol);
@@ -250,7 +250,7 @@ public class BoletimMMFertDAO {
         return pesquisa;
     }
 
-    private EspecificaPesquisa getPesqBolAberto(){
+    private EspecificaPesquisa getPesqBoletimAberto(){
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("statusBolMMFert");
         pesquisa.setValor(1L);
@@ -258,7 +258,7 @@ public class BoletimMMFertDAO {
         return pesquisa;
     }
 
-    private EspecificaPesquisa getPesqBolFechado(){
+    private EspecificaPesquisa getPesqBoletimFechado(){
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("statusBolMMFert");
         pesquisa.setValor(2L);
@@ -266,7 +266,7 @@ public class BoletimMMFertDAO {
         return pesquisa;
     }
 
-    private EspecificaPesquisa getPesqBolEnviado(){
+    private EspecificaPesquisa getPesqBoletimEnviado(){
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("statusBolMMFert");
         pesquisa.setValor(3L);

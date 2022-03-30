@@ -181,20 +181,17 @@ public class ConfigCTR {
 
             if (!result.contains("exceeded")) {
 
-                int pos1 = result.indexOf("#") + 1;
-                int pos2 = result.indexOf("_") + 1;
-
-                String objPrinc = result.substring(0, (pos1 - 1));
-                String objSeg = result.substring(pos1, (pos2 - 1));
+                String[] retorno = result.split("_");
 
                 Json json = new Json();
-                JSONArray jsonArray = json.jsonArray(objPrinc);
+                JSONArray jsonArray = json.jsonArray(retorno[0]);
 
                 if (jsonArray.length() > 0) {
 
                     EquipDAO equipDAO = new EquipDAO();
                     EquipBean equipBean = equipDAO.recDadosEquip(jsonArray);
-                    equipDAO.recDadosREquipAtiv(json.jsonArray(objSeg));
+                    equipDAO.recDadosREquipAtiv(json.jsonArray(retorno[1]));
+                    equipDAO.recDadosREquipPneu(json.jsonArray(retorno[2]));
 
                     setEquipConfig(equipBean);
 
@@ -233,15 +230,16 @@ public class ConfigCTR {
         configDAO.setNroOSConfig(nroOS);
     }
 
-    public boolean verROSAtiv(Long nroOS){
-        OSDAO osDAO = new OSDAO();
-        AtividadeDAO atividadeDAO = new AtividadeDAO();
-        return (osDAO.verOS(nroOS) && atividadeDAO.verROSAtiv(nroOS));
-    }
-
     public boolean verOS(Long nroOS){
         OSDAO osDAO = new OSDAO();
-        return osDAO.verOS(nroOS);
+        AtividadeDAO atividadeDAO = new AtividadeDAO();
+        boolean retorno = false;
+        if(osDAO.verOS(nroOS)){
+            if(atividadeDAO.verROSAtiv(osDAO.getOS(nroOS).getIdOS())){
+                retorno = true;
+            }
+        }
+        return retorno;
     }
 
     public OSBean getOS(){
@@ -264,18 +262,16 @@ public class ConfigCTR {
         try {
             if (!result.contains("exceeded")) {
 
-                int posicao = result.indexOf("#") + 1;
-                String objPrinc = result.substring(0, result.indexOf("#"));
-                String objSeg = result.substring(posicao);
+                String[] retorno = result.split("_");
 
                 Json json = new Json();
-                JSONArray jsonArray = json.jsonArray(objPrinc);
+                JSONArray jsonArray = json.jsonArray(retorno[0]);
 
                 if (jsonArray.length() > 0) {
 
                     OSDAO osDAO = new OSDAO();
                     osDAO.recDadosOS(jsonArray);
-                    osDAO.recDadosROSAtiv(json.jsonArray(objSeg));
+                    osDAO.recDadosROSAtiv(json.jsonArray(retorno[1]));
 
                     setStatusConConfig(1L);
                     VerifDadosServ.getInstance().pulaTela();
@@ -313,21 +309,14 @@ public class ConfigCTR {
 
             if (!result.contains("exceeded")) {
 
-                int pos1 = result.indexOf("_") + 1;
-                int pos2 = result.indexOf("|") + 1;
-                int pos3 = result.indexOf("#") + 1;
-
-                String objPrim = result.substring(0, (pos1 - 1));
-                String objSeg = result.substring(pos1, (pos2 - 1));
-                String objTerc = result.substring(pos2, (pos3 - 1));
-                String objQuart = result.substring(pos3);
+                String[] retorno = result.split("_");
 
                 Json json = new Json();
 
                 EquipDAO equipDAO = new EquipDAO();
-                equipDAO.recDadosREquipAtiv(json.jsonArray(objPrim));
+                equipDAO.recDadosREquipAtiv(json.jsonArray(retorno[0]));
 
-                JSONArray jsonArray = json.jsonArray(objSeg);
+                JSONArray jsonArray = json.jsonArray(retorno[2]);
 
                 if (jsonArray.length() > 0) {
                     OSDAO osDAO = new OSDAO();
@@ -335,10 +324,10 @@ public class ConfigCTR {
                 }
 
                 AtividadeDAO atividadeDAO = new AtividadeDAO();
-                atividadeDAO.recDadosAtiv(json.jsonArray(objTerc));
+                atividadeDAO.recDadosAtiv(json.jsonArray(retorno[3]));
 
                 RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
-                rFuncaoAtivParDAO.recDadosRFuncaoAtivPar(json.jsonArray(objQuart));
+                rFuncaoAtivParDAO.recDadosRFuncaoAtivPar(json.jsonArray(retorno[4]));
 
                 VerifDadosServ.getInstance().pulaTela();
 

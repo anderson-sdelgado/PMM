@@ -45,7 +45,7 @@ public class ApontMMFertBean extends Entidade {
     @DatabaseField
     private Long statusConApontMMFert;  //0 - OffLine; 1 - OnLine
     @DatabaseField
-    private Long statusApontMMFert;  //1 - Enviar; 2 - Enviado
+    private Long statusApontMMFert;  //1 - Aberto; 2 - Enviar; 3 - Enviado
 
     public ApontMMFertBean() {
     }

@@ -19,15 +19,18 @@ public class UrlsConexaoHttp {
     public static String FrenteBean = urlPrincipal + "frente.php" + put;
     public static String FuncBean = urlPrincipal + "funcionario.php" + put;
     public static String ItemCheckListBean = urlPrincipal + "itemchecklist.php" + put;
+    public static String ItemOSMecanBean = urlPrincipal + "itemosmecan.php" + put;
     public static String LeiraBean = urlPrincipal + "leira.php" + put;
     public static String MotoMecBean = urlPrincipal + "motomec.php" + put;
-    public static String OSBean = urlPrincipal + "osecm.php" + put;
+    public static String OSBean = urlPrincipal + "os.php" + put;
     public static String ParadaBean = urlPrincipal + "parada.php" + put;
+    public static String PneuBean = urlPrincipal + "pneu.php" + put;
     public static String PressaoBocalBean = urlPrincipal + "pressaobocal.php" + put;
     public static String ProdutoBean = urlPrincipal + "produto.php" + put;
     public static String PropriedadeBean = urlPrincipal + "propriedade.php" + put;
     public static String RAtivParadaBean = urlPrincipal + "rativparada.php" + put;
     public static String RFuncaoAtivParBean = urlPrincipal + "rfuncaoativpar.php" + put;
+    public static String ROSAtivBean = urlPrincipal + "rosativ.php" + put;
     public static String ServicoBean = urlPrincipal + "servico.php" + put;
     public static String TurnoBean = urlPrincipal + "turno.php" + put;
 
@@ -63,16 +66,11 @@ public class UrlsConexaoHttp {
         if (classe.equals("Equip")) {
             retorno = urlPrincipal + "equip.php" + put;
         } else if (classe.equals("OS")) {
-            if(PMMContext.aplic == 2){
-                retorno = urlPrincipal + "verosecm.php" + put;
-            }
-            else{
-                retorno = urlPrincipal + "os.php" + put;
-            }
+            retorno = urlPrincipal + "pesqos.php" + put;
         } else if (classe.equals("Atividade")) {
-            retorno = urlPrincipal + "atualativ.php" + put;
+            retorno = urlPrincipal + "pesqativ.php" + put;
         } else if (classe.equals("OSMecan")) {
-            retorno = urlPrincipal + "osmecan.php" + put;
+            retorno = urlPrincipal + "pesqosmecan.php" + put;
         } else if (classe.equals("AtualParada")) {
             retorno = urlPrincipal + "atualparada.php" + put;
         } else if (classe.equals("Atualiza")) {
@@ -86,7 +84,7 @@ public class UrlsConexaoHttp {
         } else if (classe.equals("CheckList")) {
             retorno = urlPrincipal + "atualchecklist.php" + put;
         } else if (classe.equals("Pneu")) {
-            retorno = urlPrincipal + "pneu.php" + put;
+            retorno = urlPrincipal + "pesqpneu.php" + put;
         } else if (classe.equals("Informativo")) {
             retorno = urlPrincipal + "informativo.php" + put;
         } else if(classe.equals("OrdCarreg")){

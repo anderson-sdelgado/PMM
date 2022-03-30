@@ -78,17 +78,15 @@ public class CheckListCTR {
 
             if (!result.contains("exceeded")) {
 
-                int pos1 = result.indexOf("_") + 1;
-                String objPrinc = result.substring(0, (pos1 - 1));
-                String objSeg = result.substring(pos1);
+                String[] retorno = result.split("_");
 
                 Json json = new Json();
 
                 EquipDAO equipDAO = new EquipDAO();
-                equipDAO.recDadosEquip(json.jsonArray(objPrinc));
+                equipDAO.recDadosEquip(json.jsonArray(retorno[0]));
 
                 ItemCheckListDAO itemCheckListDAO = new ItemCheckListDAO();
-                itemCheckListDAO.recDadosCheckList(json.jsonArray(objSeg));
+                itemCheckListDAO.recDadosCheckList(json.jsonArray(retorno[1]));
 
                 VerifDadosServ.getInstance().pulaTela();
 

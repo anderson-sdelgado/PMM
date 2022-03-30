@@ -32,8 +32,65 @@ public class TelaInicialActivity extends ActivityGeneric {
         customHandler.removeCallbacks(encerraAtualThread);
         if(pmmContext.getMotoMecFertCTR().verBolAberto()){
             LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verBolAberto()){", getLocalClassName());
-            if(pmmContext.getCheckListCTR().verCabecAberto()){
-                LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getCheckListCTR().verCabecAberto()){\n" +
+            if(!pmmContext.getCheckListCTR().verCabecAberto()){
+                LogProcessoDAO.getInstance().insertLogProcesso("if(!pmmContext.getCheckListCTR().verCabecAberto()){", getLocalClassName());
+                if(!pmmContext.getMotoMecFertCTR().verifBoletimPneuAberto()){
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(!pmmContext.getMotoMecFertCTR().verifBoletimPneuAberto()){\n" +
+                            "                pmmContext.getConfigCTR().setPosicaoTela(8L);", getLocalClassName());
+                    pmmContext.getConfigCTR().setPosicaoTela(8L);
+                    if (connectNetwork) {
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {", getLocalClassName());
+                        if (VerifDadosServ.getInstance().verifRecInformativo()) {
+                            LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().verifRecInformativo()\n" +
+                                    "pmmContext.getInformativoCTR().verifDadosInformativo", getLocalClassName());
+                            pmmContext.getInformativoCTR().verifDadosInformativo(getLocalClassName());
+                        } else {
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                    "                        LogProcessoDAO.getInstance().insert(\"} else {\", getLocalClassName());\n" +
+                                    "                        VerifDadosServ.status = 1;", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
+                            VerifDadosServ.status = 1;
+                        }
+                    }
+
+                    if(PMMContext.aplic == 1){
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
+                                "Intent it = new Intent(TelaInicialActivity.this, MenuPrincPMMActivity.class)", getLocalClassName());
+                        Intent it = new Intent(TelaInicialActivity.this, MenuPrincPMMActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                    else if(PMMContext.aplic == 2){
+                        LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){", getLocalClassName());
+                        if(pmmContext.getCecCTR().verPreCECAberto()){
+                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCecCTR().verPreCECAberto()\n" +
+                                    "clearPreCECAberto()", getLocalClassName());
+                            pmmContext.getCecCTR().clearPreCECAberto();
+                        }
+                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(TelaInicialActivity.this, MenuPrincECMActivity.class)", getLocalClassName());
+                        Intent it = new Intent(TelaInicialActivity.this, MenuPrincECMActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                    else if(PMMContext.aplic == 3){
+                        LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
+                                "Intent it = new Intent(TelaInicialActivity.this, MenuPrincPCOMPActivity.class)", getLocalClassName());
+                        Intent it = new Intent(TelaInicialActivity.this, MenuPrincPCOMPActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                }
+                else{
+                    LogProcessoDAO.getInstance().insertLogProcesso("}\n" +
+                            "        else{\n" +
+                            "Intent it = new Intent(TelaInicialActivity.this, ListaPosPneuActivity.class);", getLocalClassName());
+                    Intent it = new Intent(TelaInicialActivity.this, ListaPosPneuActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+            }
+            else {
+                LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                         "pmmContext.getCheckListCTR().clearRespCabecAberto();\n" +
                         "                pmmContext.getCheckListCTR().setPosCheckList(1);\n" +
                         "                Intent it = new Intent(TelaInicialActivity.this, ItemCheckListActivity.class);", getLocalClassName());
@@ -42,52 +99,6 @@ public class TelaInicialActivity extends ActivityGeneric {
                 Intent it = new Intent(TelaInicialActivity.this, ItemCheckListActivity.class);
                 startActivity(it);
                 finish();
-            }
-            else {
-                LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
-                        "                pmmContext.getConfigCTR().setPosicaoTela(8L);", getLocalClassName());
-                pmmContext.getConfigCTR().setPosicaoTela(8L);
-                if (connectNetwork) {
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {", getLocalClassName());
-                    if (VerifDadosServ.getInstance().verifRecInformativo()) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().verifRecInformativo()\n" +
-                                "pmmContext.getInformativoCTR().verifDadosInformativo", getLocalClassName());
-                        pmmContext.getInformativoCTR().verifDadosInformativo(getLocalClassName());
-                    } else {
-                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                "                        LogProcessoDAO.getInstance().insert(\"} else {\", getLocalClassName());\n" +
-                                "                        VerifDadosServ.status = 1;", getLocalClassName());
-                        LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
-                        VerifDadosServ.status = 1;
-                    }
-                }
-
-                if(PMMContext.aplic == 1){
-                    LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
-                            "Intent it = new Intent(TelaInicialActivity.this, MenuPrincPMMActivity.class)", getLocalClassName());
-                    Intent it = new Intent(TelaInicialActivity.this, MenuPrincPMMActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-                else if(PMMContext.aplic == 2){
-                    LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){", getLocalClassName());
-                    if(pmmContext.getCecCTR().verPreCECAberto()){
-                        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCecCTR().verPreCECAberto()\n" +
-                                "clearPreCECAberto()", getLocalClassName());
-                        pmmContext.getCecCTR().clearPreCECAberto();
-                    }
-                    LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(TelaInicialActivity.this, MenuPrincECMActivity.class)", getLocalClassName());
-                    Intent it = new Intent(TelaInicialActivity.this, MenuPrincECMActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-                else if(PMMContext.aplic == 3){
-                    LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
-                            "Intent it = new Intent(TelaInicialActivity.this, MenuPrincPCOMPActivity.class)", getLocalClassName());
-                    Intent it = new Intent(TelaInicialActivity.this, MenuPrincPCOMPActivity.class);
-                    startActivity(it);
-                    finish();
-                }
             }
         }
         else{

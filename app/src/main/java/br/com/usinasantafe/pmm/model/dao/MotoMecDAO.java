@@ -33,24 +33,6 @@ public class MotoMecDAO {
 
     }
 
-
-    public MotoMecBean getVoltaTrabalho(Long aplic, Long codFuncao){
-
-        MotoMecBean motoMecBean = new MotoMecBean();
-        ArrayList pesqArrayList = new ArrayList();
-
-        pesqArrayList.add(getPesqBeanAplic(aplic));
-        pesqArrayList.add(getPesqBeanInvisivel());
-        pesqArrayList.add(getPesqBeanFuncaoOper(codFuncao));
-
-        List motoMecList = motoMecBean.get(pesqArrayList);
-        motoMecBean = (MotoMecBean) motoMecList.get(0);
-        motoMecList.clear();
-
-        return motoMecBean;
-
-    }
-
     private EspecificaPesquisa getPesqBeanAplic(Long aplic){
         EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
         especificaPesquisa.setCampo("aplicOperMotoMec");
@@ -71,22 +53,6 @@ public class MotoMecDAO {
         EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
         especificaPesquisa.setCampo("tipoOperMotoMec");
         especificaPesquisa.setValor(2L);
-        especificaPesquisa.setTipo(1);
-        return especificaPesquisa;
-    }
-
-    private EspecificaPesquisa getPesqBeanInvisivel(){
-        EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
-        especificaPesquisa.setCampo("tipoOperMotoMec");
-        especificaPesquisa.setValor(0L);
-        especificaPesquisa.setTipo(1);
-        return especificaPesquisa;
-    }
-
-    private EspecificaPesquisa getPesqBeanFuncaoOper(Long codFuncao){
-        EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
-        especificaPesquisa.setCampo("codFuncaoOperMotoMec");
-        especificaPesquisa.setValor(codFuncao);
         especificaPesquisa.setTipo(1);
         return especificaPesquisa;
     }

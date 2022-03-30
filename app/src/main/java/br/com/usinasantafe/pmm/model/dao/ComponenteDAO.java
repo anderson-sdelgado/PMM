@@ -12,7 +12,7 @@ public class ComponenteDAO {
     public ComponenteBean getComponente(Long idCompItemOS){
 
         ComponenteBean componenteBean = new ComponenteBean();
-        List componenteList = componenteBean.get("idComponente", idCompItemOS);
+        List<ComponenteBean> componenteList = componenteBean.get("idComponente", idCompItemOS);
         if(componenteList.size() > 0){
             componenteBean = (ComponenteBean) componenteList.get(0);
         }

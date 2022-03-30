@@ -33,10 +33,30 @@ public class RFuncaoAtivParDAO {
 
     }
 
+    public List<RFuncaoAtivParBean> getListFuncaoParada(Long idparada){
+
+        RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
+        ArrayList<EspecificaPesquisa> pesqList = new ArrayList();
+
+        EspecificaPesquisa pesquisa1 = new EspecificaPesquisa();
+        pesquisa1.setCampo("idAtivPar");
+        pesquisa1.setValor(idparada);
+        pesquisa1.setTipo(1);
+        pesqList.add(pesquisa1);
+
+        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
+        pesquisa2.setCampo("tipoFuncao");
+        pesquisa2.setValor(2L);
+        pesquisa2.setTipo(1);
+        pesqList.add(pesquisa2);
+
+        return rFuncaoAtivParBean.get(pesqList);
+    }
+
     public List<RFuncaoAtivParBean> getListFuncaoAtividade(Long idAtiv){
 
         RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
-        ArrayList pesqList = new ArrayList();
+        ArrayList<EspecificaPesquisa> pesqList = new ArrayList();
 
         EspecificaPesquisa pesquisa1 = new EspecificaPesquisa();
         pesquisa1.setCampo("idAtivPar");
@@ -56,7 +76,7 @@ public class RFuncaoAtivParDAO {
     public Long idParadaCheckList(){
 
         RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
-        ArrayList pesqList = new ArrayList();
+        ArrayList<EspecificaPesquisa> pesqList = new ArrayList();
 
         EspecificaPesquisa pesq1 = new EspecificaPesquisa();
         pesq1.setCampo("codFuncao");
@@ -70,8 +90,8 @@ public class RFuncaoAtivParDAO {
         pesq2.setTipo(1);
         pesqList.add(pesq2);
 
-        List rFuncaoAtivParList =   rFuncaoAtivParBean.get(pesqList);
-        rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtivParList.get(0);
+        List<RFuncaoAtivParBean> rFuncaoAtivParList = rFuncaoAtivParBean.get(pesqList);
+        rFuncaoAtivParBean = rFuncaoAtivParList.get(0);
         rFuncaoAtivParList.clear();
 
         return rFuncaoAtivParBean.getIdAtivPar();
@@ -81,7 +101,7 @@ public class RFuncaoAtivParDAO {
     public Long idParadaImplemento(){
 
         RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
-        ArrayList pesqList = new ArrayList();
+        ArrayList<EspecificaPesquisa> pesqList = new ArrayList();
 
         EspecificaPesquisa pesq1 = new EspecificaPesquisa();
         pesq1.setCampo("codFuncao");
@@ -95,8 +115,8 @@ public class RFuncaoAtivParDAO {
         pesq2.setTipo(1);
         pesqList.add(pesq2);
 
-        List rFuncaoAtivParList =   rFuncaoAtivParBean.get(pesqList);
-        rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtivParList.get(0);
+        List<RFuncaoAtivParBean> rFuncaoAtivParList = rFuncaoAtivParBean.get(pesqList);
+        rFuncaoAtivParBean = rFuncaoAtivParList.get(0);
         rFuncaoAtivParList.clear();
 
         return rFuncaoAtivParBean.getIdAtivPar();
@@ -106,7 +126,7 @@ public class RFuncaoAtivParDAO {
     public Long idParadaTrocaMotorista(){
 
         RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
-        ArrayList pesqList = new ArrayList();
+        ArrayList<EspecificaPesquisa> pesqList = new ArrayList();
 
         EspecificaPesquisa pesq1 = new EspecificaPesquisa();
         pesq1.setCampo("codFuncao");

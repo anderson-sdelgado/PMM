@@ -44,25 +44,23 @@ public class InformativoCTR {
         VerifDadosServ.getInstance().verifDadosInformativo(String.valueOf(motoMecFertCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert()), "Informativo", activity);
     }
 
-    public void receberVerifInformativo(String retorno){
+    public void receberVerifInformativo(String result){
 
         ConfigCTR configCTR = new ConfigCTR();
 
         try {
 
-            if (!retorno.contains("exceeded")) {
+            if (!result.contains("exceeded")) {
 
-                int pos1 = retorno.trim().indexOf("=") + 1;
-                int pos2 = retorno.trim().indexOf("_") + 1;
-                int tipo = Integer.valueOf(retorno.trim().substring(pos1, (pos2 - 1)));
+                String[] retorno = result.split("_");
 
-                String dados = retorno.substring(pos2);
+                int tipo = Integer.parseInt(retorno[0]);
 
                 if(tipo == 1){
-                    recPlantio(dados);
+                    recPlantio(retorno[1]);
                 }
                 else if(tipo == 3){
-                    recColheita(dados);
+                    recColheita(retorno[1]);
                 }
                 else{
                     if(configCTR.getVerRecInformativo() == 0L) {

@@ -12,12 +12,20 @@ public class ParadaDAO {
     public ParadaDAO() {
     }
 
-    public List getListParada(Long idAtiv){
+    public ParadaBean getParada(Long idParada){
+        ParadaBean paradaBean = new ParadaBean();
+        List<ParadaBean> paradaList = paradaBean.get("idParada", idParada);
+        paradaBean = paradaList.get(0);
+        paradaList.clear();
+        return paradaBean;
+    }
+
+    public List<ParadaBean> getListParada(Long idAtiv){
         RAtivParadaBean rAtivParadaBean = new RAtivParadaBean();
-        List rAtivParadaList = rAtivParadaBean.get("idAtiv", idAtiv);
+        List<RAtivParadaBean> rAtivParadaList = rAtivParadaBean.get("idAtiv", idAtiv);
         ArrayList<Long> rLista = new ArrayList<Long>();
         for (int i = 0; i < rAtivParadaList.size(); i++) {
-            rAtivParadaBean = (RAtivParadaBean) rAtivParadaList.get(i);
+            rAtivParadaBean = rAtivParadaList.get(i);
             rLista.add(rAtivParadaBean.getIdParada());
         }
         rAtivParadaList.clear();
@@ -27,8 +35,8 @@ public class ParadaDAO {
 
     public ParadaBean getParadaBean(String paradaString){
         ParadaBean paradaBean = new ParadaBean();
-        List paradaList = paradaBean.get("codParada", paradaString.substring(0, paradaString.indexOf('-')).trim());
-        paradaBean = (ParadaBean) paradaList.get(0);
+        List<ParadaBean> paradaList = paradaBean.get("codParada", paradaString.substring(0, paradaString.indexOf('-')).trim());
+        paradaBean = paradaList.get(0);
         paradaList.clear();
         return paradaBean;
     }

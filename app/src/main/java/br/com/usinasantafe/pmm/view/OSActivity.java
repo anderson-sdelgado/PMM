@@ -24,7 +24,6 @@ public class OSActivity extends ActivityGeneric {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_os);
 
         pmmContext = (PMMContext) getApplication();
@@ -61,33 +60,31 @@ public class OSActivity extends ActivityGeneric {
                     Long nroOS = Long.parseLong(editTextPadrao.getText().toString());
                     pmmContext.getConfigCTR().setNroOSConfig(nroOS);
 
-                    if(PMMContext.aplic == 2) {
+                    LogProcessoDAO.getInstance().insertLogProcesso("else {", getLocalClassName());
+                    if (pmmContext.getConfigCTR().verOS(nroOS)) {
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2) {", getLocalClassName());
-
-                        if (pmmContext.getConfigCTR().verOS(nroOS)) {
-
-                            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().verOS(nroOS)) {\n" +
-                                    "if (connectNetwork) {\n" +
-                                    "                                pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
-                                    "                            }\n" +
-                                    "                            else{\n" +
-                                    "                                pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
-                                    "                            }", getLocalClassName());
-                            if (connectNetwork) {
-                                pmmContext.getConfigCTR().setStatusConConfig(1L);
-                            }
-                            else{
-                                pmmContext.getConfigCTR().setStatusConConfig(0L);
-                            }
-
-                            LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
-                            Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
-                            startActivity(it);
-                            finish();
-
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().verROSAtiv(nroOS)) {\n" +
+                                "if (connectNetwork) {\n" +
+                                "                                pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
+                                "                            }\n" +
+                                "                            else{\n" +
+                                "                                pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
+                                "                            }", getLocalClassName());
+                        if (connectNetwork) {
+                            pmmContext.getConfigCTR().setStatusConConfig(1L);
                         }
-                        else {
+                        else{
+                            pmmContext.getConfigCTR().setStatusConConfig(0L);
+                        }
+
+                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
+                        Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
+                        startActivity(it);
+                        finish();
+
+                    } else {
+
+                        if(PMMContext.aplic == 2) {
 
                             LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                                     "AlertDialog.Builder alerta = new AlertDialog.Builder(OSActivity.this);\n" +
@@ -110,33 +107,7 @@ public class OSActivity extends ActivityGeneric {
                             alerta.show();
 
                         }
-
-                    }
-                    else {
-
-                        LogProcessoDAO.getInstance().insertLogProcesso("else {", getLocalClassName());
-                        if (pmmContext.getConfigCTR().verROSAtiv(nroOS)) {
-
-                            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().verROSAtiv(nroOS)) {\n" +
-                                    "if (connectNetwork) {\n" +
-                                    "                                pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
-                                    "                            }\n" +
-                                    "                            else{\n" +
-                                    "                                pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
-                                    "                            }", getLocalClassName());
-                            if (connectNetwork) {
-                                pmmContext.getConfigCTR().setStatusConConfig(1L);
-                            }
-                            else{
-                                pmmContext.getConfigCTR().setStatusConConfig(0L);
-                            }
-
-                            LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
-                            Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
-                            startActivity(it);
-                            finish();
-
-                        } else {
+                        else {
 
                             LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
                             if (connectNetwork) {

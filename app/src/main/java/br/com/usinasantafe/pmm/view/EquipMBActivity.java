@@ -132,7 +132,7 @@ public class EquipMBActivity extends ActivityGeneric {
                         LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verMotoBomba(motoBomba)) {\n" +
                                 "                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().setIdEquipBombaBolMMFert(pmmContext.getMotoMecFertCTR().getEquipSeg(motoBomba).getIdEquip());\n" +
                                 "                        salvarBoletimAberto();", getLocalClassName());
-                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().setIdEquipBombaBolMMFert(pmmContext.getMotoMecFertCTR().getEquipSeg(motoBomba).getIdEquip());
+                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().setIdEquipBombaBolMMFert(pmmContext.getMotoMecFertCTR().getEquipSeg(motoBomba).getIdEquip());
                         salvarBoletimAberto();
 
                     } else {
@@ -185,7 +185,7 @@ public class EquipMBActivity extends ActivityGeneric {
         LogProcessoDAO.getInstance().insertLogProcesso("public void salvarBoletimAberto() {\n" +
                 "        pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());", getLocalClassName());
         pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());
-        if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getIdTurnoBolMMFert())){
+        if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().getIdTurnoBolMMFert())){
             LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getIdTurnoBolMMFert())){\n" +
                     "            pmmContext.getMotoMecFertCTR().inserirParadaCheckList(getLocalClassName());\n" +
                     "            pmmContext.getCheckListCTR().setPosCheckList(1);\n" +

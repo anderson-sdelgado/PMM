@@ -416,10 +416,8 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                     } else {
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("} else if {\n" +
-                                " pmmContext.getCecCTR().setAtivOS(" + pmmContext.getCecCTR().getOS().getIdAtivOS() + ");", getLocalClassName());
-                        pmmContext.getCecCTR().setAtivOS(pmmContext.getCecCTR().getOS().getIdAtivOS());
-                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(ListaAtividadeActivity.this, EquipActivity.class);", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                "                        Intent it = new Intent(ListaAtividadeActivity.this, EquipActivity.class);", getLocalClassName());
                         Intent it = new Intent(ListaAtividadeActivity.this, EquipActivity.class);
                         startActivity(it);
                         finish();

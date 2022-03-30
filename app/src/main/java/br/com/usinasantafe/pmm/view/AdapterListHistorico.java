@@ -78,18 +78,15 @@ public class AdapterListHistorico extends BaseAdapter {
         return view;
     }
 
-    public void descrApont(Long parada, Long ativ){
-        if(parada == 0) {
-            AtividadeBean atividadeBean = new AtividadeBean();
-            List atividadeList = atividadeBean.get("idAtiv", ativ);
-            atividadeBean = (AtividadeBean) atividadeList.get(0);
+    public void descrApont(Long idParada, Long idAtiv){
+        MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
+        if(idParada == 0) {
+            AtividadeBean atividadeBean = motoMecFertCTR.getAtividade(idAtiv);
             textViewHistApont.setText("ATIVIDADE: " + atividadeBean.getCodAtiv() + " - " + atividadeBean.getDescrAtiv());
             textViewHistApont.setTextColor(Color.BLUE);
         }
         else{
-            ParadaBean paradaBean = new ParadaBean();
-            List paradaList = paradaBean.get("idParada", parada);
-            paradaBean = (ParadaBean) paradaList.get(0);
+            ParadaBean paradaBean = motoMecFertCTR.getParada(idParada);
             textViewHistApont.setText("PARADA: " + paradaBean.getCodParada() + " - " + paradaBean.getDescrParada());
             textViewHistApont.setTextColor(Color.RED);
         }

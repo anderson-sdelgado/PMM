@@ -83,9 +83,7 @@ public class AdapterListChoice extends BaseAdapter {
     }
 
     private class ViewHolder {
-
         protected CheckBox checkBox;
-
     }
 
 

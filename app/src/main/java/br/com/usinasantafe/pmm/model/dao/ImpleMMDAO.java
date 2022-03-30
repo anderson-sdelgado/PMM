@@ -87,9 +87,8 @@ public class ImpleMMDAO {
         ApontImpleMMBean apontImpleMMBean = new ApontImpleMMBean();
         List<ApontImpleMMBean> implementoList = apontImpleMMBean.in("idApontMMFert", idApontArrayList);
 
-        for (int l = 0; l < implementoList.size(); l++) {
-            apontImpleMMBean = (ApontImpleMMBean) implementoList.get(l);
-            apontImpleMMBean.delete();
+        for (ApontImpleMMBean apontImpleMMBeanBD : implementoList) {
+            apontImpleMMBeanBD.delete();
         }
 
         idApontArrayList.clear();

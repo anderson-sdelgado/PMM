@@ -74,15 +74,13 @@ public class CECCTR {
 
             if (!result.contains("exceeded")) {
 
-                int pos1 = result.indexOf("_") + 1;
-                String precec = result.substring(0, (pos1 - 1));
-                String cec = result.substring(pos1);
+                String[] retorno = result.split("_");
 
                 PreCECDAO preCECDAO = new PreCECDAO();
-                preCECDAO.atualPreCEC(precec);
+                preCECDAO.atualPreCEC(retorno[0]);
 
                 CECDAO cecDAO = new CECDAO();
-                cecDAO.recDadosCEC(cec);
+                cecDAO.recDadosCEC(retorno[1]);
 
                 ConfigCTR configCTR = new ConfigCTR();
                 configCTR.setStatusRetVerif(0L);
@@ -157,11 +155,6 @@ public class CECCTR {
         preCECDAO.setDataChegCampo();
     }
 
-    public void setAtivOS(Long ativOS){
-        PreCECDAO preCECDAO = new PreCECDAO();
-        preCECDAO.setAtivOS(ativOS);
-    }
-
     public void setLib(Long libCam){
         PreCECDAO preCECDAO = new PreCECDAO();
         CarretaDAO carretaDAO = new CarretaDAO();
@@ -186,7 +179,7 @@ public class CECCTR {
     public OSBean getOS(){
         OSDAO osDAO = new OSDAO();
         ConfigCTR configCTR = new ConfigCTR();
-        return osDAO.getOS(configCTR.getConfig().getIdAtivConfig(), configCTR.getConfig().getNroOSConfig());
+        return osDAO.getOS(configCTR.getConfig().getNroOSConfig());
     }
 
     public boolean hasPreCEC(){

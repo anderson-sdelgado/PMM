@@ -26,7 +26,6 @@ public class PreCECDAO {
         preCECBean.setDataSaidaUsina(Tempo.getInstance().dthr());
         preCECBean.setDataChegCampo("");
         preCECBean.setDataSaidaCampo("");
-        preCECBean.setAtivOS(0L);
         preCECBean.setCam(0L);
         preCECBean.setLibCam(0L);
         preCECBean.setCarr1(0L);
@@ -43,7 +42,6 @@ public class PreCECDAO {
 
     public void clearPreCECAberto(){
         PreCECBean preCECBean = getPreCECAberto();
-        preCECBean.setAtivOS(0L);
         preCECBean.setCam(0L);
         preCECBean.setLibCam(0L);
         preCECBean.setCarr1(0L);
@@ -78,15 +76,12 @@ public class PreCECDAO {
 
     public String dadosEnvioPreCEC(){
 
-        List preCECFechadoList = preCECListFechado();
+        List<PreCECBean> preCECFechadoList = preCECListFechado();
         JsonArray preCECJsonArray = new JsonArray();
 
-        for (int i = 0; i < preCECFechadoList.size(); i++) {
-
-            PreCECBean preCECBean = (PreCECBean) preCECFechadoList.get(i);
+        for (PreCECBean preCECBean : preCECFechadoList) {
             Gson gson = new Gson();
             preCECJsonArray.add(gson.toJsonTree(preCECBean, preCECBean.getClass()));
-
         }
 
         preCECFechadoList.clear();
@@ -171,12 +166,6 @@ public class PreCECDAO {
         preCECBean.update();
     }
 
-    public void setAtivOS(Long ativOS){
-        PreCECBean preCECBean = getPreCECAberto();
-        preCECBean.setAtivOS(ativOS);
-        preCECBean.update();
-    }
-
     public void setLib(Long lib, int qtde){
         PreCECBean preCECBean = getPreCECAberto();
         if(qtde == 0){
@@ -212,8 +201,8 @@ public class PreCECDAO {
     ///////////////////////////////////GET DADOS/////////////////////////////////
 
     public PreCECBean getPreCECAberto(){
-        List preCECList = preCECListAberto();
-        PreCECBean preCECBean = (PreCECBean) preCECList.get(0);
+        List<PreCECBean> preCECList = preCECListAberto();
+        PreCECBean preCECBean = preCECList.get(0);
         preCECList.clear();
         return preCECBean;
     }

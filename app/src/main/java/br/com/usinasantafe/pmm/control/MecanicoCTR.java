@@ -17,7 +17,7 @@ import br.com.usinasantafe.pmm.model.dao.ComponenteDAO;
 import br.com.usinasantafe.pmm.model.dao.ItemOSMecanDAO;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
-import br.com.usinasantafe.pmm.model.dao.OSMecanDAO;
+import br.com.usinasantafe.pmm.model.dao.OSDAO;
 import br.com.usinasantafe.pmm.model.dao.ServicoDAO;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
@@ -43,7 +43,7 @@ public class MecanicoCTR {
                 "        ApontMecanDAO apontMecanDAO = new ApontMecanDAO();\n" +
                 "        apontMecanDAO.salvarApontMecan(seqItemOS, boletimDAO.getBolAbertoMMFert().getIdBolMMFert());", activity);
         BoletimMMFertDAO boletimDAO = new BoletimMMFertDAO();
-        apontMecanDAO.salvarApontMecan(seqItemOS, boletimDAO.getBolAbertoMMFert().getIdBolMMFert());
+        apontMecanDAO.salvarApontMecan(seqItemOS, boletimDAO.getBoletimMMFertAberto().getIdBolMMFert());
 
         LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().envioDados(activity);", activity);
         EnvioDadosServ.getInstance().envioDados(activity);
@@ -52,8 +52,8 @@ public class MecanicoCTR {
 
     public List<ItemOSMecanBean> itemOSMecanList(){
         ItemOSMecanDAO itemOSMecanDAO = new ItemOSMecanDAO();
-        OSMecanDAO osMecanDAO = new OSMecanDAO();
-        return itemOSMecanDAO.itemOSMecanList(osMecanDAO.getOSMecan(apontMecanDAO.getApontMecanBean().getOsApontMecan()).getIdOS());
+        OSDAO osDAO = new OSDAO();
+        return itemOSMecanDAO.itemOSMecanList(osDAO.getOS(apontMecanDAO.getApontMecanBean().getOsApontMecan()).getIdOS());
     }
 
     public ServicoBean getServico(Long idServItemOS){
@@ -66,20 +66,22 @@ public class MecanicoCTR {
         return componenteDAO.getComponente(idCompItemOS);
     }
 
-    public void verOSMecan(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
-        OSMecanDAO osMecanDAO = new OSMecanDAO();
-        osMecanDAO.verOSMecan(dado, telaAtual, telaProx, progressDialog, activity);
+    public boolean verOSMecanBD(Long nroOS){
+        ConfigCTR configCTR = new ConfigCTR();
+        OSDAO osDAO = new OSDAO();
+        return osDAO.verOSMecan(nroOS, configCTR.getEquip().getIdEquip());
     }
 
-    public boolean verOSMecanBD(Long nroOS){
-        OSMecanDAO osMecanDAO = new OSMecanDAO();
-        return osMecanDAO.verOSMecanBD(nroOS);
+    public void verOSMecan(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
+        ConfigCTR configCTR = new ConfigCTR();
+        OSDAO osDAO = new OSDAO();
+        osDAO.verOSMecan(dado + "_" + configCTR.getEquip().getIdEquip(), telaAtual, telaProx, progressDialog);
     }
 
     public boolean verApontMecanAberto(){
         BoletimMMFertDAO boletimDAO = new BoletimMMFertDAO();
         ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
-        return apontMecanDAO.verApontAberto(boletimDAO.getBolAbertoMMFert().getIdBolMMFert());
+        return apontMecanDAO.verApontAberto(boletimDAO.getBoletimMMFertAberto().getIdBolMMFert());
     }
 
     public Boolean verApontMecanAbertoNEnviado() {
@@ -100,7 +102,7 @@ public class MecanicoCTR {
                 "", activity);
         BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
         ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
-        apontMecanDAO.finalizarApont(boletimMMFertDAO.getBolAbertoMMFert().getIdBolMMFert());
+        apontMecanDAO.finalizarApont(boletimMMFertDAO.getBoletimMMFertAberto().getIdBolMMFert());
 
         LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().envioDados(activity);", activity);
         EnvioDadosServ.getInstance().envioDados(activity);
@@ -112,21 +114,20 @@ public class MecanicoCTR {
         try {
             if (!result.contains("exceeded")) {
 
-                int posicao = result.indexOf("#") + 1;
-                String objPrinc = result.substring(0, result.indexOf("#"));
-                String objSeg = result.substring(posicao);
+                String[] retorno = result.split("_");
 
                 Json json = new Json();
-                JSONArray jsonArray = json.jsonArray(objPrinc);
+                JSONArray jsonArray = json.jsonArray(retorno[0]);
 
                 if (jsonArray.length() > 0) {
 
-                    OSMecanDAO osMecanDAO = new OSMecanDAO();
-                    osMecanDAO.recDadosOSMecan(jsonArray);
+                    ConfigCTR configCTR = new ConfigCTR();
+                    OSDAO osDAO = new OSDAO();
+                    osDAO.recDadosOSMecan(jsonArray, configCTR.getEquip().getIdEquip());
 
-                    jsonArray = json.jsonArray(objSeg);
+                    jsonArray = json.jsonArray(retorno[1]);
                     ItemOSMecanDAO itemOSMecanDAO = new ItemOSMecanDAO();
-                    itemOSMecanDAO.recDadosItemOS(jsonArray);
+                    itemOSMecanDAO.recDadosItemOSMecan(jsonArray);
 
                     VerifDadosServ.getInstance().pulaTela();
 

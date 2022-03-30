@@ -45,9 +45,9 @@ public class ItemCheckListDAO {
         return itemCheckListBean.get("idCheckList", idChecklist).size();
     }
 
-    public List getItemList(EquipBean equipBean){
+    public List<ItemCheckListBean> getItemList(EquipBean equipBean){
         ItemCheckListBean itemCheckListBean = new ItemCheckListBean();
-        List itemCheckListList = itemCheckListBean.getAndOrderBy("idCheckList", equipBean.getIdCheckList(), "idItemCheckList", true);
+        List<ItemCheckListBean> itemCheckListList = itemCheckListBean.getAndOrderBy("idCheckList", equipBean.getIdCheckList(), "idItemCheckList", true);
         return itemCheckListList;
     }
 

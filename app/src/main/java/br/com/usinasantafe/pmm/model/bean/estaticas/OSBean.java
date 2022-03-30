@@ -19,9 +19,7 @@ public class OSBean extends Entidade {
 
 	private static final long serialVersionUID = 1L;
 
-	@DatabaseField(generatedId=true)
-	private Long idRegistro;
-	@DatabaseField
+	@DatabaseField(id=true)
 	private Long idOS;
 	@DatabaseField
     private Long nroOS;
@@ -30,30 +28,14 @@ public class OSBean extends Entidade {
 	@DatabaseField
 	private Long idProprAgr;
 	@DatabaseField
-	private String descrProprAgr;
-	@DatabaseField
 	private Double areaProgrOS;
-	@DatabaseField
-	private String dtInicProgr;
-	@DatabaseField
-	private String dtFimProgr;
 	@DatabaseField
 	private Long tipoOS;
 	@DatabaseField
-	private Long idAtiv;
-	@DatabaseField
-	private Long idAtivOS;
+	private Long idEquip;
 
     public OSBean() {
     }
-
-	public Long getIdRegistro() {
-		return idRegistro;
-	}
-
-	public void setIdRegistro(Long idRegistro) {
-		this.idRegistro = idRegistro;
-	}
 
 	public Long getIdOS() {
 		return idOS;
@@ -87,36 +69,12 @@ public class OSBean extends Entidade {
 		this.idProprAgr = idProprAgr;
 	}
 
-	public String getDescrProprAgr() {
-		return descrProprAgr;
-	}
-
-	public void setDescrProprAgr(String descrProprAgr) {
-		this.descrProprAgr = descrProprAgr;
-	}
-
 	public Double getAreaProgrOS() {
 		return areaProgrOS;
 	}
 
 	public void setAreaProgrOS(Double areaProgrOS) {
 		this.areaProgrOS = areaProgrOS;
-	}
-
-	public String getDtInicProgr() {
-		return dtInicProgr;
-	}
-
-	public void setDtInicProgr(String dtInicProgr) {
-		this.dtInicProgr = dtInicProgr;
-	}
-
-	public String getDtFimProgr() {
-		return dtFimProgr;
-	}
-
-	public void setDtFimProgr(String dtFimProgr) {
-		this.dtFimProgr = dtFimProgr;
 	}
 
 	public Long getTipoOS() {
@@ -127,19 +85,11 @@ public class OSBean extends Entidade {
 		this.tipoOS = tipoOS;
 	}
 
-	public Long getIdAtiv() {
-		return idAtiv;
+	public Long getIdEquip() {
+		return idEquip;
 	}
 
-	public void setIdAtiv(Long idAtiv) {
-		this.idAtiv = idAtiv;
-	}
-
-	public Long getIdAtivOS() {
-		return idAtivOS;
-	}
-
-	public void setIdAtivOS(Long idAtivOS) {
-		this.idAtivOS = idAtivOS;
+	public void setIdEquip(Long idEquip) {
+		this.idEquip = idEquip;
 	}
 }

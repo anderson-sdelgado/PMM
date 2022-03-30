@@ -55,8 +55,7 @@ public class ApontMecanDAO {
 
         List<ApontMecanBean> apontMecanList = apontMecanList(idApontMecanArrayList);
 
-        for (int i = 0; i < apontMecanList.size(); i++) {
-            ApontMecanBean apontMecanBean = apontMecanList.get(i);
+        for (ApontMecanBean apontMecanBean : apontMecanList) {
             if(apontMecanBean.getStatusApontMecan() == 1L){
                 apontMecanBean.setStatusApontMecan(2L);
             }

@@ -55,8 +55,7 @@ public class LeiraDAO {
 
         List<MovLeiraBean> movLeiraList = movLeiraList(idMovLeiraArrayList);
 
-        for (int i = 0; i < movLeiraList.size(); i++) {
-            MovLeiraBean movLeiraBean = movLeiraList.get(i);
+        for (MovLeiraBean movLeiraBean : movLeiraList) {
             movLeiraBean.setStatusMovLeira(2L);
             movLeiraBean.update();
         }
@@ -70,8 +69,7 @@ public class LeiraDAO {
 
         List<MovLeiraBean> movLeiraList = movLeiraList(idMovLeiraArrayList);
 
-        for (int i = 0; i < movLeiraList.size(); i++) {
-            MovLeiraBean movLeiraBean = movLeiraList.get(i);
+        for (MovLeiraBean movLeiraBean :  movLeiraList) {
             movLeiraBean.delete();
         }
 

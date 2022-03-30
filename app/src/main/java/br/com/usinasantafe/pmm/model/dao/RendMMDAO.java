@@ -116,9 +116,8 @@ public class RendMMDAO {
         RendMMBean rendMMBean = new RendMMBean();
         List<RendMMBean> rendList = rendMMBean.get(pesquisaArrayList);
 
-        for (int j = 0; j < rendList.size(); j++) {
-            rendMMBean = rendList.get(j);
-            rendMMBean.delete();
+        for (RendMMBean rendMMBeanBD : rendList) {
+            rendMMBeanBD.delete();
         }
 
         rendList.clear();

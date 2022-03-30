@@ -19,7 +19,7 @@ public class ApontMMFertDAO {
     public ApontMMFertDAO() {
     }
 
-    public void salvarApont(ApontMMFertBean apontMMFertBean, int tipo){
+    public void salvarApont(ApontMMFertBean apontMMFertBean, int tipo, Long status){
 
         if(tipo == 1){
             List<ApontMMFertBean> apontMMFertList = apontMMFertList(apontMMFertBean.getIdBolMMFert());
@@ -32,9 +32,15 @@ public class ApontMMFertDAO {
             }
         }
 
-        apontMMFertBean.setStatusApontMMFert(1L);
+        apontMMFertBean.setStatusApontMMFert(status);
         apontMMFertBean.insert();
 
+    }
+
+    public void fecharApont(Long idBol){
+        ApontMMFertBean apontMMFertBean = getApontAberto(idBol);
+        apontMMFertBean.setStatusApontMMFert(2L);
+        apontMMFertBean.update();
     }
 
     public boolean verifBackupApont(Long idBol, Long idMotoMec) {
@@ -102,9 +108,28 @@ public class ApontMMFertDAO {
         return apontMMFertBean;
     }
 
-    public List<ApontMMFertBean> apontMMFertList(Long idBol){
+    public ApontMMFertBean getApontAberto(Long idBol){
+        List<ApontMMFertBean> apontaMMFertList = apontAbertoList(idBol);
+        ApontMMFertBean apontMMFertBean = apontaMMFertList.get(0);
+        apontaMMFertList.clear();
+        return apontMMFertBean;
+    }
+
+    public List<ApontMMFertBean> apontAbertoList(Long idBol){
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqIdBolApont(idBol));
+        pesqArrayList.add(getPesqStatusAbertoApont());
+
         ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
-        return apontMMFertBean.getAndOrderBy("idBolMMFert", idBol, "idApontMMFert", true);
+        return apontMMFertBean.get(pesqArrayList);
+    }
+
+    public List<ApontMMFertBean> apontMMFertList(Long idBol){
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqIdBolApont(idBol));
+
+        ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
+        return apontMMFertBean.getAndOrderBy(pesqArrayList, "idApontMMFert", true);
     }
 
     public List<ApontMMFertBean> apontMMFertList(ArrayList<Long> idApontArrayList){
@@ -113,8 +138,10 @@ public class ApontMMFertDAO {
     }
 
     public List<ApontMMFertBean> apontEnvioList() {
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqStatusEnvioApont());
         ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
-        return apontMMFertBean.get("statusApontMMFert", 1L);
+        return apontMMFertBean.get(pesqArrayList);
     }
 
     private List<ApontMMFertBean> apontMMFertList(String dthr){
@@ -194,7 +221,7 @@ public class ApontMMFertDAO {
     public List<ApontMMFertBean> apontEnvioList(ArrayList<Long> idBolList){
 
         ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqStatusApont());
+        pesqArrayList.add(getPesqStatusEnvioApont());
 
         ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
         return apontMMFertBean.inAndGetAndOrderBy("idBolMMFert", idBolList, pesqArrayList, "idApontMMFert", true);
@@ -257,9 +284,8 @@ public class ApontMMFertDAO {
 
         List<ApontMMFertBean> apontMMList = apontMMFertList(idApontArrayList);
 
-        for (int i = 0; i < apontMMList.size(); i++) {
-            ApontMMFertBean apontMMFertBean = apontMMList.get(i);
-            apontMMFertBean.setStatusApontMMFert(2L);
+        for (ApontMMFertBean apontMMFertBean : apontMMList) {
+            apontMMFertBean.setStatusApontMMFert(3L);
             apontMMFertBean.update();
         }
 
@@ -272,8 +298,7 @@ public class ApontMMFertDAO {
 
         List<ApontMMFertBean> apontMMFertList = apontMMFertList(idApontArrayList);
 
-        for (int i = 0; i < apontMMFertList.size(); i++) {
-            ApontMMFertBean apontMMFertBean = apontMMFertList.get(i);
+        for (ApontMMFertBean apontMMFertBean : apontMMFertList) {
             apontMMFertBean.delete();
         }
 
@@ -290,10 +315,26 @@ public class ApontMMFertDAO {
         return pesquisa;
     }
 
-    private EspecificaPesquisa getPesqStatusApont(){
+    private EspecificaPesquisa getPesqStatusEnvioApont(){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("statusApontMMFert");
+        pesquisa.setValor(2L);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqStatusAbertoApont(){
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("statusApontMMFert");
         pesquisa.setValor(1L);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqIdBolApont(Long idBol){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("idBolMMFert");
+        pesquisa.setValor(idBol);
         pesquisa.setTipo(1);
         return pesquisa;
     }
