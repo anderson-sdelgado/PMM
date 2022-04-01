@@ -78,7 +78,7 @@ public class ListaPosPneuActivity extends ActivityGeneric {
                             "                    pmmContext.getMotoMecFertCTR().fecharApont();\n" +
                             "                    pmmContext.getMotoMecFertCTR().fecharBoletimPneu();", getLocalClassName());
                     pmmContext.getMotoMecFertCTR().fecharApont();
-                    pmmContext.getMotoMecFertCTR().fecharBoletimPneu();
+                    pmmContext.getMotoMecFertCTR().fecharBoletimPneu(getLocalClassName());
                     if(PMMContext.aplic == 1){
                         LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                                 "Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());

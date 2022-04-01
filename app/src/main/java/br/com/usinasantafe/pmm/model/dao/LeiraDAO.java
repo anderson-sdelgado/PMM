@@ -12,6 +12,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.estaticas.LeiraBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMecanBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.MovLeiraBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.util.Tempo;
@@ -65,15 +66,19 @@ public class LeiraDAO {
 
     }
 
-    public void deleteMovLeira(ArrayList<Long> idMovLeiraArrayList){
+    public void deleteMovLeira(Long idBol){
 
-        List<MovLeiraBean> movLeiraList = movLeiraList(idMovLeiraArrayList);
+        ArrayList<EspecificaPesquisa> pesquisaArrayList = new ArrayList();
+        pesquisaArrayList.add(getPesqIdBol(idBol));
 
-        for (MovLeiraBean movLeiraBean :  movLeiraList) {
-            movLeiraBean.delete();
+        ApontMecanBean apontMecanBean = new ApontMecanBean();
+        List<ApontMecanBean> apontMecanList = apontMecanBean.get(pesquisaArrayList);
+
+        for (ApontMecanBean apontMecanBeanBD : apontMecanList) {
+            apontMecanBeanBD.delete();
         }
 
-        movLeiraList.clear();
+        apontMecanList.clear();
 
     }
 
@@ -183,14 +188,6 @@ public class LeiraDAO {
 
     }
 
-    public ArrayList<Long> idMovLeiraArrayList(List<MovLeiraBean> movLeiraList){
-        ArrayList<Long> idMovLeiraList = new ArrayList<Long>();
-        for (MovLeiraBean movLeiraBean : movLeiraList) {
-            idMovLeiraList.add(movLeiraBean.getIdMovLeira());
-        }
-        return idMovLeiraList;
-    }
-
     public ArrayList<Long> idMovLeiraArrayList(String objeto) throws Exception {
 
         ArrayList<Long> idMovLeiraArrayList = new ArrayList<Long>();
@@ -244,6 +241,14 @@ public class LeiraDAO {
         }
         movLeiraList.clear();
         return dadosArrayList;
+    }
+
+    private EspecificaPesquisa getPesqIdBol(Long idBol){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("idBolMMFert");
+        pesquisa.setValor(idBol);
+        pesquisa.setTipo(1);
+        return pesquisa;
     }
 
 }

@@ -7,10 +7,13 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontImplMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimPneuBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ItemMedPneuBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
+import br.com.usinasantafe.pmm.util.Tempo;
+import br.com.usinasantafe.pmm.view.TelaInicialActivity;
 
 public class ItemMedPneuDAO {
 
@@ -29,7 +32,9 @@ public class ItemMedPneuDAO {
         this.itemMedPneuBean = new ItemMedPneuBean();
     }
 
-    public void salvarItemMedPneu(){
+    public void salvarItemMedPneu(Long idBoletimPneu){
+        itemMedPneuBean.setDthrItemMedPneu(Tempo.getInstance().dthr());
+        itemMedPneuBean.setIdBolItemMedPneu(idBoletimPneu);
         itemMedPneuBean.insert();
     }
 
@@ -77,7 +82,7 @@ public class ItemMedPneuDAO {
 
     public List<ItemMedPneuBean> itemMedPneuIdBolList(ArrayList<Long> idBolPneuList){
         ItemMedPneuBean itemMedPneuBean = new ItemMedPneuBean();
-        return itemMedPneuBean.getAndOrderBy("idBolItemMedPneu", idBolPneuList, "idItemMedPneu", true);
+        return itemMedPneuBean.inAndOrderBy("idBolItemMedPneu", idBolPneuList, "idItemMedPneu", true);
     }
 
     public List<ItemMedPneuBean> itemMedPneuIdBolIdPosConfList(Long idBol, Long idPosConf){
@@ -102,6 +107,19 @@ public class ItemMedPneuDAO {
         for(ItemMedPneuBean itemMedPneuBeanBD : itemMedPneuList){
             itemMedPneuBeanBD.delete();
         }
+
+    }
+
+    public void deleteItemMedPneu(ArrayList<Long> idBoletimPneuArrayList){
+
+        ItemMedPneuBean itemMedPneuBean = new ItemMedPneuBean();
+        List<ItemMedPneuBean> itemMedPneuList = itemMedPneuBean.in("idBolItemMedPneu", idBoletimPneuArrayList);
+
+        for (ItemMedPneuBean itemMedPneuBeanBD : itemMedPneuList) {
+            itemMedPneuBeanBD.delete();
+        }
+
+        idBoletimPneuArrayList.clear();
 
     }
 

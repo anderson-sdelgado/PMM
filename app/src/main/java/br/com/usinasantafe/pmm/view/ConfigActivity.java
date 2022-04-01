@@ -29,7 +29,7 @@ import br.com.usinasantafe.pmm.model.bean.estaticas.REquipAtivBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ROSAtivBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.TurnoBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontImpleMMBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ApontImplMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CECBean;
@@ -234,8 +234,8 @@ public class ConfigActivity extends ActivityGeneric {
                 TurnoBean turnoBean = new TurnoBean();
                 turnoBean.deleteAll();
 
-                ApontImpleMMBean apontImpleMMBean = new ApontImpleMMBean();
-                apontImpleMMBean.deleteAll();
+                ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
+                apontImplMMBean.deleteAll();
 
                 ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
                 apontMMFertBean.deleteAll();

@@ -47,7 +47,7 @@ public class PressaoColPneuActivity extends ActivityGeneric {
                                 "                        pmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setPressaoEncItemMedPneu(qtde);\n" +
                                 "                        Intent it = new Intent(PressaoEncPneuActivity.this, PressaoColPneuActivity.class);", getLocalClassName());
                         pmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setPressaoColItemMedPneu(qtde);
-                        pmmContext.getMotoMecFertCTR().getItemMedPneuDAO().salvarItemMedPneu();
+                        pmmContext.getMotoMecFertCTR().salvarItemMedPneu();
                         Intent it = new Intent(PressaoColPneuActivity.this, ListaPosPneuActivity.class);
                         startActivity(it);
                         finish();

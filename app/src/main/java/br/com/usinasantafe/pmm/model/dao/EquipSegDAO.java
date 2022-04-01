@@ -5,7 +5,7 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipSegBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ImpleMMBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ImplementoMMBean;
 
 public class EquipSegDAO {
 
@@ -17,24 +17,24 @@ public class EquipSegDAO {
     }
 
     public void setImplemento(Long pos, Long impl){
-        ImpleMMBean impleMMBean = new ImpleMMBean();
-        List<ImpleMMBean> implList = impleMMBean.get("posImpleMM", pos);
+        ImplementoMMBean implementoMMBean = new ImplementoMMBean();
+        List<ImplementoMMBean> implList = implementoMMBean.get("posImplMM", pos);
         if(implList.size() > 0) {
-            impleMMBean = implList.get(0);
-            impleMMBean.setCodEquipImpleMM(impl);
-            impleMMBean.update();
+            implementoMMBean = implList.get(0);
+            implementoMMBean.setCodEquipImplMM(impl);
+            implementoMMBean.update();
         }
         else{
-            impleMMBean.setCodEquipImpleMM(impl);
-            impleMMBean.setPosImpleMM(pos);
-            impleMMBean.insert();
+            implementoMMBean.setCodEquipImplMM(impl);
+            implementoMMBean.setPosImplMM(pos);
+            implementoMMBean.insert();
         }
         implList.clear();
     }
 
     public boolean verDuplicImple(Long nroEquip){
-        ImpleMMBean impleMMBean = new ImpleMMBean();
-        List<ImpleMMBean> implMMList = impleMMBean.get("codEquipImpleMM", nroEquip);
+        ImplementoMMBean implementoMMBean = new ImplementoMMBean();
+        List<ImplementoMMBean> implMMList = implementoMMBean.get("codEquipImplMM", nroEquip);
         return (implMMList.size() == 0);
     }
 

@@ -35,7 +35,7 @@ import br.com.usinasantafe.pmm.model.dao.CarretaDAO;
 import br.com.usinasantafe.pmm.model.dao.EquipDAO;
 import br.com.usinasantafe.pmm.model.dao.EquipSegDAO;
 import br.com.usinasantafe.pmm.model.dao.FuncDAO;
-import br.com.usinasantafe.pmm.model.dao.ImpleMMDAO;
+import br.com.usinasantafe.pmm.model.dao.ImplementoMMDAO;
 import br.com.usinasantafe.pmm.model.dao.ItemMedPneuDAO;
 import br.com.usinasantafe.pmm.model.dao.LeiraDAO;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
@@ -46,8 +46,8 @@ import br.com.usinasantafe.pmm.model.dao.ParadaDAO;
 import br.com.usinasantafe.pmm.model.dao.PneuDAO;
 import br.com.usinasantafe.pmm.model.dao.PressaoFertDAO;
 import br.com.usinasantafe.pmm.model.dao.RFuncaoAtivParDAO;
-import br.com.usinasantafe.pmm.model.dao.RecolhFertDAO;
-import br.com.usinasantafe.pmm.model.dao.RendMMDAO;
+import br.com.usinasantafe.pmm.model.dao.RecolhimentoFertDAO;
+import br.com.usinasantafe.pmm.model.dao.RendimentoMMDAO;
 import br.com.usinasantafe.pmm.model.dao.TurnoDAO;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
@@ -144,8 +144,8 @@ public class MotoMecFertCTR {
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
         String dadosEnvioApont = apontMMFertDAO.dadosEnvioApont(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())));
 
-        ImpleMMDAO impleMMDAO = new ImpleMMDAO();
-        String dadosEnvioApontImpl = impleMMDAO.dadosEnvioApontImpleMM(impleMMDAO.apontImpleEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())))));
+        ImplementoMMDAO implementoMMDAO = new ImplementoMMDAO();
+        String dadosEnvioApontImpl = implementoMMDAO.dadosEnvioApontImplMM(implementoMMDAO.apontImplEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())))));
 
         LeiraDAO leiraDAO = new LeiraDAO();
         String dadosEnvioMovLeira = leiraDAO.dadosEnvioMovLeira(leiraDAO.movLeiraEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())));
@@ -170,26 +170,26 @@ public class MotoMecFertCTR {
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
         String dadosEnvioApont = apontMMFertDAO.dadosEnvioApont(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
 
-        ImpleMMDAO impleMMDAO = new ImpleMMDAO();
-        String dadosEnvioApontImpl = impleMMDAO.dadosEnvioApontImpleMM(impleMMDAO.apontImpleEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))));
+        ImplementoMMDAO implementoMMDAO = new ImplementoMMDAO();
+        String dadosEnvioApontImpl = implementoMMDAO.dadosEnvioApontImplMM(implementoMMDAO.apontImplEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))));
 
         LeiraDAO leiraDAO = new LeiraDAO();
-        String dadosEnvioMovLeira = leiraDAO.dadosEnvioMovLeira(leiraDAO.movLeiraEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())));
+        String dadosEnvioMovLeira = leiraDAO.dadosEnvioMovLeira(leiraDAO.movLeiraEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
 
-        RendMMDAO rendMMDAO = new RendMMDAO();
-        String dadosEnvioRend = rendMMDAO.dadosEnvioRendMM(rendMMDAO.rendEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
+        RendimentoMMDAO rendimentoMMDAO = new RendimentoMMDAO();
+        String dadosEnvioRend = rendimentoMMDAO.dadosEnvioRendMM(rendimentoMMDAO.rendEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
 
-        RecolhFertDAO recolhFertDAO = new RecolhFertDAO();
-        String dadosEnvioRecolh = recolhFertDAO.dadosEnvioRecolh(recolhFertDAO.recolhEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
+        RecolhimentoFertDAO recolhimentoFertDAO = new RecolhimentoFertDAO();
+        String dadosEnvioRecolh = recolhimentoFertDAO.dadosEnvioRecolh(recolhimentoFertDAO.recolhEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
 
         ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
         String dadosEnvioApontMecan = apontMecanDAO.dadosEnvioApontMecan(apontMecanDAO.apontMecanEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
 
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-        String dadosEnvioBoletimPneu = boletimPneuDAO.dadosEnvioBoletimPneu(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())))));
+        String dadosEnvioBoletimPneu = boletimPneuDAO.dadosEnvioBoletimPneu(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))));
 
         ItemMedPneuDAO itemMedPneuDAO = new ItemMedPneuDAO();
-        String dadosEnvioItemMedPneu = itemMedPneuDAO.dadosEnvioItemMedPneu(itemMedPneuDAO.itemMedPneuIdBolList(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())))))));
+        String dadosEnvioItemMedPneu = itemMedPneuDAO.dadosEnvioItemMedPneu(itemMedPneuDAO.itemMedPneuIdBolList(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))))));
 
         return dadosEnvioBoletim + "_" + dadosEnvioApont + "_" + dadosEnvioApontImpl + "_" + dadosEnvioMovLeira + "_" + dadosEnvioApontMecan + "_" + dadosEnvioBoletimPneu + "_" + dadosEnvioItemMedPneu + "_" + dadosEnvioRend + "_" + dadosEnvioRecolh;
     }
@@ -207,20 +207,21 @@ public class MotoMecFertCTR {
             ArrayList<Long> idApontArrayList = apontMMFertDAO.idApontArrayList(retorno[2]);
             apontMMFertDAO.updateApont(idApontArrayList);
 
+            ImplementoMMDAO implementoMMDAO = new ImplementoMMDAO();
+            ArrayList<Long> idApontImplArrayList = implementoMMDAO.idApontImplArrayList(retorno[3]);
+            implementoMMDAO.updateApontImpl(idApontImplArrayList);
+
+            BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
+            ArrayList<Long> idBoletimPneuArrayList = boletimPneuDAO.idBoletimPneuArrayList(retorno[4]);
+            boletimPneuDAO.updateBoletimPneu(idBoletimPneuArrayList);
+
             LeiraDAO leiraDAO = new LeiraDAO();
-            ArrayList<Long> idMovLeiraArrayList = leiraDAO.idMovLeiraArrayList(retorno[3]);
+            ArrayList<Long> idMovLeiraArrayList = leiraDAO.idMovLeiraArrayList(retorno[5]);
             leiraDAO.updateMovLeira(idMovLeiraArrayList);
 
             ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
-            ArrayList<Long> idApontMecanArrayList = apontMecanDAO.idApontMecanArrayList(retorno[4]);
+            ArrayList<Long> idApontMecanArrayList = apontMecanDAO.idApontMecanArrayList(retorno[6]);
             apontMecanDAO.updateApontMecan(idApontMecanArrayList);
-
-            ImpleMMDAO impleMMDAO = new ImpleMMDAO();
-            impleMMDAO.deleteImple(idApontArrayList);
-
-            BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-            ArrayList<Long> idBoletimPneuArrayList = boletimPneuDAO.idBoletimPneuArrayList(retorno[5]);
-            boletimPneuDAO.updateBoletimPneu(idBoletimPneuArrayList);
 
             EnvioDadosServ.getInstance().envioDados(activity);
 
@@ -232,22 +233,35 @@ public class MotoMecFertCTR {
 
     }
 
-    public void updateBolFechado(String retorno, String activity){
+    public void updateBolFechado(String result, String activity){
 
         try {
 
-            int pos1 = retorno.indexOf("_") + 1;
-            String objPrinc = retorno.substring(pos1);
+            String[] retorno = result.split("_");
 
             BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
-            ArrayList<BoletimMMFertBean> boletimArrayList = boletimMMFertDAO.boletimMMFertArrayList(objPrinc);
+            ArrayList<BoletimMMFertBean> boletimArrayList = boletimMMFertDAO.boletimMMFertArrayList(retorno[1]);
+            boletimMMFertDAO.updateBoletimMMFertEnvio(boletimArrayList);
 
-            for (BoletimMMFertBean boletimMMFertBean : boletimArrayList) {
-                boletimMMFertDAO.updateBoletimMMFertEnvio(boletimMMFertBean.getIdBolMMFert());
-                ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
-                ArrayList<Long> idApontArrayList = apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontMMFertList(boletimMMFertBean.getIdBolMMFert()));
-                apontMMFertDAO.updateApont(idApontArrayList);
-            }
+            ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
+            ArrayList<Long> idApontArrayList = apontMMFertDAO.idApontArrayList(retorno[2]);
+            apontMMFertDAO.updateApont(idApontArrayList);
+
+            ImplementoMMDAO implementoMMDAO = new ImplementoMMDAO();
+            ArrayList<Long> idApontImplArrayList = implementoMMDAO.idApontImplArrayList(retorno[2]);
+            implementoMMDAO.updateApontImpl(idApontImplArrayList);
+
+            BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
+            ArrayList<Long> idBoletimPneuArrayList = boletimPneuDAO.idBoletimPneuArrayList(retorno[3]);
+            boletimPneuDAO.updateBoletimPneu(idBoletimPneuArrayList);
+
+            LeiraDAO leiraDAO = new LeiraDAO();
+            ArrayList<Long> idMovLeiraArrayList = leiraDAO.idMovLeiraArrayList(retorno[4]);
+            leiraDAO.updateMovLeira(idMovLeiraArrayList);
+
+            ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
+            ArrayList<Long> idApontMecanArrayList = apontMecanDAO.idApontMecanArrayList(retorno[5]);
+            apontMecanDAO.updateApontMecan(idApontMecanArrayList);
 
             EnvioDadosServ.getInstance().envioDados(activity);
 
@@ -267,23 +281,30 @@ public class MotoMecFertCTR {
         for (BoletimMMFertBean boletimMMFertBean : boletimMMFertArrayList) {
 
             ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
-            List<ApontMMFertBean> apontMMFertList = apontMMFertDAO.apontMMFertList(boletimMMFertBean.getIdBolMMFert());
-            ArrayList<Long> idApontArrayList = apontMMFertDAO.idApontArrayList(apontMMFertList);
+            ArrayList<Long> idApontArrayList = apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontMMFertList(boletimMMFertBean.getIdBolMMFert()));
             apontMMFertDAO.deleteApont(idApontArrayList);
 
-            ImpleMMDAO impleMMDAO = new ImpleMMDAO();
-            impleMMDAO.deleteImple(idApontArrayList);
+            ImplementoMMDAO implementoMMDAO = new ImplementoMMDAO();
+            implementoMMDAO.deleteApontImpl(idApontArrayList);
+
+            BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
+            ItemMedPneuDAO itemMedPneuDAO = new ItemMedPneuDAO();
+            itemMedPneuDAO.deleteItemMedPneu(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(idApontArrayList)));
+            boletimPneuDAO.deleteBoletimPneu(idApontArrayList);
 
             idApontArrayList.clear();
 
             LeiraDAO leiraDAO = new LeiraDAO();
-            leiraDAO.deleteMovLeira(leiraDAO.idMovLeiraArrayList(leiraDAO.movLeiraList(boletimMMFertBean.getIdBolMMFert())));
+            leiraDAO.deleteMovLeira(boletimMMFertBean.getIdBolMMFert());
 
-            RendMMDAO rendMMDAO = new RendMMDAO();
-            rendMMDAO.deleteRend(boletimMMFertBean.getIdBolMMFert());
+            ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
+            apontMecanDAO.deleteApontMecan(boletimMMFertBean.getIdBolMMFert());
 
-            RecolhFertDAO recolhFertDAO = new RecolhFertDAO();
-            recolhFertDAO.deleteRecolh(boletimMMFertBean.getIdBolMMFert());
+            RendimentoMMDAO rendimentoMMDAO = new RendimentoMMDAO();
+            rendimentoMMDAO.deleteRend(boletimMMFertBean.getIdBolMMFert());
+
+            RecolhimentoFertDAO recolhimentoFertDAO = new RecolhimentoFertDAO();
+            recolhimentoFertDAO.deleteRecolh(boletimMMFertBean.getIdBolMMFert());
 
             boletimMMFertDAO.deleteBoletimMMFert(boletimMMFertBean.getIdBolMMFert());
 
@@ -373,34 +394,34 @@ public class MotoMecFertCTR {
     }
 
     public void insRendBD(Long nroOS, String activity){
-        RendMMDAO rendMMDAO = new RendMMDAO();
+        RendimentoMMDAO rendimentoMMDAO = new RendimentoMMDAO();
         LogProcessoDAO.getInstance().insertLogProcesso("rendMMDAO.insRend(getBoletimMMFertAberto().getIdBolMMFert(), nroOS, activity);", activity);
-        rendMMDAO.insRend(getBoletimMMFertAberto().getIdBolMMFert(), nroOS, activity);
+        rendimentoMMDAO.insRend(getBoletimMMFertAberto().getIdBolMMFert(), nroOS, activity);
     }
 
     public boolean verRendMM(){
-        RendMMDAO rendMMDAO = new RendMMDAO();
-        return rendMMDAO.verRend(getBoletimMMFertAberto().getIdBolMMFert());
+        RendimentoMMDAO rendimentoMMDAO = new RendimentoMMDAO();
+        return rendimentoMMDAO.verRend(getBoletimMMFertAberto().getIdBolMMFert());
     }
 
     public RendMMBean getRend(int pos){
-        RendMMDAO rendMMDAO = new RendMMDAO();
-        return rendMMDAO.getRend(getBoletimMMFertAberto().getIdBolMMFert(), pos);
+        RendimentoMMDAO rendimentoMMDAO = new RendimentoMMDAO();
+        return rendimentoMMDAO.getRend(getBoletimMMFertAberto().getIdBolMMFert(), pos);
     }
 
     public void atualRend(RendMMBean rendMMBean){
-        RendMMDAO rendMMDAO = new RendMMDAO();
-        rendMMDAO.atualRend(rendMMBean);
+        RendimentoMMDAO rendimentoMMDAO = new RendimentoMMDAO();
+        rendimentoMMDAO.atualRend(rendMMBean);
     }
 
     public int qtdeRend(){
-        RendMMDAO rendMMDAO = new RendMMDAO();
-        return rendMMDAO.qtdeRend(getBoletimMMFertAberto().getIdBolMMFert());
+        RendimentoMMDAO rendimentoMMDAO = new RendimentoMMDAO();
+        return rendimentoMMDAO.qtdeRend(getBoletimMMFertAberto().getIdBolMMFert());
     }
 
     public List<RendMMBean> rendList(){
-        RendMMDAO rendMMDAO = new RendMMDAO();
-        return rendMMDAO.rendList(getBoletimMMFertAberto().getIdBolMMFert());
+        RendimentoMMDAO rendimentoMMDAO = new RendimentoMMDAO();
+        return rendimentoMMDAO.rendList(getBoletimMMFertAberto().getIdBolMMFert());
     }
 
     public Double rendOS(Long nroOS){
@@ -436,8 +457,8 @@ public class MotoMecFertCTR {
     }
 
     public void impleMMDelAll(){
-        ImpleMMDAO impleMMDAO = new ImpleMMDAO();
-        impleMMDAO.impleMMDelAll();
+        ImplementoMMDAO implementoMMDAO = new ImplementoMMDAO();
+        implementoMMDAO.implementoMMDelAll();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -490,34 +511,34 @@ public class MotoMecFertCTR {
 
     public void insRecolh(String activity){
         ConfigCTR configCTR = new ConfigCTR();
-        RecolhFertDAO recolhFertDAO = new RecolhFertDAO();
+        RecolhimentoFertDAO recolhimentoFertDAO = new RecolhimentoFertDAO();
         LogProcessoDAO.getInstance().insertLogProcesso("recolhFertDAO.insRecolh(" + getBoletimMMFertAberto().getIdBolMMFert() + ", " + configCTR.getConfig().getNroOSConfig() + ");", activity);
-        recolhFertDAO.insRecolh(getBoletimMMFertAberto().getIdBolMMFert(), configCTR.getConfig().getNroOSConfig(), activity);
+        recolhimentoFertDAO.insRecolh(getBoletimMMFertAberto().getIdBolMMFert(), configCTR.getConfig().getNroOSConfig(), activity);
     }
 
     public boolean verRecolh(){
-        RecolhFertDAO recolhFertDAO = new RecolhFertDAO();
-        return recolhFertDAO.verRecolh(getBoletimMMFertAberto().getIdBolMMFert());
+        RecolhimentoFertDAO recolhimentoFertDAO = new RecolhimentoFertDAO();
+        return recolhimentoFertDAO.verRecolh(getBoletimMMFertAberto().getIdBolMMFert());
     }
 
     public RecolhFertBean getRecolh(int pos) {
-        RecolhFertDAO recolhFertDAO = new RecolhFertDAO();
-        return recolhFertDAO.getRecolh(getBoletimMMFertAberto().getIdBolMMFert(), pos);
+        RecolhimentoFertDAO recolhimentoFertDAO = new RecolhimentoFertDAO();
+        return recolhimentoFertDAO.getRecolh(getBoletimMMFertAberto().getIdBolMMFert(), pos);
     }
 
     public void atualRecolh(RecolhFertBean recolhFertBean){
-        RecolhFertDAO recolhFertDAO = new RecolhFertDAO();
-        recolhFertDAO.atualRecolh(recolhFertBean);
+        RecolhimentoFertDAO recolhimentoFertDAO = new RecolhimentoFertDAO();
+        recolhimentoFertDAO.atualRecolh(recolhFertBean);
     }
 
     public int qtdeRecolh(){
-        RecolhFertDAO recolhFertDAO = new RecolhFertDAO();
-        return recolhFertDAO.qtdeRecolh(getBoletimMMFertAberto().getIdBolMMFert());
+        RecolhimentoFertDAO recolhimentoFertDAO = new RecolhimentoFertDAO();
+        return recolhimentoFertDAO.qtdeRecolh(getBoletimMMFertAberto().getIdBolMMFert());
     }
 
     public List<RecolhFertBean> recolhList(){
-        RecolhFertDAO recolhFertDAO = new RecolhFertDAO();
-        return recolhFertDAO.recolhList(getBoletimMMFertAberto().getIdBolMMFert());
+        RecolhimentoFertDAO recolhimentoFertDAO = new RecolhimentoFertDAO();
+        return recolhimentoFertDAO.recolhList(getBoletimMMFertAberto().getIdBolMMFert());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -920,9 +941,9 @@ public class MotoMecFertCTR {
     private void salvarAltCompApont(String dthr, String activity){
 
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
-        ImpleMMDAO impleMMDAO = new ImpleMMDAO();
+        ImplementoMMDAO implementoMMDAO = new ImplementoMMDAO();
         LogProcessoDAO.getInstance().insertLogProcesso("impleMMDAO.salvarApontImple(apontMMFertDAO.getApontDthr(dthr).getIdApontMMFert(), dthr);", activity);
-        impleMMDAO.salvarApontImple(apontMMFertDAO.getApontDthr(dthr).getIdApontMMFert(), dthr, activity);
+        implementoMMDAO.salvarApontImpl(apontMMFertDAO.getApontDthr(dthr).getIdApontMMFert(), dthr, activity);
 
         LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().envioDados(activity);", activity);
         EnvioDadosServ.getInstance().envioDados(activity);
@@ -1038,9 +1059,13 @@ public class MotoMecFertCTR {
                 , boletimMMFertDAO.getBoletimMMFertAberto().getIdEquipBolMMFert());
     }
 
-    public void fecharBoletimPneu(){
+    public void fecharBoletimPneu(String activity){
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
         boletimPneuDAO.fecharBoletimPneu();
+
+        LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().envioDados(activity);", activity);
+        EnvioDadosServ.getInstance().envioDados(activity);
+
     }
 
     public void deletePneuAberto(){
@@ -1048,6 +1073,11 @@ public class MotoMecFertCTR {
         ItemMedPneuDAO itemMedPneuDAO = new ItemMedPneuDAO();
         itemMedPneuDAO.deleteItemMedPneuIdBol(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu());
         boletimPneuDAO.deleteBoletimPneuAberto();
+    }
+
+    public void salvarItemMedPneu(){
+        BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
+        itemMedPneuDAO.salvarItemMedPneu(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu());
     }
 
     public boolean verifFinalItemPneuBoletimAberto(){

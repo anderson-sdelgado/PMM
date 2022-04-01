@@ -10,11 +10,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontImpleMMBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMecanBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimPneuBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ItemMedPneuBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.util.Tempo;
 
@@ -121,6 +118,19 @@ public class BoletimPneuDAO {
 
     }
 
+    public void deleteBoletimPneu(ArrayList<Long> idApontBolPneuArrayList){
+
+        BoletimPneuBean boletimPneuBean = new BoletimPneuBean();
+        List<BoletimPneuBean> boletimPneuList = boletimPneuBean.in("idApontBolPneu", idApontBolPneuArrayList);
+
+        for (BoletimPneuBean boletimPneuBeanBD : boletimPneuList) {
+            boletimPneuBeanBD.delete();
+        }
+
+        idApontBolPneuArrayList.clear();
+
+    }
+
     public String dadosEnvioBoletimPneu(List<BoletimPneuBean> boletimPneuList){
 
         JsonArray jsonArrayBoletimPneu = new JsonArray();
@@ -143,14 +153,6 @@ public class BoletimPneuDAO {
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("statusBolPneu");
         pesquisa.setValor(1L);
-        pesquisa.setTipo(1);
-        return pesquisa;
-    }
-
-    private EspecificaPesquisa getPesqBoletimPneuEnvio(){
-        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
-        pesquisa.setCampo("statusBolPneu");
-        pesquisa.setValor(2L);
         pesquisa.setTipo(1);
         return pesquisa;
     }

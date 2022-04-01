@@ -114,17 +114,21 @@ public class BoletimMMFertDAO {
 
     }
 
-    public void updateBoletimMMFertEnvio(Long idBol){
+    public void updateBoletimMMFertEnvio(ArrayList<BoletimMMFertBean> boletimArrayList){
 
-        ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqIdBoletim(idBol));
+        for (BoletimMMFertBean boletimMMFertBean : boletimArrayList) {
 
-        BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
-        List<BoletimMMFertBean> boletimMMFertList = boletimMMFertBean.get(pesqArrayList);
-        boletimMMFertBean = boletimMMFertList.get(0);
-        boletimMMFertBean.setStatusBolMMFert(3L);
-        boletimMMFertBean.update();
-        boletimMMFertList.clear();
+            ArrayList pesqArrayList = new ArrayList();
+            pesqArrayList.add(getPesqIdBoletim(boletimMMFertBean.getIdBolMMFert()));
+
+            List<BoletimMMFertBean> boletimMMFertList = boletimMMFertBean.get(pesqArrayList);
+            BoletimMMFertBean boletimMMFertDB = boletimMMFertList.get(0);
+            boletimMMFertDB.setStatusBolMMFert(3L);
+            boletimMMFertDB.update();
+            boletimMMFertList.clear();
+        }
+
+
 
     }
 

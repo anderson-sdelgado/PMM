@@ -11,9 +11,9 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.util.Tempo;
 
-public class RecolhFertDAO {
+public class RecolhimentoFertDAO {
 
-    public RecolhFertDAO() {
+    public RecolhimentoFertDAO() {
     }
 
     public void insRecolh(Long idBol, Long nroOS, String activity){

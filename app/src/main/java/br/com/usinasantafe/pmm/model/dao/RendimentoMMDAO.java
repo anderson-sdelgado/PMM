@@ -11,9 +11,9 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.util.Tempo;
 
-public class RendMMDAO {
+public class RendimentoMMDAO {
 
-    public RendMMDAO() {
+    public RendimentoMMDAO() {
     }
 
     public void insRend(Long idBol, Long nroOS, String activity){

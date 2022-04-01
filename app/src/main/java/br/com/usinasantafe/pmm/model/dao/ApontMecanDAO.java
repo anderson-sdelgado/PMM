@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMecanBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.util.Tempo;
 
@@ -149,6 +150,22 @@ public class ApontMecanDAO {
         jsonApont.add("apontmecan", jsonArrayApont);
 
         return jsonApont.toString();
+
+    }
+
+    public void deleteApontMecan(Long idBol){
+
+        ArrayList<EspecificaPesquisa> pesquisaArrayList = new ArrayList();
+        pesquisaArrayList.add(getPesqIdBol(idBol));
+
+        ApontMecanBean apontMecanBean = new ApontMecanBean();
+        List<ApontMecanBean> apontMecanList = apontMecanBean.get(pesquisaArrayList);
+
+        for (ApontMecanBean apontMecanBeanBD : apontMecanList) {
+            apontMecanBeanBD.delete();
+        }
+
+        apontMecanList.clear();
 
     }
 
