@@ -263,6 +263,7 @@
     <string name="texto_menu_titulo_carreta">CARRETA(S): 715 - 720</string>
     <string name="texto_menu_ultima_viagem">NÃO POSSUE CARREGAMENTOS</string>
     <string name="texto_menu_propriedade">60 - ITAQUERE</string>
+    <string name="texto_menu_status">STATUS: SAÍDA DA USINA</string>
     <string name="texto_enc_boletim">ENCERRAR O BOLETIM</string>
     <string name="texto_cam">1</string>
     <string name="texto_saida_campo">DESEJA REALMENTE DAR SAÍDA DO CAMPO?</string>

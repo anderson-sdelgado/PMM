@@ -12,8 +12,6 @@ public class AtualAplicBean {
     private String versaoNova;
     private Long flagAtualApp;
     private Long flagAtualCheckList;
-    private Long flagLogEnvio;
-    private Long flagLogErro;
     private String dthr;
 
     public AtualAplicBean() {
@@ -65,22 +63,6 @@ public class AtualAplicBean {
 
     public void setFlagAtualCheckList(Long flagAtualCheckList) {
         this.flagAtualCheckList = flagAtualCheckList;
-    }
-
-    public Long getFlagLogEnvio() {
-        return flagLogEnvio;
-    }
-
-    public void setFlagLogEnvio(Long flagLogEnvio) {
-        this.flagLogEnvio = flagLogEnvio;
-    }
-
-    public Long getFlagLogErro() {
-        return flagLogErro;
-    }
-
-    public void setFlagLogErro(Long flagLogErro) {
-        this.flagLogErro = flagLogErro;
     }
 
     public String getDthr() {

@@ -120,6 +120,8 @@ public class MotoMecFertCTR {
         LogProcessoDAO.getInstance().insertLogProcesso("boletimMMFertDAO.salvarBolFechadoMMFert();", activity);
         boletimMMFertDAO.salvarBoletimMMFertFechado(activity);
 
+        EnvioDadosServ.getInstance().envioDados(activity);
+
     }
 
     public Boolean verEnvioApont() {
@@ -790,6 +792,19 @@ public class MotoMecFertCTR {
     public ApontMMFertBean getApontAberto(Long idBol){
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
         return apontMMFertDAO.getApontAberto(idBol);
+    }
+
+    public String getUltApont(){
+        String retorno = "STATUS: ";
+        ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
+        if(apontMMFertDAO.hasApontBol(getBoletimMMFertAberto().getIdBolMMFert())){
+            ApontMMFertBean apontMMFertBean = apontMMFertDAO.getUltApont(getBoletimMMFertAberto().getIdBolMMFert());
+            if(apontMMFertBean.getIdMotoMec() > 0L){
+                MotoMecDAO motoMecDAO = new MotoMecDAO();
+                retorno = retorno + motoMecDAO.getMotoMec(apontMMFertBean.getIdMotoMec()).getDescrOperMotoMec();
+            }
+        }
+        return retorno;
     }
 
     public void inserirApontBolAnterior(String activity){

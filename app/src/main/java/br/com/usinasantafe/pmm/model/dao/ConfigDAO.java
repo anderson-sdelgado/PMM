@@ -47,8 +47,6 @@ public class ConfigDAO {
         configBean.setDtServConfig("");
         configBean.setDifDthrConfig(0L);
         configBean.setVerRecInformativo(0L);
-        configBean.setFlagLogErro(0L);
-        configBean.setFlagLogEnvio(0L);
         configBean.setNroOSConfig(0L);
         configBean.setIdAtivConfig(0L);
         configBean.setUltParadaBolConfig(0L);
@@ -181,8 +179,6 @@ public class ConfigDAO {
         AtualAplicBean atualAplicBean = gson.fromJson(objeto.toString(), AtualAplicBean.class);
 
         ConfigBean configBean = getConfig();
-        configBean.setFlagLogEnvio(atualAplicBean.getFlagLogEnvio());
-        configBean.setFlagLogErro(atualAplicBean.getFlagLogErro());
         configBean.setDtServConfig(atualAplicBean.getDthr());
         configBean.setAtualCheckList(atualAplicBean.getFlagAtualCheckList());
         configBean.update();

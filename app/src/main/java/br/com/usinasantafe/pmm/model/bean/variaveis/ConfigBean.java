@@ -47,10 +47,6 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private Long statusConConfig;  // 0 - Offline; 1 - Online
 	@DatabaseField
-	private Long flagLogEnvio;
-	@DatabaseField
-	private Long flagLogErro;
-	@DatabaseField
 	private Long atualCheckList;
 	@DatabaseField
 	private Long posFluxoCarregComposto;
@@ -215,22 +211,6 @@ public class ConfigBean extends Entidade {
 
 	public void setStatusConConfig(Long statusConConfig) {
 		this.statusConConfig = statusConConfig;
-	}
-
-	public Long getFlagLogEnvio() {
-		return flagLogEnvio;
-	}
-
-	public void setFlagLogEnvio(Long flagLogEnvio) {
-		this.flagLogEnvio = flagLogEnvio;
-	}
-
-	public Long getFlagLogErro() {
-		return flagLogErro;
-	}
-
-	public void setFlagLogErro(Long flagLogErro) {
-		this.flagLogErro = flagLogErro;
 	}
 
 	public Long getAtualCheckList() {

@@ -86,8 +86,7 @@ public class EnvioDadosServ {
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", dados);
 
-        Log.i("PMM", "URL = " + url);
-        Log.i("PMM", "Dados de Envio = " + dados);
+        Log.i("PMM", "URL = " + url + " - Dados de Envio = " + dados);
         LogProcessoDAO.getInstance().insertLogProcesso("postCadGenerico.execute('" + url + "'); - Dados de Envio = " + dados, activity);
         PostCadGenerico postCadGenerico = new PostCadGenerico();
         postCadGenerico.setParametrosPost(parametrosPost);
@@ -132,35 +131,44 @@ public class EnvioDadosServ {
     ////////////////////////////////////MECANISMO DE ENVIO/////////////////////////////////////////
 
     public void envioDados(String activity) {
+        LogProcessoDAO.getInstance().insertLogProcesso("public void envioDados(String activity) {\n" +
+                "        status = 1;", activity);
         status = 1;
         if(ActivityGeneric.connectNetwork) {
-            LogProcessoDAO.getInstance().insertLogProcesso("ActivityGeneric.connectNetwork", activity);
+            LogProcessoDAO.getInstance().insertLogProcesso("if(ActivityGeneric.connectNetwork) {\n" +
+                    "            status = 2;", activity);
             status = 2;
             if (verifChecklist()) {
                 LogProcessoDAO.getInstance().insertLogProcesso("verifChecklist()\n" +
                          "enviarChecklist()", activity);
                 enviarChecklist(activity);
             } else {
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {", activity);
                 if (verifEnvioCarregInsumo()) {
                     LogProcessoDAO.getInstance().insertLogProcesso("verifEnvioCarregInsumo()\n" +
                             "envioCarregInsumo()", activity);
                     envioCarregInsumo(activity);
                 } else {
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else {", activity);
                     if (verifPreCEC()) {
                         LogProcessoDAO.getInstance().insertLogProcesso("verifPreCEC()\n" +
                                 "envioPreCEC()", activity);
                         envioPreCEC(activity);
                     } else {
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {", activity);
                         if (verifBolFechadoMMFert()) {
                             LogProcessoDAO.getInstance().insertLogProcesso("verifBolFechadoMMFert()\n" +
                                     "enviarBolFechadoMMFert()", activity);
                             enviarBolFechadoMMFert(activity);
                         } else {
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {", activity);
                             if (verifApontMMMovLeiraMecanFert()) {
                                 LogProcessoDAO.getInstance().insertLogProcesso("verifApontMMMovLeiraFert()\n" +
                                         "enviarBolAbertoMMFert()", activity);
                                 enviarBolAbertoMMFert(activity);
                             } else {
+                                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                        "                                status = 3;", activity);
                                 status = 3;
                             }
                         }
@@ -188,38 +196,38 @@ public class EnvioDadosServ {
     public void recDados(String result, String activity){
         LogProcessoDAO.getInstance().insertLogProcesso("public void recDados(String " + result + ", String activity){", activity);
         if(result.trim().startsWith("GRAVOU-CHECKLIST")){
-            CheckListCTR checkListCTR = new CheckListCTR();
             LogProcessoDAO.getInstance().insertLogProcesso("if(result.trim().startsWith(\"GRAVOU-CHECKLIST\")){\n" +
                     "            CheckListCTR checkListCTR = new CheckListCTR();\n" +
                     "checkListCTR.delChecklist(activity)", activity);
+            CheckListCTR checkListCTR = new CheckListCTR();
             checkListCTR.updateRecebChecklist(activity);
         }
         else if (result.trim().startsWith("BOLABERTOMM")) {
-            MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
             LogProcessoDAO.getInstance().insertLogProcesso("else if (result.trim().startsWith(\"BOLABERTOMM\")) {\n" +
                     "            MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();\n" +
                     "motoMecFertCTR.updBolAberto(result)", activity);
+            MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
             motoMecFertCTR.updateBolAberto(result, activity);
         }
         else if (result.trim().startsWith("BOLFECHADOMM")) {
-            MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
             LogProcessoDAO.getInstance().insertLogProcesso("else if (result.trim().startsWith(\"BOLFECHADOMM\")) {\n" +
                     "            MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();\n" +
                     "motoMecFertCTR.delBolFechado(result)", activity);
+            MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
             motoMecFertCTR.updateBolFechado(result, activity);
         }
         else if (result.trim().startsWith("GRAVOU-CARREGINSUMO")) {
-            CompostoCTR compostoCTR = new CompostoCTR();
             LogProcessoDAO.getInstance().insertLogProcesso("else if (result.trim().startsWith(\"GRAVOU-CARREGINSUMO\")) {\n" +
                     "            CompostoCTR compostoCTR = new CompostoCTR();\n" +
                     "compostoCTR.updCarregInsumo(result)", activity);
+            CompostoCTR compostoCTR = new CompostoCTR();
             compostoCTR.updCarregInsumo(result, activity);
         }
         else if(result.trim().startsWith("PRECEC")){
-            CECCTR cecCTR = new CECCTR();
             LogProcessoDAO.getInstance().insertLogProcesso("else if(result.trim().startsWith(\"PRECEC\")){\n" +
                     "            CECCTR cecCTR = new CECCTR();\n" +
                     "cecCTR.updPreCEC(result)", activity);
+            CECCTR cecCTR = new CECCTR();
             cecCTR.updPreCEC(result, activity);
         }
         else {

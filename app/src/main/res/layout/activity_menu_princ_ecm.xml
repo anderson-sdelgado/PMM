@@ -34,8 +34,13 @@
     <TextView
         android:id="@+id/textViewPropriedade"
         style="@style/TextViewMenuNegrito"
-        android:paddingBottom="5dp"
         android:text="@string/texto_menu_propriedade" />
+
+    <TextView
+        android:id="@+id/textViewStatus"
+        style="@style/TextViewMenuNegrito"
+        android:paddingBottom="5dp"
+        android:text="@string/texto_menu_status" />
 
     <ListView
         android:id="@+id/motoMecListView"

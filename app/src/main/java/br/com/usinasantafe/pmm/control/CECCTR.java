@@ -41,6 +41,7 @@ public class CECCTR {
         preCECDAO.fechaPreCEC(motoMecFertCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert()
                 , motoMecFertCTR.getTurnoId(motoMecFertCTR.getBoletimMMFertAberto().getIdTurnoBolMMFert()).getCodTurno()
                 , configCTR.getEquip().getNroEquip());
+        EnvioDadosServ.getInstance().envioDados(null);
     }
 
     public String dadosEnvioPreCEC(){

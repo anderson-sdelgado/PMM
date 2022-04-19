@@ -128,8 +128,24 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                 "        listViewAtiv = (ListView) findViewById(R.id.listViewMenuPrinc);\n" +
                 "        listViewAtiv.setAdapter(adapterList);", getLocalClassName());
 
-        itens.add("APONTAR MANUTENÇÃO");
-        itens.add("FINALIZAR MANUTENÇÃO");
+        LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getEquip().getFlagApontMecan() == 1){\n" +
+                "            itens.add(\"APONTAR MANUTENÇÃO\");\n" +
+                "            itens.add(\"FINALIZAR MANUTENÇÃO\");\n" +
+                "        }", getLocalClassName());
+        if(pmmContext.getConfigCTR().getEquip().getFlagApontMecan() == 1){
+            itens.add("APONTAR MANUTENÇÃO");
+            itens.add("FINALIZAR MANUTENÇÃO");
+        }
+
+        LogProcessoDAO.getInstance().insertLogProcesso("itens.add(\"FINALIZAR BOLETIM\");\n" +
+                "        itens.add(\"HISTORICO\");\n" +
+                "        itens.add(\"REENVIO DE DADOS\");\n" +
+                "        itens.add(\"DATA/HORA\");\n" +
+                "        itens.add(\"LOG\");\n" +
+                "        AdapterList adapterList = new AdapterList(this, itens);\n" +
+                "        listViewAtiv = (ListView) findViewById(R.id.listViewMenuPrinc);\n" +
+                "        listViewAtiv.setAdapter(adapterList);", getLocalClassName());
+
         itens.add("FINALIZAR BOLETIM");
         itens.add("HISTORICO");
         itens.add("REENVIO DE DADOS");

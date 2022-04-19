@@ -69,12 +69,11 @@ public class CabecCheckListDAO {
 
     }
 
-    public void salvarFechCheckList(String activity) {
+    public void salvarFechCheckList() {
         CabecCheckListBean cabecCheckListBean = getCabecCheckListAberto();
         cabecCheckListBean.setStatusCabCL(2L);
         cabecCheckListBean.setDthrCabCLLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
         cabecCheckListBean.update();
-        EnvioDadosServ.getInstance().envioDados(activity);
     }
 
     public ArrayList<String> cabecCheckListAllArrayList(ArrayList<String> dadosArrayList){

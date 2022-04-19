@@ -41,6 +41,8 @@ public class EquipBean extends Entidade {
     private Long tipoEquip;
     @DatabaseField
     private Long classifEquip;
+    @DatabaseField
+    private Long flagApontMecan;
 
     public EquipBean() {
     }
@@ -131,5 +133,13 @@ public class EquipBean extends Entidade {
 
     public void setClassifEquip(Long classifEquip) {
         this.classifEquip = classifEquip;
+    }
+
+    public Long getFlagApontMecan() {
+        return flagApontMecan;
+    }
+
+    public void setFlagApontMecan(Long flagApontMecan) {
+        this.flagApontMecan = flagApontMecan;
     }
 }

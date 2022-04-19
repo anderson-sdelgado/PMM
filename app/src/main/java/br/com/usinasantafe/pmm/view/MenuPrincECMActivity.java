@@ -29,6 +29,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
     private TextView textViewCarreta;
     private TextView textViewUltimaViagem;
     private TextView textViewPropriedade;
+    private TextView textViewStatus;
     private ProgressDialog progressBar;
     private List<MotoMecBean> motoMecList;
     private int posicao;
@@ -47,11 +48,13 @@ public class MenuPrincECMActivity extends ActivityGeneric {
         textViewCarreta = findViewById(R.id.textViewCarreta);
         textViewUltimaViagem = findViewById(R.id.textViewUltimaViagem);
         textViewPropriedade = findViewById(R.id.textViewPropriedade);
+        textViewStatus = findViewById(R.id.textViewStatus);
 
         textViewMotorista.setText(pmmContext.getMotoMecFertCTR().getMatricFunc().getMatricFunc() + " - " + pmmContext.getMotoMecFertCTR().getMatricFunc().getNomeFunc());
         textViewCarreta.setText(pmmContext.getMotoMecFertCTR().getDescrCarreta());
         textViewUltimaViagem.setText(pmmContext.getCecCTR().getDataSaidaUlt());
         textViewPropriedade.setText(pmmContext.getConfigCTR().getMsgPropriedade());
+        textViewStatus.setText(pmmContext.getMotoMecFertCTR().getUltApont());
 
         if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L){
             LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L){\n" +

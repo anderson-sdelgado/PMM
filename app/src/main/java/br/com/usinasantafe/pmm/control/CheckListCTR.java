@@ -56,7 +56,8 @@ public class CheckListCTR {
 
     public void salvarBolFechado(String activity){
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
-        cabecCheckListDAO.salvarFechCheckList(activity);
+        cabecCheckListDAO.salvarFechCheckList();
+        EnvioDadosServ.getInstance().envioDados(activity);
     }
 
     public boolean verAberturaCheckList(Long turno){
