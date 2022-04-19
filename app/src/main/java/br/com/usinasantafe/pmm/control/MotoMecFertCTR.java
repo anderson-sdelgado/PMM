@@ -22,7 +22,7 @@ import br.com.usinasantafe.pmm.model.bean.estaticas.TurnoBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ItemMedPneuBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ItemCalibPneuBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.model.dao.ApontMMFertDAO;
@@ -31,12 +31,13 @@ import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
 import br.com.usinasantafe.pmm.model.dao.BocalDAO;
 import br.com.usinasantafe.pmm.model.dao.BoletimMMFertDAO;
 import br.com.usinasantafe.pmm.model.dao.BoletimPneuDAO;
+import br.com.usinasantafe.pmm.model.dao.CarregCompDAO;
 import br.com.usinasantafe.pmm.model.dao.CarretaDAO;
 import br.com.usinasantafe.pmm.model.dao.EquipDAO;
 import br.com.usinasantafe.pmm.model.dao.EquipSegDAO;
 import br.com.usinasantafe.pmm.model.dao.FuncDAO;
 import br.com.usinasantafe.pmm.model.dao.ImplementoMMDAO;
-import br.com.usinasantafe.pmm.model.dao.ItemMedPneuDAO;
+import br.com.usinasantafe.pmm.model.dao.ItemCalibPneuDAO;
 import br.com.usinasantafe.pmm.model.dao.LeiraDAO;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
@@ -58,7 +59,7 @@ import br.com.usinasantafe.pmm.util.VerifDadosServ;
 public class MotoMecFertCTR {
 
     private BoletimMMFertDAO boletimMMFertDAO;
-    private ItemMedPneuDAO itemMedPneuDAO;
+    private ItemCalibPneuDAO itemCalibPneuDAO;
     private MotoMecBean motoMecBean;
     private Long contImplemento;
     private int contRend;
@@ -75,10 +76,10 @@ public class MotoMecFertCTR {
         return boletimMMFertDAO;
     }
 
-    public ItemMedPneuDAO getItemMedPneuDAO() {
-        if (itemMedPneuDAO == null)
-            itemMedPneuDAO = new ItemMedPneuDAO();
-        return itemMedPneuDAO;
+    public ItemCalibPneuDAO getItemMedPneuDAO() {
+        if (itemCalibPneuDAO == null)
+            itemCalibPneuDAO = new ItemCalibPneuDAO();
+        return itemCalibPneuDAO;
     }
 
     public boolean verBolAberto(){
@@ -156,10 +157,13 @@ public class MotoMecFertCTR {
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
         String dadosEnvioBoletimPneu = boletimPneuDAO.dadosEnvioBoletimPneu(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())))));
 
-        ItemMedPneuDAO itemMedPneuDAO = new ItemMedPneuDAO();
-        String dadosEnvioItemMedPneu = itemMedPneuDAO.dadosEnvioItemMedPneu(itemMedPneuDAO.itemMedPneuIdBolList(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())))))));
+        ItemCalibPneuDAO itemCalibPneuDAO = new ItemCalibPneuDAO();
+        String dadosEnvioItemMedPneu = itemCalibPneuDAO.dadosEnvioItemMedPneu(itemCalibPneuDAO.itemMedPneuIdBolList(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())))))));
 
-        return dadosEnvioBoletim + "_" + dadosEnvioApont + "_" + dadosEnvioApontImpl + "_" + dadosEnvioMovLeira + "_" + dadosEnvioApontMecan + "_" + dadosEnvioBoletimPneu + "_" + dadosEnvioItemMedPneu;
+        CarregCompDAO carregCompDAO = new CarregCompDAO();
+        String dadosCarregComp = carregCompDAO.dadosEnvioCarreg(carregCompDAO.carregCompostoDescarregInsumo(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())))));
+
+        return dadosEnvioBoletim + "_" + dadosEnvioApont + "_" + dadosEnvioApontImpl + "_" + dadosEnvioMovLeira + "_" + dadosEnvioApontMecan + "_" + dadosEnvioBoletimPneu + "_" + dadosEnvioItemMedPneu + "_" + dadosCarregComp;
     }
 
     public String dadosEnvioBolFechadoMMFert(){
@@ -185,16 +189,19 @@ public class MotoMecFertCTR {
         ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
         String dadosEnvioApontMecan = apontMecanDAO.dadosEnvioApontMecan(apontMecanDAO.apontMecanEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
 
+        CarregCompDAO carregCompDAO = new CarregCompDAO();
+        String dadosCarregComp = carregCompDAO.dadosEnvioCarreg(carregCompDAO.carregCompostoDescarregInsumo(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())))));
+
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
         String dadosEnvioBoletimPneu = boletimPneuDAO.dadosEnvioBoletimPneu(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))));
 
-        ItemMedPneuDAO itemMedPneuDAO = new ItemMedPneuDAO();
-        String dadosEnvioItemMedPneu = itemMedPneuDAO.dadosEnvioItemMedPneu(itemMedPneuDAO.itemMedPneuIdBolList(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))))));
+        ItemCalibPneuDAO itemCalibPneuDAO = new ItemCalibPneuDAO();
+        String dadosEnvioItemMedPneu = itemCalibPneuDAO.dadosEnvioItemMedPneu(itemCalibPneuDAO.itemMedPneuIdBolList(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))))));
 
-        return dadosEnvioBoletim + "_" + dadosEnvioApont + "_" + dadosEnvioApontImpl + "_" + dadosEnvioMovLeira + "_" + dadosEnvioApontMecan + "_" + dadosEnvioBoletimPneu + "_" + dadosEnvioItemMedPneu + "_" + dadosEnvioRend + "_" + dadosEnvioRecolh;
+        return dadosEnvioBoletim + "_" + dadosEnvioApont + "_" + dadosEnvioApontImpl + "_" + dadosEnvioMovLeira + "_" + dadosEnvioApontMecan + "_" + dadosEnvioBoletimPneu + "_" + dadosEnvioItemMedPneu + "_" + dadosCarregComp + "_" + dadosEnvioRend + "_" + dadosEnvioRecolh;
     }
 
-    public void updBolAberto(String result, String activity){
+    public void updateBolAberto(String result, String activity){
 
         try {
 
@@ -215,12 +222,16 @@ public class MotoMecFertCTR {
             ArrayList<Long> idBoletimPneuArrayList = boletimPneuDAO.idBoletimPneuArrayList(retorno[4]);
             boletimPneuDAO.updateBoletimPneu(idBoletimPneuArrayList);
 
+            CarregCompDAO carregCompDAO = new CarregCompDAO();
+            ArrayList<Long> idCarregArrayList = carregCompDAO.idCarregArrayList(retorno[5]);
+            carregCompDAO.updDescarregInsumoCarregComposto(idCarregArrayList);
+
             LeiraDAO leiraDAO = new LeiraDAO();
-            ArrayList<Long> idMovLeiraArrayList = leiraDAO.idMovLeiraArrayList(retorno[5]);
+            ArrayList<Long> idMovLeiraArrayList = leiraDAO.idMovLeiraArrayList(retorno[6]);
             leiraDAO.updateMovLeira(idMovLeiraArrayList);
 
             ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
-            ArrayList<Long> idApontMecanArrayList = apontMecanDAO.idApontMecanArrayList(retorno[6]);
+            ArrayList<Long> idApontMecanArrayList = apontMecanDAO.idApontMecanArrayList(retorno[7]);
             apontMecanDAO.updateApontMecan(idApontMecanArrayList);
 
             EnvioDadosServ.getInstance().envioDados(activity);
@@ -248,19 +259,23 @@ public class MotoMecFertCTR {
             apontMMFertDAO.updateApont(idApontArrayList);
 
             ImplementoMMDAO implementoMMDAO = new ImplementoMMDAO();
-            ArrayList<Long> idApontImplArrayList = implementoMMDAO.idApontImplArrayList(retorno[2]);
+            ArrayList<Long> idApontImplArrayList = implementoMMDAO.idApontImplArrayList(retorno[3]);
             implementoMMDAO.updateApontImpl(idApontImplArrayList);
 
             BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-            ArrayList<Long> idBoletimPneuArrayList = boletimPneuDAO.idBoletimPneuArrayList(retorno[3]);
+            ArrayList<Long> idBoletimPneuArrayList = boletimPneuDAO.idBoletimPneuArrayList(retorno[4]);
             boletimPneuDAO.updateBoletimPneu(idBoletimPneuArrayList);
 
+            CarregCompDAO carregCompDAO = new CarregCompDAO();
+            ArrayList<Long> idCarregArrayList = carregCompDAO.idCarregArrayList(retorno[5]);
+            carregCompDAO.updDescarregInsumoCarregComposto(idCarregArrayList);
+
             LeiraDAO leiraDAO = new LeiraDAO();
-            ArrayList<Long> idMovLeiraArrayList = leiraDAO.idMovLeiraArrayList(retorno[4]);
+            ArrayList<Long> idMovLeiraArrayList = leiraDAO.idMovLeiraArrayList(retorno[6]);
             leiraDAO.updateMovLeira(idMovLeiraArrayList);
 
             ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
-            ArrayList<Long> idApontMecanArrayList = apontMecanDAO.idApontMecanArrayList(retorno[5]);
+            ArrayList<Long> idApontMecanArrayList = apontMecanDAO.idApontMecanArrayList(retorno[7]);
             apontMecanDAO.updateApontMecan(idApontMecanArrayList);
 
             EnvioDadosServ.getInstance().envioDados(activity);
@@ -288,9 +303,12 @@ public class MotoMecFertCTR {
             implementoMMDAO.deleteApontImpl(idApontArrayList);
 
             BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-            ItemMedPneuDAO itemMedPneuDAO = new ItemMedPneuDAO();
-            itemMedPneuDAO.deleteItemMedPneu(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(idApontArrayList)));
+            ItemCalibPneuDAO itemCalibPneuDAO = new ItemCalibPneuDAO();
+            itemCalibPneuDAO.deleteItemMedPneu(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(idApontArrayList)));
             boletimPneuDAO.deleteBoletimPneu(idApontArrayList);
+
+            CarregCompDAO carregCompDAO = new CarregCompDAO();
+            carregCompDAO.deleteCarreg(idApontArrayList);
 
             idApontArrayList.clear();
 
@@ -311,7 +329,6 @@ public class MotoMecFertCTR {
         }
 
         boletimMMFertArrayList.clear();
-
 
     }
 
@@ -770,6 +787,11 @@ public class MotoMecFertCTR {
         return apontMMFertDAO.apontMMFertList(getBoletimMMFertAberto().getIdBolMMFert());
     }
 
+    public ApontMMFertBean getApontAberto(Long idBol){
+        ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
+        return apontMMFertDAO.getApontAberto(idBol);
+    }
+
     public void inserirApontBolAnterior(String activity){
 
         CECCTR cecCTR = new CECCTR();
@@ -876,7 +898,7 @@ public class MotoMecFertCTR {
         salvarAltCompApont(Tempo.getInstance().dthrLongToString(apontMMFertBean.getDthrApontLongMMFert()), activity);
     }
 
-    public void salvarParadaPneu(Long idParada, Long idTransb, Double longitude, Double latitude, String activity){
+    public void salvarParadaCalibragem(Long idParada, Long idTransb, Double longitude, Double latitude, String activity){
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
         ApontMMFertBean apontMMFertBean = apontMMFertDefault();
         apontMMFertBean.setParadaApontMMFert(idParada);
@@ -938,6 +960,48 @@ public class MotoMecFertCTR {
 
     }
 
+    public void salvarApontLeira(Double longitude, Double latitude, String activity){
+
+        ConfigCTR configCTR = new ConfigCTR();
+        ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
+
+        LogProcessoDAO.getInstance().insertLogProcesso("Long idParada = 0L;\n" +
+                "        if(motoMecBean.getFuncaoOperMotoMec() == 1){\n" +
+                "            idParada = 0L;\n" +
+                "        }\n" +
+                "        else if(motoMecBean.getFuncaoOperMotoMec() == 2){\n" +
+                "            idParada = motoMecBean.getIdOperMotoMec();\n" +
+                "        }", activity);
+
+        Long idParada = 0L;
+
+        if(motoMecBean.getFuncaoOperMotoMec() == 1){
+            idParada = 0L;
+        }
+        else if(motoMecBean.getFuncaoOperMotoMec() == 2){
+            idParada = motoMecBean.getIdOperMotoMec();
+        }
+
+        ApontMMFertBean apontMMFertBean = apontMMFertDefault();
+        apontMMFertBean.setIdMotoMec(motoMecBean.getIdMotoMec());
+        apontMMFertBean.setParadaApontMMFert(idParada);
+        apontMMFertBean.setAtivApontMMFert(configCTR.getConfig().getIdAtivConfig());
+        apontMMFertBean.setLongitudeApontMMFert(longitude);
+        apontMMFertBean.setLatitudeApontMMFert(latitude);
+        LogProcessoDAO.getInstance().insertLogProcesso("ApontMMFertBean apontMMFertBean = apontMMFertDefault();\n" +
+                "        apontMMFertBean.setIdMotoMec(motoMecBean.getIdMotoMec());\n" +
+                "        apontMMFertBean.setParadaApontMMFert(idParada);\n" +
+                "        apontMMFertBean.setAtivApontMMFert(idAtiv);\n" +
+                "        apontMMFertBean.setLongitudeApontMMFert(longitude);\n" +
+                "        apontMMFertBean.setLatitudeApontMMFert(latitude);\n" +
+                "        apontMMFertDAO.salvarApont(apontMMFertBean, 2);", activity);
+        apontMMFertDAO.salvarApont(apontMMFertBean, 2, 1L);
+
+        LogProcessoDAO.getInstance().insertLogProcesso("salvarAltCompApont(Tempo.getInstance().dthrLongToString(dthrLong), activity);", activity);
+        salvarAltCompApont(Tempo.getInstance().dthrLongToString(apontMMFertBean.getDthrApontLongMMFert()), activity);
+
+    }
+
     private void salvarAltCompApont(String dthr, String activity){
 
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
@@ -974,10 +1038,13 @@ public class MotoMecFertCTR {
         return apontMMFertBean;
     }
 
-    public void fecharApont(){
+    public void fecharApont(String activity){
         BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
         apontMMFertDAO.fecharApont(boletimMMFertDAO.getBoletimMMFertAberto().getIdBolMMFert());
+
+        LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().envioDados(activity);", activity);
+        EnvioDadosServ.getInstance().envioDados(activity);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1059,32 +1126,28 @@ public class MotoMecFertCTR {
                 , boletimMMFertDAO.getBoletimMMFertAberto().getIdEquipBolMMFert());
     }
 
-    public void fecharBoletimPneu(String activity){
+    public void fecharBoletimPneu(){
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
         boletimPneuDAO.fecharBoletimPneu();
-
-        LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().envioDados(activity);", activity);
-        EnvioDadosServ.getInstance().envioDados(activity);
-
     }
 
     public void deletePneuAberto(){
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-        ItemMedPneuDAO itemMedPneuDAO = new ItemMedPneuDAO();
-        itemMedPneuDAO.deleteItemMedPneuIdBol(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu());
+        ItemCalibPneuDAO itemCalibPneuDAO = new ItemCalibPneuDAO();
+        itemCalibPneuDAO.deleteItemMedPneuIdBol(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu());
         boletimPneuDAO.deleteBoletimPneuAberto();
     }
 
     public void salvarItemMedPneu(){
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-        itemMedPneuDAO.salvarItemMedPneu(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu());
+        itemCalibPneuDAO.salvarItemMedPneu(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu());
     }
 
     public boolean verifFinalItemPneuBoletimAberto(){
         EquipDAO equipDAO = new EquipDAO();
-        ItemMedPneuDAO itemMedPneuDAO = new ItemMedPneuDAO();
+        ItemCalibPneuDAO itemCalibPneuDAO = new ItemCalibPneuDAO();
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-        return (equipDAO.rEquipPneuList().size() == itemMedPneuDAO.itemMedPneuIdBolList(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu()).size());
+        return (equipDAO.rEquipPneuList().size() == itemCalibPneuDAO.itemMedPneuIdBolList(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu()).size());
     }
 
     public ArrayList<REquipPneuBean> posPneuList(){
@@ -1092,11 +1155,11 @@ public class MotoMecFertCTR {
         ArrayList<REquipPneuBean> rEquipPneuArrayList = new ArrayList();
         EquipDAO equipDAO = new EquipDAO();
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-        ItemMedPneuDAO itemMedPneuDAO = new ItemMedPneuDAO();
+        ItemCalibPneuDAO itemCalibPneuDAO = new ItemCalibPneuDAO();
 
         List<REquipPneuBean> rEquipPneuList = equipDAO.rEquipPneuList();
         for (REquipPneuBean rEquipPneuBean : rEquipPneuList){
-            if(!itemMedPneuDAO.verItemMedPneuIdBolIdPosConf(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu()
+            if(!itemCalibPneuDAO.verItemMedPneuIdBolIdPosConf(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu()
                     , rEquipPneuBean.getIdPosConfPneu())){
                 rEquipPneuBean.setStatusPneu(1L);
                 rEquipPneuArrayList.add(rEquipPneuBean);
@@ -1104,7 +1167,7 @@ public class MotoMecFertCTR {
         }
 
         for (REquipPneuBean rEquipPneuBean : rEquipPneuList){
-            if(itemMedPneuDAO.verItemMedPneuIdBolIdPosConf(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu()
+            if(itemCalibPneuDAO.verItemMedPneuIdBolIdPosConf(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu()
                     , rEquipPneuBean.getIdPosConfPneu())){
                 rEquipPneuBean.setStatusPneu(2L);
                 rEquipPneuArrayList.add(rEquipPneuBean);
@@ -1121,8 +1184,8 @@ public class MotoMecFertCTR {
 
     public boolean verItemMedPneuNroPneuRepetido(String nroPneu){
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-        ItemMedPneuDAO itemMedPneuDAO = new ItemMedPneuDAO();
-        return itemMedPneuDAO.verItemMedPneuIdBolNroPneu(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu(), nroPneu);
+        ItemCalibPneuDAO itemCalibPneuDAO = new ItemCalibPneuDAO();
+        return itemCalibPneuDAO.verItemMedPneuIdBolNroPneu(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu(), nroPneu);
     }
 
     public void verPneu(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
@@ -1161,14 +1224,14 @@ public class MotoMecFertCTR {
 
     public boolean verItemMedPneuBolAberto(){
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-        return itemMedPneuDAO.verItemMedPneuIdBolIdPosConf(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu()
-                , itemMedPneuDAO.getItemMedPneuBean().getIdPosConfPneu());
+        return itemCalibPneuDAO.verItemMedPneuIdBolIdPosConf(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu()
+                , itemCalibPneuDAO.getItemMedPneuBean().getIdPosConfItemCalibPneu());
     }
 
-    public ItemMedPneuBean getItemMedPneuBolAberto(){
+    public ItemCalibPneuBean getItemMedPneuBolAberto(){
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-        return itemMedPneuDAO.getItemMedPneuIdBolIdPosConf(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu()
-                , itemMedPneuDAO.getItemMedPneuBean().getIdPosConfPneu());
+        return itemCalibPneuDAO.getItemMedPneuIdBolIdPosConf(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu()
+                , itemCalibPneuDAO.getItemMedPneuBean().getIdPosConfItemCalibPneu());
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

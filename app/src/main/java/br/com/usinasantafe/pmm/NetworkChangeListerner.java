@@ -12,9 +12,9 @@ import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.view.ActivityGeneric;
 
 public class NetworkChangeListerner extends BroadcastReceiver {
+
     @Override
     public void onReceive(Context context, Intent intent) {
-
         if(ConnectNetwork.isConnected(context)){
             ActivityGeneric.connectNetwork = true;
             LogProcessoDAO.getInstance().insertLogProcesso("if(ConnectNetwork.isConnected(context)){\n" +

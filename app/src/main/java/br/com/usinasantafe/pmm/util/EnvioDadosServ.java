@@ -49,16 +49,7 @@ public class EnvioDadosServ {
         CompostoCTR compostoCTR = new CompostoCTR();
 
         LogProcessoDAO.getInstance().insertLogProcesso("compostoCTR.dadosEnvioCarreg()", activity);
-        envio(urlsConexaoHttp.getsInsertCarreg(), compostoCTR.dadosEnvioCarreg(), activity);
-
-    }
-
-    public void envioLeiraDescarreg(String activity) {
-
-        CompostoCTR compostoCTR = new CompostoCTR();
-
-        LogProcessoDAO.getInstance().insertLogProcesso("compostoCTR.dadosEnvioLeiraDescarreg()", activity);
-        envio(urlsConexaoHttp.getsInsertLeiraDescarreg(), compostoCTR.dadosEnvioLeiraDescarreg(), activity);
+        envio(urlsConexaoHttp.getsInsertCarreg(), compostoCTR.dadosEnvioCarregInsumo(), activity);
 
     }
 
@@ -114,13 +105,9 @@ public class EnvioDadosServ {
 
     public boolean verifEnvioCarregInsumo() {
         CompostoCTR compostoCTR = new CompostoCTR();
-        return compostoCTR.verifEnvioCarregInsumo();
+        return compostoCTR.verifEnvioCarregInsumoComposto();
     }
 
-    public boolean verifEnvioLeiraDescarreg() {
-        CompostoCTR compostoCTR = new CompostoCTR();
-        return compostoCTR.verifEnvioLeiraDescarreg();
-    }
 
     public boolean verifPreCEC() {
         CECCTR cecCTR = new CECCTR();
@@ -137,8 +124,7 @@ public class EnvioDadosServ {
         MecanicoCTR mecanicoCTR = new MecanicoCTR();
         return motoMecFertCTR.verEnvioApont()
                 || motoMecFertCTR.verEnvioMovLeira()
-                || mecanicoCTR.verApontMecanAbertoNEnviado()
-                || mecanicoCTR.verApontMecanFechadoNEnviado();
+                || mecanicoCTR.verApontMecanNEnviado();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -160,28 +146,22 @@ public class EnvioDadosServ {
                             "envioCarregInsumo()", activity);
                     envioCarregInsumo(activity);
                 } else {
-                    if (verifEnvioLeiraDescarreg()) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("verifEnvioCarregComposto()\n" +
-                                "envioLeiraDescarreg()", activity);
-                        envioLeiraDescarreg(activity);
+                    if (verifPreCEC()) {
+                        LogProcessoDAO.getInstance().insertLogProcesso("verifPreCEC()\n" +
+                                "envioPreCEC()", activity);
+                        envioPreCEC(activity);
                     } else {
-                        if (verifPreCEC()) {
-                            LogProcessoDAO.getInstance().insertLogProcesso("verifPreCEC()\n" +
-                                    "envioPreCEC()", activity);
-                            envioPreCEC(activity);
+                        if (verifBolFechadoMMFert()) {
+                            LogProcessoDAO.getInstance().insertLogProcesso("verifBolFechadoMMFert()\n" +
+                                    "enviarBolFechadoMMFert()", activity);
+                            enviarBolFechadoMMFert(activity);
                         } else {
-                            if (verifBolFechadoMMFert()) {
-                                LogProcessoDAO.getInstance().insertLogProcesso("verifBolFechadoMMFert()\n" +
-                                        "enviarBolFechadoMMFert()", activity);
-                                enviarBolFechadoMMFert(activity);
+                            if (verifApontMMMovLeiraMecanFert()) {
+                                LogProcessoDAO.getInstance().insertLogProcesso("verifApontMMMovLeiraFert()\n" +
+                                        "enviarBolAbertoMMFert()", activity);
+                                enviarBolAbertoMMFert(activity);
                             } else {
-                                if (verifApontMMMovLeiraMecanFert()) {
-                                    LogProcessoDAO.getInstance().insertLogProcesso("verifApontMMMovLeiraFert()\n" +
-                                            "enviarBolAbertoMMFert()", activity);
-                                    enviarBolAbertoMMFert(activity);
-                                } else {
-                                    status = 3;
-                                }
+                                status = 3;
                             }
                         }
                     }
@@ -192,8 +172,6 @@ public class EnvioDadosServ {
 
     public boolean verifDadosEnvio() {
         if ((!verifBolFechadoMMFert())
-                && (!verifEnvioCarregInsumo())
-                && (!verifEnvioLeiraDescarreg())
                 && (!verifPreCEC())
                 && (!verifApontMMMovLeiraMecanFert())
                 && (!verifChecklist())){
@@ -221,7 +199,7 @@ public class EnvioDadosServ {
             LogProcessoDAO.getInstance().insertLogProcesso("else if (result.trim().startsWith(\"BOLABERTOMM\")) {\n" +
                     "            MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();\n" +
                     "motoMecFertCTR.updBolAberto(result)", activity);
-            motoMecFertCTR.updBolAberto(result, activity);
+            motoMecFertCTR.updateBolAberto(result, activity);
         }
         else if (result.trim().startsWith("BOLFECHADOMM")) {
             MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
@@ -236,20 +214,6 @@ public class EnvioDadosServ {
                     "            CompostoCTR compostoCTR = new CompostoCTR();\n" +
                     "compostoCTR.updCarregInsumo(result)", activity);
             compostoCTR.updCarregInsumo(result, activity);
-        }
-        else if (result.trim().startsWith("GRAVOU-CARREGCOMPOSTO")) {
-            CompostoCTR compostoCTR = new CompostoCTR();
-            LogProcessoDAO.getInstance().insertLogProcesso("else if (result.trim().startsWith(\"GRAVOU-CARREGCOMPOSTO\")) {\n" +
-                    "            CompostoCTR compostoCTR = new CompostoCTR();\n" +
-                    "compostoCTR.updCarregComposto(result)", activity);
-            compostoCTR.updCarregCompostoDescarreg(result, activity);
-        }
-        else if (result.trim().startsWith("GRAVOU-LEIRADESCARREG")) {
-            CompostoCTR compostoCTR = new CompostoCTR();
-            LogProcessoDAO.getInstance().insertLogProcesso("else if (result.trim().startsWith(\"GRAVOU-CARREGCOMPOSTO\")) {\n" +
-                    "            CompostoCTR compostoCTR = new CompostoCTR();\n" +
-                    "compostoCTR.updCarregComposto(result)", activity);
-            compostoCTR.updCarregCompostoDescarreg(result, activity);
         }
         else if(result.trim().startsWith("PRECEC")){
             CECCTR cecCTR = new CECCTR();

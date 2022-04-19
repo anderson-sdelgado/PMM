@@ -198,9 +198,7 @@ public class BackupCECActivity extends ActivityGeneric {
             else if((cecBean.getUnidadeSorteada1CEC() == 0) &&
                     (cecBean.getUnidadeSorteada2CEC() == 0) &&
                     (cecBean.getUnidadeSorteada3CEC() != 0)){
-
-
-
+                
                 retorno = retorno + "Cargas Sorteadas \n";
                 retorno = retorno + ""+ cecBean.getUnidadeSorteada3CEC() + " \n";
                 retorno = retorno + "CEC: " + cecBean.getCecSorteado3CEC() + " \n";

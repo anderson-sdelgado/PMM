@@ -40,7 +40,7 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImplementoMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfColheitaBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfPlantioBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ItemMedPneuBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ItemCalibPneuBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogProcessoBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.MovLeiraBean;
@@ -118,7 +118,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, ImplementoMMBean.class);
 			TableUtils.createTable(cs, InfColheitaBean.class);
 			TableUtils.createTable(cs, InfPlantioBean.class);
-			TableUtils.createTable(cs, ItemMedPneuBean.class);
+			TableUtils.createTable(cs, ItemCalibPneuBean.class);
 			TableUtils.createTable(cs, LogErroBean.class);
 			TableUtils.createTable(cs, LogProcessoBean.class);
 			TableUtils.createTable(cs, MovLeiraBean.class);
@@ -184,7 +184,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 				TableUtils.dropTable(cs, ImplementoMMBean.class, true);
 				TableUtils.dropTable(cs, InfColheitaBean.class, true);
 				TableUtils.dropTable(cs, InfPlantioBean.class, true);
-				TableUtils.dropTable(cs, ItemMedPneuBean.class, true);
+				TableUtils.dropTable(cs, ItemCalibPneuBean.class, true);
 				TableUtils.dropTable(cs, LogErroBean.class, true);
 				TableUtils.dropTable(cs, LogProcessoBean.class, true);
 				TableUtils.dropTable(cs, MovLeiraBean.class, true);
@@ -233,7 +233,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 				TableUtils.createTable(cs, ImplementoMMBean.class);
 				TableUtils.createTable(cs, InfColheitaBean.class);
 				TableUtils.createTable(cs, InfPlantioBean.class);
-				TableUtils.createTable(cs, ItemMedPneuBean.class);
+				TableUtils.createTable(cs, ItemCalibPneuBean.class);
 				TableUtils.createTable(cs, LogErroBean.class);
 				TableUtils.createTable(cs, LogProcessoBean.class);
 				TableUtils.createTable(cs, MovLeiraBean.class);

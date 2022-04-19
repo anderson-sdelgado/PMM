@@ -148,7 +148,6 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
             return;
         }
 
-        // Permissions ok, we get last location
         location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
         startLocationUpdates();
     }

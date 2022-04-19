@@ -1,7 +1,5 @@
 package br.com.usinasantafe.pmm.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -46,7 +44,7 @@ public class PressaoColPneuActivity extends ActivityGeneric {
                         LogProcessoDAO.getInstance().insertLogProcesso("if (qtde < 1000) {\n" +
                                 "                        pmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setPressaoEncItemMedPneu(qtde);\n" +
                                 "                        Intent it = new Intent(PressaoEncPneuActivity.this, PressaoColPneuActivity.class);", getLocalClassName());
-                        pmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setPressaoColItemMedPneu(qtde);
+                        pmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setPressaoColItemCalibPneu(qtde);
                         pmmContext.getMotoMecFertCTR().salvarItemMedPneu();
                         Intent it = new Intent(PressaoColPneuActivity.this, ListaPosPneuActivity.class);
                         startActivity(it);

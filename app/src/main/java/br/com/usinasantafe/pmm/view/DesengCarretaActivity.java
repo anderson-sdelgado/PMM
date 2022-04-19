@@ -66,7 +66,7 @@ public class DesengCarretaActivity extends ActivityGeneric {
                 else{
                     LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                             "                    Intent it = new Intent(DesengCarretaActivity.this, MenuParadaECMActivity.class);", getLocalClassName());
-                    Intent it = new Intent(DesengCarretaActivity.this, MenuParadaECMActivity.class);
+                    Intent it = new Intent(DesengCarretaActivity.this, ListaParadaECMActivity.class);
                     startActivity(it);
                     finish();
                 }
@@ -90,7 +90,7 @@ public class DesengCarretaActivity extends ActivityGeneric {
                 else{
                     LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                             "                    Intent it = new Intent(DesengCarretaActivity.this, MenuParadaECMActivity.class);", getLocalClassName());
-                    Intent it = new Intent(DesengCarretaActivity.this, MenuParadaECMActivity.class);
+                    Intent it = new Intent(DesengCarretaActivity.this, ListaParadaECMActivity.class);
                     startActivity(it);
                     finish();
                 }

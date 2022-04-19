@@ -23,7 +23,7 @@ import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
-public class ListaParadaActivity extends ActivityGeneric {
+public class ListaParadaPMMActivity extends ActivityGeneric {
 
     private ListView paradaListView;
     private PMMContext pmmContext;
@@ -35,7 +35,7 @@ public class ListaParadaActivity extends ActivityGeneric {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_parada);
+        setContentView(R.layout.activity_lista_parada_pmm);
 
         pmmContext = (PMMContext) getApplication();
 
@@ -69,7 +69,7 @@ public class ListaParadaActivity extends ActivityGeneric {
 
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                ListaParadaActivity.this.adapter.getFilter().filter(cs);
+                ListaParadaPMMActivity.this.adapter.getFilter().filter(cs);
             }
 
             @Override
@@ -102,7 +102,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                             "                    progressBar.setMax(100);\n" +
                             "                    progressBar.show();", getLocalClassName());
 
-                    progressBar = new ProgressDialog(ListaParadaActivity.this);
+                    progressBar = new ProgressDialog(ListaParadaPMMActivity.this);
                     progressBar.setCancelable(true);
                     progressBar.setMessage("ATUALIZANDO ...");
                     progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -111,7 +111,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                     progressBar.show();
 
                     LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(ListaParadaActivity.this, ListaParadaActivity.class, progressBar, \"Parada\", 1, getLocalClassName());", getLocalClassName());
-                    pmmContext.getMotoMecFertCTR().atualDados(ListaParadaActivity.this, ListaParadaActivity.class, progressBar, "Parada", 1, getLocalClassName());
+                    pmmContext.getMotoMecFertCTR().atualDados(ListaParadaPMMActivity.this, ListaParadaPMMActivity.class, progressBar, "Parada", 1, getLocalClassName());
 
                 } else {
 
@@ -124,7 +124,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                             "                        }\n" +
                             "                    });\n" +
                             "                    alerta.show();", getLocalClassName());
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaPMMActivity.this);
                     alerta.setTitle("ATENÇÃO");
                     alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
                     alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -148,7 +148,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(ListaParadaActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
-                Intent it = new Intent(ListaParadaActivity.this, ListaAtividadeActivity.class);
+                Intent it = new Intent(ListaParadaPMMActivity.this, ListaAtividadeActivity.class);
                 startActivity(it);
                 finish();
 
@@ -175,7 +175,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                 TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
                 paradaString = textView.getText().toString();
 
-                AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
+                AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaPMMActivity.this);
                 alerta.setTitle("ATENÇÃO");
                 String label = "DESEJA REALMENTE REALIZAR A PARADA '" + paradaString + "' ?";
                 alerta.setMessage(label);
@@ -186,14 +186,12 @@ public class ListaParadaActivity extends ActivityGeneric {
                         LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
                                 "                    @Override\n" +
                                 "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
-
                         if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
-
                             LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
                                     "                            AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
                                     "                            alerta.setMessage(\"POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.\");", getLocalClassName());
-                            AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
+                            AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaPMMActivity.this);
                             alerta.setTitle("ATENÇÃO");
                             alerta.setMessage("POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.");
                             alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -203,7 +201,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                                             "                                @Override\n" +
                                             "                                public void onClick(DialogInterface dialog, int which) {\n" +
                                             "                                    Intent it = new Intent(ListaParadaActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                                    Intent it = new Intent(ListaParadaActivity.this, MenuPrincPMMActivity.class);
+                                    Intent it = new Intent(ListaParadaPMMActivity.this, MenuPrincPMMActivity.class);
                                     startActivity(it);
                                     finish();
                                 }
@@ -217,7 +215,7 @@ public class ListaParadaActivity extends ActivityGeneric {
                                         "                                AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);\n" +
                                         "                                alerta.setTitle(\"ATENÇÃO\");\n" +
                                         "                                alerta.setMessage(\"PARADA JÁ APONTADA PARA O EQUIPAMENTO!\");", getLocalClassName());
-                                AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);
+                                AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaPMMActivity.this);
                                 alerta.setTitle("ATENÇÃO");
                                 alerta.setMessage("PARADA JÁ APONTADA PARA O EQUIPAMENTO!");
                                 alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -231,15 +229,20 @@ public class ListaParadaActivity extends ActivityGeneric {
                                 alerta.show();
                             } else {
 
-                                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().clearDadosFert();\n" +
-                                        "                                pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());\n" +
-                                        "                                Intent it = new Intent(ListaParadaActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                        "                                pmmContext.getConfigCTR().clearDadosFert();\n" +
+                                        "                                List<RFuncaoAtivParBean> rFuncaoAtivParList = pmmContext.getMotoMecFertCTR().getFuncaoParadaList(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), getLocalClassName());\n" +
+                                        "                                boolean calibragem = false;\n" +
+                                        "                                for (int i = 0; i < rFuncaoAtivParList.size(); i++) {\n" +
+                                        "                                    RFuncaoAtivParBean rFuncaoAtivParBean = rFuncaoAtivParList.get(i);\n" +
+                                        "                                    if (rFuncaoAtivParBean.getCodFuncao() == 3) {\n" +
+                                        "                                        calibragem = true;\n" +
+                                        "                                    }\n" +
+                                        "                                }\n" +
+                                        "                                rFuncaoAtivParList.clear();", getLocalClassName());
                                 pmmContext.getConfigCTR().clearDadosFert();
-
                                 List<RFuncaoAtivParBean> rFuncaoAtivParList = pmmContext.getMotoMecFertCTR().getFuncaoParadaList(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), getLocalClassName());
-
                                 boolean calibragem = false;
-
                                 for (int i = 0; i < rFuncaoAtivParList.size(); i++) {
                                     RFuncaoAtivParBean rFuncaoAtivParBean = rFuncaoAtivParList.get(i);
                                     if (rFuncaoAtivParBean.getCodFuncao() == 3) {
@@ -249,15 +252,21 @@ public class ListaParadaActivity extends ActivityGeneric {
                                 rFuncaoAtivParList.clear();
 
                                 if(calibragem){
-                                    pmmContext.getMotoMecFertCTR().salvarParadaPneu(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
+                                    LogProcessoDAO.getInstance().insertLogProcesso("if(calibragem){\n" +
+                                            "                                    pmmContext.getMotoMecFertCTR().salvarParadaPneu(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());\n" +
+                                            "                                    pmmContext.getMotoMecFertCTR().salvarBoletimPneu();\n" +
+                                            "                                    Intent it = new Intent(ListaParadaPMMActivity.this, ListaPosPneuActivity.class);", getLocalClassName());
+                                    pmmContext.getMotoMecFertCTR().salvarParadaCalibragem(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
                                     pmmContext.getMotoMecFertCTR().salvarBoletimPneu();
-                                    Intent it = new Intent(ListaParadaActivity.this, ListaPosPneuActivity.class);
+                                    Intent it = new Intent(ListaParadaPMMActivity.this, ListaPosPneuActivity.class);
                                     startActivity(it);
                                     finish();
-                                }
-                                else{
+                                } else {
+                                    LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                            "                                    pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());\n" +
+                                            "                                    Intent it = new Intent(ListaParadaPMMActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                                     pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
-                                    Intent it = new Intent(ListaParadaActivity.this, MenuPrincPMMActivity.class);
+                                    Intent it = new Intent(ListaParadaPMMActivity.this, MenuPrincPMMActivity.class);
                                     startActivity(it);
                                     finish();
                                 }

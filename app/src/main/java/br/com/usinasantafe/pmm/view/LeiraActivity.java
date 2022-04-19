@@ -144,7 +144,7 @@ public class LeiraActivity extends ActivityGeneric {
                         }
 
                         LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                        pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+                        pmmContext.getMotoMecFertCTR().salvarApontLeira(getLongitude(), getLatitude(), getLocalClassName());
 
                         if (pmmContext.getConfigCTR().getOS().getTipoOS() == 0L) {
                             LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getOS().getTipoOS() == 0L) {\n" +
@@ -157,14 +157,17 @@ public class LeiraActivity extends ActivityGeneric {
                             pmmContext.getCompostoCTR().salvarLeiraDescarreg(Long.parseLong(editTextPadrao.getText().toString()));
                         }
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(LeiraActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().fecharApont();\n" +
+                                "                        Intent it = new Intent(LeiraActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                        pmmContext.getMotoMecFertCTR().fecharApont(getLocalClassName());
                         Intent it = new Intent(LeiraActivity.this, MenuPrincPCOMPActivity.class);
                         startActivity(it);
                         finish();
 
                     } else {
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(LeiraActivity.this);\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                "AlertDialog.Builder alerta = new AlertDialog.Builder(LeiraActivity.this);\n" +
                                 "                        alerta.setTitle(\"ATENÇÃO\");\n" +
                                 "                        alerta.setMessage(\"NUMERAÇÃO DO LEIRA INEXISTENTE! FAVOR VERIFICA A MESMA.\");\n" +
                                 "                        alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +

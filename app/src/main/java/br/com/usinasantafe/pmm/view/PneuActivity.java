@@ -39,7 +39,7 @@ public class PneuActivity extends ActivityGeneric {
                 "            editText.setText(\"\");\n" +
                 "        }", getLocalClassName());
         if(pmmContext.getMotoMecFertCTR().verItemMedPneuBolAberto()){
-            editText.setText(pmmContext.getMotoMecFertCTR().getItemMedPneuBolAberto().getNroPneuItemMedPneu());
+            editText.setText(pmmContext.getMotoMecFertCTR().getItemMedPneuBolAberto().getNroPneuItemCalibPneu());
         }
         else{
             editText.setText("");
@@ -57,7 +57,7 @@ public class PneuActivity extends ActivityGeneric {
                             "                    String nroPneu = editTextPadrao.getText().toString();\n" +
                             "                    pmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setNroPneuItemMedPneu(nroPneu);", getLocalClassName());
                     String nroPneu = editTextPadrao.getText().toString();
-                    pmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setNroPneuItemMedPneu(nroPneu);
+                    pmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setNroPneuItemCalibPneu(nroPneu);
 
                     if(!pmmContext.getMotoMecFertCTR().verItemMedPneuNroPneuRepetido(nroPneu)){
                         LogProcessoDAO.getInstance().insertLogProcesso("if(!pmmContext.getMotoMecFertCTR().verItemMedPneuNroPneuRepetido(nroPneu)){", getLocalClassName());

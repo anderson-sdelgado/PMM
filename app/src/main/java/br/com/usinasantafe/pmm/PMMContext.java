@@ -14,7 +14,6 @@ import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 /**
  * Created by anderson on 26/04/2017.
  */
-
 public class PMMContext extends Application {
 
     private Thread.UncaughtExceptionHandler mDefaultExceptionHandler;
@@ -28,7 +27,7 @@ public class PMMContext extends Application {
     private MecanicoCTR mecanicoCTR;
 
     public static String versaoAplic = "4.00";
-    public static int aplic = 1;   // 1 - PMM; 2 - ECM; 3 - PCOMP
+    public static int aplic = 2;   // 1 - PMM; 2 - ECM; 3 - PCOMP
 
     @Override
     public void onCreate() {

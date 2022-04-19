@@ -140,7 +140,7 @@ public class MsgNumCarretaActivity extends ActivityGeneric {
                         pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
                     }
                     LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MsgNumCarretaActivity.this, MenuParadaECMActivity.class);", getLocalClassName());
-                    Intent it = new Intent(MsgNumCarretaActivity.this, MenuParadaECMActivity.class);
+                    Intent it = new Intent(MsgNumCarretaActivity.this, ListaParadaECMActivity.class);
                     startActivity(it);
                     finish();
                 }

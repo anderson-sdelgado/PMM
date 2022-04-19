@@ -16,6 +16,8 @@ public class CarregCompBean extends Entidade {
     @DatabaseField(generatedId=true)
     private Long idCarreg;
     @DatabaseField
+    private Long idApontCarreg;
+    @DatabaseField
     private Long equipCarreg;
     @DatabaseField
     private Long motoCarreg;
@@ -48,8 +50,8 @@ public class CarregCompBean extends Entidade {
                 // 1 - Envio Carreg de Insumo e Composto com Leira;
                 // 2 - Recebe Retorno Envio de Insumo e Composto com Leira;
                 // 3 - Recebe Ord Carregamento;
-                // 4 - Enviar Leira Descarregamento;
-                // 5 - Atual Carreg Leira Descarregamento;
+                // 4 - Enviar Leira Descarregamento Composto;
+                // 5 - Atual Carreg Composto e Descarregamento Leira;
 
     public CarregCompBean() {
     }
@@ -60,6 +62,14 @@ public class CarregCompBean extends Entidade {
 
     public void setIdCarreg(Long idCarreg) {
         this.idCarreg = idCarreg;
+    }
+
+    public Long getIdApontCarreg() {
+        return idApontCarreg;
+    }
+
+    public void setIdApontCarreg(Long idApontCarreg) {
+        this.idApontCarreg = idApontCarreg;
     }
 
     public Long getEquipCarreg() {
@@ -92,6 +102,14 @@ public class CarregCompBean extends Entidade {
 
     public void setDthrCarreg(String dthrCarreg) {
         this.dthrCarreg = dthrCarreg;
+    }
+
+    public Long getDthrCarregLong() {
+        return dthrCarregLong;
+    }
+
+    public void setDthrCarregLong(Long dthrCarregLong) {
+        this.dthrCarregLong = dthrCarregLong;
     }
 
     public Long getTipoCarreg() {
@@ -166,11 +184,4 @@ public class CarregCompBean extends Entidade {
         this.statusCarreg = statusCarreg;
     }
 
-    public Long getDthrCarregLong() {
-        return dthrCarregLong;
-    }
-
-    public void setDthrCarregLong(Long dthrCarregLong) {
-        this.dthrCarregLong = dthrCarregLong;
-    }
 }

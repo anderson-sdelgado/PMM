@@ -10,12 +10,10 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.REquipPneuBean;
-import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 
 public class ListaPosPneuActivity extends ActivityGeneric {
@@ -55,7 +53,7 @@ public class ListaPosPneuActivity extends ActivityGeneric {
                         "                posPneuList.clear();\n" +
                         "                Intent it = new Intent(ListaPosPneuActivity.this, PneuActivity.class);", getLocalClassName());
                 pmmContext.getMotoMecFertCTR().getItemMedPneuDAO().setItemMedPneuBean();
-                pmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setIdPosConfPneu(posPneuList.get(position).getIdPosConfPneu());
+                pmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setIdPosConfItemCalibPneu(posPneuList.get(position).getIdPosConfPneu());
                 posPneuList.clear();
                 Intent it = new Intent(ListaPosPneuActivity.this, PneuActivity.class);
                 startActivity(it);
@@ -75,10 +73,10 @@ public class ListaPosPneuActivity extends ActivityGeneric {
                 if(pmmContext.getMotoMecFertCTR().verifFinalItemPneuBoletimAberto()){
 
                     LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verifFinalItemPneuBoletimAberto()){\n" +
-                            "                    pmmContext.getMotoMecFertCTR().fecharApont();\n" +
-                            "                    pmmContext.getMotoMecFertCTR().fecharBoletimPneu();", getLocalClassName());
-                    pmmContext.getMotoMecFertCTR().fecharApont();
-                    pmmContext.getMotoMecFertCTR().fecharBoletimPneu(getLocalClassName());
+                            "                    pmmContext.getMotoMecFertCTR().fecharBoletimPneu();\n" +
+                            "                    pmmContext.getMotoMecFertCTR().fecharApont(getLocalClassName());", getLocalClassName());
+                    pmmContext.getMotoMecFertCTR().fecharBoletimPneu();
+                    pmmContext.getMotoMecFertCTR().fecharApont(getLocalClassName());
                     if(PMMContext.aplic == 1){
                         LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                                 "Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());

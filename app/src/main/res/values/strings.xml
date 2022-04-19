@@ -125,7 +125,7 @@
     <string name="wifi_changing_network">Requesting connection to network\u2026</string>
     <string name="wifi_ssid_label">Network Name</string>
     <string name="wifi_type_label">Type</string>
-    <string name="app_name">PMM</string>
+    <string name="app_name">ECM</string>
     <string name="texto_menu_principal">PRINCIPAL - V 4.00</string>
     <string name="texto_item_list">TESTE</string>
     <string name="texto_num1">1</string>
@@ -254,7 +254,7 @@
     <string name="texto_padrao_anterior">ANTERIOR</string>
     <string name="texto_padrao_proximo">PROXIMO</string>
     <string name="texto_carreta">N. CARRETA:</string>
-    <string name="texto_desengate_carreta">DESEJA DESENGATAR AS CARRETAS:</string>
+    <string name="texto_desengate_carreta">DESEJA DESENGATAR AS CARRETAS?</string>
     <string name="texto_frente">NUM. FRENTE:</string>
     <string name="texto_fazenda">COD. SEÇÃO:</string>
     <string name="texto_lista_certificado">CERTIFICADO</string>
@@ -290,4 +290,5 @@
     <string name="texto_num_item">NUM. DO ITEM:</string>
     <string name="texto_titulo_opcao">OPÇÃO</string>
     <string name="texto_final_calibragem">FINALIZAR CALIBRAGEM</string>
+    <string name="texto_liberacao">NUM. LIBERAÇÃO:</string>
 </resources>

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMecanBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.util.Tempo;
 
@@ -71,14 +70,12 @@ public class ApontMecanDAO {
 
     }
 
-    public List<ApontMecanBean> apontMecanAbertoNEnviadoList() {
+    public List<ApontMecanBean> apontMecanNEnviadoList() {
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqStatusAbertoNEnviadoMecan());
+        pesqArrayList.add(getPesqStatusFechadoNEnviadoMecan());
         ApontMecanBean apontMecanBean = new ApontMecanBean();
-        return apontMecanBean.get("statusApontMecan", 1L);
-    }
-
-    public List<ApontMecanBean> apontMecanFechadoNEnviadoList() {
-        ApontMecanBean apontMecanBean = new ApontMecanBean();
-        return apontMecanBean.get("statusApontMecan", 3L);
+        return apontMecanBean.getWithOr(pesqArrayList);
     }
 
     public boolean verApontAberto(Long idBolMMFert){
@@ -96,7 +93,7 @@ public class ApontMecanDAO {
 
     public List<ApontMecanBean> apontMecanList(Long idBolMMFert){
         ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqIdBol(idBolMMFert));
+        pesqArrayList.add(getPesqIdBolMecan(idBolMMFert));
         ApontMecanBean apontMecanBean = new ApontMecanBean();
         return apontMecanBean.getAndOrderBy(pesqArrayList, "idApontMecan", false);
     }
@@ -156,7 +153,7 @@ public class ApontMecanDAO {
     public void deleteApontMecan(Long idBol){
 
         ArrayList<EspecificaPesquisa> pesquisaArrayList = new ArrayList();
-        pesquisaArrayList.add(getPesqIdBol(idBol));
+        pesquisaArrayList.add(getPesqIdBolMecan(idBol));
 
         ApontMecanBean apontMecanBean = new ApontMecanBean();
         List<ApontMecanBean> apontMecanList = apontMecanBean.get(pesquisaArrayList);
@@ -169,10 +166,26 @@ public class ApontMecanDAO {
 
     }
 
-    private EspecificaPesquisa getPesqIdBol(Long idBol){
+    private EspecificaPesquisa getPesqIdBolMecan(Long idBol){
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("idBolApontMecan");
         pesquisa.setValor(idBol);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqStatusAbertoNEnviadoMecan(){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("statusApontMecan");
+        pesquisa.setValor(1L);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqStatusFechadoNEnviadoMecan(){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("statusApontMecan");
+        pesquisa.setValor(3L);
         pesquisa.setTipo(1);
         return pesquisa;
     }

@@ -124,7 +124,8 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                 else {
 
                     LogProcessoDAO.getInstance().insertLogProcesso("else {", getLocalClassName());
-                    if (pmmContext.getMotoMecFertCTR().verifBackupApont()) {
+                    if (pmmContext.getMotoMecFertCTR().verifBackupApont()
+                        && (motoMecBean.getCodFuncaoOperMotoMec() != 6)) {
 
                         LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verifBackupApont()) {\n" +
                                 "                        AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincECMActivity.this);\n" +
@@ -310,24 +311,71 @@ public class MenuPrincECMActivity extends ActivityGeneric {
 
                             alerta.show();
 
+                        } else if (motoMecBean.getCodFuncaoOperMotoMec() == 5) { // RETORNO PRA USINA
+
+                            LogProcessoDAO.getInstance().insertLogProcesso("if ((motoMecBean.getCodFuncaoOperMotoMec() == 1)\n" +
+                                    "                                || (motoMecBean.getCodFuncaoOperMotoMec() == 11)\n" +
+                                    "                                || (motoMecBean.getCodFuncaoOperMotoMec() == 12)) {  // ATIVIDADES NORMAIS\n" +
+                                    "                            AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincECMActivity.this);\n" +
+                                    "                            alerta.setTitle(\"ATENÇÃO\");\n" +
+                                    "                            alerta.setMessage(\"INÍCIO DE ATIVIDADE: \" + motoMecBean.getDescrOperMotoMec());", getLocalClassName());
+                            AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincECMActivity.this);
+                            alerta.setTitle("ATENÇÃO");
+                            alerta.setMessage("INÍCIO DE ATIVIDADE: " + motoMecBean.getDescrOperMotoMec());
+                            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
+                                            "if (connectNetwork) {\n" +
+                                            "                        pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
+                                            "                    }\n" +
+                                            "                    else{\n" +
+                                            "                        pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
+                                            "                    }", getLocalClassName());
+                                    if (connectNetwork) {
+                                        pmmContext.getConfigCTR().setStatusConConfig(1L);
+                                    }
+                                    else{
+                                        pmmContext.getConfigCTR().setStatusConConfig(0L);
+                                    }
+
+                                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCecCTR().delPreCECAberto();", getLocalClassName());
+                                    pmmContext.getCecCTR().delPreCECAberto();
+
+                                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+                                    pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
+
+                                }
+
+                            });
+
+                            alerta.show();
+
                         } else if (motoMecBean.getCodFuncaoOperMotoMec() == 6) { // PESAGEM
 
-                            LogProcessoDAO.getInstance().insertLogProcesso("} else if (motoMecBean.getCodFuncaoOperMotoMec() == 6) { // PESAGEM\n" +
-                                    "                            if (connectNetwork) {\n" +
-                                    "                                pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
-                                    "                            } else {\n" +
-                                    "                                pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
-                                    "                            }", getLocalClassName());
-                            if (connectNetwork) {
-                                pmmContext.getConfigCTR().setStatusConConfig(1L);
-                            } else {
-                                pmmContext.getConfigCTR().setStatusConConfig(0L);
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else if (motoMecBean.getCodFuncaoOperMotoMec() == 6) { ", getLocalClassName());
+                            if(pmmContext.getMotoMecFertCTR().verifBackupApont()){
+
+                                LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verifBackupApont()){\n" +
+                                        "                            if (connectNetwork) {\n" +
+                                        "                                pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
+                                        "                            } else {\n" +
+                                        "                                pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
+                                        "                            }", getLocalClassName());
+                                if (connectNetwork) {
+                                    pmmContext.getConfigCTR().setStatusConConfig(1L);
+                                } else {
+                                    pmmContext.getConfigCTR().setStatusConConfig(0L);
+                                }
+
+                                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+                                pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+
                             }
 
-                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                            pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
-
-                            LogProcessoDAO.getInstance().insertLogProcesso("progressBar = new ProgressDialog(v.getContext());\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("}\n" +
+                                    "progressBar = new ProgressDialog(v.getContext());\n" +
                                     "                            progressBar.setCancelable(true);\n" +
                                     "                            progressBar.setMessage(\"BUSCANDO BOLETIM...\");\n" +
                                     "                            progressBar.show();\n" +
@@ -541,7 +589,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(MenuPrincECMActivity.this, MenuParadaECMActivity.class);", getLocalClassName());
-                Intent it = new Intent(MenuPrincECMActivity.this, MenuParadaECMActivity.class);
+                Intent it = new Intent(MenuPrincECMActivity.this, ListaParadaECMActivity.class);
                 startActivity(it);
                 finish();
             }

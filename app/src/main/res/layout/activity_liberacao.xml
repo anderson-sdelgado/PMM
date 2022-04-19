@@ -9,13 +9,19 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".view.PergFinalPreCECActivity">
+    tools:context=".view.LiberacaoActivity">
 
-    <ListView
-        android:id="@+id/listViewFinalizarPreCEC"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+    <TextView
+        android:id="@+id/textViewPadrao"
+        style="@style/TextView"
+        android:text="@string/texto_liberacao" />
+
+    <EditText
+        android:id="@+id/editTextPadrao"
+        style="@style/EditView" />
+
+    <include
+        android:id="@+id/layout_novo_botoes"
+        layout="@layout/layout_botoes_s_atual" />
 
 </LinearLayout>

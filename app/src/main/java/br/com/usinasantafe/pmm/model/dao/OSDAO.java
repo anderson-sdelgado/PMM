@@ -37,6 +37,17 @@ public class OSDAO {
         return ret;
     }
 
+    public boolean verLib(Long nroOS, Long idLib){
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqNroOS(nroOS));
+        pesqArrayList.add(getPesqIdLib(idLib));
+        OSBean osBean = new OSBean();
+        List<OSBean> osList = osBean.get(pesqArrayList);
+        boolean ret = osList.size() > 0;
+        osList.clear();
+        return ret;
+    }
+
     public void rOSAtivDelAll(){
         ROSAtivBean rOSAtivBean = new ROSAtivBean();
         rOSAtivBean.deleteAll();
@@ -152,6 +163,14 @@ public class OSDAO {
         EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
         especificaPesquisa.setCampo("nroOS");
         especificaPesquisa.setValor(nroOS);
+        especificaPesquisa.setTipo(1);
+        return especificaPesquisa;
+    }
+
+    private EspecificaPesquisa getPesqIdLib(Long idLib){
+        EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
+        especificaPesquisa.setCampo("idLibOS");
+        especificaPesquisa.setValor(idLib);
         especificaPesquisa.setTipo(1);
         return especificaPesquisa;
     }

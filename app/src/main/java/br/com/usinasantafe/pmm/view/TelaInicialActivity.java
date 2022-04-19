@@ -26,6 +26,101 @@ public class TelaInicialActivity extends ActivityGeneric {
 
     }
 
+    private Runnable excluirBDThread = new Runnable() {
+
+        public void run() {
+
+            LogProcessoDAO.getInstance().insertLogProcesso("clearBD();", getLocalClassName());
+            clearBD();
+
+            if(EnvioDadosServ.getInstance().verifDadosEnvio()){
+                LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().verifDadosEnvio()", getLocalClassName());
+                if(connectNetwork){
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(connectNetwork){\n" +
+                            "EnvioDadosServ.getInstance().envioDados()", getLocalClassName());
+                    EnvioDadosServ.getInstance().envioDados(getLocalClassName());
+                }
+                else{
+                    LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                            "                EnvioDadosServ.status = 1;", getLocalClassName());
+                    EnvioDadosServ.status = 1;
+                }
+            }
+            else{
+                LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                        "            EnvioDadosServ.status = 3;", getLocalClassName());
+                EnvioDadosServ.status = 3;
+            }
+
+            LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.status = 3;", getLocalClassName());
+            VerifDadosServ.status = 3;
+
+            LogProcessoDAO.getInstance().insertLogProcesso("atualizarAplic()", getLocalClassName());
+            atualizarAplic();
+
+        }
+    };
+
+    public void clearBD() {
+        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCheckListCTR().deleteChecklist();\n" +
+                "        pmmContext.getMotoMecFertCTR().deleteBolEnviado();\n" +
+                "        pmmContext.getConfigCTR().deleteLogs();", getLocalClassName());
+        pmmContext.getCheckListCTR().deleteChecklist();
+        pmmContext.getMotoMecFertCTR().deleteBolEnviado();
+        pmmContext.getConfigCTR().deleteLogs();
+        if(PMMContext.aplic == 1){
+            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().impleMMDelAll();\n" +
+                    "            pmmContext.getConfigCTR().osDelAll();\n" +
+                    "            pmmContext.getConfigCTR().rOSAtivDelAll();", getLocalClassName());
+            pmmContext.getMotoMecFertCTR().impleMMDelAll();
+            pmmContext.getConfigCTR().osDelAll();
+            pmmContext.getConfigCTR().rOSAtivDelAll();
+        }
+    }
+
+    public void atualizarAplic(){
+        LogProcessoDAO.getInstance().insertLogProcesso("public void atualizarAplic(){", getLocalClassName());
+        if (connectNetwork) {
+            LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {", getLocalClassName());
+            if (pmmContext.getConfigCTR().hasElemConfig()) {
+                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().hasElemConfig()\n" +
+                        "                customHandler.postDelayed(updateTimerThread, 10000);", getLocalClassName());
+                customHandler.postDelayed(encerraAtualThread, 10000);
+                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().verAtualAplic(pmmContext.versaoAplic, this, getLocalClassName());", getLocalClassName());
+                pmmContext.getConfigCTR().verAtualAplic(pmmContext.versaoAplic, this, getLocalClassName());
+            }
+            else{
+                LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                        "                VerifDadosServ.status = 3;\n" +
+                        "goMenuInicial();", getLocalClassName());
+                VerifDadosServ.status = 3;
+                goMenuInicial();
+            }
+        } else {
+            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                    "                VerifDadosServ.status = 3;\n" +
+                    "goMenuInicial();", getLocalClassName());
+            VerifDadosServ.status = 3;
+            goMenuInicial();
+        }
+    }
+
+    private Runnable encerraAtualThread = new Runnable() {
+
+        public void run() {
+            LogProcessoDAO.getInstance().insertLogProcesso("    private Runnable updateTimerThread = new Runnable() {\n" +
+                    "        public void run() {", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("verifEnvio();", getLocalClassName());
+            if(VerifDadosServ.status < 3) {
+                LogProcessoDAO.getInstance().insertLogProcesso("if(VerifDadosServ.status < 3) {\n" +
+                        "VerifDadosServ.getInstance().cancel();", getLocalClassName());
+                VerifDadosServ.getInstance().cancel();
+            }
+            LogProcessoDAO.getInstance().insertLogProcesso("goMenuInicial();", getLocalClassName());
+            goMenuInicial();
+        }
+    };
+
     public void goMenuInicial(){
 
         LogProcessoDAO.getInstance().insertLogProcesso("customHandler.removeCallbacks(updateTimerThread);", getLocalClassName());
@@ -111,101 +206,5 @@ public class TelaInicialActivity extends ActivityGeneric {
         }
 
     }
-
-    public void atualizarAplic(){
-        LogProcessoDAO.getInstance().insertLogProcesso("public void atualizarAplic(){", getLocalClassName());
-        if (connectNetwork) {
-            LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {", getLocalClassName());
-            if (pmmContext.getConfigCTR().hasElemConfig()) {
-                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().hasElemConfig()\n" +
-                        "                customHandler.postDelayed(updateTimerThread, 10000);", getLocalClassName());
-                customHandler.postDelayed(encerraAtualThread, 10000);
-                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().verAtualAplic(pmmContext.versaoAplic, this, getLocalClassName());", getLocalClassName());
-                pmmContext.getConfigCTR().verAtualAplic(pmmContext.versaoAplic, this, getLocalClassName());
-            }
-            else{
-                LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                        "                VerifDadosServ.status = 3;\n" +
-                        "goMenuInicial();", getLocalClassName());
-                VerifDadosServ.status = 3;
-                goMenuInicial();
-            }
-        } else {
-            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                    "                VerifDadosServ.status = 3;\n" +
-                    "goMenuInicial();", getLocalClassName());
-            VerifDadosServ.status = 3;
-            goMenuInicial();
-        }
-    }
-
-    public void clearBD() {
-        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCheckListCTR().deleteChecklist();\n" +
-                "        pmmContext.getMotoMecFertCTR().deleteBolEnviado();\n" +
-                "        pmmContext.getConfigCTR().deleteLogs();", getLocalClassName());
-        pmmContext.getCheckListCTR().deleteChecklist();
-        pmmContext.getMotoMecFertCTR().deleteBolEnviado();
-        pmmContext.getConfigCTR().deleteLogs();
-        pmmContext.getCompostoCTR().deleteCarregComp();
-        if(PMMContext.aplic == 1){
-            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().impleMMDelAll();\n" +
-                    "            pmmContext.getConfigCTR().osDelAll();\n" +
-                    "            pmmContext.getConfigCTR().rOSAtivDelAll();", getLocalClassName());
-            pmmContext.getMotoMecFertCTR().impleMMDelAll();
-            pmmContext.getConfigCTR().osDelAll();
-            pmmContext.getConfigCTR().rOSAtivDelAll();
-        }
-    }
-
-    private Runnable encerraAtualThread = new Runnable() {
-
-        public void run() {
-            LogProcessoDAO.getInstance().insertLogProcesso("    private Runnable updateTimerThread = new Runnable() {\n" +
-                    "        public void run() {", getLocalClassName());
-            LogProcessoDAO.getInstance().insertLogProcesso("verifEnvio();", getLocalClassName());
-            if(VerifDadosServ.status < 3) {
-                LogProcessoDAO.getInstance().insertLogProcesso("if(VerifDadosServ.status < 3) {\n" +
-                        "VerifDadosServ.getInstance().cancel();", getLocalClassName());
-                VerifDadosServ.getInstance().cancel();
-            }
-            LogProcessoDAO.getInstance().insertLogProcesso("goMenuInicial();", getLocalClassName());
-            goMenuInicial();
-        }
-    };
-
-    private Runnable excluirBDThread = new Runnable() {
-
-        public void run() {
-
-            LogProcessoDAO.getInstance().insertLogProcesso("clearBD();", getLocalClassName());
-            clearBD();
-
-            if(EnvioDadosServ.getInstance().verifDadosEnvio()){
-                LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().verifDadosEnvio()", getLocalClassName());
-                if(connectNetwork){
-                    LogProcessoDAO.getInstance().insertLogProcesso("if(connectNetwork){\n" +
-                            "EnvioDadosServ.getInstance().envioDados()", getLocalClassName());
-                    EnvioDadosServ.getInstance().envioDados(getLocalClassName());
-                }
-                else{
-                    LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                            "                EnvioDadosServ.status = 1;", getLocalClassName());
-                    EnvioDadosServ.status = 1;
-                }
-            }
-            else{
-                LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                        "            EnvioDadosServ.status = 3;", getLocalClassName());
-                EnvioDadosServ.status = 3;
-            }
-
-            LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.status = 3;", getLocalClassName());
-            VerifDadosServ.status = 3;
-
-            LogProcessoDAO.getInstance().insertLogProcesso("atualizarAplic()", getLocalClassName());
-            atualizarAplic();
-
-        }
-    };
 
 }

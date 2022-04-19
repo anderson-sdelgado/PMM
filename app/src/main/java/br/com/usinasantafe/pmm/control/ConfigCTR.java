@@ -242,6 +242,11 @@ public class ConfigCTR {
         return retorno;
     }
 
+    public boolean verLib(Long idLib){
+        OSDAO osDAO = new OSDAO();
+        return osDAO.verLib(getConfig().getNroOSConfig(), idLib);
+    }
+
     public OSBean getOS(){
         OSDAO osDAO = new OSDAO();
         return osDAO.getOS(getConfig().getNroOSConfig());

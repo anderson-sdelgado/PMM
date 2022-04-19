@@ -53,6 +53,11 @@ public class CompostoCTR {
         return leiraDAO.leiraStatusList(tipoMovLeira);
     }
 
+    public void updateLeira(LeiraBean leiraBean, Long tipoMovLeira){
+        LeiraDAO leiraDAO = new LeiraDAO();
+        leiraDAO.updateLeira(leiraBean, tipoMovLeira);
+    }
+
     public boolean pesqLeiraExibir(){
         CarregCompDAO carregCompDAO = new CarregCompDAO();
         return carregCompDAO.verLeiraExibir();
@@ -62,34 +67,33 @@ public class CompostoCTR {
         MotoMecFertCTR motoMecFuncCTR = new MotoMecFertCTR();
         ConfigCTR configCTR = new ConfigCTR();
         CarregCompDAO carregCompDAO = new CarregCompDAO();
-        carregCompDAO.abrirCarregInsumo(motoMecFuncCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert(), configCTR.getConfig().getEquipConfig(), produtoBean.getIdProduto());
+        carregCompDAO.abrirCarregInsumo(motoMecFuncCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert()
+                , configCTR.getConfig().getEquipConfig()
+                , produtoBean.getIdProduto());
     }
 
     public void abrirCarregComposto(Long codLeira){
         MotoMecFertCTR motoMecFuncCTR = new MotoMecFertCTR();
         ConfigCTR configCTR = new ConfigCTR();
         CarregCompDAO carregCompDAO = new CarregCompDAO();
-        carregCompDAO.abrirCarregComposto(motoMecFuncCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert(), configCTR.getConfig().getEquipConfig(), getLeiraCod(codLeira).getIdLeira(), configCTR.getOS().getIdOS());
-    }
+        carregCompDAO.abrirCarregComposto(motoMecFuncCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert()
+                , configCTR.getConfig().getEquipConfig()
+                , getLeiraCod(codLeira).getIdLeira()
+                , configCTR.getOS().getIdOS()
+                , motoMecFuncCTR.getApontAberto(motoMecFuncCTR.getBoletimMMFertAberto().getIdBolMMFert()).getIdApontMMFert());
 
-    public void updateLeira(LeiraBean leiraBean, Long tipoMovLeira){
-        LeiraDAO leiraDAO = new LeiraDAO();
-        leiraDAO.updateLeira(leiraBean, tipoMovLeira);
     }
 
     public void salvarLeiraDescarreg(Long codLeira){
+        MotoMecFertCTR motoMecFuncCTR = new MotoMecFertCTR();
         CarregCompDAO carregCompDAO = new CarregCompDAO();
-        carregCompDAO.salvarLeiraDescarreg(getLeiraCod(codLeira).getIdLeira());
+        carregCompDAO.salvarDescarregCarreg(getLeiraCod(codLeira).getIdLeira()
+                , motoMecFuncCTR.getApontAberto(motoMecFuncCTR.getBoletimMMFertAberto().getIdBolMMFert()).getIdApontMMFert());
     }
 
-    public String dadosEnvioCarreg(){
+    public String dadosEnvioCarregInsumo(){
         CarregCompDAO carregCompDAO = new CarregCompDAO();
         return carregCompDAO.dadosEnvioCarregInsumo();
-    }
-
-    public String dadosEnvioLeiraDescarreg(){
-        CarregCompDAO carregCompDAO = new CarregCompDAO();
-        return carregCompDAO.dadosEnvioCarregComposto();
     }
 
     public boolean verProduto(String codProduto){
@@ -107,14 +111,9 @@ public class CompostoCTR {
         return carregCompDAO.getOrdCarreg();
     }
 
-    public CarregCompBean getOrdCarregLeira(){
+    public boolean verOrdemCarregComLeira(){
         CarregCompDAO carregCompDAO = new CarregCompDAO();
-        return carregCompDAO.getOrdCarregLeira();
-    }
-
-    public boolean verOrdemCarreg(){
-        CarregCompDAO carregCompDAO = new CarregCompDAO();
-        return carregCompDAO.verOrdemCarreg();
+        return carregCompDAO.verOrdemCarregComLeira();
     }
 
     public void verifDadosCarreg(Context telaAtual, Class telaProx, String activity){
@@ -180,48 +179,9 @@ public class CompostoCTR {
 
     }
 
-    public void updCarregCompostoDescarreg(String result, String activity) {
-
-        try {
-
-            if (!result.contains("exceeded")) {
-
-                int pos1 = result.indexOf("_") + 1;
-                String obj = result.substring(pos1);
-                Json json = new Json();
-                JSONArray jsonArray = json.jsonArray(obj);
-
-                if (jsonArray.length() > 0) {
-                    CarregCompDAO carregCompDAO = new CarregCompDAO();
-                    carregCompDAO.updCarregCompostoDescarreg(jsonArray);
-                }
-
-                EnvioDadosServ.getInstance().envioDados(activity);
-
-            } else {
-                EnvioDadosServ.status = 1;
-            }
-
-        } catch (Exception e) {
-            EnvioDadosServ.status = 1;
-            LogErroDAO.getInstance().insertLogErro(e);
-        }
-
-    }
-
-    public boolean verifEnvioCarregInsumo(){
+    public boolean verifEnvioCarregInsumoComposto(){
         CarregCompDAO carregCompDAO = new CarregCompDAO();
-        return carregCompDAO.verEnvioCarreg();
-    }
-
-    public boolean verifEnvioLeiraDescarreg(){
-        CarregCompDAO carregCompDAO = new CarregCompDAO();
-        return carregCompDAO.verEnvioLeiraDescarreg();
-    }
-
-    public void deleteCarregComp(){
-        CarregCompDAO carregCompDAO = new CarregCompDAO();
-        carregCompDAO.deleteCarregComp();
+        return carregCompDAO.verEnvioCarregInsumoComposto();
     }
 
 }

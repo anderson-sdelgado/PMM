@@ -394,8 +394,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 10) {
 
                             LogProcessoDAO.getInstance().insertLogProcesso("else if (motoMecBean.getCodFuncaoOperMotoMec() == 10) {", getLocalClassName());
-
-                            if(pmmContext.getCompostoCTR().verOrdemCarreg()){
+                            if(pmmContext.getCompostoCTR().verOrdemCarregComLeira()){
 
                                 LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getCompostoCTR().verOrdemCarreg()){\n" +
                                         "                            pmmContext.getConfigCTR().setPosicaoTela(15L);\n" +
@@ -426,7 +425,6 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                                     public void onClick(DialogInterface dialog, int which) {
                                     }
                                 });
-
                                 alerta.show();
 
                             }
@@ -487,7 +485,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         "            @Override\n" +
                         "            public void onClick(View v) {\n" +
                         "                Intent it = new Intent(MenuPrincPCOMPActivity.this, MenuParadaPCOMPActivity.class);", getLocalClassName());
-                Intent it = new Intent(MenuPrincPCOMPActivity.this, MenuParadaPCOMPActivity.class);
+                Intent it = new Intent(MenuPrincPCOMPActivity.this, ListaParadaPCOMPActivity.class);
                 startActivity(it);
                 finish();
             }
