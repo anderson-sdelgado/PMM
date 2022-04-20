@@ -343,11 +343,14 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                                         pmmContext.getConfigCTR().setStatusConConfig(0L);
                                     }
 
-                                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCecCTR().delPreCECAberto();", getLocalClassName());
+                                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCecCTR().delPreCECAberto();\n" +
+                                            "                                    pmmContext.getConfigCTR().setPosicaoTela(2L);\n" +
+                                            "                                    Intent it = new Intent(MenuPrincECMActivity.this, OSActivity.class);", getLocalClassName());
                                     pmmContext.getCecCTR().delPreCECAberto();
-
-                                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                                    pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
+                                    pmmContext.getConfigCTR().setPosicaoTela(2L);
+                                    Intent it = new Intent(MenuPrincECMActivity.this, OSActivity.class);
+                                    startActivity(it);
+                                    finish();
 
                                 }
 

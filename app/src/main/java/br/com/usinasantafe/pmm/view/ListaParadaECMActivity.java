@@ -1,6 +1,7 @@
 package br.com.usinasantafe.pmm.view;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class ListaParadaECMActivity extends ActivityGeneric {
     private ListView paradaListView;
     private PMMContext pmmContext;
     private List<ParadaBean> paradaList;
+    private ProgressDialog progressBar;
     private String paradaString;
 
     @Override
@@ -34,7 +36,9 @@ public class ListaParadaECMActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
+        Button buttonAtualParada = findViewById(R.id.buttonAtualParada);
         Button buttonRetMenuParada = findViewById(R.id.buttonRetMenuParada);
+
         LogProcessoDAO.getInstance().insertLogProcesso("paradaList = pmmContext.getMotoMecFertCTR().getListParada();\n" +
                 "        ArrayList<String> itens = new ArrayList<String>();\n" +
                 "        for (int i = 0; i < paradaList.size(); i++) {\n" +
@@ -189,6 +193,62 @@ public class ListaParadaECMActivity extends ActivityGeneric {
 
             }
 
+        });
+
+        buttonAtualParada.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                LogProcessoDAO.getInstance().insertLogProcesso("buttonAtualParada.setOnClickListener(new View.OnClickListener() {\n" +
+                        "\n" +
+                        "            @Override\n" +
+                        "            public void onClick(View v) {", getLocalClassName());
+                if (connectNetwork) {
+
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
+                            "                    progressBar = new ProgressDialog(ListaParadaECMActivity.this);\n" +
+                            "                    progressBar.setCancelable(true);\n" +
+                            "                    progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
+                            "                    progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);\n" +
+                            "                    progressBar.setProgress(0);\n" +
+                            "                    progressBar.setMax(100);\n" +
+                            "                    progressBar.show();", getLocalClassName());
+
+                    progressBar = new ProgressDialog(ListaParadaECMActivity.this);
+                    progressBar.setCancelable(true);
+                    progressBar.setMessage("ATUALIZANDO ...");
+                    progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                    progressBar.setProgress(0);
+                    progressBar.setMax(100);
+                    progressBar.show();
+
+                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(ListaParadaECMActivity.this, ListaParadaECMActivity.class, progressBar, \"Parada\", 1, getLocalClassName());", getLocalClassName());
+                    pmmContext.getMotoMecFertCTR().atualDados(ListaParadaECMActivity.this, ListaParadaECMActivity.class, progressBar, "Parada", 1, getLocalClassName());
+
+                } else {
+
+                    LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaECMActivity.this);\n" +
+                            "                    alerta.setTitle(\"ATENÇÃO\");\n" +
+                            "                    alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
+                            "                    alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                            "                        @Override\n" +
+                            "                        public void onClick(DialogInterface dialog, int which) {\n" +
+                            "                        }\n" +
+                            "                    });\n" +
+                            "                    alerta.show();", getLocalClassName());
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaECMActivity.this);
+                    alerta.setTitle("ATENÇÃO");
+                    alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
+                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    alerta.show();
+
+                }
+
+            }
         });
 
         buttonRetMenuParada.setOnClickListener(new View.OnClickListener() {

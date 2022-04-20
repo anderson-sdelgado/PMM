@@ -13,15 +13,21 @@
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_interroper_finalizar_mecan.xml" value="0.16145833333333334" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_item_historico.xml" value="0.11277173913043478" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_item_lista.xml" value="0.11277173913043478" />
+        <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_item_log_erro.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_item_log_processo.xml" value="0.1" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_item_planta.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_item_pos_pneu.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_liberacao.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_lista_atividade.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_lista_hist_apont.xml" value="0.11413043478260869" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_lista_item_os_mecan.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_lista_parada.xml" value="0.11413043478260869" />
+        <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_lista_parada_ecm.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_lista_parada_pcomp.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_lista_parada_pmm.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_lista_pos_pneu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_lista_pressao_fert.xml" value="0.11413043478260869" />
+        <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_lista_turno.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_log_base_dado.xml" value="0.1" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_log_erro.xml" value="0.1" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_log_processo.xml" value="0.1" />
