@@ -213,7 +213,7 @@ public class ListaParadaPCOMPActivity extends ActivityGeneric {
                     progressBar.show();
 
                     LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(ListaParadaPCOMPActivity.this, ListaParadaPCOMPActivity.class, progressBar, \"Parada\", 1, getLocalClassName());", getLocalClassName());
-                    pmmContext.getMotoMecFertCTR().atualDados(ListaParadaPCOMPActivity.this, ListaParadaPCOMPActivity.class, progressBar, "Parada", 1, getLocalClassName());
+                    pmmContext.getMotoMecFertCTR().atualDados(ListaParadaPCOMPActivity.this, ListaParadaPCOMPActivity.class, progressBar, "Parada", 2, getLocalClassName());
 
                 } else {
 

@@ -186,9 +186,12 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                                     }
 
                                     LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
-                                            "                                    motoMecListView.setSelection(posicao + 1);", getLocalClassName());
+                                            "                                    motoMecListView.setSelection(posicao + 1);\n" +
+                                            "textViewStatus.setText(pmmContext.getMotoMecFertCTR().getUltApont());", getLocalClassName());
                                     pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
                                     motoMecListView.setSelection(posicao + 1);
+
+                                    textViewStatus.setText(pmmContext.getMotoMecFertCTR().getUltApont());
 
                                 }
 
@@ -304,8 +307,10 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                                             } else {
                                                 pmmContext.getConfigCTR().setStatusConConfig(0L);
                                             }
-                                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+                                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
+                                                    "textViewStatus.setText(pmmContext.getMotoMecFertCTR().getUltApont());", getLocalClassName());
                                             pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+                                            textViewStatus.setText(pmmContext.getMotoMecFertCTR().getUltApont());
                                         }
                                         motoMecListView.setSelection(posicao + 1);
                                     }
@@ -361,9 +366,9 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                         } else if (motoMecBean.getCodFuncaoOperMotoMec() == 6) { // PESAGEM
 
                             LogProcessoDAO.getInstance().insertLogProcesso("} else if (motoMecBean.getCodFuncaoOperMotoMec() == 6) { ", getLocalClassName());
-                            if(pmmContext.getMotoMecFertCTR().verifBackupApont()){
+                            if(!pmmContext.getMotoMecFertCTR().verifBackupApont()){
 
-                                LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verifBackupApont()){\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("if(!pmmContext.getMotoMecFertCTR().verifBackupApont()){\n" +
                                         "                            if (connectNetwork) {\n" +
                                         "                                pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
                                         "                            } else {\n" +
@@ -375,8 +380,10 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                                     pmmContext.getConfigCTR().setStatusConConfig(0L);
                                 }
 
-                                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+                                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
+                                        "textViewStatus.setText(pmmContext.getMotoMecFertCTR().getUltApont());", getLocalClassName());
                                 pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+                                textViewStatus.setText(pmmContext.getMotoMecFertCTR().getUltApont());
 
                             }
 
@@ -529,6 +536,8 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                     }
 
                 }
+
+
 
             }
 

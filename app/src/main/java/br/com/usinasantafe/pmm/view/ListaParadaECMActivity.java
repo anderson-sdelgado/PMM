@@ -161,12 +161,8 @@ public class ListaParadaECMActivity extends ActivityGeneric {
                                     finish();
                                 } else {
                                     LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                            "                                    pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());\n" +
-                                            "                                    Intent it = new Intent(ListaParadaECMActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                                            "                                    pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
                                     pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
-                                    Intent it = new Intent(ListaParadaECMActivity.this, MenuPrincECMActivity.class);
-                                    startActivity(it);
-                                    finish();
                                 }
 
                             }
@@ -223,7 +219,7 @@ public class ListaParadaECMActivity extends ActivityGeneric {
                     progressBar.show();
 
                     LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(ListaParadaECMActivity.this, ListaParadaECMActivity.class, progressBar, \"Parada\", 1, getLocalClassName());", getLocalClassName());
-                    pmmContext.getMotoMecFertCTR().atualDados(ListaParadaECMActivity.this, ListaParadaECMActivity.class, progressBar, "Parada", 1, getLocalClassName());
+                    pmmContext.getMotoMecFertCTR().atualDados(ListaParadaECMActivity.this, ListaParadaECMActivity.class, progressBar, "Parada", 2, getLocalClassName());
 
                 } else {
 

@@ -798,10 +798,16 @@ public class MotoMecFertCTR {
         String retorno = "STATUS: ";
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
         if(apontMMFertDAO.hasApontBol(getBoletimMMFertAberto().getIdBolMMFert())){
-            ApontMMFertBean apontMMFertBean = apontMMFertDAO.getUltApont(getBoletimMMFertAberto().getIdBolMMFert());
-            if(apontMMFertBean.getIdMotoMec() > 0L){
+            List<ApontMMFertBean> apontMMFertList = apontMMFertDAO.apontMMFertList(getBoletimMMFertAberto().getIdBolMMFert());
+            Long idMotoMec = 0L;
+            for(ApontMMFertBean apontMMFertBean : apontMMFertList){
+                if(apontMMFertBean.getIdMotoMec() > 0L){
+                    idMotoMec = apontMMFertBean.getIdMotoMec();
+                }
+            }
+            if(idMotoMec > 0L){
                 MotoMecDAO motoMecDAO = new MotoMecDAO();
-                retorno = retorno + motoMecDAO.getMotoMec(apontMMFertBean.getIdMotoMec()).getDescrOperMotoMec();
+                retorno = retorno + motoMecDAO.getMotoMec(idMotoMec).getDescrOperMotoMec();
             }
         }
         return retorno;
@@ -861,6 +867,9 @@ public class MotoMecFertCTR {
     private void salvarApont(Long idParada, Long idTransb, Long dthrLong, String activity){
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
         ApontMMFertBean apontMMFertBean = apontMMFertDefault();
+        if((PMMContext.aplic == 2) && (motoMecBean != null)){
+            apontMMFertBean.setIdMotoMec(motoMecBean.getIdMotoMec());
+        }
         apontMMFertBean.setParadaApontMMFert(idParada);
         apontMMFertBean.setTransbApontMMFert(idTransb);
         apontMMFertBean.setDthrApontMMFert(Tempo.getInstance().dthrLongToString(dthrLong));
@@ -880,6 +889,9 @@ public class MotoMecFertCTR {
     private void salvarApont(Long idParada, Long idTransb, String activity){
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
         ApontMMFertBean apontMMFertBean = apontMMFertDefault();
+        if((PMMContext.aplic == 2) && (motoMecBean != null)){
+            apontMMFertBean.setIdMotoMec(motoMecBean.getIdMotoMec());
+        }
         apontMMFertBean.setParadaApontMMFert(idParada);
         apontMMFertBean.setTransbApontMMFert(idTransb);
         LogProcessoDAO.getInstance().insertLogProcesso("private void salvarApont(Long idParada, Long idTransb, String activity){\n" +
@@ -896,6 +908,9 @@ public class MotoMecFertCTR {
     public void salvarApont(Long idParada, Long idTransb, Double longitude, Double latitude, String activity){
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
         ApontMMFertBean apontMMFertBean = apontMMFertDefault();
+        if((PMMContext.aplic == 2) && (motoMecBean != null)){
+            apontMMFertBean.setIdMotoMec(motoMecBean.getIdMotoMec());
+        }
         apontMMFertBean.setParadaApontMMFert(idParada);
         apontMMFertBean.setTransbApontMMFert(idTransb);
         apontMMFertBean.setLongitudeApontMMFert(longitude);
