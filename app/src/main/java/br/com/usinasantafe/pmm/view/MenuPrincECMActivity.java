@@ -254,13 +254,11 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                             }
 
                         } else if (motoMecBean.getCodFuncaoOperMotoMec() == 3) { // CHEGADA CAMPO
-
-                            LogProcessoDAO.getInstance().insertLogProcesso("} else if (motoMecBean.getCodFuncaoOperMotoMec() == 3) { // CHEGADA CAMPO", getLocalClassName());
-
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else if (motoMecBean.getCodFuncaoOperMotoMec() == 3) { // CHEGADA CAMPO\n" +
+                                    "                            String mensagem = \"\";", getLocalClassName());
                             String mensagem = "";
                             if (!pmmContext.getCecCTR().verPreCECAberto()) {
-                                LogProcessoDAO.getInstance().insertLogProcesso("String mensagem = \"\";\n" +
-                                        "                            if (!pmmContext.getCecCTR().verPreCECAberto()) {\n" +
+                                LogProcessoDAO.getInstance().insertLogProcesso("if (!pmmContext.getCecCTR().verPreCECAberto()) {\n" +
                                         "                                mensagem = \"É NECESSÁRIO A INSERÇÃO DO HORÁRIO DE SAÍDA DA USINA.\";", getLocalClassName());
                                 mensagem = "É NECESSÁRIO A INSERÇÃO DO HORÁRIO DE SAÍDA DA USINA.";
                             } else {
