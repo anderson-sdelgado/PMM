@@ -67,36 +67,34 @@ public class CECActivity extends ActivityGeneric {
 
         if(analisar == 0){
 
-            retorno = retorno + "NÃO FOI SORTEADO \n";
-            retorno = retorno + "PARA ANALISE! \n";
-            retorno = retorno + "PESO LIQ:  "  + cecBean.getPesoLiquidoCEC() + "\n";
-            retorno = retorno + "---------------- \n";
-            retorno = retorno + "" + cecBean.getDthrEntradaCEC() + " \n";
+            retorno = retorno + "Liberado sem análise\n";
+            retorno = retorno + "Frente: " + cecBean.getCodFrenteCEC() + "\n";
+            retorno = retorno + "Peso Liquido Total: " + cecBean.getPesoLiquidoCEC() + "\n";
+            retorno = retorno + "Data: " + cecBean.getDthrEntradaCEC() + " \n";
 
         }
         else if(analisar == 1){
 
-            String CEC1 = "";
-            String CEC2 = "";
-            String CEC3 = "";
+            retorno = retorno + "Sorteado(s) para análise\n";
 
             if(cecBean.getUnidadeSorteada1CEC() != 0){
-                CEC1 = "CARRETA " + cecBean.getUnidadeSorteada1CEC() + "-> N. CEC = " + cecBean.getCecSorteado1CEC() + "\n";
+                retorno = retorno + "Unidade de Carga: " + cecBean.getUnidadeSorteada1CEC() + "\n" +
+                        "Certificado = " + cecBean.getCecSorteado1CEC() + "\n";
             }
 
             if(cecBean.getUnidadeSorteada2CEC() != 0){
-                CEC2 = "CARRETA " + cecBean.getUnidadeSorteada2CEC() + "-> N. CEC = " + cecBean.getCecSorteado2CEC() + "\n";
+                retorno = retorno + "Unidade de Carga: " + cecBean.getUnidadeSorteada2CEC() + "\n" +
+                        "Certificado = " + cecBean.getCecSorteado2CEC() + "\n";
             }
 
             if(cecBean.getUnidadeSorteada3CEC() != 0){
-                CEC3 = "CARRETA " + cecBean.getUnidadeSorteada3CEC() + "-> N. CEC = " + cecBean.getCecSorteado3CEC() + "\n";
+                retorno = retorno + "Unidade de Carga: " + cecBean.getUnidadeSorteada3CEC() + "\n" +
+                        "Certificado = " + cecBean.getCecSorteado3CEC() + "\n";
             }
 
-            retorno = retorno + "CARGAS SORTEADAS \n";
-            retorno = retorno + "" + CEC1 + CEC2 + CEC3;
-            retorno = retorno + "FRENTE: " + cecBean.getCodFrenteCEC() + " \n";
-            retorno = retorno + "PESO LIQ:  "  + cecBean.getPesoLiquidoCEC() + " \n";
-            retorno = retorno + "" + cecBean.getDthrEntradaCEC() + " \n";
+            retorno = retorno + "Frente: " + cecBean.getCodFrenteCEC() + "\n";
+            retorno = retorno + "Peso Liquido Total: " + cecBean.getPesoLiquidoCEC() + "\n";
+            retorno = retorno + "Data: " + cecBean.getDthrEntradaCEC() + " \n";
 
         }
 
