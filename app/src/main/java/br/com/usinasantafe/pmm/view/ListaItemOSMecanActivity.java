@@ -82,7 +82,7 @@ public class ListaItemOSMecanActivity extends ActivityGeneric {
                     progressBar.show();
 
                     LogProcessoDAO.getInstance().insertLogProcesso("customHandler.removeCallbacks(updateTimerThread)", getLocalClassName());
-                    pmmContext.getMecanicoCTR().atualDados(ListaItemOSMecanActivity.this, ListaItemOSMecanActivity.class, progressBar, "ItemOSMecan", 1, getLocalClassName());
+                    pmmContext.getMecanicoCTR().atualDados(ListaItemOSMecanActivity.this, ListaItemOSMecanActivity.class, progressBar, "ItemOSMecan", 2, getLocalClassName());
 
                 } else {
 
