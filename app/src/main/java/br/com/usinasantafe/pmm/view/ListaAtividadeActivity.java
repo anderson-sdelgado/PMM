@@ -54,46 +54,34 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                         "            public void onClick(View v) {", getLocalClassName());
                 if (connectNetwork) {
 
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
+                            "                    progressBar = new ProgressDialog(v.getContext());\n" +
+                            "                    progressBar.setCancelable(true);\n" +
+                            "                    progressBar.setMessage(\"Atualizando Atividades...\");\n" +
+                            "                    progressBar.show();\n" +
+                            "                    customHandler.postDelayed(updateTimerThread, 10000);", getLocalClassName());
+                    progressBar = new ProgressDialog(v.getContext());
+                    progressBar.setCancelable(true);
+                    progressBar.setMessage("Atualizando Atividades...");
+                    progressBar.show();
+
+                    customHandler.postDelayed(updateTimerThread, 10000);
+
                     if(PMMContext.aplic != 2) {
 
                         LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic != 2) {\n" +
-                                "progressBar = new ProgressDialog(v.getContext());\n" +
-                                "                        progressBar.setCancelable(true);\n" +
-                                "                        progressBar.setMessage(\"Atualizando Atividades...\");\n" +
-                                "                        progressBar.show();\n" +
-                                "                        customHandler.postDelayed(updateTimerThread, 10000);", getLocalClassName());
-                        progressBar = new ProgressDialog(v.getContext());
-                        progressBar.setCancelable(true);
-                        progressBar.setMessage("Atualizando Atividades...");
-                        progressBar.show();
-
-                        customHandler.postDelayed(updateTimerThread, 10000);
-
+                                "                        LogProcessoDAO.getInstance().insertLogProcesso(\"pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(\" + nroOS + \"), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);\", getLocalClassName());\n" +
+                                "                        pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(nroOS), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
                         LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(" + nroOS + "), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
                         pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(nroOS), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
 
                     } else {
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                "AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);\n" +
-                                "                        alerta.setTitle(\"ATENÇÃO\");\n" +
-                                "                        alerta.setMessage(\"AS ATIVIDADES SERÃO ATUALIZADAS AUTOMATICAMENTE APÓS A PESAGEM NA BALANÇA.\");\n" +
-                                "                        alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                                "                            @Override\n" +
-                                "                            public void onClick(DialogInterface dialog, int which) {\n" +
-                                "                            }\n" +
-                                "                        });\n" +
-                                "                        alerta.show();", getLocalClassName());
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
-                        alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("AS ATIVIDADES SERÃO ATUALIZADAS AUTOMATICAMENTE APÓS A PESAGEM NA BALANÇA.");
-                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
-                        alerta.show();
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic != 2) {\n" +
+                                "                        LogProcessoDAO.getInstance().insertLogProcesso(\"pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(\" + nroOS + \"), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);\", getLocalClassName());\n" +
+                                "                        pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(nroOS), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(" + nroOS + "), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
+                        pmmContext.getMotoMecFertCTR().verAtivECM(ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
 
                     }
 

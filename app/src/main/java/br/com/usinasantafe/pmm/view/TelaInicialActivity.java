@@ -87,7 +87,7 @@ public class TelaInicialActivity extends ActivityGeneric {
                         "                customHandler.postDelayed(updateTimerThread, 10000);", getLocalClassName());
                 customHandler.postDelayed(encerraAtualThread, 10000);
                 LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().verAtualAplic(pmmContext.versaoAplic, this, getLocalClassName());", getLocalClassName());
-                pmmContext.getConfigCTR().verAtualAplic(pmmContext.versaoAplic, this, getLocalClassName());
+                pmmContext.getConfigCTR().verAtualAplic(pmmContext.versaoAPP, this, getLocalClassName());
             }
             else{
                 LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +

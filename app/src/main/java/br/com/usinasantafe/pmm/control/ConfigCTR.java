@@ -321,7 +321,7 @@ public class ConfigCTR {
                 EquipDAO equipDAO = new EquipDAO();
                 equipDAO.recDadosREquipAtiv(json.jsonArray(retorno[0]));
 
-                JSONArray jsonArray = json.jsonArray(retorno[2]);
+                JSONArray jsonArray = json.jsonArray(retorno[1]);
 
                 if (jsonArray.length() > 0) {
                     OSDAO osDAO = new OSDAO();
@@ -329,10 +329,40 @@ public class ConfigCTR {
                 }
 
                 AtividadeDAO atividadeDAO = new AtividadeDAO();
-                atividadeDAO.recDadosAtiv(json.jsonArray(retorno[3]));
+                atividadeDAO.recDadosAtiv(json.jsonArray(retorno[2]));
 
                 RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
-                rFuncaoAtivParDAO.recDadosRFuncaoAtivPar(json.jsonArray(retorno[4]));
+                rFuncaoAtivParDAO.recDadosRFuncaoAtivPar(json.jsonArray(retorno[3]));
+
+                VerifDadosServ.getInstance().pulaTela();
+
+            } else {
+                VerifDadosServ.getInstance().msg("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, PROCURE UM PONTO MELHOR DE CONEXÃO DOS DADOS.");
+            }
+        } catch (Exception e) {
+            LogErroDAO.getInstance().insertLogErro(e);
+            VerifDadosServ.getInstance().msg("FALHA DE PESQUISA DE ATIVIDADE! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
+        }
+    }
+
+    public void receberVerifAtivECM(String result){
+
+        try {
+
+            if (!result.contains("exceeded")) {
+
+                String[] retorno = result.split("_");
+
+                Json json = new Json();
+
+                EquipDAO equipDAO = new EquipDAO();
+                equipDAO.recDadosREquipAtiv(json.jsonArray(retorno[0]));
+
+                AtividadeDAO atividadeDAO = new AtividadeDAO();
+                atividadeDAO.recDadosAtiv(json.jsonArray(retorno[1]));
+
+                RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
+                rFuncaoAtivParDAO.recDadosRFuncaoAtivPar(json.jsonArray(retorno[2]));
 
                 VerifDadosServ.getInstance().pulaTela();
 

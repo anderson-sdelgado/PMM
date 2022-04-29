@@ -71,6 +71,10 @@ public class VerifDadosServ {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Atividade\")) {\n" +
                     "            configCTR.receberVerifAtiv(" + result + ");", activity);
             configCTR.receberVerifAtiv(result);
+        } else if (this.tipo.equals("AtividadeECM")) {
+            LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"AtividadeECM\")) {\n" +
+                    "            configCTR.receberVerifAtivECM(" + result + ");", activity);
+            configCTR.receberVerifAtivECM(result);
         } else if (this.tipo.equals("Atualiza")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Atualiza\")) {\n" +
                     "            configCTR.recAtual(result.trim());\n" +

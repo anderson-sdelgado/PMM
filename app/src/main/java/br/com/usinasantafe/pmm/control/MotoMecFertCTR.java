@@ -780,6 +780,12 @@ public class MotoMecFertCTR {
         atividadeDAO.verAtiv(dado + "_" + configCTR.getEquip().getNroEquip(), telaAtual, telaProx, progressDialog);
     }
 
+    public void verAtivECM(Context telaAtual, Class telaProx, ProgressDialog progressDialog){
+        ConfigCTR configCTR = new ConfigCTR();
+        AtividadeDAO atividadeDAO = new AtividadeDAO();
+        atividadeDAO.verAtivECM(configCTR.getEquip().getNroEquip().toString(), telaAtual, telaProx, progressDialog);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////APONTAMENTO /////////////////////////////////////////////

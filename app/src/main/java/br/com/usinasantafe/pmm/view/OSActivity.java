@@ -39,9 +39,16 @@ public class OSActivity extends ActivityGeneric {
                     "editText.setText(\"\");", getLocalClassName());
             editText.setText("");
         } else {
-            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                    "editText.setText(String.valueOf(" + pmmContext.getConfigCTR().getConfig().getNroOSConfig() + "));", getLocalClassName());
-            editText.setText(String.valueOf(pmmContext.getConfigCTR().getConfig().getNroOSConfig()));
+            LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
+            if(pmmContext.getConfigCTR().getConfig().getNroOSConfig() == 0L){
+                LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getNroOSConfig() == 0L){\n" +
+                        "                editText.setText(\"\");", getLocalClassName());
+                editText.setText("");
+            } else {
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                        "                editText.setText(String.valueOf(pmmContext.getConfigCTR().getConfig().getNroOSConfig()));", getLocalClassName());
+                editText.setText(String.valueOf(pmmContext.getConfigCTR().getConfig().getNroOSConfig()));
+            }
         }
 
         buttonOkOS.setOnClickListener(new View.OnClickListener() {
