@@ -36,7 +36,7 @@ public class ListaPosPneuActivity extends ActivityGeneric {
                 "        listaHistorico.setAdapter(adapterListHistorico);", getLocalClassName());
         posPneuList = pmmContext.getMotoMecFertCTR().posPneuList();
         ListView listaPosPneu = findViewById(R.id.listaPosPneu);
-        AdapterListPosPneu adapterListPosPneu = new AdapterListPosPneu(this, pmmContext.getMotoMecFertCTR().posPneuList());
+        AdapterListPosPneu adapterListPosPneu = new AdapterListPosPneu(this, posPneuList);
         listaPosPneu.setAdapter(adapterListPosPneu);
 
         listaPosPneu.setOnItemClickListener(new AdapterView.OnItemClickListener() {

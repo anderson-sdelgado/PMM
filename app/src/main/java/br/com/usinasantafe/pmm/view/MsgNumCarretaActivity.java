@@ -97,7 +97,7 @@ public class MsgNumCarretaActivity extends ActivityGeneric {
                         "            public void onClick(View v) {", getLocalClassName());
                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 20L){
                     LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 20L){", getLocalClassName());
-                    if(numCarreta < 1){
+                    if(numCarreta > 1){
                         LogProcessoDAO.getInstance().insertLogProcesso("if(numCarreta < 1){\n" +
                                 "                        if (connectNetwork) {\n" +
                                 "                            pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +

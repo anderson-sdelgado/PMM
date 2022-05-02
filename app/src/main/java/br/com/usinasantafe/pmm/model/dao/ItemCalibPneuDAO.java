@@ -29,9 +29,18 @@ public class ItemCalibPneuDAO {
     }
 
     public void salvarItemMedPneu(Long idBoletimPneu){
-        itemCalibPneuBean.setDthrItemCalibPneu(Tempo.getInstance().dthr());
-        itemCalibPneuBean.setIdBolItemCalibPneu(idBoletimPneu);
-        itemCalibPneuBean.insert();
+        if(verItemMedPneuIdBolIdPosConf(idBoletimPneu, itemCalibPneuBean.getIdPosConfItemCalibPneu())) {
+            ItemCalibPneuBean itemCalibPneuBeanBD = getItemMedPneuIdBolIdPosConf(idBoletimPneu, itemCalibPneuBean.getIdPosConfItemCalibPneu());
+            itemCalibPneuBeanBD.setNroPneuItemCalibPneu(itemCalibPneuBean.getNroPneuItemCalibPneu());
+            itemCalibPneuBeanBD.setPressaoEncItemCalibPneu(itemCalibPneuBean.getPressaoEncItemCalibPneu());
+            itemCalibPneuBeanBD.setPressaoColItemCalibPneu(itemCalibPneuBean.getPressaoColItemCalibPneu());
+            itemCalibPneuBeanBD.setDthrItemCalibPneu(Tempo.getInstance().dthr());
+            itemCalibPneuBeanBD.update();
+        } else {
+            itemCalibPneuBean.setDthrItemCalibPneu(Tempo.getInstance().dthr());
+            itemCalibPneuBean.setIdBolItemCalibPneu(idBoletimPneu);
+            itemCalibPneuBean.insert();
+        }
     }
 
     public boolean verItemMedPneuIdBolIdPosConf(Long idBol, Long idPosConf){
