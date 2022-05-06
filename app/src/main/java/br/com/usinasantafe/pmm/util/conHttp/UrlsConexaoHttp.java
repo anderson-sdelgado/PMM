@@ -6,11 +6,11 @@ public class UrlsConexaoHttp {
 
     public static String versao = "versao_" + PMMContext.versaoWebService.replace(".", "_");
 
-    public static String urlPrincipal = "https://www.usinasantafe.com.br/pmmdev/view/";
-    public static String urlPrincEnvio = "https://www.usinasantafe.com.br/pmmdev/view/";
+//    public static String urlPrincipal = "https://www.usinasantafe.com.br/pmmdev/view/";
+//    public static String urlPrincEnvio = "https://www.usinasantafe.com.br/pmmdev/view/";
 
-//    public static String urlPrincipal = "https://www.usinasantafe.com.br/pmmqa/view/";
-//    public static String urlPrincEnvio = "https://www.usinasantafe.com.br/pmmqa/view/";
+    public static String urlPrincipal = "https://www.usinasantafe.com.br/pmmqa/view/";
+    public static String urlPrincEnvio = "https://www.usinasantafe.com.br/pmmqa/view/";
 
 //    public static String urlPrincipal = "https://www.usinasantafe.com.br/pmmprod/" + versao + "/view/";
 //    public static String urlPrincEnvio = "https://www.usinasantafe.com.br/pmmprod/" + versao + "/view/";

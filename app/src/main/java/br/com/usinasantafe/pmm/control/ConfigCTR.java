@@ -164,10 +164,16 @@ public class ConfigCTR {
         configDAO.setEquipConfig(equipBean);
     }
 
-    public void verEquipConfig(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
+    public void verEquipAtualTodosDadosConfig(Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo){
         EquipDAO equipDAO = new EquipDAO();
         LogProcessoDAO.getInstance().insertLogProcesso("equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog);", activity);
-        equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog, activity);
+        equipDAO.verEquip(getEquip().getNroEquip().toString(), telaAtual, telaProx, progressDialog, activity, tipo);
+    }
+
+    public void verEquipConfig(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo){
+        EquipDAO equipDAO = new EquipDAO();
+        LogProcessoDAO.getInstance().insertLogProcesso("equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog);", activity);
+        equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog, activity, tipo);
     }
 
     public EquipBean getEquip(){
@@ -175,7 +181,7 @@ public class ConfigCTR {
         return equipDAO.getEquip();
     }
 
-    public void receberVerifEquip(String result){
+    public void receberVerifEquip(String result, int tipo){
 
         try {
 
@@ -195,7 +201,11 @@ public class ConfigCTR {
 
                     setEquipConfig(equipBean);
 
-                    VerifDadosServ.getInstance().pulaTela();
+                    if(tipo == 1){
+                        VerifDadosServ.getInstance().pulaTela();
+                    } else {
+                        VerifDadosServ.getInstance().atualTodosDados();
+                    }
 
                 } else {
                     VerifDadosServ.getInstance().msg("EQUIPAMENTO INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");

@@ -26,7 +26,7 @@ public class EquipDAO {
     public EquipBean getEquip(){
         EquipBean equipBean = new EquipBean();
         List<EquipBean> equipList = equipBean.all();
-        equipBean = (EquipBean) equipList.get(0);
+        equipBean = equipList.get(0);
         equipList.clear();
         if ((equipBean.getTipoEquipFert() == 1) || (equipBean.getTipoEquipFert() == 2)) {
             equipBean.setTipoEquip(2L);
@@ -36,9 +36,9 @@ public class EquipDAO {
         return equipBean;
     }
 
-    public void verEquip(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
+    public void verEquip(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo){
         LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().verifDados(dado, \"Equip\", telaAtual, telaProx, progressDialog, activity);", activity);
-        VerifDadosServ.getInstance().verifDados(dado, "Equip", telaAtual, telaProx, progressDialog, activity);
+        VerifDadosServ.getInstance().verifDados(dado, "Equip", telaAtual, telaProx, progressDialog, activity, tipo);
     }
 
     public EquipBean recDadosEquip(JSONArray jsonArray) throws JSONException {
@@ -94,7 +94,7 @@ public class EquipDAO {
         List<EquipBean> equipList = equipBean.all();
         JsonArray equipJsonArray = new JsonArray();
 
-        equipBean = (EquipBean) equipList.get(0);
+        equipBean = equipList.get(0);
         Gson gson = new Gson();
         equipJsonArray.add(gson.toJsonTree(equipBean, equipBean.getClass()));
         equipList.clear();

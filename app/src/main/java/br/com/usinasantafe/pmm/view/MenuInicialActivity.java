@@ -70,7 +70,7 @@ public class MenuInicialActivity extends ActivityGeneric {
         itens.add("CONFIGURAÇÃO");
         itens.add("SAIR");
         itens.add("REENVIO DE DADOS");
-        itens.add("ATUALIZAR APLICATIVO");
+        itens.add("ATUALIZAR DADOS");
         itens.add("LOG");
 
         LogProcessoDAO.getInstance().insertLogProcesso("AdapterList adapterList = new AdapterList(this, itens);\n" +
@@ -135,48 +135,54 @@ public class MenuInicialActivity extends ActivityGeneric {
                 } else if (text.equals("ATUALIZAR DADOS")) {
 
                     LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"ATUALIZAR DADOS\")) {", getLocalClassName());
-                    if (connectNetwork) {
+                    if(pmmContext.getConfigCTR().hasElemConfig()) {
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
-                                "progressBar = new ProgressDialog(v.getContext());\n" +
-                                "                        progressBar.setCancelable(true);\n" +
-                                "                        progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
-                                "                        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);\n" +
-                                "                        progressBar.setProgress(0);\n" +
-                                "                        progressBar.setMax(100);\n" +
-                                "                        progressBar.show()", getLocalClassName());
-                        progressBar = new ProgressDialog(v.getContext());
-                        progressBar.setCancelable(true);
-                        progressBar.setMessage("ATUALIZANDO ...");
-                        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                        progressBar.setProgress(0);
-                        progressBar.setMax(100);
-                        progressBar.show();
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().hasElemConfig()) {", getLocalClassName());
+                        if (connectNetwork) {
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().atualTodasTabelas(MenuInicialActivity.this, progressBar);", getLocalClassName());
-                        pmmContext.getConfigCTR().atualTodasTabelas(MenuInicialActivity.this, progressBar, getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
+                                    "progressBar = new ProgressDialog(v.getContext());\n" +
+                                    "                        progressBar.setCancelable(true);\n" +
+                                    "                        progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
+                                    "                        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);\n" +
+                                    "                        progressBar.setProgress(0);\n" +
+                                    "                        progressBar.setMax(100);\n" +
+                                    "                        progressBar.show()", getLocalClassName());
+                            progressBar = new ProgressDialog(v.getContext());
+                            progressBar.setCancelable(true);
+                            progressBar.setMessage("ATUALIZANDO ...");
+                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                            progressBar.setProgress(0);
+                            progressBar.setMax(100);
+                            progressBar.show();
 
-                    } else {
-                        LogProcessoDAO.getInstance().insertLogProcesso("} else {" +
-                                "AlertDialog.Builder alerta = new AlertDialog.Builder(MenuInicialActivity.this);\n" +
-                                "                        alerta.setTitle(\"ATENÇÃO\");\n" +
-                                "                        alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
-                                "                        alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                                "                            @Override\n" +
-                                "                            public void onClick(DialogInterface dialog, int which) {\n" +
-                                "                            }\n" +
-                                "                        });\n" +
-                                "                        alerta.show()", getLocalClassName());
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(MenuInicialActivity.this);
-                        alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
-                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
-                        alerta.show();
+                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().verEquipConfig(MenuInicialActivity.this, MenuInicialActivity.class, progressBar, getLocalClassName(), 2);", getLocalClassName());
+                            pmmContext.getConfigCTR().verEquipAtualTodosDadosConfig(MenuInicialActivity.this, MenuInicialActivity.class, progressBar, getLocalClassName(), 2);
+
+                        } else {
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {" +
+                                    "AlertDialog.Builder alerta = new AlertDialog.Builder(MenuInicialActivity.this);\n" +
+                                    "                        alerta.setTitle(\"ATENÇÃO\");\n" +
+                                    "                        alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
+                                    "                        alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                    "                            @Override\n" +
+                                    "                            public void onClick(DialogInterface dialog, int which) {\n" +
+                                    "                            }\n" +
+                                    "                        });\n" +
+                                    "                        alerta.show()", getLocalClassName());
+                            AlertDialog.Builder alerta = new AlertDialog.Builder(MenuInicialActivity.this);
+                            alerta.setTitle("ATENÇÃO");
+                            alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
+                            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+                            alerta.show();
+                        }
+
                     }
+
 
                 }
                 else if (text.equals("LOG")) {

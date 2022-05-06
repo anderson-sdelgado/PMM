@@ -19,6 +19,7 @@ import br.com.usinasantafe.pmm.util.conHttp.PostVerGenerico;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp;
+import br.com.usinasantafe.pmm.view.MenuInicialActivity;
 import br.com.usinasantafe.pmm.view.TelaInicialActivity;
 
 import android.os.AsyncTask;
@@ -35,10 +36,11 @@ public class VerifDadosServ {
     private Class telaProx;
     private ProgressDialog progressDialog;
     private String dados;
-    private String tipo;
+    private String classe;
     private TelaInicialActivity telaInicialActivity;
     private PostVerGenerico postVerGenerico;
     public static int status;
+    private int tipo;
 
     public VerifDadosServ() {
     }
@@ -59,23 +61,23 @@ public class VerifDadosServ {
         MecanicoCTR mecanicoCTR = new MecanicoCTR();
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
         LogProcessoDAO.getInstance().insertLogProcesso("public void manipularDadosHttp(String result) {", activity);
-        if (this.tipo.equals("Equip")) {
+        if (this.classe.equals("Equip")) {
             LogProcessoDAO.getInstance().insertLogProcesso("if (this.tipo.equals(\"Equip\")) {\n" +
                     "            configCTR.receberVerifEquip(" + result + ");", activity);
-            configCTR.receberVerifEquip(result);
-        } else if (this.tipo.equals("OS")) {
+            configCTR.receberVerifEquip(result, this.tipo);
+        } else if (this.classe.equals("OS")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"OS\")) {\n" +
                     "            configCTR.receberVerifOS(" + result + ");", activity);
             configCTR.receberVerifOS(result);
-        } else if (this.tipo.equals("Atividade")) {
+        } else if (this.classe.equals("Atividade")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Atividade\")) {\n" +
                     "            configCTR.receberVerifAtiv(" + result + ");", activity);
             configCTR.receberVerifAtiv(result);
-        } else if (this.tipo.equals("AtividadeECM")) {
+        } else if (this.classe.equals("AtividadeECM")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"AtividadeECM\")) {\n" +
                     "            configCTR.receberVerifAtivECM(" + result + ");", activity);
             configCTR.receberVerifAtivECM(result);
-        } else if (this.tipo.equals("Atualiza")) {
+        } else if (this.classe.equals("Atualiza")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Atualiza\")) {\n" +
                     "            configCTR.recAtual(result.trim());\n" +
                     "            status = 3;", activity);
@@ -83,27 +85,27 @@ public class VerifDadosServ {
             status = 3;
                 LogProcessoDAO.getInstance().insertLogProcesso("this.menuInicialActivity.encerrarBarra();", activity);
                 this.telaInicialActivity.goMenuInicial();
-        } else if (this.tipo.equals("CheckList")) {
+        } else if (this.classe.equals("CheckList")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"CheckList\")) {\n" +
                     "            checkListCTR.receberVerifCheckList(" + result + ");", activity);
             checkListCTR.receberVerifCheckList(result);
-        } else if (this.tipo.equals("Informativo")) {
+        } else if (this.classe.equals("Informativo")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Informativo\")) {\n" +
                     "            informativoCTR.receberVerifInformativo(" + result + ");", activity);
             informativoCTR.receberVerifInformativo(result);
-        } else if(this.tipo.equals("OrdCarreg")) {
+        } else if(this.classe.equals("OrdCarreg")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if(this.tipo.equals(\"OrdCarreg\")) {\n" +
                     "            compostoCTR.receberVerifOrdCarreg(" + result + ");", activity);
             compostoCTR.receberVerifOrdCarreg(result, activity);
-        } else if (this.tipo.equals("CEC")) {
+        } else if (this.classe.equals("CEC")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"CEC\")) {\n" +
                     "            cecCTR.receberVerifCEC(" + result + ");", activity);
             cecCTR.receberVerifCEC(result);
-        } else if (this.tipo.equals("OSMecan")) {
+        } else if (this.classe.equals("OSMecan")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"OS\")) {\n" +
                     "            configCTR.receberVerifOS(" + result + ");", activity);
             mecanicoCTR.receberVerifOSMecan(result);
-        } else if (this.tipo.equals("Pneu")) {
+        } else if (this.classe.equals("Pneu")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Pneu\")) {\n" +
                     "            motoMecFertCTR.receberVerifPneu(" + result + ");", activity);
             motoMecFertCTR.receberVerifPneu(result);
@@ -137,10 +139,10 @@ public class VerifDadosServ {
         return ret;
     }
 
-    public void verifDadosInformativo(String dados,  String tipo, String activity) {
+    public void verifDadosInformativo(String dados,  String classe, String activity) {
 
         urlsConexaoHttp = new UrlsConexaoHttp();
-        this.tipo = tipo;
+        this.classe = classe;
         this.dados = dados;
 
         envioVerif(activity);
@@ -150,7 +152,7 @@ public class VerifDadosServ {
     public void verifAtualAplic(String dados, TelaInicialActivity telaInicialActivity, String activity) {
 
         urlsConexaoHttp = new UrlsConexaoHttp();
-        this.tipo = "Atualiza";
+        this.classe = "Atualiza";
         this.dados = dados;
         this.telaInicialActivity = telaInicialActivity;
 
@@ -158,26 +160,41 @@ public class VerifDadosServ {
 
     }
 
-    public void verifDados(String dados, String tipo, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity) {
+    public void verifDados(String dados, String classe, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity) {
 
         this.urlsConexaoHttp = new UrlsConexaoHttp();
         this.telaAtual = telaAtual;
         this.telaProx = telaProx;
         this.progressDialog = progressDialog;
-        this.tipo = tipo;
+        this.classe = classe;
         this.dados = dados;
 
         envioVerif(activity);
 
     }
 
-    public void verifDados(String dados, String tipo, Context telaAtual, Class telaProx, String activity) {
+
+    public void verifDados(String dados, String classe, Context telaAtual, Class telaProx, String activity) {
 
         this.urlsConexaoHttp = new UrlsConexaoHttp();
         this.telaAtual = telaAtual;
         this.telaProx = telaProx;
-        this.tipo = tipo;
+        this.classe = classe;
         this.dados = dados;
+
+        envioVerif(activity);
+
+    }
+
+    public void verifDados(String dados, String classe, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo) {
+
+        this.urlsConexaoHttp = new UrlsConexaoHttp();
+        this.telaAtual = telaAtual;
+        this.telaProx = telaProx;
+        this.progressDialog = progressDialog;
+        this.classe = classe;
+        this.dados = dados;
+        this.tipo = tipo;
 
         envioVerif(activity);
 
@@ -187,12 +204,12 @@ public class VerifDadosServ {
 
         status = 2;
         this.urlsConexaoHttp = new UrlsConexaoHttp();
-        String[] url = {urlsConexaoHttp.urlVerifica(tipo), activity};
+        String[] url = {urlsConexaoHttp.urlVerifica(classe), activity};
         Map<String, Object> parametrosPost = new HashMap<String, Object>();
         parametrosPost.put("dado", this.dados);
 
-        Log.i("PMM", "postVerGenerico.execute('" + urlsConexaoHttp.urlVerifica(tipo) + "'); - Dados de Envio = " + this.dados);
-        LogProcessoDAO.getInstance().insertLogProcesso("postVerGenerico.execute('" + urlsConexaoHttp.urlVerifica(tipo) + "'); - Dados de Envio = " + this.dados, activity);
+        Log.i("PMM", "postVerGenerico.execute('" + urlsConexaoHttp.urlVerifica(classe) + "'); - Dados de Envio = " + this.dados);
+        LogProcessoDAO.getInstance().insertLogProcesso("postVerGenerico.execute('" + urlsConexaoHttp.urlVerifica(classe) + "'); - Dados de Envio = " + this.dados, activity);
         postVerGenerico = new PostVerGenerico();
         postVerGenerico.setParametrosPost(parametrosPost);
         postVerGenerico.execute(url);
@@ -231,6 +248,10 @@ public class VerifDadosServ {
         }
     }
 
+    public void atualTodosDados(){
+        AtualDadosServ.getInstance().atualTodasTabBD(telaAtual, progressDialog, "MenuInicialActivity");
+    }
+
     public void msg(String texto){
         if(status < 3){
             status = 3;
@@ -263,11 +284,11 @@ public class VerifDadosServ {
         }
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getClasse() {
+        return classe;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setClasse(String classe) {
+        this.classe = classe;
     }
 }
