@@ -259,14 +259,31 @@ public class DataHoraActivity extends ActivityGeneric {
 
                                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
                                     LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {", getLocalClassName());
-                                    if(PMMContext.aplic == 2){
-                                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2){\n" +
-                                                "                                        it = new Intent(DataHoraActivity.this, HorimetroActivity.class);", getLocalClassName());
-                                        it = new Intent(DataHoraActivity.this, HorimetroActivity.class);
+                                    if(PMMContext.aplic == 2) {
+
+                                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2){", getLocalClassName());
+                                        if (connectNetwork) {
+                                            LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
+                                                    "pmmContext.getConfigCTR().setStatusConConfig(1L);", getLocalClassName());
+                                            pmmContext.getConfigCTR().setStatusConConfig(1L);
+                                        }
+                                        else{
+                                            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                                                    "pmmContext.getConfigCTR().setStatusConConfig(0L);", getLocalClassName());
+                                            pmmContext.getConfigCTR().setStatusConConfig(0L);
+                                        }
+                                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(ListaTurnoActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
+                                        it = new Intent(DataHoraActivity.this, ListaAtividadeActivity.class);
                                         startActivity(it);
                                         finish();
-                                    }
-                                    else {
+
+                                    } else if(PMMContext.aplic == 3){
+                                        LogProcessoDAO.getInstance().insertLogProcesso("} else if(PMMContext.aplic == 3){\n" +
+                                                "                                        it = new Intent(DataHoraActivity.this, OSActivity.class);", getLocalClassName());
+                                        it = new Intent(DataHoraActivity.this, ListaFuncaoPCOMPActivity.class);
+                                        startActivity(it);
+                                        finish();
+                                    } else {
                                         LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                                                 "                                        it = new Intent(DataHoraActivity.this, OSActivity.class);", getLocalClassName());
                                         it = new Intent(DataHoraActivity.this, OSActivity.class);

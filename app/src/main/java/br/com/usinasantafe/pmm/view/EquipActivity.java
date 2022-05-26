@@ -59,10 +59,9 @@ public class EquipActivity extends ActivityGeneric {
                     startActivity(it);
                     finish();
 
-                }
-                else {
+                } else {
 
-                    LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                             "pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().setIdEquipBolMMFert(" + pmmContext.getConfigCTR().getEquip().getIdEquip() + ");", getLocalClassName());
                     pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().setIdEquipBolMMFert(pmmContext.getConfigCTR().getEquip().getIdEquip());
 

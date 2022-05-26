@@ -26,9 +26,9 @@ public class PMMContext extends Application {
     private CompostoCTR compostoCTR;
     private MecanicoCTR mecanicoCTR;
 
-    public static String versaoAPP = "5.02";
-    public static String versaoWebService = "5.01";
-    public static int aplic = 1;   // 1 - PMM; 2 - ECM; 3 - PCOMP
+    public static String versaoAPP = "5.03";
+    public static String versaoWS = "5.01";
+    public static int aplic = 3;   // 1 - PMM; 2 - ECM; 3 - PCOMP
 
     @Override
     public void onCreate() {

@@ -177,9 +177,18 @@ public class ListaTurnoActivity extends ActivityGeneric {
                         Intent it = new Intent(ListaTurnoActivity.this, ListaAtividadeActivity.class);
                         startActivity(it);
                         finish();
-                    }
-                    else {
-                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);", getLocalClassName());
+
+                    } else if(PMMContext.aplic == 3){
+
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                "                        Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);", getLocalClassName());
+                        Intent it = new Intent(ListaTurnoActivity.this, ListaFuncaoPCOMPActivity.class);
+                        startActivity(it);
+                        finish();
+
+                    } else {
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                "                        Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);", getLocalClassName());
                         Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);
                         startActivity(it);
                         finish();

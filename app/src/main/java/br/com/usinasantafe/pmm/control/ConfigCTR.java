@@ -93,6 +93,11 @@ public class ConfigCTR {
         configDAO.setStatusRetVerif(statusRetVerif);
     }
 
+    public void setFuncaoPCOMP(Long funcaoPCOMP) {
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setFuncaoPCOMP(funcaoPCOMP);
+    }
+
     public Long getStatusRetVerif(){
         ConfigDAO configDAO = new ConfigDAO();
         return configDAO.getStatusRetVerif();

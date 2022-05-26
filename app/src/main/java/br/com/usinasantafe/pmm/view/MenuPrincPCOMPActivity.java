@@ -170,7 +170,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 2) {
 
                             LogProcessoDAO.getInstance().insertLogProcesso("else if (motoMecBean.getCodFuncaoOperMotoMec() == 2) {", getLocalClassName());
-                            if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 0) {
+                            if (pmmContext.getConfigCTR().getConfig().getPosFluxoPCOMP() == 0) {
 
                                 LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 0) {\n" +
                                         "                                AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincPCOMPActivity.this);\n" +
@@ -219,9 +219,9 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                                         "                                alerta.show();", getLocalClassName());
                                 String msg = "";
 
-                                if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 1) {
+                                if (pmmContext.getConfigCTR().getConfig().getPosFluxoPCOMP() == 1) {
                                     msg = "POR FAVOR, CARREGUE O EQUIPAMENTO E DEPOIS PASSE NA BALANÇA PARA FAZER A PESAGEM CARREGADO!";
-                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 2) {
+                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoPCOMP() == 2) {
                                     msg = "POR FAVOR, PASSE NA BALANÇA PARA FAZER A PESAGEM DO EQUIPAMENTO CARREGADO!";
                                 }
 
@@ -254,24 +254,24 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 3) {
 
                             LogProcessoDAO.getInstance().insertLogProcesso("else if (motoMecBean.getCodFuncaoOperMotoMec() == 3) {", getLocalClassName());
-                            if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 1) {
+                            if (pmmContext.getConfigCTR().getConfig().getPosFluxoPCOMP() == 1) {
 
                                 LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 1) {", getLocalClassName());
-                                if (pmmContext.getConfigCTR().getOS().getTipoOS() == 0L) {
+                                if (pmmContext.getConfigCTR().getConfig().getFuncaoPCOMP() == 2L) {
 
-                                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getOS().getTipoOS() == 0L) {\n" +
+                                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getFuncaoCompostagem() == 2L) {n" +
+                                            "                                    Intent it = new Intent(MenuPrincPCOMPActivity.this, ProdutoActivity.class);", getLocalClassName());
+                                    Intent it = new Intent(MenuPrincPCOMPActivity.this, ProdutoActivity.class);
+                                    startActivity(it);
+                                    finish();
+
+                                } else if (pmmContext.getConfigCTR().getConfig().getFuncaoPCOMP() == 3L) {
+
+                                    LogProcessoDAO.getInstance().insertLogProcesso("} else if (pmmContext.getConfigCTR().getConfig().getFuncaoCompostagem() == 3L) {\n" +
                                             "                                    pmmContext.getConfigCTR().setPosFluxoCarregComposto(2L);\n" +
                                             "                                    Intent it = new Intent(MenuPrincPCOMPActivity.this, LeiraActivity.class);", getLocalClassName());
                                     pmmContext.getConfigCTR().setPosFluxoCarregComposto(2L);
                                     Intent it = new Intent(MenuPrincPCOMPActivity.this, LeiraActivity.class);
-                                    startActivity(it);
-                                    finish();
-
-                                } else {
-
-                                    LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                            "                                    Intent it = new Intent(MenuPrincPCOMPActivity.this, ProdutoActivity.class);", getLocalClassName());
-                                    Intent it = new Intent(MenuPrincPCOMPActivity.this, ProdutoActivity.class);
                                     startActivity(it);
                                     finish();
 
@@ -299,9 +299,9 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                                 String msg = "";
 
-                                if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 0) {
+                                if (pmmContext.getConfigCTR().getConfig().getPosFluxoPCOMP() == 0) {
                                     msg = "POR FAVOR, TIRE A PESAGEM TARA DO EQUIPAMENTO!";
-                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 2) {
+                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoPCOMP() == 2) {
                                     msg = "POR FAVOR, PASSE NA BALANÇA PARA FAZER A PESAGEM DO EQUIPAMENTO CARREGADO!";
                                 }
 
@@ -323,7 +323,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         else if (motoMecBean.getCodFuncaoOperMotoMec() == 4) {
 
                             LogProcessoDAO.getInstance().insertLogProcesso("else if (motoMecBean.getCodFuncaoOperMotoMec() == 4) {", getLocalClassName());
-                            if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 2) {
+                            if (pmmContext.getConfigCTR().getConfig().getPosFluxoPCOMP() == 2) {
 
                                 LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 2) {\n" +
                                         "                                pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());" +
@@ -359,9 +359,9 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
                                 String msg = "";
 
-                                if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 0) {
+                                if (pmmContext.getConfigCTR().getConfig().getPosFluxoPCOMP() == 0) {
                                     msg = "POR FAVOR, TIRE A PESAGEM TARA DO EQUIPAMENTO!";
-                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoCarregComposto() == 1) {
+                                } else if (pmmContext.getConfigCTR().getConfig().getPosFluxoPCOMP() == 1) {
                                     msg = "POR FAVOR, CARREGUE O EQUIPAMENTO E DEPOIS PASSE NA BALANÇA PARA FAZER A PESAGEM CARREGADO!";
                                 }
 

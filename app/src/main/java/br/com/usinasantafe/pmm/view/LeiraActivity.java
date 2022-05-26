@@ -146,15 +146,14 @@ public class LeiraActivity extends ActivityGeneric {
                         LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
                         pmmContext.getMotoMecFertCTR().salvarApontLeira(getLongitude(), getLatitude(), getLocalClassName());
 
-                        if (pmmContext.getConfigCTR().getOS().getTipoOS() == 0L) {
-                            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getOS().getTipoOS() == 0L) {\n" +
-                                    "                            pmmContext.getCompostoCTR().abrirCarregComposto(Long.parseLong(" + editTextPadrao.getText().toString() + "));", getLocalClassName());
-                            pmmContext.getCompostoCTR().abrirCarregComposto(Long.parseLong(editTextPadrao.getText().toString()));
-                        }
-                        else{
-                            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                        if (pmmContext.getConfigCTR().getConfig().getFuncaoPCOMP() == 2L) {
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getFuncaoCompostagem() == 2L) {\n" +
                                     "                            pmmContext.getCompostoCTR().salvarLeiraDescarreg(Long.parseLong(" + editTextPadrao.getText().toString() + "));", getLocalClassName());
                             pmmContext.getCompostoCTR().salvarLeiraDescarreg(Long.parseLong(editTextPadrao.getText().toString()));
+                        } else if (pmmContext.getConfigCTR().getConfig().getFuncaoPCOMP() == 3L) {
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else if (pmmContext.getConfigCTR().getConfig().getFuncaoCompostagem() == 3L) {\n" +
+                                    "                            pmmContext.getCompostoCTR().abrirCarregComposto(Long.parseLong(" + editTextPadrao.getText().toString() + "));", getLocalClassName());
+                            pmmContext.getCompostoCTR().abrirCarregComposto(Long.parseLong(editTextPadrao.getText().toString()));
                         }
 
                         LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().fecharApont();\n" +

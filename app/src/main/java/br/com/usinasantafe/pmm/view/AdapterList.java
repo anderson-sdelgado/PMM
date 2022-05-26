@@ -51,6 +51,7 @@ public class AdapterList extends BaseAdapter {
                 || itens.get(position).equals("TROCA MOTORISTA")
                 || itens.get(position).equals("CARREG REST/AGUA")
                 || itens.get(position).equals("VOLTAR AO TRABALHO")
+                || itens.get(position).equals("TROCA DE FUNCAO")
                 || itens.get(position).equals("VERIFICAR LEIRA")){
             textView.setTypeface(null, Typeface.BOLD);
         }

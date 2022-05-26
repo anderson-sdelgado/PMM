@@ -49,9 +49,11 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private Long atualCheckList;
 	@DatabaseField
-	private Long posFluxoCarregComposto;
+	private Long posFluxoPCOMP;
 	@DatabaseField
 	private Long statusRetVerif; // 0 - Não Verificando; 1 - Verificando
+	@DatabaseField
+	private Long funcaoPCOMP; // 2 - Insumo; 3 - Composto
 	@DatabaseField
 	private Long posicaoTela;
 	// 1 - Inicio do Boletim; PMM - ECM - PCOMP
@@ -81,6 +83,7 @@ public class ConfigBean extends Entidade {
 	// 26 - Finalizar
 	// 27 - Inicia Apontamento Manutenção
 	// 28 - Interroper/Finalizar Apontamento Manutenção
+	// 29 - Troca Funcao PCOMP
 
 	public ConfigBean() {
 	}
@@ -221,12 +224,12 @@ public class ConfigBean extends Entidade {
 		this.atualCheckList = atualCheckList;
 	}
 
-	public Long getPosFluxoCarregComposto() {
-		return posFluxoCarregComposto;
+	public Long getPosFluxoPCOMP() {
+		return posFluxoPCOMP;
 	}
 
-	public void setPosFluxoCarregComposto(Long posFluxoCarregComposto) {
-		this.posFluxoCarregComposto = posFluxoCarregComposto;
+	public void setPosFluxoPCOMP(Long posFluxoPCOMP) {
+		this.posFluxoPCOMP = posFluxoPCOMP;
 	}
 
 	public Long getPosicaoTela() {
@@ -259,5 +262,13 @@ public class ConfigBean extends Entidade {
 
 	public void setIdPropriedadeConfig(Long idPropriedadeConfig) {
 		this.idPropriedadeConfig = idPropriedadeConfig;
+	}
+
+	public Long getFuncaoPCOMP() {
+		return funcaoPCOMP;
+	}
+
+	public void setFuncaoPCOMP(Long funcaoPCOMP) {
+		this.funcaoPCOMP = funcaoPCOMP;
 	}
 }

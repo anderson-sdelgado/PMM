@@ -680,40 +680,10 @@ public class MotoMecFertCTR {
         this.motoMecBean = motoMecBean;
     }
 
-    public List<MotoMecBean> paradaList() {
-        Long aplic;
-        ConfigCTR configCTR = new ConfigCTR();
-        MotoMecDAO motoMecDAO = new MotoMecDAO();
-        if(PMMContext.aplic == 2){
-            aplic = 1l;
-        }
-        else{
-            if(configCTR.getOS().getTipoOS() == 0L){
-                aplic = 3L;
-            }
-            else{
-                aplic = 2L;
-            }
-        }
-        return motoMecDAO.paradaList(aplic);
-    }
-
     public List<MotoMecBean> motoMecList() {
-        Long aplic;
         ConfigCTR configCTR = new ConfigCTR();
         MotoMecDAO motoMecDAO = new MotoMecDAO();
-        if(PMMContext.aplic == 2){
-            aplic = 1l;
-        }
-        else{
-            if(configCTR.getOS().getTipoOS() == 0L){
-                aplic = 3L;
-            }
-            else{
-                aplic = 2L;
-            }
-        }
-        return motoMecDAO.motoMecList(aplic);
+        return motoMecDAO.motoMecList((PMMContext.aplic == 2) ? 1L : configCTR.getConfig().getFuncaoPCOMP());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

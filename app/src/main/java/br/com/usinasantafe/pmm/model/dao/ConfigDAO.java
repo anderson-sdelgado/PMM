@@ -54,7 +54,7 @@ public class ConfigDAO {
         configBean.setVelocConfig(0L);
         configBean.setBocalConfig(0L);
         configBean.setSenhaConfig(senha);
-        configBean.setPosFluxoCarregComposto(0L);
+        configBean.setPosFluxoPCOMP(0L);
         configBean.setPosicaoTela(0L);
         configBean.setStatusRetVerif(0L);
         configBean.setIdFrenteConfig(0L);
@@ -139,7 +139,7 @@ public class ConfigDAO {
 
     public void setPosFluxoCarregComposto(Long posFluxoCarregComposto){
         ConfigBean configBean = getConfig();
-        configBean.setPosFluxoCarregComposto(posFluxoCarregComposto);
+        configBean.setPosFluxoPCOMP(posFluxoCarregComposto);
         configBean.update();
     }
 
@@ -159,6 +159,12 @@ public class ConfigDAO {
         ConfigBean configBean = getConfig();
         configBean.setIdFrenteConfig(idFrente);
         configBean.setIdPropriedadeConfig(idPropriedade);
+        configBean.update();
+    }
+
+    public void setFuncaoPCOMP(Long funcaoPCOMP) {
+        ConfigBean configBean = getConfig();
+        configBean.setFuncaoPCOMP(funcaoPCOMP);
         configBean.update();
     }
 

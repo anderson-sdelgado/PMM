@@ -180,15 +180,30 @@ public class OSActivity extends ActivityGeneric {
     public void onBackPressed()  {
         LogProcessoDAO.getInstance().insertLogProcesso("onBackPressed()", getLocalClassName());
         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
-            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
-                    "Intent it = new Intent(OSActivity.this, ListaTurnoActivity.class);", getLocalClassName());
-            Intent it = new Intent(OSActivity.this, ListaTurnoActivity.class);
-            startActivity(it);
-            finish();
+            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {", getLocalClassName());
+            if(PMMContext.aplic == 3){
+                LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 3){\n" +
+                        "                Intent it = new Intent(OSActivity.this, ListaFuncaoPCOMPActivity.class);", getLocalClassName());
+                Intent it = new Intent(OSActivity.this, ListaFuncaoPCOMPActivity.class);
+                startActivity(it);
+                finish();
+            } else {
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                        "Intent it = new Intent(OSActivity.this, ListaTurnoActivity.class);", getLocalClassName());
+                Intent it = new Intent(OSActivity.this, ListaTurnoActivity.class);
+                startActivity(it);
+                finish();
+            }
         } else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {\n" +
                     "Intent it = new Intent(OSActivity.this, MenuCertifActivity.class);", getLocalClassName());
             Intent it = new Intent(OSActivity.this, MenuCertifActivity.class);
+            startActivity(it);
+            finish();
+        } else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 29L) {
+            LogProcessoDAO.getInstance().insertLogProcesso("} else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 29L) {\n" +
+                    "Intent it = new Intent(OSActivity.this, ListaFuncaoPCOMPActivity.class);", getLocalClassName());
+            Intent it = new Intent(OSActivity.this, ListaFuncaoPCOMPActivity.class);
             startActivity(it);
             finish();
         } else {

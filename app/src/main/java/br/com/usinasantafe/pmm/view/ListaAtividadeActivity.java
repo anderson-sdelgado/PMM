@@ -404,9 +404,15 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                         startActivity(it);
                         finish();
                     } else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {\n" +
                                 "                        Intent it = new Intent(ListaAtividadeActivity.this, EquipActivity.class);", getLocalClassName());
                         Intent it = new Intent(ListaAtividadeActivity.this, LiberacaoActivity.class);
+                        startActivity(it);
+                        finish();
+                    } else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 29L) {
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 29L) {\n" +
+                                "                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);
                         startActivity(it);
                         finish();
                     }
