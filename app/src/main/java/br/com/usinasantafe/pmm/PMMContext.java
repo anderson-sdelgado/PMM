@@ -11,9 +11,6 @@ import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.control.InformativoCTR;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 
-/**
- * Created by anderson on 26/04/2017.
- */
 public class PMMContext extends Application {
 
     private Thread.UncaughtExceptionHandler mDefaultExceptionHandler;
@@ -26,9 +23,9 @@ public class PMMContext extends Application {
     private CompostoCTR compostoCTR;
     private MecanicoCTR mecanicoCTR;
 
-    public static String versaoAPP = "5.03";
+    public static String versaoAPP = "5.05";
     public static String versaoWS = "5.01";
-    public static int aplic = 3;   // 1 - PMM; 2 - ECM; 3 - PCOMP
+    public static int aplic = 2;   // 1 - PMM; 2 - ECM; 3 - PCOMP
 
     @Override
     public void onCreate() {

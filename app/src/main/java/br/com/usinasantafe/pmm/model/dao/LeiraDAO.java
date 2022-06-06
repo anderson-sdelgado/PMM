@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.estaticas.LeiraBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMecanBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.MovLeiraBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.util.Tempo;
@@ -71,14 +69,14 @@ public class LeiraDAO {
         ArrayList<EspecificaPesquisa> pesquisaArrayList = new ArrayList();
         pesquisaArrayList.add(getPesqIdBol(idBol));
 
-        ApontMecanBean apontMecanBean = new ApontMecanBean();
-        List<ApontMecanBean> apontMecanList = apontMecanBean.get(pesquisaArrayList);
+        MovLeiraBean movLeiraBean = new MovLeiraBean();
+        List<MovLeiraBean> movLeiraList = movLeiraBean.get(pesquisaArrayList);
 
-        for (ApontMecanBean apontMecanBeanBD : apontMecanList) {
-            apontMecanBeanBD.delete();
+        for (MovLeiraBean movLeiraBeanBD : movLeiraList) {
+            movLeiraBeanBD.delete();
         }
 
-        apontMecanList.clear();
+        movLeiraList.clear();
 
     }
 

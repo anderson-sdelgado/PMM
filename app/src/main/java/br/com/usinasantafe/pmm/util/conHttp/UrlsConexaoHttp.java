@@ -7,8 +7,8 @@ public class UrlsConexaoHttp {
     public static String versao = "versao_" + PMMContext.versaoWS.replace(".", "_");
 
 //    public static String url = "https://www.usinasantafe.com.br/pmmdev/view/";
-    public static String url = "https://www.usinasantafe.com.br/pmmqa/view/";
-//    public static String url = "https://www.usinasantafe.com.br/pmmprod/" + versao + "/view/";
+//    public static String url = "https://www.usinasantafe.com.br/pmmqa/view/";
+    public static String url = "https://www.usinasantafe.com.br/pmmprod/" + versao + "/view/";
 
     public static String localPSTEstatica = "br.com.usinasantafe.pmm.model.bean.estaticas.";
     public static String localUrl = "br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp";
@@ -25,7 +25,6 @@ public class UrlsConexaoHttp {
     public static String MotoMecBean = url + "motomec.php";
     public static String OSBean = url + "os.php";
     public static String ParadaBean = url + "parada.php";
-    public static String PneuBean = url + "pneu.php";
     public static String PressaoBocalBean = url + "pressaobocal.php";
     public static String ProdutoBean = url + "produto.php";
     public static String PropriedadeBean = url + "propriedade.php";

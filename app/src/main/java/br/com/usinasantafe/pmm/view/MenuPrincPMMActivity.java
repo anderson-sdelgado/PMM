@@ -103,9 +103,9 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                 if(rFuncaoAtivParBean.getCodFuncao() == 3){
                     itens.add("TROCAR IMPLEMENTO");
                 }
-                if(rFuncaoAtivParBean.getCodFuncao() == 5){
-                    itens.add("COMPOSTAGEM");
-                }
+//                if(rFuncaoAtivParBean.getCodFuncao() == 5){
+//                    itens.add("COMPOSTAGEM");
+//                }
             }
             rFuncaoAtividadeList.clear();
         }
