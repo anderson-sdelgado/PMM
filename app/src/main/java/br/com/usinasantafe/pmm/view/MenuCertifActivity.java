@@ -74,8 +74,8 @@ public class MenuCertifActivity extends ActivityGeneric {
                         if (pmmContext.getCecCTR().verDataPreCEC()) {
 
                             LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getCecCTR().verDataPreCEC()) {\n" +
-                                    "                            Intent it = new Intent(MenuCertifActivity.this, OSActivity.class);", getLocalClassName());
-                            Intent it = new Intent(MenuCertifActivity.this, OSActivity.class);
+                                    "                            Intent it = new Intent(MenuCertifActivity.this, EquipActivity.class);", getLocalClassName());
+                            Intent it = new Intent(MenuCertifActivity.this, EquipActivity.class);
                             startActivity(it);
                             finish();
 

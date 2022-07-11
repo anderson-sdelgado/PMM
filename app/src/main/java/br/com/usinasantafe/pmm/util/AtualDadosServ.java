@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.conHttp.GetBDGenerico;
 import br.com.usinasantafe.pmm.model.pst.GenericRecordable;
 import br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp;
+import br.com.usinasantafe.pmm.view.PropriedadeActivity;
 
 import com.google.gson.Gson;
 
@@ -33,7 +35,8 @@ public class AtualDadosServ {
 	private Context telaAtual;
 	private Class telaProx;
 	private int tipoReceb;
-	private UrlsConexaoHttp urlsConexaoHttp;
+	private Class telaProxAlt;
+	private String dado;
 	
 	public AtualDadosServ() {
 		genericRecordable = new GenericRecordable();
@@ -90,52 +93,82 @@ public class AtualDadosServ {
 	
 
 	public void atualTodasTabBD(Context telaAtual, ProgressDialog progressDialog, String activity){
-		
-		try {
-			
-			this.tipoReceb = 1;
-			this.telaAtual = telaAtual;
-			this.progressDialog = progressDialog;
-			tabAtualArrayList = new ArrayList();
 
-	        Class<?> retClasse = Class.forName(urlsConexaoHttp.localUrl); 
+		this.tipoReceb = 1;
+		this.telaAtual = telaAtual;
+		this.progressDialog = progressDialog;
 
-	        for (Field field : retClasse.getDeclaredFields()) {
-	            String campo = field.getName();
-	            if(campo.contains("Bean")){
-	            	tabAtualArrayList.add(campo);
-	            }
-	        }
-	        
-	        classe = (String) tabAtualArrayList.get(contAtualBD);
-	        String[] url = {classe, activity};
-		    contAtualBD++;
+		allClasses();
+		startAtualizacao(activity);
 
-			LogProcessoDAO.getInstance().insertLogProcesso("getBDGenerico.execute('" + classe + "');", activity);
-			GetBDGenerico getBDGenerico = new GetBDGenerico();
-	        getBDGenerico.execute(url);
-	        
-		} catch (Exception e) {
-			LogErroDAO.getInstance().insertLogErro(e);
-		}
-        
+	}
+
+	public void atualGenericoBD(ArrayList classeArrayList, int tipoReceb, String activity){
+
+		this.tipoReceb = tipoReceb;
+
+		selecionarClasses(classeArrayList);
+		startAtualizacao(activity);
+
 	}
 
 	public void atualGenericoBD(Context telaAtual, Class telaProx, ProgressDialog progressDialog, ArrayList classeArrayList, int tipoReceb, String activity){
 
+		this.tipoReceb = tipoReceb;
+		this.telaAtual = telaAtual;
+		this.telaProx = telaProx;
+		this.progressDialog = progressDialog;
+
+		selecionarClasses(classeArrayList);
+		startAtualizacao(activity);
+
+	}
+
+	public void atualGenericoBD(Context telaAtual, Class telaProx, ProgressDialog progressDialog, ArrayList classeArrayList, int tipoReceb, String activity, Class telaProxAlt, String dado){
+
+		this.tipoReceb = tipoReceb;
+		this.telaAtual = telaAtual;
+		this.telaProx = telaProx;
+		this.progressDialog = progressDialog;
+		this.telaProxAlt = telaProxAlt;
+		this.dado = dado;
+
+		selecionarClasses(classeArrayList);
+		startAtualizacao(activity);
+
+	}
+
+	public void allClasses(){
+
 		try {
 
-			this.tipoReceb = tipoReceb;
-			this.telaAtual = telaAtual;
-			this.telaProx = telaProx;
-			this.progressDialog = progressDialog;
 			tabAtualArrayList = new ArrayList();
 
-			Class<?> retClasse = Class.forName(urlsConexaoHttp.localUrl);
+			Class<?> retClasse = Class.forName(UrlsConexaoHttp.localUrl);
 
 			for (Field field : retClasse.getDeclaredFields()) {
 				String campo = field.getName();
-				Log.i("PMM", "Campo = " + campo);
+				if(campo.contains("Bean")){
+					tabAtualArrayList.add(campo);
+				}
+			}
+
+		} catch (Exception e) {
+			LogErroDAO.getInstance().insertLogErro(e);
+		}
+
+	}
+
+	public void selecionarClasses(ArrayList classeArrayList){
+
+		try {
+
+			tabAtualArrayList = new ArrayList();
+
+			Class<?> retClasse = Class.forName(UrlsConexaoHttp.localUrl);
+
+			for (Field field : retClasse.getDeclaredFields()) {
+				String campo = field.getName();
 				for (int i = 0; i < classeArrayList.size(); i++) {
 					String classe = (String) classeArrayList.get(i);
 					if(campo.equals(classe)){
@@ -144,59 +177,61 @@ public class AtualDadosServ {
 				}
 			}
 
-			classe = (String) tabAtualArrayList.get(contAtualBD);
-			String[] url = {classe, activity};
-			contAtualBD++;
-
-			LogProcessoDAO.getInstance().insertLogProcesso("getBDGenerico.execute('" + classe + "');", activity);
-			GetBDGenerico getBDGenerico = new GetBDGenerico();
-			getBDGenerico.execute(url);
-
 		} catch (Exception e) {
 			LogErroDAO.getInstance().insertLogErro(e);
 		}
 
 	}
 
+	public void startAtualizacao(String activity){
+
+		classe = (String) tabAtualArrayList.get(contAtualBD);
+		String[] url = {classe, activity};
+		contAtualBD++;
+
+		LogProcessoDAO.getInstance().insertLogProcesso("getBDGenerico.execute('" + classe + "');", activity);
+		GetBDGenerico getBDGenerico = new GetBDGenerico();
+		getBDGenerico.execute(url);
+
+	}
+
 
 	public void atualizandoBD(String activity){
 
-		LogProcessoDAO.getInstance().insertLogProcesso("public void atualizandoBD(String activity){", activity);
-		if(this.tipoReceb == 1){
+		LogProcessoDAO.getInstance().insertLogProcesso("public void atualizandoBD(String activity){\n" +
+				"qtdeBD = tabAtualArrayList.size();", activity);
+		qtdeBD = tabAtualArrayList.size();
+		if(contAtualBD < tabAtualArrayList.size()){
 
-			LogProcessoDAO.getInstance().insertLogProcesso("if(this.tipoReceb == 1){\n" +
-					"\t\t\tqtdeBD = tabAtualArrayList.size();", activity);
-			qtdeBD = tabAtualArrayList.size();
+			LogProcessoDAO.getInstance().insertLogProcesso("if(contAtualBD < tabAtualArrayList.size()){\n" +
+					"this.progressDialog.setProgress((contAtualBD * 100) / qtdeBD);\n" +
+					"        classe = (String) tabAtualArrayList.get(contAtualBD);\n" +
+					"String[] url = {classe, activity};\n" +
+					"contAtualBD++;\n" +
+					"GetBDGenerico getBDGenerico = new GetBDGenerico();\n" +
+					"        getBDGenerico.execute(url);\n" +
+					"        getBDGenerico.execute('" + classe + "');", activity);
+			this.progressDialog.setProgress((contAtualBD * 100) / qtdeBD);
+			classe = (String) tabAtualArrayList.get(contAtualBD);
+			String[] url = {classe, activity};
+			contAtualBD++;
+			GetBDGenerico getBDGenerico = new GetBDGenerico();
+			getBDGenerico.execute(url);
 
-			if(contAtualBD < tabAtualArrayList.size()){
+		} else {
+			LogProcessoDAO.getInstance().insertLogProcesso("} else {", activity);
+			contAtualBD = 0;
+			this.progressDialog.dismiss();
 
-				LogProcessoDAO.getInstance().insertLogProcesso("if(contAtualBD < tabAtualArrayList.size()){\n" +
-						"\t\t\t\tthis.progressDialog.setProgress((contAtualBD * 100) / qtdeBD);\n" +
-						"\t\t        classe = (String) tabAtualArrayList.get(contAtualBD);\n" +
-						"\t\t\t\tString[] url = {classe, activity};\n" +
-						"\t\t\t\tcontAtualBD++;\n" +
-						"\t\t\t\tGetBDGenerico getBDGenerico = new GetBDGenerico();\n" +
-						"\t\t        getBDGenerico.execute(url);\n" +
-						"\t\t        getBDGenerico.execute('" + classe + "');", activity);
+			if(this.tipoReceb == 1){
 
-				this.progressDialog.setProgress((contAtualBD * 100) / qtdeBD);
-		        classe = (String) tabAtualArrayList.get(contAtualBD);
-				String[] url = {classe, activity};
-				contAtualBD++;
+				LogProcessoDAO.getInstance().insertLogProcesso("if(this.tipoReceb == 1){\n" +
+						"contAtualBD = 0;\n" +
+						"this.progressDialog.dismiss();\n" +
+						"AlertDialog.Builder alerta = new AlertDialog.Builder(this.telaAtual);\n" +
+						"alerta.setTitle(\"ATENCAO\");\n" +
+						"alerta.setMessage(\"ATUALIZAÇÃO REALIZADA COM SUCESSO OS DADOS.\");", activity);
 
-				GetBDGenerico getBDGenerico = new GetBDGenerico();
-		        getBDGenerico.execute(url);
-		        
-			} else {
-
-				LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-						"\t\t\t\tcontAtualBD = 0;\n" +
-						"\t\t\t\tthis.progressDialog.dismiss();\n" +
-						"\t\t\t\tAlertDialog.Builder alerta = new AlertDialog.Builder(this.telaAtual);\n" +
-						"\t\t\t\talerta.setTitle(\"ATENCAO\");\n" +
-						"\t\t\t\talerta.setMessage(\"ATUALIZAÇÃO REALIZADA COM SUCESSO OS DADOS.\");", activity);
-				contAtualBD = 0;
-				this.progressDialog.dismiss();
 				AlertDialog.Builder alerta = new AlertDialog.Builder(this.telaAtual);
 				alerta.setTitle("ATENCAO");
 				alerta.setMessage("ATUALIZAÇÃO REALIZADA COM SUCESSO OS DADOS.");
@@ -204,46 +239,21 @@ public class AtualDadosServ {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-								"\t\t\t\t\t@Override\n" +
-								"\t\t\t\t\tpublic void onClick(DialogInterface dialog, int which) {", activity);
+								"@Override\n" +
+								"public void onClick(DialogInterface dialog, int which) {", activity);
 					}
 				});
-				
+
 				alerta.show();
-			}
-		
-		} else if(this.tipoReceb == 2){
 
-			LogProcessoDAO.getInstance().insertLogProcesso("} else if(this.tipoReceb == 2){\n" +
-					"\t\t\tqtdeBD = tabAtualArrayList.size();", activity);
-			qtdeBD = tabAtualArrayList.size();
+			} else if(this.tipoReceb == 2) {
 
-			if(contAtualBD < tabAtualArrayList.size()){
-
-				LogProcessoDAO.getInstance().insertLogProcesso("if(contAtualBD < tabAtualArrayList.size()){\n" +
-						"\t\t        classe = (String) tabAtualArrayList.get(contAtualBD);\n" +
-						"\t\t\t\tString[] url = {classe, activity};\n" +
-						"\t\t\t\tcontAtualBD++;\n" +
-						"\t\t\t\tGetBDGenerico getBDGenerico = new GetBDGenerico();\n" +
-						"\t\t\t\tgetBDGenerico.execute('" + classe + "');", activity);
-		        classe = (String) tabAtualArrayList.get(contAtualBD);
-				String[] url = {classe, activity};
-				contAtualBD++;
-
-				GetBDGenerico getBDGenerico = new GetBDGenerico();
-		        getBDGenerico.execute(url);
-		        
-			} else {
-
-				LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-						"\t\t\t\tcontAtualBD = 0;\n" +
-						"\t\t\t\tthis.progressDialog.dismiss();\n" +
-						"\t\t\t\tAlertDialog.Builder alerta = new AlertDialog.Builder(this.telaAtual);\n" +
-						"\t\t\t\talerta.setTitle(\"ATENCAO\");\n" +
-						"\t\t\t\talerta.setMessage(\"ATUALIZAÇÃO REALIZADA COM SUCESSO OS DADOS.\");", activity);
-				contAtualBD = 0;
-
-				this.progressDialog.dismiss();
+				LogProcessoDAO.getInstance().insertLogProcesso("} else if(this.tipoReceb == 2) {\n" +
+						"contAtualBD = 0;\n" +
+						"this.progressDialog.dismiss();\n" +
+						"AlertDialog.Builder alerta = new AlertDialog.Builder(this.telaAtual);\n" +
+						"alerta.setTitle(\"ATENCAO\");\n" +
+						"alerta.setMessage(\"ATUALIZAÇÃO REALIZADA COM SUCESSO OS DADOS.\");", activity);
 				AlertDialog.Builder alerta = new AlertDialog.Builder(this.telaAtual);
 				alerta.setTitle("ATENCAO");
 				alerta.setMessage("ATUALIZAÇÃO REALIZADA COM SUCESSO OS DADOS.");
@@ -251,21 +261,47 @@ public class AtualDadosServ {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-								"\t\t\t\t\t@Override\n" +
-								"\t\t\t\t\tpublic void onClick(DialogInterface dialog, int which) {\n" +
-								"\t\t\t\t\t\tprogressDialog.dismiss();\n" +
-								"\t\t\t\t\t\tIntent it = new Intent(telaAtual, telaProx);\n" +
-								"\t\t\t\t\t\ttelaAtual.startActivity(it);", activity);
-						progressDialog.dismiss();
+								"@Override\n" +
+								"public void onClick(DialogInterface dialog, int which) {\n" +
+								"progressDialog.dismiss();\n" +
+								"Intent it = new Intent(telaAtual, telaProx);\n" +
+								"telaAtual.startActivity(it);", activity);
 						Intent it = new Intent(telaAtual, telaProx);
 						telaAtual.startActivity(it);
 					}
 				});
 				alerta.show();
 
+			} else if(this.tipoReceb == 3) {
+
+				ConfigCTR configCTR = new ConfigCTR();
+				if(configCTR.verPropriedade(Long.parseLong(dado))){
+
+					Intent it = new Intent(telaAtual, telaProxAlt);
+					telaAtual.startActivity(it);
+
+				} else {
+
+					LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+							"                        AlertDialog.Builder alerta = new AlertDialog.Builder(PropriedadeActivity.this);\n" +
+							"                        alerta.setTitle(\"ATENÇÃO\");\n" +
+							"                        alerta.setMessage(\"CÓDIGO DA SEÇÃO INCORRETO, POR FAVOR CERTIFIQUE-SE DE QUE O CÓDIGO REGISTRADO ESTÁ CORRETO OU POSSUI O.S. DE COLHEITA ABERTA E TENTE NOVAMENTE.\");", activity);
+					AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
+					alerta.setTitle("ATENÇÃO");
+					alerta.setMessage("CÓDIGO DA SEÇÃO INCORRETO, POR FAVOR CERTIFIQUE-SE DE QUE O CÓDIGO REGISTRADO ESTÁ CORRETO OU POSSUI O.S. DE COLHEITA ABERTA E TENTE NOVAMENTE.");
+					alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+									"                            @Override\n" +
+									"                            public void onClick(DialogInterface dialog, int which) {", activity);
+						}
+					});
+					alerta.show();
+
+				}
 
 			}
-
 		}
 
 	}
@@ -275,10 +311,10 @@ public class AtualDadosServ {
 		LogProcessoDAO.getInstance().insertLogProcesso("public void encerrar(String activity){", activity);
 		if(this.tipoReceb == 1){
 			LogProcessoDAO.getInstance().insertLogProcesso("if(this.tipoReceb == 1){\n" +
-					"\t\t\tthis.progressDialog.dismiss();\n" +
-					"\t\t\tAlertDialog.Builder alerta = new AlertDialog.Builder(this.telaAtual);\n" +
-					"\t\t\talerta.setTitle(\"ATENCAO\");\n" +
-					"\t\t\talerta.setMessage(\"FALHA NA CONEXAO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");", activity);
+					"this.progressDialog.dismiss();\n" +
+					"AlertDialog.Builder alerta = new AlertDialog.Builder(this.telaAtual);\n" +
+					"alerta.setTitle(\"ATENCAO\");\n" +
+					"alerta.setMessage(\"FALHA NA CONEXAO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");", activity);
 			this.progressDialog.dismiss();
 			AlertDialog.Builder alerta = new AlertDialog.Builder(this.telaAtual);
 			alerta.setTitle("ATENCAO");
@@ -287,8 +323,8 @@ public class AtualDadosServ {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-							"\t\t\t\t@Override\n" +
-							"\t\t\t\tpublic void onClick(DialogInterface dialog, int which) {", activity);
+							"@Override\n" +
+							"public void onClick(DialogInterface dialog, int which) {", activity);
 				}
 			});
 			alerta.show();
@@ -298,7 +334,7 @@ public class AtualDadosServ {
 
 	public String manipLocalClasse(String classe){
 	    if(classe.contains("Bean")){
-	    	classe = urlsConexaoHttp.localPSTEstatica + classe;
+	    	classe = UrlsConexaoHttp.localPSTEstatica + classe;
 	    }
 		return classe;
 	}

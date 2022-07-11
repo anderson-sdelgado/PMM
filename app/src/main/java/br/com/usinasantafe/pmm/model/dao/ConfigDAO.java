@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.AtualAplicBean;
+import br.com.usinasantafe.pmm.model.bean.estaticas.PropriedadeBean;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
@@ -59,6 +60,7 @@ public class ConfigDAO {
         configBean.setStatusRetVerif(0L);
         configBean.setIdFrenteConfig(0L);
         configBean.setIdPropriedadeConfig(0L);
+        configBean.setCarretaConfig(0L);
         configBean.insert();
         configBean.commit();
     }
@@ -155,16 +157,24 @@ public class ConfigDAO {
         configBean.update();
     }
 
-    public void setFrentePropriedade(Long idFrente, Long idPropriedade){
+    public void setFrentePropriedade(Long idFrente, PropriedadeBean propriedadeBean){
         ConfigBean configBean = getConfig();
         configBean.setIdFrenteConfig(idFrente);
-        configBean.setIdPropriedadeConfig(idPropriedade);
+        configBean.setIdPropriedadeConfig(propriedadeBean.getIdPropriedade());
+        configBean.setCodPropriedadeConfig(propriedadeBean.getCodPropriedade());
+        configBean.setDescrPropriedadeConfig(propriedadeBean.getDescrPropriedade());
         configBean.update();
     }
 
     public void setFuncaoPCOMP(Long funcaoPCOMP) {
         ConfigBean configBean = getConfig();
         configBean.setFuncaoPCOMP(funcaoPCOMP);
+        configBean.update();
+    }
+
+    public void setCarreta(Long carreta){
+        ConfigBean configBean = getConfig();
+        configBean.setCarretaConfig(carreta);
         configBean.update();
     }
 

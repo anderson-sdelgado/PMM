@@ -50,7 +50,7 @@ public class ConfigCTR {
     private int hora;
     private int minuto;
 
-    private Long idPropriedade;
+    private String codPropriedade;
     private Long idFrente;
 
     public ConfigCTR() {
@@ -465,8 +465,8 @@ public class ConfigCTR {
         return frenteDAO.verFrente(codFrente);
     }
 
-    public void setIdPropriedade(Long idPropriedade) {
-        this.idPropriedade = idPropriedade;
+    public void setCodPropriedade(String codPropriedade) {
+        this.codPropriedade = codPropriedade;
     }
 
     public boolean verPropriedade(Long codPropriedade){
@@ -474,9 +474,8 @@ public class ConfigCTR {
         return propriedadeDAO.verPropriedade(codPropriedade);
     }
 
-    public PropriedadeBean getIdPropriedade(){
-        PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
-        return propriedadeDAO.getPropriedadeId(idPropriedade);
+    public PropriedadeBean getPropriedade(){
+        return getCodPropriedade(Long.parseLong(this.codPropriedade));
     }
 
     public PropriedadeBean getCodPropriedade(Long codPropriedade){
@@ -486,24 +485,15 @@ public class ConfigCTR {
 
     public void setFrentePropriedade(){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setFrentePropriedade(idFrente, idPropriedade);
+        configDAO.setFrentePropriedade(idFrente, getCodPropriedade(Long.parseLong(this.codPropriedade)));
     }
 
     public String getMsgPropriedade(){
         String retorno = "";
-        if((getConfig().getNroOSConfig() == 0L) && (getConfig().getIdPropriedadeConfig() == 0L)){
+        if(getConfig().getIdPropriedadeConfig() == 0L){
             retorno = "NÃO POSSUE SEÇÃO AINDA";
-        }
-        else if(getConfig().getNroOSConfig() == 0L){
-            PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
-            PropriedadeBean propriedadeBean = propriedadeDAO.getPropriedadeId(getConfig().getIdPropriedadeConfig());
-            retorno = "SEÇÃO " + propriedadeBean.getCodPropriedade() + " - " + propriedadeBean.getDescrPropriedade();
-        }
-        else{
-            OSDAO osDAO = new OSDAO();
-            PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
-            PropriedadeBean propriedadeBean = propriedadeDAO.getPropriedadeId(osDAO.getOS(getConfig().getNroOSConfig()).getIdProprAgr());
-            retorno = "SEÇÃO " + propriedadeBean.getCodPropriedade() + " - " + propriedadeBean.getDescrPropriedade();
+        } else {
+            retorno = "SEÇÃO " + getConfig().getCodPropriedadeConfig() + " - " + getConfig().getDescrPropriedadeConfig();
         }
         return retorno;
     }
@@ -611,6 +601,5 @@ public class ConfigCTR {
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
-
 
 }

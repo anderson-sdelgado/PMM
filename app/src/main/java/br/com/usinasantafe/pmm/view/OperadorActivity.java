@@ -64,7 +64,7 @@ public class OperadorActivity extends ActivityGeneric {
                             progressBar.setMax(100);
                             progressBar.show();
 
-                            LogProcessoDAO.getInstance().insertLogProcesso("customHandler.removeCallbacks(updateTimerThread)", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(OperadorActivity.this, OperadorActivity.class, progressBar, \"Operador\", 1, getLocalClassName());", getLocalClassName());
                             pmmContext.getMotoMecFertCTR().atualDados(OperadorActivity.this, OperadorActivity.class, progressBar, "Operador", 1, getLocalClassName());
 
                         } else {

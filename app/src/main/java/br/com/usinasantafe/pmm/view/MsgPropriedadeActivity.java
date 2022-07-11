@@ -27,7 +27,7 @@ public class MsgPropriedadeActivity extends ActivityGeneric {
         TextView textViewMsgDescrPropriedade = findViewById(R.id.textViewMsgDescrPropriedade);
 
         LogProcessoDAO.getInstance().insertLogProcesso("PropriedadeBean propriedadeBean = pmmContext.getConfigCTR().getPropriedade();", getLocalClassName());
-        PropriedadeBean propriedadeBean = pmmContext.getConfigCTR().getIdPropriedade();
+        PropriedadeBean propriedadeBean = pmmContext.getConfigCTR().getPropriedade();
         textViewMsgDescrPropriedade.setText(propriedadeBean.getCodPropriedade() + " - " + propriedadeBean.getDescrPropriedade());
 
         buttonMsgPropriedadeOk.setOnClickListener(new View.OnClickListener() {

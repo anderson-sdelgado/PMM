@@ -116,8 +116,7 @@ public class ImplementoMMDAO {
 
     public void updateApontImpl(ArrayList<Long> idApontImplMMArrayList){
 
-        ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
-        List<ApontImplMMBean> apontImplList = apontImplMMBean.in("idApontImplMM", idApontImplMMArrayList);
+        List<ApontImplMMBean> apontImplList = apontImplMMList(idApontImplMMArrayList);
 
         for (ApontImplMMBean apontImplMMBeanBD : apontImplList) {
             apontImplMMBeanBD.setStatusImplMM(2L);
@@ -139,6 +138,11 @@ public class ImplementoMMDAO {
 
         idApontImplMMArrayList.clear();
 
+    }
+
+    public List<ApontImplMMBean> apontImplMMList(ArrayList<Long> idApontImplMMArrayList){
+        ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
+        return apontImplMMBean.in("idApontImplMM", idApontImplMMArrayList);
     }
 
     private EspecificaPesquisa getPesqStatusEnvioApontImpl(){

@@ -195,11 +195,20 @@ public class OSActivity extends ActivityGeneric {
                 finish();
             }
         } else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {
-            LogProcessoDAO.getInstance().insertLogProcesso("} else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {\n" +
-                    "Intent it = new Intent(OSActivity.this, MenuCertifActivity.class);", getLocalClassName());
-            Intent it = new Intent(OSActivity.this, MenuCertifActivity.class);
-            startActivity(it);
-            finish();
+            LogProcessoDAO.getInstance().insertLogProcesso("} else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {", getLocalClassName());
+            if((pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L) && (pmmContext.getMotoMecFertCTR().qtdeCarreta() == 0)) {
+                LogProcessoDAO.getInstance().insertLogProcesso("if((pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L) && (pmmContext.getMotoMecFertCTR().qtdeCarreta() == 0)) {\n" +
+                        "                Intent it = new Intent(OSActivity.this, EquipActivity.class);", getLocalClassName());
+                Intent it = new Intent(OSActivity.this, EquipActivity.class);
+                startActivity(it);
+                finish();
+            } else {
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                        "                Intent it = new Intent(OSActivity.this, CarretaActivity.class);", getLocalClassName());
+                Intent it = new Intent(OSActivity.this, CarretaActivity.class);
+                startActivity(it);
+                finish();
+            }
         } else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 29L) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 29L) {\n" +
                     "Intent it = new Intent(OSActivity.this, ListaFuncaoPCOMPActivity.class);", getLocalClassName());

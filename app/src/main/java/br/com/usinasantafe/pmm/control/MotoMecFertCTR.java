@@ -2,6 +2,7 @@ package br.com.usinasantafe.pmm.control;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 
@@ -124,14 +125,16 @@ public class MotoMecFertCTR {
 
     }
 
-    public Boolean verEnvioApont() {
+    public boolean verEnvioApont() {
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
-        return apontMMFertDAO.apontEnvioList().size() > 0;
+        int qtde = apontMMFertDAO.apontEnvioList().size();
+        return qtde > 0;
     }
 
-    public Boolean verEnvioMovLeira() {
+    public boolean verEnvioMovLeira() {
         LeiraDAO leiraDAO = new LeiraDAO();
-        return leiraDAO.movLeiraEnvioList().size() > 0;
+        int qtde = leiraDAO.movLeiraEnvioList().size();
+        return qtde > 0;
     }
 
     public boolean verEnvioBolFech() {
@@ -279,6 +282,14 @@ public class MotoMecFertCTR {
             ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
             ArrayList<Long> idApontMecanArrayList = apontMecanDAO.idApontMecanArrayList(retorno[7]);
             apontMecanDAO.updateApontMecan(idApontMecanArrayList);
+
+            RendimentoMMDAO rendimentoMMDAO = new RendimentoMMDAO();
+            ArrayList<Long> idRendArrayList = rendimentoMMDAO.idRendArrayList(retorno[8]);
+            rendimentoMMDAO.updateRend(idRendArrayList);
+
+            RecolhimentoFertDAO recolhimentoFertDAO = new RecolhimentoFertDAO();
+            ArrayList<Long> idRecolhArrayList = recolhimentoFertDAO.idRecolhArrayList(retorno[9]);
+            recolhimentoFertDAO.updateRecolh(idRecolhArrayList);
 
             EnvioDadosServ.getInstance().envioDados(activity);
 
@@ -690,10 +701,29 @@ public class MotoMecFertCTR {
 
     ////////////////////////////// ATUALIZAÇÃO DE DADOS POR CLASSE /////////////////////////////////
 
+    public void atualDados(String tipoAtual, int tipoReceb, String activity) {
+        LogProcessoDAO.getInstance().insertLogProcesso("ArrayList classeArrayList = classeAtual(tipoAtual, activity);\n" +
+                "        AtualDadosServ.getInstance().atualGenericoBD(classeArrayList, tipoReceb, activity);", activity);
+        ArrayList classeArrayList = classeAtual(tipoAtual, activity);
+        AtualDadosServ.getInstance().atualGenericoBD(classeArrayList, tipoReceb, activity);
+    }
+
     public void atualDados(Context telaAtual, Class telaProx, ProgressDialog progressDialog, String tipoAtual, int tipoReceb, String activity) {
-        ArrayList classeArrayList = new ArrayList();
-        LogProcessoDAO.getInstance().insertLogProcesso("ArrayList classeArrayList = new ArrayList();\n" +
-                "        switch (" + tipoAtual + ") {", activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("ArrayList classeArrayList = classeAtual(tipoAtual, activity);\n" +
+                "        AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, classeArrayList, tipoReceb, activity);", activity);
+        ArrayList classeArrayList = classeAtual(tipoAtual, activity);
+        AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, classeArrayList, tipoReceb, activity);
+    }
+
+    public void atualDados(Context telaAtual, Class telaProx, ProgressDialog progressDialog, String tipoAtual, int tipoReceb, String activity, Class telaProxAlt, String dado) {
+        LogProcessoDAO.getInstance().insertLogProcesso("ArrayList classeArrayList = classeAtual(tipoAtual, activity);\n" +
+                "        AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, classeArrayList, tipoReceb, activity, telaProxAlt, dado);", activity);
+        ArrayList classeArrayList = classeAtual(tipoAtual, activity);
+        AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, classeArrayList, tipoReceb, activity, telaProxAlt, dado);
+    }
+
+    public ArrayList<String> classeAtual(String tipoAtual, String activity){
+        ArrayList<String> classeArrayList = new ArrayList();
         switch (tipoAtual) {
             case "Leira":
                 classeArrayList.add("LeiraBean");
@@ -721,6 +751,7 @@ public class MotoMecFertCTR {
                 classeArrayList.add("FrenteBean");
                 break;
             case "Propriedade":
+                classeArrayList.add("OSBean");
                 classeArrayList.add("PropriedadeBean");
                 break;
             case "OS":
@@ -729,10 +760,10 @@ public class MotoMecFertCTR {
                 classeArrayList.add("EquipSegBean");
                 classeArrayList.add("FrenteBean");
                 classeArrayList.add("MotoMecBean");
+                classeArrayList.add("PropriedadeBean");
                 break;
         }
-        LogProcessoDAO.getInstance().insertLogProcesso("AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, classeArrayList, tipoReceb, activity);", activity);
-        AtualDadosServ.getInstance().atualGenericoBD(telaAtual, telaProx, progressDialog, classeArrayList, tipoReceb, activity);
+        return classeArrayList;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////

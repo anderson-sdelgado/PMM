@@ -84,9 +84,10 @@ public class MecanicoCTR {
         return apontMecanDAO.verApontAberto(boletimDAO.getBoletimMMFertAberto().getIdBolMMFert());
     }
 
-    public Boolean verApontMecanNEnviado() {
+    public boolean verApontMecanNEnviado() {
         ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
-        return apontMecanDAO.apontMecanNEnviadoList().size() > 0;
+        int qtde = apontMecanDAO.apontMecanNEnviadoList().size();
+        return qtde > 0;
     }
 
     public void finalizarApontMecan(String activity){

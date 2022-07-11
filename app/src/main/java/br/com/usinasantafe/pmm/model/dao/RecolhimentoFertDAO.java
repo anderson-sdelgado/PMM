@@ -4,10 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.util.Tempo;
 
@@ -41,6 +45,7 @@ public class RecolhimentoFertDAO {
             recolhFertBean.setIdBolMMFert(idBol);
             recolhFertBean.setNroOSRecolhFert(nroOS);
             recolhFertBean.setValorRecolhFert(0L);
+            recolhFertBean.setStatusRecolhFert(1L);
             recolhFertBean.insert();
             recolhFertBean.commit();
         }
@@ -96,9 +101,35 @@ public class RecolhimentoFertDAO {
         return recolhFertBean.in("idBolMMFert", idBolList);
     }
 
+    public List<RecolhFertBean> recolhList(ArrayList<Long> idRendArrayList){
+        RecolhFertBean recolhFertBean = new RecolhFertBean();
+        return recolhFertBean.in("idRecolhFert", idRendArrayList);
+    }
+
     public String dadosRecolh(RecolhFertBean recolhFertBean){
         Gson gsonRecol = new Gson();
         return gsonRecol.toJsonTree(recolhFertBean, recolhFertBean.getClass()).toString();
+    }
+
+    public ArrayList<Long> idRecolhArrayList(String objeto) throws Exception {
+
+        ArrayList<Long> idRecolhArrayList = new ArrayList<Long>();
+
+        JSONObject jObjRecolh = new JSONObject(objeto);
+        JSONArray jsonArrayRecolh = jObjRecolh.getJSONArray("recolh");
+
+        for (int i = 0; i < jsonArrayRecolh.length(); i++) {
+
+            JSONObject objRecolh = jsonArrayRecolh.getJSONObject(i);
+            Gson gsonRecolh = new Gson();
+            RecolhFertBean recolhFertBean = gsonRecolh.fromJson(objRecolh.toString(), RecolhFertBean.class);
+
+            idRecolhArrayList.add(recolhFertBean.getIdRecolhFert());
+
+        }
+
+        return idRecolhArrayList;
+
     }
 
     public String dadosEnvioRecolh(List<RecolhFertBean> recolhimentoList){
@@ -116,6 +147,20 @@ public class RecolhimentoFertDAO {
         jsonRecolhimento.add("recolhimento", jsonArrayRecolhimento);
 
         return jsonRecolhimento.toString();
+
+    }
+
+    public void updateRecolh(ArrayList<Long> idRecolhArrayList) {
+
+        List<RecolhFertBean> recolhFertList = recolhList(idRecolhArrayList);
+
+        for (RecolhFertBean recolhFertBean : recolhFertList) {
+            recolhFertBean.setStatusRecolhFert(2L);
+            recolhFertBean.update();
+        }
+
+        recolhFertList.clear();
+        idRecolhArrayList.clear();
 
     }
 
@@ -150,5 +195,6 @@ public class RecolhimentoFertDAO {
         pesquisa.setTipo(1);
         return pesquisa;
     }
+
 
 }

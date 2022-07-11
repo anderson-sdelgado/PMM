@@ -159,13 +159,8 @@ public class CECCTR {
     public void setLib(Long libCam){
         PreCECDAO preCECDAO = new PreCECDAO();
         CarretaDAO carretaDAO = new CarretaDAO();
-        preCECDAO.setLib(libCam, carretaDAO.getQtdeCarreta());
-    }
-
-    public void setCarr(Long carr){
-        PreCECDAO preCECDAO = new PreCECDAO();
-        CarretaDAO carretaDAO = new CarretaDAO();
-        preCECDAO.setCarr(carr, carretaDAO.getQtdeCarreta());
+        ConfigCTR configCTR = new ConfigCTR();
+        preCECDAO.setLib(configCTR.getConfig().getCarretaConfig(), libCam, carretaDAO.getQtdeCarreta());
     }
 
     /////////////////////////////////////////////////////////////////////////////

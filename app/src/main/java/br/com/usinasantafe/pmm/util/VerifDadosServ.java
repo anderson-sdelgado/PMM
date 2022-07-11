@@ -83,8 +83,8 @@ public class VerifDadosServ {
                     "            status = 3;", activity);
             configCTR.recAtual(result.trim());
             status = 3;
-                LogProcessoDAO.getInstance().insertLogProcesso("this.menuInicialActivity.encerrarBarra();", activity);
-                this.telaInicialActivity.goMenuInicial();
+            LogProcessoDAO.getInstance().insertLogProcesso("this.telaInicialActivity.goMenuInicial();", activity);
+            this.telaInicialActivity.goMenuInicial();
         } else if (this.classe.equals("CheckList")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"CheckList\")) {\n" +
                     "            checkListCTR.receberVerifCheckList(" + result + ");", activity);

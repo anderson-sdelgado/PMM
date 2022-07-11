@@ -43,46 +43,28 @@ public class CarretaActivity extends ActivityGeneric {
 
                     if(verCarreta == 1) {
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("if(verCarreta == 1) {\n" +
-                                "                        pmmContext.getMotoMecFertCTR().insCarreta(Long.parseLong(" + editTextPadrao.getText().toString() + "));", getLocalClassName());
-                        pmmContext.getMotoMecFertCTR().insCarreta(Long.parseLong(editTextPadrao.getText().toString()));
-
                         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){
 
                             LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){\n" +
                                     "                            pmmContext.getCecCTR().setCarr(Long.parseLong(editTextPadrao.getText().toString()));\n" +
                                     "                            pmmContext.getCecCTR().setLib(pmmContext.getCecCTR().getOS().getIdLibOS());\n" +
                                     "                            int numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;", getLocalClassName());
-
-                            pmmContext.getCecCTR().setCarr(Long.parseLong(editTextPadrao.getText().toString()));
-                            pmmContext.getCecCTR().setLib(pmmContext.getCecCTR().getOS().getIdLibOS());
-
-                            int numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;
-
-                            if (numCarreta < 4) {
-                                LogProcessoDAO.getInstance().insertLogProcesso("if (numCarreta < 4) {\n" +
-                                        "                                Intent it = new Intent(CarretaActivity.this, MsgNumCarretaActivity.class);", getLocalClassName());
-                                Intent it = new Intent(CarretaActivity.this, MsgNumCarretaActivity.class);
-                                startActivity(it);
-                                finish();
-                            }
-                            else{
-                                LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                                        "                                Intent it = new Intent(CarretaActivity.this, PergFinalPreCECActivity.class);", getLocalClassName());
-                                Intent it = new Intent(CarretaActivity.this, PergFinalPreCECActivity.class);
-                                startActivity(it);
-                                finish();
-                            }
+                            Intent it = new Intent(CarretaActivity.this, OSActivity.class);
+                            startActivity(it);
+                            finish();
 
                         } else {
                             LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                    "                            pmmContext.getMotoMecFertCTR().insCarreta(Long.parseLong(editTextPadrao.getText().toString()));\n" +
                                     "                            Intent it = new Intent(CarretaActivity.this, MsgNumCarretaActivity.class);", getLocalClassName());
+                            pmmContext.getMotoMecFertCTR().insCarreta(Long.parseLong(editTextPadrao.getText().toString()));
                             Intent it = new Intent(CarretaActivity.this, MsgNumCarretaActivity.class);
                             startActivity(it);
                             finish();
                         }
-                    }
-                    else{
+
+                    } else {
+
                         LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                                 "                        String msg = \"\";\n" +
                                 "                        int numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;\n" +

@@ -48,16 +48,19 @@ public class EquipActivity extends ActivityGeneric {
                             "                    pmmContext.getMotoMecFertCTR().delCarreta();", getLocalClassName());
                     pmmContext.getMotoMecFertCTR().delCarreta();
 
-                    if(pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L){
-                        LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L){\n" +
-                                "                        pmmContext.getCecCTR().setLib(pmmContext.getCecCTR().getOS().getIdLibOS());", getLocalClassName());
-                        pmmContext.getCecCTR().setLib(pmmContext.getCecCTR().getOS().getIdLibOS());
+                    if(pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L) {
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L) {\n" +
+                                "                        Intent it = new Intent(EquipActivity.this, OSActivity.class);", getLocalClassName());
+                        Intent it = new Intent(EquipActivity.this, OSActivity.class);
+                        startActivity(it);
+                        finish();
+                    } else {
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                "                        Intent it = new Intent(EquipActivity.this, MsgNumCarretaActivity.class);", getLocalClassName());
+                        Intent it = new Intent(EquipActivity.this, MsgNumCarretaActivity.class);
+                        startActivity(it);
+                        finish();
                     }
-
-                    LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(EquipActivity.this, MsgNumCarretaActivity.class);", getLocalClassName());
-                    Intent it = new Intent(EquipActivity.this, MsgNumCarretaActivity.class);
-                    startActivity(it);
-                    finish();
 
                 } else {
 
@@ -86,8 +89,8 @@ public class EquipActivity extends ActivityGeneric {
 
                 if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){
                     LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){\n" +
-                            "                    Intent it = new Intent(EquipActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
-                    Intent it = new Intent(EquipActivity.this, ListaAtividadeActivity.class);
+                            "                    Intent it = new Intent(EquipActivity.this, MenuCertifActivity.class);", getLocalClassName());
+                    Intent it = new Intent(EquipActivity.this, MenuCertifActivity.class);
                     startActivity(it);
                     finish();
                 }

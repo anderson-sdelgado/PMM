@@ -128,6 +128,12 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                         Intent it = new Intent(ListaAtividadeActivity.this, ListaTurnoActivity.class);
                         startActivity(it);
                         finish();
+                    } else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {\n" +
+                                "                        Intent it = new Intent(ListaAtividadeActivity.this, OSActivity.class);", getLocalClassName());
+                        Intent it = new Intent(ListaAtividadeActivity.this, OSActivity.class);
+                        startActivity(it);
+                        finish();
                     } else {
                         LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                 "Intent it = new Intent(ListaAtividadeActivity.this, MsgPropriedadeActivity.class);", getLocalClassName());

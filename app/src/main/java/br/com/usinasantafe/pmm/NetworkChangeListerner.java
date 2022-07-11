@@ -3,7 +3,14 @@ package br.com.usinasantafe.pmm;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import com.google.gson.Gson;
+
+import java.util.List;
+
+import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.LogProcessoBean;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.ConnectNetwork;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
@@ -15,6 +22,7 @@ public class NetworkChangeListerner extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+//        logProcesso();
         if(ConnectNetwork.isConnected(context)){
             ActivityGeneric.connectNetwork = true;
             LogProcessoDAO.getInstance().insertLogProcesso("if(ConnectNetwork.isConnected(context)){\n" +
@@ -37,6 +45,19 @@ public class NetworkChangeListerner extends BroadcastReceiver {
                     "            ActivityGeneric.connectNetwork = false;", context.getClass().getName());
             ActivityGeneric.connectNetwork = false;
         }
+    }
+
+    public void logProcesso(){
+        LogProcessoBean logProcessoBean = new LogProcessoBean();
+        List<LogProcessoBean> logProcessoList = logProcessoBean.orderBy("idLogProcesso", false);
+        for(LogProcessoBean logProcessoBeanBD : logProcessoList){
+            Log.i("PMM", dados((logProcessoBeanBD)));
+        }
+    }
+
+    private String dados(LogProcessoBean logProcessoBean){
+        Gson gsonCabec = new Gson();
+        return gsonCabec.toJsonTree(logProcessoBean, logProcessoBean.getClass()).toString();
     }
 
 }

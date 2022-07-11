@@ -212,7 +212,7 @@ public class EnvioDadosServ {
         else if (result.trim().startsWith("BOLFECHADOMM")) {
             LogProcessoDAO.getInstance().insertLogProcesso("else if (result.trim().startsWith(\"BOLFECHADOMM\")) {\n" +
                     "            MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();\n" +
-                    "motoMecFertCTR.delBolFechado(result)", activity);
+                    "motoMecFertCTR.updateBolFechado(result)", activity);
             MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
             motoMecFertCTR.updateBolFechado(result, activity);
         }

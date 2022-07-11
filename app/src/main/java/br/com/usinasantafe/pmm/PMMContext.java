@@ -23,7 +23,7 @@ public class PMMContext extends Application {
     private CompostoCTR compostoCTR;
     private MecanicoCTR mecanicoCTR;
 
-    public static String versaoAPP = "5.05";
+    public static String versaoAPP = "5.06";
     public static String versaoWS = "5.01";
     public static int aplic = 2;   // 1 - PMM; 2 - ECM; 3 - PCOMP
 

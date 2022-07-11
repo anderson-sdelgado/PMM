@@ -48,6 +48,7 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCheckListBean;
+import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -56,7 +57,7 @@ import com.j256.ormlite.table.TableUtils;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	public static final String FORCA_DB_NAME = "mm_db";
-	public static final int FORCA_BD_VERSION = 2;
+	public static final int FORCA_BD_VERSION = 3;
 
 	private static DatabaseHelper instance;
 	
@@ -79,6 +80,95 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public void onCreate(SQLiteDatabase db, ConnectionSource cs) {
 		
 		try{
+			createAllInitial(cs);
+		}
+		catch(Exception e){
+			Log.e(DatabaseHelper.class.getName(),
+					"Erro criando banco de dados...",
+					e);
+		}
+		
+	}
+
+	@Override
+	public void onUpgrade(SQLiteDatabase db,
+			ConnectionSource cs,
+			int oldVersion,
+			int newVersion) {
+
+		if((oldVersion == 1) && (newVersion == 2)){
+			//Versão 5.05
+			dropAllInitial(cs);
+			createAllInitial(cs);
+		} else if((oldVersion == 2) && (newVersion == 3)){
+			//Versão 5.06
+			dropAllInitialSLog(cs);
+			createAllInitialSLog(cs);
+		}
+
+	}
+
+	public void dropAllInitial(ConnectionSource cs){
+
+		try {
+
+			TableUtils.dropTable(cs, AtividadeBean.class, true);
+			TableUtils.dropTable(cs, BocalBean.class, true);
+			TableUtils.dropTable(cs, ComponenteBean.class, true);
+			TableUtils.dropTable(cs, EquipBean.class, true);
+			TableUtils.dropTable(cs, EquipSegBean.class, true);
+			TableUtils.dropTable(cs, FrenteBean.class, true);
+			TableUtils.dropTable(cs, FuncBean.class, true);
+			TableUtils.dropTable(cs, ItemCheckListBean.class, true);
+			TableUtils.dropTable(cs, ItemOSMecanBean.class, true);
+			TableUtils.dropTable(cs, LeiraBean.class, true);
+			TableUtils.dropTable(cs, MotoMecBean.class, true);
+			TableUtils.dropTable(cs, OSBean.class, true);
+			TableUtils.dropTable(cs, ParadaBean.class, true);
+			TableUtils.dropTable(cs, PneuBean.class, true);
+			TableUtils.dropTable(cs, PressaoBocalBean.class, true);
+			TableUtils.dropTable(cs, ProdutoBean.class, true);
+			TableUtils.dropTable(cs, PropriedadeBean.class, true);
+			TableUtils.dropTable(cs, RAtivParadaBean.class, true);
+			TableUtils.dropTable(cs, REquipAtivBean.class, true);
+			TableUtils.dropTable(cs, REquipPneuBean.class, true);
+			TableUtils.dropTable(cs, RFuncaoAtivParBean.class, true);
+			TableUtils.dropTable(cs, ROSAtivBean.class, true);
+			TableUtils.dropTable(cs, ServicoBean.class, true);
+			TableUtils.dropTable(cs, TurnoBean.class, true);
+
+			TableUtils.dropTable(cs, ApontImplMMBean.class, true);
+			TableUtils.dropTable(cs, ApontMecanBean.class, true);
+			TableUtils.dropTable(cs, ApontMMFertBean.class, true);
+			TableUtils.dropTable(cs, BoletimMMFertBean.class, true);
+			TableUtils.dropTable(cs, BoletimPneuBean.class, true);
+			TableUtils.dropTable(cs, CabecCheckListBean.class, true);
+			TableUtils.dropTable(cs, CarregCompBean.class, true);
+			TableUtils.dropTable(cs, CarretaBean.class, true);
+			TableUtils.dropTable(cs, CECBean.class, true);
+			TableUtils.dropTable(cs, ConfigBean.class, true);
+			TableUtils.dropTable(cs, ImplementoMMBean.class, true);
+			TableUtils.dropTable(cs, InfColheitaBean.class, true);
+			TableUtils.dropTable(cs, InfPlantioBean.class, true);
+			TableUtils.dropTable(cs, ItemCalibPneuBean.class, true);
+			TableUtils.dropTable(cs, LogErroBean.class, true);
+			TableUtils.dropTable(cs, LogProcessoBean.class, true);
+			TableUtils.dropTable(cs, MovLeiraBean.class, true);
+			TableUtils.dropTable(cs, PreCECBean.class, true);
+			TableUtils.dropTable(cs, RecolhFertBean.class, true);
+			TableUtils.dropTable(cs, RendMMBean.class, true);
+			TableUtils.dropTable(cs, RespItemCheckListBean.class, true);
+
+		} catch (Exception e) {
+			LogErroDAO.getInstance().insertLogErro(e);
+			Log.e(DatabaseHelper.class.getName(), "Erro atualizando banco de dados...", e);
+		}
+
+	}
+
+	public void createAllInitial(ConnectionSource cs){
+
+		try {
 
 			TableUtils.createTable(cs, AtividadeBean.class);
 			TableUtils.createTable(cs, BocalBean.class);
@@ -126,128 +216,124 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, RecolhFertBean.class);
 			TableUtils.createTable(cs, RendMMBean.class);
 			TableUtils.createTable(cs, RespItemCheckListBean.class);
-			
-		}
-		catch(Exception e){
-			Log.e(DatabaseHelper.class.getName(),
-					"Erro criando banco de dados...",
-					e);
-		}
-		
-	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db,
-			ConnectionSource cs,
-			int oldVersion,
-			int newVersion) {
-		
-		try {
-
-			if((oldVersion <= 1) && (newVersion > 1)){
-
-				TableUtils.dropTable(cs, AtividadeBean.class, true);
-				TableUtils.dropTable(cs, BocalBean.class, true);
-				TableUtils.dropTable(cs, ComponenteBean.class, true);
-				TableUtils.dropTable(cs, EquipBean.class, true);
-				TableUtils.dropTable(cs, EquipSegBean.class, true);
-				TableUtils.dropTable(cs, FrenteBean.class, true);
-				TableUtils.dropTable(cs, FuncBean.class, true);
-				TableUtils.dropTable(cs, ItemCheckListBean.class, true);
-				TableUtils.dropTable(cs, ItemOSMecanBean.class, true);
-				TableUtils.dropTable(cs, LeiraBean.class, true);
-				TableUtils.dropTable(cs, MotoMecBean.class, true);
-				TableUtils.dropTable(cs, OSBean.class, true);
-				TableUtils.dropTable(cs, ParadaBean.class, true);
-				TableUtils.dropTable(cs, PneuBean.class, true);
-				TableUtils.dropTable(cs, PressaoBocalBean.class, true);
-				TableUtils.dropTable(cs, ProdutoBean.class, true);
-				TableUtils.dropTable(cs, PropriedadeBean.class, true);
-				TableUtils.dropTable(cs, RAtivParadaBean.class, true);
-				TableUtils.dropTable(cs, REquipAtivBean.class, true);
-				TableUtils.dropTable(cs, REquipPneuBean.class, true);
-				TableUtils.dropTable(cs, RFuncaoAtivParBean.class, true);
-				TableUtils.dropTable(cs, ROSAtivBean.class, true);
-				TableUtils.dropTable(cs, ServicoBean.class, true);
-				TableUtils.dropTable(cs, TurnoBean.class, true);
-
-				TableUtils.dropTable(cs, ApontImplMMBean.class, true);
-				TableUtils.dropTable(cs, ApontMecanBean.class, true);
-				TableUtils.dropTable(cs, ApontMMFertBean.class, true);
-				TableUtils.dropTable(cs, BoletimMMFertBean.class, true);
-				TableUtils.dropTable(cs, BoletimPneuBean.class, true);
-				TableUtils.dropTable(cs, CabecCheckListBean.class, true);
-				TableUtils.dropTable(cs, CarregCompBean.class, true);
-				TableUtils.dropTable(cs, CarretaBean.class, true);
-				TableUtils.dropTable(cs, CECBean.class, true);
-				TableUtils.dropTable(cs, ConfigBean.class, true);
-				TableUtils.dropTable(cs, ImplementoMMBean.class, true);
-				TableUtils.dropTable(cs, InfColheitaBean.class, true);
-				TableUtils.dropTable(cs, InfPlantioBean.class, true);
-				TableUtils.dropTable(cs, ItemCalibPneuBean.class, true);
-				TableUtils.dropTable(cs, LogErroBean.class, true);
-				TableUtils.dropTable(cs, LogProcessoBean.class, true);
-				TableUtils.dropTable(cs, MovLeiraBean.class, true);
-				TableUtils.dropTable(cs, PreCECBean.class, true);
-				TableUtils.dropTable(cs, RecolhFertBean.class, true);
-				TableUtils.dropTable(cs, RendMMBean.class, true);
-				TableUtils.dropTable(cs, RespItemCheckListBean.class, true);
-
-				///////////////////////////////////////////////////////////////
-
-				TableUtils.createTable(cs, AtividadeBean.class);
-				TableUtils.createTable(cs, BocalBean.class);
-				TableUtils.createTable(cs, ComponenteBean.class);
-				TableUtils.createTable(cs, EquipBean.class);
-				TableUtils.createTable(cs, EquipSegBean.class);
-				TableUtils.createTable(cs, FrenteBean.class);
-				TableUtils.createTable(cs, FuncBean.class);
-				TableUtils.createTable(cs, ItemCheckListBean.class);
-				TableUtils.createTable(cs, ItemOSMecanBean.class);
-				TableUtils.createTable(cs, LeiraBean.class);
-				TableUtils.createTable(cs, MotoMecBean.class);
-				TableUtils.createTable(cs, OSBean.class);
-				TableUtils.createTable(cs, ParadaBean.class);
-				TableUtils.createTable(cs, PneuBean.class);
-				TableUtils.createTable(cs, PressaoBocalBean.class);
-				TableUtils.createTable(cs, ProdutoBean.class);
-				TableUtils.createTable(cs, PropriedadeBean.class);
-				TableUtils.createTable(cs, RAtivParadaBean.class);
-				TableUtils.createTable(cs, REquipAtivBean.class);
-				TableUtils.createTable(cs, REquipPneuBean.class);
-				TableUtils.createTable(cs, RFuncaoAtivParBean.class);
-				TableUtils.createTable(cs, ROSAtivBean.class);
-				TableUtils.createTable(cs, ServicoBean.class);
-				TableUtils.createTable(cs, TurnoBean.class);
-
-				TableUtils.createTable(cs, ApontImplMMBean.class);
-				TableUtils.createTable(cs, ApontMecanBean.class);
-				TableUtils.createTable(cs, ApontMMFertBean.class);
-				TableUtils.createTable(cs, BoletimMMFertBean.class);
-				TableUtils.createTable(cs, BoletimPneuBean.class);
-				TableUtils.createTable(cs, CabecCheckListBean.class);
-				TableUtils.createTable(cs, CarregCompBean.class);
-				TableUtils.createTable(cs, CarretaBean.class);
-				TableUtils.createTable(cs, CECBean.class);
-				TableUtils.createTable(cs, ConfigBean.class);
-				TableUtils.createTable(cs, ImplementoMMBean.class);
-				TableUtils.createTable(cs, InfColheitaBean.class);
-				TableUtils.createTable(cs, InfPlantioBean.class);
-				TableUtils.createTable(cs, ItemCalibPneuBean.class);
-				TableUtils.createTable(cs, LogErroBean.class);
-				TableUtils.createTable(cs, LogProcessoBean.class);
-				TableUtils.createTable(cs, MovLeiraBean.class);
-				TableUtils.createTable(cs, PreCECBean.class);
-				TableUtils.createTable(cs, RecolhFertBean.class);
-				TableUtils.createTable(cs, RendMMBean.class);
-				TableUtils.createTable(cs, RespItemCheckListBean.class);
-
-			}
 
 		} catch (Exception e) {
+			LogErroDAO.getInstance().insertLogErro(e);
 			Log.e(DatabaseHelper.class.getName(), "Erro atualizando banco de dados...", e);
 		}
-		
+
+	}
+
+	public void dropAllInitialSLog(ConnectionSource cs){
+
+		try {
+
+			TableUtils.dropTable(cs, AtividadeBean.class, true);
+			TableUtils.dropTable(cs, BocalBean.class, true);
+			TableUtils.dropTable(cs, ComponenteBean.class, true);
+			TableUtils.dropTable(cs, EquipBean.class, true);
+			TableUtils.dropTable(cs, EquipSegBean.class, true);
+			TableUtils.dropTable(cs, FrenteBean.class, true);
+			TableUtils.dropTable(cs, FuncBean.class, true);
+			TableUtils.dropTable(cs, ItemCheckListBean.class, true);
+			TableUtils.dropTable(cs, ItemOSMecanBean.class, true);
+			TableUtils.dropTable(cs, LeiraBean.class, true);
+			TableUtils.dropTable(cs, MotoMecBean.class, true);
+			TableUtils.dropTable(cs, OSBean.class, true);
+			TableUtils.dropTable(cs, ParadaBean.class, true);
+			TableUtils.dropTable(cs, PneuBean.class, true);
+			TableUtils.dropTable(cs, PressaoBocalBean.class, true);
+			TableUtils.dropTable(cs, ProdutoBean.class, true);
+			TableUtils.dropTable(cs, PropriedadeBean.class, true);
+			TableUtils.dropTable(cs, RAtivParadaBean.class, true);
+			TableUtils.dropTable(cs, REquipAtivBean.class, true);
+			TableUtils.dropTable(cs, REquipPneuBean.class, true);
+			TableUtils.dropTable(cs, RFuncaoAtivParBean.class, true);
+			TableUtils.dropTable(cs, ROSAtivBean.class, true);
+			TableUtils.dropTable(cs, ServicoBean.class, true);
+			TableUtils.dropTable(cs, TurnoBean.class, true);
+
+			TableUtils.dropTable(cs, ApontImplMMBean.class, true);
+			TableUtils.dropTable(cs, ApontMecanBean.class, true);
+			TableUtils.dropTable(cs, ApontMMFertBean.class, true);
+			TableUtils.dropTable(cs, BoletimMMFertBean.class, true);
+			TableUtils.dropTable(cs, BoletimPneuBean.class, true);
+			TableUtils.dropTable(cs, CabecCheckListBean.class, true);
+			TableUtils.dropTable(cs, CarregCompBean.class, true);
+			TableUtils.dropTable(cs, CarretaBean.class, true);
+			TableUtils.dropTable(cs, CECBean.class, true);
+			TableUtils.dropTable(cs, ConfigBean.class, true);
+			TableUtils.dropTable(cs, ImplementoMMBean.class, true);
+			TableUtils.dropTable(cs, InfColheitaBean.class, true);
+			TableUtils.dropTable(cs, InfPlantioBean.class, true);
+			TableUtils.dropTable(cs, ItemCalibPneuBean.class, true);
+			TableUtils.dropTable(cs, MovLeiraBean.class, true);
+			TableUtils.dropTable(cs, PreCECBean.class, true);
+			TableUtils.dropTable(cs, RecolhFertBean.class, true);
+			TableUtils.dropTable(cs, RendMMBean.class, true);
+			TableUtils.dropTable(cs, RespItemCheckListBean.class, true);
+
+		} catch (Exception e) {
+			LogErroDAO.getInstance().insertLogErro(e);
+			Log.e(DatabaseHelper.class.getName(), "Erro atualizando banco de dados...", e);
+		}
+
+	}
+
+	public void createAllInitialSLog(ConnectionSource cs){
+
+		try {
+
+			TableUtils.createTable(cs, AtividadeBean.class);
+			TableUtils.createTable(cs, BocalBean.class);
+			TableUtils.createTable(cs, ComponenteBean.class);
+			TableUtils.createTable(cs, EquipBean.class);
+			TableUtils.createTable(cs, EquipSegBean.class);
+			TableUtils.createTable(cs, FrenteBean.class);
+			TableUtils.createTable(cs, FuncBean.class);
+			TableUtils.createTable(cs, ItemCheckListBean.class);
+			TableUtils.createTable(cs, ItemOSMecanBean.class);
+			TableUtils.createTable(cs, LeiraBean.class);
+			TableUtils.createTable(cs, MotoMecBean.class);
+			TableUtils.createTable(cs, OSBean.class);
+			TableUtils.createTable(cs, ParadaBean.class);
+			TableUtils.createTable(cs, PneuBean.class);
+			TableUtils.createTable(cs, PressaoBocalBean.class);
+			TableUtils.createTable(cs, ProdutoBean.class);
+			TableUtils.createTable(cs, PropriedadeBean.class);
+			TableUtils.createTable(cs, RAtivParadaBean.class);
+			TableUtils.createTable(cs, REquipAtivBean.class);
+			TableUtils.createTable(cs, REquipPneuBean.class);
+			TableUtils.createTable(cs, RFuncaoAtivParBean.class);
+			TableUtils.createTable(cs, ROSAtivBean.class);
+			TableUtils.createTable(cs, ServicoBean.class);
+			TableUtils.createTable(cs, TurnoBean.class);
+
+			TableUtils.createTable(cs, ApontImplMMBean.class);
+			TableUtils.createTable(cs, ApontMecanBean.class);
+			TableUtils.createTable(cs, ApontMMFertBean.class);
+			TableUtils.createTable(cs, BoletimMMFertBean.class);
+			TableUtils.createTable(cs, BoletimPneuBean.class);
+			TableUtils.createTable(cs, CabecCheckListBean.class);
+			TableUtils.createTable(cs, CarregCompBean.class);
+			TableUtils.createTable(cs, CarretaBean.class);
+			TableUtils.createTable(cs, CECBean.class);
+			TableUtils.createTable(cs, ConfigBean.class);
+			TableUtils.createTable(cs, ImplementoMMBean.class);
+			TableUtils.createTable(cs, InfColheitaBean.class);
+			TableUtils.createTable(cs, InfPlantioBean.class);
+			TableUtils.createTable(cs, ItemCalibPneuBean.class);
+			TableUtils.createTable(cs, MovLeiraBean.class);
+			TableUtils.createTable(cs, PreCECBean.class);
+			TableUtils.createTable(cs, RecolhFertBean.class);
+			TableUtils.createTable(cs, RendMMBean.class);
+			TableUtils.createTable(cs, RespItemCheckListBean.class);
+
+		} catch (Exception e) {
+			LogErroDAO.getInstance().insertLogErro(e);
+			Log.e(DatabaseHelper.class.getName(), "Erro atualizando banco de dados...", e);
+		}
+
 	}
 
 }

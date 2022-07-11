@@ -23,6 +23,8 @@ public class RecolhFertBean extends Entidade {
     private Long valorRecolhFert;
     @DatabaseField
     private String dthrRecolhFert;
+    @DatabaseField
+    private Long statusRecolhFert; //1 - enviar; 2 - enviado
 
     public RecolhFertBean() {
     }
@@ -67,4 +69,11 @@ public class RecolhFertBean extends Entidade {
         this.dthrRecolhFert = dthrRecolhFert;
     }
 
+    public Long getStatusRecolhFert() {
+        return statusRecolhFert;
+    }
+
+    public void setStatusRecolhFert(Long statusRecolhFert) {
+        this.statusRecolhFert = statusRecolhFert;
+    }
 }

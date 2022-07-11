@@ -35,15 +35,34 @@ public class LiberacaoActivity extends ActivityGeneric {
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
                 if (!editTextPadrao.getText().toString().equals("")) {
+
                     LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
                             "                    Long idLib = Long.parseLong(editTextPadrao.getText().toString());", getLocalClassName());
                     Long idLib = Long.parseLong(editTextPadrao.getText().toString());
+
                     if (pmmContext.getConfigCTR().verLib(idLib)) {
+                        pmmContext.getMotoMecFertCTR().insCarreta(Long.parseLong(editTextPadrao.getText().toString()));
+                        pmmContext.getCecCTR().setLib(idLib);
+                        int numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;
                         LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().verLib(idLib)) {\n" +
-                                "                        Intent it = new Intent(LiberacaoActivity.this, EquipActivity.class);", getLocalClassName());
-                        Intent it = new Intent(LiberacaoActivity.this, EquipActivity.class);
-                        startActivity(it);
-                        finish();
+                                "                        pmmContext.getMotoMecFertCTR().insCarreta(Long.parseLong(editTextPadrao.getText().toString()));\n" +
+                                "                        pmmContext.getCecCTR().setLib(" + idLib + ");\n" +
+                                "                        int numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;", getLocalClassName());
+                        if (numCarreta < 4) {
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (numCarreta < 4) {\n" +
+                                    "                                Intent it = new Intent(CarretaActivity.this, MsgNumCarretaActivity.class);", getLocalClassName());
+                            Intent it = new Intent(LiberacaoActivity.this, MsgNumCarretaActivity.class);
+                            startActivity(it);
+                            finish();
+                        }
+                        else{
+                            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                                    "                                Intent it = new Intent(CarretaActivity.this, PergFinalPreCECActivity.class);", getLocalClassName());
+                            Intent it = new Intent(LiberacaoActivity.this, PergFinalPreCECActivity.class);
+                            startActivity(it);
+                            finish();
+                        }
+
                     } else {
 
                         LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +

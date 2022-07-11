@@ -145,11 +145,40 @@ public class MsgNumCarretaActivity extends ActivityGeneric {
                     finish();
                 }
                 else{
-                    LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                            "Intent it = new Intent(MsgNumCarretaActivity.this, PergFinalPreCECActivity.class);", getLocalClassName());
-                    Intent it = new Intent(MsgNumCarretaActivity.this, PergFinalPreCECActivity.class);
-                    startActivity(it);
-                    finish();
+
+                    if((pmmContext.getConfigCTR().getEquip().getCodClasseEquip() != 1L) && (pmmContext.getMotoMecFertCTR().qtdeCarreta() == 0)) {
+
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                "                    AlertDialog.Builder alerta = new AlertDialog.Builder(MsgNumCarretaActivity.this);\n" +
+                                "                    alerta.setTitle(\"ATENÇÃO\");\n" +
+                                "                    alerta.setMessage(\"PROIBIDO A INSERÇÃO DE MAIS DE 3 CARRETAS.\");\n" +
+                                "                    alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                "                        @Override\n" +
+                                "                        public void onClick(DialogInterface dialog, int which) {\n" +
+                                "                        }\n" +
+                                "                    });\n" +
+                                "                    alerta.show();", getLocalClassName());
+
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(MsgNumCarretaActivity.this);
+                        alerta.setTitle("ATENÇÃO");
+                        alerta.setMessage("PROIBIDO FINALIZAR A VIAGEM SEM NENHUMA CARRETA ADICIONADA! POR FAVOR, ADICIONE ALGUMA CARRETA NA VIAGEM.");
+
+                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+
+                        alerta.show();
+
+                    } else {
+                        LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                                "Intent it = new Intent(MsgNumCarretaActivity.this, PergFinalPreCECActivity.class);", getLocalClassName());
+                        Intent it = new Intent(MsgNumCarretaActivity.this, PergFinalPreCECActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+
                 }
             }
         });

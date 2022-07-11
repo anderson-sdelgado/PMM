@@ -65,9 +65,9 @@ public class TelaInicialActivity extends ActivityGeneric {
         LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCheckListCTR().deleteChecklist();\n" +
                 "        pmmContext.getMotoMecFertCTR().deleteBolEnviado();\n" +
                 "        pmmContext.getConfigCTR().deleteLogs();", getLocalClassName());
-        pmmContext.getCheckListCTR().deleteChecklist();
-        pmmContext.getMotoMecFertCTR().deleteBolEnviado();
-        pmmContext.getConfigCTR().deleteLogs();
+//        pmmContext.getCheckListCTR().deleteChecklist();
+//        pmmContext.getMotoMecFertCTR().deleteBolEnviado();
+//        pmmContext.getConfigCTR().deleteLogs();
         if(PMMContext.aplic == 1){
             LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().impleMMDelAll();\n" +
                     "            pmmContext.getConfigCTR().osDelAll();\n" +

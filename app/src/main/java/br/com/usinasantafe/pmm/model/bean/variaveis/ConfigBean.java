@@ -41,6 +41,12 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private Long idPropriedadeConfig;
 	@DatabaseField
+	private Long codPropriedadeConfig;
+	@DatabaseField
+	private String descrPropriedadeConfig;
+	@DatabaseField
+	private Long carretaConfig;
+	@DatabaseField
 	private Double horimetroConfig;
 	@DatabaseField
 	private Long verRecInformativo; // 0 - Verificar Dados; 1- Dados Recebidos; 2 - Dados Visualizados
@@ -270,5 +276,29 @@ public class ConfigBean extends Entidade {
 
 	public void setFuncaoPCOMP(Long funcaoPCOMP) {
 		this.funcaoPCOMP = funcaoPCOMP;
+	}
+
+	public Long getCodPropriedadeConfig() {
+		return codPropriedadeConfig;
+	}
+
+	public void setCodPropriedadeConfig(Long codPropriedadeConfig) {
+		this.codPropriedadeConfig = codPropriedadeConfig;
+	}
+
+	public String getDescrPropriedadeConfig() {
+		return descrPropriedadeConfig;
+	}
+
+	public void setDescrPropriedadeConfig(String descrPropriedadeConfig) {
+		this.descrPropriedadeConfig = descrPropriedadeConfig;
+	}
+
+	public Long getCarretaConfig() {
+		return carretaConfig;
+	}
+
+	public void setCarretaConfig(Long carretaConfig) {
+		this.carretaConfig = carretaConfig;
 	}
 }

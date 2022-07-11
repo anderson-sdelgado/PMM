@@ -56,10 +56,9 @@ public class PropriedadeActivity extends ActivityGeneric {
                     progressBar.show();
 
                     LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(PropriedadeActivity.this, PropriedadeActivity.class, progressBar, \"Propriedade\", 1, getLocalClassName());", getLocalClassName());
-                    pmmContext.getMotoMecFertCTR().atualDados(PropriedadeActivity.this, PropriedadeActivity.class, progressBar, "Propriedade", 1, getLocalClassName());
+                    pmmContext.getMotoMecFertCTR().atualDados(PropriedadeActivity.this, PropriedadeActivity.class, progressBar, "OS", 1, getLocalClassName());
 
-                }
-                else {
+                } else {
 
                     LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                             "                    AlertDialog.Builder alerta = new AlertDialog.Builder(PropriedadeActivity.this);\n" +
@@ -93,37 +92,64 @@ public class PropriedadeActivity extends ActivityGeneric {
                         "            public void onClick(View v) {", getLocalClassName());
                 if (!editTextPadrao.getText().toString().equals("")) {
 
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
+                            "                    pmmContext.getConfigCTR().setIdPropriedade(pmmContext.getConfigCTR().getCodPropriedade(Long.parseLong(editTextPadrao.getText().toString())).getIdPropriedade());", getLocalClassName());
+                    pmmContext.getConfigCTR().setCodPropriedade(editTextPadrao.getText().toString());
+
                     if (pmmContext.getConfigCTR().verPropriedade(Long.parseLong(editTextPadrao.getText().toString()))) {
 
                         LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().verPropriedade(Long.parseLong(editTextPadrao.getText().toString()))) {\n" +
-                                "pmmContext.getConfigCTR().setIdPropriedade(pmmContext.getConfigCTR().getCodPropriedade(Long.parseLong(editTextPadrao.getText().toString())).getIdPropriedade());\n" +
                                 "Intent it = new Intent(PropriedadeActivity.this, MsgPropriedadeActivity.class);", getLocalClassName());
-
-                        pmmContext.getConfigCTR().setIdPropriedade(pmmContext.getConfigCTR().getCodPropriedade(Long.parseLong(editTextPadrao.getText().toString())).getIdPropriedade());
                         Intent it = new Intent(PropriedadeActivity.this, MsgPropriedadeActivity.class);
                         startActivity(it);
                         finish();
 
-                    }
-                    else{
+                    } else {
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                                "                        AlertDialog.Builder alerta = new AlertDialog.Builder(PropriedadeActivity.this);\n" +
-                                "                        alerta.setTitle(\"ATENÇÃO\");\n" +
-                                "                        alerta.setMessage(\"CÓDIGO DA SEÇÃO INCORRETO, POR FAVOR CERTIFIQUE-SE DE QUE O CÓDIGO REGISTRADO ESTÁ CORRETO OU POSSUI O.S. DE COLHEITA ABERTA E TENTE NOVAMENTE.\");", getLocalClassName());
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(PropriedadeActivity.this);
-                        alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("CÓDIGO DA SEÇÃO INCORRETO, POR FAVOR CERTIFIQUE-SE DE QUE O CÓDIGO REGISTRADO ESTÁ CORRETO OU POSSUI O.S. DE COLHEITA ABERTA E TENTE NOVAMENTE.");
-                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                                        "                            @Override\n" +
-                                        "                            public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
-                            }
-                        });
-                        alerta.show();
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
+                        if (connectNetwork) {
+
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
+                                    "                    progressBar = new ProgressDialog(PropriedadeActivity.this);\n" +
+                                    "                    progressBar.setCancelable(true);\n" +
+                                    "                    progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
+                                    "                    progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);\n" +
+                                    "                    progressBar.setProgress(0);\n" +
+                                    "                    progressBar.setMax(100);\n" +
+                                    "                    progressBar.show();", getLocalClassName());
+
+                            progressBar = new ProgressDialog(PropriedadeActivity.this);
+                            progressBar.setCancelable(true);
+                            progressBar.setMessage("ATUALIZANDO ...");
+                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                            progressBar.setProgress(0);
+                            progressBar.setMax(100);
+                            progressBar.show();
+
+                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(PropriedadeActivity.this, PropriedadeActivity.class, progressBar, \"Propriedade\", 3, getLocalClassName(), MsgPropriedadeActivity.class, editTextPadrao.getText().toString());", getLocalClassName());
+                            pmmContext.getMotoMecFertCTR().atualDados(PropriedadeActivity.this, PropriedadeActivity.class, progressBar, "Propriedade", 3, getLocalClassName(), MsgPropriedadeActivity.class, editTextPadrao.getText().toString());
+
+                        } else {
+
+                            LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
+                                    "                    AlertDialog.Builder alerta = new AlertDialog.Builder(PropriedadeActivity.this);\n" +
+                                    "                    alerta.setTitle(\"ATENÇÃO\");\n" +
+                                    "                    alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");", getLocalClassName());
+                            AlertDialog.Builder alerta = new AlertDialog.Builder(PropriedadeActivity.this);
+                            alerta.setTitle("ATENÇÃO");
+                            alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
+                            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                            "                        @Override\n" +
+                                            "                        public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
+                                }
+                            });
+
+                            alerta.show();
+
+                        }
 
                     }
 
