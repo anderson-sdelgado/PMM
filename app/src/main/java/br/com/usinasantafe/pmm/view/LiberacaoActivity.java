@@ -41,7 +41,6 @@ public class LiberacaoActivity extends ActivityGeneric {
                     Long idLib = Long.parseLong(editTextPadrao.getText().toString());
 
                     if (pmmContext.getConfigCTR().verLib(idLib)) {
-                        pmmContext.getMotoMecFertCTR().insCarreta(Long.parseLong(editTextPadrao.getText().toString()));
                         pmmContext.getCecCTR().setLib(idLib);
                         int numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;
                         LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().verLib(idLib)) {\n" +

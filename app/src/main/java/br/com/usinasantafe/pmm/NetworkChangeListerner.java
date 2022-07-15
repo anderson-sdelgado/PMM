@@ -10,6 +10,8 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMFertBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogProcessoBean;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.ConnectNetwork;
@@ -22,7 +24,9 @@ public class NetworkChangeListerner extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+//        logConfig();
 //        logProcesso();
+//        logErro();
         if(ConnectNetwork.isConnected(context)){
             ActivityGeneric.connectNetwork = true;
             LogProcessoDAO.getInstance().insertLogProcesso("if(ConnectNetwork.isConnected(context)){\n" +
@@ -47,17 +51,44 @@ public class NetworkChangeListerner extends BroadcastReceiver {
         }
     }
 
+    public void logConfig(){
+        ConfigBean configBean = new ConfigBean();
+        List<ConfigBean> configList = configBean.all();
+        for(ConfigBean configBeanBD : configList){
+            Log.i("PMM", dadosConfig(configBeanBD));
+        }
+    }
+
+    private String dadosConfig(ConfigBean configBean){
+        Gson gsonCabec = new Gson();
+        return gsonCabec.toJsonTree(configBean, configBean.getClass()).toString();
+    }
+
     public void logProcesso(){
         LogProcessoBean logProcessoBean = new LogProcessoBean();
         List<LogProcessoBean> logProcessoList = logProcessoBean.orderBy("idLogProcesso", false);
         for(LogProcessoBean logProcessoBeanBD : logProcessoList){
-            Log.i("PMM", dados((logProcessoBeanBD)));
+            Log.i("PMM", dadosProcesso(logProcessoBeanBD));
         }
     }
 
-    private String dados(LogProcessoBean logProcessoBean){
+    private String dadosProcesso(LogProcessoBean logProcessoBean){
         Gson gsonCabec = new Gson();
         return gsonCabec.toJsonTree(logProcessoBean, logProcessoBean.getClass()).toString();
+    }
+
+    public void logErro(){
+        LogErroBean logErroBean = new LogErroBean();
+        List<LogErroBean> logErroList = logErroBean.orderBy("idLogErro", false);
+        Log.i("PMM", "Log Erro");
+        for(LogErroBean logErroBeanBD : logErroList){
+            Log.i("PMM", dadosErro(logErroBeanBD));
+        }
+    }
+
+    private String dadosErro(LogErroBean logErroBean){
+        Gson gsonCabec = new Gson();
+        return gsonCabec.toJsonTree(logErroBean, logErroBean.getClass()).toString();
     }
 
 }

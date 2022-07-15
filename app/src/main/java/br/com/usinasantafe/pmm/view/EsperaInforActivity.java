@@ -35,18 +35,18 @@ public class EsperaInforActivity extends ActivityGeneric {
 
                 if(PMMContext.aplic == 1){
                     LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
-                            "pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(" + pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().getMatricFuncBolMMFert() + "), EsperaInforActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                    pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().getMatricFuncBolMMFert()), EsperaInforActivity.this, MenuPrincPMMActivity.class, getLocalClassName());
+                            "pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(" + pmmContext.getConfigCTR().getConfig().getMatricFuncConfig() + "), EsperaInforActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                    pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(pmmContext.getConfigCTR().getConfig().getMatricFuncConfig()), EsperaInforActivity.this, MenuPrincPMMActivity.class, getLocalClassName());
                 }
                 else if(PMMContext.aplic == 2){
                     LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2){\n" +
-                            "pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(" + pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().getMatricFuncBolMMFert() + "), EsperaInforActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
-                    pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().getMatricFuncBolMMFert()), EsperaInforActivity.this, MenuPrincECMActivity.class, getLocalClassName());
+                            "pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(" + pmmContext.getConfigCTR().getConfig().getMatricFuncConfig() + "), EsperaInforActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                    pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(pmmContext.getConfigCTR().getConfig().getMatricFuncConfig()), EsperaInforActivity.this, MenuPrincECMActivity.class, getLocalClassName());
                 }
                 else if(PMMContext.aplic == 3){
                     LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 3){\n" +
-                            "pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(" + pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().getMatricFuncBolMMFert() + "), EsperaInforActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
-                    pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().getMatricFuncBolMMFert()), EsperaInforActivity.this, MenuPrincPCOMPActivity.class, getLocalClassName());
+                            "pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(" + pmmContext.getConfigCTR().getConfig().getMatricFuncConfig() + "), EsperaInforActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                    pmmContext.getInformativoCTR().verifDadosInformativo(String.valueOf(pmmContext.getConfigCTR().getConfig().getMatricFuncConfig()), EsperaInforActivity.this, MenuPrincPCOMPActivity.class, getLocalClassName());
                 }
 
             }

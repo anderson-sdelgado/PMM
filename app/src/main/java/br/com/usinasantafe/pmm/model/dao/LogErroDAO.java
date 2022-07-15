@@ -70,7 +70,7 @@ public class LogErroDAO {
         LogErroBean logErroBean = new LogErroBean();
         List<LogErroBean> logErroList = logErroBean.all();
         for(LogErroBean logErroBeanBD : logErroList){
-            if(logErroBeanBD.getDthrLong() < Tempo.getInstance().dthrLongDiaMenos(3)){
+            if(logErroBeanBD.getDthrLong() < Tempo.getInstance().dthrLongDiaMenos(15)){
                 logErroBeanBD.delete();
             }
         }

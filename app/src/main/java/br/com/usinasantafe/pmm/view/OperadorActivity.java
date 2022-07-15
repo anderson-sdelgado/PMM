@@ -123,11 +123,8 @@ public class OperadorActivity extends ActivityGeneric {
                     if (pmmContext.getMotoMecFertCTR().verFunc(Long.parseLong(editTextPadrao.getText().toString()))) {
 
                         LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verFunc(Long.parseLong(editTextPadrao.getText().toString()))) {\n" +
-                                "pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().setBoletimMMBean();\n" +
-                                "                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().setMatricFuncBolMMFert(Long.parseLong(editTextPadrao.getText().toString()));", getLocalClassName());
-                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().setBolMMFert();
-                        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().setMatricFuncBolMMFert(Long.parseLong(editTextPadrao.getText().toString()));
-
+                                "                        pmmContext.getConfigCTR().setMatricFuncConfig(Long.parseLong(editTextPadrao.getText().toString()));", getLocalClassName());
+                        pmmContext.getConfigCTR().setMatricFuncConfig(Long.parseLong(editTextPadrao.getText().toString()));
                         LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(OperadorActivity.this, EquipActivity.class);", getLocalClassName());
                         Intent it = new Intent(OperadorActivity.this, EquipActivity.class);
                         startActivity(it);

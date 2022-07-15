@@ -7,17 +7,26 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import br.com.usinasantafe.pmm.BuildConfig;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
+import br.com.usinasantafe.pmm.model.bean.variaveis.LogProcessoBean;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
@@ -29,6 +38,7 @@ public class MenuInicialActivity extends ActivityGeneric {
     private ProgressDialog progressBar;
 
     private TextView textViewProcesso;
+    private TextView textViewPrincipal;
     private Handler customHandler = new Handler();
 
     @Override
@@ -38,6 +48,9 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
         textViewProcesso = findViewById(R.id.textViewProcesso);
+        textViewPrincipal = findViewById(R.id.textViewPrincipal);
+
+        textViewPrincipal.setText("PRINCIPAL - V " + BuildConfig.VERSION_NAME);
 
         if (!checkPermission(Manifest.permission.CAMERA)) {
             String[] PERMISSIONS = {Manifest.permission.CAMERA};
@@ -217,7 +230,6 @@ public class MenuInicialActivity extends ActivityGeneric {
         public void run() {
 
             if (pmmContext.getConfigCTR().hasElemConfig()) {
-                pmmContext.getConfigCTR().setStatusRetVerif(0L);
                 LogProcessoDAO.getInstance().insertLogProcesso("        if (pmmContext.getConfigCTR().hasElemConfig()) {\n" +
                         "            pmmContext.getConfigCTR().setStatusRetVerif(0L);\n" +
                         "EnvioDadosServ.status = " + EnvioDadosServ.status, getLocalClassName());
@@ -244,5 +256,19 @@ public class MenuInicialActivity extends ActivityGeneric {
             }
         }
     };
+
+
+    public void logProcesso(){
+        LogProcessoBean logProcessoBean = new LogProcessoBean();
+        List<LogProcessoBean> logProcessoList = logProcessoBean.all();
+        for(LogProcessoBean logProcessoBeanBD : logProcessoList){
+            Log.i("PMM", dadosProcesso(logProcessoBeanBD));
+        }
+    }
+
+    private String dadosProcesso(LogProcessoBean logProcessoBean){
+        Gson gsonCabec = new Gson();
+        return gsonCabec.toJsonTree(logProcessoBean, logProcessoBean.getClass()).toString();
+    }
 
 }

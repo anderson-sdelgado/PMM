@@ -37,6 +37,10 @@ public class UrlsConexaoHttp {
     public UrlsConexaoHttp() {
     }
 
+    public String getsInsertLogProcesso() {
+        return url + "inserirlogprocesso.php";
+    }
+
     public String getsInsertCarreg() {
         return url + "inserircarreg.php";
     }

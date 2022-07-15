@@ -48,9 +48,6 @@ public class BoletimMMFertBean extends Entidade {
     private Long dthrLongFinalBolMMFert;
 
     public BoletimMMFertBean() {
-        this.hodometroFinalBolMMFert = 0D;
-        this.idExtBolMMFert = 0L;
-        this.statusBolMMFert = 1L;
     }
 
     public Long getIdBolMMFert() {

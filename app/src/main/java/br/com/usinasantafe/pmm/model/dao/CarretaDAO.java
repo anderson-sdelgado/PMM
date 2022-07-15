@@ -131,7 +131,7 @@ public class CarretaDAO {
 
     public int getQtdeCarreta(){
         CarretaBean carretaBean = new CarretaBean();
-        List carretaList = carretaBean.all();
+        List<CarretaBean> carretaList = carretaBean.all();
         int pos = carretaList.size();
         carretaList.clear();
         return pos;

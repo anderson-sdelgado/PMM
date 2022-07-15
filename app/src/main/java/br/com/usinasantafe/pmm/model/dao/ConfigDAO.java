@@ -166,15 +166,39 @@ public class ConfigDAO {
         configBean.update();
     }
 
-    public void setFuncaoPCOMP(Long funcaoPCOMP) {
-        ConfigBean configBean = getConfig();
-        configBean.setFuncaoPCOMP(funcaoPCOMP);
-        configBean.update();
-    }
-
     public void setCarreta(Long carreta){
         ConfigBean configBean = getConfig();
         configBean.setCarretaConfig(carreta);
+        configBean.update();
+    }
+
+    public void setMatricFuncConfig(Long matricFuncConfig) {
+        ConfigBean configBean = getConfig();
+        configBean.setMatricFuncConfig(matricFuncConfig);
+        configBean.update();
+    }
+
+    public void setIdTurnoConfig(Long idTurnoConfig) {
+        ConfigBean configBean = getConfig();
+        configBean.setIdTurnoConfig(idTurnoConfig);
+        configBean.update();
+    }
+
+    public void setIdEquipBombaBolConfig(Long idEquipBombaBolConfig) {
+        ConfigBean configBean = getConfig();
+        configBean.setIdTurnoConfig(idEquipBombaBolConfig);
+        configBean.update();
+    }
+
+    public void setHodometroInicialConfig(Double hodometroInicialBolMMFert, Double longitudeBolMMFert, Double latitudeBolMMFert) {
+        ConfigBean configBean = getConfig();
+        configBean.setHodometroInicialConfig(hodometroInicialBolMMFert, longitudeBolMMFert, latitudeBolMMFert);
+        configBean.update();
+    }
+
+    public void setHodometroFinalConfig(Double hodometroFinalBolMMFert) {
+        ConfigBean configBean = getConfig();
+        configBean.setHodometroFinalConfig(hodometroFinalBolMMFert);
         configBean.update();
     }
 

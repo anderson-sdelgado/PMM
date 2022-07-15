@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import br.com.usinasantafe.pmm.BuildConfig;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
@@ -21,7 +22,6 @@ public class TelaInicialActivity extends ActivityGeneric {
         setContentView(R.layout.activity_tela_inicial);
 
         pmmContext = (PMMContext) getApplication();
-
         customHandler.postDelayed(excluirBDThread, 0);
 
     }
@@ -65,9 +65,9 @@ public class TelaInicialActivity extends ActivityGeneric {
         LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCheckListCTR().deleteChecklist();\n" +
                 "        pmmContext.getMotoMecFertCTR().deleteBolEnviado();\n" +
                 "        pmmContext.getConfigCTR().deleteLogs();", getLocalClassName());
-//        pmmContext.getCheckListCTR().deleteChecklist();
-//        pmmContext.getMotoMecFertCTR().deleteBolEnviado();
-//        pmmContext.getConfigCTR().deleteLogs();
+        pmmContext.getCheckListCTR().deleteChecklist();
+        pmmContext.getMotoMecFertCTR().deleteBolEnviado();
+        pmmContext.getConfigCTR().deleteLogs();
         if(PMMContext.aplic == 1){
             LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().impleMMDelAll();\n" +
                     "            pmmContext.getConfigCTR().osDelAll();\n" +
@@ -87,7 +87,7 @@ public class TelaInicialActivity extends ActivityGeneric {
                         "                customHandler.postDelayed(updateTimerThread, 10000);", getLocalClassName());
                 customHandler.postDelayed(encerraAtualThread, 10000);
                 LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().verAtualAplic(pmmContext.versaoAplic, this, getLocalClassName());", getLocalClassName());
-                pmmContext.getConfigCTR().verAtualAplic(pmmContext.versaoAPP, this, getLocalClassName());
+                pmmContext.getConfigCTR().verAtualAplic(BuildConfig.VERSION_NAME, this, getLocalClassName());
             }
             else{
                 LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +

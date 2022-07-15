@@ -160,6 +160,7 @@ public class CECCTR {
         PreCECDAO preCECDAO = new PreCECDAO();
         CarretaDAO carretaDAO = new CarretaDAO();
         ConfigCTR configCTR = new ConfigCTR();
+        carretaDAO.insCarreta(configCTR.getConfig().getCarretaConfig());
         preCECDAO.setLib(configCTR.getConfig().getCarretaConfig(), libCam, carretaDAO.getQtdeCarreta());
     }
 

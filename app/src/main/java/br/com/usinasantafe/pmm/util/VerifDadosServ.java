@@ -117,7 +117,7 @@ public class VerifDadosServ {
 
     }
 
-    public Boolean verifRecInformativo() {
+    public boolean verifRecInformativo() {
         boolean ret = false;
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.hasElemConfig()){
@@ -128,7 +128,7 @@ public class VerifDadosServ {
         return ret;
     }
 
-    public Boolean statusRetVerif() {
+    public boolean statusRetVerif() {
         boolean ret = false;
         ConfigCTR configCTR = new ConfigCTR();
         if(configCTR.hasElemConfig()){
@@ -221,8 +221,7 @@ public class VerifDadosServ {
         if(statusRetVerif()){
             LogProcessoDAO.getInstance().insertLogProcesso("envioVerif()", activity);
             envioVerif(activity);
-        }
-        else {
+        } else {
             LogProcessoDAO.getInstance().insertLogProcesso("verifRecInformativo()", activity);
             if (verifRecInformativo()) {
                 InformativoCTR informativoCTR = new InformativoCTR();

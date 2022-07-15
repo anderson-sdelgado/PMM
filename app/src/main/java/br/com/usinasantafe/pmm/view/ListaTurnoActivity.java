@@ -154,8 +154,8 @@ public class ListaTurnoActivity extends ActivityGeneric {
                 TurnoBean turnoBean = turnoList.get(position);
                 turnoList.clear();
 
-                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFertBean().setIdTurnoBolMMFert(" + turnoBean.getIdTurno() + ");", getLocalClassName());
-                pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().setIdTurnoBolMMFert(turnoBean.getIdTurno());
+                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().setIdTurnoConfig(" + turnoBean.getIdTurno() + ");", getLocalClassName());
+                pmmContext.getConfigCTR().setIdTurnoConfig(turnoBean.getIdTurno());
 
                 if(Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())){
                     LogProcessoDAO.getInstance().insertLogProcesso("if(Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())){\n" +

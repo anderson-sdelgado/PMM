@@ -1,9 +1,15 @@
 package br.com.usinasantafe.pmm.model.dao;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.variaveis.CarregCompBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogProcessoBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.util.Tempo;
 
@@ -33,7 +39,7 @@ public class LogProcessoDAO {
 
     public void deleteLogProcesso(){
         ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqDtrhLongDiaMenos(Tempo.getInstance().dthrLongDiaMenos(3)));
+        pesqArrayList.add(getPesqDtrhLongDiaMenos(Tempo.getInstance().dthrLongDiaMenos(15)));
         LogProcessoBean logProcessoBean = new LogProcessoBean();
         logProcessoBean.deleteGet(pesqArrayList);
     }
@@ -44,6 +50,25 @@ public class LogProcessoDAO {
         pesquisa.setValor(dtrhLongDiaMenos);
         pesquisa.setTipo(1);
         return pesquisa;
+    }
+
+    public String dadosEnvioLogProcesso(){
+
+        List<LogProcessoBean> logProcessoList = logProcessoList();
+        JsonArray preCECJsonArray = new JsonArray();
+
+        for (LogProcessoBean logProcessoBean : logProcessoList) {
+            Gson gson = new Gson();
+            preCECJsonArray.add(gson.toJsonTree(logProcessoBean, logProcessoBean.getClass()));
+        }
+
+        logProcessoList.clear();
+
+        JsonObject preCECJsonObj = new JsonObject();
+        preCECJsonObj.add("logprocesso", preCECJsonArray);
+
+        return preCECJsonObj.toString();
+
     }
 
 }

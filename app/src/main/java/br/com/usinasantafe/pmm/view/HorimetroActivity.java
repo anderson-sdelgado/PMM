@@ -152,8 +152,8 @@ public class HorimetroActivity extends ActivityGeneric {
 
     public void salvarBoletimAberto() {
         LogProcessoDAO.getInstance().insertLogProcesso("public void salvarBoletimAberto() {\n" +
-                "pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().setHodometroInicialBol(horimetroNum,  getLongitude(), getLatitude());", getLocalClassName());
-        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().setHodometroInicialBol(horimetroNum,  getLongitude(), getLatitude());
+                "pmmContext.getConfigCTR().setHodometroInicialBolMMFert(horimetroNum,  getLongitude(), getLatitude());", getLocalClassName());
+        pmmContext.getConfigCTR().setHodometroInicialConfig(horimetroNum,  getLongitude(), getLatitude());
         if(pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1){
             LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1){\n" +
                     "List<RFuncaoAtivParBean> rFuncaoAtividadeList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList();", getLocalClassName());
@@ -187,8 +187,8 @@ public class HorimetroActivity extends ActivityGeneric {
                         "                pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto();", getLocalClassName());
                 pmmContext.getConfigCTR().setHorimetroConfig(horimetroNum);
                 pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());
-                if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().getIdTurnoBolMMFert())){
-                    LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getIdTurnoBolMMFert())){\n" +
+                if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getConfigCTR().getConfig().getIdTurnoConfig())){
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getConfigCTR().getConfig().getIdTurnoConfig())){\n" +
                             "pmmContext.getMotoMecFertCTR().inserirParadaCheckList();", getLocalClassName());
                     pmmContext.getMotoMecFertCTR().inserirParadaCheckList(getLocalClassName());
                     LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCheckListCTR().setPosCheckList(1);", getLocalClassName());
@@ -243,8 +243,8 @@ public class HorimetroActivity extends ActivityGeneric {
         LogProcessoDAO.getInstance().insertLogProcesso("public void salvarBoletimFechado() {\n" +
                 "pmmContext.getConfigCTR().setHorimetroConfig(" + horimetroNum + ");", getLocalClassName());
         pmmContext.getConfigCTR().setHorimetroConfig(horimetroNum);
-        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().setHodometroFinalBolMMFert(" + horimetroNum + ");", getLocalClassName());
-        pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().setHodometroFinalBolMMFert(horimetroNum);
+        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().setHodometroFinalConfig(" + horimetroNum + ");", getLocalClassName());
+        pmmContext.getConfigCTR().setHodometroFinalConfig(horimetroNum);
         if(pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1){
             LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1){", getLocalClassName());
             if (pmmContext.getMotoMecFertCTR().verRendMM()) {

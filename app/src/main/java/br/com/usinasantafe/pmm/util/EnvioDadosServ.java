@@ -62,6 +62,13 @@ public class EnvioDadosServ {
 
     }
 
+    public void envioLogProcesso() {
+
+        LogProcessoDAO logProcessoDAO = new LogProcessoDAO();
+        envio(urlsConexaoHttp.getsInsertLogProcesso(), logProcessoDAO.dadosEnvioLogProcesso(), null);
+
+    }
+
     public void enviarBolFechadoMMFert(String activity) {
 
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
@@ -176,6 +183,10 @@ public class EnvioDadosServ {
                 }
             }
         }
+    }
+
+    public void envioDadosLog() {
+        envioLogProcesso();
     }
 
     public boolean verifDadosEnvio() {

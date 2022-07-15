@@ -227,8 +227,8 @@ public class ImplementoActivity extends ActivityGeneric {
         LogProcessoDAO.getInstance().insertLogProcesso("public void salvarBoletimAberto() {\n" +
                 "pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());", getLocalClassName());
         pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());
-        if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().getIdTurnoBolMMFert())){
-            LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getIdTurnoBolMMFert())){\n" +
+        if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getConfigCTR().getConfig().getIdTurnoConfig())){
+            LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getConfigCTR().getConfig().getIdTurnoConfig())){\n" +
                     "            pmmContext.getMotoMecFertCTR().inserirParadaCheckList(getLocalClassName());\n" +
                     "            pmmContext.getCheckListCTR().setPosCheckList(1);\n" +
                     "            pmmContext.getCheckListCTR().createCabecAberto(getLocalClassName());", getLocalClassName());

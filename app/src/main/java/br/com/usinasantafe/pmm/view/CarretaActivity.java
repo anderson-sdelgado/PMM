@@ -42,13 +42,12 @@ public class CarretaActivity extends ActivityGeneric {
                     int verCarreta = pmmContext.getMotoMecFertCTR().verCarreta(Long.parseLong(editTextPadrao.getText().toString()));
 
                     if(verCarreta == 1) {
-
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(verCarreta == 1) {", getLocalClassName());
                         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){
-
                             LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){\n" +
-                                    "                            pmmContext.getCecCTR().setCarr(Long.parseLong(editTextPadrao.getText().toString()));\n" +
-                                    "                            pmmContext.getCecCTR().setLib(pmmContext.getCecCTR().getOS().getIdLibOS());\n" +
-                                    "                            int numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;", getLocalClassName());
+                                    "                            pmmContext.getConfigCTR().setCarreta(Long.parseLong(editTextPadrao.getText().toString()));\n" +
+                                    "                            Intent it = new Intent(CarretaActivity.this, OSActivity.class);", getLocalClassName());
+                            pmmContext.getConfigCTR().setCarreta(Long.parseLong(editTextPadrao.getText().toString()));
                             Intent it = new Intent(CarretaActivity.this, OSActivity.class);
                             startActivity(it);
                             finish();

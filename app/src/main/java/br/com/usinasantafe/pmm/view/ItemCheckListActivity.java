@@ -108,9 +108,9 @@ public class ItemCheckListActivity extends ActivityGeneric {
             pmmContext.getCheckListCTR().setRespCheckList(respItemCheckListBean);
             if (pmmContext.getCheckListCTR().qtdeItemCheckList() == pmmContext.getCheckListCTR().getPosCheckList()) {
                 LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getCheckListCTR().qtdeItemCheckList() == pmmContext.getCheckListCTR().getPosCheckList()) {\n" +
-                        "                pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBolMMFert().getIdTurnoBolMMFert());\n" +
+                        "                pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getConfigCTR().getConfig().getIdTurnoConfig());\n" +
                         "                pmmContext.getCheckListCTR().salvarBolFechado();", getLocalClassName());
-                pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getMotoMecFertCTR().getBoletimMMFertDAO().getBoletimMMFert().getIdTurnoBolMMFert());
+                pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getConfigCTR().getConfig().getIdTurnoConfig());
                 pmmContext.getCheckListCTR().salvarBolFechado(getLocalClassName());
                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
                     LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +

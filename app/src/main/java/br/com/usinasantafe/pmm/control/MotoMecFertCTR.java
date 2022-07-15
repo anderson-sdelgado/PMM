@@ -59,7 +59,7 @@ import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class MotoMecFertCTR {
 
-    private BoletimMMFertDAO boletimMMFertDAO;
+//    private BoletimMMFertDAO boletimMMFertDAO;
     private ItemCalibPneuDAO itemCalibPneuDAO;
     private MotoMecBean motoMecBean;
     private Long contImplemento;
@@ -69,12 +69,6 @@ public class MotoMecFertCTR {
     private int posRecolh;
 
     public MotoMecFertCTR() {
-    }
-
-    public BoletimMMFertDAO getBoletimMMFertDAO(){
-        if (boletimMMFertDAO == null)
-            boletimMMFertDAO = new BoletimMMFertDAO();
-        return boletimMMFertDAO;
     }
 
     public ItemCalibPneuDAO getItemMedPneuDAO() {
@@ -96,30 +90,46 @@ public class MotoMecFertCTR {
     public void salvarBolMMFertAberto(String activity){
         ConfigCTR configCTR = new ConfigCTR();
         ConfigBean configBean = configCTR.getConfig();
-        LogProcessoDAO.getInstance().insertLogProcesso("boletimMMFertDAO.salvarBolAbertoMMFert(configCTR.getEquip().getTipoEquip(), configBean.getNroOSConfig()\n" +
-                "                                            , configBean.getIdAtivConfig(), configBean.getStatusConConfig(), activity);", activity);
-        boletimMMFertDAO.salvarBoletimMMFertAberto(configCTR.getEquip().getTipoEquip(), configBean.getNroOSConfig()
-                                            , configBean.getIdAtivConfig(), configBean.getStatusConConfig(), activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("boletimMMFertDAO.salvarBoletimMMFertAberto(configCTR.getConfig().getMatricFuncConfig()\n" +
+                "                , configCTR.getEquip().getIdEquip()\n" +
+                "                , configCTR.getConfig().getIdEquipBombaBolConfig()\n" +
+                "                , configCTR.getConfig().getIdTurnoConfig()\n" +
+                "                , configCTR.getConfig().getHodometroInicialConfig()\n" +
+                "                , configCTR.getConfig().getLongitudeConfig()\n" +
+                "                , configCTR.getConfig().getLatitudeConfig()\n" +
+                "                , configCTR.getEquip().getTipoEquip()\n" +
+                "                , configBean.getNroOSConfig()\n" +
+                "                , configBean.getIdAtivConfig()\n" +
+                "                , configBean.getStatusConConfig()\n" +
+                "                , activity);", activity);
+        BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
+        boletimMMFertDAO.salvarBoletimMMFertAberto(configCTR.getConfig().getMatricFuncConfig()
+                , configCTR.getEquip().getIdEquip()
+                , configCTR.getConfig().getIdEquipBombaBolConfig()
+                , configCTR.getConfig().getIdTurnoConfig()
+                , configCTR.getConfig().getHodometroInicialConfig()
+                , configCTR.getConfig().getLongitudeConfig()
+                , configCTR.getConfig().getLatitudeConfig()
+                , configCTR.getEquip().getTipoEquip()
+                , configBean.getNroOSConfig()
+                , configBean.getIdAtivConfig()
+                , configBean.getStatusConConfig()
+                , activity);
     }
 
     public void salvarBolMMFertFechado(String activity){
 
-        if (boletimMMFertDAO == null) {
-            boletimMMFertDAO = new BoletimMMFertDAO();
-        }
-
+        BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
 
         ConfigCTR configCTR = new ConfigCTR();
-        LogProcessoDAO.getInstance().insertLogProcesso("if (boletimMMFertDAO == null) {\n" +
-                "            boletimMMFertDAO = new BoletimMMFertDAO();}\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("boletimMMFertDAO = new BoletimMMFertDAO();\n" +
                 "        ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();\n" +
-                "        ConfigCTR configCTR = new ConfigCTR();\n" +
-                "", activity);
+                "        ConfigCTR configCTR = new ConfigCTR();", activity);
         configCTR.setUltParadaBolConfig(apontMMFertDAO.getUltApont(boletimMMFertDAO.getBoletimMMFertAberto().getIdBolMMFert()).getParadaApontMMFert());
 
-        LogProcessoDAO.getInstance().insertLogProcesso("boletimMMFertDAO.salvarBolFechadoMMFert();", activity);
-        boletimMMFertDAO.salvarBoletimMMFertFechado(activity);
+        LogProcessoDAO.getInstance().insertLogProcesso("boletimMMFertDAO.salvarBoletimMMFertFechado(configCTR.getConfig().getHodometroFinalConfig(), activity);", activity);
+        boletimMMFertDAO.salvarBoletimMMFertFechado(configCTR.getConfig().getHodometroFinalConfig(), activity);
 
         EnvioDadosServ.getInstance().envioDados(activity);
 
@@ -195,7 +205,7 @@ public class MotoMecFertCTR {
         String dadosEnvioApontMecan = apontMecanDAO.dadosEnvioApontMecan(apontMecanDAO.apontMecanEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
 
         CarregCompDAO carregCompDAO = new CarregCompDAO();
-        String dadosCarregComp = carregCompDAO.dadosEnvioCarreg(carregCompDAO.carregCompostoDescarregInsumo(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())))));
+        String dadosCarregComp = carregCompDAO.dadosEnvioCarreg(carregCompDAO.carregCompostoDescarregInsumo(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))));
 
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
         String dadosEnvioBoletimPneu = boletimPneuDAO.dadosEnvioBoletimPneu(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))));

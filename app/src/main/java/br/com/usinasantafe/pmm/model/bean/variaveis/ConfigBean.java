@@ -25,6 +25,20 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private Long difDthrConfig;
 	@DatabaseField
+	private Long matricFuncConfig;
+	@DatabaseField
+	private Long idTurnoConfig;
+	@DatabaseField
+	private Long idEquipBombaBolConfig;
+	@DatabaseField
+	private Double hodometroInicialConfig;
+	@DatabaseField
+	private Double hodometroFinalConfig;
+	@DatabaseField
+	private Double longitudeConfig;
+	@DatabaseField
+	private Double latitudeConfig;
+	@DatabaseField
 	private Long nroOSConfig;
 	@DatabaseField
 	private Long idAtivConfig;
@@ -301,4 +315,55 @@ public class ConfigBean extends Entidade {
 	public void setCarretaConfig(Long carretaConfig) {
 		this.carretaConfig = carretaConfig;
 	}
+
+	public Long getMatricFuncConfig() {
+		return matricFuncConfig;
+	}
+
+	public void setMatricFuncConfig(Long matricFuncConfig) {
+		this.matricFuncConfig = matricFuncConfig;
+	}
+
+	public Long getIdTurnoConfig() {
+		return idTurnoConfig;
+	}
+
+	public void setIdTurnoConfig(Long idTurnoConfig) {
+		this.idTurnoConfig = idTurnoConfig;
+	}
+
+	public Long getIdEquipBombaBolConfig() {
+		return idEquipBombaBolConfig;
+	}
+
+	public void setIdEquipBombaBolConfig(Long idEquipBombaBolConfig) {
+		this.idEquipBombaBolConfig = idEquipBombaBolConfig;
+	}
+
+	public Double getHodometroInicialConfig() {
+		return hodometroInicialConfig;
+	}
+
+	public void setHodometroInicialConfig(Double hodometroInicialBolMMFert, Double longitudeBolMMFert, Double latitudeBolMMFert) {
+		this.latitudeConfig = latitudeBolMMFert;
+		this.longitudeConfig = longitudeBolMMFert;
+		this.hodometroInicialConfig = hodometroInicialBolMMFert;
+	}
+
+	public Double getHodometroFinalConfig() {
+		return hodometroFinalConfig;
+	}
+
+	public void setHodometroFinalConfig(Double hodometroFinalConfig) {
+		this.hodometroFinalConfig = hodometroFinalConfig;
+	}
+
+	public Double getLongitudeConfig() {
+		return longitudeConfig;
+	}
+
+	public Double getLatitudeConfig() {
+		return latitudeConfig;
+	}
+
 }

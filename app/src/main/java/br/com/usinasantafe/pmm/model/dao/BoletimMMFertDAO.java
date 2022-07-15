@@ -3,6 +3,7 @@ package br.com.usinasantafe.pmm.model.dao;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.j256.ormlite.field.DatabaseField;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,19 +18,9 @@ import br.com.usinasantafe.pmm.util.Tempo;
 
 public class BoletimMMFertDAO {
 
-    private BoletimMMFertBean boletimMMFertBean;
+//    private BoletimMMFertBean boletimMMFertBean;
 
     public BoletimMMFertDAO() {
-    }
-
-    public void setBolMMFert(){
-        boletimMMFertBean = new BoletimMMFertBean();
-    }
-
-    public BoletimMMFertBean getBoletimMMFert() {
-        if (boletimMMFertBean == null)
-            boletimMMFertBean = new BoletimMMFertBean();
-        return boletimMMFertBean;
     }
 
     public boolean verBoletimMMFertAberto(){
@@ -78,22 +69,31 @@ public class BoletimMMFertDAO {
         return dadosArrayList;
     }
 
-    public void salvarBoletimMMFertAberto(Long tipoEquip, Long os, Long ativ, Long statusCon, String activity){
+    public void salvarBoletimMMFertAberto(Long matricFunc, Long idEquip, Long idEquipBomba, Long idTurno
+            , Double hodometroInicial, Double longitude, Double latitude
+            , Long tipoEquip, Long os, Long ativ, Long statusCon, String activity){
         LogProcessoDAO.getInstance().insertLogProcesso("public void salvarBolAbertoMMFert(Long tipoEquip, Long os, Long ativ, Long statusCon, String activity){", activity);
         if(!verBoletimMMFertAberto()){
             String dthr = Tempo.getInstance().dthr();
             LogProcessoDAO.getInstance().insertLogProcesso("if(!verBolAbertoMMFert()){ + Data Inicial Boletim = " + dthr, activity);
+            BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
+            boletimMMFertBean.setMatricFuncBolMMFert(matricFunc);
+            boletimMMFertBean.setIdEquipBolMMFert(idEquip);
+            boletimMMFertBean.setIdEquipBombaBolMMFert(idEquipBomba);
+            boletimMMFertBean.setIdTurnoBolMMFert(idTurno);
+            boletimMMFertBean.setHodometroInicialBol(hodometroInicial, longitude, latitude);
             boletimMMFertBean.setTipoBolMMFert(tipoEquip);
             boletimMMFertBean.setOsBolMMFert(os);
             boletimMMFertBean.setAtivPrincBolMMFert(ativ);
             boletimMMFertBean.setStatusConBolMMFert(statusCon);
             boletimMMFertBean.setDthrInicialBolMMFert(dthr);
             boletimMMFertBean.setDthrLongFinalBolMMFert(0L);
+            boletimMMFertBean.setStatusBolMMFert(1L);
             boletimMMFertBean.insert();
         }
     }
 
-    public void salvarBoletimMMFertFechado(String activity) {
+    public void salvarBoletimMMFertFechado(Double hodometroFinal, String activity) {
 
         List<BoletimMMFertBean> boletimMMList = boletimMMFertAbertoList();
 
@@ -103,7 +103,7 @@ public class BoletimMMFertDAO {
             LogProcessoDAO.getInstance().insertLogProcesso("for(BoletimMMFertBean boletimMMFertBeanBD : boletimMMList){ + Boletins = " + boletimMMFertBeanBD.getIdBolMMFert() , activity);
             boletimMMFertBeanBD.setDthrFinalBolMMFert(Tempo.getInstance().dthr());
             boletimMMFertBeanBD.setStatusBolMMFert(2L);
-            boletimMMFertBeanBD.setHodometroFinalBolMMFert(boletimMMFertBean.getHodometroFinalBolMMFert());
+            boletimMMFertBeanBD.setHodometroFinalBolMMFert(hodometroFinal);
             boletimMMFertBeanBD.setDthrLongFinalBolMMFert(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
             boletimMMFertBeanBD.update();
         }
@@ -154,7 +154,7 @@ public class BoletimMMFertDAO {
 
         ArrayList<BoletimMMFertBean> boletimMMFertArrayList = new ArrayList<>();
         for (BoletimMMFertBean boletimMMFertBeanBD : boletimMMFertList) {
-            if(boletimMMFertBeanBD.getDthrLongFinalBolMMFert() < Tempo.getInstance().dthrLongDiaMenos(3)) {
+            if(boletimMMFertBeanBD.getDthrLongFinalBolMMFert() < Tempo.getInstance().dthrLongDiaMenos(15)) {
                 boletimMMFertArrayList.add(boletimMMFertBeanBD);
             }
         }

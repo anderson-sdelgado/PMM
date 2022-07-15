@@ -93,11 +93,6 @@ public class ConfigCTR {
         configDAO.setStatusRetVerif(statusRetVerif);
     }
 
-    public void setFuncaoPCOMP(Long funcaoPCOMP) {
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setFuncaoPCOMP(funcaoPCOMP);
-    }
-
     public Long getStatusRetVerif(){
         ConfigDAO configDAO = new ConfigDAO();
         return configDAO.getStatusRetVerif();
@@ -226,6 +221,35 @@ public class ConfigCTR {
         }
 
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////// BOLETIM MM /////////////////////////////////////////////////
+
+    public void setMatricFuncConfig(Long matricFuncConfig) {
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setMatricFuncConfig(matricFuncConfig);
+    }
+
+    public void setIdTurnoConfig(Long idTurnoConfig) {
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setIdTurnoConfig(idTurnoConfig);
+    }
+
+    public void setIdEquipBombaBolConfig(Long idEquipBombaBolConfig) {
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setIdEquipBombaBolConfig(idEquipBombaBolConfig);
+    }
+
+    public void setHodometroInicialConfig(Double hodometroInicialBolMMFert, Double longitudeBolMMFert, Double latitudeBolMMFert) {
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setHodometroInicialConfig(hodometroInicialBolMMFert, longitudeBolMMFert, latitudeBolMMFert);
+    }
+
+    public void setHodometroFinalConfig(Double hodometroFinalBolMMFert) {
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setHodometroFinalConfig(hodometroFinalBolMMFert);
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////////// OS - ATIVIDADE /////////////////////////////////////////////
@@ -498,6 +522,11 @@ public class ConfigCTR {
         return retorno;
     }
 
+    public void setCarreta(Long carreta){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setCarreta(carreta);
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////// INFORMATIVO ////////////////////////////////////////////
@@ -518,6 +547,7 @@ public class ConfigCTR {
 
     public AtualAplicBean recAtual(String result) {
 
+        setStatusRetVerif(0L);
         AtualAplicBean atualAplicBean = new AtualAplicBean();
 
         try {
