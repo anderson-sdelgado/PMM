@@ -20,10 +20,16 @@ public class CarretaDAO {
     }
 
     public int verCarreta(Long nroCarreta){
+        ConfigCTR configCTR = new ConfigCTR();
+        int numCarreta;
+        if(configCTR.getConfig().getPosicaoTela() == 16L){
+            numCarreta = configCTR.getConfig().getQtdeCarretaConfig().intValue();
+        } else {
+            numCarreta = getQtdeCarreta() + 1;
+        }
         int retorno; //1 - CARRETA CORRETA; 2 - NÃO EXISTE NA BASE DE DADOS; 3 - CARRETA REPETIDA; 4 - CARRETA INVERTIDA;
         if(verCarretaEquipSeg(nroCarreta)){
             if(!verCarretaBD(nroCarreta)){
-                ConfigCTR configCTR = new ConfigCTR();
                 EquipBean equipBean = configCTR.getEquip();
                 EquipSegBean carreta = getCarretaEquipSeg(nroCarreta);
                 if(equipBean.getCodClasseEquip() == 1){ //CAMINHÃO CANAVIEIRO
@@ -35,14 +41,14 @@ public class CarretaDAO {
                     }
                 } else { //CAVALO CANAVIEIRO
                     if(carreta.getCodClasseEquip() == 21){  //SEMI REBOQUE
-                        if((getQtdeCarreta() + 1) == 1){
+                        if(numCarreta == 1){
                             retorno = 1;
                         }
                         else{
                             retorno = 4;
                         }
                     } else { //REBOQUE
-                        if((getQtdeCarreta() + 1) > 1){
+                        if(numCarreta > 1){
                             retorno = 1;
                         }
                         else{
@@ -62,30 +68,10 @@ public class CarretaDAO {
     }
 
     public void insCarreta(Long carreta){
-        if(getQtdeCarreta() == 0){
-            CarretaBean carretaBean1 = new CarretaBean();
-            carretaBean1.setPosCarreta(1L);
-            carretaBean1.setNroEquip(carreta);
-            carretaBean1.insert();
-        }
-        else if(getQtdeCarreta() == 1){
-            CarretaBean carretaBean2 = new CarretaBean();
-            carretaBean2.setPosCarreta(2L);
-            carretaBean2.setNroEquip(carreta);
-            carretaBean2.insert();
-        }
-        else if(getQtdeCarreta() == 2){
-            CarretaBean carretaBean3 = new CarretaBean();
-            carretaBean3.setPosCarreta(3L);
-            carretaBean3.setNroEquip(carreta);
-            carretaBean3.insert();
-        }
-        else if(getQtdeCarreta() == 3){
-            CarretaBean carretaBean4 = new CarretaBean();
-            carretaBean4.setPosCarreta(4L);
-            carretaBean4.setNroEquip(carreta);
-            carretaBean4.insert();
-        }
+        CarretaBean carretaBean = new CarretaBean();
+        carretaBean.setPosCarreta((long) (getQtdeCarreta() + 1));
+        carretaBean.setNroEquip(carreta);
+        carretaBean.insert();
     }
 
     public void delCarreta(){
@@ -139,7 +125,7 @@ public class CarretaDAO {
 
     public String getDescrCarreta(){
         CarretaBean carretaBean = new CarretaBean();
-        List carretaList = carretaBean.orderBy("posCarreta", true);
+        List<CarretaBean> carretaList = carretaBean.orderBy("posCarreta", true);
         String textoCarreta = "";
         if (carretaList.size() == 0) {
             textoCarreta = "CARRETA(S): ";

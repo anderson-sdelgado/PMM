@@ -61,6 +61,7 @@ public class ConfigDAO {
         configBean.setIdFrenteConfig(0L);
         configBean.setIdPropriedadeConfig(0L);
         configBean.setCarretaConfig(0L);
+        configBean.setQtdeCarretaConfig(0L);
         configBean.insert();
         configBean.commit();
     }
@@ -169,6 +170,12 @@ public class ConfigDAO {
     public void setCarreta(Long carreta){
         ConfigBean configBean = getConfig();
         configBean.setCarretaConfig(carreta);
+        configBean.update();
+    }
+
+    public void setQtdeCarreta(Long qtdeCarreta){
+        ConfigBean configBean = getConfig();
+        configBean.setQtdeCarretaConfig(qtdeCarreta);
         configBean.update();
     }
 

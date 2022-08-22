@@ -579,14 +579,6 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                 textViewDataHora.setTextColor(Color.RED);
             }
 
-            if(pmmContext.getConfigCTR().getConfig().getVerRecInformativo() == 2){
-                LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getVerRecInformativo() == 2){\n" +
-                        "                Intent it = new Intent( MenuPrincPMMActivity.this, DadosColheitaActivity.class);", getLocalClassName());
-                Intent it = new Intent( MenuPrincPMMActivity.this, DadosColheitaActivity.class);
-                startActivity(it);
-                finish();
-
-            }
             LogProcessoDAO.getInstance().insertLogProcesso("if(EnvioDadosServ.status != 3){\n" +
                     "                customHandler.postDelayed(this, 10000);\n" +
                     "            }", getLocalClassName());

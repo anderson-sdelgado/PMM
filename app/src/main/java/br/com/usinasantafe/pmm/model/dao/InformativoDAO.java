@@ -10,10 +10,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.view.DadosColheitaActivity;
-import br.com.usinasantafe.pmm.view.DadosPlantioActivity;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfPlantioBean;
-import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfColheitaBean;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 

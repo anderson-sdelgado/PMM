@@ -208,11 +208,28 @@ public class EquipMBActivity extends ActivityGeneric {
             }
         }
         else{
-            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                    "            Intent it = new Intent(EquipMBActivity.this, EsperaInforActivity.class);", getLocalClassName());
-            Intent it = new Intent(EquipMBActivity.this, EsperaInforActivity.class);
-            startActivity(it);
-            finish();
+            LogProcessoDAO.getInstance().insertLogProcesso("else{", getLocalClassName());
+            if(PMMContext.aplic == 1){
+                LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
+                        "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                Intent it = new Intent(EquipMBActivity.this, MenuPrincPMMActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else if(PMMContext.aplic == 2){
+                LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
+                        "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                Intent it = new Intent(EquipMBActivity.this, MenuPrincECMActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else if(PMMContext.aplic == 3){
+                LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
+                        "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                Intent it = new Intent(EquipMBActivity.this, MenuPrincPCOMPActivity.class);
+                startActivity(it);
+                finish();
+            }
         }
     }
 

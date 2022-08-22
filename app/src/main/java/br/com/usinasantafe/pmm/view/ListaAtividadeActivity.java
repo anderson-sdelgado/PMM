@@ -67,21 +67,17 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                     customHandler.postDelayed(updateTimerThread, 10000);
 
-                    if(PMMContext.aplic != 2) {
+                    if(pmmContext.getConfigCTR().getConfig().getNroOSConfig() == 0){
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic != 2) {\n" +
-                                "                        LogProcessoDAO.getInstance().insertLogProcesso(\"pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(\" + nroOS + \"), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);\", getLocalClassName());\n" +
-                                "                        pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(nroOS), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
-                        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(" + nroOS + "), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
-                        pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(nroOS), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getNroOSConfig() == 0){\n" +
+                                "                        pmmContext.getMotoMecFertCTR().verAtivECM(ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
+                        pmmContext.getMotoMecFertCTR().verAtivECM(ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
 
                     } else {
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic != 2) {\n" +
-                                "                        LogProcessoDAO.getInstance().insertLogProcesso(\"pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(\" + nroOS + \"), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);\", getLocalClassName());\n" +
-                                "                        pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(nroOS), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
-                        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(" + nroOS + "), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
-                        pmmContext.getMotoMecFertCTR().verAtivECM(ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                "                        pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(" + nroOS + "), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
+                        pmmContext.getMotoMecFertCTR().verAtiv(String.valueOf(nroOS), ListaAtividadeActivity.this, ListaAtividadeActivity.class, progressBar);
 
                     }
 

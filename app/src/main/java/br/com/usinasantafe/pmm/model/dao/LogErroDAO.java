@@ -20,31 +20,21 @@ public class LogErroDAO {
     }
 
     public void insertLogErro(Throwable ex){
-        ConfigCTR configCTR = new ConfigCTR();
-        if(configCTR.hasElemConfig()){
-            ConfigBean configBean = configCTR.getConfig();
-            LogErroBean logErroBean = new LogErroBean();
-            logErroBean.setIdEquip(configBean.getEquipConfig());
-            logErroBean.setException(throwableToString(ex));
-            logErroBean.setDthr(Tempo.getInstance().dthr());
-            logErroBean.setDthrLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
-            logErroBean.setStatus(1L);
-            logErroBean.insert();
-        }
+        LogErroBean logErroBean = new LogErroBean();
+        logErroBean.setException(throwableToString(ex));
+        logErroBean.setDthr(Tempo.getInstance().dthr());
+        logErroBean.setDthrLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
+        logErroBean.setStatus(1L);
+        logErroBean.insert();
     }
 
     public void insertLogErro(String erro){
-        ConfigCTR configCTR = new ConfigCTR();
-        if(configCTR.hasElemConfig()){
-            ConfigBean configBean = configCTR.getConfig();
-            LogErroBean logErroBean = new LogErroBean();
-            logErroBean.setIdEquip(configBean.getEquipConfig());
-            logErroBean.setException("RETORNO SERVIDOR COM FALHA = " + erro);
-            logErroBean.setDthr(Tempo.getInstance().dthr());
-            logErroBean.setDthrLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
-            logErroBean.setStatus(1L);
-            logErroBean.insert();
-        }
+        LogErroBean logErroBean = new LogErroBean();
+        logErroBean.setException("RETORNO SERVIDOR COM FALHA = " + erro);
+        logErroBean.setDthr(Tempo.getInstance().dthr());
+        logErroBean.setDthrLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
+        logErroBean.setStatus(1L);
+        logErroBean.insert();
     }
 
     private String throwableToString(Throwable t) {

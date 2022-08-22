@@ -57,7 +57,7 @@ import com.j256.ormlite.table.TableUtils;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	public static final String FORCA_DB_NAME = "mm_db";
-	public static final int FORCA_BD_VERSION = 4;
+	public static final int FORCA_BD_VERSION = 5;
 
 	private static DatabaseHelper instance;
 	
@@ -100,15 +100,22 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			//Versão 5.05
 			dropAllInitial(cs);
 			createAllInitial(cs);
-		} else if((oldVersion == 2) && (newVersion == 3)){
-			//Versão 5.06
-			dropAllInitialSLog(cs);
-			createAllInitialSLog(cs);
-		} else if((oldVersion == 3) && (newVersion == 4)){
-			//Versão 5.08
-			dropAllInitialSLog(cs);
-			createAllInitialSLog(cs);
 		}
+//		else if((oldVersion == 2) && (newVersion == 3)){
+//			//Versão 5.06
+//			dropAllInitialSLog(cs);
+//			createAllInitialSLog(cs);
+//		}
+//		else if((oldVersion == 3) && (newVersion == 4)){
+//			//Versão 5.08
+//			dropAllInitialSLog(cs);
+//			createAllInitialSLog(cs);
+//		}
+//		else if((oldVersion == 4) && (newVersion == 5)){
+//			//Versão 5.10
+//			dropAllInitial(cs);
+//			createAllInitial(cs);
+//		}
 
 	}
 

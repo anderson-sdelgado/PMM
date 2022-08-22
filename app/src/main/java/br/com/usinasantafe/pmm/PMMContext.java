@@ -8,7 +8,6 @@ import br.com.usinasantafe.pmm.control.MecanicoCTR;
 import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.control.InformativoCTR;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 
 public class PMMContext extends Application {
@@ -17,14 +16,13 @@ public class PMMContext extends Application {
 
     private MotoMecFertCTR motoMecFertCTR;
     private CECCTR cecCTR;
-    private InformativoCTR informativoCTR;
     private CheckListCTR checkListCTR;
     private ConfigCTR configCTR;
     private CompostoCTR compostoCTR;
     private MecanicoCTR mecanicoCTR;
 
     public static String versaoWS = "5.01";
-    public static int aplic = 3;   // 1 - PMM; 2 - ECM; 3 - PCOMP
+    public static int aplic = 2; // 1 - PMM; 2 - ECM; 3 - PCOMP
 
     @Override
     public void onCreate() {
@@ -45,11 +43,6 @@ public class PMMContext extends Application {
         return cecCTR;
     }
 
-    public InformativoCTR getInformativoCTR(){
-        if (informativoCTR == null)
-            informativoCTR = new InformativoCTR();
-        return informativoCTR;
-    }
 
     public CheckListCTR getCheckListCTR(){
         if (checkListCTR == null)

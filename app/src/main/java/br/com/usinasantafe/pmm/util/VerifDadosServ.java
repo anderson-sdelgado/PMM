@@ -11,7 +11,6 @@ import java.util.Map;
 
 import br.com.usinasantafe.pmm.control.CECCTR;
 import br.com.usinasantafe.pmm.control.CompostoCTR;
-import br.com.usinasantafe.pmm.control.InformativoCTR;
 import br.com.usinasantafe.pmm.control.MecanicoCTR;
 import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
@@ -19,7 +18,6 @@ import br.com.usinasantafe.pmm.util.conHttp.PostVerGenerico;
 import br.com.usinasantafe.pmm.control.CheckListCTR;
 import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp;
-import br.com.usinasantafe.pmm.view.MenuInicialActivity;
 import br.com.usinasantafe.pmm.view.TelaInicialActivity;
 
 import android.os.AsyncTask;
@@ -55,7 +53,6 @@ public class VerifDadosServ {
 
         ConfigCTR configCTR = new ConfigCTR();
         CheckListCTR checkListCTR = new CheckListCTR();
-        InformativoCTR informativoCTR = new InformativoCTR();
         CompostoCTR compostoCTR = new CompostoCTR();
         CECCTR cecCTR = new CECCTR();
         MecanicoCTR mecanicoCTR = new MecanicoCTR();
@@ -89,10 +86,6 @@ public class VerifDadosServ {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"CheckList\")) {\n" +
                     "            checkListCTR.receberVerifCheckList(" + result + ");", activity);
             checkListCTR.receberVerifCheckList(result);
-        } else if (this.classe.equals("Informativo")) {
-            LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Informativo\")) {\n" +
-                    "            informativoCTR.receberVerifInformativo(" + result + ");", activity);
-            informativoCTR.receberVerifInformativo(result);
         } else if(this.classe.equals("OrdCarreg")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if(this.tipo.equals(\"OrdCarreg\")) {\n" +
                     "            compostoCTR.receberVerifOrdCarreg(" + result + ");", activity);
@@ -114,38 +107,6 @@ public class VerifDadosServ {
                     "            status = 1;", activity);
             status = 1;
         }
-
-    }
-
-    public boolean verifRecInformativo() {
-        boolean ret = false;
-        ConfigCTR configCTR = new ConfigCTR();
-        if(configCTR.hasElemConfig()){
-            if(configCTR.getVerRecInformativo() == 1){
-                ret = true;
-            }
-        }
-        return ret;
-    }
-
-    public boolean statusRetVerif() {
-        boolean ret = false;
-        ConfigCTR configCTR = new ConfigCTR();
-        if(configCTR.hasElemConfig()){
-            if(configCTR.getStatusRetVerif() == 1){
-                ret = true;
-            }
-        }
-        return ret;
-    }
-
-    public void verifDadosInformativo(String dados,  String classe, String activity) {
-
-        urlsConexaoHttp = new UrlsConexaoHttp();
-        this.classe = classe;
-        this.dados = dados;
-
-        envioVerif(activity);
 
     }
 
@@ -214,21 +175,6 @@ public class VerifDadosServ {
         postVerGenerico.setParametrosPost(parametrosPost);
         postVerGenerico.execute(url);
 
-    }
-
-    public void reenvioVerif(String activity){
-        LogProcessoDAO.getInstance().insertLogProcesso("statusRetVerif()", activity);
-        if(statusRetVerif()){
-            LogProcessoDAO.getInstance().insertLogProcesso("envioVerif()", activity);
-            envioVerif(activity);
-        } else {
-            LogProcessoDAO.getInstance().insertLogProcesso("verifRecInformativo()", activity);
-            if (verifRecInformativo()) {
-                InformativoCTR informativoCTR = new InformativoCTR();
-                LogProcessoDAO.getInstance().insertLogProcesso("informativoCTR.verifDadosInformativo()", activity);
-                informativoCTR.verifDadosInformativo(activity);
-            }
-        }
     }
 
     public void cancel() {

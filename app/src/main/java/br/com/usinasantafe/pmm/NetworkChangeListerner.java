@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
-import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogProcessoBean;
@@ -17,7 +16,6 @@ import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.ConnectNetwork;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
-import br.com.usinasantafe.pmm.util.VerifDadosServ;
 import br.com.usinasantafe.pmm.view.ActivityGeneric;
 
 public class NetworkChangeListerner extends BroadcastReceiver {
@@ -33,11 +31,6 @@ public class NetworkChangeListerner extends BroadcastReceiver {
                     "            ActivityGeneric.connectNetwork = true;\n" +
                     "Tempo.getInstance().zerarDifTempo()", context.getClass().getName());
             Tempo.getInstance().zerarDifTempo();
-            if(VerifDadosServ.status == 1){
-                LogProcessoDAO.getInstance().insertLogProcesso("if(VerifDadosServ.status == 1){\n" +
-                        "VerifDadosServ.getInstance().reenvioVerif(context.getClass().getName());", context.getClass().getName());
-                VerifDadosServ.getInstance().reenvioVerif(context.getClass().getName());
-            }
             if (EnvioDadosServ.status == 1) {
                 LogProcessoDAO.getInstance().insertLogProcesso("if (EnvioDadosServ.status == 1) {\n" +
                         "EnvioDadosServ.getInstance().envioDados(context.getClass().getName());", context.getClass().getName());

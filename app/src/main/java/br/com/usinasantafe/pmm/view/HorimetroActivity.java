@@ -213,11 +213,28 @@ public class HorimetroActivity extends ActivityGeneric {
                 else{
                     LogProcessoDAO.getInstance().insertLogProcesso("else{", getLocalClassName());
                     if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
-                                "                    Intent it = new Intent(HorimetroActivity.this, EsperaInforActivity.class);", getLocalClassName());
-                        Intent it = new Intent(HorimetroActivity.this, EsperaInforActivity.class);
-                        startActivity(it);
-                        finish();
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {", getLocalClassName());
+                        if(PMMContext.aplic == 1){
+                            LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
+                                    "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                            Intent it = new Intent(HorimetroActivity.this, MenuPrincPMMActivity.class);
+                            startActivity(it);
+                            finish();
+                        }
+                        else if(PMMContext.aplic == 2){
+                            LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
+                                    "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                            Intent it = new Intent(HorimetroActivity.this, MenuPrincECMActivity.class);
+                            startActivity(it);
+                            finish();
+                        }
+                        else if(PMMContext.aplic == 3){
+                            LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
+                                    "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                            Intent it = new Intent(HorimetroActivity.this, MenuPrincPCOMPActivity.class);
+                            startActivity(it);
+                            finish();
+                        }
                     }
                     else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L) {
                         LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +

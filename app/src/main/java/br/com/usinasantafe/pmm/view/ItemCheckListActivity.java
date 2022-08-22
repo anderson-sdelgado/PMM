@@ -113,11 +113,28 @@ public class ItemCheckListActivity extends ActivityGeneric {
                 pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getConfigCTR().getConfig().getIdTurnoConfig());
                 pmmContext.getCheckListCTR().salvarBolFechado(getLocalClassName());
                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
-                            "                    Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);", getLocalClassName());
-                    Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);
-                    startActivity(it);
-                    finish();
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {", getLocalClassName());
+                    if(PMMContext.aplic == 1){
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
+                                "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                        Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPMMActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                    else if(PMMContext.aplic == 2){
+                        LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
+                                "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                        Intent it = new Intent(ItemCheckListActivity.this, MenuPrincECMActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
+                    else if(PMMContext.aplic == 3){
+                        LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
+                                "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                        Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPCOMPActivity.class);
+                        startActivity(it);
+                        finish();
+                    }
                 } else {
                     LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                             "                    Intent it = new Intent(ItemCheckListActivity.this, VerifOperadorActivity.class);", getLocalClassName());
@@ -136,11 +153,28 @@ public class ItemCheckListActivity extends ActivityGeneric {
         }
         else{
             if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
-                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {\n" +
-                        "                Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);", getLocalClassName());
-                Intent it = new Intent(ItemCheckListActivity.this, EsperaInforActivity.class);
-                startActivity(it);
-                finish();
+                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {", getLocalClassName());
+                if(PMMContext.aplic == 1){
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
+                            "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                    Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPMMActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else if(PMMContext.aplic == 2){
+                    LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
+                            "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                    Intent it = new Intent(ItemCheckListActivity.this, MenuPrincECMActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+                else if(PMMContext.aplic == 3){
+                    LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
+                            "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                    Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPCOMPActivity.class);
+                    startActivity(it);
+                    finish();
+                }
             } else {
                 LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                         "                Intent it = new Intent(ItemCheckListActivity.this, VerifOperadorActivity.class);", getLocalClassName());

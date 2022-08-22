@@ -2,12 +2,19 @@ package br.com.usinasantafe.pmm.view;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.google.gson.Gson;
+
+import java.util.List;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
@@ -40,12 +47,16 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfColheitaBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.InfPlantioBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
+import br.com.usinasantafe.pmm.model.bean.variaveis.LogProcessoBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.MovLeiraBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.RespItemCheckListBean;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
+import br.com.usinasantafe.pmm.util.ConnectNetwork;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
+import br.com.usinasantafe.pmm.util.Tempo;
 
 public class ConfigActivity extends ActivityGeneric {
 

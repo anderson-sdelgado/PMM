@@ -93,11 +93,6 @@ public class ConfigCTR {
         configDAO.setStatusRetVerif(statusRetVerif);
     }
 
-    public Long getStatusRetVerif(){
-        ConfigDAO configDAO = new ConfigDAO();
-        return configDAO.getStatusRetVerif();
-    }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////// DATA HORA ///////////////////////////////////////////////
@@ -527,18 +522,9 @@ public class ConfigCTR {
         configDAO.setCarreta(carreta);
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    ////////////////////////////////////// INFORMATIVO ////////////////////////////////////////////
-
-    public void setVerInforConfig(Long tipo){
+    public void setQtdeCarreta(Long qtdeCarreta){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setVerInforConfig(tipo);
-    }
-
-    public Long getVerRecInformativo(){
-        ConfigDAO configDAO = new ConfigDAO();
-        return configDAO.getVerRecInformativo();
+        configDAO.setQtdeCarreta(qtdeCarreta);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

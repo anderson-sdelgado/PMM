@@ -59,6 +59,8 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private String descrPropriedadeConfig;
 	@DatabaseField
+	private Long qtdeCarretaConfig;
+	@DatabaseField
 	private Long carretaConfig;
 	@DatabaseField
 	private Double horimetroConfig;
@@ -366,4 +368,11 @@ public class ConfigBean extends Entidade {
 		return latitudeConfig;
 	}
 
+	public Long getQtdeCarretaConfig() {
+		return qtdeCarretaConfig;
+	}
+
+	public void setQtdeCarretaConfig(Long qtdeCarretaConfig) {
+		this.qtdeCarretaConfig = qtdeCarretaConfig;
+	}
 }

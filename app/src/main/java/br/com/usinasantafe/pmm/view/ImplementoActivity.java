@@ -30,6 +30,9 @@ public class ImplementoActivity extends ActivityGeneric {
         TextView textViewImplemento = findViewById(R.id.textViewImplemento);
         Button buttonAtualPadrao = findViewById(R.id.buttonAtualPadrao);
 
+        LogProcessoDAO.getInstance().insertLogProcesso("textViewImplemento.setText(\"IMPLEMENTO \" + " + pmmContext.getMotoMecFertCTR().getContImplemento() + " + \":\");", getLocalClassName());
+        textViewImplemento.setText("IMPLEMENTO " + pmmContext.getMotoMecFertCTR().getContImplemento() + ":");
+
         buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,9 +110,6 @@ public class ImplementoActivity extends ActivityGeneric {
             }
 
         });
-
-        LogProcessoDAO.getInstance().insertLogProcesso("textViewImplemento.setText(\"IMPLEMENTO \" + " + pmmContext.getMotoMecFertCTR().getContImplemento() + " + \":\");", getLocalClassName());
-        textViewImplemento.setText("IMPLEMENTO " + pmmContext.getMotoMecFertCTR().getContImplemento() + ":");
 
         buttonOkImplemento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,11 +250,28 @@ public class ImplementoActivity extends ActivityGeneric {
             }
         }
         else{
-            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                    "            Intent it = new Intent(ImplementoActivity.this, EsperaInforActivity.class);", getLocalClassName());
-            Intent it = new Intent(ImplementoActivity.this, EsperaInforActivity.class);
-            startActivity(it);
-            finish();
+            LogProcessoDAO.getInstance().insertLogProcesso("else{", getLocalClassName());
+            if(PMMContext.aplic == 1){
+                LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
+                        "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                Intent it = new Intent(ImplementoActivity.this, MenuPrincPMMActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else if(PMMContext.aplic == 2){
+                LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
+                        "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                Intent it = new Intent(ImplementoActivity.this, MenuPrincECMActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else if(PMMContext.aplic == 3){
+                LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
+                        "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                Intent it = new Intent(ImplementoActivity.this, MenuPrincPCOMPActivity.class);
+                startActivity(it);
+                finish();
+            }
         }
     }
 

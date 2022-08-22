@@ -8,6 +8,13 @@ import java.net.URL;
 
 import android.os.AsyncTask;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
@@ -52,10 +59,19 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
             }
 
 			URL urlCon = new URL(url);
-			HttpURLConnection connection = (HttpURLConnection) urlCon.openConnection();
+			HttpsURLConnection connection = (HttpsURLConnection) urlCon.openConnection();
 			connection.setRequestMethod("GET");
 			connection.setDoInput(true);
 			connection.setDoOutput(false);
+			SSLContext sc = SSLContext.getInstance("SSL");
+			sc.init(null, trustAllCerts(), new java.security.SecureRandom());
+			connection.setSSLSocketFactory(sc.getSocketFactory());
+			connection.setHostnameVerifier(new HostnameVerifier() {
+				@Override
+				public boolean verify(String s, SSLSession sslSession) {
+					return true;
+				}
+			});
 			connection.connect();
 
 			bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -105,5 +121,22 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 		}
 
     }
+
+	public TrustManager[] trustAllCerts(){
+		return new TrustManager[]{
+				new X509TrustManager() {
+					public java.security.cert.X509Certificate[] getAcceptedIssuers()
+					{
+						return null;
+					}
+					public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType)
+					{
+					}
+					public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType)
+					{
+					}
+				}
+		};
+	}
 
 }

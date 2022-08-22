@@ -3,10 +3,14 @@ package br.com.usinasantafe.pmm.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 import br.com.usinasantafe.pmm.BuildConfig;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
+import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
@@ -23,6 +27,9 @@ public class TelaInicialActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
         customHandler.postDelayed(excluirBDThread, 0);
+
+//        String dados = pmmContext.getMotoMecFertCTR().dadosEnvioBolFechadoMMFert();
+//        Log.i("Envio", dados);
 
     }
 
@@ -133,20 +140,6 @@ public class TelaInicialActivity extends ActivityGeneric {
                     LogProcessoDAO.getInstance().insertLogProcesso("if(!pmmContext.getMotoMecFertCTR().verifBoletimPneuAberto()){\n" +
                             "                pmmContext.getConfigCTR().setPosicaoTela(8L);", getLocalClassName());
                     pmmContext.getConfigCTR().setPosicaoTela(8L);
-                    if (connectNetwork) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {", getLocalClassName());
-                        if (VerifDadosServ.getInstance().verifRecInformativo()) {
-                            LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().verifRecInformativo()\n" +
-                                    "pmmContext.getInformativoCTR().verifDadosInformativo", getLocalClassName());
-                            pmmContext.getInformativoCTR().verifDadosInformativo(getLocalClassName());
-                        } else {
-                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                    "                        LogProcessoDAO.getInstance().insert(\"} else {\", getLocalClassName());\n" +
-                                    "                        VerifDadosServ.status = 1;", getLocalClassName());
-                            LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
-                            VerifDadosServ.status = 1;
-                        }
-                    }
 
                     if(PMMContext.aplic == 1){
                         LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +

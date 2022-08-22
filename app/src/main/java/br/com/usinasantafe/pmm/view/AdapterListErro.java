@@ -64,7 +64,6 @@ public class AdapterListErro extends BaseAdapter {
         LogErroBean logErroBean = (LogErroBean) itens.get(position);
 
         textViewErroId.setText("ID = " + logErroBean.getIdLogErro());
-        textViewErroEquip.setText("ID EQUIP = " + logErroBean.getIdEquip());
         textViewErroDthr.setText("DTHR = " + logErroBean.getDthr());
         textViewErroDescr.setText(logErroBean.getException());
 

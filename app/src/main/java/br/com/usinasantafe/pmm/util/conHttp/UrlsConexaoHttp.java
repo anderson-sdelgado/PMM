@@ -6,9 +6,9 @@ public class UrlsConexaoHttp {
 
     public static String versao = "versao_" + PMMContext.versaoWS.replace(".", "_");
 
-    public static String url = "https://www.usinasantafe.com.br/pmmdev/view/";
+//    public static String url = "https://www.usinasantafe.com.br/pmmdev/view/";
 //    public static String url = "https://www.usinasantafe.com.br/pmmqa/view/";
-//    public static String url = "https://www.usinasantafe.com.br/pmmprod/" + versao + "/view/";
+    public static String url = "https://www.usinasantafe.com.br/pmmprod/" + versao + "/view/";
 
     public static String localPSTEstatica = "br.com.usinasantafe.pmm.model.bean.estaticas.";
     public static String localUrl = "br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp";

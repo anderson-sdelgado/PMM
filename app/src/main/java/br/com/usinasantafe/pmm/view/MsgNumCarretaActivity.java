@@ -28,16 +28,21 @@ public class MsgNumCarretaActivity extends ActivityGeneric {
 
         LogProcessoDAO.getInstance().insertLogProcesso("numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;\n" +
                 "        if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){\n" +
+                "            numCarreta = (int) (pmmContext.getConfigCTR().getConfig().getQtdeCarretaConfig() + 1);\n" +
                 "            textViewMsgNumCarreta.setText(\"DESEJA INSERIR A CARRETA \" + numCarreta +\"?\");\n" +
                 "        }\n" +
                 "        else{\n" +
+                "            numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;\n" +
                 "            textViewMsgNumCarreta.setText(\"DESEJA ENGATAR A CARRETA \" + numCarreta + \"?\");\n" +
                 "        }", getLocalClassName());
-        numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;
+
         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){
+            pmmContext.getConfigCTR().setQtdeCarreta(pmmContext.getConfigCTR().getConfig().getQtdeCarretaConfig() + 1L);
+            numCarreta = pmmContext.getConfigCTR().getConfig().getQtdeCarretaConfig().intValue();
             textViewMsgNumCarreta.setText("DESEJA INSERIR A CARRETA " + numCarreta +"?");
         }
         else{
+            numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;
             textViewMsgNumCarreta.setText("DESEJA ENGATAR A CARRETA " + numCarreta + "?");
         }
 
@@ -146,30 +151,14 @@ public class MsgNumCarretaActivity extends ActivityGeneric {
                 }
                 else{
 
-                    if((pmmContext.getConfigCTR().getEquip().getCodClasseEquip() != 1L) && (pmmContext.getMotoMecFertCTR().qtdeCarreta() == 0)) {
+                    LogProcessoDAO.getInstance().insertLogProcesso("else{", getLocalClassName());
+                    if((pmmContext.getConfigCTR().getEquip().getCodClasseEquip() != 1L) && (numCarreta == 1)) {
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                "                    AlertDialog.Builder alerta = new AlertDialog.Builder(MsgNumCarretaActivity.this);\n" +
-                                "                    alerta.setTitle(\"ATENÇÃO\");\n" +
-                                "                    alerta.setMessage(\"PROIBIDO A INSERÇÃO DE MAIS DE 3 CARRETAS.\");\n" +
-                                "                    alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                                "                        @Override\n" +
-                                "                        public void onClick(DialogInterface dialog, int which) {\n" +
-                                "                        }\n" +
-                                "                    });\n" +
-                                "                    alerta.show();", getLocalClassName());
-
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(MsgNumCarretaActivity.this);
-                        alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("PROIBIDO FINALIZAR A VIAGEM SEM NENHUMA CARRETA ADICIONADA! POR FAVOR, ADICIONE ALGUMA CARRETA NA VIAGEM.");
-
-                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
-
-                        alerta.show();
+                        LogProcessoDAO.getInstance().insertLogProcesso("if((pmmContext.getConfigCTR().getEquip().getCodClasseEquip() != 1L) && (pmmContext.getMotoMecFertCTR().qtdeCarreta() == 0)) {\n" +
+                                "                        Intent it = new Intent(MsgNumCarretaActivity.this, EquipActivity.class);", getLocalClassName());
+                        Intent it = new Intent(MsgNumCarretaActivity.this, EquipActivity.class);
+                        startActivity(it);
+                        finish();
 
                     } else {
                         LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +

@@ -59,7 +59,6 @@ import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class MotoMecFertCTR {
 
-//    private BoletimMMFertDAO boletimMMFertDAO;
     private ItemCalibPneuDAO itemCalibPneuDAO;
     private MotoMecBean motoMecBean;
     private Long contImplemento;
@@ -195,23 +194,23 @@ public class MotoMecFertCTR {
         LeiraDAO leiraDAO = new LeiraDAO();
         String dadosEnvioMovLeira = leiraDAO.dadosEnvioMovLeira(leiraDAO.movLeiraEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
 
-        RendimentoMMDAO rendimentoMMDAO = new RendimentoMMDAO();
-        String dadosEnvioRend = rendimentoMMDAO.dadosEnvioRendMM(rendimentoMMDAO.rendEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
-
-        RecolhimentoFertDAO recolhimentoFertDAO = new RecolhimentoFertDAO();
-        String dadosEnvioRecolh = recolhimentoFertDAO.dadosEnvioRecolh(recolhimentoFertDAO.recolhEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
-
         ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
         String dadosEnvioApontMecan = apontMecanDAO.dadosEnvioApontMecan(apontMecanDAO.apontMecanEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
-
-        CarregCompDAO carregCompDAO = new CarregCompDAO();
-        String dadosCarregComp = carregCompDAO.dadosEnvioCarreg(carregCompDAO.carregCompostoDescarregInsumo(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))));
 
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
         String dadosEnvioBoletimPneu = boletimPneuDAO.dadosEnvioBoletimPneu(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))));
 
         ItemCalibPneuDAO itemCalibPneuDAO = new ItemCalibPneuDAO();
         String dadosEnvioItemMedPneu = itemCalibPneuDAO.dadosEnvioItemMedPneu(itemCalibPneuDAO.itemMedPneuIdBolList(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))))));
+
+        CarregCompDAO carregCompDAO = new CarregCompDAO();
+        String dadosCarregComp = carregCompDAO.dadosEnvioCarreg(carregCompDAO.carregCompostoDescarregInsumo(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))));
+
+        RendimentoMMDAO rendimentoMMDAO = new RendimentoMMDAO();
+        String dadosEnvioRend = rendimentoMMDAO.dadosEnvioRendMM(rendimentoMMDAO.rendEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
+
+        RecolhimentoFertDAO recolhimentoFertDAO = new RecolhimentoFertDAO();
+        String dadosEnvioRecolh = recolhimentoFertDAO.dadosEnvioRecolh(recolhimentoFertDAO.recolhEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
 
         return dadosEnvioBoletim + "_" + dadosEnvioApont + "_" + dadosEnvioApontImpl + "_" + dadosEnvioMovLeira + "_" + dadosEnvioApontMecan + "_" + dadosEnvioBoletimPneu + "_" + dadosEnvioItemMedPneu + "_" + dadosCarregComp + "_" + dadosEnvioRend + "_" + dadosEnvioRecolh;
     }
