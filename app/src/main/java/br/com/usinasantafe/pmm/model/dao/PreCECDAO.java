@@ -165,20 +165,20 @@ public class PreCECDAO {
         preCECBean.update();
     }
 
-    public void setLib(Long carr, Long lib, Long qtde){
+    public void setLib(Long carr, Long lib, int qtde){
         PreCECBean preCECBean = getPreCECAberto();
-        if(qtde == 0L){
+        if(qtde == 0){
             preCECBean.setLibCam(lib);
-        } else if(qtde == 1L){
+        } else if(qtde == 1){
             preCECBean.setCarr1(carr);
             preCECBean.setLibCarr1(lib);
-        } else if(qtde == 2L){
+        } else if(qtde == 2){
             preCECBean.setCarr2(carr);
             preCECBean.setLibCarr2(lib);
-        } else if(qtde == 3L){
+        } else if(qtde == 3){
             preCECBean.setCarr3(carr);
             preCECBean.setLibCarr3(lib);
-        } else if(qtde == 4L){
+        } else if(qtde == 4){
             preCECBean.setCarr4(carr);
             preCECBean.setLibCarr4(lib);
         }

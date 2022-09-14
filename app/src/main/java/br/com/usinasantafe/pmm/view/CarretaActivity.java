@@ -50,7 +50,6 @@ public class CarretaActivity extends ActivityGeneric {
                             pmmContext.getConfigCTR().setCarreta(Long.parseLong(editTextPadrao.getText().toString()));
                             Intent it = new Intent(CarretaActivity.this, OSActivity.class);
                             startActivity(it);
-                            finish();
 
                         } else {
                             LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
@@ -59,8 +58,8 @@ public class CarretaActivity extends ActivityGeneric {
                             pmmContext.getMotoMecFertCTR().insCarreta(Long.parseLong(editTextPadrao.getText().toString()));
                             Intent it = new Intent(CarretaActivity.this, MsgNumCarretaActivity.class);
                             startActivity(it);
-                            finish();
                         }
+                        finish();
 
                     } else {
 

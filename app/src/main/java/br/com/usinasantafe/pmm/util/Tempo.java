@@ -240,10 +240,10 @@ public class Tempo {
 
     public void zerarDifTempo(){
         ConfigCTR configCTR = new ConfigCTR();
-        if (configCTR.hasElemConfig()) {
-            if (verDthrServ(configCTR.getConfig().getDtServConfig())) {
+        if (configCTR.hasElemConfig()
+                && !configCTR.getConfig().getDtServConfig().equals("")
+                &&  verDthrServ(configCTR.getConfig().getDtServConfig())) {
                 configCTR.setDifDthrConfig(0L);
-            }
         }
     }
 

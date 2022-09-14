@@ -18,8 +18,6 @@ import br.com.usinasantafe.pmm.util.Tempo;
 
 public class BoletimMMFertDAO {
 
-//    private BoletimMMFertBean boletimMMFertBean;
-
     public BoletimMMFertDAO() {
     }
 

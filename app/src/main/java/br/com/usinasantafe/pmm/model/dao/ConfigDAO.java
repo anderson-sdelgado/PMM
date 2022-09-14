@@ -61,7 +61,6 @@ public class ConfigDAO {
         configBean.setIdFrenteConfig(0L);
         configBean.setIdPropriedadeConfig(0L);
         configBean.setCarretaConfig(0L);
-        configBean.setQtdeCarretaConfig(0L);
         configBean.insert();
         configBean.commit();
     }
@@ -128,12 +127,6 @@ public class ConfigDAO {
         configBean.update();
     }
 
-    public void setVerInforConfig(Long tipo){
-        ConfigBean configBean = getConfig();
-        configBean.setVerRecInformativo(tipo);
-        configBean.update();
-    }
-
     public void setDifDthrConfig(Long difDthr){
         ConfigBean configBean = getConfig();
         configBean.setDifDthrConfig(difDthr);
@@ -170,12 +163,6 @@ public class ConfigDAO {
     public void setCarreta(Long carreta){
         ConfigBean configBean = getConfig();
         configBean.setCarretaConfig(carreta);
-        configBean.update();
-    }
-
-    public void setQtdeCarreta(Long qtdeCarreta){
-        ConfigBean configBean = getConfig();
-        configBean.setQtdeCarretaConfig(qtdeCarreta);
         configBean.update();
     }
 

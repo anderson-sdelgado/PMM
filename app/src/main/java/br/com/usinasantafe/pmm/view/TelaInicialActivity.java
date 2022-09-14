@@ -11,7 +11,9 @@ import br.com.usinasantafe.pmm.BuildConfig;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
+import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
+import br.com.usinasantafe.pmm.model.dao.RendimentoMMDAO;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
@@ -153,7 +155,7 @@ public class TelaInicialActivity extends ActivityGeneric {
                         if(pmmContext.getCecCTR().verPreCECAberto()){
                             LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCecCTR().verPreCECAberto()\n" +
                                     "clearPreCECAberto()", getLocalClassName());
-                            pmmContext.getCecCTR().clearPreCECAberto();
+                            pmmContext.getCecCTR().clearPreCECAberto(false);
                         }
                         LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(TelaInicialActivity.this, MenuPrincECMActivity.class)", getLocalClassName());
                         Intent it = new Intent(TelaInicialActivity.this, MenuPrincECMActivity.class);

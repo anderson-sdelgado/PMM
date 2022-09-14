@@ -33,7 +33,7 @@ public class RendimentoMMDAO {
             rendMMBean.setIdBolMMFert(idBol);
             rendMMBean.setNroOSRendMM(nroOS);
             rendMMBean.setValorRendMM(0D);
-            rendMMBean.setStatusRendMM(1L);
+//            rendMMBean.setStatusRendMM(1L);
             rendMMBean.insert();
             rendMMBean.commit();
         }
@@ -142,7 +142,7 @@ public class RendimentoMMDAO {
         List<RendMMBean> rendMMList = rendList(idRendArrayList);
 
         for (RendMMBean rendMMBean : rendMMList) {
-            rendMMBean.setStatusRendMM(2L);
+//            rendMMBean.setStatusRendMM(2L);
             rendMMBean.update();
         }
 

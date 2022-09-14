@@ -66,7 +66,7 @@ public class PergFinalPreCECActivity extends ActivityGeneric {
                     LogProcessoDAO.getInstance().insertLogProcesso("else if (text.equals(\"DESFAZER CERTIFICADO\")) {\n" +
                             "                    pmmContext.getCecCTR().clearPreCECAberto();\n" +
                             "                    Intent it = new Intent(PergFinalPreCECActivity.this, MenuCertifActivity.class);", getLocalClassName());
-                    pmmContext.getCecCTR().clearPreCECAberto();
+                    pmmContext.getCecCTR().clearPreCECAberto(true);
                     Intent it = new Intent(PergFinalPreCECActivity.this, MenuCertifActivity.class);
                     startActivity(it);
                     finish();

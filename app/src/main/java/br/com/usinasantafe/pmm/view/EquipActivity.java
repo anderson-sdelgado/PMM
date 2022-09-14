@@ -47,7 +47,9 @@ public class EquipActivity extends ActivityGeneric {
                     LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){", getLocalClassName());
                     if(pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L) {
                         LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L) {\n" +
+                                "pmmContext.getConfigCTR().setCarreta(0L);\n" +
                                 "                        Intent it = new Intent(EquipActivity.this, OSActivity.class);", getLocalClassName());
+                        pmmContext.getConfigCTR().setCarreta(0L);
                         Intent it = new Intent(EquipActivity.this, OSActivity.class);
                         startActivity(it);
                         finish();
@@ -85,7 +87,7 @@ public class EquipActivity extends ActivityGeneric {
 
                     LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){\n" +
                             "                    Intent it = new Intent(EquipActivity.this, MenuCertifActivity.class);", getLocalClassName());
-                    pmmContext.getCecCTR().clearPreCECAberto();
+                    pmmContext.getCecCTR().clearPreCECAberto(true);
                     Intent it = new Intent(EquipActivity.this, MenuCertifActivity.class);
                     startActivity(it);
                     finish();

@@ -52,15 +52,14 @@ public class LiberacaoActivity extends ActivityGeneric {
                                     "                                Intent it = new Intent(CarretaActivity.this, MsgNumCarretaActivity.class);", getLocalClassName());
                             Intent it = new Intent(LiberacaoActivity.this, MsgNumCarretaActivity.class);
                             startActivity(it);
-                            finish();
                         }
                         else{
                             LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                                     "                                Intent it = new Intent(CarretaActivity.this, PergFinalPreCECActivity.class);", getLocalClassName());
                             Intent it = new Intent(LiberacaoActivity.this, PergFinalPreCECActivity.class);
                             startActivity(it);
-                            finish();
                         }
+                        finish();
 
                     } else {
 

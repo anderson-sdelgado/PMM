@@ -36,13 +36,11 @@ public class MsgNumCarretaActivity extends ActivityGeneric {
                 "            textViewMsgNumCarreta.setText(\"DESEJA ENGATAR A CARRETA \" + numCarreta + \"?\");\n" +
                 "        }", getLocalClassName());
 
+        numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;
         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){
-            pmmContext.getConfigCTR().setQtdeCarreta(pmmContext.getConfigCTR().getConfig().getQtdeCarretaConfig() + 1L);
-            numCarreta = pmmContext.getConfigCTR().getConfig().getQtdeCarretaConfig().intValue();
             textViewMsgNumCarreta.setText("DESEJA INSERIR A CARRETA " + numCarreta +"?");
         }
         else{
-            numCarreta = pmmContext.getMotoMecFertCTR().qtdeCarreta() + 1;
             textViewMsgNumCarreta.setText("DESEJA ENGATAR A CARRETA " + numCarreta + "?");
         }
 

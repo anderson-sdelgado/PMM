@@ -59,26 +59,30 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
         super.onCreate(savedInstanceState);
         getHelper();
 
-        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (!this.getLocalClassName().equals("view.TelaInicialActivity")){
 
-        permissionsToRequest = permissionsToRequest(permissions);
+            permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (permissionsToRequest.size() > 0) {
-                requestPermissions(permissionsToRequest.toArray(
-                        new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
+            permissionsToRequest = permissionsToRequest(permissions);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (permissionsToRequest.size() > 0) {
+                    requestPermissions(permissionsToRequest.toArray(
+                            new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
+                }
             }
-        }
 
-        // we build google api client
-        googleApiClient = new GoogleApiClient.Builder(this).
-                addApi(LocationServices.API).
-                addConnectionCallbacks(this).
-                addOnConnectionFailedListener(this).build();
+            // we build google api client
+            googleApiClient = new GoogleApiClient.Builder(this).
+                    addApi(LocationServices.API).
+                    addConnectionCallbacks(this).
+                    addOnConnectionFailedListener(this).build();
 
-        if (googleApiClient != null) {
-            googleApiClient.connect();
+            if (googleApiClient != null) {
+                googleApiClient.connect();
+            }
+
         }
 
     }

@@ -21,12 +21,7 @@ public class CarretaDAO {
 
     public int verCarreta(Long nroCarreta){
         ConfigCTR configCTR = new ConfigCTR();
-        int numCarreta;
-        if(configCTR.getConfig().getPosicaoTela() == 16L){
-            numCarreta = configCTR.getConfig().getQtdeCarretaConfig().intValue();
-        } else {
-            numCarreta = getQtdeCarreta() + 1;
-        }
+        int numCarreta = getQtdeCarreta() + 1;
         int retorno; //1 - CARRETA CORRETA; 2 - NÃO EXISTE NA BASE DE DADOS; 3 - CARRETA REPETIDA; 4 - CARRETA INVERTIDA;
         if(verCarretaEquipSeg(nroCarreta)){
             if(!verCarretaBD(nroCarreta)){
@@ -126,36 +121,9 @@ public class CarretaDAO {
     public String getDescrCarreta(){
         CarretaBean carretaBean = new CarretaBean();
         List<CarretaBean> carretaList = carretaBean.orderBy("posCarreta", true);
-        String textoCarreta = "";
-        if (carretaList.size() == 0) {
-            textoCarreta = "CARRETA(S): ";
-        } else if (carretaList.size() == 1) {
-            carretaBean = (CarretaBean) carretaList.get(0);
-            textoCarreta = "CARRETA(S): " + carretaBean.getNroEquip();
-        } else if (carretaList.size() == 2) {
-            textoCarreta = "CARRETA(S): ";
-            carretaBean = (CarretaBean) carretaList.get(0);
-            textoCarreta = textoCarreta + carretaBean.getNroEquip();
-            carretaBean = (CarretaBean) carretaList.get(1);
-            textoCarreta = textoCarreta + " - " + carretaBean.getNroEquip();
-        } else if (carretaList.size() == 3) {
-            textoCarreta = "CARRETA(S): ";
-            carretaBean = (CarretaBean) carretaList.get(0);
-            textoCarreta = textoCarreta + carretaBean.getNroEquip();
-            carretaBean = (CarretaBean) carretaList.get(1);
-            textoCarreta = textoCarreta + " - " + carretaBean.getNroEquip();
-            carretaBean = (CarretaBean) carretaList.get(2);
-            textoCarreta = textoCarreta + " - " + carretaBean.getNroEquip();
-        } else {
-            textoCarreta = "CARRETA(S): ";
-            carretaBean = (CarretaBean) carretaList.get(0);
-            textoCarreta = textoCarreta + carretaBean.getNroEquip();
-            carretaBean = (CarretaBean) carretaList.get(1);
-            textoCarreta = textoCarreta + " - " + carretaBean.getNroEquip();
-            carretaBean = (CarretaBean) carretaList.get(2);
-            textoCarreta = textoCarreta + " - " + carretaBean.getNroEquip();
-            carretaBean = (CarretaBean) carretaList.get(3);
-            textoCarreta = textoCarreta + " - " + carretaBean.getNroEquip();
+        String textoCarreta = "CARRETA(S): ";
+        for(CarretaBean carretaBeanBD : carretaList){
+            textoCarreta = textoCarreta + carretaBeanBD.getNroEquip() + " ";
         }
         carretaList.clear();
         return textoCarreta;

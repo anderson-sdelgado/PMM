@@ -23,8 +23,8 @@ public class RendMMBean extends Entidade {
     private Double valorRendMM;
     @DatabaseField
     private String dthrRendMM;
-    @DatabaseField
-    private Long statusRendMM; //1 - enviar; 2 - enviado
+//    @DatabaseField
+//    private Long statusRendMM; //1 - enviar; 2 - enviado
 
     public RendMMBean() {
     }
@@ -65,11 +65,11 @@ public class RendMMBean extends Entidade {
         this.dthrRendMM = dthrRendMM;
     }
 
-    public Long getStatusRendMM() {
-        return statusRendMM;
-    }
-
-    public void setStatusRendMM(Long statusRendMM) {
-        this.statusRendMM = statusRendMM;
-    }
+//    public Long getStatusRendMM() {
+//        return statusRendMM;
+//    }
+//
+//    public void setStatusRendMM(Long statusRendMM) {
+//        this.statusRendMM = statusRendMM;
+//    }
 }

@@ -29,32 +29,20 @@ public class CECCTR {
         preCECDAO.abrirPreCEC();
     }
 
-    public void clearPreCECAberto(){
-        ConfigCTR configCTR = new ConfigCTR();
-        configCTR.setQtdeCarreta(0L);
+    public void clearPreCECAberto(boolean clearCarreta){
+        if(clearCarreta){
+            CarretaDAO carretaDAO = new CarretaDAO();
+            carretaDAO.delCarreta();
+        }
         PreCECDAO preCECDAO = new PreCECDAO();
         preCECDAO.clearPreCECAberto();
     }
 
     public void fechaPreCEC(){
+
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
         ConfigCTR configCTR = new ConfigCTR();
         PreCECDAO preCECDAO = new PreCECDAO();
-
-        CarretaDAO carretaDAO = new CarretaDAO();
-        carretaDAO.delCarreta();
-        if(preCECDAO.getPreCECAberto().getCarr1() > 0L){
-            carretaDAO.insCarreta(configCTR.getConfig().getCarretaConfig());
-        }
-        if(preCECDAO.getPreCECAberto().getCarr2() > 0L){
-            carretaDAO.insCarreta(configCTR.getConfig().getCarretaConfig());
-        }
-        if(preCECDAO.getPreCECAberto().getCarr3() > 0L){
-            carretaDAO.insCarreta(configCTR.getConfig().getCarretaConfig());
-        }
-        if(preCECDAO.getPreCECAberto().getCarr4() > 0L){
-            carretaDAO.insCarreta(configCTR.getConfig().getCarretaConfig());
-        }
 
         preCECDAO.fechaPreCEC(motoMecFertCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert()
                 , motoMecFertCTR.getTurnoId(motoMecFertCTR.getBoletimMMFertAberto().getIdTurnoBolMMFert()).getCodTurno()
@@ -177,7 +165,11 @@ public class CECCTR {
     public void setLib(Long libCam){
         PreCECDAO preCECDAO = new PreCECDAO();
         ConfigCTR configCTR = new ConfigCTR();
-        preCECDAO.setLib(configCTR.getConfig().getCarretaConfig(), libCam, configCTR.getConfig().getQtdeCarretaConfig());
+        CarretaDAO carretaDAO = new CarretaDAO();
+        if(configCTR.getConfig().getCarretaConfig() > 0L){
+            carretaDAO.insCarreta(configCTR.getConfig().getCarretaConfig());
+        }
+        preCECDAO.setLib(configCTR.getConfig().getCarretaConfig(), libCam, carretaDAO.getQtdeCarreta());
     }
 
     /////////////////////////////////////////////////////////////////////////////

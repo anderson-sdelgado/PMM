@@ -522,11 +522,6 @@ public class ConfigCTR {
         configDAO.setCarreta(carreta);
     }
 
-    public void setQtdeCarreta(Long qtdeCarreta){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setQtdeCarreta(qtdeCarreta);
-    }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////// ATUALIZAR APLIC /////////////////////////////////////////

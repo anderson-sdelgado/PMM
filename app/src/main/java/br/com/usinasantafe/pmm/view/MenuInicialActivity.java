@@ -52,16 +52,6 @@ public class MenuInicialActivity extends ActivityGeneric {
 
         textViewPrincipal.setText("PRINCIPAL - V " + BuildConfig.VERSION_NAME);
 
-        if (!checkPermission(Manifest.permission.CAMERA)) {
-            String[] PERMISSIONS = {Manifest.permission.CAMERA};
-            ActivityCompat.requestPermissions(this, PERMISSIONS, 112);
-        }
-
-        if (!checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            ActivityCompat.requestPermissions(this, PERMISSIONS, 112);
-        }
-
         LogProcessoDAO.getInstance().insertLogProcesso("customHandler.postDelayed(updateTimerThread, 0);", getLocalClassName());
         customHandler.postDelayed(updateTimerThread, 0);
 
