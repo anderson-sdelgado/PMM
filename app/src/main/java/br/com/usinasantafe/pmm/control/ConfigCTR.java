@@ -465,9 +465,10 @@ public class ConfigCTR {
 
     ////////////////////////////////////// COMPOSTAGEM ////////////////////////////////////////////
 
-    public void setPosFluxoCarregComposto(Long posFluxoCarregComposto){
+
+    public void setFuncaoComposto(Long funcaoComposto) {
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setPosFluxoCarregComposto(posFluxoCarregComposto);
+        configDAO.setFuncaoComposto(funcaoComposto);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

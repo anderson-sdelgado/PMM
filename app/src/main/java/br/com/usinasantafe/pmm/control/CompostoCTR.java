@@ -1,5 +1,6 @@
 package br.com.usinasantafe.pmm.control;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 
 import org.json.JSONArray;
@@ -36,6 +37,11 @@ public class CompostoCTR {
     public boolean verLeira(Long codLeira){
         LeiraDAO leiraDAO = new LeiraDAO();
         return leiraDAO.verLeiraCod(codLeira);
+    }
+
+    public boolean verCarregInsumo(){
+        CarregCompDAO carregCompDAO = new CarregCompDAO();
+        return carregCompDAO.verCarregInsumo();
     }
 
     public LeiraBean getLeiraCod(Long codLeira){
@@ -116,13 +122,13 @@ public class CompostoCTR {
         return carregCompDAO.verOrdemCarregComLeira();
     }
 
-    public void verifDadosCarreg(Context telaAtual, Class telaProx, String activity){
+    public void verifDadosCarreg(Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
         CarregCompDAO carregCompDAO = new CarregCompDAO();
         ConfigCTR configCTR = new ConfigCTR();
         LogProcessoDAO.getInstance().insertLogProcesso("configCTR.setStatusRetVerif(1L);\n" +
                 "        carregCompDAO.verifDadosCarreg(configCTR.getConfig().getEquipConfig(), telaAtual, telaProx, activity);", activity);
         configCTR.setStatusRetVerif(1L);
-        carregCompDAO.verifDadosCarreg(configCTR.getConfig().getEquipConfig(), telaAtual, telaProx, activity);
+        carregCompDAO.verifDadosCarreg(configCTR.getConfig().getEquipConfig(), telaAtual, telaProx, progressDialog, activity);
     }
 
     public void receberVerifOrdCarreg(String result, String activity) {

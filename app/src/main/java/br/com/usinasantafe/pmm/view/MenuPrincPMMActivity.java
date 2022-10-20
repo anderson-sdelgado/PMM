@@ -571,7 +571,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                 textViewProcessoNormal.setText("Todos os Dados já foram enviados e recebidos");
             }
 
-            textViewDataHora.setText(Tempo.getInstance().dthr());
+            textViewDataHora.setText(Tempo.getInstance().dthrAtualString());
             if(Tempo.getInstance().dif() == 0){
                 textViewDataHora.setTextColor(Color.GREEN);
             }

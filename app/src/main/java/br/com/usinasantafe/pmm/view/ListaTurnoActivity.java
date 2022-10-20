@@ -182,7 +182,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
 
                         LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                 "                        Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);", getLocalClassName());
-                        Intent it = new Intent(ListaTurnoActivity.this, ListaFuncaoPCOMPActivity.class);
+                        Intent it = new Intent(ListaTurnoActivity.this, ListaFuncaoCompActivity.class);
                         startActivity(it);
                         finish();
 
@@ -193,8 +193,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
                         startActivity(it);
                         finish();
                     }
-                }
-                else{
+                } else {
                     LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                             "pmmContext.getConfigCTR().setContDataHora(1);", getLocalClassName());
                     pmmContext.getConfigCTR().setContDataHora(1);

@@ -1,5 +1,6 @@
 package br.com.usinasantafe.pmm.model.dao;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 
 import com.google.gson.Gson;
@@ -13,7 +14,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimPneuBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CarregCompBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.util.Tempo;
@@ -31,6 +31,13 @@ public class CarregCompDAO {
         return ret;
     }
 
+    public boolean verCarregInsumo(){
+        List<CarregCompBean> carregList = carregInsumoList();
+        boolean ret = carregList.size() > 0;
+        carregList.clear();
+        return ret;
+    }
+
     private List<CarregCompBean> leiraExibir(){
         CarregCompBean carregCompBean = new CarregCompBean();
         return carregCompBean.dif("idLeiraCarreg", 0L);
@@ -41,7 +48,6 @@ public class CarregCompDAO {
         List<CarregCompBean> carregList = carregCompBean.get("statusCarreg", 1L);
         return carregList;
     }
-
 
     public List<CarregCompBean> carregCompostoDescarregInsumo(ArrayList<Long> idApontList){
 
@@ -104,8 +110,8 @@ public class CarregCompDAO {
 
     public void abrirCarregInsumo(Long matricFunc, Long idEquip, Long idProd){
         CarregCompBean carregCompBean = new CarregCompBean();
-        carregCompBean.setDthrCarreg(Tempo.getInstance().dthr());
-        carregCompBean.setDthrCarregLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
+        carregCompBean.setDthrCarreg(Tempo.getInstance().dthrAtualString());
+        carregCompBean.setDthrCarregLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthrAtualString()));
         carregCompBean.setEquipCarreg(idEquip);
         carregCompBean.setProdCarreg(idProd);
         carregCompBean.setMotoCarreg(matricFunc);
@@ -118,8 +124,8 @@ public class CarregCompDAO {
     public void abrirCarregComposto(Long matricFunc, Long idEquip, Long idLeira, Long os, Long idApont){
         CarregCompBean carregCompBean = new CarregCompBean();
         carregCompBean.setIdApontCarreg(idApont);
-        carregCompBean.setDthrCarreg(Tempo.getInstance().dthr());
-        carregCompBean.setDthrCarregLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
+        carregCompBean.setDthrCarreg(Tempo.getInstance().dthrAtualString());
+        carregCompBean.setDthrCarregLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthrAtualString()));
         carregCompBean.setIdOrdCarreg(0L);
         carregCompBean.setEquipCarreg(idEquip);
         carregCompBean.setMotoCarreg(matricFunc);
@@ -151,8 +157,8 @@ public class CarregCompDAO {
 
     }
 
-    public void verifDadosCarreg(Long idEquip, Context telaAtual, Class telaProx, String activity){
-        VerifDadosServ.getInstance().verifDados(String.valueOf(idEquip), "OrdCarreg", telaAtual, telaProx, activity);
+    public void verifDadosCarreg(Long idEquip, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
+        VerifDadosServ.getInstance().verifDados(String.valueOf(idEquip), "OrdCarreg", telaAtual, telaProx, progressDialog, activity);
     }
 
     public String dadosEnvioCarreg(List<CarregCompBean> carregCompList){

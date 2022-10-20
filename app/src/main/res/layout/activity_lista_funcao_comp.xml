@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".view.ListaFuncaoPCOMPActivity">
+    tools:context=".view.ListaFuncaoCompActivity">
 
     <TextView
         android:id="@+id/textViewFuncao"
@@ -20,8 +20,7 @@
         android:id="@+id/listaFuncao"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        />
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/buttonRetFuncao"

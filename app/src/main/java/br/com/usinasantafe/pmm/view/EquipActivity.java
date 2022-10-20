@@ -43,8 +43,9 @@ public class EquipActivity extends ActivityGeneric {
                         "            public void onClick(View v) {", getLocalClassName());
 
                 if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){
-
-                    LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){\n" +
+                            "                    pmmContext.getCecCTR().clearPreCECAberto();", getLocalClassName());
+                    pmmContext.getCecCTR().clearPreCECAberto();
                     if(pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L) {
                         LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L) {\n" +
                                 "pmmContext.getConfigCTR().setCarreta(0L);\n" +
@@ -52,25 +53,19 @@ public class EquipActivity extends ActivityGeneric {
                         pmmContext.getConfigCTR().setCarreta(0L);
                         Intent it = new Intent(EquipActivity.this, OSActivity.class);
                         startActivity(it);
-                        finish();
                     } else {
                         LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                 "                        Intent it = new Intent(EquipActivity.this, MsgNumCarretaActivity.class);", getLocalClassName());
                         Intent it = new Intent(EquipActivity.this, MsgNumCarretaActivity.class);
                         startActivity(it);
-                        finish();
                     }
-
                 } else {
-
                     LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                             "Intent it = new Intent(EquipActivity.this, ListaTurnoActivity.class);" + pmmContext.getConfigCTR().getEquip().getIdEquip() + ");", getLocalClassName());
                     Intent it = new Intent(EquipActivity.this, ListaTurnoActivity.class);
                     startActivity(it);
-                    finish();
-
                 }
-
+                finish();
             }
         });
 
@@ -84,21 +79,20 @@ public class EquipActivity extends ActivityGeneric {
                         "            public void onClick(View v) {", getLocalClassName());
 
                 if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){
-
                     LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L){\n" +
+                            "                    pmmContext.getCecCTR().clearPreCECAberto();\n" +
                             "                    Intent it = new Intent(EquipActivity.this, MenuCertifActivity.class);", getLocalClassName());
-                    pmmContext.getCecCTR().clearPreCECAberto(true);
+                    pmmContext.getCecCTR().clearPreCECAberto();
                     Intent it = new Intent(EquipActivity.this, MenuCertifActivity.class);
                     startActivity(it);
-                    finish();
                 }
                 else{
                     LogProcessoDAO.getInstance().insertLogProcesso("else{ \n" +
                             "                    Intent it = new Intent(EquipActivity.this, OperadorActivity.class);", getLocalClassName());
                     Intent it = new Intent(EquipActivity.this, OperadorActivity.class);
                     startActivity(it);
-                    finish();
                 }
+                finish();
             }
 
         });

@@ -73,7 +73,7 @@ public class ListaParadaECMActivity extends ActivityGeneric {
                         "                String label = \"DESEJA REALMENTE REALIZAR A PARADA '\" + paradaString + \"' ?\";\n" +
                         "                alerta.setMessage(label);", getLocalClassName());
 
-                TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
+                TextView textView = v.findViewById(R.id.textViewItemList);
                 paradaString = textView.getText().toString();
 
                 AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaECMActivity.this);

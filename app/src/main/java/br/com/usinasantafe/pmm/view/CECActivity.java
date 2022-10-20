@@ -48,7 +48,7 @@ public class CECActivity extends ActivityGeneric {
                 finish();
 
                 LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(null, null, null, \"OS\", 2, getLocalClassName());", getLocalClassName());
-                pmmContext.getMotoMecFertCTR().atualDados("OS", 2, getLocalClassName());
+                pmmContext.getMotoMecFertCTR().atualDados("OS", 4, getLocalClassName());
 
             }
         });

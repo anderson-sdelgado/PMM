@@ -34,7 +34,7 @@ public class ApontMecanDAO {
     public void salvarApontMecan(Long seqItemOS, Long idBolMMFert){
         apontMecanBean.setIdBolApontMecan(idBolMMFert);
         apontMecanBean.setItemOSApontMecan(seqItemOS);
-        apontMecanBean.setDthrInicialApontMecan(Tempo.getInstance().dthr());
+        apontMecanBean.setDthrInicialApontMecan(Tempo.getInstance().dthrAtualString());
         apontMecanBean.setStatusApontMecan(1L);
         apontMecanBean.insert();
     }
@@ -45,7 +45,7 @@ public class ApontMecanDAO {
         ApontMecanBean apontMecanBean = apontMecanList.get(0);
         apontMecanList.clear();
 
-        apontMecanBean.setDthrFinalApontMecan(Tempo.getInstance().dthr());
+        apontMecanBean.setDthrFinalApontMecan(Tempo.getInstance().dthrAtualString());
         apontMecanBean.setStatusApontMecan(3L);
         apontMecanBean.update();
 

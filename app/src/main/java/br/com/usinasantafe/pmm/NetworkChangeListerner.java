@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.control.ConfigCTR;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogProcessoBean;
@@ -25,6 +26,7 @@ public class NetworkChangeListerner extends BroadcastReceiver {
 //        logConfig();
 //        logProcesso();
 //        logErro();
+//        logBaseDados();
         if(ConnectNetwork.isConnected(context)){
             ActivityGeneric.connectNetwork = true;
             LogProcessoDAO.getInstance().insertLogProcesso("if(ConnectNetwork.isConnected(context)){\n" +
@@ -83,5 +85,15 @@ public class NetworkChangeListerner extends BroadcastReceiver {
         Gson gsonCabec = new Gson();
         return gsonCabec.toJsonTree(logErroBean, logErroBean.getClass()).toString();
     }
+
+    public void logBaseDados(){
+        ConfigCTR configCTR = new ConfigCTR();
+        List<String> logBaseDadoList = configCTR.logBaseDadoList();
+        Log.i("PMM", "Log Base Dados");
+        for(String s : logBaseDadoList){
+            Log.i("PMM", s);
+        }
+    }
+
 
 }

@@ -29,11 +29,9 @@ public class CECCTR {
         preCECDAO.abrirPreCEC();
     }
 
-    public void clearPreCECAberto(boolean clearCarreta){
-        if(clearCarreta){
-            CarretaDAO carretaDAO = new CarretaDAO();
-            carretaDAO.delCarreta();
-        }
+    public void clearPreCECAberto(){
+        CarretaDAO carretaDAO = new CarretaDAO();
+        carretaDAO.delCarreta();
         PreCECDAO preCECDAO = new PreCECDAO();
         preCECDAO.clearPreCECAberto();
     }

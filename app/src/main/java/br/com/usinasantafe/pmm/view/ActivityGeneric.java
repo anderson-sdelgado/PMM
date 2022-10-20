@@ -63,6 +63,7 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
 
             permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
             permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+            permissions.add(Manifest.permission.CAMERA);
 
             permissionsToRequest = permissionsToRequest(permissions);
 
@@ -73,7 +74,6 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
                 }
             }
 
-            // we build google api client
             googleApiClient = new GoogleApiClient.Builder(this).
                     addApi(LocationServices.API).
                     addConnectionCallbacks(this).

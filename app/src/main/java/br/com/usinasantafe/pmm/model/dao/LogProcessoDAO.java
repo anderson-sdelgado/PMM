@@ -7,9 +7,7 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.model.bean.variaveis.CarregCompBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogProcessoBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.util.Tempo;
 
@@ -27,8 +25,8 @@ public class LogProcessoDAO {
         LogProcessoBean logProcessoBean = new LogProcessoBean();
         logProcessoBean.setProcesso(processo);
         logProcessoBean.setActivity(activity);
-        logProcessoBean.setDthr(Tempo.getInstance().dthr());
-        logProcessoBean.setDthrLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
+        logProcessoBean.setDthr(Tempo.getInstance().dthrAtualString());
+        logProcessoBean.setDthrLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthrAtualString()));
         logProcessoBean.insert();
     }
 

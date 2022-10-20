@@ -37,52 +37,46 @@ public class EnvioDadosServ {
 
     public void enviarChecklist(String activity) {
 
+        LogProcessoDAO.getInstance().insertLogProcesso("CheckListCTR checkListCTR = new CheckListCTR();\n" +
+                "        envio(urlsConexaoHttp.getsInserirCheckList(), checkListCTR.dadosEnvio(), activity);", activity);
         CheckListCTR checkListCTR = new CheckListCTR();
-
-        LogProcessoDAO.getInstance().insertLogProcesso("checkListCTR.dadosEnvio()", activity);
         envio(urlsConexaoHttp.getsInserirCheckList(), checkListCTR.dadosEnvio(), activity);
 
     }
 
     public void envioCarregInsumo(String activity) {
 
+        LogProcessoDAO.getInstance().insertLogProcesso("CompostoCTR compostoCTR = new CompostoCTR();\n" +
+                "        envio(urlsConexaoHttp.getsInsertCarreg(), compostoCTR.dadosEnvioCarregInsumo(), activity);", activity);
         CompostoCTR compostoCTR = new CompostoCTR();
-
-        LogProcessoDAO.getInstance().insertLogProcesso("compostoCTR.dadosEnvioCarreg()", activity);
         envio(urlsConexaoHttp.getsInsertCarreg(), compostoCTR.dadosEnvioCarregInsumo(), activity);
 
     }
 
     public void envioPreCEC(String activity) {
 
+        LogProcessoDAO.getInstance().insertLogProcesso("CECCTR cecCTR = new CECCTR();\n" +
+                "        envio(urlsConexaoHttp.getsInsertPreCEC(), cecCTR.dadosEnvioPreCEC(), activity);", activity);
         CECCTR cecCTR = new CECCTR();
-
-        LogProcessoDAO.getInstance().insertLogProcesso("cecCTR.dadosEnvioPreCEC()", activity);
         envio(urlsConexaoHttp.getsInsertPreCEC(), cecCTR.dadosEnvioPreCEC(), activity);
 
     }
 
-    public void envioLogProcesso() {
-
-        LogProcessoDAO logProcessoDAO = new LogProcessoDAO();
-        envio(urlsConexaoHttp.getsInsertLogProcesso(), logProcessoDAO.dadosEnvioLogProcesso(), null);
-
-    }
 
     public void enviarBolFechadoMMFert(String activity) {
 
+        LogProcessoDAO.getInstance().insertLogProcesso("MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();\n" +
+                "        envio(urlsConexaoHttp.getsInsertBolFechadoMMFert(), motoMecFertCTR.dadosEnvioBolFechadoMMFert(), activity);", activity);
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
-
-        LogProcessoDAO.getInstance().insertLogProcesso("motoMecFertCTR.dadosEnvioBolFechadoMMFert()", activity);
         envio(urlsConexaoHttp.getsInsertBolFechadoMMFert(), motoMecFertCTR.dadosEnvioBolFechadoMMFert(), activity);
 
     }
 
     public void enviarBolAbertoMMFert(String activity) {
 
+        LogProcessoDAO.getInstance().insertLogProcesso("MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();\n" +
+                "        envio(urlsConexaoHttp.getsInsertBolAbertoMMFert(), motoMecFertCTR.dadosEnvioBolAbertoMMFert(), activity);", activity);
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
-
-        LogProcessoDAO.getInstance().insertLogProcesso("motoMecFertCTR.dadosEnvioBolAbertoMMFert()", activity);
         envio(urlsConexaoHttp.getsInsertBolAbertoMMFert(), motoMecFertCTR.dadosEnvioBolAbertoMMFert(), activity);
 
     }
@@ -183,10 +177,6 @@ public class EnvioDadosServ {
                 }
             }
         }
-    }
-
-    public void envioDadosLog() {
-        envioLogProcesso();
     }
 
     public boolean verifDadosEnvio() {

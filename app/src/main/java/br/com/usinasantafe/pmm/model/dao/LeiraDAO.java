@@ -35,7 +35,7 @@ public class LeiraDAO {
 
     public void inserirMovLeira(Long idLeira, Long tipo, Long idBol, Long idExtBol){
 
-        String dthrString = Tempo.getInstance().dthr();
+        String dthrString = Tempo.getInstance().dthrAtualString();
         Long dthrLong = Tempo.getInstance().dthrStringToLong(dthrString);
 
         MovLeiraBean movLeiraBean = new MovLeiraBean();
@@ -95,7 +95,7 @@ public class LeiraDAO {
             ret = true;
         }
         else{
-            if ((Tempo.getInstance().dthrAddMinutoLong(getUltMovLeira(idBol).getDthrLongMovLeira(), 1) < Tempo.getInstance().dtHr())) {
+            if ((Tempo.getInstance().dthrAddMinutoLong(getUltMovLeira(idBol).getDthrLongMovLeira(), 1) < Tempo.getInstance().dthrAtualLong())) {
                 ret = true;
             }
         }

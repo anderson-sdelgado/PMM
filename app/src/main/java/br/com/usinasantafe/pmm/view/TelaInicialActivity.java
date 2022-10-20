@@ -155,7 +155,7 @@ public class TelaInicialActivity extends ActivityGeneric {
                         if(pmmContext.getCecCTR().verPreCECAberto()){
                             LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCecCTR().verPreCECAberto()\n" +
                                     "clearPreCECAberto()", getLocalClassName());
-                            pmmContext.getCecCTR().clearPreCECAberto(false);
+                            pmmContext.getCecCTR().clearPreCECAberto();
                         }
                         LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(TelaInicialActivity.this, MenuPrincECMActivity.class)", getLocalClassName());
                         Intent it = new Intent(TelaInicialActivity.this, MenuPrincECMActivity.class);

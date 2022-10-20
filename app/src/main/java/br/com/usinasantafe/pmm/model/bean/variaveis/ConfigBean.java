@@ -58,8 +58,6 @@ public class ConfigBean extends Entidade {
 	private Long codPropriedadeConfig;
 	@DatabaseField
 	private String descrPropriedadeConfig;
-//	@DatabaseField
-//	private Long qtdeCarretaConfig;
 	@DatabaseField
 	private Long carretaConfig;
 	@DatabaseField
@@ -71,11 +69,9 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private Long atualCheckList;
 	@DatabaseField
-	private Long posFluxoPCOMP;
-	@DatabaseField
 	private Long statusRetVerif; // 0 - Não Verificando; 1 - Verificando
 	@DatabaseField
-	private Long funcaoPCOMP; // 2 - Insumo; 3 - Composto
+	private Long funcaoComposto; // 2 - Insumo; 3 - Composto
 	@DatabaseField
 	private Long posicaoTela;
 	// 1 - Inicio do Boletim; PMM - ECM - PCOMP
@@ -246,14 +242,6 @@ public class ConfigBean extends Entidade {
 		this.atualCheckList = atualCheckList;
 	}
 
-	public Long getPosFluxoPCOMP() {
-		return posFluxoPCOMP;
-	}
-
-	public void setPosFluxoPCOMP(Long posFluxoPCOMP) {
-		this.posFluxoPCOMP = posFluxoPCOMP;
-	}
-
 	public Long getPosicaoTela() {
 		return posicaoTela;
 	}
@@ -286,12 +274,12 @@ public class ConfigBean extends Entidade {
 		this.idPropriedadeConfig = idPropriedadeConfig;
 	}
 
-	public Long getFuncaoPCOMP() {
-		return funcaoPCOMP;
+	public Long getFuncaoComposto() {
+		return funcaoComposto;
 	}
 
-	public void setFuncaoPCOMP(Long funcaoPCOMP) {
-		this.funcaoPCOMP = funcaoPCOMP;
+	public void setFuncaoComposto(Long funcaoComposto) {
+		this.funcaoComposto = funcaoComposto;
 	}
 
 	public Long getCodPropriedadeConfig() {

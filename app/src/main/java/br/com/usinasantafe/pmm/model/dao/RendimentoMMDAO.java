@@ -62,7 +62,7 @@ public class RendimentoMMDAO {
     }
 
     public void atualRend(RendMMBean rendMMBean){
-        rendMMBean.setDthrRendMM(Tempo.getInstance().dthr());
+        rendMMBean.setDthrRendMM(Tempo.getInstance().dthrAtualString());
         rendMMBean.update();
         rendMMBean.commit();
     }

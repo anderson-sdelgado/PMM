@@ -184,7 +184,7 @@ public class OSActivity extends ActivityGeneric {
             if(PMMContext.aplic == 3){
                 LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 3){\n" +
                         "                Intent it = new Intent(OSActivity.this, ListaFuncaoPCOMPActivity.class);", getLocalClassName());
-                Intent it = new Intent(OSActivity.this, ListaFuncaoPCOMPActivity.class);
+                Intent it = new Intent(OSActivity.this, ListaFuncaoCompActivity.class);
                 startActivity(it);
                 finish();
             } else {
@@ -212,7 +212,7 @@ public class OSActivity extends ActivityGeneric {
         } else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 29L) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 29L) {\n" +
                     "Intent it = new Intent(OSActivity.this, ListaFuncaoPCOMPActivity.class);", getLocalClassName());
-            Intent it = new Intent(OSActivity.this, ListaFuncaoPCOMPActivity.class);
+            Intent it = new Intent(OSActivity.this, ListaFuncaoCompActivity.class);
             startActivity(it);
             finish();
         } else {

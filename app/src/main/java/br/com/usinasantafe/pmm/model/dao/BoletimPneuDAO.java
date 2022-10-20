@@ -27,7 +27,7 @@ public class BoletimPneuDAO {
     }
 
     public void salvarBoletimPneu(Long idApontMMFert, Long matricFunc, Long idEquip){
-        Long dthr = Tempo.getInstance().dtHr();
+        Long dthr = Tempo.getInstance().dthrAtualLong();
         BoletimPneuBean boletimPneuBean = new BoletimPneuBean();
         boletimPneuBean.setIdApontBolPneu(idApontMMFert);
         boletimPneuBean.setMatricFuncBolPneu(matricFunc);

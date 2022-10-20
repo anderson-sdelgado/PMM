@@ -34,10 +34,10 @@ public class ItemCalibPneuDAO {
             itemCalibPneuBeanBD.setNroPneuItemCalibPneu(itemCalibPneuBean.getNroPneuItemCalibPneu());
             itemCalibPneuBeanBD.setPressaoEncItemCalibPneu(itemCalibPneuBean.getPressaoEncItemCalibPneu());
             itemCalibPneuBeanBD.setPressaoColItemCalibPneu(itemCalibPneuBean.getPressaoColItemCalibPneu());
-            itemCalibPneuBeanBD.setDthrItemCalibPneu(Tempo.getInstance().dthr());
+            itemCalibPneuBeanBD.setDthrItemCalibPneu(Tempo.getInstance().dthrAtualString());
             itemCalibPneuBeanBD.update();
         } else {
-            itemCalibPneuBean.setDthrItemCalibPneu(Tempo.getInstance().dthr());
+            itemCalibPneuBean.setDthrItemCalibPneu(Tempo.getInstance().dthrAtualString());
             itemCalibPneuBean.setIdBolItemCalibPneu(idBoletimPneu);
             itemCalibPneuBean.insert();
         }
@@ -87,7 +87,6 @@ public class ItemCalibPneuDAO {
 
     public List<ItemCalibPneuBean> itemMedPneuIdBolList(ArrayList<Long> idBolPneuList){
         ItemCalibPneuBean itemCalibPneuBean = new ItemCalibPneuBean();
-
         return itemCalibPneuBean.inAndOrderBy("idBolItemCalibPneu", idBolPneuList, "idItemCalibPneu", true);
     }
 

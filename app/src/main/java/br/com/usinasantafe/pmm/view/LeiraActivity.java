@@ -24,9 +24,9 @@ public class LeiraActivity extends ActivityGeneric {
 
         pmmContext = (PMMContext) getApplication();
 
-        Button buttonOkLeira = (Button) findViewById(R.id.buttonOkPadrao);
-        Button buttonCancLeira = (Button) findViewById(R.id.buttonCancPadrao);
-        Button buttonAtualPadrao = (Button) findViewById(R.id.buttonAtualPadrao);
+        Button buttonOkLeira = findViewById(R.id.buttonOkPadrao);
+        Button buttonCancLeira = findViewById(R.id.buttonCancPadrao);
+        Button buttonAtualPadrao = findViewById(R.id.buttonAtualPadrao);
 
         buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,8 +128,8 @@ public class LeiraActivity extends ActivityGeneric {
                     LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {", getLocalClassName());
                     if (pmmContext.getCompostoCTR().verLeira(Long.parseLong(editTextPadrao.getText().toString()))) {
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getCompostoCTR().verLeira(Long.parseLong(editTextPadrao.getText().toString())))\n" +
-                                " {if (connectNetwork) {\n" +
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getCompostoCTR().verLeira(Long.parseLong(editTextPadrao.getText().toString()))){\n" +
+                                " if (connectNetwork) {\n" +
                                 "                            pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
                                 "                        }\n" +
                                 "                        else{\n" +
@@ -146,11 +146,11 @@ public class LeiraActivity extends ActivityGeneric {
                         LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
                         pmmContext.getMotoMecFertCTR().salvarApontLeira(getLongitude(), getLatitude(), getLocalClassName());
 
-                        if (pmmContext.getConfigCTR().getConfig().getFuncaoPCOMP() == 2L) {
+                        if (pmmContext.getConfigCTR().getConfig().getFuncaoComposto() == 2L) {
                             LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getFuncaoCompostagem() == 2L) {\n" +
                                     "                            pmmContext.getCompostoCTR().salvarLeiraDescarreg(Long.parseLong(" + editTextPadrao.getText().toString() + "));", getLocalClassName());
                             pmmContext.getCompostoCTR().salvarLeiraDescarreg(Long.parseLong(editTextPadrao.getText().toString()));
-                        } else if (pmmContext.getConfigCTR().getConfig().getFuncaoPCOMP() == 3L) {
+                        } else if (pmmContext.getConfigCTR().getConfig().getFuncaoComposto() == 3L) {
                             LogProcessoDAO.getInstance().insertLogProcesso("} else if (pmmContext.getConfigCTR().getConfig().getFuncaoCompostagem() == 3L) {\n" +
                                     "                            pmmContext.getCompostoCTR().abrirCarregComposto(Long.parseLong(" + editTextPadrao.getText().toString() + "));", getLocalClassName());
                             pmmContext.getCompostoCTR().abrirCarregComposto(Long.parseLong(editTextPadrao.getText().toString()));

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.RecolhFertBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.util.Tempo;
 
@@ -86,7 +85,7 @@ public class RecolhimentoFertDAO {
     }
 
     public void atualRecolh(RecolhFertBean recolhFertBean){
-        recolhFertBean.setDthrRecolhFert(Tempo.getInstance().dthr());
+        recolhFertBean.setDthrRecolhFert(Tempo.getInstance().dthrAtualString());
         recolhFertBean.update();
         recolhFertBean.commit();
     }

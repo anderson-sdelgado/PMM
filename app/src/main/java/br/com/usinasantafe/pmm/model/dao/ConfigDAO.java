@@ -55,7 +55,6 @@ public class ConfigDAO {
         configBean.setVelocConfig(0L);
         configBean.setBocalConfig(0L);
         configBean.setSenhaConfig(senha);
-        configBean.setPosFluxoPCOMP(0L);
         configBean.setPosicaoTela(0L);
         configBean.setStatusRetVerif(0L);
         configBean.setIdFrenteConfig(0L);
@@ -123,19 +122,13 @@ public class ConfigDAO {
     public void setCheckListConfig(Long idTurno){
         ConfigBean configBean = getConfig();
         configBean.setUltTurnoCLConfig(idTurno);
-        configBean.setDtUltCLConfig(Tempo.getInstance().dt());
+        configBean.setDtUltCLConfig(Tempo.getInstance().dtAtualString());
         configBean.update();
     }
 
     public void setDifDthrConfig(Long difDthr){
         ConfigBean configBean = getConfig();
         configBean.setDifDthrConfig(difDthr);
-        configBean.update();
-    }
-
-    public void setPosFluxoCarregComposto(Long posFluxoCarregComposto){
-        ConfigBean configBean = getConfig();
-        configBean.setPosFluxoPCOMP(posFluxoCarregComposto);
         configBean.update();
     }
 
@@ -196,14 +189,10 @@ public class ConfigDAO {
         configBean.update();
     }
 
-    public Long getVerRecInformativo(){
+    public void setFuncaoComposto(Long funcaoComposto) {
         ConfigBean configBean = getConfig();
-        return configBean.getVerRecInformativo();
-    }
-
-    public Long getStatusRetVerif(){
-        ConfigBean configBean = getConfig();
-        return configBean.getStatusRetVerif();
+        configBean.setFuncaoComposto(funcaoComposto);
+        configBean.update();
     }
 
     public AtualAplicBean recAtual(JSONArray jsonArray) throws JSONException {

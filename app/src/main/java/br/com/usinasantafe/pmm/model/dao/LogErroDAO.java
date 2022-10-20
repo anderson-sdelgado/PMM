@@ -4,8 +4,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 
-import br.com.usinasantafe.pmm.control.ConfigCTR;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
 import br.com.usinasantafe.pmm.util.Tempo;
 
@@ -22,8 +20,8 @@ public class LogErroDAO {
     public void insertLogErro(Throwable ex){
         LogErroBean logErroBean = new LogErroBean();
         logErroBean.setException(throwableToString(ex));
-        logErroBean.setDthr(Tempo.getInstance().dthr());
-        logErroBean.setDthrLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
+        logErroBean.setDthr(Tempo.getInstance().dthrAtualString());
+        logErroBean.setDthrLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthrAtualString()));
         logErroBean.setStatus(1L);
         logErroBean.insert();
     }
@@ -31,8 +29,8 @@ public class LogErroDAO {
     public void insertLogErro(String erro){
         LogErroBean logErroBean = new LogErroBean();
         logErroBean.setException("RETORNO SERVIDOR COM FALHA = " + erro);
-        logErroBean.setDthr(Tempo.getInstance().dthr());
-        logErroBean.setDthrLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
+        logErroBean.setDthr(Tempo.getInstance().dthrAtualString());
+        logErroBean.setDthrLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthrAtualString()));
         logErroBean.setStatus(1L);
         logErroBean.insert();
     }

@@ -280,7 +280,7 @@ public class DataHoraActivity extends ActivityGeneric {
                                     } else if(PMMContext.aplic == 3){
                                         LogProcessoDAO.getInstance().insertLogProcesso("} else if(PMMContext.aplic == 3){\n" +
                                                 "                                        it = new Intent(DataHoraActivity.this, OSActivity.class);", getLocalClassName());
-                                        it = new Intent(DataHoraActivity.this, ListaFuncaoPCOMPActivity.class);
+                                        it = new Intent(DataHoraActivity.this, ListaFuncaoCompActivity.class);
                                         startActivity(it);
                                         finish();
                                     } else {

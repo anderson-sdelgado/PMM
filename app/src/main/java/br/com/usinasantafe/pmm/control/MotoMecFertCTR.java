@@ -2,7 +2,6 @@ package br.com.usinasantafe.pmm.control;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
 
 import org.json.JSONArray;
 
@@ -157,25 +156,31 @@ public class MotoMecFertCTR {
         String dadosEnvioBoletim = boletimMMFertDAO.dadosEnvioBoletimMMFertAberto();
 
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
-        String dadosEnvioApont = apontMMFertDAO.dadosEnvioApont(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())));
+        ArrayList<Long> idBoletimArrayList = boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList());
+        ArrayList<Long> idApontArrayList = apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(idBoletimArrayList));
+
+        String dadosEnvioApont = apontMMFertDAO.dadosEnvioApont(apontMMFertDAO.apontEnvioList(idBoletimArrayList));
 
         ImplementoMMDAO implementoMMDAO = new ImplementoMMDAO();
-        String dadosEnvioApontImpl = implementoMMDAO.dadosEnvioApontImplMM(implementoMMDAO.apontImplEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())))));
+        String dadosEnvioApontImpl = implementoMMDAO.dadosEnvioApontImplMM(implementoMMDAO.apontImplEnvioList(idApontArrayList));
 
         LeiraDAO leiraDAO = new LeiraDAO();
-        String dadosEnvioMovLeira = leiraDAO.dadosEnvioMovLeira(leiraDAO.movLeiraEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())));
+        String dadosEnvioMovLeira = leiraDAO.dadosEnvioMovLeira(leiraDAO.movLeiraEnvioList(idBoletimArrayList));
 
         ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
-        String dadosEnvioApontMecan = apontMecanDAO.dadosEnvioApontMecan(apontMecanDAO.apontMecanEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())));
+        String dadosEnvioApontMecan = apontMecanDAO.dadosEnvioApontMecan(apontMecanDAO.apontMecanEnvioList(idBoletimArrayList));
 
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-        String dadosEnvioBoletimPneu = boletimPneuDAO.dadosEnvioBoletimPneu(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())))));
+        String dadosEnvioBoletimPneu = boletimPneuDAO.dadosEnvioBoletimPneu(boletimPneuDAO.boletimPneuEnvioList(idApontArrayList));
 
         ItemCalibPneuDAO itemCalibPneuDAO = new ItemCalibPneuDAO();
-        String dadosEnvioItemMedPneu = itemCalibPneuDAO.dadosEnvioItemMedPneu(itemCalibPneuDAO.itemMedPneuIdBolList(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())))))));
+        String dadosEnvioItemMedPneu = itemCalibPneuDAO.dadosEnvioItemMedPneu(itemCalibPneuDAO.itemMedPneuIdBolList(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(idApontArrayList))));
 
         CarregCompDAO carregCompDAO = new CarregCompDAO();
-        String dadosCarregComp = carregCompDAO.dadosEnvioCarreg(carregCompDAO.carregCompostoDescarregInsumo(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertAbertoList())))));
+        String dadosCarregComp = carregCompDAO.dadosEnvioCarreg(carregCompDAO.carregCompostoDescarregInsumo(idApontArrayList));
+
+        idBoletimArrayList.clear();
+        idApontArrayList.clear();
 
         return dadosEnvioBoletim + "_" + dadosEnvioApont + "_" + dadosEnvioApontImpl + "_" + dadosEnvioMovLeira + "_" + dadosEnvioApontMecan + "_" + dadosEnvioBoletimPneu + "_" + dadosEnvioItemMedPneu + "_" + dadosCarregComp;
     }
@@ -186,31 +191,37 @@ public class MotoMecFertCTR {
         String dadosEnvioBoletim = boletimMMFertDAO.dadosEnvioBoletimMMFertFechado();
 
         ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
-        String dadosEnvioApont = apontMMFertDAO.dadosEnvioApont(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
+        ArrayList<Long> idBoletimArrayList = boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList());
+        ArrayList<Long> idApontArrayList = apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(idBoletimArrayList));
+
+        String dadosEnvioApont = apontMMFertDAO.dadosEnvioApont(apontMMFertDAO.apontEnvioList(idBoletimArrayList));
 
         ImplementoMMDAO implementoMMDAO = new ImplementoMMDAO();
-        String dadosEnvioApontImpl = implementoMMDAO.dadosEnvioApontImplMM(implementoMMDAO.apontImplEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))));
+        String dadosEnvioApontImpl = implementoMMDAO.dadosEnvioApontImplMM(implementoMMDAO.apontImplEnvioList(idApontArrayList));
 
         LeiraDAO leiraDAO = new LeiraDAO();
-        String dadosEnvioMovLeira = leiraDAO.dadosEnvioMovLeira(leiraDAO.movLeiraEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
+        String dadosEnvioMovLeira = leiraDAO.dadosEnvioMovLeira(leiraDAO.movLeiraEnvioList(idBoletimArrayList));
 
         ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
-        String dadosEnvioApontMecan = apontMecanDAO.dadosEnvioApontMecan(apontMecanDAO.apontMecanEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
+        String dadosEnvioApontMecan = apontMecanDAO.dadosEnvioApontMecan(apontMecanDAO.apontMecanEnvioList(idBoletimArrayList));
 
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-        String dadosEnvioBoletimPneu = boletimPneuDAO.dadosEnvioBoletimPneu(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))));
+        String dadosEnvioBoletimPneu = boletimPneuDAO.dadosEnvioBoletimPneu(boletimPneuDAO.boletimPneuEnvioList(idApontArrayList));
 
         ItemCalibPneuDAO itemCalibPneuDAO = new ItemCalibPneuDAO();
-        String dadosEnvioItemMedPneu = itemCalibPneuDAO.dadosEnvioItemMedPneu(itemCalibPneuDAO.itemMedPneuIdBolList(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))))));
+        String dadosEnvioItemMedPneu = itemCalibPneuDAO.dadosEnvioItemMedPneu(itemCalibPneuDAO.itemMedPneuIdBolList(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(idApontArrayList))));
 
         CarregCompDAO carregCompDAO = new CarregCompDAO();
-        String dadosCarregComp = carregCompDAO.dadosEnvioCarreg(carregCompDAO.carregCompostoDescarregInsumo(apontMMFertDAO.idApontArrayList(apontMMFertDAO.apontEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())))));
+        String dadosCarregComp = carregCompDAO.dadosEnvioCarreg(carregCompDAO.carregCompostoDescarregInsumo(idApontArrayList));
 
         RendimentoMMDAO rendimentoMMDAO = new RendimentoMMDAO();
-        String dadosEnvioRend = rendimentoMMDAO.dadosEnvioRendMM(rendimentoMMDAO.rendEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
+        String dadosEnvioRend = rendimentoMMDAO.dadosEnvioRendMM(rendimentoMMDAO.rendEnvioList(idBoletimArrayList));
 
         RecolhimentoFertDAO recolhimentoFertDAO = new RecolhimentoFertDAO();
-        String dadosEnvioRecolh = recolhimentoFertDAO.dadosEnvioRecolh(recolhimentoFertDAO.recolhEnvioList(boletimMMFertDAO.idBoletimArrayList(boletimMMFertDAO.boletimMMFertFechadoList())));
+        String dadosEnvioRecolh = recolhimentoFertDAO.dadosEnvioRecolh(recolhimentoFertDAO.recolhEnvioList(idBoletimArrayList));
+
+        idBoletimArrayList.clear();
+        idApontArrayList.clear();
 
         return dadosEnvioBoletim + "_" + dadosEnvioApont + "_" + dadosEnvioApontImpl + "_" + dadosEnvioMovLeira + "_" + dadosEnvioApontMecan + "_" + dadosEnvioBoletimPneu + "_" + dadosEnvioItemMedPneu + "_" + dadosCarregComp + "_" + dadosEnvioRend + "_" + dadosEnvioRecolh;
     }
@@ -703,7 +714,7 @@ public class MotoMecFertCTR {
     public List<MotoMecBean> motoMecList() {
         ConfigCTR configCTR = new ConfigCTR();
         MotoMecDAO motoMecDAO = new MotoMecDAO();
-        return motoMecDAO.motoMecList((PMMContext.aplic == 2) ? 1L : configCTR.getConfig().getFuncaoPCOMP());
+        return motoMecDAO.motoMecList((PMMContext.aplic == 2) ? 1L : configCTR.getConfig().getFuncaoComposto());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1061,7 +1072,7 @@ public class MotoMecFertCTR {
     }
 
     private ApontMMFertBean apontMMFertDefault(){
-        Long dthrLong = Tempo.getInstance().dtHr();
+        Long dthrLong = Tempo.getInstance().dthrAtualLong();
         ConfigCTR configCTR = new ConfigCTR();
         BoletimMMFertBean boletimMMFertBean = getBoletimMMFertAberto();
         ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
@@ -1140,12 +1151,7 @@ public class MotoMecFertCTR {
     public boolean verDataHoraInsApontMMFert(){
         ApontMMFertDAO apontMMDAO = new ApontMMFertDAO();
         BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
-        if(Tempo.getInstance().dif() > 0){
-            return false;
-        }
-        else{
-            return apontMMDAO.verDataHoraApont(boletimMMFertDAO.getBoletimMMFertAberto().getIdBolMMFert());
-        }
+        return apontMMDAO.verDataHoraApont(boletimMMFertDAO.getBoletimMMFertAberto().getIdBolMMFert());
     }
 
     public boolean verDataHoraInsMovLeira(){

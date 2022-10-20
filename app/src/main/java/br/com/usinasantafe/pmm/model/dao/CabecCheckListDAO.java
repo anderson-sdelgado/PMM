@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CabecCheckListBean;
 
@@ -45,7 +44,7 @@ public class CabecCheckListDAO {
 
     public void createCabecAberto(Long nroEquip, Long matricFunc, Long idTurno){
         CabecCheckListBean cabecCheckListBean = new CabecCheckListBean();
-        cabecCheckListBean.setDtCabCL(Tempo.getInstance().dthr());
+        cabecCheckListBean.setDtCabCL(Tempo.getInstance().dthrAtualString());
         cabecCheckListBean.setEquipCabCL(nroEquip);
         cabecCheckListBean.setFuncCabCL(matricFunc);
         cabecCheckListBean.setTurnoCabCL(idTurno);
@@ -60,7 +59,7 @@ public class CabecCheckListDAO {
         if ((idCheckList > 0) &&
                 ((ultTurnoCL != idTurno)
                         || ((ultTurnoCL == idTurno)
-                                    && (!dtUltCL.equals(Tempo.getInstance().dt()))))) {
+                                    && (!dtUltCL.equals(Tempo.getInstance().dtAtualString()))))) {
             return true;
         }
         else{
@@ -72,7 +71,7 @@ public class CabecCheckListDAO {
     public void salvarFechCheckList() {
         CabecCheckListBean cabecCheckListBean = getCabecCheckListAberto();
         cabecCheckListBean.setStatusCabCL(2L);
-        cabecCheckListBean.setDthrCabCLLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
+        cabecCheckListBean.setDthrCabCLLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthrAtualString()));
         cabecCheckListBean.update();
     }
 

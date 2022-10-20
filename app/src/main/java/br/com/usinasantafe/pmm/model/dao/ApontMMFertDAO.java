@@ -175,7 +175,7 @@ public class ApontMMFertDAO {
                 retorno = 1;
             }
             else{
-                if (Tempo.getInstance().dthrAddMinutoLong(apontMMFertBean.getDthrApontLongMMFert(), 10) > Tempo.getInstance().dtHr()) {
+                if (Tempo.getInstance().dthrAddMinutoLong(apontMMFertBean.getDthrApontLongMMFert(), 10) > Tempo.getInstance().dthrAtualLong()) {
                     retorno = 2;
                 }
             }
@@ -202,27 +202,21 @@ public class ApontMMFertDAO {
     }
 
     public boolean verDataHoraApont(Long idBol){
-
         boolean ret = true;
-
         if(!hasApontBol(idBol)){
             ret = false;
-        }
-        else{
-            if ((Tempo.getInstance().dthrAddMinutoLong(getUltApont(idBol).getDthrApontLongMMFert(), 1) < Tempo.getInstance().dtHr())) {
+        } else {
+            if ((Tempo.getInstance().dthrAddMinutoLong(getUltApont(idBol).getDthrApontLongMMFert(), 1) < Tempo.getInstance().dthrAtualLong())) {
                 ret = false;
             }
         }
-
         return ret;
-
     }
 
     public List<ApontMMFertBean> apontEnvioList(ArrayList<Long> idBolList){
 
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqStatusEnvioApont());
-
         ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
         return apontMMFertBean.inAndGetAndOrderBy("idBolMMFert", idBolList, pesqArrayList, "idApontMMFert", true);
 

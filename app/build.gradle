@@ -10,8 +10,8 @@ android {
         applicationId "br.com.usinasantafe.pmm"
         minSdkVersion 22
         targetSdk 31
-        versionCode 10
-        versionName "5.13"
+        versionCode 13
+        versionName "5.16"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

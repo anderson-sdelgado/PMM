@@ -385,8 +385,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
 
                             }
 
-                            LogProcessoDAO.getInstance().insertLogProcesso("}\n" +
-                                    "progressBar = new ProgressDialog(v.getContext());\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("progressBar = new ProgressDialog(v.getContext());\n" +
                                     "                            progressBar.setCancelable(true);\n" +
                                     "                            progressBar.setMessage(\"BUSCANDO BOLETIM...\");\n" +
                                     "                            progressBar.show();\n" +

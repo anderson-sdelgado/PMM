@@ -72,9 +72,9 @@ public class AtualDadosServ {
 					genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
 				}
 
-				LogProcessoDAO.getInstance().insertLogProcesso("Terminou atualização da tabela = '" + classe + "'", activity);
 				if(contAtualBD > 0){
-					LogProcessoDAO.getInstance().insertLogProcesso("atualizandoBD();", activity);
+					LogProcessoDAO.getInstance().insertLogProcesso("if(contAtualBD > 0){\n" +
+							"\t\t\t\t\tatualizandoBD(activity);", activity);
 					atualizandoBD(activity);
 				}
 
@@ -83,9 +83,9 @@ public class AtualDadosServ {
 				LogErroDAO.getInstance().insertLogErro(e);
 			}
 
-		}
-		else{
-			LogProcessoDAO.getInstance().insertLogProcesso("encerrar();", activity);
+		} else {
+			LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+					"\t\t\tencerrar(activity);", activity);
 			encerrar(activity);
 		}
 
@@ -195,7 +195,6 @@ public class AtualDadosServ {
 
 	}
 
-
 	public void atualizandoBD(String activity){
 
 		LogProcessoDAO.getInstance().insertLogProcesso("public void atualizandoBD(String activity){\n" +
@@ -211,7 +210,10 @@ public class AtualDadosServ {
 					"GetBDGenerico getBDGenerico = new GetBDGenerico();\n" +
 					"        getBDGenerico.execute(url);\n" +
 					"        getBDGenerico.execute('" + classe + "');", activity);
-			this.progressDialog.setProgress((contAtualBD * 100) / qtdeBD);
+			if(this.tipoReceb < 4) {
+				this.progressDialog.setProgress((contAtualBD * 100) / qtdeBD);
+			}
+
 			classe = (String) tabAtualArrayList.get(contAtualBD);
 			String[] url = {classe, activity};
 			contAtualBD++;
@@ -219,9 +221,12 @@ public class AtualDadosServ {
 			getBDGenerico.execute(url);
 
 		} else {
+
 			LogProcessoDAO.getInstance().insertLogProcesso("} else {", activity);
 			contAtualBD = 0;
-			this.progressDialog.dismiss();
+			if(this.tipoReceb < 4) {
+				this.progressDialog.dismiss();
+			}
 
 			if(this.tipoReceb == 1){
 

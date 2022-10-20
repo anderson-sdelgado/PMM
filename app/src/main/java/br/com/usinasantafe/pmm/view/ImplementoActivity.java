@@ -253,21 +253,21 @@ public class ImplementoActivity extends ActivityGeneric {
             LogProcessoDAO.getInstance().insertLogProcesso("else{", getLocalClassName());
             if(PMMContext.aplic == 1){
                 LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
-                        "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                        "                Intent it = new Intent(ImplementoActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                 Intent it = new Intent(ImplementoActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();
             }
             else if(PMMContext.aplic == 2){
                 LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
-                        "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                        "                Intent it = new Intent(ImplementoActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                 Intent it = new Intent(ImplementoActivity.this, MenuPrincECMActivity.class);
                 startActivity(it);
                 finish();
             }
             else if(PMMContext.aplic == 3){
                 LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
-                        "                Intent it = new Intent(EsperaInforActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                        "                Intent it = new Intent(ImplementoActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                 Intent it = new Intent(ImplementoActivity.this, MenuPrincPCOMPActivity.class);
                 startActivity(it);
                 finish();

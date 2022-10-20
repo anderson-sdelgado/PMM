@@ -3,7 +3,6 @@ package br.com.usinasantafe.pmm.model.dao;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.j256.ormlite.field.DatabaseField;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,7 +12,6 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.BoletimMMFertBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
-import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.Tempo;
 
 public class BoletimMMFertDAO {
@@ -72,7 +70,7 @@ public class BoletimMMFertDAO {
             , Long tipoEquip, Long os, Long ativ, Long statusCon, String activity){
         LogProcessoDAO.getInstance().insertLogProcesso("public void salvarBolAbertoMMFert(Long tipoEquip, Long os, Long ativ, Long statusCon, String activity){", activity);
         if(!verBoletimMMFertAberto()){
-            String dthr = Tempo.getInstance().dthr();
+            String dthr = Tempo.getInstance().dthrAtualString();
             LogProcessoDAO.getInstance().insertLogProcesso("if(!verBolAbertoMMFert()){ + Data Inicial Boletim = " + dthr, activity);
             BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
             boletimMMFertBean.setMatricFuncBolMMFert(matricFunc);
@@ -99,10 +97,10 @@ public class BoletimMMFertDAO {
                 "        List<BoletimMMFertBean> boletimMMList = bolAbertoMMFertList();", activity);
         for(BoletimMMFertBean boletimMMFertBeanBD : boletimMMList){
             LogProcessoDAO.getInstance().insertLogProcesso("for(BoletimMMFertBean boletimMMFertBeanBD : boletimMMList){ + Boletins = " + boletimMMFertBeanBD.getIdBolMMFert() , activity);
-            boletimMMFertBeanBD.setDthrFinalBolMMFert(Tempo.getInstance().dthr());
+            boletimMMFertBeanBD.setDthrFinalBolMMFert(Tempo.getInstance().dthrAtualString());
             boletimMMFertBeanBD.setStatusBolMMFert(2L);
             boletimMMFertBeanBD.setHodometroFinalBolMMFert(hodometroFinal);
-            boletimMMFertBeanBD.setDthrLongFinalBolMMFert(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()));
+            boletimMMFertBeanBD.setDthrLongFinalBolMMFert(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthrAtualString()));
             boletimMMFertBeanBD.update();
         }
 

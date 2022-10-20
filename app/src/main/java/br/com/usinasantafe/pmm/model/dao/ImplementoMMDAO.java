@@ -29,7 +29,6 @@ public class ImplementoMMDAO {
 
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqStatusEnvioApontImpl());
-
         ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
         return apontImplMMBean.inAndGetAndOrderBy("idApontMMFert", idApontList, pesqArrayList, "idApontImplMM", true);
 

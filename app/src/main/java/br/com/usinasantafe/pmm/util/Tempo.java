@@ -1,5 +1,7 @@
 package br.com.usinasantafe.pmm.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -21,18 +23,57 @@ public class Tempo {
         return instance;
     }
 
-    public Long dtHr(){
+    private String dthrAtualBaseString(){
         Date dataHora = new Date();
-        return dataHora.getTime() + dif();
+        return dthrLongToString(dataHora.getTime() + dif());
     }
 
-    public String dthr(){
-        return dthrLongToString(dtHr());
+    //////////////////////////////////// DATA/HORA ATUAL ///////////////////////////////////////////
+
+    public String dthrAtualString(){
+        return dthrLongToString(dthrAtualLong());
     }
 
-    public String dt(){
-        return dtLongToString(dtHr());
+    public String dtAtualString(){
+        return dtLongToString(dthrAtualLong());
     }
+
+    public Long dthrAtualLong(){
+        return dthrStringToLong(dthrAtualBaseString());
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////// STRING TO LONG ///////////////////////////////////////////
+
+    public Long dthrStringToLong(String dthrString){
+        Date date = new Date();
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            date = format.parse(dthrString + ":00");
+        } catch (ParseException e) {
+            LogErroDAO.getInstance().insertLogErro(e);
+        }
+        return date.getTime();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////// LONG TO STRING ///////////////////////////////////////////
+
+    public String dthrLongToString(Long dthrLong){
+        Date dt = new Date (dthrLong);
+        SimpleDateFormat df = new SimpleDateFormat ("dd/MM/yyyy HH:mm");
+        return df.format(dt);
+    }
+
+    public String dtLongToString(Long dthrLong){
+        Date dt = new Date (dthrLong);
+        SimpleDateFormat df = new SimpleDateFormat ("dd/MM/yyyy");
+        return df.format(dt);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public Long dthrAddMinutoLong(Long dthrLong, int minuto){
         dthrLong = dthrLong + (minuto * 60 * 1000);
@@ -41,14 +82,7 @@ public class Tempo {
 
     public boolean verDthrServ(String dthrServ){
 
-        Date dataHoraServ = dthrStringToCalendar(dthrServ).getTime();
-        Long longDtServ =  dataHoraServ.getTime();
-
-        Date dataHoraCel = new Date();
-        Long longDtCel =  dataHoraCel.getTime();
-
-        Long dthrDif =  longDtServ - longDtCel;
-        Long diaDif = dthrDif/24/60/60/1000;
+        Long diaDif = (dthrStringToLong(dthrServ) - dthrAtualLong())/24/60/60/1000;
 
         if((diaDif >= 0) && (diaDif <= 15)){
             return true;
@@ -59,7 +93,7 @@ public class Tempo {
 
     }
 
-    public Long difDthr(int dia, int mes, int ano, int hora, int minuto){
+    public Long difDthr(int dia, int mes, int ano, int hora, int minute){
 
         String diaStr;
         if(dia < 10){
@@ -77,39 +111,44 @@ public class Tempo {
             mesStr = String.valueOf(mes);
         }
 
-        String anoStr = String.valueOf(ano);
-
-        String horaStr = "";
+        String horasStr;
         if(hora < 10){
-            horaStr = "0" + hora;
+            horasStr = "0" + hora;
         }
         else{
-            horaStr = String.valueOf(hora);
+            horasStr = String.valueOf(hora);
         }
 
-        String minutoStr = "";
-        if(minuto < 10){
-            minutoStr = "0" + minuto;
+        String minutosStr;
+        if(minute < 10){
+            minutosStr = "0" + minute;
         }
         else{
-            minutoStr = String.valueOf(minuto);
+            minutosStr = String.valueOf(minute);
         }
 
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(diaStr));
-        cal.set(Calendar.MONTH, Integer.parseInt(mesStr) - 1);
-        cal.set(Calendar.YEAR, Integer.parseInt(anoStr));
-        cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(horaStr));
-        cal.set(Calendar.MINUTE, Integer.parseInt(minutoStr));
-
-        Date dataHoraDig = cal.getTime();
-        Long longDtDig =  dataHoraDig.getTime();
-        Date dataHora = new Date();
-        Long dif = longDtDig - dataHora.getTime();
+        Long longDtDig =  dthrStringToLong(""+diaStr+"/"+mesStr+"/"+ano+" "+horasStr+":"+minutosStr);
+        Long dif = longDtDig - dthrAtualLong();
 
         return dif;
 
     }
+
+    public Long dthrLongDiaMenos(int dia){
+        return dthrStringToLong(dthrAtualString()) - (dia*24*60*60*1000);
+    }
+
+    public void zerarDifTempo(){
+        ConfigCTR configCTR = new ConfigCTR();
+        if (configCTR.hasElemConfig()
+                && !configCTR.getConfig().getDtServConfig().equals("")
+                &&  verDthrServ(configCTR.getConfig().getDtServConfig())) {
+                configCTR.setDifDthrConfig(0L);
+        }
+    }
+
+
+    //////////////////////////////////// DIFERENÇA SERVIDOR ///////////////////////////////////////
 
     public Long dif(){
         ConfigBean configBean = new ConfigBean();
@@ -123,128 +162,8 @@ public class Tempo {
         return dif;
     }
 
-    public String dthrLongToString(Long dthrLong){
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(dthrLong);
 
-        int mes = cal.get(Calendar.MONTH);
-        int dia = cal.get(Calendar.DAY_OF_MONTH);
-        int ano = cal.get(Calendar.YEAR);
-        int horas = cal.get(Calendar.HOUR_OF_DAY);
-        int minutos = cal.get(Calendar.MINUTE);
-        mes = mes + 1;
-
-        String mesStr = "";
-        if(mes < 10){
-            mesStr = "0" + mes;
-        }
-        else{
-            mesStr = String.valueOf(mes);
-        }
-
-        String diaStr = "";
-        if(dia < 10){
-            diaStr = "0" + dia;
-        }
-        else{
-            diaStr = String.valueOf(dia);
-        }
-
-        String horasStr = "";
-        if(horas < 10){
-            horasStr = "0" + horas;
-        }
-        else{
-            horasStr = String.valueOf(horas);
-        }
-
-        String minutosStr = "";
-        if(minutos < 10){
-            minutosStr = "0" + minutos;
-        }
-        else{
-            minutosStr = String.valueOf(minutos);
-        }
-
-        return ""+diaStr+"/"+mesStr+"/"+ano+" "+horasStr+":"+minutosStr;
-
-    }
-
-    public String dtLongToString(Long dthrLong){
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(dthrLong);
-
-        int mes = cal.get(Calendar.MONTH);
-        int dia = cal.get(Calendar.DAY_OF_MONTH);
-        int ano = cal.get(Calendar.YEAR);
-        mes = mes + 1;
-
-        String mesStr = "";
-        if(mes < 10){
-            mesStr = "0" + mes;
-        }
-        else{
-            mesStr = String.valueOf(mes);
-        }
-
-        String diaStr = "";
-        if(dia < 10){
-            diaStr = "0" + dia;
-        }
-        else{
-            diaStr = String.valueOf(dia);
-        }
-
-        return ""+diaStr+"/"+mesStr+"/"+ano;
-
-    }
-
-    public Long dthrLongDiaMenos(int dia){
-        return Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthr()) - (dia*24*60*60*1000);
-    }
-
-    public Long dthrStringToLong(String dthrString){
-        return dthrStringToCalendar(dthrString).getTimeInMillis();
-    }
-
-    public Calendar dthrStringToCalendar(String dthrString){
-
-        Calendar calendar = Calendar.getInstance();
-
-        try {
-
-            String diaStr = dthrString.substring(0, 2);
-            String mesStr = dthrString.substring(3, 5);
-            String anoStr = dthrString.substring(6, 10);
-            String horaStr = dthrString.substring(11, 13);
-            String minutoStr = dthrString.substring(14, 16);
-
-            calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(diaStr));
-            calendar.set(Calendar.MONTH, Integer.parseInt(mesStr) - 1);
-            calendar.set(Calendar.YEAR, Integer.parseInt(anoStr));
-            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(horaStr));
-            calendar.set(Calendar.MINUTE, Integer.parseInt(minutoStr));
-            calendar.set(Calendar.SECOND, 59);
-            calendar.set(Calendar.MILLISECOND, 9999);
-
-        }
-        catch (Exception e) {
-            LogErroDAO.getInstance().insertLogErro(e);
-        }
-
-        return calendar;
-
-    }
-
-    public void zerarDifTempo(){
-        ConfigCTR configCTR = new ConfigCTR();
-        if (configCTR.hasElemConfig()
-                && !configCTR.getConfig().getDtServConfig().equals("")
-                &&  verDthrServ(configCTR.getConfig().getDtServConfig())) {
-                configCTR.setDifDthrConfig(0L);
-        }
-    }
 
 }
