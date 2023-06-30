@@ -28,10 +28,10 @@ public class NetworkChangeListerner extends BroadcastReceiver {
 //        logErro();
 //        logBaseDados();
         if(ConnectNetwork.isConnected(context)){
-            ActivityGeneric.connectNetwork = true;
             LogProcessoDAO.getInstance().insertLogProcesso("if(ConnectNetwork.isConnected(context)){\n" +
                     "            ActivityGeneric.connectNetwork = true;\n" +
                     "Tempo.getInstance().zerarDifTempo()", context.getClass().getName());
+            ActivityGeneric.connectNetwork = true;
             Tempo.getInstance().zerarDifTempo();
             if (EnvioDadosServ.status == 1) {
                 LogProcessoDAO.getInstance().insertLogProcesso("if (EnvioDadosServ.status == 1) {\n" +

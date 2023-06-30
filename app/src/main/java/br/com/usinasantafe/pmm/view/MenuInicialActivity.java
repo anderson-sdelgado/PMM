@@ -207,11 +207,6 @@ public class MenuInicialActivity extends ActivityGeneric {
 
     }
 
-    public boolean checkPermission(String permission) {
-        int check = ContextCompat.checkSelfPermission(this, permission);
-        return (check == PackageManager.PERMISSION_GRANTED);
-    }
-
     public void onBackPressed() {
     }
 

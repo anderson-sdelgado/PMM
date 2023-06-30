@@ -359,13 +359,14 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetMotoMec.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                pmmContext.getConfigCTR().setPosicaoTela(26L);\n" +
-                        "                Intent it = new Intent(MenuPrincPCOMPActivity.this, HorimetroActivity.class);", getLocalClassName());
+                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().setPosicaoTela(26L);\n" +
+                        "                pmmContext.getConfigCTR().setHodometroFinalConfig(0D);\n" +
+                        "                pmmContext.getMotoMecFertCTR().salvarBolMMFertFechado(getLocalClassName());\n" +
+                        "                Intent it = new Intent(MenuPrincPCOMPActivity.this, TelaInicialActivity.class);", getLocalClassName());
                 pmmContext.getConfigCTR().setPosicaoTela(26L);
-                Intent it = new Intent(MenuPrincPCOMPActivity.this, HorimetroActivity.class);
+                pmmContext.getConfigCTR().setHodometroFinalConfig(0D);
+                pmmContext.getMotoMecFertCTR().salvarBolMMFertFechado(getLocalClassName());
+                Intent it = new Intent(MenuPrincPCOMPActivity.this, TelaInicialActivity.class);
                 startActivity(it);
                 finish();
             }

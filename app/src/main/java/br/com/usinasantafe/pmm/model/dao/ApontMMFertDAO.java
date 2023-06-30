@@ -214,12 +214,10 @@ public class ApontMMFertDAO {
     }
 
     public List<ApontMMFertBean> apontEnvioList(ArrayList<Long> idBolList){
-
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqStatusEnvioApont());
         ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
         return apontMMFertBean.inAndGetAndOrderBy("idBolMMFert", idBolList, pesqArrayList, "idApontMMFert", true);
-
     }
 
     public ArrayList<Long> idApontArrayList(List<ApontMMFertBean> apontMMFertList){

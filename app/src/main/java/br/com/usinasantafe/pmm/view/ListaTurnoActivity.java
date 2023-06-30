@@ -13,6 +13,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.BuildConfig;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.TurnoBean;
@@ -161,7 +162,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
                     LogProcessoDAO.getInstance().insertLogProcesso("if(Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())){\n" +
                             "pmmContext.getConfigCTR().setDifDthrConfig(0L);", getLocalClassName());
                     pmmContext.getConfigCTR().setDifDthrConfig(0L);
-                    if(PMMContext.aplic == 2){
+                    if(BuildConfig.FLAVOR.equals("ecm")){
                         LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2){", getLocalClassName());
                         if (connectNetwork) {
                             LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
@@ -178,7 +179,7 @@ public class ListaTurnoActivity extends ActivityGeneric {
                         startActivity(it);
                         finish();
 
-                    } else if(PMMContext.aplic == 3){
+                    } else if(BuildConfig.FLAVOR.equals("pcomp")){
 
                         LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                 "                        Intent it = new Intent(ListaTurnoActivity.this, OSActivity.class);", getLocalClassName());

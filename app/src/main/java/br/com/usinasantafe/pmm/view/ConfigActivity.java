@@ -73,7 +73,7 @@ public class ConfigActivity extends ActivityGeneric {
         Button buttonSalvarConfig =  findViewById(R.id.buttonSalvarConfig);
         Button buttonCancConfig = findViewById(R.id.buttonCancConfig);
         Button buttonAtualizarBD = findViewById(R.id.buttonAtualizarBD);
-        Button buttonLimparBD = (Button) findViewById(R.id.buttonLimparBD);
+        Button buttonLimparBD = findViewById(R.id.buttonLimparBD);
         editTextEquipConfig = findViewById(R.id.editTextEquipConfig);
         editTextSenhaConfig = findViewById(R.id.editTextSenhaConfig);
 
@@ -185,7 +185,6 @@ public class ConfigActivity extends ActivityGeneric {
                 }
             }
         });
-
 
         buttonLimparBD.setOnClickListener(new View.OnClickListener() {
             @Override

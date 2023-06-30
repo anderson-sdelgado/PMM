@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import br.com.usinasantafe.pmm.BuildConfig;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
@@ -91,7 +92,7 @@ public class OSActivity extends ActivityGeneric {
 
                     } else {
 
-                        if(PMMContext.aplic == 2) {
+                        if(BuildConfig.FLAVOR.equals("ecm")) {
 
                             LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                                     "AlertDialog.Builder alerta = new AlertDialog.Builder(OSActivity.this);\n" +
@@ -181,19 +182,18 @@ public class OSActivity extends ActivityGeneric {
         LogProcessoDAO.getInstance().insertLogProcesso("onBackPressed()", getLocalClassName());
         if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
             LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {", getLocalClassName());
-            if(PMMContext.aplic == 3){
+            if(BuildConfig.FLAVOR.equals("pcomp")){
                 LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 3){\n" +
                         "                Intent it = new Intent(OSActivity.this, ListaFuncaoPCOMPActivity.class);", getLocalClassName());
                 Intent it = new Intent(OSActivity.this, ListaFuncaoCompActivity.class);
                 startActivity(it);
-                finish();
             } else {
                 LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                         "Intent it = new Intent(OSActivity.this, ListaTurnoActivity.class);", getLocalClassName());
                 Intent it = new Intent(OSActivity.this, ListaTurnoActivity.class);
                 startActivity(it);
-                finish();
             }
+            finish();
         } else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 16L) {", getLocalClassName());
             if((pmmContext.getConfigCTR().getEquip().getCodClasseEquip() == 1L) && (pmmContext.getMotoMecFertCTR().qtdeCarreta() == 0)) {
@@ -201,14 +201,13 @@ public class OSActivity extends ActivityGeneric {
                         "                Intent it = new Intent(OSActivity.this, EquipActivity.class);", getLocalClassName());
                 Intent it = new Intent(OSActivity.this, EquipActivity.class);
                 startActivity(it);
-                finish();
             } else {
                 LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                         "                Intent it = new Intent(OSActivity.this, CarretaActivity.class);", getLocalClassName());
                 Intent it = new Intent(OSActivity.this, CarretaActivity.class);
                 startActivity(it);
-                finish();
             }
+            finish();
         } else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 29L) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 29L) {\n" +
                     "Intent it = new Intent(OSActivity.this, ListaFuncaoPCOMPActivity.class);", getLocalClassName());
@@ -217,20 +216,19 @@ public class OSActivity extends ActivityGeneric {
             finish();
         } else {
             LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
-            if(PMMContext.aplic == 1){
+            if(BuildConfig.FLAVOR.equals("pmm")){
                 LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                         "Intent it = new Intent(OSActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                 Intent it = new Intent(OSActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
-                finish();
             }
             else{
                 LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                         "Intent it = new Intent(OSActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                 Intent it = new Intent(OSActivity.this, MenuPrincPCOMPActivity.class);
                 startActivity(it);
-                finish();
             }
+            finish();
         }
     }
 

@@ -26,12 +26,10 @@ public class ImplementoMMDAO {
     }
 
     public List<ApontImplMMBean> apontImplEnvioList(ArrayList<Long> idApontList){
-
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqStatusEnvioApontImpl());
         ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
         return apontImplMMBean.inAndGetAndOrderBy("idApontMMFert", idApontList, pesqArrayList, "idApontImplMM", true);
-
     }
 
     public ArrayList<String> apontImplAllArrayList(ArrayList<String> dadosArrayList){

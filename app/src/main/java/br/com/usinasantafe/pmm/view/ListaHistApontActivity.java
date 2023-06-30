@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import br.com.usinasantafe.pmm.BuildConfig;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
@@ -38,21 +39,21 @@ public class ListaHistApontActivity extends ActivityGeneric {
                 LogProcessoDAO.getInstance().insertLogProcesso("buttonRetHistorico.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
-                if(PMMContext.aplic == 1){
+                if(BuildConfig.FLAVOR.equals("pmm")){
                     LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                             "                    Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                     Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPMMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if(PMMContext.aplic == 2){
+                else if(BuildConfig.FLAVOR.equals("ecm")){
                     LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
                             "                    Intent it = new Intent(ListaHistApontActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                     Intent it = new Intent(ListaHistApontActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if(PMMContext.aplic == 3){
+                else if(BuildConfig.FLAVOR.equals("pcomp")){
                     LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
                             "                    Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                     Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPCOMPActivity.class);

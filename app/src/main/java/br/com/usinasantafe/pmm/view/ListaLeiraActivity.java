@@ -31,10 +31,10 @@ public class ListaLeiraActivity extends ActivityGeneric {
         setContentView(R.layout.activity_lista_leira);
 
         pmmContext = (PMMContext) getApplication();
-        itens = new ArrayList<ViewHolderChoice>();
+        itens = new ArrayList<>();
 
-        Button buttonRetListaLeira = (Button) findViewById(R.id.buttonRetListaLeira);
-        Button buttonSalvarListaLeira = (Button) findViewById(R.id.buttonSalvarListaLeira);
+        Button buttonRetListaLeira = findViewById(R.id.buttonRetListaLeira);
+        Button buttonSalvarListaLeira = findViewById(R.id.buttonSalvarListaLeira);
 
         LogProcessoDAO.getInstance().insertLogProcesso("leiraList = pmmContext.getCompostoCTR().leiraStatusList(" + pmmContext.getCompostoCTR().getTipoMovLeira() + ");", getLocalClassName());
         leiraList = pmmContext.getCompostoCTR().leiraStatusList(pmmContext.getCompostoCTR().getTipoMovLeira());
@@ -56,7 +56,7 @@ public class ListaLeiraActivity extends ActivityGeneric {
                 "        leiraListView = (ListView) findViewById(R.id.listLeira);\n" +
                 "        leiraListView.setAdapter(adapterListChoice);", getLocalClassName());
         adapterListChoice = new AdapterListChoice(this, itens);
-        leiraListView = (ListView) findViewById(R.id.listLeira);
+        leiraListView = findViewById(R.id.listLeira);
         leiraListView.setAdapter(adapterListChoice);
 
         buttonRetListaLeira.setOnClickListener(new View.OnClickListener() {

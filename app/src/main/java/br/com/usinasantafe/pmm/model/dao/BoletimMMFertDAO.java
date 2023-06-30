@@ -123,8 +123,6 @@ public class BoletimMMFertDAO {
             boletimMMFertList.clear();
         }
 
-
-
     }
 
     public void deleteBoletimMMFert(Long idBol){

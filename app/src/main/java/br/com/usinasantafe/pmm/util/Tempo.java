@@ -82,7 +82,8 @@ public class Tempo {
 
     public boolean verDthrServ(String dthrServ){
 
-        Long diaDif = (dthrStringToLong(dthrServ) - dthrAtualLong())/24/60/60/1000;
+        Date dataHora = new Date();
+        Long diaDif = (dthrStringToLong(dthrServ) - dataHora.getTime())/24/60/60/1000;
 
         if((diaDif >= 0) && (diaDif <= 15)){
             return true;
@@ -93,7 +94,7 @@ public class Tempo {
 
     }
 
-    public Long difDthr(int dia, int mes, int ano, int hora, int minute){
+    public Long difDthr(int dia, int mes, int ano, int hora, int minuto){
 
         String diaStr;
         if(dia < 10){
@@ -120,15 +121,16 @@ public class Tempo {
         }
 
         String minutosStr;
-        if(minute < 10){
-            minutosStr = "0" + minute;
+        if(minuto < 10){
+            minutosStr = "0" + minuto;
         }
         else{
-            minutosStr = String.valueOf(minute);
+            minutosStr = String.valueOf(minuto);
         }
 
         Long longDtDig =  dthrStringToLong(""+diaStr+"/"+mesStr+"/"+ano+" "+horasStr+":"+minutosStr);
-        Long dif = longDtDig - dthrAtualLong();
+        Date dataHora = new Date();
+        Long dif = longDtDig - dataHora.getTime();
 
         return dif;
 

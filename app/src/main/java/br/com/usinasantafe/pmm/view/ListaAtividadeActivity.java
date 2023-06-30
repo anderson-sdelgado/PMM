@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.BuildConfig;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
@@ -114,7 +115,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 LogProcessoDAO.getInstance().insertLogProcesso("buttonRetAtividade.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
-                if(PMMContext.aplic == 2){
+                if(BuildConfig.FLAVOR.equals("ecm")){
                     LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2){", getLocalClassName());
                     if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L)
                             || (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L)) {
@@ -236,16 +237,27 @@ public class ListaAtividadeActivity extends ActivityGeneric {
 
                         LogProcessoDAO.getInstance().insertLogProcesso("if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L)\n" +
                                 "                            || (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L)) {", getLocalClassName());
-                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(ListaAtividadeActivity.this, HorimetroActivity.class);", getLocalClassName());
-                        Intent it = new Intent(ListaAtividadeActivity.this, HorimetroActivity.class);
-                        startActivity(it);
+                        if(!BuildConfig.FLAVOR.equals("pcomp")){
+                            LogProcessoDAO.getInstance().insertLogProcesso("if(!BuildConfig.FLAVOR.equals(\"pcomp\")){\n" +
+                                    "                            Intent it = new Intent(ListaAtividadeActivity.this, HorimetroActivity.class);", getLocalClassName());
+                            Intent it = new Intent(ListaAtividadeActivity.this, HorimetroActivity.class);
+                            startActivity(it);
+                        } else {
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                    "                            pmmContext.getConfigCTR().setHodometroInicialConfig(0D,  getLongitude(), getLatitude());\n" +
+                                    "                            pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());\n" +
+                                    "                            Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);\n" +
+                                    "                            startActivity(it);", getLocalClassName());
+                            pmmContext.getConfigCTR().setHodometroInicialConfig(0D,  getLongitude(), getLatitude());
+                            pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());
+                            Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);
+                            startActivity(it);
+                        }
                         finish();
 
                     } else if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L)) {
-
                         LogProcessoDAO.getInstance().insertLogProcesso("} else if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L)) {", getLocalClassName());
                         if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
-
                             LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
                                     "AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);\n" +
                                     "                            alerta.setTitle(\"ATENÇÃO\");\n" +
@@ -260,21 +272,21 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                     LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
                                             "                                @Override\n" +
                                             "                                public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
-                                    if(PMMContext.aplic == 1){
+                                    if(BuildConfig.FLAVOR.equals("pmm")){
                                         LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                                                 "                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                                         Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
                                         startActivity(it);
                                         finish();
                                     }
-                                    else if(PMMContext.aplic == 2){
+                                    else if(BuildConfig.FLAVOR.equals("ecm")){
                                         LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2){\n" +
                                                 "                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                                         Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);
                                         startActivity(it);
                                         finish();
                                     }
-                                    else if(PMMContext.aplic == 3){
+                                    else if(BuildConfig.FLAVOR.equals("pcomp")){
                                         LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 3){\n" +
                                                 "                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                                         Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);
@@ -363,21 +375,21 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                             pmmContext.getMotoMecFertCTR().insRendBD(nroOS, getLocalClassName());
                                         }
 
-                                        if(PMMContext.aplic == 1){
+                                        if(BuildConfig.FLAVOR.equals("pmm")){
                                             LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                                                     "Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                                             Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
                                             startActivity(it);
                                             finish();
                                         }
-                                        else if(PMMContext.aplic == 2){
+                                        else if(BuildConfig.FLAVOR.equals("ecm")){
                                             LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
                                                     "Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                                             Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);
                                             startActivity(it);
                                             finish();
                                         }
-                                        else if(PMMContext.aplic == 3){
+                                        else if(BuildConfig.FLAVOR.equals("pcomp")){
                                             LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
                                                     "Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                                             Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);

@@ -94,11 +94,11 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         "                    }\n" +
                         "                }", getLocalClassName());
 
-                if(rFuncaoAtivParBean.getCodFuncao() == 2){
-                    itens.add("NOVO TRANSBORDO");
-                }
                 if(rFuncaoAtivParBean.getCodFuncao() == 1){
                     itens.add("RENDIMENTO");
+                }
+                if(rFuncaoAtivParBean.getCodFuncao() == 2){
+                    itens.add("NOVO TRANSBORDO");
                 }
                 if(rFuncaoAtivParBean.getCodFuncao() == 3){
                     itens.add("TROCAR IMPLEMENTO");

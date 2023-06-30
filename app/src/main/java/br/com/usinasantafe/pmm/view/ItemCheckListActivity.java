@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.BuildConfig;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ItemCheckListBean;
@@ -114,21 +115,21 @@ public class ItemCheckListActivity extends ActivityGeneric {
                 pmmContext.getCheckListCTR().salvarBolFechado(getLocalClassName());
                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
                     LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {", getLocalClassName());
-                    if(PMMContext.aplic == 1){
+                    if(BuildConfig.FLAVOR.equals("pmm")){
                         LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                                 "                Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                         Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPMMActivity.class);
                         startActivity(it);
                         finish();
                     }
-                    else if(PMMContext.aplic == 2){
+                    else if(BuildConfig.FLAVOR.equals("ecm")){
                         LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
                                 "                Intent it = new Intent(ItemCheckListActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                         Intent it = new Intent(ItemCheckListActivity.this, MenuPrincECMActivity.class);
                         startActivity(it);
                         finish();
                     }
-                    else if(PMMContext.aplic == 3){
+                    else if(BuildConfig.FLAVOR.equals("pcomp")){
                         LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
                                 "                Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                         Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPCOMPActivity.class);
@@ -154,21 +155,21 @@ public class ItemCheckListActivity extends ActivityGeneric {
         else{
             if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
                 LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {", getLocalClassName());
-                if(PMMContext.aplic == 1){
+                if(BuildConfig.FLAVOR.equals("pmm")){
                     LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                             "                Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                     Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPMMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if(PMMContext.aplic == 2){
+                else if(BuildConfig.FLAVOR.equals("ecm")){
                     LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
                             "                Intent it = new Intent(ItemCheckListActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                     Intent it = new Intent(ItemCheckListActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();
                 }
-                else if(PMMContext.aplic == 3){
+                else if(BuildConfig.FLAVOR.equals("pcomp")){
                     LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
                             "                Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                     Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPCOMPActivity.class);

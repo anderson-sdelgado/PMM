@@ -10,8 +10,8 @@ android {
         applicationId "br.com.usinasantafe.pmm"
         minSdkVersion 22
         targetSdk 31
-        versionCode 13
-        versionName "5.16"
+        versionCode 15
+        versionName "5.19"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -24,6 +24,26 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    namespace 'br.com.usinasantafe.pmm'
+    productFlavors{
+        flavorDimensions 'cmm'
+        pmm {
+            dimension 'cmm'
+            applicationIdSuffix '.pmm'
+            manifestPlaceholders.appName = "PMM"
+
+        }
+        ecm {
+            dimension 'cmm'
+            applicationIdSuffix '.ecm'
+            manifestPlaceholders.appName = "ECM"
+        }
+        pcomp {
+            dimension 'cmm'
+            applicationIdSuffix '.pcomp'
+            manifestPlaceholders.appName = "PCOMP"
+        }
     }
 }
 

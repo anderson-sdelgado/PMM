@@ -69,10 +69,13 @@ public class AtualDadosServ {
 				for(int i = 0; i < jsonArray.length(); i++){
 					JSONObject objeto = jsonArray.getJSONObject(i);
 					Gson gson = new Gson();
+					Log.i("PMM", "OBJETO -> " + objeto.toString());
 					genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
 				}
 
+				Log.i("PMM", "Termino de integração ");
 				if(contAtualBD > 0){
+					Log.i("PMM", "contAtualBD " + contAtualBD);
 					LogProcessoDAO.getInstance().insertLogProcesso("if(contAtualBD > 0){\n" +
 							"\t\t\t\t\tatualizandoBD(activity);", activity);
 					atualizandoBD(activity);
@@ -80,6 +83,7 @@ public class AtualDadosServ {
 
 			}
 			catch (Exception e) {
+				Log.i("PMM", "Erro integração -> " + e);
 				LogErroDAO.getInstance().insertLogErro(e);
 			}
 
@@ -200,8 +204,10 @@ public class AtualDadosServ {
 		LogProcessoDAO.getInstance().insertLogProcesso("public void atualizandoBD(String activity){\n" +
 				"qtdeBD = tabAtualArrayList.size();", activity);
 		qtdeBD = tabAtualArrayList.size();
-		if(contAtualBD < tabAtualArrayList.size()){
+		Log.i("PMM", "qtdeBD  " + qtdeBD );
+		if(contAtualBD < qtdeBD){
 
+			Log.i("PMM", "ATUALIZANDO");
 			LogProcessoDAO.getInstance().insertLogProcesso("if(contAtualBD < tabAtualArrayList.size()){\n" +
 					"this.progressDialog.setProgress((contAtualBD * 100) / qtdeBD);\n" +
 					"        classe = (String) tabAtualArrayList.get(contAtualBD);\n" +

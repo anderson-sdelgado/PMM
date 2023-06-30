@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import br.com.usinasantafe.pmm.BuildConfig;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.REquipPneuBean;
@@ -77,21 +78,21 @@ public class ListaPosPneuActivity extends ActivityGeneric {
                             "                    pmmContext.getMotoMecFertCTR().fecharApont(getLocalClassName());", getLocalClassName());
                     pmmContext.getMotoMecFertCTR().fecharBoletimPneu();
                     pmmContext.getMotoMecFertCTR().fecharApont(getLocalClassName());
-                    if(PMMContext.aplic == 1){
+                    if(BuildConfig.FLAVOR.equals("pmm")){
                         LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                                 "Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                         Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincPMMActivity.class);
                         startActivity(it);
                         finish();
                     }
-                    else if(PMMContext.aplic == 2){
+                    else if(BuildConfig.FLAVOR.equals("ecm")){
                         LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
                                 "Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                         Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincECMActivity.class);
                         startActivity(it);
                         finish();
                     }
-                    else if(PMMContext.aplic == 3){
+                    else if(BuildConfig.FLAVOR.equals("pcomp")){
                         LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
                                 "Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                         Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincPCOMPActivity.class);
@@ -149,21 +150,21 @@ public class ListaPosPneuActivity extends ActivityGeneric {
                                 "                    public void onClick(DialogInterface dialog, int which) {\n" +
                                 "                    pmmContext.getMotoMecFertCTR().deletePneuAberto();", getLocalClassName());
                         pmmContext.getMotoMecFertCTR().deletePneuAberto();
-                        if(PMMContext.aplic == 1){
+                        if(BuildConfig.FLAVOR.equals("pmm")){
                             LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                                     "Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                             Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincPMMActivity.class);
                             startActivity(it);
                             finish();
                         }
-                        else if(PMMContext.aplic == 2){
+                        else if(BuildConfig.FLAVOR.equals("ecm")){
                             LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
                                     "Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                             Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincECMActivity.class);
                             startActivity(it);
                             finish();
                         }
-                        else if(PMMContext.aplic == 3){
+                        else if(BuildConfig.FLAVOR.equals("pcomp")){
                             LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
                                     "Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                             Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincPCOMPActivity.class);

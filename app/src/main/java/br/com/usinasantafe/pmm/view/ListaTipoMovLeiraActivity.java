@@ -38,7 +38,7 @@ public class ListaTipoMovLeiraActivity extends ActivityGeneric {
                 "        tipoFuncaoLeiraListView = (ListView) findViewById(R.id.listTipoComp);\n" +
                 "        tipoFuncaoLeiraListView.setAdapter(adapterList);", getLocalClassName());
         AdapterList adapterList = new AdapterList(this, itens);
-        tipoFuncaoLeiraListView = (ListView) findViewById(R.id.listTipoComp);
+        tipoFuncaoLeiraListView = findViewById(R.id.listTipoComp);
         tipoFuncaoLeiraListView.setAdapter(adapterList);
 
         tipoFuncaoLeiraListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

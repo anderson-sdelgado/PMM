@@ -51,7 +51,7 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
     private ArrayList<String> permissions = new ArrayList<>();
     private static final int ALL_PERMISSIONS_RESULT = 1011;
 
-    NetworkChangeListerner networkChangeListerner = new NetworkChangeListerner();
+    private NetworkChangeListerner networkChangeListerner = new NetworkChangeListerner();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

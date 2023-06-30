@@ -12,11 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import br.com.usinasantafe.pmm.BuildConfig;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.Tempo;
-//import br.com.usinasantafe.pmm.model.bean.variaveis.ConfigBean;
 
 public class DataHoraActivity extends ActivityGeneric {
 
@@ -52,7 +52,7 @@ public class DataHoraActivity extends ActivityGeneric {
                 break;
         }
 
-        editPadrao = (EditText) findViewById(R.id.editTextPadrao);
+        editPadrao = findViewById(R.id.editTextPadrao);
 
         editPadrao.addTextChangedListener(new TextWatcher() {
 
@@ -61,19 +61,13 @@ public class DataHoraActivity extends ActivityGeneric {
 
                 switch (pmmContext.getConfigCTR().getContDataHora()) {
                     case 1:
-                        editPadrao.setFilters(new InputFilter[] { new InputFilter.LengthFilter(2) });
-                        break;
                     case 2:
+                    case 4:
+                    case 5:
                         editPadrao.setFilters(new InputFilter[] { new InputFilter.LengthFilter(2) });
                         break;
                     case 3:
                         editPadrao.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
-                        break;
-                    case 4:
-                        editPadrao.setFilters(new InputFilter[] { new InputFilter.LengthFilter(2) });
-                        break;
-                    case 5:
-                        editPadrao.setFilters(new InputFilter[] { new InputFilter.LengthFilter(2) });
                         break;
                 }
 
@@ -93,15 +87,11 @@ public class DataHoraActivity extends ActivityGeneric {
 
             @Override
             public void onClick(View v) {
-
                 LogProcessoDAO.getInstance().insertLogProcesso("buttonOkDataHora.setOnClickListener(new View.OnClickListener() {\n" +
                         "            @Override\n" +
                         "            public void onClick(View v) {", getLocalClassName());
-
                 if (!editTextPadrao.getText().toString().equals("")) {
-
                     int valor = Integer.parseInt(editTextPadrao.getText().toString());
-
                     LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
                             "                    int valor = Integer.parseInt(" + editTextPadrao.getText().toString() + ");\n" +
                             "                    Intent it;\n" +
@@ -259,7 +249,7 @@ public class DataHoraActivity extends ActivityGeneric {
 
                                 if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
                                     LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {", getLocalClassName());
-                                    if(PMMContext.aplic == 2) {
+                                    if(BuildConfig.FLAVOR.equals("ecm")) {
 
                                         LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2){", getLocalClassName());
                                         if (connectNetwork) {
@@ -277,7 +267,7 @@ public class DataHoraActivity extends ActivityGeneric {
                                         startActivity(it);
                                         finish();
 
-                                    } else if(PMMContext.aplic == 3){
+                                    } else if(BuildConfig.FLAVOR.equals("pcomp")){
                                         LogProcessoDAO.getInstance().insertLogProcesso("} else if(PMMContext.aplic == 3){\n" +
                                                 "                                        it = new Intent(DataHoraActivity.this, OSActivity.class);", getLocalClassName());
                                         it = new Intent(DataHoraActivity.this, ListaFuncaoCompActivity.class);
@@ -292,7 +282,7 @@ public class DataHoraActivity extends ActivityGeneric {
                                     }
                                 }
                                 else {
-                                    if(PMMContext.aplic == 1){
+                                    if(BuildConfig.FLAVOR.equals("pmm")){
                                         LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                                                 "                                    if(PMMContext.aplic == 1){\n" +
                                                 "                                        it = new Intent(DataHoraActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
@@ -300,14 +290,14 @@ public class DataHoraActivity extends ActivityGeneric {
                                         startActivity(it);
                                         finish();
                                     }
-                                    else if(PMMContext.aplic == 2){
+                                    else if(BuildConfig.FLAVOR.equals("ecm")){
                                         LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
                                                 "                                        it = new Intent(DataHoraActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                                         it = new Intent(DataHoraActivity.this, MenuPrincECMActivity.class);
                                         startActivity(it);
                                         finish();
                                     }
-                                    else if(PMMContext.aplic == 3){
+                                    else if(BuildConfig.FLAVOR.equals("pcomp")){
                                         LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
                                                 "                                        it = new Intent(DataHoraActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                                         it = new Intent(DataHoraActivity.this, MenuPrincPCOMPActivity.class);

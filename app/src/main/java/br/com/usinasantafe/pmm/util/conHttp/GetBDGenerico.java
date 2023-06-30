@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -58,6 +59,7 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
                }
             }
 
+			Log.i("PMM", "URL -> " + url);
 			URL urlCon = new URL(url);
 			HttpsURLConnection connection = (HttpsURLConnection) urlCon.openConnection();
 			connection.setRequestMethod("GET");
@@ -87,11 +89,13 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 			connection.disconnect();
             
 		} catch (Exception e) {
+			Log.i("PMM", "Erro Get " + e);
 			LogErroDAO.getInstance().insertLogErro(e);
 			if(bufferedReader != null){
 				try {
 					bufferedReader.close();
 				} catch (Exception erro) {
+					Log.i("PMM", "Erro Get 2 " + erro);
 					LogErroDAO.getInstance().insertLogErro(erro);
 				}
 			}
@@ -102,6 +106,7 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 				try {
 					bufferedReader.close();
 				} catch (Exception e) {
+					Log.i("PMM", "Erro Get 3 " + e);
 					LogErroDAO.getInstance().insertLogErro(e);
 				}
 			}
@@ -114,6 +119,7 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 	protected void onPostExecute(String result) {
 
 		try {
+			Log.i("PMM", "Recebeu");
 			LogProcessoDAO.getInstance().insertLogProcesso("AtualDadosServ.getInstance().manipularDadosHttp('" + tipo + "', result);", activity);
 			AtualDadosServ.getInstance().manipularDadosHttp(tipo, result, activity);
 		} catch (Exception e) {
