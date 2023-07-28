@@ -1,7 +1,6 @@
 package br.com.usinasantafe.pmm.view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.control.MotoMecFertCTR;
-import br.com.usinasantafe.pmm.model.bean.estaticas.AtividadeBean;
-import br.com.usinasantafe.pmm.model.bean.estaticas.BocalBean;
-import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogProcessoBean;
 
 /**

@@ -113,7 +113,6 @@ public class TelaInicialActivity extends ActivityGeneric {
     }
 
     private Runnable encerraAtualThread = new Runnable() {
-
         public void run() {
             LogProcessoDAO.getInstance().insertLogProcesso("    private Runnable updateTimerThread = new Runnable() {\n" +
                     "        public void run() {", getLocalClassName());

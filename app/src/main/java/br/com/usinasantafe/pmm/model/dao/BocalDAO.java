@@ -1,6 +1,5 @@
 package br.com.usinasantafe.pmm.model.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.estaticas.BocalBean;

@@ -13,12 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import br.com.usinasantafe.pmm.PMMContext;
-import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.AtividadeBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.REquipAtivBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ROSAtivBean;
-import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
 public class AtividadeDAO {

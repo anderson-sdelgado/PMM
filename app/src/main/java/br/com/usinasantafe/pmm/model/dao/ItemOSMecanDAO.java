@@ -1,8 +1,5 @@
 package br.com.usinasantafe.pmm.model.dao;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-
 import com.google.gson.Gson;
 
 import org.json.JSONArray;

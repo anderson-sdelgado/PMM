@@ -17,7 +17,6 @@ import java.util.List;
 
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
-import br.com.usinasantafe.pmm.model.bean.estaticas.MotoMecBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.RFuncaoAtivParBean;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;

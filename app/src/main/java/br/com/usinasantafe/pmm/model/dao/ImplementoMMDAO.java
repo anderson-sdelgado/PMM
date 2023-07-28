@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.model.bean.variaveis.ApontImplMMBean;
-import br.com.usinasantafe.pmm.model.bean.variaveis.ApontMMFertBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.ImplementoMMBean;
 import br.com.usinasantafe.pmm.model.pst.EspecificaPesquisa;
 

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.pmm.BuildConfig;
-import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.model.bean.estaticas.AtividadeBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.BocalBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.EquipSegBean;
