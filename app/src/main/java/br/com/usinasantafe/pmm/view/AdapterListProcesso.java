@@ -15,7 +15,6 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.LogProcessoBean;
 /**
  * Created by anderson on 08/03/2018.
  */
-
 public class AdapterListProcesso extends BaseAdapter {
 
     private List itens;

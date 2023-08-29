@@ -3,6 +3,8 @@ package br.com.usinasantafe.pmm.model.pst;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import br.com.usinasantafe.pmm.BuildConfig;
 import br.com.usinasantafe.pmm.model.bean.estaticas.AtividadeBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.BocalBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ComponenteBean;
@@ -56,8 +58,8 @@ import com.j256.ormlite.table.TableUtils;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
-	public static final String FORCA_DB_NAME = "mm_db";
-	public static final int FORCA_BD_VERSION = 5;
+	public static final String FORCA_DB_NAME = BuildConfig.FLAVOR + "_db";
+	public static final int FORCA_BD_VERSION = 1;
 
 	private static DatabaseHelper instance;
 	

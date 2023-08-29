@@ -52,127 +52,116 @@ public class OSActivity extends ActivityGeneric {
             }
         }
 
-        buttonOkOS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonOkOS.setOnClickListener(v -> {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkOS.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonOkOS.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {", getLocalClassName());
 
-                if (!editTextPadrao.getText().toString().equals("")) {
+            if (!editTextPadrao.getText().toString().equals("")) {
 
-                    LogProcessoDAO.getInstance().insertLogProcesso(" if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
-                            "Long nroOS = Long.parseLong(" + editTextPadrao.getText().toString() + ");\n" +
-                            "                    pmmContext.getConfigCTR().setOsConfig(nroOS);", getLocalClassName());
-                    Long nroOS = Long.parseLong(editTextPadrao.getText().toString());
-                    pmmContext.getConfigCTR().setNroOSConfig(nroOS);
+                LogProcessoDAO.getInstance().insertLogProcesso(" if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
+                        "Long nroOS = Long.parseLong(" + editTextPadrao.getText().toString() + ");\n" +
+                        "                    pmmContext.getConfigCTR().setOsConfig(nroOS);", getLocalClassName());
+                Long nroOS = Long.parseLong(editTextPadrao.getText().toString());
+                pmmContext.getConfigCTR().setNroOSConfig(nroOS);
 
-                    LogProcessoDAO.getInstance().insertLogProcesso("else {", getLocalClassName());
-                    if (pmmContext.getConfigCTR().verOS(nroOS)) {
+                LogProcessoDAO.getInstance().insertLogProcesso("else {", getLocalClassName());
+                if (pmmContext.getConfigCTR().verOS(nroOS)) {
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().verROSAtiv(nroOS)) {\n" +
-                                "if (connectNetwork) {\n" +
-                                "                                pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
-                                "                            }\n" +
-                                "                            else{\n" +
-                                "                                pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
-                                "                            }", getLocalClassName());
-                        if (connectNetwork) {
-                            pmmContext.getConfigCTR().setStatusConConfig(1L);
-                        }
-                        else{
-                            pmmContext.getConfigCTR().setStatusConConfig(0L);
-                        }
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().verROSAtiv(nroOS)) {\n" +
+                            "if (connectNetwork) {\n" +
+                            "                                pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
+                            "                            }\n" +
+                            "                            else{\n" +
+                            "                                pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
+                            "                            }", getLocalClassName());
+                    if (connectNetwork) {
+                        pmmContext.getConfigCTR().setStatusConConfig(1L);
+                    }
+                    else{
+                        pmmContext.getConfigCTR().setStatusConConfig(0L);
+                    }
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
-                        Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
-                        startActivity(it);
-                        finish();
+                    LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
+                    Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
+                    startActivity(it);
+                    finish();
+
+                } else {
+
+                    if(BuildConfig.FLAVOR.equals("ecm")) {
+
+                        LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
+                                "AlertDialog.Builder alerta = new AlertDialog.Builder(OSActivity.this);\n" +
+                                "                            alerta.setTitle(\"ATENÇÃO\");\n" +
+                                "                            alerta.setMessage(\"ORDEM SERVIÇO INCORRETA! POR FAVOR, VERIFIQUE A NUMERAÇÃO DIGITADA DA ORDEM SERVIÇO.\");\n" +
+                                "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                "                                @Override\n" +
+                                "                                public void onClick(DialogInterface dialog, int which) {\n" +
+                                "                                }\n" +
+                                "                            });\n" +
+                                "                            alerta.show();", getLocalClassName());
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(OSActivity.this);
+                        alerta.setTitle("ATENÇÃO");
+                        alerta.setMessage("ORDEM SERVIÇO INCORRETA! POR FAVOR, VERIFIQUE A NUMERAÇÃO DIGITADA DA ORDEM SERVIÇO.");
+                        alerta.setPositiveButton("OK", (dialog, which) -> {
+                        });
+                        alerta.show();
 
                     } else {
 
-                        if(BuildConfig.FLAVOR.equals("ecm")) {
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
+                        if (connectNetwork) {
 
-                            LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
-                                    "AlertDialog.Builder alerta = new AlertDialog.Builder(OSActivity.this);\n" +
-                                    "                            alerta.setTitle(\"ATENÇÃO\");\n" +
-                                    "                            alerta.setMessage(\"ORDEM SERVIÇO INCORRETA! POR FAVOR, VERIFIQUE A NUMERAÇÃO DIGITADA DA ORDEM SERVIÇO.\");\n" +
-                                    "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                                    "                                @Override\n" +
-                                    "                                public void onClick(DialogInterface dialog, int which) {\n" +
-                                    "                                }\n" +
-                                    "                            });\n" +
-                                    "                            alerta.show();", getLocalClassName());
-                            AlertDialog.Builder alerta = new AlertDialog.Builder(OSActivity.this);
-                            alerta.setTitle("ATENÇÃO");
-                            alerta.setMessage("ORDEM SERVIÇO INCORRETA! POR FAVOR, VERIFIQUE A NUMERAÇÃO DIGITADA DA ORDEM SERVIÇO.");
-                            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            });
-                            alerta.show();
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
+                                    "progressBar = new ProgressDialog(v.getContext());\n" +
+                                    "                                progressBar.setCancelable(true);\n" +
+                                    "                                progressBar.setMessage(\"PESQUISANDO OS...\");\n" +
+                                    "                                progressBar.show();\n" +
+                                    "                                customHandler.postDelayed(updateTimerThread, 10000);", getLocalClassName());
+                            progressBar = new ProgressDialog(v.getContext());
+                            progressBar.setCancelable(true);
+                            progressBar.setMessage("PESQUISANDO OS...");
+                            progressBar.show();
 
-                        }
-                        else {
+                            customHandler.postDelayed(updateTimerThread, 10000);
 
-                            LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
-                            if (connectNetwork) {
+                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().verOS(" + editTextPadrao.getText().toString() + "\n" +
+                                    "                                        , OSActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
+                            pmmContext.getMotoMecFertCTR().verOS(editTextPadrao.getText().toString()
+                                    , OSActivity.this, ListaAtividadeActivity.class, progressBar, getLocalClassName());
 
-                                LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
-                                        "progressBar = new ProgressDialog(v.getContext());\n" +
-                                        "                                progressBar.setCancelable(true);\n" +
-                                        "                                progressBar.setMessage(\"PESQUISANDO OS...\");\n" +
-                                        "                                progressBar.show();\n" +
-                                        "                                customHandler.postDelayed(updateTimerThread, 10000);", getLocalClassName());
-                                progressBar = new ProgressDialog(v.getContext());
-                                progressBar.setCancelable(true);
-                                progressBar.setMessage("PESQUISANDO OS...");
-                                progressBar.show();
+                        } else {
 
-                                customHandler.postDelayed(updateTimerThread, 10000);
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                    "pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
+                                    "Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
 
-                                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().verOS(" + editTextPadrao.getText().toString() + "\n" +
-                                        "                                        , OSActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
-                                pmmContext.getMotoMecFertCTR().verOS(editTextPadrao.getText().toString()
-                                        , OSActivity.this, ListaAtividadeActivity.class, progressBar, getLocalClassName());
-
-                            } else {
-
-                                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                        "pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
-                                        "Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
-
-                                pmmContext.getConfigCTR().setStatusConConfig(0L);
-                                Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
-                                startActivity(it);
-                                finish();
-
-                            }
+                            pmmContext.getConfigCTR().setStatusConConfig(0L);
+                            Intent it = new Intent(OSActivity.this, ListaAtividadeActivity.class);
+                            startActivity(it);
+                            finish();
 
                         }
 
                     }
 
                 }
+
             }
         });
 
-        buttonCancOS.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancOS.setOnClickListener(new View.OnClickListener() {\n" +
-                        "\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "if (editTextPadrao.getText().toString().length() > 0) {\n" +
-                        "                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));\n" +
-                        "                }", getLocalClassName());
-                if (editTextPadrao.getText().toString().length() > 0) {
-                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
-                }
+        buttonCancOS.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonCancOS.setOnClickListener(new View.OnClickListener() {\n" +
+                    "\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "if (editTextPadrao.getText().toString().length() > 0) {\n" +
+                    "                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));\n" +
+                    "                }", getLocalClassName());
+            if (editTextPadrao.getText().toString().length() > 0) {
+                editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
             }
         });
 

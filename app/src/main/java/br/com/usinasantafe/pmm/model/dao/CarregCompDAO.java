@@ -157,8 +157,8 @@ public class CarregCompDAO {
 
     }
 
-    public void verifDadosCarreg(Long idEquip, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
-        VerifDadosServ.getInstance().verifDados(String.valueOf(idEquip), "OrdCarreg", telaAtual, telaProx, progressDialog, activity);
+    public void verifDadosCarreg(String dados, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
+        VerifDadosServ.getInstance().verifDados(dados, "OrdCarreg", telaAtual, telaProx, progressDialog, activity);
     }
 
     public String dadosEnvioCarreg(List<CarregCompBean> carregCompList){

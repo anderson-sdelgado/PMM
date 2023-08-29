@@ -31,58 +31,48 @@ public class LogProcessoActivity extends ActivityGeneric {
         AdapterListProcesso adapterListProcesso = new AdapterListProcesso(this, pmmContext.getConfigCTR().logProcessoList());
         listViewLogProcesso.setAdapter(adapterListProcesso);
 
-        buttonAvancaLogProcesso.setOnClickListener(new View.OnClickListener() {
+        buttonAvancaLogProcesso.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonAvancaLogProcesso.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "Intent it = new Intent(LogProcessoActivity.this, LogBaseDadoActivity.class);", getLocalClassName());
+            Intent it = new Intent(LogProcessoActivity.this, LogBaseDadoActivity.class);
+            startActivity(it);
+            finish();
+        });
 
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonAvancaLogProcesso.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "Intent it = new Intent(LogProcessoActivity.this, LogBaseDadoActivity.class);", getLocalClassName());
-                Intent it = new Intent(LogProcessoActivity.this, LogBaseDadoActivity.class);
+        buttonRetLogProcesso.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonRetLogProcesso.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {", getLocalClassName());
+            if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 12L){
+                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 12L){\n" +
+                        "Intent it = new Intent(LogProcessoActivity.this, TelaInicialActivity.class);", getLocalClassName());
+                Intent it = new Intent(LogProcessoActivity.this, TelaInicialActivity.class);
                 startActivity(it);
                 finish();
             }
-
-        });
-
-        buttonRetLogProcesso.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetLogProcesso.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {", getLocalClassName());
-                if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 12L){
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 12L){\n" +
-                            "Intent it = new Intent(LogProcessoActivity.this, TelaInicialActivity.class);", getLocalClassName());
-                    Intent it = new Intent(LogProcessoActivity.this, TelaInicialActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-                else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 23L){
-                    LogProcessoDAO.getInstance().insertLogProcesso("else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 23L){\n" +
-                            "Intent it = new Intent(LogProcessoActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                    Intent it = new Intent(LogProcessoActivity.this, MenuPrincPMMActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-                else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 24L){
-                    LogProcessoDAO.getInstance().insertLogProcesso("else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 23L){\n" +
-                            "Intent it = new Intent(LogProcessoActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
-                    Intent it = new Intent(LogProcessoActivity.this, MenuPrincECMActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-                else {
-                    LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
-                            "Intent it = new Intent(LogProcessoActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
-                    Intent it = new Intent(LogProcessoActivity.this, MenuPrincPCOMPActivity.class);
-                    startActivity(it);
-                    finish();
-                }
+            else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 23L){
+                LogProcessoDAO.getInstance().insertLogProcesso("else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 23L){\n" +
+                        "Intent it = new Intent(LogProcessoActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                Intent it = new Intent(LogProcessoActivity.this, MenuPrincPMMActivity.class);
+                startActivity(it);
+                finish();
             }
-
+            else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 24L){
+                LogProcessoDAO.getInstance().insertLogProcesso("else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 23L){\n" +
+                        "Intent it = new Intent(LogProcessoActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                Intent it = new Intent(LogProcessoActivity.this, MenuPrincECMActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else {
+                LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
+                        "Intent it = new Intent(LogProcessoActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                Intent it = new Intent(LogProcessoActivity.this, MenuPrincPCOMPActivity.class);
+                startActivity(it);
+                finish();
+            }
         });
 
     }

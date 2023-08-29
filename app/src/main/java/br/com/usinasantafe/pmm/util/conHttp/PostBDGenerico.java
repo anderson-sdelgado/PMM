@@ -2,11 +2,13 @@ package br.com.usinasantafe.pmm.util.conHttp;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.Map;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -18,21 +20,23 @@ import javax.net.ssl.X509TrustManager;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.pmm.util.AtualDadosServ;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
+import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 
-public class GetBDGenerico extends AsyncTask<String, Void, String> {
+public class PostBDGenerico extends AsyncTask<String, Void, String> {
 
-	private static GetBDGenerico instance = null;
+	private static PostBDGenerico instance = null;
+	private Map<String, Object> parametrosPost = null;
 	private String tipo = null;
 	private String activity;
-	
+
 	private UrlsConexaoHttp urlsConexaoHttp;
 
-	public GetBDGenerico() {
+	public PostBDGenerico() {
 	}
 
-    public static GetBDGenerico getInstance() {
+    public static PostBDGenerico getInstance() {
         if (instance == null)
-        instance = new GetBDGenerico();
+        instance = new PostBDGenerico();
         return instance;
     }
 
@@ -58,12 +62,12 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
                }
             }
 
-			Log.i("PMM", "URL -> " + url);
+			String parametros = getQueryString(parametrosPost);
 			URL urlCon = new URL(url);
 			HttpsURLConnection connection = (HttpsURLConnection) urlCon.openConnection();
-			connection.setRequestMethod("GET");
+			connection.setRequestMethod("POST");
 			connection.setDoInput(true);
-			connection.setDoOutput(false);
+			connection.setDoOutput(true);
 			SSLContext sc = SSLContext.getInstance("SSL");
 			sc.init(null, trustAllCerts(), new java.security.SecureRandom());
 			connection.setSSLSocketFactory(sc.getSocketFactory());
@@ -74,6 +78,12 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 				}
 			});
 			connection.connect();
+
+			OutputStream out = connection.getOutputStream();
+			byte[] bytes = parametros.getBytes("UTF8");
+			out.write(bytes);
+			out.flush();
+			out.close();
 
 			bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			StringBuffer stringBuffer = new StringBuffer("");
@@ -88,13 +98,11 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 			connection.disconnect();
             
 		} catch (Exception e) {
-			Log.i("PMM", "Erro Get " + e);
 			LogErroDAO.getInstance().insertLogErro(e);
 			if(bufferedReader != null){
 				try {
 					bufferedReader.close();
 				} catch (Exception erro) {
-					Log.i("PMM", "Erro Get 2 " + erro);
 					LogErroDAO.getInstance().insertLogErro(erro);
 				}
 			}
@@ -105,7 +113,6 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 				try {
 					bufferedReader.close();
 				} catch (Exception e) {
-					Log.i("PMM", "Erro Get 3 " + e);
 					LogErroDAO.getInstance().insertLogErro(e);
 				}
 			}
@@ -118,7 +125,6 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 	protected void onPostExecute(String result) {
 
 		try {
-			Log.i("PMM", "Recebeu");
 			LogProcessoDAO.getInstance().insertLogProcesso("AtualDadosServ.getInstance().manipularDadosHttp('" + tipo + "', result);", activity);
 			AtualDadosServ.getInstance().manipularDadosHttp(tipo, result, activity);
 		} catch (Exception e) {
@@ -126,6 +132,26 @@ public class GetBDGenerico extends AsyncTask<String, Void, String> {
 		}
 
     }
+
+	public void setParametrosPost(Map<String, Object> parametrosPost) {
+		this.parametrosPost = parametrosPost;
+	}
+
+	private String getQueryString(Map<String, Object> params){
+		if (params == null || params.size() == 0) {
+			return null;
+		}
+		String urlParams = null;
+		Iterator<String> e = (Iterator<String>) params.keySet().iterator();
+		while (e.hasNext()) {
+			String chave = (String) e.next();
+			Object objValor = params.get(chave);
+			String valor = objValor.toString();
+			urlParams = urlParams == null ? "" : urlParams + "&";
+			urlParams += chave + "=" + valor;
+		}
+		return urlParams;
+	}
 
 	public TrustManager[] trustAllCerts(){
 		return new TrustManager[]{

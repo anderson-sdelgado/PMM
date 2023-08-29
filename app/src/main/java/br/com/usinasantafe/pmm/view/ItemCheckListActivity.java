@@ -42,49 +42,36 @@ public class ItemCheckListActivity extends ActivityGeneric {
         ItemCheckListBean itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(pmmContext.getCheckListCTR().getPosCheckList() - 1);
         textViewItemChecklist.setText(pmmContext.getCheckListCTR().getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
 
-        buttonConforme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonConforme.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                proximaTela(1L);", getLocalClassName());
-                proximaTela(1L);
-            }
+        buttonConforme.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonConforme.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                proximaTela(1L);", getLocalClassName());
+            proximaTela(1L);
         });
 
-        buttonNaoConforme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonNaoConforme.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                proximaTela(2L);", getLocalClassName());
-                proximaTela(2L);
-            }
+        buttonNaoConforme.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonNaoConforme.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                proximaTela(2L);", getLocalClassName());
+            proximaTela(2L);
         });
 
-        buttonReparo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonReparo.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                proximaTela(3L);", getLocalClassName());
-                proximaTela(3L);
-            }
+        buttonReparo.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonReparo.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                proximaTela(3L);", getLocalClassName());
+            proximaTela(3L);
         });
 
-        buttonCancChecklist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancChecklist.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                retornoTela();", getLocalClassName());
-                retornoTela();
-            }
-
+        buttonCancChecklist.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonCancChecklist.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                retornoTela();", getLocalClassName());
+            retornoTela();
         });
 
     }

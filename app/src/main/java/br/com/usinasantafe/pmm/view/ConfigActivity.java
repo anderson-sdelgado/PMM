@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import br.com.usinasantafe.pmm.BuildConfig;
 import br.com.usinasantafe.pmm.PMMContext;
 import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.estaticas.AtividadeBean;
@@ -76,58 +77,52 @@ public class ConfigActivity extends ActivityGeneric {
             editTextSenhaConfig.setText(pmmContext.getConfigCTR().getConfig().getSenhaConfig());
         }
 
-        buttonSalvarConfig.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonSalvarConfig.setOnClickListener(v -> {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("        buttonSalvarConfig.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {", getLocalClassName());
-                if(!editTextEquipConfig.getText().toString().equals("") &&
-                        !editTextSenhaConfig.getText().toString().equals("")){
-                    LogProcessoDAO.getInstance().insertLogProcesso("if(!editTextEquipConfig.getText().toString().equals(\"\") &&\n" +
-                            "                        !editTextSenhaConfig.getText().toString().equals(\"\")){", getLocalClassName());
-                    LogProcessoDAO.getInstance().insertLogProcesso("progressBar = new ProgressDialog(v.getContext());\n" +
-                            "                    progressBar.setCancelable(true);\n" +
-                            "                    progressBar.setMessage(\"Pequisando o Equipamento...\");\n" +
-                            "                    progressBar.show();", getLocalClassName());
-                    progressBar = new ProgressDialog(v.getContext());
-                    progressBar.setCancelable(true);
-                    progressBar.setMessage("Pequisando o Equipamento...");
-                    progressBar.show();
+            LogProcessoDAO.getInstance().insertLogProcesso("        buttonSalvarConfig.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {", getLocalClassName());
+            if(!editTextEquipConfig.getText().toString().equals("") &&
+                    !editTextSenhaConfig.getText().toString().equals("")){
+                LogProcessoDAO.getInstance().insertLogProcesso("if(!editTextEquipConfig.getText().toString().equals(\"\") &&\n" +
+                        "                        !editTextSenhaConfig.getText().toString().equals(\"\")){", getLocalClassName());
+                LogProcessoDAO.getInstance().insertLogProcesso("progressBar = new ProgressDialog(v.getContext());\n" +
+                        "                    progressBar.setCancelable(true);\n" +
+                        "                    progressBar.setMessage(\"Pequisando o Equipamento...\");\n" +
+                        "                    progressBar.show();", getLocalClassName());
+                progressBar = new ProgressDialog(v.getContext());
+                progressBar.setCancelable(true);
+                progressBar.setMessage("Pequisando o Equipamento...");
+                progressBar.show();
 
-                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().salvarConfig(" + editTextSenhaConfig.getText().toString() + ");\n" +
-                            "                    pmmContext.getConfigCTR().verEquipConfig(" + editTextEquipConfig.getText().toString() + ", ConfigActivity.this ,TelaInicialActivity.class, progressBar);", getLocalClassName());
-                    pmmContext.getConfigCTR().salvarConfig(editTextSenhaConfig.getText().toString());
-                    pmmContext.getConfigCTR().verEquipConfig(editTextEquipConfig.getText().toString(), ConfigActivity.this , TelaInicialActivity.class, progressBar, getLocalClassName(), 1);
-
-                }
+                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().salvarConfig(" + editTextSenhaConfig.getText().toString() + ");\n" +
+                        "                    pmmContext.getConfigCTR().verEquipConfig(" + editTextEquipConfig.getText().toString() + ", ConfigActivity.this ,TelaInicialActivity.class, progressBar);", getLocalClassName());
+                pmmContext.getConfigCTR().verEquipConfig(editTextSenhaConfig.getText().toString(), BuildConfig.VERSION_NAME, editTextEquipConfig.getText().toString(), ConfigActivity.this , TelaInicialActivity.class, progressBar, getLocalClassName(), 2);
 
             }
+
         });
 
-        buttonCancConfig.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonCancConfig.setOnClickListener(v -> {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("        buttonCancConfig.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {", getLocalClassName());
-                LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(ConfigActivity.this, TelaInicialActivity.class);", getLocalClassName());
-                Intent it = new Intent(ConfigActivity.this, TelaInicialActivity.class);
-                startActivity(it);
-                finish();
+            LogProcessoDAO.getInstance().insertLogProcesso("        buttonCancConfig.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(ConfigActivity.this, TelaInicialActivity.class);", getLocalClassName());
+            Intent it = new Intent(ConfigActivity.this, TelaInicialActivity.class);
+            startActivity(it);
+            finish();
 
-            }
         });
 
-        buttonAtualizarBD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonAtualizarBD.setOnClickListener(v -> {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("        buttonAtualizarBD.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("        buttonAtualizarBD.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n", getLocalClassName());
+            if(pmmContext.getConfigCTR().hasElemConfig()) {
+
+                LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().hasElemConfig()) {", getLocalClassName());
 
                 if(connectNetwork){
 
@@ -150,8 +145,7 @@ public class ConfigActivity extends ActivityGeneric {
                     LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().atualTodasTabelas(ConfigActivity.this, progressBar);", getLocalClassName());
                     pmmContext.getConfigCTR().atualTodasTabelas(ConfigActivity.this, progressBar, getLocalClassName());
 
-                }
-                else{
+                } else {
 
                     LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                             "                    AlertDialog.Builder alerta = new AlertDialog.Builder(ConfigActivity.this);\n" +
@@ -165,135 +159,146 @@ public class ConfigActivity extends ActivityGeneric {
                     AlertDialog.Builder alerta = new AlertDialog.Builder(ConfigActivity.this);
                     alerta.setTitle("ATENÇÃO");
                     alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
-                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
+                    alerta.setPositiveButton("OK", (dialog, which) -> {
                     });
                     alerta.show();
                 }
-            }
-        });
 
-        buttonLimparBD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            } else {
 
-                AtividadeBean atividadeBean = new AtividadeBean();
-                atividadeBean.deleteAll();
-
-                BocalBean bocalBean = new BocalBean();
-                bocalBean.deleteAll();
-
-                EquipBean equipBean = new EquipBean();
-                equipBean.deleteAll();
-
-                EquipSegBean equipSegBean = new EquipSegBean();
-                equipSegBean.deleteAll();
-
-                FrenteBean frenteBean = new FrenteBean();
-                frenteBean.deleteAll();
-
-                FuncBean funcBean = new FuncBean();
-                funcBean.deleteAll();
-
-                ItemCheckListBean itemCheckListBean = new ItemCheckListBean();
-                itemCheckListBean.deleteAll();
-
-                LeiraBean leiraBean = new LeiraBean();
-                leiraBean.deleteAll();
-
-                MotoMecBean motoMecBean = new MotoMecBean();
-                motoMecBean.deleteAll();
-
-                OSBean osBean = new OSBean();
-                osBean.deleteAll();
-
-                ParadaBean paradaBean = new ParadaBean();
-                paradaBean.deleteAll();
-
-                PressaoBocalBean pressaoBocalBean = new PressaoBocalBean();
-                pressaoBocalBean.deleteAll();
-
-                ProdutoBean produtoBean = new ProdutoBean();
-                produtoBean.deleteAll();
-
-                RAtivParadaBean rAtivParadaBean = new RAtivParadaBean();
-                rAtivParadaBean.deleteAll();
-
-                REquipAtivBean rEquipAtivBean = new REquipAtivBean();
-                rEquipAtivBean.deleteAll();
-
-                RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
-                rFuncaoAtivParBean.deleteAll();
-
-                ROSAtivBean rosAtivBean = new ROSAtivBean();
-                rosAtivBean.deleteAll();
-
-                TurnoBean turnoBean = new TurnoBean();
-                turnoBean.deleteAll();
-
-                ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
-                apontImplMMBean.deleteAll();
-
-                ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
-                apontMMFertBean.deleteAll();
-
-                BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
-                boletimMMFertBean.deleteAll();
-
-                CabecCheckListBean cabecCLBean = new CabecCheckListBean();
-                cabecCLBean.deleteAll();
-
-                CarregCompBean carregCompBean = new CarregCompBean();
-                carregCompBean.deleteAll();
-
-                CarretaBean carretaBean = new CarretaBean();
-                carretaBean.deleteAll();
-
-                CECBean cecBean = new CECBean();
-                cecBean.deleteAll();
-
-                ConfigBean configBean = new ConfigBean();
-                configBean.deleteAll();
-
-                InfColheitaBean infColheitaBean = new InfColheitaBean();
-                infColheitaBean.deleteAll();
-
-                InfPlantioBean infPlantioBean = new InfPlantioBean();
-                infPlantioBean.deleteAll();
-
-                LogErroBean logErroBean = new LogErroBean();
-                logErroBean.deleteAll();
-
-                MovLeiraBean movLeiraBean = new MovLeiraBean();
-                movLeiraBean.deleteAll();
-
-                PreCECBean preCECBean = new PreCECBean();
-                preCECBean.deleteAll();
-
-                RecolhFertBean recolhFertBean = new RecolhFertBean();
-                recolhFertBean.deleteAll();
-
-                RendMMBean rendMMBean = new RendMMBean();
-                rendMMBean.deleteAll();
-
-                RespItemCheckListBean respItemCLBean = new RespItemCheckListBean();
-                respItemCLBean.deleteAll();
-
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                        "                    AlertDialog.Builder alerta = new AlertDialog.Builder(ConfigActivity.this);\n" +
+                        "                    alerta.setTitle(\"ATENÇÃO\");\n" +
+                        "                    alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
+                        "                    alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                        "                        @Override\n" +
+                        "                        public void onClick(DialogInterface dialog, int which) {\n" +
+                        "                    });\n" +
+                        "                    alerta.show();", getLocalClassName());
                 AlertDialog.Builder alerta = new AlertDialog.Builder(ConfigActivity.this);
                 alerta.setTitle("ATENÇÃO");
-                alerta.setMessage("TODOS OS DADOS FORAM APAGADOS!");
-                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
+                alerta.setMessage("POR FAVOR, INSIRA O EQUIPAMENTO E SENHA ANTES DE ATUALIZAR OS DADDOS.");
+                alerta.setPositiveButton("OK", (dialog, which) -> {
                 });
-
                 alerta.show();
 
             }
+
+        });
+
+        buttonLimparBD.setOnClickListener(v -> {
+
+            AtividadeBean atividadeBean = new AtividadeBean();
+            atividadeBean.deleteAll();
+
+            BocalBean bocalBean = new BocalBean();
+            bocalBean.deleteAll();
+
+            EquipBean equipBean = new EquipBean();
+            equipBean.deleteAll();
+
+            EquipSegBean equipSegBean = new EquipSegBean();
+            equipSegBean.deleteAll();
+
+            FrenteBean frenteBean = new FrenteBean();
+            frenteBean.deleteAll();
+
+            FuncBean funcBean = new FuncBean();
+            funcBean.deleteAll();
+
+            ItemCheckListBean itemCheckListBean = new ItemCheckListBean();
+            itemCheckListBean.deleteAll();
+
+            LeiraBean leiraBean = new LeiraBean();
+            leiraBean.deleteAll();
+
+            MotoMecBean motoMecBean = new MotoMecBean();
+            motoMecBean.deleteAll();
+
+            OSBean osBean = new OSBean();
+            osBean.deleteAll();
+
+            ParadaBean paradaBean = new ParadaBean();
+            paradaBean.deleteAll();
+
+            PressaoBocalBean pressaoBocalBean = new PressaoBocalBean();
+            pressaoBocalBean.deleteAll();
+
+            ProdutoBean produtoBean = new ProdutoBean();
+            produtoBean.deleteAll();
+
+            RAtivParadaBean rAtivParadaBean = new RAtivParadaBean();
+            rAtivParadaBean.deleteAll();
+
+            REquipAtivBean rEquipAtivBean = new REquipAtivBean();
+            rEquipAtivBean.deleteAll();
+
+            RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
+            rFuncaoAtivParBean.deleteAll();
+
+            ROSAtivBean rosAtivBean = new ROSAtivBean();
+            rosAtivBean.deleteAll();
+
+            TurnoBean turnoBean = new TurnoBean();
+            turnoBean.deleteAll();
+
+            ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
+            apontImplMMBean.deleteAll();
+
+            ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
+            apontMMFertBean.deleteAll();
+
+            BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
+            boletimMMFertBean.deleteAll();
+
+            CabecCheckListBean cabecCLBean = new CabecCheckListBean();
+            cabecCLBean.deleteAll();
+
+            CarregCompBean carregCompBean = new CarregCompBean();
+            carregCompBean.deleteAll();
+
+            CarretaBean carretaBean = new CarretaBean();
+            carretaBean.deleteAll();
+
+            CECBean cecBean = new CECBean();
+            cecBean.deleteAll();
+
+            ConfigBean configBean = new ConfigBean();
+            configBean.deleteAll();
+
+            InfColheitaBean infColheitaBean = new InfColheitaBean();
+            infColheitaBean.deleteAll();
+
+            InfPlantioBean infPlantioBean = new InfPlantioBean();
+            infPlantioBean.deleteAll();
+
+            LogErroBean logErroBean = new LogErroBean();
+            logErroBean.deleteAll();
+
+            MovLeiraBean movLeiraBean = new MovLeiraBean();
+            movLeiraBean.deleteAll();
+
+            PreCECBean preCECBean = new PreCECBean();
+            preCECBean.deleteAll();
+
+            RecolhFertBean recolhFertBean = new RecolhFertBean();
+            recolhFertBean.deleteAll();
+
+            RendMMBean rendMMBean = new RendMMBean();
+            rendMMBean.deleteAll();
+
+            RespItemCheckListBean respItemCLBean = new RespItemCheckListBean();
+            respItemCLBean.deleteAll();
+
+            AlertDialog.Builder alerta = new AlertDialog.Builder(ConfigActivity.this);
+            alerta.setTitle("ATENÇÃO");
+            alerta.setMessage("TODOS OS DADOS FORAM APAGADOS!");
+            alerta.setPositiveButton("OK", (dialog, which) -> {
+
+            });
+
+            alerta.show();
+
         });
 
     }

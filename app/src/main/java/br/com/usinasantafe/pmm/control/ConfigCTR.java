@@ -58,6 +58,8 @@ public class ConfigCTR {
 
     /////////////////////////////////////// CONFIG ///////////////////////////////////////////////
 
+
+
     public boolean hasElemConfig(){
         ConfigDAO configDAO = new ConfigDAO();
         return configDAO.hasElements();
@@ -68,10 +70,6 @@ public class ConfigCTR {
         return configDAO.getConfig();
     }
 
-    public void salvarConfig(String senha){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.salvarConfig(senha);
-    }
 
     public boolean verSenha(String senha){
         ConfigDAO configDAO = new ConfigDAO();
@@ -154,21 +152,15 @@ public class ConfigCTR {
 
     ///////////////////////////////////// EQUIP ///////////////////////////////////////////////////
 
-    public void setEquipConfig(EquipBean equipBean){
+    public void salvarConfigInicial(String senha, EquipBean equipBean){
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setEquipConfig(equipBean);
+        configDAO.salvarConfig(senha, equipBean);
     }
 
-    public void verEquipAtualTodosDadosConfig(Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo){
+    public void verEquipConfig(String senha, String versao, String nroEquip, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo){
         EquipDAO equipDAO = new EquipDAO();
-        LogProcessoDAO.getInstance().insertLogProcesso("equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog);", activity);
-        equipDAO.verEquip(getEquip().getNroEquip().toString(), telaAtual, telaProx, progressDialog, activity, tipo);
-    }
-
-    public void verEquipConfig(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo){
-        EquipDAO equipDAO = new EquipDAO();
-        LogProcessoDAO.getInstance().insertLogProcesso("equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog);", activity);
-        equipDAO.verEquip(dado, telaAtual, telaProx, progressDialog, activity, tipo);
+        LogProcessoDAO.getInstance().insertLogProcesso("equipDAO.verEquip(equipDAO.dadosVerEquip(Long.parseLong(nroEquip), versao), telaAtual, telaProx, progressDialog, activity, tipo);", activity);
+        equipDAO.verEquip(senha, equipDAO.dadosVerEquip(Long.parseLong(nroEquip), versao), telaAtual, telaProx, progressDialog, activity, tipo);
     }
 
     public EquipBean getEquip(){
@@ -176,7 +168,7 @@ public class ConfigCTR {
         return equipDAO.getEquip();
     }
 
-    public void receberVerifEquip(String result, int tipo){
+    public void receberVerifEquip(String senha, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String result, int tipo){
 
         try {
 
@@ -194,13 +186,16 @@ public class ConfigCTR {
                     equipDAO.recDadosREquipAtiv(json.jsonArray(retorno[1]));
                     equipDAO.recDadosREquipPneu(json.jsonArray(retorno[2]));
 
-                    setEquipConfig(equipBean);
-
-                    if(tipo == 1){
-                        VerifDadosServ.getInstance().pulaTela();
-                    } else {
-                        VerifDadosServ.getInstance().atualTodosDados();
-                    }
+                    salvarConfigInicial(senha, equipBean);
+                    progressDialog.dismiss();
+                    progressDialog = new ProgressDialog(telaAtual);
+                    progressDialog.setCancelable(true);
+                    progressDialog.setMessage("ATUALIZANDO ...");
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                    progressDialog.setProgress(0);
+                    progressDialog.setMax(100);
+                    progressDialog.show();
+                    AtualDadosServ.getInstance().atualTodasTabBD(telaAtual, telaProx, progressDialog, "ConfigActivity", tipo);
 
                 } else {
                     VerifDadosServ.getInstance().msg("EQUIPAMENTO INEXISTENTE NA BASE DE DADOS! FAVOR VERIFICA A NUMERAÇÃO.");
@@ -556,7 +551,7 @@ public class ConfigCTR {
 
         LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().verifAtualAplic(atualAplicDAO.dadosVerAtualAplicBean(equipBean.getNroEquip(), equipBean.getIdCheckList(), versaoAplic)\n" +
                 "                , telaInicialActivity, progressDialog);", activity);
-        VerifDadosServ.getInstance().verifAtualAplic(atualAplicDAO.dadosVerAtualAplicBean(equipBean.getNroEquip(), equipBean.getIdCheckList(), versaoAplic)
+        VerifDadosServ.getInstance().verifAtualAplic(atualAplicDAO.dadosVerAtualAplicBean(equipBean.getIdEquip(), equipBean.getIdCheckList(), versaoAplic)
                 , telaInicialActivity, activity);
     }
 
@@ -566,7 +561,7 @@ public class ConfigCTR {
 
     public void atualTodasTabelas(Context tela, ProgressDialog progressDialog, String activity){
         LogProcessoDAO.getInstance().insertLogProcesso("AtualDadosServ.getInstance().atualTodasTabBD(tela, progressDialog, activity);", activity);
-        AtualDadosServ.getInstance().atualTodasTabBD(tela, progressDialog, activity);
+        AtualDadosServ.getInstance().atualTodasTabBD(tela, progressDialog, activity, 1);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

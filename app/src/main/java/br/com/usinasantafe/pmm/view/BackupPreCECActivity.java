@@ -43,62 +43,50 @@ public class BackupPreCECActivity extends ActivityGeneric {
         PreCECBean preCECBean = (PreCECBean) precCECList.get(contador);
         textViewBkpViagemCana.setText(exibirPreCEC(preCECBean));
 
-        buttonAntBkpViagemCana.setOnClickListener(new View.OnClickListener() {
+        buttonAntBkpViagemCana.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            LogProcessoDAO.getInstance().insertLogProcesso("                if(contador < precCECList.size() - 1){\n" +
+                    "                    contador = contador + 1;\n" +
+                    "                }\n" +
+                    "                PreCECBean preCECBean = (PreCECBean) precCECList.get(contador);\n" +
+                    "                textViewBkpViagemCana.setText(exibirPreCEC(preCECBean));", getLocalClassName());
 
-                LogProcessoDAO.getInstance().insertLogProcesso("                if(contador < precCECList.size() - 1){\n" +
-                        "                    contador = contador + 1;\n" +
-                        "                }\n" +
-                        "                PreCECBean preCECBean = (PreCECBean) precCECList.get(contador);\n" +
-                        "                textViewBkpViagemCana.setText(exibirPreCEC(preCECBean));", getLocalClassName());
-
-                if(contador < precCECList.size() - 1){
-                    contador = contador + 1;
-                }
-
-                PreCECBean preCECBean = (PreCECBean) precCECList.get(contador);
-                textViewBkpViagemCana.setText(exibirPreCEC(preCECBean));
-
+            if(contador < precCECList.size() - 1){
+                contador = contador + 1;
             }
+
+            PreCECBean preCECBean1 = (PreCECBean) precCECList.get(contador);
+            textViewBkpViagemCana.setText(exibirPreCEC(preCECBean1));
+
         });
 
-        buttonProxBkpViagemCana.setOnClickListener(new View.OnClickListener() {
+        buttonProxBkpViagemCana.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            LogProcessoDAO.getInstance().insertLogProcesso("                if(contador < precCECList.size() - 1){\n" +
+                    "                    contador = contador + 1;\n" +
+                    "                }\n" +
+                    "                PreCECBean preCECBean = (PreCECBean) precCECList.get(contador);\n" +
+                    "                textViewBkpViagemCana.setText(exibirPreCEC(preCECBean));", getLocalClassName());
 
-                LogProcessoDAO.getInstance().insertLogProcesso("                if(contador < precCECList.size() - 1){\n" +
-                        "                    contador = contador + 1;\n" +
-                        "                }\n" +
-                        "                PreCECBean preCECBean = (PreCECBean) precCECList.get(contador);\n" +
-                        "                textViewBkpViagemCana.setText(exibirPreCEC(preCECBean));", getLocalClassName());
-
-                if(contador > 0){
-                    contador = contador - 1;
-                }
-
-                PreCECBean preCECBean = (PreCECBean) precCECList.get(contador);
-                textViewBkpViagemCana.setText(exibirPreCEC(preCECBean));
-
+            if(contador > 0){
+                contador = contador - 1;
             }
+
+            PreCECBean preCECBean12 = (PreCECBean) precCECList.get(contador);
+            textViewBkpViagemCana.setText(exibirPreCEC(preCECBean12));
+
         });
 
-        buttonRetornarBkpViagemCana.setOnClickListener(new View.OnClickListener() {
+        buttonRetornarBkpViagemCana.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonRetornarBkpViagemCana.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                Intent it = new Intent(BackupPreCECActivity.this, MenuCertifActivity.class);", getLocalClassName());
+            Intent it = new Intent(BackupPreCECActivity.this, MenuCertifActivity.class);
+            startActivity(it);
+            finish();
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetornarBkpViagemCana.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                Intent it = new Intent(BackupPreCECActivity.this, MenuCertifActivity.class);", getLocalClassName());
-                Intent it = new Intent(BackupPreCECActivity.this, MenuCertifActivity.class);
-                startActivity(it);
-                finish();
-
-            }
         });
 
     }

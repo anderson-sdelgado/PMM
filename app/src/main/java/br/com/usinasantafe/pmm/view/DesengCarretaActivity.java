@@ -29,72 +29,65 @@ public class DesengCarretaActivity extends ActivityGeneric {
         LogProcessoDAO.getInstance().insertLogProcesso("textViewMsgDesengCarreta.setText(pmmContext.getMotoMecFertCTR().getDescrCarreta());", getLocalClassName());
         textViewMsgDesengCarreta.setText(pmmContext.getMotoMecFertCTR().getDescrCarreta());
 
-        buttonSimDesengate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonSimDesengate.setOnClickListener(v -> {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonSimDesengate.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                pmmContext.getMotoMecFertCTR().delCarreta();\n" +
-                        "                if (connectNetwork) {\n" +
-                        "                    pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
-                        "                }\n" +
-                        "                else{\n" +
-                        "                    pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
-                        "                }", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonSimDesengate.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                pmmContext.getMotoMecFertCTR().delCarreta();\n" +
+                    "                if (connectNetwork) {\n" +
+                    "                    pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
+                    "                }\n" +
+                    "                else{\n" +
+                    "                    pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
+                    "                }", getLocalClassName());
 
-                pmmContext.getMotoMecFertCTR().delCarreta();
+            pmmContext.getMotoMecFertCTR().delCarreta();
 
-                if (connectNetwork) {
-                    pmmContext.getConfigCTR().setStatusConConfig(1L);
-                }
-                else{
-                    pmmContext.getConfigCTR().setStatusConConfig(0L);
-                }
-
-                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());", getLocalClassName());
-                pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
-
-                if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 19L){
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 19L){\n" +
-                            "                    Intent it = new Intent(DesengCarretaActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
-                    Intent it = new Intent(DesengCarretaActivity.this, MenuPrincECMActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-                else{
-                    LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                            "                    Intent it = new Intent(DesengCarretaActivity.this, MenuParadaECMActivity.class);", getLocalClassName());
-                    Intent it = new Intent(DesengCarretaActivity.this, ListaParadaECMActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-
+            if (connectNetwork) {
+                pmmContext.getConfigCTR().setStatusConConfig(1L);
             }
+            else{
+                pmmContext.getConfigCTR().setStatusConConfig(0L);
+            }
+
+            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude());", getLocalClassName());
+            pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+
+            if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 19L){
+                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 19L){\n" +
+                        "                    Intent it = new Intent(DesengCarretaActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                Intent it = new Intent(DesengCarretaActivity.this, MenuPrincECMActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else{
+                LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                        "                    Intent it = new Intent(DesengCarretaActivity.this, MenuParadaECMActivity.class);", getLocalClassName());
+                Intent it = new Intent(DesengCarretaActivity.this, ListaParadaECMActivity.class);
+                startActivity(it);
+                finish();
+            }
+
         });
 
-        buttonNaoDesengate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonNaoDesengate.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {", getLocalClassName());
-                if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 19L){
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 19L){\n" +
-                            "                    Intent it = new Intent(DesengCarretaActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
-                    Intent it = new Intent(DesengCarretaActivity.this, MenuPrincECMActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-                else{
-                    LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                            "                    Intent it = new Intent(DesengCarretaActivity.this, MenuParadaECMActivity.class);", getLocalClassName());
-                    Intent it = new Intent(DesengCarretaActivity.this, ListaParadaECMActivity.class);
-                    startActivity(it);
-                    finish();
-                }
+        buttonNaoDesengate.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonNaoDesengate.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {", getLocalClassName());
+            if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 19L){
+                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 19L){\n" +
+                        "                    Intent it = new Intent(DesengCarretaActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                Intent it = new Intent(DesengCarretaActivity.this, MenuPrincECMActivity.class);
+                startActivity(it);
             }
+            else{
+                LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                        "                    Intent it = new Intent(DesengCarretaActivity.this, MenuParadaECMActivity.class);", getLocalClassName());
+                Intent it = new Intent(DesengCarretaActivity.this, ListaParadaECMActivity.class);
+                startActivity(it);
+            }
+            finish();
         });
 
     }

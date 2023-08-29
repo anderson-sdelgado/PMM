@@ -38,7 +38,7 @@ public class ListaItemOSMecanActivity extends ActivityGeneric {
         LogProcessoDAO.getInstance().insertLogProcesso("itemOSList = pmmContext.getMecanicoCTR().itemOSMecanList();\n" +
                 "        ArrayList<String> itens = new ArrayList<String>();", getLocalClassName());
         itemOSList = pmmContext.getMecanicoCTR().itemOSMecanList();
-        ArrayList<String> itens = new ArrayList<String>();
+        ArrayList<String> itens = new ArrayList<>();
 
         LogProcessoDAO.getInstance().insertLogProcesso("for(ItemOSMecanBean itemOSBean : itemOSList){\n" +
                 "            itens.add(itemOSBean.getSeqItemOS() + \" - \"\n" +
@@ -53,58 +53,49 @@ public class ListaItemOSMecanActivity extends ActivityGeneric {
                     + pmmContext.getMecanicoCTR().getComponente(itemOSBean.getIdCompItemOS()).getDescrComponente());
         }
 
-        buttonAtualItemOS.setOnClickListener(new View.OnClickListener() {
+        buttonAtualItemOS.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonAtualItemOS.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {", getLocalClassName());
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonAtualItemOS.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {", getLocalClassName());
+            if (connectNetwork) {
 
-                if (connectNetwork) {
+                LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
+                        "                    progressBar = new ProgressDialog(ListaItemOSMecanActivity.this);\n" +
+                        "                    progressBar.setCancelable(true);\n" +
+                        "                    progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
+                        "                    progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);\n" +
+                        "                    progressBar.setProgress(0);\n" +
+                        "                    progressBar.setMax(100);\n" +
+                        "                    progressBar.show();", getLocalClassName());
 
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
-                            "                    progressBar = new ProgressDialog(ListaItemOSMecanActivity.this);\n" +
-                            "                    progressBar.setCancelable(true);\n" +
-                            "                    progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
-                            "                    progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);\n" +
-                            "                    progressBar.setProgress(0);\n" +
-                            "                    progressBar.setMax(100);\n" +
-                            "                    progressBar.show();", getLocalClassName());
+                progressBar = new ProgressDialog(ListaItemOSMecanActivity.this);
+                progressBar.setCancelable(true);
+                progressBar.setMessage("ATUALIZANDO ...");
+                progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progressBar.setProgress(0);
+                progressBar.setMax(100);
+                progressBar.show();
 
-                    progressBar = new ProgressDialog(ListaItemOSMecanActivity.this);
-                    progressBar.setCancelable(true);
-                    progressBar.setMessage("ATUALIZANDO ...");
-                    progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                    progressBar.setProgress(0);
-                    progressBar.setMax(100);
-                    progressBar.show();
+                LogProcessoDAO.getInstance().insertLogProcesso("customHandler.removeCallbacks(updateTimerThread)", getLocalClassName());
+                pmmContext.getMecanicoCTR().atualDados(ListaItemOSMecanActivity.this, ListaItemOSMecanActivity.class, progressBar, "ItemOSMecan", 2, getLocalClassName());
 
-                    LogProcessoDAO.getInstance().insertLogProcesso("customHandler.removeCallbacks(updateTimerThread)", getLocalClassName());
-                    pmmContext.getMecanicoCTR().atualDados(ListaItemOSMecanActivity.this, ListaItemOSMecanActivity.class, progressBar, "ItemOSMecan", 2, getLocalClassName());
+            } else {
 
-                } else {
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
 
-                    LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
+                AlertDialog.Builder alerta = new AlertDialog.Builder(ListaItemOSMecanActivity.this);
+                alerta.setTitle("ATENÇÃO");
+                alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
+                alerta.setPositiveButton("OK", (dialog, which) -> LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(ListaItemOSMecanActivity.this);\n" +
+                        "                    alerta.setTitle(\"ATENÇÃO\");\n" +
+                        "                    alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
+                        "                    alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                        "                        @Override\n" +
+                        "                        public void onClick(DialogInterface dialog, int which) {", getLocalClassName()));
 
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(ListaItemOSMecanActivity.this);
-                    alerta.setTitle("ATENÇÃO");
-                    alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
-                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(ListaItemOSMecanActivity.this);\n" +
-                                    "                    alerta.setTitle(\"ATENÇÃO\");\n" +
-                                    "                    alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
-                                    "                    alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                                    "                        @Override\n" +
-                                    "                        public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
-                        }
-                    });
-
-                    alerta.show();
-                }
+                alerta.show();
             }
         });
 
@@ -115,41 +106,32 @@ public class ListaItemOSMecanActivity extends ActivityGeneric {
         itemOSListView = findViewById(R.id.listItemOS);
         itemOSListView.setAdapter(adapterList);
 
-        itemOSListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        itemOSListView.setOnItemClickListener((l, v, position, id) -> {
 
-            @Override
-            public void onItemClick(AdapterView<?> l, View v, int position,
-                                    long id) {
+            ItemOSMecanBean itemOSBean = itemOSList.get(position);
+            pmmContext.getMecanicoCTR().salvarApontMecan(itemOSBean.getSeqItemOS(), getLocalClassName());
 
-                ItemOSMecanBean itemOSBean = itemOSList.get(position);
-                pmmContext.getMecanicoCTR().salvarApontMecan(itemOSBean.getSeqItemOS(), getLocalClassName());
-
-                LogProcessoDAO.getInstance().insertLogProcesso("itemOSListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
-                        "                                    long id) {\n" +
-                        "                ItemOSMecanBean itemOSBean = itemOSList.get(position);\n" +
-                        "                pmmContext.getMecanicoCTR().salvarApont(itemOSBean.getSeqItemOS(), getLocalClassName());\n" +
-                        "                Intent it = new Intent(ListaItemOSMecanActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                Intent it = new Intent(ListaItemOSMecanActivity.this, MenuPrincPMMActivity.class);
-                startActivity(it);
-                finish();
-
-            }
+            LogProcessoDAO.getInstance().insertLogProcesso("itemOSListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
+                    "                                    long id) {\n" +
+                    "                ItemOSMecanBean itemOSBean = itemOSList.get(position);\n" +
+                    "                pmmContext.getMecanicoCTR().salvarApont(itemOSBean.getSeqItemOS(), getLocalClassName());\n" +
+                    "                Intent it = new Intent(ListaItemOSMecanActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+            Intent it = new Intent(ListaItemOSMecanActivity.this, MenuPrincPMMActivity.class);
+            startActivity(it);
+            finish();
 
         });
 
-        buttonRetItemOS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetItemOS.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                Intent it = new Intent(ListaItemOSMecanActivity.this, OSMecanActivity.class);", getLocalClassName());
-                Intent it = new Intent(ListaItemOSMecanActivity.this, OSMecanActivity.class);
-                startActivity(it);
-                finish();
-            }
+        buttonRetItemOS.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonRetItemOS.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                Intent it = new Intent(ListaItemOSMecanActivity.this, OSMecanActivity.class);", getLocalClassName());
+            Intent it = new Intent(ListaItemOSMecanActivity.this, OSMecanActivity.class);
+            startActivity(it);
+            finish();
         });
     }
 

@@ -31,35 +31,31 @@ public class ListaHistApontActivity extends ActivityGeneric {
         AdapterListHistorico adapterListHistorico = new AdapterListHistorico(this, pmmContext.getMotoMecFertCTR().apontList());
         listaHistorico.setAdapter(adapterListHistorico);
 
-        buttonRetHistorico.setOnClickListener(new View.OnClickListener() {
+        buttonRetHistorico.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
-
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetHistorico.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {", getLocalClassName());
-                if(BuildConfig.FLAVOR.equals("pmm")){
-                    LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
-                            "                    Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                    Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPMMActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-                else if(BuildConfig.FLAVOR.equals("ecm")){
-                    LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
-                            "                    Intent it = new Intent(ListaHistApontActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
-                    Intent it = new Intent(ListaHistApontActivity.this, MenuPrincECMActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-                else if(BuildConfig.FLAVOR.equals("pcomp")){
-                    LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
-                            "                    Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
-                    Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPCOMPActivity.class);
-                    startActivity(it);
-                    finish();
-                }
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonRetHistorico.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {", getLocalClassName());
+            if(BuildConfig.FLAVOR.equals("pmm")){
+                LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
+                        "                    Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPMMActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else if(BuildConfig.FLAVOR.equals("ecm")){
+                LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
+                        "                    Intent it = new Intent(ListaHistApontActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                Intent it = new Intent(ListaHistApontActivity.this, MenuPrincECMActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else if(BuildConfig.FLAVOR.equals("pcomp")){
+                LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
+                        "                    Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                Intent it = new Intent(ListaHistApontActivity.this, MenuPrincPCOMPActivity.class);
+                startActivity(it);
+                finish();
             }
         });
 

@@ -34,23 +34,20 @@ public class CECActivity extends ActivityGeneric {
         String boletim = visCEC(pmmContext.getCecCTR().getCEC());
         textViewBoletim.setText(boletim);
 
-        buttonOkBoletim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonOkBoletim.setOnClickListener(v -> {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkBoletim.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                Intent it = new Intent(CECActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonOkBoletim.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                Intent it = new Intent(CECActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
 
-                Intent it = new Intent(CECActivity.this, MenuPrincECMActivity.class);
-                startActivity(it);
-                finish();
+            Intent it = new Intent(CECActivity.this, MenuPrincECMActivity.class);
+            startActivity(it);
+            finish();
 
-                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(null, null, null, \"OS\", 2, getLocalClassName());", getLocalClassName());
-                pmmContext.getMotoMecFertCTR().atualDados("OS", 4, getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(null, null, null, \"OS\", 2, getLocalClassName());", getLocalClassName());
+            pmmContext.getMotoMecFertCTR().atualDados("OS", 4, getLocalClassName());
 
-            }
         });
 
     }

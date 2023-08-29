@@ -8,6 +8,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.model.bean.estaticas.OSBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CECBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.PreCECBean;
+import br.com.usinasantafe.pmm.model.dao.AtualAplicDAO;
 import br.com.usinasantafe.pmm.model.dao.CECDAO;
 import br.com.usinasantafe.pmm.model.dao.CarretaDAO;
 import br.com.usinasantafe.pmm.model.dao.EquipDAO;
@@ -146,8 +147,9 @@ public class CECCTR {
         CECDAO cecDAO = new CECDAO();
         EquipDAO equipDAO = new EquipDAO();
         PreCECDAO preCECDAO = new PreCECDAO();
+        AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
 
-        String dados = equipDAO.dadosEnvioEquip() + "_" + preCECDAO.dadosEnvioPreCEC();
+        String dados = equipDAO.dadosEnvioEquip() + "_" + preCECDAO.dadosEnvioPreCEC() + "_" + atualAplicDAO.getAtualBDToken();
         cecDAO.verCEC(dados, telaAtual, telaProx, progressDialog);
     }
 

@@ -15,7 +15,6 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
 /**
  * Created by anderson on 08/03/2018.
  */
-
 public class AdapterListErro extends BaseAdapter {
 
     private List itens;

@@ -3,26 +3,35 @@ package br.com.usinasantafe.pmm.model.bean;
 /**
  * Created by anderson on 24/07/2017.
  */
-
 public class AtualAplicBean {
 
-    private Long idEquipAtual;
+    private Long idEquip;
+    private Long nroEquip;
     private Long idCheckList;
-    private String versaoAtual;
-    private String versaoNova;
-    private Long flagAtualApp;
+    private String versao;
     private Long flagAtualCheckList;
     private String dthr;
+    private String token;
+    private Long nroOS;
+    private Long codPneu;
 
     public AtualAplicBean() {
     }
 
-    public Long getIdEquipAtual() {
-        return idEquipAtual;
+    public Long getIdEquip() {
+        return idEquip;
     }
 
-    public void setIdEquipAtual(Long idEquipAtual) {
-        this.idEquipAtual = idEquipAtual;
+    public void setIdEquip(Long idEquip) {
+        this.idEquip = idEquip;
+    }
+
+    public Long getNroEquip() {
+        return nroEquip;
+    }
+
+    public void setNroEquip(Long nroEquip) {
+        this.nroEquip = nroEquip;
     }
 
     public Long getIdCheckList() {
@@ -33,28 +42,12 @@ public class AtualAplicBean {
         this.idCheckList = idCheckList;
     }
 
-    public String getVersaoAtual() {
-        return versaoAtual;
+    public String getVersao() {
+        return versao;
     }
 
-    public void setVersaoAtual(String versaoAtual) {
-        this.versaoAtual = versaoAtual;
-    }
-
-    public String getVersaoNova() {
-        return versaoNova;
-    }
-
-    public void setVersaoNova(String versaoNova) {
-        this.versaoNova = versaoNova;
-    }
-
-    public Long getFlagAtualApp() {
-        return flagAtualApp;
-    }
-
-    public void setFlagAtualApp(Long flagAtualApp) {
-        this.flagAtualApp = flagAtualApp;
+    public void setVersao(String versao) {
+        this.versao = versao;
     }
 
     public Long getFlagAtualCheckList() {
@@ -71,5 +64,29 @@ public class AtualAplicBean {
 
     public void setDthr(String dthr) {
         this.dthr = dthr;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Long getNroOS() {
+        return nroOS;
+    }
+
+    public void setNroOS(Long nroOS) {
+        this.nroOS = nroOS;
+    }
+
+    public Long getCodPneu() {
+        return codPneu;
+    }
+
+    public void setCodPneu(Long codPneu) {
+        this.codPneu = codPneu;
     }
 }

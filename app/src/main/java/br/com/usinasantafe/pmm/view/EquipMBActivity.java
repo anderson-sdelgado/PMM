@@ -29,154 +29,130 @@ public class EquipMBActivity extends ActivityGeneric {
         Button buttonCancMotoBomba = findViewById(R.id.buttonCancPadrao);
         Button buttonAtualPadrao = findViewById(R.id.buttonAtualPadrao);
 
-        buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonAtualPadrao.setOnClickListener(v -> {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                AlertDialog.Builder alerta = new AlertDialog.Builder(EquipMBActivity.this);\n" +
-                        "                alerta.setTitle(\"ATENÇÃO\");\n" +
-                        "                alerta.setMessage(\"DESEJA REALMENTE ATUALIZAR BASE DE DADOS?\");", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                AlertDialog.Builder alerta = new AlertDialog.Builder(EquipMBActivity.this);\n" +
+                    "                alerta.setTitle(\"ATENÇÃO\");\n" +
+                    "                alerta.setMessage(\"DESEJA REALMENTE ATUALIZAR BASE DE DADOS?\");", getLocalClassName());
 
-                AlertDialog.Builder alerta = new AlertDialog.Builder(EquipMBActivity.this);
-                alerta.setTitle("ATENÇÃO");
-                alerta.setMessage("DESEJA REALMENTE ATUALIZAR BASE DE DADOS?");
-                alerta.setNegativeButton("SIM", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+            AlertDialog.Builder alerta = new AlertDialog.Builder(EquipMBActivity.this);
+            alerta.setTitle("ATENÇÃO");
+            alerta.setMessage("DESEJA REALMENTE ATUALIZAR BASE DE DADOS?");
+            alerta.setNegativeButton("SIM", (dialog, which) -> {
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
-                                "                    @Override\n" +
-                                "                    public void onClick(DialogInterface dialog, int which) {\n" +
-                                "                        if (connectNetwork) {", getLocalClassName());
+                LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                        "                    @Override\n" +
+                        "                    public void onClick(DialogInterface dialog, int which) {\n" +
+                        "                        if (connectNetwork) {", getLocalClassName());
 
-                        if (connectNetwork) {
+                if (connectNetwork) {
 
-                            LogProcessoDAO.getInstance().insertLogProcesso("progressBar = new ProgressDialog(EquipMBActivity.this);\n" +
-                                    "                            progressBar.setCancelable(true);\n" +
-                                    "                            progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
-                                    "                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);\n" +
-                                    "                            progressBar.setProgress(0);\n" +
-                                    "                            progressBar.setMax(100);\n" +
-                                    "                            progressBar.show();", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("progressBar = new ProgressDialog(EquipMBActivity.this);\n" +
+                            "                            progressBar.setCancelable(true);\n" +
+                            "                            progressBar.setMessage(\"ATUALIZANDO ...\");\n" +
+                            "                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);\n" +
+                            "                            progressBar.setProgress(0);\n" +
+                            "                            progressBar.setMax(100);\n" +
+                            "                            progressBar.show();", getLocalClassName());
 
-                            progressBar = new ProgressDialog(EquipMBActivity.this);
-                            progressBar.setCancelable(true);
-                            progressBar.setMessage("ATUALIZANDO ...");
-                            progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                            progressBar.setProgress(0);
-                            progressBar.setMax(100);
-                            progressBar.show();
+                    progressBar = new ProgressDialog(EquipMBActivity.this);
+                    progressBar.setCancelable(true);
+                    progressBar.setMessage("ATUALIZANDO ...");
+                    progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                    progressBar.setProgress(0);
+                    progressBar.setMax(100);
+                    progressBar.show();
 
-                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(EquipMBActivity.this, EquipMBActivity.class, progressBar, \"EquipSeg\", 1);", getLocalClassName());
-                            pmmContext.getMotoMecFertCTR().atualDados(EquipMBActivity.this, EquipMBActivity.class, progressBar, "EquipSeg", 1, getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(EquipMBActivity.this, EquipMBActivity.class, progressBar, \"EquipSeg\", 1);", getLocalClassName());
+                    pmmContext.getMotoMecFertCTR().atualDados(EquipMBActivity.this, EquipMBActivity.class, progressBar, "EquipSeg", 1, getLocalClassName());
 
-                        } else {
+                } else {
 
-                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                    "                            AlertDialog.Builder alerta = new AlertDialog.Builder(EquipMBActivity.this);\n" +
-                                    "                            alerta.setTitle(\"ATENÇÃO\");\n" +
-                                    "                            alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
-                                    "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                                    "                                @Override\n" +
-                                    "                                public void onClick(DialogInterface dialog, int which) {\n" +
-                                    "                                }\n" +
-                                    "                            });\n" +
-                                    "                            alerta.show();", getLocalClassName());
-                            AlertDialog.Builder alerta = new AlertDialog.Builder(EquipMBActivity.this);
-                            alerta.setTitle("ATENÇÃO");
-                            alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
-                            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            });
-                            alerta.show();
-
-                        }
-
-                    }
-                });
-
-                alerta.setPositiveButton("NÃO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
-                                "                    @Override\n" +
-                                "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
-                    }
-                });
-                alerta.show();
-
-            }
-
-        });
-
-        buttonOkMotoBomba.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkMotoBomba.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {", getLocalClassName());
-
-                if (!editTextPadrao.getText().toString().equals("")) {
-
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
-                            "                    Long motoBomba = Long.parseLong(editTextPadrao.getText().toString());", getLocalClassName());
-                    Long motoBomba = Long.parseLong(editTextPadrao.getText().toString());
-
-                    if (pmmContext.getMotoMecFertCTR().verMotoBomba(motoBomba)) {
-
-                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verMotoBomba(motoBomba)) {\n" +
-                                "                        pmmContext.getConfigCTR().setIdEquipBombaBolConfig(pmmContext.getMotoMecFertCTR().getEquipSeg(motoBomba).getIdEquip());\n" +
-                                "                        salvarBoletimAberto();", getLocalClassName());
-                        pmmContext.getConfigCTR().setIdEquipBombaBolConfig(pmmContext.getMotoMecFertCTR().getEquipSeg(motoBomba).getIdEquip());
-                        salvarBoletimAberto();
-
-                    } else {
-
-                        LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(EquipMBActivity.this);\n" +
-                                "                        alerta.setTitle(\"ATENCAO\");\n" +
-                                "                        alerta.setMessage(\"NUMERAÇÃO DA MOTO BOMBA INCORRETA. FAVOR, VERIFICAR A NUMERAÇÃO OU ATUALIZAR A BASE DE DADOS NOVAMENTE!\");\n" +
-                                "                        alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                                "                            @Override\n" +
-                                "                            public void onClick(DialogInterface dialog, int which) {\n" +
-                                "                            }\n" +
-                                "                        });\n" +
-                                "                        alerta.show();", getLocalClassName());
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(EquipMBActivity.this);
-                        alerta.setTitle("ATENCAO");
-                        alerta.setMessage("NUMERAÇÃO DA MOTO BOMBA INCORRETA. FAVOR, VERIFICAR A NUMERAÇÃO OU ATUALIZAR A BASE DE DADOS NOVAMENTE!");
-                        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
-                        alerta.show();
-
-                    }
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                            "                            AlertDialog.Builder alerta = new AlertDialog.Builder(EquipMBActivity.this);\n" +
+                            "                            alerta.setTitle(\"ATENÇÃO\");\n" +
+                            "                            alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
+                            "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                            "                                @Override\n" +
+                            "                                public void onClick(DialogInterface dialog, int which) {\n" +
+                            "                                }\n" +
+                            "                            });\n" +
+                            "                            alerta.show();", getLocalClassName());
+                    AlertDialog.Builder alerta1 = new AlertDialog.Builder(EquipMBActivity.this);
+                    alerta1.setTitle("ATENÇÃO");
+                    alerta1.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
+                    alerta1.setPositiveButton("OK", (dialog1, which1) -> {
+                    });
+                    alerta1.show();
 
                 }
 
+            });
 
-            }
+            alerta.setPositiveButton("NÃO", (dialog, which) -> LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                    "                    @Override\n" +
+                    "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName()));
+            alerta.show();
+
         });
 
-        buttonCancMotoBomba.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancMotoBomba.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "           if (editTextPadrao.getText().toString().length() > 0) {\n" +
-                        "                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));\n" +
-                        "                }", getLocalClassName());
-                if (editTextPadrao.getText().toString().length() > 0) {
-                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
+        buttonOkMotoBomba.setOnClickListener(v -> {
+
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonOkMotoBomba.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {", getLocalClassName());
+
+            if (!editTextPadrao.getText().toString().equals("")) {
+
+                LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
+                        "                    Long motoBomba = Long.parseLong(editTextPadrao.getText().toString());", getLocalClassName());
+                Long motoBomba = Long.parseLong(editTextPadrao.getText().toString());
+
+                if (pmmContext.getMotoMecFertCTR().verMotoBomba(motoBomba)) {
+
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verMotoBomba(motoBomba)) {\n" +
+                            "                        pmmContext.getConfigCTR().setIdEquipBombaBolConfig(pmmContext.getMotoMecFertCTR().getEquipSeg(motoBomba).getIdEquip());\n" +
+                            "                        salvarBoletimAberto();", getLocalClassName());
+                    pmmContext.getConfigCTR().setIdEquipBombaBolConfig(pmmContext.getMotoMecFertCTR().getEquipSeg(motoBomba).getIdEquip());
+                    salvarBoletimAberto();
+
+                } else {
+
+                    LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(EquipMBActivity.this);\n" +
+                            "                        alerta.setTitle(\"ATENCAO\");\n" +
+                            "                        alerta.setMessage(\"NUMERAÇÃO DA MOTO BOMBA INCORRETA. FAVOR, VERIFICAR A NUMERAÇÃO OU ATUALIZAR A BASE DE DADOS NOVAMENTE!\");\n" +
+                            "                        alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                            "                            @Override\n" +
+                            "                            public void onClick(DialogInterface dialog, int which) {\n" +
+                            "                            }\n" +
+                            "                        });\n" +
+                            "                        alerta.show();", getLocalClassName());
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(EquipMBActivity.this);
+                    alerta.setTitle("ATENCAO");
+                    alerta.setMessage("NUMERAÇÃO DA MOTO BOMBA INCORRETA. FAVOR, VERIFICAR A NUMERAÇÃO OU ATUALIZAR A BASE DE DADOS NOVAMENTE!");
+                    alerta.setPositiveButton("OK", (dialog, which) -> {
+                    });
+                    alerta.show();
+
                 }
+
+            }
+
+
+        });
+
+        buttonCancMotoBomba.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonCancMotoBomba.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "           if (editTextPadrao.getText().toString().length() > 0) {\n" +
+                    "                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));\n" +
+                    "                }", getLocalClassName());
+            if (editTextPadrao.getText().toString().length() > 0) {
+                editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
             }
         });
 

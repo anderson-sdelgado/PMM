@@ -32,39 +32,29 @@ public class ListaOSRecolhActivity extends ActivityGeneric {
         AdapterListRecolh adapterListRecolh = new AdapterListRecolh(this, pmmContext.getMotoMecFertCTR().recolhList());
         listaRecMang.setAdapter(adapterListRecolh);
 
-        listaRecMang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listaRecMang.setOnItemClickListener((l, v, position, id) -> {
 
-            @Override
-            public void onItemClick(AdapterView<?> l, View v, int position,
-                                    long id) {
-
-                LogProcessoDAO.getInstance().insertLogProcesso("listaRecMang.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
-                        "                                    long id) {\n" +
-                        "                pmmContext.getMotoMecFertCTR().setContRecolh(position);\n" +
-                        "                Intent it = new Intent(ListaOSRecolhActivity.this, RecolhimentoActivity.class);", getLocalClassName());
-                pmmContext.getMotoMecFertCTR().setContRecolh(position);
-                Intent it = new Intent(ListaOSRecolhActivity.this, RecolhimentoActivity.class);
-                startActivity(it);
-                finish();
-
-            }
+            LogProcessoDAO.getInstance().insertLogProcesso("listaRecMang.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
+                    "                                    long id) {\n" +
+                    "                pmmContext.getMotoMecFertCTR().setContRecolh(position);\n" +
+                    "                Intent it = new Intent(ListaOSRecolhActivity.this, RecolhimentoActivity.class);", getLocalClassName());
+            pmmContext.getMotoMecFertCTR().setContRecolh(position);
+            Intent it = new Intent(ListaOSRecolhActivity.this, RecolhimentoActivity.class);
+            startActivity(it);
+            finish();
 
         });
 
-        buttonRetRecMang.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetRecMang.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                Intent it = new Intent(ListaOSRecolhActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                Intent it = new Intent(ListaOSRecolhActivity.this, MenuPrincPMMActivity.class);
-                startActivity(it);
-                finish();
-            }
+        buttonRetRecMang.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonRetRecMang.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                Intent it = new Intent(ListaOSRecolhActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+            Intent it = new Intent(ListaOSRecolhActivity.this, MenuPrincPMMActivity.class);
+            startActivity(it);
+            finish();
         });
 
     }

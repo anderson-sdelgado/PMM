@@ -6,6 +6,7 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.dao.AtualAplicDAO;
 import br.com.usinasantafe.pmm.model.dao.CabecCheckListDAO;
 import br.com.usinasantafe.pmm.model.dao.EquipDAO;
 import br.com.usinasantafe.pmm.model.dao.ItemCheckListDAO;
@@ -68,9 +69,11 @@ public class CheckListCTR {
                 , configCTR.getConfig().getUltTurnoCLConfig(), configCTR.getConfig().getDtUltCLConfig());
     }
 
-    public void atualCheckList(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
+    public void atualCheckList(Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
         ItemCheckListDAO itemCheckListDAO = new ItemCheckListDAO();
-        itemCheckListDAO.atualCheckList(dado, telaAtual, telaProx, progressDialog, activity);
+        AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
+        ConfigCTR configCTR = new ConfigCTR();
+        itemCheckListDAO.atualCheckList(atualAplicDAO.getAtualNroEquip(configCTR.getEquip().getNroEquip()), telaAtual, telaProx, progressDialog, activity);
     }
 
     public void receberVerifCheckList(String result) {
@@ -89,11 +92,8 @@ public class CheckListCTR {
                 ItemCheckListDAO itemCheckListDAO = new ItemCheckListDAO();
                 itemCheckListDAO.recDadosCheckList(json.jsonArray(retorno[1]));
 
-                VerifDadosServ.getInstance().pulaTela();
-
-            } else {
-                VerifDadosServ.getInstance().pulaTela();
             }
+            VerifDadosServ.getInstance().pulaTela();
 
         } catch (Exception e) {
             LogErroDAO.getInstance().insertLogErro(e);

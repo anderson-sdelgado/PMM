@@ -65,42 +65,35 @@ public class RendimentoActivity extends ActivityGeneric {
             editText.setText("");
         }
 
-        buttonOkRendimento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkRendimento.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {", getLocalClassName());
-                if (!editTextPadrao.getText().toString().equals("")) {
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
-                            "                    verifRend();", getLocalClassName());
-                    verifRend();
-                }
-                else{
-                    if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 7L){
-                        LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                                "                    if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 7L){\n" +
-                                "                        Intent it = new Intent(RendimentoActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                        Intent it = new Intent(RendimentoActivity.this, MenuPrincPMMActivity.class);
-                        startActivity(it);
-                        finish();
-                    }
+        buttonOkRendimento.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonOkRendimento.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {", getLocalClassName());
+            if (!editTextPadrao.getText().toString().equals("")) {
+                LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
+                        "                    verifRend();", getLocalClassName());
+                verifRend();
+            } else {
+                if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 7L){
+                    LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                            "                    if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 7L){\n" +
+                            "                        Intent it = new Intent(RendimentoActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                    Intent it = new Intent(RendimentoActivity.this, MenuPrincPMMActivity.class);
+                    startActivity(it);
+                    finish();
                 }
             }
         });
 
-        buttonCancRendimento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancRendimento.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "if (editTextPadrao.getText().toString().length() > 0) {\n" +
-                        "                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));\n" +
-                        "                }", getLocalClassName());
-                if (editTextPadrao.getText().toString().length() > 0) {
-                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
-                }
+        buttonCancRendimento.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonCancRendimento.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "if (editTextPadrao.getText().toString().length() > 0) {\n" +
+                    "                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));\n" +
+                    "                }", getLocalClassName());
+            if (editTextPadrao.getText().toString().length() > 0) {
+                editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
             }
         });
 
@@ -117,23 +110,20 @@ public class RendimentoActivity extends ActivityGeneric {
                 pmmContext.getMotoMecFertCTR().setPosRend(pmmContext.getMotoMecFertCTR().getPosRend() - 1);
                 Intent it = new Intent(RendimentoActivity.this, RendimentoActivity.class);
                 startActivity(it);
-                finish();
             }
             else{
                 LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                         "                Intent it = new Intent(RendimentoActivity.this, HorimetroActivity.class);", getLocalClassName());
                 Intent it = new Intent(RendimentoActivity.this, HorimetroActivity.class);
                 startActivity(it);
-                finish();
             }
-        }
-        else {
+        } else {
             LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                     "            Intent it = new Intent(RendimentoActivity.this, ListaOSRendActivity.class);", getLocalClassName());
             Intent it = new Intent(RendimentoActivity.this, ListaOSRendActivity.class);
             startActivity(it);
-            finish();
         }
+        finish();
     }
 
     public void verTela(Double rendNum){
@@ -152,7 +142,6 @@ public class RendimentoActivity extends ActivityGeneric {
                 LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(RendimentoActivity.this, TelaInicialActivity.class);", getLocalClassName());
                 Intent it = new Intent(RendimentoActivity.this, TelaInicialActivity.class);
                 startActivity(it);
-                finish();
             } else {
                 LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                         "pmmContext.getMotoMecFertCTR().setContRend(pmmContext.getMotoMecFertCTR().getContRend() + 1);\n" +
@@ -160,17 +149,15 @@ public class RendimentoActivity extends ActivityGeneric {
                 pmmContext.getMotoMecFertCTR().setContRend(pmmContext.getMotoMecFertCTR().getContRend() + 1);
                 Intent it = new Intent(RendimentoActivity.this, RendimentoActivity.class);
                 startActivity(it);
-                finish();
             }
-
         }
         else {
             LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                     "Intent it = new Intent(RendimentoActivity.this, ListaOSRendActivity.class);", getLocalClassName());
             Intent it = new Intent(RendimentoActivity.this, ListaOSRendActivity.class);
             startActivity(it);
-            finish();
         }
+        finish();
     }
 
     public void verifRend(){
@@ -196,10 +183,7 @@ public class RendimentoActivity extends ActivityGeneric {
             AlertDialog.Builder alerta = new AlertDialog.Builder(RendimentoActivity.this);
             alerta.setTitle("ATENCAO");
             alerta.setMessage("VALOR INFORMADO MAIS ALTO DO QUE O PERMITIDO PRA OS. VALOR VERIFIQUE O VALOR DIGITADO.");
-            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
+            alerta.setPositiveButton("OK", (dialog, which) -> {
             });
             alerta.show();
         }

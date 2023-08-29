@@ -28,6 +28,7 @@ import br.com.usinasantafe.pmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.pmm.model.dao.ApontMMFertDAO;
 import br.com.usinasantafe.pmm.model.dao.ApontMecanDAO;
 import br.com.usinasantafe.pmm.model.dao.AtividadeDAO;
+import br.com.usinasantafe.pmm.model.dao.AtualAplicDAO;
 import br.com.usinasantafe.pmm.model.dao.BocalDAO;
 import br.com.usinasantafe.pmm.model.dao.BoletimMMFertDAO;
 import br.com.usinasantafe.pmm.model.dao.BoletimPneuDAO;
@@ -789,21 +790,24 @@ public class MotoMecFertCTR {
 
     //////////////////////////////// VERIFICAÇÃO E ATUALIZAÇÃO DE DADOS ////////////////////////////
 
-    public void verOS(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
+    public void verOS(String nroOS, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
         OSDAO osDAO = new OSDAO();
-        osDAO.verOS(dado, telaAtual, telaProx, progressDialog, activity);
+        AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
+        osDAO.verOS(atualAplicDAO.getAtualNroOS(Long.parseLong(nroOS)), telaAtual, telaProx, progressDialog, activity);
     }
 
-    public void verAtiv(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
+    public void verAtiv(Long nroOS, Context telaAtual, Class telaProx, ProgressDialog progressDialog){
         ConfigCTR configCTR = new ConfigCTR();
         AtividadeDAO atividadeDAO = new AtividadeDAO();
-        atividadeDAO.verAtiv(dado + "_" + configCTR.getEquip().getNroEquip(), telaAtual, telaProx, progressDialog);
+        AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
+        atividadeDAO.verAtiv(atualAplicDAO.getAtualNroOSIdEquip(nroOS, configCTR.getEquip().getIdEquip()), telaAtual, telaProx, progressDialog);
     }
 
     public void verAtivECM(Context telaAtual, Class telaProx, ProgressDialog progressDialog){
         ConfigCTR configCTR = new ConfigCTR();
         AtividadeDAO atividadeDAO = new AtividadeDAO();
-        atividadeDAO.verAtivECM(configCTR.getEquip().getNroEquip().toString(), telaAtual, telaProx, progressDialog);
+        AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
+        atividadeDAO.verAtivECM(atualAplicDAO.getAtualIdEquip(configCTR.getEquip().getIdEquip()), telaAtual, telaProx, progressDialog);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1241,9 +1245,10 @@ public class MotoMecFertCTR {
         return itemCalibPneuDAO.verItemMedPneuIdBolNroPneu(boletimPneuDAO.getBoletimPneuAberto().getIdBolPneu(), nroPneu);
     }
 
-    public void verPneu(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
+    public void verPneu(String codPneu, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
         PneuDAO pneuDAO = new PneuDAO();
-        pneuDAO.verPneu(dado, telaAtual, telaProx, progressDialog, activity);
+        AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
+        pneuDAO.verPneu(atualAplicDAO.getAtualCodPneu(Long.parseLong(codPneu)), telaAtual, telaProx, progressDialog, activity);
     }
 
     public void receberVerifPneu(String result){

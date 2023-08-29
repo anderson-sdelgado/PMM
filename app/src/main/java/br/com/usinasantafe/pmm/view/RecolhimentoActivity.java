@@ -62,47 +62,39 @@ public class RecolhimentoActivity extends ActivityGeneric {
             editText.setText("");
         }
 
-        buttonOkRecolMang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonOkRecolMang.setOnClickListener(v -> {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkRecolMang.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {", getLocalClassName());
-                if (!editTextPadrao.getText().toString().equals("")) {
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
-                            "                    verTela();", getLocalClassName());
-                    verTela();
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonOkRecolMang.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {", getLocalClassName());
+            if (!editTextPadrao.getText().toString().equals("")) {
+                LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
+                        "                    verTela();", getLocalClassName());
+                verTela();
+            }
+            else{
+                LogProcessoDAO.getInstance().insertLogProcesso("else{", getLocalClassName());
+                if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 9L){
+                    LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                            "                    if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 9L){\n" +
+                            "                        Intent it = new Intent(RecolhimentoActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                    Intent it = new Intent(RecolhimentoActivity.this, MenuPrincPMMActivity.class);
+                    startActivity(it);
+                    finish();
                 }
-                else{
-                    LogProcessoDAO.getInstance().insertLogProcesso("else{", getLocalClassName());
-                    if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 9L){
-                        LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                                "                    if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 9L){\n" +
-                                "                        Intent it = new Intent(RecolhimentoActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                        Intent it = new Intent(RecolhimentoActivity.this, MenuPrincPMMActivity.class);
-                        startActivity(it);
-                        finish();
-                    }
-                }
-
             }
 
         });
 
-        buttonCancRecolMang.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancRecolMang.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "if (editTextPadrao.getText().toString().length() > 0) {\n" +
-                        "                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));\n" +
-                        "                }", getLocalClassName());
-                if (editTextPadrao.getText().toString().length() > 0) {
-                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
-                }
+        buttonCancRecolMang.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonCancRecolMang.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "if (editTextPadrao.getText().toString().length() > 0) {\n" +
+                    "                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));\n" +
+                    "                }", getLocalClassName());
+            if (editTextPadrao.getText().toString().length() > 0) {
+                editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
             }
         });
 
@@ -120,22 +112,20 @@ public class RecolhimentoActivity extends ActivityGeneric {
                 pmmContext.getMotoMecFertCTR().setPosRecolh(pmmContext.getMotoMecFertCTR().getPosRecolh() - 1);
                 Intent it = new Intent(RecolhimentoActivity.this, RecolhimentoActivity.class);
                 startActivity(it);
-                finish();
             }
             else{
                 LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                         "                Intent it = new Intent(RecolhimentoActivity.this, HorimetroActivity.class);", getLocalClassName());
                 Intent it = new Intent(RecolhimentoActivity.this, HorimetroActivity.class);
                 startActivity(it);
-                finish();
             }
         } else {
             LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                     "            Intent it = new Intent(RecolhimentoActivity.this, ListaOSRendActivity.class);", getLocalClassName());
             Intent it = new Intent(RecolhimentoActivity.this, ListaOSRendActivity.class);
             startActivity(it);
-            finish();
         }
+        finish();
     }
 
     public void verTela(){
@@ -155,7 +145,6 @@ public class RecolhimentoActivity extends ActivityGeneric {
                 LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(RecolhimentoActivity.this, TelaInicialActivity.class);", getLocalClassName());
                 Intent it = new Intent(RecolhimentoActivity.this, TelaInicialActivity.class);
                 startActivity(it);
-                finish();
             } else {
                 LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                         "                pmmContext.getMotoMecFertCTR().setContRecolh(pmmContext.getMotoMecFertCTR().getContRecolh() + 1);\n" +
@@ -163,7 +152,6 @@ public class RecolhimentoActivity extends ActivityGeneric {
                 pmmContext.getMotoMecFertCTR().setContRecolh(pmmContext.getMotoMecFertCTR().getContRecolh() + 1);
                 Intent it = new Intent(RecolhimentoActivity.this, RecolhimentoActivity.class);
                 startActivity(it);
-                finish();
             }
         }
         else {
@@ -171,8 +159,8 @@ public class RecolhimentoActivity extends ActivityGeneric {
                     "            Intent it = new Intent(RecolhimentoActivity.this, ListaOSRecolhActivity.class);", getLocalClassName());
             Intent it = new Intent(RecolhimentoActivity.this, ListaOSRecolhActivity.class);
             startActivity(it);
-            finish();
         }
+        finish();
     }
 
 }

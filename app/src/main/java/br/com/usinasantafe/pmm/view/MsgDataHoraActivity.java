@@ -22,15 +22,13 @@ public class MsgDataHoraActivity extends ActivityGeneric {
 
     }
 
-    private Runnable runnable = new Runnable(){
-        public void run() {
-            LogProcessoDAO.getInstance().insertLogProcesso("private Runnable runnable = new Runnable(){\n" +
-                    "        public void run() {\n" +
-                    "            Intent it = new Intent( MsgDataHoraActivity.this, DataHoraActivity.class);", getLocalClassName());
-            Intent it = new Intent( MsgDataHoraActivity.this, DataHoraActivity.class);
-            startActivity(it);
-            finish();
-        }
+    private Runnable runnable = () -> {
+        LogProcessoDAO.getInstance().insertLogProcesso("private Runnable runnable = new Runnable(){\n" +
+                "        public void run() {\n" +
+                "            Intent it = new Intent( MsgDataHoraActivity.this, DataHoraActivity.class);", getLocalClassName());
+        Intent it = new Intent( MsgDataHoraActivity.this, DataHoraActivity.class);
+        startActivity(it);
+        finish();
     };
 
 }

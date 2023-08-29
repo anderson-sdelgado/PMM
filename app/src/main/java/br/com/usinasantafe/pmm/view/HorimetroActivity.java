@@ -48,75 +48,59 @@ public class HorimetroActivity extends ActivityGeneric {
             textViewHorimetro.setText("HORIMETRO/HODOMETRO FINAL");
         }
 
-        buttonOkHorimetro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonOkHorimetro.setOnClickListener(v -> {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkHorimetro.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonOkHorimetro.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {", getLocalClassName());
 
-                if (!editTextPadrao.getText().toString().equals("")) {
+            if (!editTextPadrao.getText().toString().equals("")) {
 
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
-                            "                    String horimetro = editTextPadrao.getText().toString();\n" +
-                            "                    horimetroNum = Double.valueOf(horimetro.replace(\",\", \".\"));", getLocalClassName());
-                    String horimetro = editTextPadrao.getText().toString();
-                    horimetroNum = Double.valueOf(horimetro.replace(",", "."));
+                LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
+                        "                    String horimetro = editTextPadrao.getText().toString();\n" +
+                        "                    horimetroNum = Double.valueOf(horimetro.replace(\",\", \".\"));", getLocalClassName());
+                String horimetro = editTextPadrao.getText().toString();
+                horimetroNum = Double.valueOf(horimetro.replace(",", "."));
 
-                    if (horimetroNum >= pmmContext.getConfigCTR().getConfig().getHorimetroConfig()) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("if (horimetroNum >= pmmContext.getConfigCTR().getConfig().getHorimetroConfig()) {\n" +
-                                "                        verTela();", getLocalClassName());
+                if (horimetroNum >= pmmContext.getConfigCTR().getConfig().getHorimetroConfig()) {
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (horimetroNum >= pmmContext.getConfigCTR().getConfig().getHorimetroConfig()) {\n" +
+                            "                        verTela();", getLocalClassName());
+                    verTela();
+                } else {
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                            "AlertDialog.Builder alerta = new AlertDialog.Builder(HorimetroActivity.this);\n" +
+                            "                        alerta.setTitle(\"ATENÇÃO\");\n" +
+                            "                        alerta.setMessage(\"O HORIMETRO DIGITADO \" + horimetroNum + \" É MENOR QUE O HORIMETRO ANTERIOR DA MAQUINA \" + pmmContext.getConfigCTR().getConfig().getHorimetroConfig() + \". DESEJA MANTER ESSE VALOR?\");", getLocalClassName());
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(HorimetroActivity.this);
+                    alerta.setTitle("ATENÇÃO");
+                    alerta.setMessage("O HODÔMETRO REGISTRADO " + horimetroNum + " É MENOR QUE O ANTERIOR DE " + pmmContext.getConfigCTR().getConfig().getHorimetroConfig() + ". DESEJA MANTÊ-LO?");
+                    alerta.setPositiveButton("SIM", (dialog, which) -> {
+                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                                "                            @Override\n" +
+                                "                            public void onClick(DialogInterface dialog, int which) {\n" +
+                                "                                verTela();", getLocalClassName());
                         verTela();
-                    } else {
-                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                "AlertDialog.Builder alerta = new AlertDialog.Builder(HorimetroActivity.this);\n" +
-                                "                        alerta.setTitle(\"ATENÇÃO\");\n" +
-                                "                        alerta.setMessage(\"O HORIMETRO DIGITADO \" + horimetroNum + \" É MENOR QUE O HORIMETRO ANTERIOR DA MAQUINA \" + pmmContext.getConfigCTR().getConfig().getHorimetroConfig() + \". DESEJA MANTER ESSE VALOR?\");", getLocalClassName());
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(HorimetroActivity.this);
-                        alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("O HODÔMETRO REGISTRADO " + horimetroNum + " É MENOR QUE O ANTERIOR DE " + pmmContext.getConfigCTR().getConfig().getHorimetroConfig() + ". DESEJA MANTÊ-LO?");
-                        alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
-                                        "                            @Override\n" +
-                                        "                            public void onClick(DialogInterface dialog, int which) {\n" +
-                                        "                                verTela();", getLocalClassName());
-                                verTela();
-                            }
+                    });
 
-                        });
+                    alerta.setNegativeButton("NÃO", (dialog, which) -> LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"NÃO\", new DialogInterface.OnClickListener() {", getLocalClassName()));
 
-                        alerta.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"NÃO\", new DialogInterface.OnClickListener() {", getLocalClassName());
-                            }
-                        });
-
-                        alerta.show();
-
-                    }
+                    alerta.show();
 
                 }
 
             }
+
         });
 
-        buttonCancHorimetro.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancHorimetro.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                if (editTextPadrao.getText().toString().length() > 0) {\n" +
-                        "                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));\n" +
-                        "                }", getLocalClassName());
-                if (editTextPadrao.getText().toString().length() > 0) {
-                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
-                }
+        buttonCancHorimetro.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonCancHorimetro.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                if (editTextPadrao.getText().toString().length() > 0) {\n" +
+                    "                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));\n" +
+                    "                }", getLocalClassName());
+            if (editTextPadrao.getText().toString().length() > 0) {
+                editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
             }
         });
 

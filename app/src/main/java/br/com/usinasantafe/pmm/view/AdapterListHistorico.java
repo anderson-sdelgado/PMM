@@ -20,7 +20,6 @@ import br.com.usinasantafe.pmm.model.bean.estaticas.ParadaBean;
 /**
  * Created by anderson on 08/03/2018.
  */
-
 public class AdapterListHistorico extends BaseAdapter {
 
     private List itens;

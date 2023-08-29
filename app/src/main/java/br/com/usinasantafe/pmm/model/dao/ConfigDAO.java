@@ -40,7 +40,7 @@ public class ConfigDAO {
         return ret;
     }
 
-    public void salvarConfig(String senha){
+    public void salvarConfig(String senha, EquipBean equipBean){
         ConfigBean configBean = new ConfigBean();
         configBean.deleteAll();
         configBean.setUltTurnoCLConfig(0L);
@@ -60,15 +60,10 @@ public class ConfigDAO {
         configBean.setIdFrenteConfig(0L);
         configBean.setIdPropriedadeConfig(0L);
         configBean.setCarretaConfig(0L);
-        configBean.insert();
-        configBean.commit();
-    }
-
-    public void setEquipConfig(EquipBean equipBean){
-        ConfigBean configBean = getConfig();
         configBean.setEquipConfig(equipBean.getIdEquip());
         configBean.setHorimetroConfig(equipBean.getHorimetroEquip());
-        configBean.update();
+        configBean.insert();
+        configBean.commit();
     }
 
     public void setStatusConConfig(Long status){

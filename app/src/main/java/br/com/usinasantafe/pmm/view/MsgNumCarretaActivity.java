@@ -47,126 +47,116 @@ public class MsgNumCarretaActivity extends ActivityGeneric {
         Button buttonOkMsgNumCarreta = findViewById(R.id.buttonOkMsgNumCarreta);
         Button buttonCancMsgNumCarreta = findViewById(R.id.buttonCancMsgNumCarreta);
 
-        buttonOkMsgNumCarreta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonOkMsgNumCarreta.setOnClickListener(v -> {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkMsgNumCarreta.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonOkMsgNumCarreta.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {", getLocalClassName());
 
-                if (numCarreta < 4) {
+            if (numCarreta < 4) {
 
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (numCarreta < 4) {\n" +
-                            "                    Intent it = new Intent(MsgNumCarretaActivity.this, CarretaActivity.class);", getLocalClassName());
-                    Intent it = new Intent(MsgNumCarretaActivity.this, CarretaActivity.class);
-                    startActivity(it);
-                    finish();
+                LogProcessoDAO.getInstance().insertLogProcesso("if (numCarreta < 4) {\n" +
+                        "                    Intent it = new Intent(MsgNumCarretaActivity.this, CarretaActivity.class);", getLocalClassName());
+                Intent it = new Intent(MsgNumCarretaActivity.this, CarretaActivity.class);
+                startActivity(it);
+                finish();
 
-                } else {
+            } else {
 
-                    LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                            "                    AlertDialog.Builder alerta = new AlertDialog.Builder(MsgNumCarretaActivity.this);\n" +
-                            "                    alerta.setTitle(\"ATENÇÃO\");\n" +
-                            "                    alerta.setMessage(\"PROIBIDO A INSERÇÃO DE MAIS DE 3 CARRETAS.\");\n" +
-                            "                    alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                            "                        @Override\n" +
-                            "                        public void onClick(DialogInterface dialog, int which) {\n" +
-                            "                        }\n" +
-                            "                    });\n" +
-                            "                    alerta.show();", getLocalClassName());
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                        "                    AlertDialog.Builder alerta = new AlertDialog.Builder(MsgNumCarretaActivity.this);\n" +
+                        "                    alerta.setTitle(\"ATENÇÃO\");\n" +
+                        "                    alerta.setMessage(\"PROIBIDO A INSERÇÃO DE MAIS DE 3 CARRETAS.\");\n" +
+                        "                    alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                        "                        @Override\n" +
+                        "                        public void onClick(DialogInterface dialog, int which) {\n" +
+                        "                        }\n" +
+                        "                    });\n" +
+                        "                    alerta.show();", getLocalClassName());
 
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(MsgNumCarretaActivity.this);
-                    alerta.setTitle("ATENÇÃO");
-                    alerta.setMessage("PROIBIDO A INSERÇÃO DE MAIS DE 3 CARRETAS.");
+                AlertDialog.Builder alerta = new AlertDialog.Builder(MsgNumCarretaActivity.this);
+                alerta.setTitle("ATENÇÃO");
+                alerta.setMessage("PROIBIDO A INSERÇÃO DE MAIS DE 3 CARRETAS.");
 
-                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
+                alerta.setPositiveButton("OK", (dialog, which) -> {
+                });
 
-                    alerta.show();
+                alerta.show();
 
-                }
             }
         });
 
-        buttonCancMsgNumCarreta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancMsgNumCarreta.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {", getLocalClassName());
-                if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 20L){
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 20L){", getLocalClassName());
-                    if(numCarreta > 1){
-                        LogProcessoDAO.getInstance().insertLogProcesso("if(numCarreta < 1){\n" +
-                                "                        if (connectNetwork) {\n" +
-                                "                            pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
-                                "                        }\n" +
-                                "                        else{\n" +
-                                "                            pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
-                                "                        }", getLocalClassName());
-                        if (connectNetwork) {
-                            pmmContext.getConfigCTR().setStatusConConfig(1L);
-                        }
-                        else{
-                            pmmContext.getConfigCTR().setStatusConConfig(0L);
-                        }
-                        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                        pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+        buttonCancMsgNumCarreta.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonCancMsgNumCarreta.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {", getLocalClassName());
+            if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 20L){
+                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 20L){", getLocalClassName());
+                if(numCarreta > 1){
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(numCarreta < 1){\n" +
+                            "                        if (connectNetwork) {\n" +
+                            "                            pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
+                            "                        }\n" +
+                            "                        else{\n" +
+                            "                            pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
+                            "                        }", getLocalClassName());
+                    if (connectNetwork) {
+                        pmmContext.getConfigCTR().setStatusConConfig(1L);
                     }
+                    else{
+                        pmmContext.getConfigCTR().setStatusConConfig(0L);
+                    }
+                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+                    pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+                }
 
-                    LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MsgNumCarretaActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
-                    Intent it = new Intent(MsgNumCarretaActivity.this, MenuPrincECMActivity.class);
+                LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MsgNumCarretaActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                Intent it = new Intent(MsgNumCarretaActivity.this, MenuPrincECMActivity.class);
+                startActivity(it);
+                finish();
+
+            } else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 22L){
+                LogProcessoDAO.getInstance().insertLogProcesso("else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 22L){", getLocalClassName());
+                if(numCarreta < 1){
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(numCarreta < 1){\n" +
+                            "                        if (connectNetwork) {\n" +
+                            "                            pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
+                            "                        }\n" +
+                            "                        else{\n" +
+                            "                            pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
+                            "                        }", getLocalClassName());
+                    if (connectNetwork) {
+                        pmmContext.getConfigCTR().setStatusConConfig(1L);
+                    }
+                    else{
+                        pmmContext.getConfigCTR().setStatusConConfig(0L);
+                    }
+                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+                    pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+                }
+                LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MsgNumCarretaActivity.this, MenuParadaECMActivity.class);", getLocalClassName());
+                Intent it = new Intent(MsgNumCarretaActivity.this, ListaParadaECMActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else{
+
+                LogProcessoDAO.getInstance().insertLogProcesso("else{", getLocalClassName());
+                if((pmmContext.getConfigCTR().getEquip().getCodClasseEquip() != 1L) && (numCarreta == 1)) {
+
+                    LogProcessoDAO.getInstance().insertLogProcesso("if((pmmContext.getConfigCTR().getEquip().getCodClasseEquip() != 1L) && (pmmContext.getMotoMecFertCTR().qtdeCarreta() == 0)) {\n" +
+                            "                        Intent it = new Intent(MsgNumCarretaActivity.this, EquipActivity.class);", getLocalClassName());
+                    Intent it = new Intent(MsgNumCarretaActivity.this, EquipActivity.class);
                     startActivity(it);
-                    finish();
-                }
-                else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 22L){
-                    LogProcessoDAO.getInstance().insertLogProcesso("else if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 22L){", getLocalClassName());
-                    if(numCarreta < 1){
-                        LogProcessoDAO.getInstance().insertLogProcesso("if(numCarreta < 1){\n" +
-                                "                        if (connectNetwork) {\n" +
-                                "                            pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
-                                "                        }\n" +
-                                "                        else{\n" +
-                                "                            pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
-                                "                        }", getLocalClassName());
-                        if (connectNetwork) {
-                            pmmContext.getConfigCTR().setStatusConConfig(1L);
-                        }
-                        else{
-                            pmmContext.getConfigCTR().setStatusConConfig(0L);
-                        }
-                        LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                        pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
-                    }
-                    LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MsgNumCarretaActivity.this, MenuParadaECMActivity.class);", getLocalClassName());
-                    Intent it = new Intent(MsgNumCarretaActivity.this, ListaParadaECMActivity.class);
+
+                } else {
+                    LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
+                            "Intent it = new Intent(MsgNumCarretaActivity.this, PergFinalPreCECActivity.class);", getLocalClassName());
+                    Intent it = new Intent(MsgNumCarretaActivity.this, PergFinalPreCECActivity.class);
                     startActivity(it);
-                    finish();
                 }
-                else{
+                finish();
 
-                    LogProcessoDAO.getInstance().insertLogProcesso("else{", getLocalClassName());
-                    if((pmmContext.getConfigCTR().getEquip().getCodClasseEquip() != 1L) && (numCarreta == 1)) {
-
-                        LogProcessoDAO.getInstance().insertLogProcesso("if((pmmContext.getConfigCTR().getEquip().getCodClasseEquip() != 1L) && (pmmContext.getMotoMecFertCTR().qtdeCarreta() == 0)) {\n" +
-                                "                        Intent it = new Intent(MsgNumCarretaActivity.this, EquipActivity.class);", getLocalClassName());
-                        Intent it = new Intent(MsgNumCarretaActivity.this, EquipActivity.class);
-                        startActivity(it);
-                        finish();
-
-                    } else {
-                        LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                                "Intent it = new Intent(MsgNumCarretaActivity.this, PergFinalPreCECActivity.class);", getLocalClassName());
-                        Intent it = new Intent(MsgNumCarretaActivity.this, PergFinalPreCECActivity.class);
-                        startActivity(it);
-                        finish();
-                    }
-
-                }
             }
         });
 

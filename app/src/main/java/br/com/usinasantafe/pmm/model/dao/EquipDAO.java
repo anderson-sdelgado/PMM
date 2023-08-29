@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.model.bean.AtualAplicBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.REquipAtivBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.REquipPneuBean;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
@@ -21,6 +22,23 @@ import br.com.usinasantafe.pmm.model.bean.estaticas.EquipBean;
 public class EquipDAO {
 
     public EquipDAO() {
+    }
+
+    public String dadosVerEquip(Long nroEquip, String versaoAplic){
+
+        AtualAplicBean atualAplicBean = new AtualAplicBean();
+        atualAplicBean.setVersao(versaoAplic);
+        atualAplicBean.setNroEquip(nroEquip);
+
+        JsonArray jsonArray = new JsonArray();
+
+        Gson gson = new Gson();
+        jsonArray.add(gson.toJsonTree(atualAplicBean, atualAplicBean.getClass()));
+
+        JsonObject json = new JsonObject();
+        json.add("dados", jsonArray);
+
+        return json.toString();
     }
 
     public EquipBean getEquip(){
@@ -36,9 +54,9 @@ public class EquipDAO {
         return equipBean;
     }
 
-    public void verEquip(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo){
+    public void verEquip(String senha, String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo){
         LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().verifDados(dado, \"Equip\", telaAtual, telaProx, progressDialog, activity);", activity);
-        VerifDadosServ.getInstance().verifDados(dado, "Equip", telaAtual, telaProx, progressDialog, activity, tipo);
+        VerifDadosServ.getInstance().verifDados(senha, dado, "Equip", telaAtual, telaProx, progressDialog, activity, tipo);
     }
 
     public EquipBean recDadosEquip(JSONArray jsonArray) throws JSONException {

@@ -9,9 +9,9 @@ android {
     defaultConfig {
         applicationId "br.com.usinasantafe.pmm"
         minSdkVersion 22
-        targetSdk 31
+        targetSdk 32
         versionCode 15
-        versionName "5.19"
+        versionName "5.20"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -32,17 +32,19 @@ android {
             dimension 'cmm'
             applicationIdSuffix '.pmm'
             manifestPlaceholders.appName = "PMM"
-
+            resValue "string", "app_name", "PMM"
         }
         ecm {
             dimension 'cmm'
             applicationIdSuffix '.ecm'
             manifestPlaceholders.appName = "ECM"
+            resValue "string", "app_name", "ECM"
         }
         pcomp {
             dimension 'cmm'
             applicationIdSuffix '.pcomp'
             manifestPlaceholders.appName = "PCOMP"
+            resValue "string", "app_name", "PCOMP"
         }
     }
 }

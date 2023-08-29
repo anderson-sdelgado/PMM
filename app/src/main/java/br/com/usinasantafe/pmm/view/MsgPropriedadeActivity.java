@@ -30,43 +30,37 @@ public class MsgPropriedadeActivity extends ActivityGeneric {
         PropriedadeBean propriedadeBean = pmmContext.getConfigCTR().getPropriedade();
         textViewMsgDescrPropriedade.setText(propriedadeBean.getCodPropriedade() + " - " + propriedadeBean.getDescrPropriedade());
 
-        buttonMsgPropriedadeOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonMsgPropriedadeOk.setOnClickListener(v -> {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonMsgPropriedadeOk.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                pmmContext.getConfigCTR().setFrentePropriedade();\n" +
-                        "                pmmContext.getConfigCTR().clearOSAtiv();\n" +
-                        "                pmmContext.getCecCTR().salvarPrecCECAberto();", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonMsgPropriedadeOk.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                pmmContext.getConfigCTR().setFrentePropriedade();\n" +
+                    "                pmmContext.getConfigCTR().clearOSAtiv();\n" +
+                    "                pmmContext.getCecCTR().salvarPrecCECAberto();", getLocalClassName());
 
-                pmmContext.getConfigCTR().setFrentePropriedade();
-                pmmContext.getConfigCTR().clearOSAtiv();
+            pmmContext.getConfigCTR().setFrentePropriedade();
+            pmmContext.getConfigCTR().clearOSAtiv();
 
-                pmmContext.getCecCTR().salvarPrecCECAberto();
+            pmmContext.getCecCTR().salvarPrecCECAberto();
 
-                LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MsgPropriedadeActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
-                Intent it = new Intent(MsgPropriedadeActivity.this, ListaAtividadeActivity.class);
-                startActivity(it);
-                finish();
+            LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MsgPropriedadeActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
+            Intent it = new Intent(MsgPropriedadeActivity.this, ListaAtividadeActivity.class);
+            startActivity(it);
+            finish();
 
-            }
         });
 
-        buttonMsgPropriedadeCanc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonMsgPropriedadeCanc.setOnClickListener(v -> {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonMsgPropriedadeCanc.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                Intent it = new Intent(MsgPropriedadeActivity.this, PropriedadeActivity.class);", getLocalClassName());
-                Intent it = new Intent(MsgPropriedadeActivity.this, PropriedadeActivity.class);
-                startActivity(it);
-                finish();
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonMsgPropriedadeCanc.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                Intent it = new Intent(MsgPropriedadeActivity.this, PropriedadeActivity.class);", getLocalClassName());
+            Intent it = new Intent(MsgPropriedadeActivity.this, PropriedadeActivity.class);
+            startActivity(it);
+            finish();
 
-            }
         });
 
     }

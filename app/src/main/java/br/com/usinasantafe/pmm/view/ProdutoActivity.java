@@ -30,77 +30,65 @@ public class ProdutoActivity extends ActivityGeneric {
         Button buttonCancOS = findViewById(R.id.buttonCancProd);
         Button btnCapturaBarra = findViewById(R.id.btnCapturaBarra);
 
-        buttonOkOS.setOnClickListener(new View.OnClickListener() {
+        buttonOkOS.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonOkOS.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {", getLocalClassName());
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkOS.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {", getLocalClassName());
+            if(!txtResult.getText().equals("PRODUTO:")) {
 
-                if(!txtResult.getText().equals("PRODUTO:")) {
+                LogProcessoDAO.getInstance().insertLogProcesso("if(!txtResult.getText().equals(\"PRODUTO:\")) {\n" +
+                        "                    if (connectNetwork) {\n" +
+                        "                        pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
+                        "                    }\n" +
+                        "                    else{\n" +
+                        "                        pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
+                        "                    }", getLocalClassName());
 
-                    LogProcessoDAO.getInstance().insertLogProcesso("if(!txtResult.getText().equals(\"PRODUTO:\")) {\n" +
-                            "                    if (connectNetwork) {\n" +
-                            "                        pmmContext.getConfigCTR().setStatusConConfig(1L);\n" +
-                            "                    }\n" +
-                            "                    else{\n" +
-                            "                        pmmContext.getConfigCTR().setStatusConConfig(0L);\n" +
-                            "                    }", getLocalClassName());
-
-                    if (connectNetwork) {
-                        pmmContext.getConfigCTR().setStatusConConfig(1L);
-                    }
-                    else{
-                        pmmContext.getConfigCTR().setStatusConConfig(0L);
-                    }
-
-                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
-                            "                    pmmContext.getConfigCTR().setPosFluxoCarregComposto(2L);\n" +
-                            "                    pmmContext.getCompostoCTR().abrirCarregInsumo(produtoBean);\n" +
-                            "                    Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
-                    pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
-                    pmmContext.getCompostoCTR().abrirCarregInsumo(produtoBean);
-
-                    Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);
-                    startActivity(it);
-                    finish();
-
+                if (connectNetwork) {
+                    pmmContext.getConfigCTR().setStatusConConfig(1L);
+                }
+                else{
+                    pmmContext.getConfigCTR().setStatusConConfig(0L);
                 }
 
-            }
-        });
+                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
+                        "                    pmmContext.getConfigCTR().setPosFluxoCarregComposto(2L);\n" +
+                        "                    pmmContext.getCompostoCTR().abrirCarregInsumo(produtoBean);\n" +
+                        "                    Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+                pmmContext.getCompostoCTR().abrirCarregInsumo(produtoBean);
 
-        buttonCancOS.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancOS.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                 Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);
                 startActivity(it);
                 finish();
 
             }
+
         });
 
-        btnCapturaBarra.setOnClickListener(new View.OnClickListener() {
+        buttonCancOS.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonCancOS.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+            Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);
+            startActivity(it);
+            finish();
 
-                LogProcessoDAO.getInstance().insertLogProcesso("btnCapturaBarra.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                Intent it = new Intent(ProdutoActivity.this, br.com.usinasantafe.pmm.zxing.CaptureActivity.class);", getLocalClassName());
-                Intent it = new Intent(ProdutoActivity.this, br.com.usinasantafe.pmm.zxing.CaptureActivity.class);
-                startActivityForResult(it, REQUEST_CODE);
+        });
 
-            }
+        btnCapturaBarra.setOnClickListener(v -> {
+
+            LogProcessoDAO.getInstance().insertLogProcesso("btnCapturaBarra.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                Intent it = new Intent(ProdutoActivity.this, br.com.usinasantafe.pmm.zxing.CaptureActivity.class);", getLocalClassName());
+            Intent it = new Intent(ProdutoActivity.this, br.com.usinasantafe.pmm.zxing.CaptureActivity.class);
+            startActivityForResult(it, REQUEST_CODE);
+
         });
 
     }

@@ -31,7 +31,7 @@ public class PergFinalPreCECActivity extends ActivityGeneric {
                 "        AdapterList adapterList = new AdapterList(this, itens);\n" +
                 "        finalizarListView = findViewById(R.id.listViewFinalizarPreCEC);\n" +
                 "        finalizarListView.setAdapter(adapterList);", getLocalClassName());
-        ArrayList<String> itens = new ArrayList<String>();
+        ArrayList<String> itens = new ArrayList<>();
 
         itens.add("FINALIZAR CERTIFICADO");
         itens.add("DESFAZER CERTIFICADO");
@@ -39,39 +39,33 @@ public class PergFinalPreCECActivity extends ActivityGeneric {
         AdapterList adapterList = new AdapterList(this, itens);
         finalizarListView = findViewById(R.id.listViewFinalizarPreCEC);
         finalizarListView.setAdapter(adapterList);
-        finalizarListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        finalizarListView.setOnItemClickListener((l, v, position, id) -> {
 
-            @Override
-            public void onItemClick(AdapterView<?> l, View v, int position,
-                                    long id) {
+            LogProcessoDAO.getInstance().insertLogProcesso("finalizarListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
+                    "                                    long id) {\n" +
+                    "                TextView textView = v.findViewById(R.id.textViewItemList);\n" +
+                    "                String text = textView.getText().toString();", getLocalClassName());
 
-                LogProcessoDAO.getInstance().insertLogProcesso("finalizarListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
-                        "                                    long id) {\n" +
-                        "                TextView textView = v.findViewById(R.id.textViewItemList);\n" +
-                        "                String text = textView.getText().toString();", getLocalClassName());
+            TextView textView = v.findViewById(R.id.textViewItemList);
+            String text = textView.getText().toString();
 
-                TextView textView = v.findViewById(R.id.textViewItemList);
-                String text = textView.getText().toString();
-
-                if (text.equals("FINALIZAR CERTIFICADO")) {
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (text.equals(\"FINALIZAR CERTIFICADO\")) {\n" +
-                            "                    Intent it = new Intent(PergFinalPreCECActivity.this, VerifOperadorActivity.class);", getLocalClassName());
-                    Intent it = new Intent(PergFinalPreCECActivity.this, VerifOperadorActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-                else if (text.equals("DESFAZER CERTIFICADO")) {
-                    LogProcessoDAO.getInstance().insertLogProcesso("else if (text.equals(\"DESFAZER CERTIFICADO\")) {\n" +
-                            "                    pmmContext.getCecCTR().clearPreCECAberto();\n" +
-                            "                    Intent it = new Intent(PergFinalPreCECActivity.this, MenuCertifActivity.class);", getLocalClassName());
-                    pmmContext.getCecCTR().clearPreCECAberto();
-                    Intent it = new Intent(PergFinalPreCECActivity.this, MenuCertifActivity.class);
-                    startActivity(it);
-                    finish();
-                }
-
+            if (text.equals("FINALIZAR CERTIFICADO")) {
+                LogProcessoDAO.getInstance().insertLogProcesso("if (text.equals(\"FINALIZAR CERTIFICADO\")) {\n" +
+                        "                    Intent it = new Intent(PergFinalPreCECActivity.this, VerifOperadorActivity.class);", getLocalClassName());
+                Intent it = new Intent(PergFinalPreCECActivity.this, VerifOperadorActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else if (text.equals("DESFAZER CERTIFICADO")) {
+                LogProcessoDAO.getInstance().insertLogProcesso("else if (text.equals(\"DESFAZER CERTIFICADO\")) {\n" +
+                        "                    pmmContext.getCecCTR().clearPreCECAberto();\n" +
+                        "                    Intent it = new Intent(PergFinalPreCECActivity.this, MenuCertifActivity.class);", getLocalClassName());
+                pmmContext.getCecCTR().clearPreCECAberto();
+                Intent it = new Intent(PergFinalPreCECActivity.this, MenuCertifActivity.class);
+                startActivity(it);
+                finish();
             }
 
         });

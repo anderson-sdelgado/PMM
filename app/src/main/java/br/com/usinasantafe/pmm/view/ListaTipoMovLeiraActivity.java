@@ -41,38 +41,29 @@ public class ListaTipoMovLeiraActivity extends ActivityGeneric {
         tipoFuncaoLeiraListView = findViewById(R.id.listTipoComp);
         tipoFuncaoLeiraListView.setAdapter(adapterList);
 
-        tipoFuncaoLeiraListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        tipoFuncaoLeiraListView.setOnItemClickListener((l, v, position, id) -> {
 
-            @Override
-            public void onItemClick(AdapterView<?> l, View v, int position,
-                                    long id) {
-
-                LogProcessoDAO.getInstance().insertLogProcesso("tipoFuncaoLeiraListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
-                        "                                    long id) {\n" +
-                        "                pmmContext.getCompostoCTR().setTipoMovLeira((long) (position + 1));\n" +
-                        "                Intent it = new Intent(ListaTipoMovLeiraActivity.this, ListaLeiraActivity.class);", getLocalClassName());
-                pmmContext.getCompostoCTR().setTipoMovLeira((long) (position + 1));
-                Intent it = new Intent(ListaTipoMovLeiraActivity.this, ListaLeiraActivity.class);
-                startActivity(it);
-                finish();
-
-            }
+            LogProcessoDAO.getInstance().insertLogProcesso("tipoFuncaoLeiraListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
+                    "                                    long id) {\n" +
+                    "                pmmContext.getCompostoCTR().setTipoMovLeira((long) (position + 1));\n" +
+                    "                Intent it = new Intent(ListaTipoMovLeiraActivity.this, ListaLeiraActivity.class);", getLocalClassName());
+            pmmContext.getCompostoCTR().setTipoMovLeira((long) (position + 1));
+            Intent it = new Intent(ListaTipoMovLeiraActivity.this, ListaLeiraActivity.class);
+            startActivity(it);
+            finish();
 
         });
 
-        buttonRetTipoComp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetTipoComp.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                Intent it = new Intent(ListaTipoMovLeiraActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                Intent it = new Intent(ListaTipoMovLeiraActivity.this, MenuPrincPMMActivity.class);
-                startActivity(it);
-                finish();
-            }
+        buttonRetTipoComp.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonRetTipoComp.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                Intent it = new Intent(ListaTipoMovLeiraActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+            Intent it = new Intent(ListaTipoMovLeiraActivity.this, MenuPrincPMMActivity.class);
+            startActivity(it);
+            finish();
         });
 
     }

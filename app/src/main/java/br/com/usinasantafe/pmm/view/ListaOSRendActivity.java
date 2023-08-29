@@ -32,40 +32,34 @@ public class ListaOSRendActivity extends ActivityGeneric {
         AdapterListRend adapterListRend = new AdapterListRend(this, pmmContext.getMotoMecFertCTR().rendList());
         listaOSRend.setAdapter(adapterListRend);
 
-        listaOSRend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listaOSRend.setOnItemClickListener((l, v, position, id) -> {
 
-            @Override
-            public void onItemClick(AdapterView<?> l, View v, int position,
-                                    long id) {
-
-                LogProcessoDAO.getInstance().insertLogProcesso("listaOSRend.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
-                        "                                    long id) {\n" +
-                        "                pmmContext.getMotoMecFertCTR().setPosRend(position);\n" +
-                        "                Intent it = new Intent(ListaOSRendActivity.this, RendimentoActivity.class);", getLocalClassName());
-                pmmContext.getMotoMecFertCTR().setPosRend(position);
-                Intent it = new Intent(ListaOSRendActivity.this, RendimentoActivity.class);
-                startActivity(it);
-                finish();
-
-            }
+            LogProcessoDAO.getInstance().insertLogProcesso("listaOSRend.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
+                    "                                    long id) {\n" +
+                    "                pmmContext.getMotoMecFertCTR().setPosRend(position);\n" +
+                    "                Intent it = new Intent(ListaOSRendActivity.this, RendimentoActivity.class);", getLocalClassName());
+            pmmContext.getMotoMecFertCTR().setPosRend(position);
+            Intent it = new Intent(ListaOSRendActivity.this, RendimentoActivity.class);
+            startActivity(it);
+            finish();
 
         });
 
-        buttonRetOSRend.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetOSRend.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                Intent it = new Intent(ListaOSRendActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                Intent it = new Intent(ListaOSRendActivity.this, MenuPrincPMMActivity.class);
-                startActivity(it);
-                finish();
-            }
+        buttonRetOSRend.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonRetOSRend.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                Intent it = new Intent(ListaOSRendActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+            Intent it = new Intent(ListaOSRendActivity.this, MenuPrincPMMActivity.class);
+            startActivity(it);
+            finish();
         });
 
     }
+
+    public void onBackPressed() {
+    }
+
 }

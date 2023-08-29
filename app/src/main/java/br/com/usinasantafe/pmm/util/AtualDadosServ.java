@@ -2,17 +2,19 @@ package br.com.usinasantafe.pmm.util;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import br.com.usinasantafe.pmm.control.ConfigCTR;
+import br.com.usinasantafe.pmm.model.dao.AtualAplicDAO;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
-import br.com.usinasantafe.pmm.util.conHttp.GetBDGenerico;
+import br.com.usinasantafe.pmm.util.conHttp.PostBDGenerico;
 import br.com.usinasantafe.pmm.model.pst.GenericRecordable;
 import br.com.usinasantafe.pmm.util.conHttp.UrlsConexaoHttp;
-import br.com.usinasantafe.pmm.view.PropriedadeActivity;
 
 import com.google.gson.Gson;
 
@@ -69,13 +71,10 @@ public class AtualDadosServ {
 				for(int i = 0; i < jsonArray.length(); i++){
 					JSONObject objeto = jsonArray.getJSONObject(i);
 					Gson gson = new Gson();
-					Log.i("PMM", "OBJETO -> " + objeto.toString());
 					genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
 				}
 
-				Log.i("PMM", "Termino de integração ");
 				if(contAtualBD > 0){
-					Log.i("PMM", "contAtualBD " + contAtualBD);
 					LogProcessoDAO.getInstance().insertLogProcesso("if(contAtualBD > 0){\n" +
 							"\t\t\t\t\tatualizandoBD(activity);", activity);
 					atualizandoBD(activity);
@@ -94,16 +93,27 @@ public class AtualDadosServ {
 		}
 
 	}
-	
 
-	public void atualTodasTabBD(Context telaAtual, ProgressDialog progressDialog, String activity){
+	public void atualTodasTabBD(Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipoReceb){
 
-		this.tipoReceb = 1;
+		this.tipoReceb = tipoReceb;
+		this.telaAtual = telaAtual;
+		this.telaProx = telaProx;
+		this.progressDialog = progressDialog;
+
+		allClasses();
+		postAtualizacao(activity);
+
+	}
+
+	public void atualTodasTabBD(Context telaAtual, ProgressDialog progressDialog, String activity, int tipoReceb){
+
+		this.tipoReceb = tipoReceb;
 		this.telaAtual = telaAtual;
 		this.progressDialog = progressDialog;
 
 		allClasses();
-		startAtualizacao(activity);
+		postAtualizacao(activity);
 
 	}
 
@@ -112,7 +122,7 @@ public class AtualDadosServ {
 		this.tipoReceb = tipoReceb;
 
 		selecionarClasses(classeArrayList);
-		startAtualizacao(activity);
+		postAtualizacao(activity);
 
 	}
 
@@ -124,7 +134,7 @@ public class AtualDadosServ {
 		this.progressDialog = progressDialog;
 
 		selecionarClasses(classeArrayList);
-		startAtualizacao(activity);
+		postAtualizacao(activity);
 
 	}
 
@@ -138,7 +148,7 @@ public class AtualDadosServ {
 		this.dado = dado;
 
 		selecionarClasses(classeArrayList);
-		startAtualizacao(activity);
+		postAtualizacao(activity);
 
 	}
 
@@ -187,15 +197,20 @@ public class AtualDadosServ {
 
 	}
 
-	public void startAtualizacao(String activity){
+	public void postAtualizacao(String activity){
 
 		classe = (String) tabAtualArrayList.get(contAtualBD);
 		String[] url = {classe, activity};
 		contAtualBD++;
 
-		LogProcessoDAO.getInstance().insertLogProcesso("getBDGenerico.execute('" + classe + "');", activity);
-		GetBDGenerico getBDGenerico = new GetBDGenerico();
-		getBDGenerico.execute(url);
+		AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
+		Map<String, Object> parametrosPost = new HashMap<String, Object>();
+		parametrosPost.put("dado", atualAplicDAO.getAtualBDToken());
+
+		LogProcessoDAO.getInstance().insertLogProcesso("postBDGenerico.execute('" + classe + "');", activity);
+		PostBDGenerico postBDGenerico = new PostBDGenerico();
+		postBDGenerico.setParametrosPost(parametrosPost);
+		postBDGenerico.execute(url);
 
 	}
 
@@ -204,10 +219,8 @@ public class AtualDadosServ {
 		LogProcessoDAO.getInstance().insertLogProcesso("public void atualizandoBD(String activity){\n" +
 				"qtdeBD = tabAtualArrayList.size();", activity);
 		qtdeBD = tabAtualArrayList.size();
-		Log.i("PMM", "qtdeBD  " + qtdeBD );
 		if(contAtualBD < qtdeBD){
 
-			Log.i("PMM", "ATUALIZANDO");
 			LogProcessoDAO.getInstance().insertLogProcesso("if(contAtualBD < tabAtualArrayList.size()){\n" +
 					"this.progressDialog.setProgress((contAtualBD * 100) / qtdeBD);\n" +
 					"        classe = (String) tabAtualArrayList.get(contAtualBD);\n" +
@@ -220,11 +233,7 @@ public class AtualDadosServ {
 				this.progressDialog.setProgress((contAtualBD * 100) / qtdeBD);
 			}
 
-			classe = (String) tabAtualArrayList.get(contAtualBD);
-			String[] url = {classe, activity};
-			contAtualBD++;
-			GetBDGenerico getBDGenerico = new GetBDGenerico();
-			getBDGenerico.execute(url);
+			postAtualizacao(activity);
 
 		} else {
 

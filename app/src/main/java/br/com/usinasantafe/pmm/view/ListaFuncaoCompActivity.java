@@ -43,59 +43,50 @@ public class ListaFuncaoCompActivity extends ActivityGeneric {
         AdapterList adapterList = new AdapterList(this, itens);
         funcaoCompListView = findViewById(R.id.listaFuncao);
         funcaoCompListView.setAdapter(adapterList);
-        funcaoCompListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        funcaoCompListView.setOnItemClickListener((l, v, position, id) -> {
 
-            @Override
-            public void onItemClick(AdapterView<?> l, View v, int position,
-                                    long id) {
+            LogProcessoDAO.getInstance().insertLogProcesso("listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
+                    "                                    long id) {\n" +
+                    "                TextView textView = v.findViewById(R.id.textViewItemList);\n" +
+                    "                String text = textView.getText().toString();", getLocalClassName());
+            TextView textView = v.findViewById(R.id.textViewItemList);
+            String text = textView.getText().toString();
 
-                LogProcessoDAO.getInstance().insertLogProcesso("listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
-                        "                                    long id) {\n" +
-                        "                TextView textView = v.findViewById(R.id.textViewItemList);\n" +
-                        "                String text = textView.getText().toString();", getLocalClassName());
-                TextView textView = v.findViewById(R.id.textViewItemList);
-                String text = textView.getText().toString();
-
-                if (text.equals("CARREG. TORTA/CINZA")) {
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (text.equals(\"CARREG. TORTA/CINZA\")) {\n" +
-                            "                    pmmContext.getConfigCTR().setFuncaoComposto(2L);", getLocalClassName());
-                    pmmContext.getConfigCTR().setFuncaoComposto(2L);
-                } else if (text.equals("CARREG. COMPOSTO")) {
-                    LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"CARREG. COMPOSTO\")) {\n" +
-                            "                    pmmContext.getConfigCTR().setFuncaoComposto(3L);", getLocalClassName());
-                    pmmContext.getConfigCTR().setFuncaoComposto(3L);
-                }
-
-                if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L){
-                    LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L){\n" +
-                            "                    Intent it = new Intent(ListaFuncaoCompActivity.this, OSActivity.class);", getLocalClassName());
-                    Intent it = new Intent(ListaFuncaoCompActivity.this, OSActivity.class);
-                    startActivity(it);
-                } else {
-                    LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                            "                    Intent it = new Intent(ListaFuncaoCompActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
-                    Intent it = new Intent(ListaFuncaoCompActivity.this, MenuPrincPCOMPActivity.class);
-                    startActivity(it);
-                }
-                finish();
-
+            if (text.equals("CARREG. TORTA/CINZA")) {
+                LogProcessoDAO.getInstance().insertLogProcesso("if (text.equals(\"CARREG. TORTA/CINZA\")) {\n" +
+                        "                    pmmContext.getConfigCTR().setFuncaoComposto(2L);", getLocalClassName());
+                pmmContext.getConfigCTR().setFuncaoComposto(2L);
+            } else if (text.equals("CARREG. COMPOSTO")) {
+                LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"CARREG. COMPOSTO\")) {\n" +
+                        "                    pmmContext.getConfigCTR().setFuncaoComposto(3L);", getLocalClassName());
+                pmmContext.getConfigCTR().setFuncaoComposto(3L);
             }
+
+            if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L){
+                LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L){\n" +
+                        "                    Intent it = new Intent(ListaFuncaoCompActivity.this, OSActivity.class);", getLocalClassName());
+                Intent it = new Intent(ListaFuncaoCompActivity.this, OSActivity.class);
+                startActivity(it);
+            } else {
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                        "                    Intent it = new Intent(ListaFuncaoCompActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                Intent it = new Intent(ListaFuncaoCompActivity.this, MenuPrincPCOMPActivity.class);
+                startActivity(it);
+            }
+            finish();
 
         });
 
-        buttonRetFuncao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetFuncao.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                Intent it = new Intent(ListaFuncaoCompActivity.this, ListaTurnoActivity.class);", getLocalClassName());
-                Intent it = new Intent(ListaFuncaoCompActivity.this, ListaTurnoActivity.class);
-                startActivity(it);
-                finish();
-            }
+        buttonRetFuncao.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonRetFuncao.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                Intent it = new Intent(ListaFuncaoCompActivity.this, ListaTurnoActivity.class);", getLocalClassName());
+            Intent it = new Intent(ListaFuncaoCompActivity.this, ListaTurnoActivity.class);
+            startActivity(it);
+            finish();
         });
 
     }

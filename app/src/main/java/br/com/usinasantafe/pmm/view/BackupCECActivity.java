@@ -42,62 +42,50 @@ public class BackupCECActivity extends ActivityGeneric {
         CECBean cecBean = cecList.get(contador);
         textViewBkpBoletim.setText(visBoletim(cecBean));
 
-        buttonAntBkpBoletim.setOnClickListener(new View.OnClickListener() {
+        buttonAntBkpBoletim.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            LogProcessoDAO.getInstance().insertLogProcesso("if(contador < cecList.size() - 1){\n" +
+                    "                    contador = contador + 1;\n" +
+                    "                }\n" +
+                    "                CECBean cecBean = cecList.get(contador);\n" +
+                    "                textViewBkpBoletim.setText(visBoletim(cecBean));", getLocalClassName());
 
-                LogProcessoDAO.getInstance().insertLogProcesso("if(contador < cecList.size() - 1){\n" +
-                        "                    contador = contador + 1;\n" +
-                        "                }\n" +
-                        "                CECBean cecBean = cecList.get(contador);\n" +
-                        "                textViewBkpBoletim.setText(visBoletim(cecBean));", getLocalClassName());
-
-                if(contador < cecList.size() - 1){
-                    contador = contador + 1;
-                }
-
-                CECBean cecBean = cecList.get(contador);
-                textViewBkpBoletim.setText(visBoletim(cecBean));
-
+            if(contador < cecList.size() - 1){
+                contador = contador + 1;
             }
+
+            CECBean cecBean1 = cecList.get(contador);
+            textViewBkpBoletim.setText(visBoletim(cecBean1));
+
         });
 
-        buttonProxBkpBoletim.setOnClickListener(new View.OnClickListener() {
+        buttonProxBkpBoletim.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            LogProcessoDAO.getInstance().insertLogProcesso("if(contador > 0){\n" +
+                    "                    contador = contador - 1;\n" +
+                    "                }\n" +
+                    "                CECBean cecBean = cecList.get(contador);\n" +
+                    "                textViewBkpBoletim.setText(visBoletim(cecBean));", getLocalClassName());
 
-                LogProcessoDAO.getInstance().insertLogProcesso("if(contador > 0){\n" +
-                        "                    contador = contador - 1;\n" +
-                        "                }\n" +
-                        "                CECBean cecBean = cecList.get(contador);\n" +
-                        "                textViewBkpBoletim.setText(visBoletim(cecBean));", getLocalClassName());
-
-                if(contador > 0){
-                    contador = contador - 1;
-                }
-
-                CECBean cecBean = cecList.get(contador);
-                textViewBkpBoletim.setText(visBoletim(cecBean));
-
+            if(contador > 0){
+                contador = contador - 1;
             }
+
+            CECBean cecBean12 = cecList.get(contador);
+            textViewBkpBoletim.setText(visBoletim(cecBean12));
+
         });
 
-        buttonRetornarBkpBoletim.setOnClickListener(new View.OnClickListener() {
+        buttonRetornarBkpBoletim.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonRetornarBkpBoletim.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                Intent it = new Intent(BackupCECActivity.this, MenuCertifActivity.class);", getLocalClassName());
+            Intent it = new Intent(BackupCECActivity.this, MenuCertifActivity.class);
+            startActivity(it);
+            finish();
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonRetornarBkpBoletim.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                Intent it = new Intent(BackupCECActivity.this, MenuCertifActivity.class);", getLocalClassName());
-                Intent it = new Intent(BackupCECActivity.this, MenuCertifActivity.class);
-                startActivity(it);
-                finish();
-
-            }
         });
 
     }

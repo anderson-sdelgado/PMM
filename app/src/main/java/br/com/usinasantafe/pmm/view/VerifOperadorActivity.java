@@ -31,63 +31,48 @@ public class VerifOperadorActivity extends ActivityGeneric {
         textViewCodMotorista.setText(String.valueOf(pmmContext.getMotoMecFertCTR().getMatricFunc().getMatricFunc()));
         textViewNomeMotorista.setText(pmmContext.getMotoMecFertCTR().getMatricFunc().getNomeFunc());
 
-        buttonManterMotorista.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonManterMotorista.setOnClickListener(v -> {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonManterMotorista.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                Intent it = new Intent(VerifOperadorActivity.this, MsgSaidaCampoActivity.class);", getLocalClassName());
-                Intent it = new Intent(VerifOperadorActivity.this, MsgSaidaCampoActivity.class);
-                startActivity(it);
-                finish();
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonManterMotorista.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                Intent it = new Intent(VerifOperadorActivity.this, MsgSaidaCampoActivity.class);", getLocalClassName());
+            Intent it = new Intent(VerifOperadorActivity.this, MsgSaidaCampoActivity.class);
+            startActivity(it);
+            finish();
 
-            }
         });
 
-        buttonAlterarMotorista.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonAlterarMotorista.setOnClickListener(v -> {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonAlterarMotorista.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                AlertDialog.Builder alerta = new AlertDialog.Builder(VerifOperadorActivity.this);\n" +
-                        "                alerta.setTitle(\"ATENÇÃO\");\n" +
-                        "                alerta.setMessage(\"AO REALIZAR A ALTERAÇÃO O PROCESSO ENCERRARÁ O BOLETIM ATUAL E UM NOVO SERÁ CRIADO. DESEJA REALMENTE ALTERAR O MOTORISTA?\");", getLocalClassName());
-                AlertDialog.Builder alerta = new AlertDialog.Builder(VerifOperadorActivity.this);
-                alerta.setTitle("ATENÇÃO");
-                alerta.setMessage("AO REALIZAR A ALTERAÇÃO O PROCESSO ENCERRARÁ O BOLETIM ATUAL E UM NOVO SERÁ CRIADO. DESEJA REALMENTE ALTERAR O MOTORISTA?");
-                alerta.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
-                                "                    @Override\n" +
-                                "                    public void onClick(DialogInterface dialog, int which) {\n" +
-                                "                        pmmContext.getConfigCTR().setPosicaoTela(17L);\n" +
-                                "                        pmmContext.getMotoMecFertCTR().inserirParadaTrocaMotorista(getLocalClassName());\n" +
-                                "                        Intent it = new Intent(VerifOperadorActivity.this, HorimetroActivity.class);", getLocalClassName());
-                        pmmContext.getConfigCTR().setPosicaoTela(17L);
-                        pmmContext.getMotoMecFertCTR().inserirParadaTrocaMotorista(getLocalClassName());
-                        Intent it = new Intent(VerifOperadorActivity.this, HorimetroActivity.class);
-                        startActivity(it);
-                        finish();
-                    }
-                });
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonAlterarMotorista.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                AlertDialog.Builder alerta = new AlertDialog.Builder(VerifOperadorActivity.this);\n" +
+                    "                alerta.setTitle(\"ATENÇÃO\");\n" +
+                    "                alerta.setMessage(\"AO REALIZAR A ALTERAÇÃO O PROCESSO ENCERRARÁ O BOLETIM ATUAL E UM NOVO SERÁ CRIADO. DESEJA REALMENTE ALTERAR O MOTORISTA?\");", getLocalClassName());
+            AlertDialog.Builder alerta = new AlertDialog.Builder(VerifOperadorActivity.this);
+            alerta.setTitle("ATENÇÃO");
+            alerta.setMessage("AO REALIZAR A ALTERAÇÃO O PROCESSO ENCERRARÁ O BOLETIM ATUAL E UM NOVO SERÁ CRIADO. DESEJA REALMENTE ALTERAR O MOTORISTA?");
+            alerta.setPositiveButton("SIM", (dialog, which) -> {
+                LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                        "                    @Override\n" +
+                        "                    public void onClick(DialogInterface dialog, int which) {\n" +
+                        "                        pmmContext.getConfigCTR().setPosicaoTela(17L);\n" +
+                        "                        pmmContext.getMotoMecFertCTR().inserirParadaTrocaMotorista(getLocalClassName());\n" +
+                        "                        Intent it = new Intent(VerifOperadorActivity.this, HorimetroActivity.class);", getLocalClassName());
+                pmmContext.getConfigCTR().setPosicaoTela(17L);
+                pmmContext.getMotoMecFertCTR().inserirParadaTrocaMotorista(getLocalClassName());
+                Intent it = new Intent(VerifOperadorActivity.this, HorimetroActivity.class);
+                startActivity(it);
+                finish();
+            });
 
-                alerta.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
-                                "                    @Override\n" +
-                                "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
-                    }
-                });
+            alerta.setNegativeButton("NÃO", (dialog, which) -> LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                    "                    @Override\n" +
+                    "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName()));
+            alerta.show();
 
-                alerta.show();
-
-            }
         });
 
     }

@@ -34,152 +34,131 @@ public class ImplementoActivity extends ActivityGeneric {
         LogProcessoDAO.getInstance().insertLogProcesso("textViewImplemento.setText(\"IMPLEMENTO \" + " + pmmContext.getMotoMecFertCTR().getContImplemento() + " + \":\");", getLocalClassName());
         textViewImplemento.setText("IMPLEMENTO " + pmmContext.getMotoMecFertCTR().getContImplemento() + ":");
 
-        buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "                AlertDialog.Builder alerta = new AlertDialog.Builder(ImplementoActivity.this);\n" +
-                        "                alerta.setTitle(\"ATENÇÃO\");\n" +
-                        "                alerta.setMessage(\"DESEJA REALMENTE ATUALIZAR BASE DE DADOS?\");", getLocalClassName());
-                AlertDialog.Builder alerta = new AlertDialog.Builder(ImplementoActivity.this);
-                alerta.setTitle("ATENÇÃO");
-                alerta.setMessage("DESEJA REALMENTE ATUALIZAR BASE DE DADOS?");
-                alerta.setNegativeButton("SIM", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
-                                "                    @Override\n" +
-                                "                    public void onClick(DialogInterface dialog, int which) {\n", getLocalClassName());
+        buttonAtualPadrao.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonAtualPadrao.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "                AlertDialog.Builder alerta = new AlertDialog.Builder(ImplementoActivity.this);\n" +
+                    "                alerta.setTitle(\"ATENÇÃO\");\n" +
+                    "                alerta.setMessage(\"DESEJA REALMENTE ATUALIZAR BASE DE DADOS?\");", getLocalClassName());
+            AlertDialog.Builder alerta = new AlertDialog.Builder(ImplementoActivity.this);
+            alerta.setTitle("ATENÇÃO");
+            alerta.setMessage("DESEJA REALMENTE ATUALIZAR BASE DE DADOS?");
+            alerta.setNegativeButton("SIM", (dialog, which) -> {
+                LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
+                        "                    @Override\n" +
+                        "                    public void onClick(DialogInterface dialog, int which) {\n", getLocalClassName());
 
-                        if (connectNetwork) {
+                if (connectNetwork) {
 
-                            LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
-                                    "progressBar = new ProgressDialog(ImplementoActivity.this);\n" +
-                                    "                            progressBar.setCancelable(true);\n" +
-                                    "                            progressBar.setMessage(\"Atualizando Implemento...\");\n" +
-                                    "                            progressBar.show();", getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {\n" +
+                            "progressBar = new ProgressDialog(ImplementoActivity.this);\n" +
+                            "                            progressBar.setCancelable(true);\n" +
+                            "                            progressBar.setMessage(\"Atualizando Implemento...\");\n" +
+                            "                            progressBar.show();", getLocalClassName());
 
-                            progressBar = new ProgressDialog(ImplementoActivity.this);
-                            progressBar.setCancelable(true);
-                            progressBar.setMessage("Atualizando Implemento...");
-                            progressBar.show();
+                    progressBar = new ProgressDialog(ImplementoActivity.this);
+                    progressBar.setCancelable(true);
+                    progressBar.setMessage("Atualizando Implemento...");
+                    progressBar.show();
 
-                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(ImplementoActivity.this, ImplementoActivity.class, progressBar, \"EquipSeg\", 1, getLocalClassName());", getLocalClassName());
-                            pmmContext.getMotoMecFertCTR().atualDados(ImplementoActivity.this, ImplementoActivity.class, progressBar, "EquipSeg", 1, getLocalClassName());
+                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().atualDados(ImplementoActivity.this, ImplementoActivity.class, progressBar, \"EquipSeg\", 1, getLocalClassName());", getLocalClassName());
+                    pmmContext.getMotoMecFertCTR().atualDados(ImplementoActivity.this, ImplementoActivity.class, progressBar, "EquipSeg", 1, getLocalClassName());
 
-                        } else {
+                } else {
 
-                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                    "AlertDialog.Builder alerta = new AlertDialog.Builder(ImplementoActivity.this);\n" +
-                                    "                            alerta.setTitle(\"ATENÇÃO\");\n" +
-                                    "                            alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
-                                    "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                                    "                                @Override\n" +
-                                    "                                public void onClick(DialogInterface dialog, int which) {\n" +
-                                    "                                }\n" +
-                                    "                            });\n" +
-                                    "                            alerta.show();", getLocalClassName());
-                            AlertDialog.Builder alerta = new AlertDialog.Builder(ImplementoActivity.this);
-                            alerta.setTitle("ATENÇÃO");
-                            alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
-                            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            });
-                            alerta.show();
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                            "AlertDialog.Builder alerta = new AlertDialog.Builder(ImplementoActivity.this);\n" +
+                            "                            alerta.setTitle(\"ATENÇÃO\");\n" +
+                            "                            alerta.setMessage(\"FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.\");\n" +
+                            "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                            "                                @Override\n" +
+                            "                                public void onClick(DialogInterface dialog, int which) {\n" +
+                            "                                }\n" +
+                            "                            });\n" +
+                            "                            alerta.show();", getLocalClassName());
+                    AlertDialog.Builder alerta1 = new AlertDialog.Builder(ImplementoActivity.this);
+                    alerta1.setTitle("ATENÇÃO");
+                    alerta1.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
+                    alerta1.setPositiveButton("OK", (dialog1, which1) -> {
+                    });
+                    alerta1.show();
 
-                        }
+                }
 
 
-                    }
-                });
+            });
 
-                alerta.setPositiveButton("NÃO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
-                                "                    @Override\n" +
-                                "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
-                    }
-                });
+            alerta.setPositiveButton("NÃO", (dialog, which) -> LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
+                    "                    @Override\n" +
+                    "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName()));
 
-                alerta.show();
-
-            }
+            alerta.show();
 
         });
 
-        buttonOkImplemento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonOkImplemento.setOnClickListener(v -> {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonOkImplemento.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonOkImplemento.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {", getLocalClassName());
 
-                if(pmmContext.getMotoMecFertCTR().getContImplemento() == 1L){
-                    LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().getContImplemento() == 1L){", getLocalClassName());
-                    if (!editTextPadrao.getText().toString().equals("")) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
-                                "                        Long impl = Long.parseLong(editTextPadrao.getText().toString());", getLocalClassName());
-                        Long impl = Long.parseLong(editTextPadrao.getText().toString());
-                        if(pmmContext.getMotoMecFertCTR().verImplemento(impl)){
-                            LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verImplemento(impl)){\n" +
-                                    "                            pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getMotoMecFertCTR().getContImplemento(), impl);\n" +
-                                    "                            pmmContext.getMotoMecFertCTR().setContImplemento(2L);\n" +
-                                    "                            Intent it = new Intent(ImplementoActivity.this, ImplementoActivity.class);", getLocalClassName());
-                            pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getMotoMecFertCTR().getContImplemento(), impl);
-                            pmmContext.getMotoMecFertCTR().setContImplemento(2L);
-                            Intent it = new Intent(ImplementoActivity.this, ImplementoActivity.class);
-                            startActivity(it);
-                            finish();
-                        }
-                        else{
-                            msg("NUMERAÇÃO DE IMPLEMENTO INCORRETA. FAVOR, VERIFICAR A NUMERAÇÃO OU ATUALIZAR A BASE DE DADOS NOVAMENTE!");
-                        }
-                    }
-                } else {
-                    LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
-                    if (!editTextPadrao.getText().toString().equals("")) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
-                                "                        Long impl = Long.parseLong(editTextPadrao.getText().toString());", getLocalClassName());
-                        Long impl = Long.parseLong(editTextPadrao.getText().toString());
-                        if(pmmContext.getMotoMecFertCTR().verImplemento(impl) && (pmmContext.getMotoMecFertCTR().verDuplicImpleMM(impl))){
-                            LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verImplemento(impl) && (pmmContext.getMotoMecFertCTR().verDuplicImpleMM(impl))){\n" +
-                                    "                            pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getMotoMecFertCTR().getContImplemento(), impl);\n" +
-                                    "                            verTela();", getLocalClassName());
-                            pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getMotoMecFertCTR().getContImplemento(), impl);
-                            verTela();
-                        }
-                        else{
-                            msg("NUMERAÇÃO DE IMPLEMENTO INCORRETA OU REPETIDA. POR FAVOR, VERIFICAR A NUMERAÇÃO OU ATUALIZAR A BASE DE DADOS NOVAMENTE!");
-                        }
+            if(pmmContext.getMotoMecFertCTR().getContImplemento() == 1L){
+                LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().getContImplemento() == 1L){", getLocalClassName());
+                if (!editTextPadrao.getText().toString().equals("")) {
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
+                            "                        Long impl = Long.parseLong(editTextPadrao.getText().toString());", getLocalClassName());
+                    Long impl = Long.parseLong(editTextPadrao.getText().toString());
+                    if(pmmContext.getMotoMecFertCTR().verImplemento(impl)){
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verImplemento(impl)){\n" +
+                                "                            pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getMotoMecFertCTR().getContImplemento(), impl);\n" +
+                                "                            pmmContext.getMotoMecFertCTR().setContImplemento(2L);\n" +
+                                "                            Intent it = new Intent(ImplementoActivity.this, ImplementoActivity.class);", getLocalClassName());
+                        pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getMotoMecFertCTR().getContImplemento(), impl);
+                        pmmContext.getMotoMecFertCTR().setContImplemento(2L);
+                        Intent it = new Intent(ImplementoActivity.this, ImplementoActivity.class);
+                        startActivity(it);
+                        finish();
                     }
                     else{
-                        LogProcessoDAO.getInstance().insertLogProcesso("verTela();", getLocalClassName());
-                        verTela();
+                        msg("NUMERAÇÃO DE IMPLEMENTO INCORRETA. FAVOR, VERIFICAR A NUMERAÇÃO OU ATUALIZAR A BASE DE DADOS NOVAMENTE!");
                     }
                 }
-
-
+            } else {
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
+                if (!editTextPadrao.getText().toString().equals("")) {
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
+                            "                        Long impl = Long.parseLong(editTextPadrao.getText().toString());", getLocalClassName());
+                    Long impl = Long.parseLong(editTextPadrao.getText().toString());
+                    if(pmmContext.getMotoMecFertCTR().verImplemento(impl) && (pmmContext.getMotoMecFertCTR().verDuplicImpleMM(impl))){
+                        LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verImplemento(impl) && (pmmContext.getMotoMecFertCTR().verDuplicImpleMM(impl))){\n" +
+                                "                            pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getMotoMecFertCTR().getContImplemento(), impl);\n" +
+                                "                            verTela();", getLocalClassName());
+                        pmmContext.getMotoMecFertCTR().setImplemento(pmmContext.getMotoMecFertCTR().getContImplemento(), impl);
+                        verTela();
+                    }
+                    else{
+                        msg("NUMERAÇÃO DE IMPLEMENTO INCORRETA OU REPETIDA. POR FAVOR, VERIFICAR A NUMERAÇÃO OU ATUALIZAR A BASE DE DADOS NOVAMENTE!");
+                    }
+                }
+                else{
+                    LogProcessoDAO.getInstance().insertLogProcesso("verTela();", getLocalClassName());
+                    verTela();
+                }
             }
+
+
         });
 
-        buttonCancImplemento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogProcessoDAO.getInstance().insertLogProcesso("buttonCancImplemento.setOnClickListener(new View.OnClickListener() {\n" +
-                        "            @Override\n" +
-                        "            public void onClick(View v) {\n" +
-                        "if (editTextPadrao.getText().toString().length() > 0) {\n" +
-                        "                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));\n" +
-                        "                }", getLocalClassName());
-                if (editTextPadrao.getText().toString().length() > 0) {
-                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
-                }
+        buttonCancImplemento.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonCancImplemento.setOnClickListener(new View.OnClickListener() {\n" +
+                    "            @Override\n" +
+                    "            public void onClick(View v) {\n" +
+                    "if (editTextPadrao.getText().toString().length() > 0) {\n" +
+                    "                    editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));\n" +
+                    "                }", getLocalClassName());
+            if (editTextPadrao.getText().toString().length() > 0) {
+                editTextPadrao.setText(editTextPadrao.getText().toString().substring(0, editTextPadrao.getText().toString().length() - 1));
             }
         });
 
@@ -214,11 +193,8 @@ public class ImplementoActivity extends ActivityGeneric {
         AlertDialog.Builder alerta = new AlertDialog.Builder(ImplementoActivity.this);
         alerta.setTitle("ATENÇÃO");
         alerta.setMessage(msg);
-        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        alerta.setPositiveButton("OK", (dialog, which) -> {
 
-            }
         });
         alerta.show();
     }
@@ -249,8 +225,7 @@ public class ImplementoActivity extends ActivityGeneric {
                 startActivity(it);
                 finish();
             }
-        }
-        else{
+        } else {
             LogProcessoDAO.getInstance().insertLogProcesso("else{", getLocalClassName());
             if(BuildConfig.FLAVOR.equals("pmm")){
                 LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +

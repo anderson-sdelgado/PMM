@@ -10,6 +10,7 @@ import java.util.List;
 import br.com.usinasantafe.pmm.model.bean.estaticas.LeiraBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.ProdutoBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.CarregCompBean;
+import br.com.usinasantafe.pmm.model.dao.AtualAplicDAO;
 import br.com.usinasantafe.pmm.model.dao.CarregCompDAO;
 import br.com.usinasantafe.pmm.model.dao.LeiraDAO;
 import br.com.usinasantafe.pmm.model.dao.LogErroDAO;
@@ -125,10 +126,11 @@ public class CompostoCTR {
     public void verifDadosCarreg(Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
         CarregCompDAO carregCompDAO = new CarregCompDAO();
         ConfigCTR configCTR = new ConfigCTR();
+        AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
         LogProcessoDAO.getInstance().insertLogProcesso("configCTR.setStatusRetVerif(1L);\n" +
-                "        carregCompDAO.verifDadosCarreg(configCTR.getConfig().getEquipConfig(), telaAtual, telaProx, activity);", activity);
+                "        carregCompDAO.verifDadosCarreg(atualAplicDAO.getAtualIdEquip(configCTR.getEquip().getIdEquip()), telaAtual, telaProx, progressDialog, activity);", activity);
         configCTR.setStatusRetVerif(1L);
-        carregCompDAO.verifDadosCarreg(configCTR.getConfig().getEquipConfig(), telaAtual, telaProx, progressDialog, activity);
+        carregCompDAO.verifDadosCarreg(atualAplicDAO.getAtualIdEquip(configCTR.getEquip().getIdEquip()), telaAtual, telaProx, progressDialog, activity);
     }
 
     public void receberVerifOrdCarreg(String result, String activity) {

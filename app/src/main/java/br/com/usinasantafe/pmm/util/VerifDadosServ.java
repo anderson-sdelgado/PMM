@@ -39,6 +39,7 @@ public class VerifDadosServ {
     private PostVerGenerico postVerGenerico;
     public static int status;
     private int tipo;
+    private String senha;
 
     public VerifDadosServ() {
     }
@@ -58,11 +59,10 @@ public class VerifDadosServ {
         MecanicoCTR mecanicoCTR = new MecanicoCTR();
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
         LogProcessoDAO.getInstance().insertLogProcesso("public void manipularDadosHttp(String result) {", activity);
-        //Log.i("PMM", "manipularDadosHttp(String " + result + ", String activity) - Classe = " + this.classe);
         if (this.classe.equals("Equip")) {
             LogProcessoDAO.getInstance().insertLogProcesso("if (this.tipo.equals(\"Equip\")) {\n" +
                     "            configCTR.receberVerifEquip(" + result + ");", activity);
-            configCTR.receberVerifEquip(result, this.tipo);
+            configCTR.receberVerifEquip(senha, telaAtual, telaProx, progressDialog, result, this.tipo);
         } else if (this.classe.equals("OS")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"OS\")) {\n" +
                     "            configCTR.receberVerifOS(" + result + ");", activity);
@@ -135,20 +135,7 @@ public class VerifDadosServ {
 
     }
 
-
-    public void verifDados(String dados, String classe, Context telaAtual, Class telaProx, String activity) {
-
-        this.urlsConexaoHttp = new UrlsConexaoHttp();
-        this.telaAtual = telaAtual;
-        this.telaProx = telaProx;
-        this.classe = classe;
-        this.dados = dados;
-
-        envioVerif(activity);
-
-    }
-
-    public void verifDados(String dados, String classe, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo) {
+    public void verifDados(String senha, String dados, String classe, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo) {
 
         this.urlsConexaoHttp = new UrlsConexaoHttp();
         this.telaAtual = telaAtual;
@@ -157,6 +144,7 @@ public class VerifDadosServ {
         this.classe = classe;
         this.dados = dados;
         this.tipo = tipo;
+        this.senha = senha;
 
         envioVerif(activity);
 
@@ -194,9 +182,6 @@ public class VerifDadosServ {
         }
     }
 
-    public void atualTodosDados(){
-        AtualDadosServ.getInstance().atualTodasTabBD(telaAtual, progressDialog, "MenuInicialActivity");
-    }
 
     public void msg(String texto){
         if(status < 3){
