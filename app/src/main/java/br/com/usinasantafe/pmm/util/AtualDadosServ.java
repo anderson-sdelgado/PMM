@@ -71,6 +71,8 @@ public class AtualDadosServ {
 				for(int i = 0; i < jsonArray.length(); i++){
 					JSONObject objeto = jsonArray.getJSONObject(i);
 					Gson gson = new Gson();
+
+					Log.i("PMM", "OBJETO -> " + objeto.toString());
 					genericRecordable.insert(gson.fromJson(objeto.toString(), classe), classe);
 				}
 

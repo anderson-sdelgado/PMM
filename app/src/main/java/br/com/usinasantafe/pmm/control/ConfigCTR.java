@@ -195,6 +195,7 @@ public class ConfigCTR {
                     progressDialog.setProgress(0);
                     progressDialog.setMax(100);
                     progressDialog.show();
+
                     AtualDadosServ.getInstance().atualTodasTabBD(telaAtual, telaProx, progressDialog, "ConfigActivity", tipo);
 
                 } else {

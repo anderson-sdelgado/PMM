@@ -15,6 +15,7 @@ import br.com.usinasantafe.pmm.R;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogErroBean;
 import br.com.usinasantafe.pmm.model.bean.variaveis.LogProcessoBean;
 import br.com.usinasantafe.pmm.model.dao.LogProcessoDAO;
+import br.com.usinasantafe.pmm.util.ConnectNetwork;
 import br.com.usinasantafe.pmm.util.EnvioDadosServ;
 import br.com.usinasantafe.pmm.util.VerifDadosServ;
 
@@ -40,7 +41,7 @@ public class TelaInicialActivity extends ActivityGeneric {
 
         if(EnvioDadosServ.getInstance().verifDadosEnvio()){
             LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().verifDadosEnvio()", getLocalClassName());
-            if(connectNetwork){
+            if(ConnectNetwork.isConnected(this)){
                 LogProcessoDAO.getInstance().insertLogProcesso("if(connectNetwork){\n" +
                         "EnvioDadosServ.getInstance().envioDados()", getLocalClassName());
                 EnvioDadosServ.getInstance().envioDados(getLocalClassName());
@@ -81,7 +82,7 @@ public class TelaInicialActivity extends ActivityGeneric {
 
     public void atualizarAplic(){
         LogProcessoDAO.getInstance().insertLogProcesso("public void atualizarAplic(){", getLocalClassName());
-        if (connectNetwork) {
+        if (ConnectNetwork.isConnected(this)) {
             LogProcessoDAO.getInstance().insertLogProcesso("if (connectNetwork) {", getLocalClassName());
             if (pmmContext.getConfigCTR().hasElemConfig()) {
                 LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getConfigCTR().hasElemConfig()\n" +

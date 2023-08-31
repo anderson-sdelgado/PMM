@@ -109,11 +109,10 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
 
     @Override
     protected void onStart() {
+        super.onStart();
 
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangeListerner, intentFilter);
-
-        super.onStart();
 
         if (googleApiClient != null) {
             googleApiClient.connect();
