@@ -69,7 +69,7 @@ public class AtualAplicDAO {
         try {
 
             EquipDAO equipDAO = new EquipDAO();
-            token = "CMM-VERSAO_" + BuildConfig.VERSION_NAME + "-" + equipDAO.getEquip().getIdEquip();
+            token = BuildConfig.FLAVOR.toUpperCase() + "-VERSAO_" + BuildConfig.VERSION_NAME + "-" + equipDAO.getEquip().getIdEquip();
             MessageDigest m = MessageDigest.getInstance("MD5");
             m.update(token.getBytes(),0, token.length());
             token = (new BigInteger(1, m.digest()).toString(16).toUpperCase());

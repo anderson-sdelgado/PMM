@@ -14,6 +14,7 @@ public class AtualAplicBean {
     private String token;
     private Long nroOS;
     private Long codPneu;
+    private String aplic;
 
     public AtualAplicBean() {
     }
@@ -88,5 +89,13 @@ public class AtualAplicBean {
 
     public void setCodPneu(Long codPneu) {
         this.codPneu = codPneu;
+    }
+
+    public String getAplic() {
+        return aplic;
+    }
+
+    public void setAplic(String aplic) {
+        this.aplic = aplic;
     }
 }

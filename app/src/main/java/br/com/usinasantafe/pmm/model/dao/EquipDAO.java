@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import br.com.usinasantafe.pmm.BuildConfig;
 import br.com.usinasantafe.pmm.model.bean.AtualAplicBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.REquipAtivBean;
 import br.com.usinasantafe.pmm.model.bean.estaticas.REquipPneuBean;
@@ -29,6 +30,7 @@ public class EquipDAO {
         AtualAplicBean atualAplicBean = new AtualAplicBean();
         atualAplicBean.setVersao(versaoAplic);
         atualAplicBean.setNroEquip(nroEquip);
+        atualAplicBean.setAplic(BuildConfig.FLAVOR.toUpperCase());
 
         JsonArray jsonArray = new JsonArray();
 
