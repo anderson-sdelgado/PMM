@@ -85,8 +85,8 @@ public class ConfigActivity extends ActivityGeneric {
             if(!editTextEquipConfig.getText().toString().equals("") &&
                     !editTextSenhaConfig.getText().toString().equals("")){
                 LogProcessoDAO.getInstance().insertLogProcesso("if(!editTextEquipConfig.getText().toString().equals(\"\") &&\n" +
-                        "                        !editTextSenhaConfig.getText().toString().equals(\"\")){", getLocalClassName());
-                LogProcessoDAO.getInstance().insertLogProcesso("progressBar = new ProgressDialog(v.getContext());\n" +
+                        "                        !editTextSenhaConfig.getText().toString().equals(\"\")){\n" +
+                        "progressBar = new ProgressDialog(v.getContext());\n" +
                         "                    progressBar.setCancelable(true);\n" +
                         "                    progressBar.setMessage(\"Pequisando o Equipamento...\");\n" +
                         "                    progressBar.show();", getLocalClassName());

@@ -124,7 +124,8 @@ public class EnvioDadosServ {
         MecanicoCTR mecanicoCTR = new MecanicoCTR();
         return motoMecFertCTR.verEnvioApont()
                 || motoMecFertCTR.verEnvioMovLeira()
-                || mecanicoCTR.verApontMecanNEnviado();
+                || mecanicoCTR.verApontMecanNEnviado()
+                || motoMecFertCTR.verEnvioBolPneu();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

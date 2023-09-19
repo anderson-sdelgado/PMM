@@ -311,6 +311,17 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         startActivity(it);
                         finish();
 
+                    } else if (motoMecBean.getCodFuncaoOperMotoMec() == 12) {
+
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else if (motoMecBean.getCodFuncaoOperMotoMec() == 12) {\n" +
+                                "                            pmmContext.getConfigCTR().setPosicaoTela(29L);\n" +
+                                "                            Intent it = new Intent(MenuPrincPCOMPActivity.this, ListaFuncaoCompActivity.class);", getLocalClassName());
+                        pmmContext.getConfigCTR().setPosicaoTela(30L);
+                        pmmContext.getMotoMecFertCTR().abrirBoletimPneu();
+                        Intent it = new Intent(MenuPrincPCOMPActivity.this, ListaPosPneuActivity.class);
+                        startActivity(it);
+                        finish();
+
                     }
 
                 }

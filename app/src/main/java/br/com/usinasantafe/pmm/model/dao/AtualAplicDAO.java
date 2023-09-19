@@ -1,7 +1,5 @@
 package br.com.usinasantafe.pmm.model.dao;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -11,6 +9,7 @@ import java.security.MessageDigest;
 
 import br.com.usinasantafe.pmm.BuildConfig;
 import br.com.usinasantafe.pmm.model.bean.AtualAplicBean;
+import com.google.common.base.Strings;
 
 public class AtualAplicDAO {
 
@@ -36,7 +35,7 @@ public class AtualAplicDAO {
         return getToken(atualAplicBean);
     }
 
-    public String getAtualCodPneu(Long codPneu) {
+    public String getAtualCodPneu(String codPneu) {
         AtualAplicBean atualAplicBean = new AtualAplicBean();
         atualAplicBean.setCodPneu(codPneu);
         return getToken(atualAplicBean);
@@ -72,7 +71,9 @@ public class AtualAplicDAO {
             token = BuildConfig.FLAVOR.toUpperCase() + "-VERSAO_" + BuildConfig.VERSION_NAME + "-" + equipDAO.getEquip().getIdEquip();
             MessageDigest m = MessageDigest.getInstance("MD5");
             m.update(token.getBytes(),0, token.length());
-            token = (new BigInteger(1, m.digest()).toString(16).toUpperCase());
+            BigInteger bigInteger = new BigInteger(1, m.digest());
+            String str = bigInteger.toString(16).toUpperCase();
+            token = Strings.padStart(str, 32, '0');
 
         } catch (Exception e) {
             LogErroDAO.getInstance().insertLogErro(e);

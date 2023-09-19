@@ -40,8 +40,7 @@ public class PneuActivity extends ActivityGeneric {
                 "        }", getLocalClassName());
         if(pmmContext.getMotoMecFertCTR().verItemMedPneuBolAberto()){
             editText.setText(pmmContext.getMotoMecFertCTR().getItemMedPneuBolAberto().getNroPneuItemCalibPneu());
-        }
-        else{
+        } else {
             editText.setText("");
         }
 
@@ -65,8 +64,7 @@ public class PneuActivity extends ActivityGeneric {
                         Intent it = new Intent(PneuActivity.this, PressaoEncPneuActivity.class);
                         startActivity(it);
                         finish();
-                    }
-                    else{
+                    } else {
                         LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
                         if (connectNetwork) {
 
@@ -108,8 +106,7 @@ public class PneuActivity extends ActivityGeneric {
 
                         }
                     }
-                }
-                else{
+                } else {
 
                     LogProcessoDAO.getInstance().insertLogProcesso("AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);\n" +
                             "                alerta.setTitle(\"ATENÇÃO\");\n" +
@@ -123,10 +120,7 @@ public class PneuActivity extends ActivityGeneric {
                     AlertDialog.Builder alerta = new AlertDialog.Builder(PneuActivity.this);
                     alerta.setTitle("ATENÇÃO");
                     alerta.setMessage("PNEU REPETIDO! POR FAVOR, VERIFIQUE A NUMERAÇÃO DO PNEU.");
-                    alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
+                    alerta.setPositiveButton("OK", (dialog, which) -> {
                     });
                     alerta.show();
 

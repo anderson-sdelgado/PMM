@@ -13,7 +13,7 @@ public class AtualAplicBean {
     private String dthr;
     private String token;
     private Long nroOS;
-    private Long codPneu;
+    private String codPneu;
     private String aplic;
 
     public AtualAplicBean() {
@@ -83,11 +83,11 @@ public class AtualAplicBean {
         this.nroOS = nroOS;
     }
 
-    public Long getCodPneu() {
+    public String getCodPneu() {
         return codPneu;
     }
 
-    public void setCodPneu(Long codPneu) {
+    public void setCodPneu(String codPneu) {
         this.codPneu = codPneu;
     }
 

@@ -71,12 +71,7 @@ public class PostBDGenerico extends AsyncTask<String, Void, String> {
 			SSLContext sc = SSLContext.getInstance("SSL");
 			sc.init(null, trustAllCerts(), new java.security.SecureRandom());
 			connection.setSSLSocketFactory(sc.getSocketFactory());
-			connection.setHostnameVerifier(new HostnameVerifier() {
-				@Override
-				public boolean verify(String s, SSLSession sslSession) {
-					return true;
-				}
-			});
+			connection.setHostnameVerifier((s, sslSession) -> true);
 			connection.connect();
 
 			OutputStream out = connection.getOutputStream();
@@ -142,9 +137,9 @@ public class PostBDGenerico extends AsyncTask<String, Void, String> {
 			return null;
 		}
 		String urlParams = null;
-		Iterator<String> e = (Iterator<String>) params.keySet().iterator();
+		Iterator<String> e = params.keySet().iterator();
 		while (e.hasNext()) {
-			String chave = (String) e.next();
+			String chave = e.next();
 			Object objValor = params.get(chave);
 			String valor = objValor.toString();
 			urlParams = urlParams == null ? "" : urlParams + "&";

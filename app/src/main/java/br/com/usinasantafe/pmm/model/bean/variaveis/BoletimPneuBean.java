@@ -13,7 +13,7 @@ public class BoletimPneuBean extends Entidade {
     @DatabaseField(generatedId=true)
     private Long idBolPneu;
     @DatabaseField
-    private Long idApontBolPneu;
+    private Long idBolMMPneu;
     @DatabaseField
     private Long matricFuncBolPneu;
     @DatabaseField
@@ -36,12 +36,12 @@ public class BoletimPneuBean extends Entidade {
         this.idBolPneu = idBolPneu;
     }
 
-    public Long getIdApontBolPneu() {
-        return idApontBolPneu;
+    public Long getIdBolMMPneu() {
+        return idBolMMPneu;
     }
 
-    public void setIdApontBolPneu(Long idApontBolPneu) {
-        this.idApontBolPneu = idApontBolPneu;
+    public void setIdBolMMPneu(Long idBolMMPneu) {
+        this.idBolMMPneu = idBolMMPneu;
     }
 
     public Long getMatricFuncBolPneu() {

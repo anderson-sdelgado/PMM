@@ -1,11 +1,8 @@
 package br.com.usinasantafe.pmm.view;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -41,7 +38,6 @@ public class ListaPosPneuActivity extends ActivityGeneric {
         listaPosPneu.setAdapter(adapterListPosPneu);
 
         listaPosPneu.setOnItemClickListener((l, v, position, id) -> {
-
             LogProcessoDAO.getInstance().insertLogProcesso("listaPosPneu.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
                     "            @Override\n" +
                     "            public void onItemClick(AdapterView<?> l, View v, int position,\n" +
@@ -56,21 +52,17 @@ public class ListaPosPneuActivity extends ActivityGeneric {
             Intent it = new Intent(ListaPosPneuActivity.this, PneuActivity.class);
             startActivity(it);
             finish();
-
         });
 
         buttonFinalCalibragem.setOnClickListener(v -> {
-
             LogProcessoDAO.getInstance().insertLogProcesso("buttonFinalCalibragem.setOnClickListener(new View.OnClickListener() {\n" +
                     "            @Override\n" +
                     "            public void onClick(View v) {", getLocalClassName());
             if(pmmContext.getMotoMecFertCTR().verifFinalItemPneuBoletimAberto()){
-
                 LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verifFinalItemPneuBoletimAberto()){\n" +
                         "                    pmmContext.getMotoMecFertCTR().fecharBoletimPneu();\n" +
                         "                    pmmContext.getMotoMecFertCTR().fecharApont(getLocalClassName());", getLocalClassName());
-                pmmContext.getMotoMecFertCTR().fecharBoletimPneu();
-                pmmContext.getMotoMecFertCTR().fecharApont(getLocalClassName());
+                pmmContext.getMotoMecFertCTR().fecharBoletimPneu(getLocalClassName());
                 if(BuildConfig.FLAVOR.equals("pmm")){
                     LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                             "Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
@@ -108,7 +100,6 @@ public class ListaPosPneuActivity extends ActivityGeneric {
                 alerta.setTitle("ATENÇÃO");
                 alerta.setMessage("POR FAVOR, TERMINE A CALIBRAGEM EM TODOS OS PNEU DO EQUIPAMENTO.");
                 alerta.setPositiveButton("OK", (dialog, which) -> {
-
                 });
 
                 alerta.show();
@@ -161,7 +152,6 @@ public class ListaPosPneuActivity extends ActivityGeneric {
             alerta.setNegativeButton("NÃO", (dialog, which) -> LogProcessoDAO.getInstance().insertLogProcesso("alerta.setNegativeButton(\"NÃO\", new DialogInterface.OnClickListener() {\n" +
                     "                    @Override\n" +
                     "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName()));
-
             alerta.show();
 
         });

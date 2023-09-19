@@ -205,7 +205,7 @@ public class AtualDadosServ {
 		contAtualBD++;
 
 		AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
-		Map<String, Object> parametrosPost = new HashMap<String, Object>();
+		Map<String, Object> parametrosPost = new HashMap<>();
 		parametrosPost.put("dado", atualAplicDAO.getAtualBDToken());
 
 		LogProcessoDAO.getInstance().insertLogProcesso("postBDGenerico.execute('" + classe + "');", activity);

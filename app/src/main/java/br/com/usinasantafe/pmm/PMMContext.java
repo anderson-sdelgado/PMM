@@ -21,7 +21,7 @@ public class PMMContext extends Application {
     private CompostoCTR compostoCTR;
     private MecanicoCTR mecanicoCTR;
 
-    public static String versaoWS = "5.02";
+    public static String versaoWS = "5.03";
 
     @Override
     public void onCreate() {

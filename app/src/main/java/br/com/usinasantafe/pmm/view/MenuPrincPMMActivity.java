@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,8 +47,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
             LogProcessoDAO.getInstance().insertLogProcesso("if (Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())) {\n" +
                     "            pmmContext.getConfigCTR().setDifDthrConfig(0L);", getLocalClassName());
             pmmContext.getConfigCTR().setDifDthrConfig(0L);
-        }
-        else {
+        } else {
             LogProcessoDAO.getInstance().insertLogProcesso("else {", getLocalClassName());
             if ((pmmContext.getConfigCTR().getConfig().getDifDthrConfig() == 0) && (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 8L)) {
                 LogProcessoDAO.getInstance().insertLogProcesso("if ((pmmContext.getConfigCTR().getConfig().getDifDthrConfig() == 0) && (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 8L)) {\n" +
@@ -133,6 +130,10 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
         if(pmmContext.getConfigCTR().getEquip().getFlagApontMecan() == 1){
             itens.add("APONTAR MANUTENÇÃO");
             itens.add("FINALIZAR MANUTENÇÃO");
+        }
+
+        if(pmmContext.getMotoMecFertCTR().verParadaCalibragem()){
+            itens.add("APONTAR CALIBRAGEM");
         }
 
         LogProcessoDAO.getInstance().insertLogProcesso("itens.add(\"FINALIZAR BOLETIM\");\n" +
@@ -559,7 +560,13 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                         Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR, INICIE UM APONTAMENTO MECANICO PARA INTERROMPER/FINALIZAR O MESMO.",
                                 Toast.LENGTH_LONG).show();
                     }
-
+                    break;
+                }
+                case "APONTAR CALIBRAGEM": {
+                    pmmContext.getMotoMecFertCTR().abrirBoletimPneu();
+                    Intent it = new Intent(MenuPrincPMMActivity.this, ListaPosPneuActivity.class);
+                    startActivity(it);
+                    finish();
                     break;
                 }
             }

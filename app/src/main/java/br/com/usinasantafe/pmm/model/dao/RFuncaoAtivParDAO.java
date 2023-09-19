@@ -33,6 +33,37 @@ public class RFuncaoAtivParDAO {
 
     }
 
+    public boolean verParadaCalibragem(Long idparada){
+
+        boolean ret = false;
+        RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();
+        ArrayList<EspecificaPesquisa> pesqList = new ArrayList();
+
+        EspecificaPesquisa pesquisa1 = new EspecificaPesquisa();
+        pesquisa1.setCampo("idAtivPar");
+        pesquisa1.setValor(idparada);
+        pesquisa1.setTipo(1);
+        pesqList.add(pesquisa1);
+
+        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
+        pesquisa2.setCampo("tipoFuncao");
+        pesquisa2.setValor(2L);
+        pesquisa2.setTipo(1);
+        pesqList.add(pesquisa2);
+
+        EspecificaPesquisa pesquisa3 = new EspecificaPesquisa();
+        pesquisa3.setCampo("codFuncao");
+        pesquisa3.setValor(3L);
+        pesquisa3.setTipo(1);
+        pesqList.add(pesquisa3);
+
+        List<RFuncaoAtivParBean> rFuncaoAtivParList = rFuncaoAtivParBean.get(pesqList);
+        ret = rFuncaoAtivParList.size() > 0;
+        rFuncaoAtivParList.clear();
+
+        return ret;
+    }
+
     public List<RFuncaoAtivParBean> getListFuncaoParada(Long idparada){
 
         RFuncaoAtivParBean rFuncaoAtivParBean = new RFuncaoAtivParBean();

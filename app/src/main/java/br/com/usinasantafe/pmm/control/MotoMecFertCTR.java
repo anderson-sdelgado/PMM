@@ -151,6 +151,11 @@ public class MotoMecFertCTR {
         return boletimMMFertDAO.verBoletimMMFertFechado();
     }
 
+    public boolean verEnvioBolPneu() {
+        BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
+        return boletimPneuDAO.verifBoletimPneuFechado();
+    }
+
     public String dadosEnvioBolAbertoMMFert(){
 
         BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
@@ -172,10 +177,10 @@ public class MotoMecFertCTR {
         String dadosEnvioApontMecan = apontMecanDAO.dadosEnvioApontMecan(apontMecanDAO.apontMecanEnvioList(idBoletimArrayList));
 
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-        String dadosEnvioBoletimPneu = boletimPneuDAO.dadosEnvioBoletimPneu(boletimPneuDAO.boletimPneuEnvioList(idApontArrayList));
+        String dadosEnvioBoletimPneu = boletimPneuDAO.dadosEnvioBoletimPneu(boletimPneuDAO.boletimPneuEnvioList(idBoletimArrayList));
 
         ItemCalibPneuDAO itemCalibPneuDAO = new ItemCalibPneuDAO();
-        String dadosEnvioItemMedPneu = itemCalibPneuDAO.dadosEnvioItemMedPneu(itemCalibPneuDAO.itemMedPneuIdBolList(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(idApontArrayList))));
+        String dadosEnvioItemMedPneu = itemCalibPneuDAO.dadosEnvioItemMedPneu(itemCalibPneuDAO.itemMedPneuIdBolList(boletimPneuDAO.idBoletimPneuArrayList(boletimPneuDAO.boletimPneuEnvioList(idBoletimArrayList))));
 
         CarregCompDAO carregCompDAO = new CarregCompDAO();
         String dadosCarregComp = carregCompDAO.dadosEnvioCarreg(carregCompDAO.carregCompostoDescarregInsumo(idApontArrayList));
@@ -421,6 +426,20 @@ public class MotoMecFertCTR {
         RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
         LogProcessoDAO.getInstance().insertLogProcesso("rFuncaoAtivParDAO.getListFuncaoParada(" + idParada + ");", activity);
         return rFuncaoAtivParDAO.getListFuncaoParada(idParada);
+    }
+
+    public boolean verParadaCalibragem(){
+        RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
+        List<ParadaBean> listParada = getListParada();
+        boolean calibragem = false;
+        for (ParadaBean paradaBean : listParada) {
+            if (rFuncaoAtivParDAO.verParadaCalibragem(paradaBean.getIdParada())) {
+                calibragem = true;
+                break;
+            }
+        }
+        listParada.clear();
+        return calibragem;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -714,7 +733,7 @@ public class MotoMecFertCTR {
     public List<MotoMecBean> motoMecList() {
         ConfigCTR configCTR = new ConfigCTR();
         MotoMecDAO motoMecDAO = new MotoMecDAO();
-        return motoMecDAO.motoMecList(BuildConfig.FLAVOR.equals("cmm") ? 1L : configCTR.getConfig().getFuncaoComposto());
+        return motoMecDAO.motoMecList(BuildConfig.FLAVOR.equals("ecm") ? 1L : configCTR.getConfig().getFuncaoComposto());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1106,7 +1125,7 @@ public class MotoMecFertCTR {
         apontMMFertDAO.fecharApont(boletimMMFertDAO.getBoletimMMFertAberto().getIdBolMMFert());
 
         LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().envioDados(activity);", activity);
-        EnvioDadosServ.getInstance().envioDados(activity);
+
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1174,18 +1193,18 @@ public class MotoMecFertCTR {
         return boletimPneuDAO.verifBoletimPneuAberto();
     }
 
-    public void salvarBoletimPneu(){
+    public void abrirBoletimPneu(){
         BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
-        ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-        boletimPneuDAO.salvarBoletimPneu(apontMMFertDAO.getApontAberto(boletimMMFertDAO.getBoletimMMFertAberto().getIdBolMMFert()).getIdApontMMFert()
+        boletimPneuDAO.abrirBoletimPneu(boletimMMFertDAO.getBoletimMMFertAberto().getIdBolMMFert()
                 ,  boletimMMFertDAO.getBoletimMMFertAberto().getMatricFuncBolMMFert()
                 , boletimMMFertDAO.getBoletimMMFertAberto().getIdEquipBolMMFert());
     }
 
-    public void fecharBoletimPneu(){
+    public void fecharBoletimPneu(String activity){
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
         boletimPneuDAO.fecharBoletimPneu();
+        EnvioDadosServ.getInstance().envioDados(activity);
     }
 
     public void deletePneuAberto(){
@@ -1248,7 +1267,7 @@ public class MotoMecFertCTR {
     public void verPneu(String codPneu, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
         PneuDAO pneuDAO = new PneuDAO();
         AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
-        pneuDAO.verPneu(atualAplicDAO.getAtualCodPneu(Long.parseLong(codPneu)), telaAtual, telaProx, progressDialog, activity);
+        pneuDAO.verPneu(atualAplicDAO.getAtualCodPneu(codPneu), telaAtual, telaProx, progressDialog, activity);
     }
 
     public void receberVerifPneu(String result){

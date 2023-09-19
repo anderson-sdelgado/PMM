@@ -26,10 +26,17 @@ public class BoletimPneuDAO {
         return retorno;
     }
 
-    public void salvarBoletimPneu(Long idApontMMFert, Long matricFunc, Long idEquip){
+    public boolean verifBoletimPneuFechado(){
+        List<BoletimPneuBean> boletimPneuList = boletimPneuFechadoList();
+        boolean retorno = boletimPneuList.size() > 0;
+        boletimPneuList.clear();
+        return retorno;
+    }
+
+    public void abrirBoletimPneu(Long idApontMMFert, Long matricFunc, Long idEquip){
         Long dthr = Tempo.getInstance().dthrAtualLong();
         BoletimPneuBean boletimPneuBean = new BoletimPneuBean();
-        boletimPneuBean.setIdApontBolPneu(idApontMMFert);
+        boletimPneuBean.setIdBolMMPneu(idApontMMFert);
         boletimPneuBean.setMatricFuncBolPneu(matricFunc);
         boletimPneuBean.setIdEquipBolPneu(idEquip);
         boletimPneuBean.setDthrLongBolPneu(dthr);
@@ -77,9 +84,16 @@ public class BoletimPneuDAO {
         return boletimPneuBean.get(pesqArrayList);
     }
 
-    public List<BoletimPneuBean> boletimPneuEnvioList(ArrayList<Long> idApontList){
+    public List<BoletimPneuBean> boletimPneuFechadoList(){
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqBoletimPneuFechado());
         BoletimPneuBean boletimPneuBean = new BoletimPneuBean();
-        return boletimPneuBean.in("idApontBolPneu", idApontList);
+        return boletimPneuBean.get(pesqArrayList);
+    }
+
+    public List<BoletimPneuBean> boletimPneuEnvioList(ArrayList<Long> idBolMMList){
+        BoletimPneuBean boletimPneuBean = new BoletimPneuBean();
+        return boletimPneuBean.in("idBolMMPneu", idBolMMList);
     }
 
     public List<BoletimPneuBean> boletimPneuList(ArrayList<Long> idBolPneuArrayList){
@@ -156,4 +170,11 @@ public class BoletimPneuDAO {
         return pesquisa;
     }
 
+    private EspecificaPesquisa getPesqBoletimPneuFechado(){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("statusBolPneu");
+        pesquisa.setValor(2L);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
 }

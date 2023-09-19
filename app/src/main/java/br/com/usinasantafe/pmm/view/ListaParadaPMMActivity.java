@@ -79,7 +79,6 @@ public class ListaParadaPMMActivity extends ActivityGeneric {
 
             @Override
             public void afterTextChanged(Editable arg0) {
-
             }
         });
 
@@ -124,10 +123,7 @@ public class ListaParadaPMMActivity extends ActivityGeneric {
                 AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaPMMActivity.this);
                 alerta.setTitle("ATENÇÃO");
                 alerta.setMessage("FALHA NA CONEXÃO DE DADOS. O CELULAR ESTA SEM SINAL. POR FAVOR, TENTE NOVAMENTE QUANDO O CELULAR ESTIVE COM SINAL.");
-                alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
+                alerta.setPositiveButton("OK", (dialog, which) -> {
                 });
                 alerta.show();
 
@@ -206,49 +202,15 @@ public class ListaParadaPMMActivity extends ActivityGeneric {
                                 "                                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName()));
                         alertDialog.show();
                     } else {
-
                         LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                "                                pmmContext.getConfigCTR().clearDadosFert();\n" +
-                                "                                List<RFuncaoAtivParBean> rFuncaoAtivParList = pmmContext.getMotoMecFertCTR().getFuncaoParadaList(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), getLocalClassName());\n" +
-                                "                                boolean calibragem = false;\n" +
-                                "                                for (int i = 0; i < rFuncaoAtivParList.size(); i++) {\n" +
-                                "                                    RFuncaoAtivParBean rFuncaoAtivParBean = rFuncaoAtivParList.get(i);\n" +
-                                "                                    if (rFuncaoAtivParBean.getCodFuncao() == 3) {\n" +
-                                "                                        calibragem = true;\n" +
-                                "                                    }\n" +
-                                "                                }\n" +
-                                "                                rFuncaoAtivParList.clear();", getLocalClassName());
+                                "                        pmmContext.getConfigCTR().clearDadosFert();\n" +
+                                "                        pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());\n" +
+                                "                        Intent it = new Intent(ListaParadaPMMActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                         pmmContext.getConfigCTR().clearDadosFert();
-                        List<RFuncaoAtivParBean> rFuncaoAtivParList = pmmContext.getMotoMecFertCTR().getFuncaoParadaList(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), getLocalClassName());
-                        boolean calibragem = false;
-                        for (int i = 0; i < rFuncaoAtivParList.size(); i++) {
-                            RFuncaoAtivParBean rFuncaoAtivParBean = rFuncaoAtivParList.get(i);
-                            if (rFuncaoAtivParBean.getCodFuncao() == 3) {
-                                calibragem = true;
-                            }
-                        }
-                        rFuncaoAtivParList.clear();
-
-                        if(calibragem){
-                            LogProcessoDAO.getInstance().insertLogProcesso("if(calibragem){\n" +
-                                    "                                    pmmContext.getMotoMecFertCTR().salvarParadaPneu(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());\n" +
-                                    "                                    pmmContext.getMotoMecFertCTR().salvarBoletimPneu();\n" +
-                                    "                                    Intent it = new Intent(ListaParadaPMMActivity.this, ListaPosPneuActivity.class);", getLocalClassName());
-                            pmmContext.getMotoMecFertCTR().salvarParadaCalibragem(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
-                            pmmContext.getMotoMecFertCTR().salvarBoletimPneu();
-                            Intent it = new Intent(ListaParadaPMMActivity.this, ListaPosPneuActivity.class);
-                            startActivity(it);
-                            finish();
-                        } else {
-                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                    "                                    pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());\n" +
-                                    "                                    Intent it = new Intent(ListaParadaPMMActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                            pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
-                            Intent it = new Intent(ListaParadaPMMActivity.this, MenuPrincPMMActivity.class);
-                            startActivity(it);
-                            finish();
-                        }
-
+                        pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
+                        Intent it = new Intent(ListaParadaPMMActivity.this, MenuPrincPMMActivity.class);
+                        startActivity(it);
+                        finish();
                     }
 
                 }

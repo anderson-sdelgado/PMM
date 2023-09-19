@@ -482,6 +482,18 @@ public class MenuPrincECMActivity extends ActivityGeneric {
 
                         }
 
+                    } else if (motoMecBean.getCodFuncaoOperMotoMec() == 21) {
+
+                        LogProcessoDAO.getInstance().insertLogProcesso("} else if (motoMecBean.getCodFuncaoOperMotoMec() == 21) {\n" +
+                                "                        pmmContext.getConfigCTR().setPosicaoTela(30L);\n" +
+                                "                        pmmContext.getMotoMecFertCTR().abrirBoletimPneu();\n" +
+                                "                        Intent it = new Intent(MenuPrincECMActivity.this, ListaPosPneuActivity.class);", getLocalClassName());
+                        pmmContext.getConfigCTR().setPosicaoTela(30L);
+                        pmmContext.getMotoMecFertCTR().abrirBoletimPneu();
+                        Intent it = new Intent(MenuPrincECMActivity.this, ListaPosPneuActivity.class);
+                        startActivity(it);
+                        finish();
+
                     }
 
                 }
