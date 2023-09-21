@@ -21,7 +21,7 @@
                android:layout_width="fill_parent"
                android:layout_height="fill_parent"/>
 
-  <br.com.usinasantafe.pmm.zxing.ViewfinderView
+  <br.com.usinasantafe.cmm.zxing.ViewfinderView
       android:id="@+id/viewfinder_view"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"/>
