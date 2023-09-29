@@ -11,12 +11,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.cmm.BuildConfig;
 import br.com.usinasantafe.cmm.model.bean.AtualAplicBean;
 import br.com.usinasantafe.cmm.model.bean.estaticas.REquipAtivBean;
 import br.com.usinasantafe.cmm.model.bean.estaticas.REquipPneuBean;
+import br.com.usinasantafe.cmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.cmm.util.VerifDadosServ;
 import br.com.usinasantafe.cmm.model.bean.estaticas.EquipBean;
 
@@ -126,9 +128,29 @@ public class EquipDAO {
 
     }
 
-    public List<REquipPneuBean> rEquipPneuList(){
+    public List<REquipPneuBean> rEquipPneuList(Long idEquip){
+
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqId(idEquip));
+
         REquipPneuBean rEquipPneuBean = new REquipPneuBean();
-        return rEquipPneuBean.orderBy("posPneu", true);
+        return rEquipPneuBean.getAndOrderBy(pesqArrayList,"posPneu", true);
+    }
+
+    private EspecificaPesquisa getPesqId(Long idEquip){
+        EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
+        especificaPesquisa.setCampo("idEquip");
+        especificaPesquisa.setValor(idEquip);
+        especificaPesquisa.setTipo(1);
+        return especificaPesquisa;
+    }
+
+    private EspecificaPesquisa getPesqNro(Long nroEquip){
+        EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
+        especificaPesquisa.setCampo("nroEquip");
+        especificaPesquisa.setValor(nroEquip);
+        especificaPesquisa.setTipo(1);
+        return especificaPesquisa;
     }
 
 }

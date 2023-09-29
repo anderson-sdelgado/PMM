@@ -39,8 +39,8 @@ public class PressaoColPneuActivity extends ActivityGeneric {
                     LogProcessoDAO.getInstance().insertLogProcesso("if (qtde < 1000) {\n" +
                             "                        pmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setPressaoEncItemMedPneu(qtde);\n" +
                             "                        Intent it = new Intent(PressaoEncPneuActivity.this, PressaoColPneuActivity.class);", getLocalClassName());
-                    cmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setPressaoColItemCalibPneu(qtde);
-                    cmmContext.getMotoMecFertCTR().salvarItemMedPneu();
+                    cmmContext.getPneuCTR().getItemCalibPneuBean().setPressaoColItemCalibPneu(qtde);
+                    cmmContext.getPneuCTR().salvarItemCalibPneu();
                     Intent it = new Intent(PressaoColPneuActivity.this, ListaPosPneuActivity.class);
                     startActivity(it);
                     finish();

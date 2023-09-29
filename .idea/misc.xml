@@ -10,6 +10,7 @@
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_deseng_carreta.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_dig_item_os_mecan.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_equip.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_equip_pneu.xml" value="0.10185185185185185" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_espera_infor.xml" value="0.1265625" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_horimetro.xml" value="0.19635416666666666" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_infor_carreg_compostagem.xml" value="0.20260416666666667" />
@@ -56,6 +57,8 @@
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_perg_atual_check_list.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_perg_final_pre_cec.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_pneu.xml" value="0.146875" />
+        <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_pneu_col.xml" value="0.13854166666666667" />
+        <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_pneu_ret.xml" value="0.13854166666666667" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_pressao_col_pneu.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_pressao_enc_pneu.xml" value="0.25885416666666666" />
         <entry key="..\:/Users/anderson/Documents/Android/PMM/app/src/main/res/layout/activity_produto.xml" value="0.13272543059777103" />

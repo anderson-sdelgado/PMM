@@ -132,8 +132,13 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
             itens.add("FINALIZAR MANUTENÇÃO");
         }
 
-        if(cmmContext.getConfigCTR().getEquip().getFlagApontMecan() == 1){
-            itens.add("APONTAR CALIBRAGEM");
+        LogProcessoDAO.getInstance().insertLogProcesso("if(cmmContext.getConfigCTR().getEquip().getFlagApontPneu() == 1){\n" +
+                "            itens.add(\"CALIBRAGEM DE PNEU\");\n" +
+                "            itens.add(\"TROCA DE PNEU\");\n" +
+                "        }", getLocalClassName());
+        if(cmmContext.getConfigCTR().getEquip().getFlagApontPneu() == 1){
+            itens.add("CALIBRAGEM DE PNEU");
+            itens.add("TROCA DE PNEU");
         }
 
         LogProcessoDAO.getInstance().insertLogProcesso("itens.add(\"FINALIZAR BOLETIM\");\n" +
@@ -562,9 +567,16 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                     }
                     break;
                 }
-                case "APONTAR CALIBRAGEM": {
-                    cmmContext.getMotoMecFertCTR().abrirBoletimPneu();
-                    Intent it = new Intent(MenuPrincPMMActivity.this, ListaPosPneuActivity.class);
+                case "CALIBRAGEM DE PNEU": {
+                    cmmContext.getPneuCTR().setTipoPneu(1L);
+                    Intent it = new Intent(MenuPrincPMMActivity.this, EquipPneuActivity.class);
+                    startActivity(it);
+                    finish();
+                    break;
+                }
+                case "TROCA DE PNEU": {
+                    cmmContext.getPneuCTR().setTipoPneu(2L);
+                    Intent it = new Intent(MenuPrincPMMActivity.this, EquipPneuActivity.class);
                     startActivity(it);
                     finish();
                     break;

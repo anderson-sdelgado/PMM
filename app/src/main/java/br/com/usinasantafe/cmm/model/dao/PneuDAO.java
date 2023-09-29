@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.usinasantafe.cmm.model.bean.estaticas.PneuBean;
+import br.com.usinasantafe.cmm.model.bean.variaveis.ItemManutPneuBean;
 import br.com.usinasantafe.cmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.cmm.util.VerifDadosServ;
 
@@ -28,8 +29,8 @@ public class PneuDAO {
         return ret;
     }
 
-    public void verPneu(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
-        VerifDadosServ.getInstance().verifDados(dado, "Pneu", telaAtual, telaProx, progressDialog, activity);
+    public void verPneu(String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, ItemManutPneuBean itemManutPneuBean, String activity){
+        VerifDadosServ.getInstance().verifDados(dado, "Pneu", telaAtual, telaProx, progressDialog, itemManutPneuBean, activity);
     }
 
     public void recDadosPneu(JSONArray jsonArray) throws JSONException {

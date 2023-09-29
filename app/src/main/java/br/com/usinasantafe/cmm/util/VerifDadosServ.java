@@ -13,6 +13,8 @@ import br.com.usinasantafe.cmm.control.CECCTR;
 import br.com.usinasantafe.cmm.control.CompostoCTR;
 import br.com.usinasantafe.cmm.control.MecanicoCTR;
 import br.com.usinasantafe.cmm.control.MotoMecFertCTR;
+import br.com.usinasantafe.cmm.control.PneuCTR;
+import br.com.usinasantafe.cmm.model.bean.variaveis.ItemManutPneuBean;
 import br.com.usinasantafe.cmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.cmm.util.conHttp.PostVerGenerico;
 import br.com.usinasantafe.cmm.control.CheckListCTR;
@@ -40,6 +42,7 @@ public class VerifDadosServ {
     public static int status;
     private int tipo;
     private String senha;
+    private ItemManutPneuBean itemManutPneuBean;
 
     public VerifDadosServ() {
     }
@@ -57,7 +60,7 @@ public class VerifDadosServ {
         CompostoCTR compostoCTR = new CompostoCTR();
         CECCTR cecCTR = new CECCTR();
         MecanicoCTR mecanicoCTR = new MecanicoCTR();
-        MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
+        PneuCTR pneuCTR = new PneuCTR();
         LogProcessoDAO.getInstance().insertLogProcesso("public void manipularDadosHttp(String result) {", activity);
         if (this.classe.equals("Equip")) {
             LogProcessoDAO.getInstance().insertLogProcesso("if (this.tipo.equals(\"Equip\")) {\n" +
@@ -102,7 +105,7 @@ public class VerifDadosServ {
         } else if (this.classe.equals("Pneu")) {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Pneu\")) {\n" +
                     "            motoMecFertCTR.receberVerifPneu(" + result + ");", activity);
-            motoMecFertCTR.receberVerifPneu(result);
+            pneuCTR.receberVerifPneu(result, itemManutPneuBean, activity);
         } else {
             LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                     "            status = 1;", activity);
@@ -130,6 +133,20 @@ public class VerifDadosServ {
         this.progressDialog = progressDialog;
         this.classe = classe;
         this.dados = dados;
+
+        envioVerif(activity);
+
+    }
+
+    public void verifDados(String dados, String classe, Context telaAtual, Class telaProx, ProgressDialog progressDialog, ItemManutPneuBean itemManutPneuBean, String activity) {
+
+        this.urlsConexaoHttp = new UrlsConexaoHttp();
+        this.telaAtual = telaAtual;
+        this.telaProx = telaProx;
+        this.progressDialog = progressDialog;
+        this.classe = classe;
+        this.dados = dados;
+        this.itemManutPneuBean = itemManutPneuBean;
 
         envioVerif(activity);
 

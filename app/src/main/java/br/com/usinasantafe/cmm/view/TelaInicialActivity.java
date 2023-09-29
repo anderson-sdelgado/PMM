@@ -128,7 +128,7 @@ public class TelaInicialActivity extends ActivityGeneric {
             LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verBolAberto()){", getLocalClassName());
             if(!cmmContext.getCheckListCTR().verCabecAberto()){
                 LogProcessoDAO.getInstance().insertLogProcesso("if(!pmmContext.getCheckListCTR().verCabecAberto()){", getLocalClassName());
-                if(!cmmContext.getMotoMecFertCTR().verifBoletimPneuAberto()){
+                if(!cmmContext.getPneuCTR().verifBolPneuAberto()){
                     LogProcessoDAO.getInstance().insertLogProcesso("if(!pmmContext.getMotoMecFertCTR().verifBoletimPneuAberto()){\n" +
                             "                pmmContext.getConfigCTR().setPosicaoTela(8L);", getLocalClassName());
                     cmmContext.getConfigCTR().setPosicaoTela(8L);

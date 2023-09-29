@@ -13,7 +13,7 @@ import br.com.usinasantafe.cmm.R;
 import br.com.usinasantafe.cmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.cmm.util.VerifDadosServ;
 
-public class PneuActivity extends ActivityGeneric {
+public class PneuCalibActivity extends ActivityGeneric {
 
     private CMMContext cmmContext;
     private ProgressDialog progressBar;
@@ -22,7 +22,7 @@ public class PneuActivity extends ActivityGeneric {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pneu);
+        setContentView(R.layout.activity_pneu_calib);
 
         cmmContext = (CMMContext) getApplication();
 
@@ -30,36 +30,32 @@ public class PneuActivity extends ActivityGeneric {
         Button buttonCancPneu = findViewById(R.id.buttonCancPadrao);
         EditText editText = findViewById(R.id.editTextPadrao);
 
-        LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verItemMedPneuBolAberto()){\n" +
-                "            editText.setText(pmmContext.getMotoMecFertCTR().getItemMedPneuBolAberto().getNroPneuItemMedPneu());\n" +
-                "        }\n" +
-                "        else{\n" +
+        LogProcessoDAO.getInstance().insertLogProcesso("if(cmmContext.getPneuCTR().verItemMedPneuBolAberto()){\n" +
+                "            editText.setText(cmmContext.getPneuCTR().getItemMedPneuBolAberto().getNroPneuItemCalibPneu());\n" +
+                "        } else {\n" +
                 "            editText.setText(\"\");\n" +
                 "        }", getLocalClassName());
-        if(cmmContext.getMotoMecFertCTR().verItemMedPneuBolAberto()){
-            editText.setText(cmmContext.getMotoMecFertCTR().getItemMedPneuBolAberto().getNroPneuItemCalibPneu());
+        if(cmmContext.getPneuCTR().verItemMedPneuBolAberto()){
+            editText.setText(cmmContext.getPneuCTR().getItemMedPneuBolAberto().getNroPneuItemCalibPneu());
         } else {
             editText.setText("");
         }
 
         buttonOkPneu.setOnClickListener(v -> {
 
-            LogProcessoDAO.getInstance().insertLogProcesso("buttonOkPneu.setOnClickListener(new View.OnClickListener() {\n" +
-                    "            @Override\n" +
-                    "            public void onClick(View v) {", getLocalClassName());
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonOkPneu.setOnClickListener(v -> {", getLocalClassName());
             if (!editTextPadrao.getText().toString().equals("")) {
                 LogProcessoDAO.getInstance().insertLogProcesso("if (!editTextPadrao.getText().toString().equals(\"\")) {\n" +
-                        "                    String nroPneu = editTextPadrao.getText().toString();\n" +
-                        "                    pmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setNroPneuItemMedPneu(nroPneu);", getLocalClassName());
+                        "                String nroPneu = editTextPadrao.getText().toString();\n" +
+                        "                cmmContext.getPneuCTR().getItemCalibPneuBean().setNroPneuItemCalibPneu(nroPneu);", getLocalClassName());
                 String nroPneu = editTextPadrao.getText().toString();
-                cmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setNroPneuItemCalibPneu(nroPneu);
-
-                if(!cmmContext.getMotoMecFertCTR().verItemMedPneuNroPneuRepetido(nroPneu)){
-                    LogProcessoDAO.getInstance().insertLogProcesso("if(!pmmContext.getMotoMecFertCTR().verItemMedPneuNroPneuRepetido(nroPneu)){", getLocalClassName());
-                    if (cmmContext.getMotoMecFertCTR().verPneuNro(nroPneu)) {
+                cmmContext.getPneuCTR().getItemCalibPneuBean().setNroPneuItemCalibPneu(nroPneu);
+                if(!cmmContext.getPneuCTR().verPneuRepetidoNro(nroPneu)){
+                    LogProcessoDAO.getInstance().insertLogProcesso("if(!cmmContext.getPneuCTR().verPneuRepetidoNro(nroPneu)){", getLocalClassName());
+                    if (cmmContext.getPneuCTR().verPneuNro(nroPneu)) {
                         LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verPneuNro(nroPneu)) {\n" +
                                 "                        Intent it = new Intent(PneuActivity.this, PressaoEncPneuActivity.class);", getLocalClassName());
-                        Intent it = new Intent(PneuActivity.this, PressaoEncPneuActivity.class);
+                        Intent it = new Intent(PneuCalibActivity.this, PressaoEncPneuActivity.class);
                         startActivity(it);
                         finish();
                     } else {
@@ -81,8 +77,8 @@ public class PneuActivity extends ActivityGeneric {
 
                             LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().verOS(" + editTextPadrao.getText().toString() + "\n" +
                                     "                                        , OSActivity.this, ListaAtividadeActivity.class, progressBar);", getLocalClassName());
-                            cmmContext.getMotoMecFertCTR().verPneu(editTextPadrao.getText().toString()
-                                    , PneuActivity.this, PressaoEncPneuActivity.class, progressBar, getLocalClassName());
+                            cmmContext.getPneuCTR().verPneu(editTextPadrao.getText().toString()
+                                    , PneuCalibActivity.this, PressaoEncPneuActivity.class, progressBar, getLocalClassName());
 
                         } else {
 
@@ -95,7 +91,7 @@ public class PneuActivity extends ActivityGeneric {
                                     "                    }\n" +
                                     "                });\n" +
                                     "                alerta.show();", getLocalClassName());
-                            AlertDialog.Builder alerta = new AlertDialog.Builder(PneuActivity.this);
+                            AlertDialog.Builder alerta = new AlertDialog.Builder(PneuCalibActivity.this);
                             alerta.setTitle("ATENÇÃO");
                             alerta.setMessage("FALHA DE PESQUISA DE PNEU! POR FAVOR, TENTAR NOVAMENTE COM UM SINAL MELHOR.");
                             alerta.setPositiveButton("OK", (dialog, which) -> {
@@ -115,7 +111,7 @@ public class PneuActivity extends ActivityGeneric {
                             "                    }\n" +
                             "                });\n" +
                             "                alerta.show();", getLocalClassName());
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(PneuActivity.this);
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(PneuCalibActivity.this);
                     alerta.setTitle("ATENÇÃO");
                     alerta.setMessage("PNEU REPETIDO! POR FAVOR, VERIFIQUE A NUMERAÇÃO DO PNEU.");
                     alerta.setPositiveButton("OK", (dialog, which) -> {
@@ -145,7 +141,7 @@ public class PneuActivity extends ActivityGeneric {
     public void onBackPressed()  {
         LogProcessoDAO.getInstance().insertLogProcesso("public void onBackPressed()  {\n" +
                 "        Intent it = new Intent(PneuActivity.this, ListaPosPneuActivity.class);", getLocalClassName());
-        Intent it = new Intent(PneuActivity.this, ListaPosPneuActivity.class);
+        Intent it = new Intent(PneuCalibActivity.this, ListaPosPneuActivity.class);
         startActivity(it);
         finish();
     }

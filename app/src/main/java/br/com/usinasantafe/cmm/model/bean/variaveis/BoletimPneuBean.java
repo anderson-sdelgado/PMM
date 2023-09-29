@@ -13,17 +13,19 @@ public class BoletimPneuBean extends Entidade {
     @DatabaseField(generatedId=true)
     private Long idBolPneu;
     @DatabaseField
-    private Long idBolMMPneu;
+    private Long idBolMMFertPneu;
     @DatabaseField
     private Long matricFuncBolPneu;
     @DatabaseField
     private Long idEquipBolPneu;
     @DatabaseField
+    private Long tipoBolPneu; // 1 - Calibragem; 2 - Troca
+    @DatabaseField
     private String dthrBolPneu;
     @DatabaseField
     private Long dthrLongBolPneu;
     @DatabaseField
-    private Long statusBolPneu;  //1 - Aberto; 2 - Encerrado; 3 - Enviado
+    private Long statusBolPneu;  // 1 - Aberto; 2 - Encerrado; 3 - Enviado
 
     public BoletimPneuBean() {
     }
@@ -36,12 +38,12 @@ public class BoletimPneuBean extends Entidade {
         this.idBolPneu = idBolPneu;
     }
 
-    public Long getIdBolMMPneu() {
-        return idBolMMPneu;
+    public Long getIdBolMMFertPneu() {
+        return idBolMMFertPneu;
     }
 
-    public void setIdBolMMPneu(Long idBolMMPneu) {
-        this.idBolMMPneu = idBolMMPneu;
+    public void setIdBolMMFertPneu(Long idBolMMFertPneu) {
+        this.idBolMMFertPneu = idBolMMFertPneu;
     }
 
     public Long getMatricFuncBolPneu() {
@@ -58,6 +60,14 @@ public class BoletimPneuBean extends Entidade {
 
     public void setIdEquipBolPneu(Long idEquipBolPneu) {
         this.idEquipBolPneu = idEquipBolPneu;
+    }
+
+    public Long getTipoBolPneu() {
+        return tipoBolPneu;
+    }
+
+    public void setTipoBolPneu(Long tipoBolPneu) {
+        this.tipoBolPneu = tipoBolPneu;
     }
 
     public String getDthrBolPneu() {

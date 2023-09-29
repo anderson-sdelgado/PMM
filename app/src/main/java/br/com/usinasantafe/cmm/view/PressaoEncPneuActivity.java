@@ -39,7 +39,7 @@ public class PressaoEncPneuActivity extends ActivityGeneric {
                     LogProcessoDAO.getInstance().insertLogProcesso("if (qtde < 1000) {\n" +
                             "                        pmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setPressaoEncItemMedPneu(qtde);\n" +
                             "                        Intent it = new Intent(PressaoEncPneuActivity.this, PressaoColPneuActivity.class);", getLocalClassName());
-                    cmmContext.getMotoMecFertCTR().getItemMedPneuDAO().getItemMedPneuBean().setPressaoEncItemCalibPneu(qtde);
+                    cmmContext.getPneuCTR().getItemCalibPneuBean().setPressaoEncItemCalibPneu(qtde);
                     Intent it = new Intent(PressaoEncPneuActivity.this, PressaoColPneuActivity.class);
                     startActivity(it);
                     finish();
@@ -86,7 +86,7 @@ public class PressaoEncPneuActivity extends ActivityGeneric {
     public void onBackPressed()  {
         LogProcessoDAO.getInstance().insertLogProcesso("public void onBackPressed()  {\n" +
                 "        Intent it = new Intent(PressaoEncPneuActivity.this, PneuActivity.class);", getLocalClassName());
-        Intent it = new Intent(PressaoEncPneuActivity.this, PneuActivity.class);
+        Intent it = new Intent(PressaoEncPneuActivity.this, PneuCalibActivity.class);
         startActivity(it);
         finish();
     }

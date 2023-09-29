@@ -44,6 +44,7 @@ import br.com.usinasantafe.cmm.model.bean.variaveis.ImplementoMMBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.InfColheitaBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.InfPlantioBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.ItemCalibPneuBean;
+import br.com.usinasantafe.cmm.model.bean.variaveis.ItemManutPneuBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.LogErroBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.LogProcessoBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.MovLeiraBean;
@@ -60,7 +61,7 @@ import com.j256.ormlite.table.TableUtils;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	public static final String FORCA_DB_NAME = BuildConfig.FLAVOR + "_db";
-	public static final int FORCA_BD_VERSION = 2;
+	public static final int FORCA_BD_VERSION = 1;
 
 	private static DatabaseHelper instance;
 	
@@ -168,6 +169,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(cs, InfColheitaBean.class, true);
 			TableUtils.dropTable(cs, InfPlantioBean.class, true);
 			TableUtils.dropTable(cs, ItemCalibPneuBean.class, true);
+			TableUtils.dropTable(cs, ItemOSMecanBean.class, true);
 			TableUtils.dropTable(cs, LogErroBean.class, true);
 			TableUtils.dropTable(cs, LogProcessoBean.class, true);
 			TableUtils.dropTable(cs, MovLeiraBean.class, true);
@@ -227,6 +229,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, InfColheitaBean.class);
 			TableUtils.createTable(cs, InfPlantioBean.class);
 			TableUtils.createTable(cs, ItemCalibPneuBean.class);
+			TableUtils.createTable(cs, ItemManutPneuBean.class);
 			TableUtils.createTable(cs, LogErroBean.class);
 			TableUtils.createTable(cs, LogProcessoBean.class);
 			TableUtils.createTable(cs, MovLeiraBean.class);
@@ -286,6 +289,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(cs, InfColheitaBean.class, true);
 			TableUtils.dropTable(cs, InfPlantioBean.class, true);
 			TableUtils.dropTable(cs, ItemCalibPneuBean.class, true);
+			TableUtils.dropTable(cs, ItemManutPneuBean.class, true);
 			TableUtils.dropTable(cs, MovLeiraBean.class, true);
 			TableUtils.dropTable(cs, PreCECBean.class, true);
 			TableUtils.dropTable(cs, RecolhFertBean.class, true);
@@ -342,6 +346,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(cs, InfColheitaBean.class);
 			TableUtils.createTable(cs, InfPlantioBean.class);
 			TableUtils.createTable(cs, ItemCalibPneuBean.class);
+			TableUtils.createTable(cs, ItemManutPneuBean.class);
 			TableUtils.createTable(cs, MovLeiraBean.class);
 			TableUtils.createTable(cs, PreCECBean.class);
 			TableUtils.createTable(cs, RecolhFertBean.class);

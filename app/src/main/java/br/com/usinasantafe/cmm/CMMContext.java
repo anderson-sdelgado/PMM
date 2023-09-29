@@ -8,6 +8,7 @@ import br.com.usinasantafe.cmm.control.MecanicoCTR;
 import br.com.usinasantafe.cmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.cmm.control.CheckListCTR;
 import br.com.usinasantafe.cmm.control.ConfigCTR;
+import br.com.usinasantafe.cmm.control.PneuCTR;
 import br.com.usinasantafe.cmm.model.dao.LogErroDAO;
 
 public class CMMContext extends Application {
@@ -20,6 +21,7 @@ public class CMMContext extends Application {
     private ConfigCTR configCTR;
     private CompostoCTR compostoCTR;
     private MecanicoCTR mecanicoCTR;
+    private PneuCTR pneuCTR;
 
     public static String versaoWS = "5.03";
 
@@ -65,6 +67,12 @@ public class CMMContext extends Application {
         if (mecanicoCTR == null)
             mecanicoCTR = new MecanicoCTR();
         return mecanicoCTR;
+    }
+
+    public PneuCTR getPneuCTR(){
+        if (pneuCTR == null)
+            pneuCTR = new PneuCTR();
+        return pneuCTR;
     }
 
     private Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() {

@@ -13,22 +13,10 @@ import br.com.usinasantafe.cmm.util.Tempo;
 
 public class ItemCalibPneuDAO {
 
-    private ItemCalibPneuBean itemCalibPneuBean;
-
     public ItemCalibPneuDAO() {
     }
 
-    public ItemCalibPneuBean getItemMedPneuBean() {
-        if (itemCalibPneuBean == null)
-            itemCalibPneuBean = new ItemCalibPneuBean();
-        return itemCalibPneuBean;
-    }
-
-    public void setItemMedPneuBean() {
-        this.itemCalibPneuBean = new ItemCalibPneuBean();
-    }
-
-    public void salvarItemMedPneu(Long idBoletimPneu){
+    public void salvarItemCalibPneu(Long idBoletimPneu, ItemCalibPneuBean itemCalibPneuBean){
         if(verItemMedPneuIdBolIdPosConf(idBoletimPneu, itemCalibPneuBean.getIdPosConfItemCalibPneu())) {
             ItemCalibPneuBean itemCalibPneuBeanBD = getItemMedPneuIdBolIdPosConf(idBoletimPneu, itemCalibPneuBean.getIdPosConfItemCalibPneu());
             itemCalibPneuBeanBD.setNroPneuItemCalibPneu(itemCalibPneuBean.getNroPneuItemCalibPneu());
@@ -115,16 +103,16 @@ public class ItemCalibPneuDAO {
 
     }
 
-    public void deleteItemMedPneu(ArrayList<Long> idBoletimPneuArrayList){
+    public void deleteItemMedPneu(ArrayList<Long> idBolPneuArrayList){
 
         ItemCalibPneuBean itemCalibPneuBean = new ItemCalibPneuBean();
-        List<ItemCalibPneuBean> itemMedPneuList = itemCalibPneuBean.in("idBolItemCalibPneu", idBoletimPneuArrayList);
+        List<ItemCalibPneuBean> itemMedPneuList = itemCalibPneuBean.in("idBolItemCalibPneu", idBolPneuArrayList);
 
         for (ItemCalibPneuBean itemCalibPneuBeanBD : itemMedPneuList) {
             itemCalibPneuBeanBD.delete();
         }
 
-        idBoletimPneuArrayList.clear();
+        idBolPneuArrayList.clear();
 
     }
 

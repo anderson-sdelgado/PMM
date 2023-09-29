@@ -9,12 +9,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".view.EquipPneuActivity">
+    tools:context=".view.PneuColActivity">
 
     <TextView
         android:id="@+id/textViewPadrao"
         style="@style/TextView"
-        android:text="@string/texto_equip" />
+        android:text="@string/texto_pneu_col" />
 
     <EditText
         android:id="@+id/editTextPadrao"
@@ -22,6 +22,6 @@
 
     <include
         android:id="@+id/layout_novo_botoes"
-        layout="@layout/layout_botoes" />
+        layout="@layout/layout_botoes_s_atual" />
 
 </LinearLayout>

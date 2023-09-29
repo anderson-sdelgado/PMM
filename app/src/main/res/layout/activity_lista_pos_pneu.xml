@@ -17,17 +17,17 @@
         android:text="@string/texto_pos_pneu" />
 
     <ListView
-        android:id="@+id/listaPosPneu"
+        android:id="@+id/listViewPosPneu"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
     <Button
-        android:id="@+id/buttonFinalCalibragem"
+        android:id="@+id/buttonFinalBoletim"
         style="@style/BotaoAvulso"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/texto_final_calibragem" />
+        android:text="@string/texto_final_boletim" />
 
     <Button
         android:id="@+id/buttonCancPosPneu"
