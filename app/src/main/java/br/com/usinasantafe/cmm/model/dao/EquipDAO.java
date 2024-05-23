@@ -95,21 +95,6 @@ public class EquipDAO {
 
     }
 
-    public void recDadosREquipPneu(JSONArray jsonArray) throws JSONException {
-
-        REquipPneuBean rEquipPneuBean = new REquipPneuBean();
-        rEquipPneuBean.deleteAll();
-
-        for (int j = 0; j < jsonArray.length(); j++) {
-            JSONObject objeto = jsonArray.getJSONObject(j);
-            Gson gson = new Gson();
-            REquipPneuBean rEquipPneu = gson.fromJson(objeto.toString(), REquipPneuBean.class);
-            rEquipPneu.insert();
-        }
-
-    }
-
-
     public String dadosEnvioEquip(){
 
         EquipBean equipBean = new EquipBean();

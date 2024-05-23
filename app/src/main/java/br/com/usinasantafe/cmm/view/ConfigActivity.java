@@ -68,8 +68,8 @@ public class ConfigActivity extends ActivityGeneric {
         cmmContext = (CMMContext) getApplication();
 
         if (cmmContext.getConfigCTR().hasElemConfig()) {
-            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().hasElemConfig()) {", getLocalClassName());
-            LogProcessoDAO.getInstance().insertLogProcesso("editTextEquipConfig.setText(String.valueOf(pmmContext.getConfigCTR().getEquip().getNroEquip()));\n" +
+            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().hasElemConfig()) {\n" +
+                    "       editTextEquipConfig.setText(String.valueOf(pmmContext.getConfigCTR().getEquip().getNroEquip()));\n" +
                     "            editTextSenhaConfig.setText(pmmContext.getConfigCTR().getConfig().getSenhaConfig());", getLocalClassName());
             editTextEquipConfig.setText(String.valueOf(cmmContext.getConfigCTR().getEquip().getNroEquip()));
             editTextSenhaConfig.setText(cmmContext.getConfigCTR().getConfig().getSenhaConfig());
@@ -119,7 +119,6 @@ public class ConfigActivity extends ActivityGeneric {
                     "            @Override\n" +
                     "            public void onClick(View v) {\n", getLocalClassName());
             if(cmmContext.getConfigCTR().hasElemConfig()) {
-
                 LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().hasElemConfig()) {", getLocalClassName());
 
                 if(connectNetwork){
@@ -292,7 +291,6 @@ public class ConfigActivity extends ActivityGeneric {
             alerta.setTitle("ATENÇÃO");
             alerta.setMessage("TODOS OS DADOS FORAM APAGADOS!");
             alerta.setPositiveButton("OK", (dialog, which) -> {
-
             });
 
             alerta.show();

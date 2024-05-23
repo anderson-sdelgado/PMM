@@ -313,8 +313,7 @@ public class MotoMecFertCTR {
 
             EnvioDadosServ.getInstance().envioDados(activity);
 
-        }
-        catch (Exception e){
+        } catch (Exception e){
             EnvioDadosServ.status = 1;
             LogErroDAO.getInstance().insertLogErro(e);
         }

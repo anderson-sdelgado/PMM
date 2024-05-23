@@ -26,8 +26,6 @@ public class PostBDGenerico extends AsyncTask<String, Void, String> {
 	private String tipo = null;
 	private String activity;
 
-	private UrlsConexaoHttp urlsConexaoHttp;
-
 	public PostBDGenerico() {
 	}
 
@@ -50,7 +48,7 @@ public class PostBDGenerico extends AsyncTask<String, Void, String> {
 		try {
 			
 			Object object = new Object();
-            Class<?> retClasse = Class.forName(urlsConexaoHttp.localUrl); 
+            Class<?> retClasse = Class.forName(UrlsConexaoHttp.localUrl);
 			
             for (Field field : retClasse.getDeclaredFields()) {
                 String campo = field.getName();
@@ -152,12 +150,8 @@ public class PostBDGenerico extends AsyncTask<String, Void, String> {
 					{
 						return null;
 					}
-					public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType)
-					{
-					}
-					public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType)
-					{
-					}
+					public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType) {}
+					public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType) {}
 				}
 		};
 	}

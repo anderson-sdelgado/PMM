@@ -23,7 +23,7 @@ public class CMMContext extends Application {
     private MecanicoCTR mecanicoCTR;
     private PneuCTR pneuCTR;
 
-    public static String versaoWS = "5.03";
+    public static String versaoWS = "5.04";
 
     @Override
     public void onCreate() {
@@ -31,20 +31,16 @@ public class CMMContext extends Application {
         mDefaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(handler);
     }
-
     public MotoMecFertCTR getMotoMecFertCTR() {
         if (motoMecFertCTR == null)
             motoMecFertCTR = new MotoMecFertCTR();
         return motoMecFertCTR;
     }
-
     public CECCTR getCecCTR() {
         if (cecCTR == null)
             cecCTR = new CECCTR();
         return cecCTR;
     }
-
-
     public CheckListCTR getCheckListCTR(){
         if (checkListCTR == null)
             checkListCTR = new CheckListCTR();

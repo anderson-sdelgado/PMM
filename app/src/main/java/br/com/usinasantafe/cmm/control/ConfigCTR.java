@@ -211,6 +211,7 @@ public class ConfigCTR {
         }
 
     }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////////// BOLETIM MM /////////////////////////////////////////////////
@@ -548,7 +549,6 @@ public class ConfigCTR {
         EquipDAO equipDAO = new EquipDAO();
         EquipBean equipBean = equipDAO.getEquip();
         AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
-
         LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().verifAtualAplic(atualAplicDAO.dadosVerAtualAplicBean(equipBean.getNroEquip(), equipBean.getIdCheckList(), versaoAplic)\n" +
                 "                , telaInicialActivity, progressDialog);", activity);
         VerifDadosServ.getInstance().verifAtualAplic(atualAplicDAO.dadosVerAtualAplicBean(equipBean.getIdEquip(), equipBean.getIdCheckList(), versaoAplic)

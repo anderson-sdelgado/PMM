@@ -207,36 +207,10 @@ public class VerifDadosServ {
             AlertDialog.Builder alerta = new AlertDialog.Builder(telaAtual);
             alerta.setTitle("ATENÇÃO");
             alerta.setMessage(texto);
-            alerta.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
+            alerta.setPositiveButton("OK", (dialog, which) -> {
             });
             alerta.show();
         }
     }
 
-    public void pulaTelaSemBarra(){
-        if(status < 3){
-            status = 3;
-            Intent it = new Intent(telaAtual, telaProx);
-            telaAtual.startActivity(it);
-        }
-    }
-
-    public void pulaTelaSemBarra(Class telaProx){
-        if(status < 3){
-            status = 3;
-            Intent it = new Intent(telaAtual, telaProx);
-            telaAtual.startActivity(it);
-        }
-    }
-
-    public String getClasse() {
-        return classe;
-    }
-
-    public void setClasse(String classe) {
-        this.classe = classe;
-    }
 }

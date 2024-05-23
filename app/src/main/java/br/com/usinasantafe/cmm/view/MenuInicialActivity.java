@@ -88,7 +88,7 @@ public class MenuInicialActivity extends ActivityGeneric {
 
             Intent it;
             switch (text) {
-                case "BOLETIM":
+                case "BOLETIM": {
                     LogProcessoDAO.getInstance().insertLogProcesso("if (text.equals(\"BOLETIM\")) {", getLocalClassName());
                     if (cmmContext.getMotoMecFertCTR().hasElemFunc()
                             && cmmContext.getConfigCTR().hasElemConfig()
@@ -104,7 +104,8 @@ public class MenuInicialActivity extends ActivityGeneric {
                         finish();
                     }
                     break;
-                case "CONFIGURAÇÃO":
+                }
+                case "CONFIGURAÇÃO": {
                     LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"CONFIGURAÇÃO\")) {\n" +
                             "                    if(pmmContext.getConfigCTR().hasElemConfig()) {\n" +
                             "                        pmmContext.getConfigCTR().setPosicaoTela(11L);\n" +
@@ -117,7 +118,8 @@ public class MenuInicialActivity extends ActivityGeneric {
                     startActivity(it);
                     finish();
                     break;
-                case "SAIR":
+                }
+                case "SAIR": {
                     LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"SAIR\")) {\n" +
                             "Intent intent = new Intent(Intent.ACTION_MAIN);\n" +
                             "                    intent.addCategory(Intent.CATEGORY_HOME);\n" +
@@ -128,7 +130,8 @@ public class MenuInicialActivity extends ActivityGeneric {
                     it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(it);
                     break;
-                case "ATUALIZAR DADOS":
+                }
+                case "ATUALIZAR DADOS": {
 
                     LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"ATUALIZAR DADOS\")) {", getLocalClassName());
                     if (cmmContext.getConfigCTR().hasElemConfig()) {
@@ -176,7 +179,8 @@ public class MenuInicialActivity extends ActivityGeneric {
 
                     }
                     break;
-                case "LOG":
+                }
+                case "LOG": {
                     LogProcessoDAO.getInstance().insertLogProcesso("else if (text.equals(\"LOG\")) {", getLocalClassName());
                     if (cmmContext.getConfigCTR().hasElemConfig()) {
                         LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().hasElemConfig()) {\n" +
@@ -188,6 +192,7 @@ public class MenuInicialActivity extends ActivityGeneric {
                         finish();
                     }
                     break;
+                }
             }
 
         });

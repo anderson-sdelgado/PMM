@@ -54,7 +54,6 @@ public class AtualAplicDAO {
         return getToken(atualAplicBean);
     }
 
-
     public String getAtualNroEquip(Long nroEquip) {
         AtualAplicBean atualAplicBean = new AtualAplicBean();
         atualAplicBean.setNroEquip(nroEquip);
