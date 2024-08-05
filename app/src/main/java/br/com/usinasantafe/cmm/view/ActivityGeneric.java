@@ -45,7 +45,6 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private static final long UPDATE_INTERVAL = 60000, FASTEST_INTERVAL = 60000; // = 5 seconds
-    // lists for permissions
     private ArrayList<String> permissionsToRequest;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
     private ArrayList<String> permissions = new ArrayList<>();
@@ -74,14 +73,14 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
                 }
             }
 
-            googleApiClient = new GoogleApiClient.Builder(this).
-                    addApi(LocationServices.API).
-                    addConnectionCallbacks(this).
-                    addOnConnectionFailedListener(this).build();
-
-            if (googleApiClient != null) {
-                googleApiClient.connect();
-            }
+//            googleApiClient = new GoogleApiClient.Builder(this).
+//                    addApi(LocationServices.API).
+//                    addConnectionCallbacks(this).
+//                    addOnConnectionFailedListener(this).build();
+//
+//            if (googleApiClient != null) {
+//                googleApiClient.connect();
+//            }
 
         }
 
@@ -114,9 +113,9 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangeListerner, intentFilter);
 
-        if (googleApiClient != null) {
-            googleApiClient.connect();
-        }
+//        if (googleApiClient != null) {
+//            googleApiClient.connect();
+//        }
 
     }
 
@@ -124,10 +123,10 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
     protected void onPause() {
 
         super.onPause();
-        if (googleApiClient != null  &&  googleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
-            googleApiClient.disconnect();
-        }
+//        if (googleApiClient != null  &&  googleApiClient.isConnected()) {
+//            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+//            googleApiClient.disconnect();
+//        }
 
     }
 
@@ -180,39 +179,36 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch(requestCode) {
-            case ALL_PERMISSIONS_RESULT:
-                for (String perm : permissionsToRequest) {
-                    if (!hasPermission(perm)) {
-                        permissionsRejected.add(perm);
-                    }
+        if (requestCode == ALL_PERMISSIONS_RESULT) {
+            for (String perm : permissionsToRequest) {
+                if (!hasPermission(perm)) {
+                    permissionsRejected.add(perm);
                 }
+            }
 
-                if (permissionsRejected.size() > 0) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
-                            new AlertDialog.Builder(this).
-                                    setMessage("These permissions are mandatory to get your location. You need to allow them.").
-                                    setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                                requestPermissions(permissionsRejected.
-                                                        toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
-                                            }
+            if (permissionsRejected.size() > 0) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
+                        new AlertDialog.Builder(this).
+                                setMessage("These permissions are mandatory to get your location. You need to allow them.").
+                                setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                            requestPermissions(permissionsRejected.
+                                                    toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
                                         }
-                                    }).setNegativeButton("Cancel", null).create().show();
+                                    }
+                                }).setNegativeButton("Cancel", null).create().show();
 
-                            return;
-                        }
-                    }
-                } else {
-                    if (googleApiClient != null) {
-                        googleApiClient.connect();
+                        return;
                     }
                 }
-
-                break;
+            } else {
+                if (googleApiClient != null) {
+                    googleApiClient.connect();
+                }
+            }
         }
     }
 
@@ -317,21 +313,23 @@ public class ActivityGeneric extends OrmLiteBaseActivity<DatabaseHelper> impleme
     }
 
     public Double getLatitude(){
-        if(location != null){
-            return location.getLatitude();
-        }
-        else{
-            return 0D;
-        }
+//        if(location != null){
+//            return location.getLatitude();
+//        }
+//        else{
+//            return 0D;
+//        }
+        return 0D;
     }
 
     public Double getLongitude(){
-        if(location != null){
-            return location.getLongitude();
-        }
-        else {
-            return 0D;
-        }
+//        if(location != null){
+//            return location.getLongitude();
+//        }
+//        else {
+//            return 0D;
+//        }
+        return 0D;
     }
 
 }

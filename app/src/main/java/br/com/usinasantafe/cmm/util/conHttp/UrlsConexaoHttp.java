@@ -61,26 +61,40 @@ public class UrlsConexaoHttp {
 
     public String urlVerifica(String classe) {
         String retorno = "";
-        if (classe.equals("Equip")) {
-            retorno = url + "equip.php";
-        } else if (classe.equals("OS")) {
-            retorno = url + "pesqos.php";
-        } else if (classe.equals("Atividade")) {
-            retorno = url + "pesqativ.php";
-        } else if (classe.equals("AtividadeECM")) {
-            retorno = url + "pesqativecm.php";
-        } else if (classe.equals("OSMecan")) {
-            retorno = url + "pesqosmecan.php";
-        } else if (classe.equals("Atualiza")) {
-            retorno = url + "atualaplic.php";
-        } else if (classe.equals("CheckList")) {
-            retorno = url + "atualchecklist.php";
-        } else if (classe.equals("Pneu")) {
-            retorno = url + "pesqpneu.php";
-        } else if(classe.equals("OrdCarreg")){
-            retorno = url + "retcarreg.php";
-        } else if (classe.equals("CEC")) {
-            retorno = url + "retcec.php";
+        switch (classe) {
+            case "Equip":
+                retorno = url + "equip.php";
+                break;
+            case "OS":
+                retorno = url + "pesqos.php";
+                break;
+            case "Atividade":
+                retorno = url + "pesqativ.php";
+                break;
+            case "AtividadeECM":
+                retorno = url + "pesqativecm.php";
+                break;
+            case "OSMecan":
+                retorno = url + "pesqosmecan.php";
+                break;
+            case "Atualiza":
+                retorno = url + "atualaplic.php";
+                break;
+            case "CheckList":
+                retorno = url + "atualchecklist.php";
+                break;
+            case "Pneu":
+                retorno = url + "pesqpneu.php";
+                break;
+            case "OrdCarreg":
+                retorno = url + "retcarreg.php";
+                break;
+            case "LocalCarreg":
+                retorno = url + "retlocalcarreg.php";
+                break;
+            case "CEC":
+                retorno = url + "retcec.php";
+                break;
         }
         return retorno;
     }

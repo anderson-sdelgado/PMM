@@ -3,6 +3,8 @@ package br.com.usinasantafe.cmm.control;
 import android.app.ProgressDialog;
 import android.content.Context;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,7 @@ import br.com.usinasantafe.cmm.model.bean.estaticas.TurnoBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.ApontMMFertBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.BoletimMMFertBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.ConfigBean;
+import br.com.usinasantafe.cmm.model.bean.variaveis.LocalCarregBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.RecolhFertBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.RendMMBean;
 import br.com.usinasantafe.cmm.model.dao.ApontMMFertDAO;
@@ -28,6 +31,7 @@ import br.com.usinasantafe.cmm.model.dao.AtualAplicDAO;
 import br.com.usinasantafe.cmm.model.dao.BocalDAO;
 import br.com.usinasantafe.cmm.model.dao.BoletimMMFertDAO;
 import br.com.usinasantafe.cmm.model.dao.BoletimPneuDAO;
+import br.com.usinasantafe.cmm.model.dao.LocalCarregCanaDAO;
 import br.com.usinasantafe.cmm.model.dao.CarregCompDAO;
 import br.com.usinasantafe.cmm.model.dao.CarretaDAO;
 import br.com.usinasantafe.cmm.model.dao.EquipSegDAO;
@@ -48,7 +52,9 @@ import br.com.usinasantafe.cmm.model.dao.RendimentoMMDAO;
 import br.com.usinasantafe.cmm.model.dao.TurnoDAO;
 import br.com.usinasantafe.cmm.util.AtualDadosServ;
 import br.com.usinasantafe.cmm.util.EnvioDadosServ;
+import br.com.usinasantafe.cmm.util.Json;
 import br.com.usinasantafe.cmm.util.Tempo;
+import br.com.usinasantafe.cmm.util.VerifDadosServ;
 
 public class MotoMecFertCTR {
 
@@ -140,6 +146,16 @@ public class MotoMecFertCTR {
     public boolean verEnvioBolPneu() {
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
         return boletimPneuDAO.verifBolPneuFechado();
+    }
+
+    public void verifLocalCarreg(Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
+        LocalCarregCanaDAO localCarregCanaDAO = new LocalCarregCanaDAO();
+        ConfigCTR configCTR = new ConfigCTR();
+        AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
+        LogProcessoDAO.getInstance().insertLogProcesso("configCTR.setStatusRetVerif(1L);\n" +
+                "        carregCanaDAO.verifDadosCarreg(atualAplicDAO.getAtualNroEquip(configCTR.getEquip().getNroEquip()), telaAtual, telaProx, progressDialog, activity);", activity);
+        configCTR.setStatusRetVerif(1L);
+        localCarregCanaDAO.verifLocalCarreg(atualAplicDAO.getAtualNroEquip(configCTR.getEquip().getNroEquip()), telaAtual, telaProx, progressDialog, activity);
     }
 
     public String dadosEnvioBolAbertoMMFert(){
@@ -1184,5 +1200,39 @@ public class MotoMecFertCTR {
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public LocalCarregBean getLocalCarreg() {
+        LocalCarregCanaDAO localCarregCanaDAO = new LocalCarregCanaDAO();
+        return localCarregCanaDAO.getLocalCarreg();
+    }
+
+    public void receberVerifLocaCarreg(String result, String activity){
+
+        LocalCarregCanaDAO localCarregCanaDAO = new LocalCarregCanaDAO();
+
+        try {
+
+            if (!result.contains("exceeded")) {
+
+                Json json = new Json();
+                JSONArray jsonArray = json.jsonArray(result);
+
+                if (jsonArray.length() > 0) {
+                    localCarregCanaDAO.recLocalCarreg(jsonArray);
+                    VerifDadosServ.getInstance().pulaTela();
+
+                } else {
+                    VerifDadosServ.getInstance().msg("Alocação para o veículo não encontrada, por favor, entre em contato com COA!");
+                }
+
+            } else {
+                VerifDadosServ.getInstance().msg("EXCEDEU TEMPO LIMITE DE PESQUISA! POR FAVOR, TENTAR NOVAMENTE EM UM PONTO COM SINAL MELHOR.");
+            }
+        } catch (Exception e) {
+            LogErroDAO.getInstance().insertLogErro(e);
+            VerifDadosServ.getInstance().msg("FALHA NA PESQUISA DE LOCAL! POR FAVOR, TENTAR NOVAMENTE EM UM PONTO COM SINAL MELHOR.");
+        }
+    }
+
 
 }

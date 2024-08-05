@@ -17,8 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/texto_titulo_carreg"
-        android:paddingBottom="5dp"
-        />
+        android:paddingBottom="5dp" />
 
     <TextView
         android:id="@+id/textViewDescrInfor"
@@ -26,8 +25,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:text=""
-        android:paddingBottom="5dp"
-        />
+        android:paddingBottom="5dp" />
 
     <Button
         android:id="@+id/buttonRetMenuPesq"

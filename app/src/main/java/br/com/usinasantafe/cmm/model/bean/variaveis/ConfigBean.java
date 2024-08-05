@@ -103,6 +103,7 @@ public class ConfigBean extends Entidade {
 	// 28 - Interroper/Finalizar Apontamento Manutenção
 	// 29 - Troca Funcao PCOMP
 	// 30 - Calibragem Pneu
+	// 31 - Verificar Caminho
 
 	public ConfigBean() {
 	}

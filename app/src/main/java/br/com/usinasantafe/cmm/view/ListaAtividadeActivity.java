@@ -120,12 +120,6 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                     Intent it = new Intent(ListaAtividadeActivity.this, OSActivity.class);
                     startActivity(it);
                     finish();
-                } else {
-                    LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                            "Intent it = new Intent(ListaAtividadeActivity.this, MsgPropriedadeActivity.class);", getLocalClassName());
-                    Intent it = new Intent(ListaAtividadeActivity.this, MsgPropriedadeActivity.class);
-                    startActivity(it);
-                    finish();
                 }
             } else {
                 LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +

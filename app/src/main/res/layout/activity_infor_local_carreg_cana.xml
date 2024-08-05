@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".view.InforLocalCarregCanaActivity">
+
+    <TextView
+        android:id="@+id/textViewFrente"
+        style="@style/TextViewMsgDescr"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:text="FRENTE: 6" />
+
+    <TextView
+        android:id="@+id/textViewSecao"
+        style="@style/TextViewMsgDescr"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:text=" SEÇÃO: 142 - JOSE ANTONIO GEROLAMO E OUTROS" />
+
+    <TextView
+        android:id="@+id/textViewCaminho"
+        style="@style/TextViewMsgDescr"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        tools:text="CAMINHO: Pontilhão da Usina sentido Ibitinga, faz o retorno no posto titico e pega voltando, entra a direita no Takashi ital, e acompanha emplacamento." />
+
+    <Button
+        android:id="@+id/buttonOkLocalCarreg"
+        style="@style/BotaoAvulso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/texto_padrao_ok" />
+
+</LinearLayout>

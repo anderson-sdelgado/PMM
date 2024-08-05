@@ -40,7 +40,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
 
         Button buttonRetMotoMec = findViewById(R.id.buttonRetMotoMec);
         Button buttonParadaMotoMec = findViewById(R.id.buttonParadaMotoMec);
-        Button buttonLogMotoMec = findViewById(R.id.buttonLogMotoMec);
+        Button buttonVerificarCaminhoMotoMec = findViewById(R.id.buttonVerificarCaminhoMotoMec);
         textViewMotorista = findViewById(R.id.textViewMotorista);
         textViewCarreta = findViewById(R.id.textViewCarreta);
         textViewUltimaViagem = findViewById(R.id.textViewUltimaViagem);
@@ -224,13 +224,19 @@ public class MenuPrincECMActivity extends ActivityGeneric {
 
                         } else {
 
-                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                    "                                pmmContext.getConfigCTR().setPosicaoTela(2L);\n" +
-                                    "                                Intent it = new Intent(MenuPrincECMActivity.this, FrenteActivity.class);", getLocalClassName());
+                            LogProcessoDAO.getInstance().insertLogProcesso("progressBar = new ProgressDialog(v.getContext());\n" +
+                                    "                            progressBar.setCancelable(true);\n" +
+                                    "                            progressBar.setMessage(\"BUSCANDO LOCAL CARREGAMENTO...\");\n" +
+                                    "                            progressBar.show();\n" +
+                                    "                            cmmContext.getConfigCTR().setPosicaoTela(2L);\n" +
+                                    "                            cmmContext.getMotoMecFertCTR().verifLocalCarreg(MenuPrincECMActivity.this, InforCarregColheitaActivity.class, progressBar, getLocalClassName());", getLocalClassName());
+                            progressBar = new ProgressDialog(v.getContext());
+                            progressBar.setCancelable(true);
+                            progressBar.setMessage("BUSCANDO LOCAL CARREGAMENTO...");
+                            progressBar.show();
+
                             cmmContext.getConfigCTR().setPosicaoTela(2L);
-                            Intent it = new Intent(MenuPrincECMActivity.this, FrenteActivity.class);
-                            startActivity(it);
-                            finish();
+                            cmmContext.getMotoMecFertCTR().verifLocalCarreg(MenuPrincECMActivity.this, InforLocalCarregCanaActivity.class, progressBar, getLocalClassName());
 
                         }
 
@@ -539,16 +545,17 @@ public class MenuPrincECMActivity extends ActivityGeneric {
             finish();
         });
 
-        buttonLogMotoMec.setOnClickListener(v -> {
-            LogProcessoDAO.getInstance().insertLogProcesso("buttonLogMotoMec.setOnClickListener(new View.OnClickListener() {\n" +
-                    "            @Override\n" +
-                    "            public void onClick(View v) {\n" +
-                    "                pmmContext.getConfigCTR().setPosicaoTela(24L);\n" +
-                    "                Intent it = new Intent(MenuPrincECMActivity.this, SenhaActivity.class);", getLocalClassName());
-            cmmContext.getConfigCTR().setPosicaoTela(24L);
-            Intent it = new Intent(MenuPrincECMActivity.this, SenhaActivity.class);
-            startActivity(it);
-            finish();
+        buttonVerificarCaminhoMotoMec.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonVerificarCaminhoMotoMec.setOnClickListener(v -> {", getLocalClassName());
+            if (cmmContext.getCecCTR().verPreCECAberto()) {
+                LogProcessoDAO.getInstance().insertLogProcesso("if (cmmContext.getCecCTR().verPreCECAberto()) {\n" +
+                        "                            cmmContext.getConfigCTR().setPosicaoTela(31L);\n" +
+                        "                Intent it = new Intent(MenuPrincECMActivity.this, InforLocalCarregCanaActivity.class);", getLocalClassName());
+                cmmContext.getConfigCTR().setPosicaoTela(31L);
+                Intent it = new Intent(MenuPrincECMActivity.this, InforLocalCarregCanaActivity.class);
+                startActivity(it);
+                finish();
+            }
         });
 
     }

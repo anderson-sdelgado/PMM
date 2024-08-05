@@ -61,55 +61,73 @@ public class VerifDadosServ {
         CECCTR cecCTR = new CECCTR();
         MecanicoCTR mecanicoCTR = new MecanicoCTR();
         PneuCTR pneuCTR = new PneuCTR();
+        MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
         LogProcessoDAO.getInstance().insertLogProcesso("public void manipularDadosHttp(String result) {", activity);
-        if (this.classe.equals("Equip")) {
-            LogProcessoDAO.getInstance().insertLogProcesso("if (this.tipo.equals(\"Equip\")) {\n" +
-                    "            configCTR.receberVerifEquip(" + result + ");", activity);
-            configCTR.receberVerifEquip(senha, telaAtual, telaProx, progressDialog, result, this.tipo);
-        } else if (this.classe.equals("OS")) {
-            LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"OS\")) {\n" +
-                    "            configCTR.receberVerifOS(" + result + ");", activity);
-            configCTR.receberVerifOS(result);
-        } else if (this.classe.equals("Atividade")) {
-            LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Atividade\")) {\n" +
-                    "            configCTR.receberVerifAtiv(" + result + ");", activity);
-            configCTR.receberVerifAtiv(result);
-        } else if (this.classe.equals("AtividadeECM")) {
-            LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"AtividadeECM\")) {\n" +
-                    "            configCTR.receberVerifAtivECM(" + result + ");", activity);
-            configCTR.receberVerifAtivECM(result);
-        } else if (this.classe.equals("Atualiza")) {
-            LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Atualiza\")) {\n" +
-                    "            configCTR.recAtual(result.trim());\n" +
-                    "            status = 3;", activity);
-            configCTR.recAtual(result.trim());
-            status = 3;
-            LogProcessoDAO.getInstance().insertLogProcesso("this.telaInicialActivity.goMenuInicial();", activity);
-            this.telaInicialActivity.goMenuInicial();
-        } else if (this.classe.equals("CheckList")) {
-            LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"CheckList\")) {\n" +
-                    "            checkListCTR.receberVerifCheckList(" + result + ");", activity);
-            checkListCTR.receberVerifCheckList(result);
-        } else if(this.classe.equals("OrdCarreg")) {
-            LogProcessoDAO.getInstance().insertLogProcesso("} else if(this.tipo.equals(\"OrdCarreg\")) {\n" +
-                    "            compostoCTR.receberVerifOrdCarreg(" + result + ");", activity);
-            compostoCTR.receberVerifOrdCarreg(result, activity);
-        } else if (this.classe.equals("CEC")) {
-            LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"CEC\")) {\n" +
-                    "            cecCTR.receberVerifCEC(" + result + ");", activity);
-            cecCTR.receberVerifCEC(result);
-        } else if (this.classe.equals("OSMecan")) {
-            LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"OS\")) {\n" +
-                    "            configCTR.receberVerifOS(" + result + ");", activity);
-            mecanicoCTR.receberVerifOSMecan(result);
-        } else if (this.classe.equals("Pneu")) {
-            LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Pneu\")) {\n" +
-                    "            motoMecFertCTR.receberVerifPneu(" + result + ");", activity);
-            pneuCTR.receberVerifPneu(result, itemManutPneuBean, activity);
-        } else {
-            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                    "            status = 1;", activity);
-            status = 1;
+        switch (this.classe) {
+            case "Equip":
+                LogProcessoDAO.getInstance().insertLogProcesso("if (this.tipo.equals(\"Equip\")) {\n" +
+                        "            configCTR.receberVerifEquip(" + result + ");", activity);
+                configCTR.receberVerifEquip(senha, telaAtual, telaProx, progressDialog, result, this.tipo);
+                break;
+            case "OS":
+                LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"OS\")) {\n" +
+                        "            configCTR.receberVerifOS(" + result + ");", activity);
+                configCTR.receberVerifOS(result);
+                break;
+            case "Atividade":
+                LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Atividade\")) {\n" +
+                        "            configCTR.receberVerifAtiv(" + result + ");", activity);
+                configCTR.receberVerifAtiv(result);
+                break;
+            case "AtividadeECM":
+                LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"AtividadeECM\")) {\n" +
+                        "            configCTR.receberVerifAtivECM(" + result + ");", activity);
+                configCTR.receberVerifAtivECM(result);
+                break;
+            case "Atualiza":
+                LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Atualiza\")) {\n" +
+                        "            configCTR.recAtual(result.trim());\n" +
+                        "            status = 3;", activity);
+                configCTR.recAtual(result.trim());
+                status = 3;
+                LogProcessoDAO.getInstance().insertLogProcesso("this.telaInicialActivity.goMenuInicial();", activity);
+                this.telaInicialActivity.goMenuInicial();
+                break;
+            case "CheckList":
+                LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"CheckList\")) {\n" +
+                        "            checkListCTR.receberVerifCheckList(" + result + ");", activity);
+                checkListCTR.receberVerifCheckList(result);
+                break;
+            case "OrdCarreg":
+                LogProcessoDAO.getInstance().insertLogProcesso("} else if(this.tipo.equals(\"OrdCarreg\")) {\n" +
+                        "            compostoCTR.receberVerifOrdCarreg(" + result + ");", activity);
+                compostoCTR.receberVerifOrdCarreg(result, activity);
+                break;
+            case "CEC":
+                LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"CEC\")) {\n" +
+                        "            cecCTR.receberVerifCEC(" + result + ");", activity);
+                cecCTR.receberVerifCEC(result);
+                break;
+            case "OSMecan":
+                LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"OS\")) {\n" +
+                        "            configCTR.receberVerifOS(" + result + ");", activity);
+                mecanicoCTR.receberVerifOSMecan(result);
+                break;
+            case "Pneu":
+                LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"Pneu\")) {\n" +
+                        "            motoMecFertCTR.receberVerifPneu(" + result + ");", activity);
+                pneuCTR.receberVerifPneu(result, itemManutPneuBean, activity);
+                break;
+            case "LocalCarreg":
+                LogProcessoDAO.getInstance().insertLogProcesso("case \"LocalCarreg\":" +
+                        "            motoMecFertCTR.receberVerifLocaCarreg(" + result + ");", activity);
+                motoMecFertCTR.receberVerifLocaCarreg(result, activity);
+                break;
+            default:
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                        "            status = 1;", activity);
+                status = 1;
+                break;
         }
 
     }
@@ -172,7 +190,7 @@ public class VerifDadosServ {
         status = 2;
         this.urlsConexaoHttp = new UrlsConexaoHttp();
         String[] url = {urlsConexaoHttp.urlVerifica(classe), activity};
-        Map<String, Object> parametrosPost = new HashMap<String, Object>();
+        Map<String, Object> parametrosPost = new HashMap();
         parametrosPost.put("dado", this.dados);
 
         Log.i("PMM", "postVerGenerico.execute('" + urlsConexaoHttp.urlVerifica(classe) + "'); - Dados de Envio = " + this.dados);

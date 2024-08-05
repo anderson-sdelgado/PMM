@@ -23,7 +23,7 @@ public class CMMContext extends Application {
     private MecanicoCTR mecanicoCTR;
     private PneuCTR pneuCTR;
 
-    public static String versaoWS = "5.04";
+    public static String versaoWS = "5.05";
 
     @Override
     public void onCreate() {

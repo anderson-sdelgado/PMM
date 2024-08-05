@@ -50,8 +50,6 @@ public class ConfigCTR {
     private int hora;
     private int minuto;
 
-    private String codPropriedade;
-    private Long idFrente;
 
     public ConfigCTR() {
     }
@@ -471,47 +469,19 @@ public class ConfigCTR {
 
     /////////////////////////////// ECM (FRENTE - PROPRIEDADE) ////////////////////////////////////
 
-    public void setIdFrente(Long codFrente) {
-        FrenteDAO frenteDAO = new FrenteDAO();
-        this.idFrente = frenteDAO.getFrente(codFrente).getIdFrente();
-    }
-
-    public boolean verFrente(Long codFrente){
-        FrenteDAO frenteDAO = new FrenteDAO();
-        return frenteDAO.verFrente(codFrente);
-    }
-
-    public void setCodPropriedade(String codPropriedade) {
-        this.codPropriedade = codPropriedade;
-    }
-
-    public boolean verPropriedade(Long codPropriedade){
-        PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
-        return propriedadeDAO.verPropriedade(codPropriedade);
-    }
-
-    public PropriedadeBean getPropriedade(){
-        return getCodPropriedade(Long.parseLong(this.codPropriedade));
-    }
-
-    public PropriedadeBean getCodPropriedade(Long codPropriedade){
-        PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
-        return propriedadeDAO.getPropriedadeCod(codPropriedade);
-    }
-
-    public void setFrentePropriedade(){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setFrentePropriedade(idFrente, getCodPropriedade(Long.parseLong(this.codPropriedade)));
-    }
-
-    public String getMsgPropriedade(){
-        String retorno = "";
-        if(getConfig().getIdPropriedadeConfig() == 0L){
-            retorno = "NÃO POSSUE SEÇÃO AINDA";
+    public String getMsgPropriedade() {
+        if (getConfig().getIdPropriedadeConfig() == 0L) {
+            return "NÃO POSSUE SEÇÃO AINDA";
         } else {
-            retorno = "SEÇÃO " + getConfig().getCodPropriedadeConfig() + " - " + getConfig().getDescrPropriedadeConfig();
+            return "SEÇÃO " + getConfig().getCodPropriedadeConfig() + " - " + getConfig().getDescrPropriedadeConfig();
         }
-        return retorno;
+    }
+
+    public void setFrentePropriedade(String codFrente, String codPropriedade){
+        FrenteDAO frenteDAO = new FrenteDAO();
+        PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setFrentePropriedade(frenteDAO.getFrente(Long.parseLong(codFrente)).getIdFrente(), propriedadeDAO.getPropriedadeCod(Long.parseLong(codPropriedade)));
     }
 
     public void setCarreta(Long carreta){
