@@ -19,14 +19,14 @@ public class BoletimPneuDAO {
     public BoletimPneuDAO() {
     }
 
-    public boolean verifBolPneuAberto(){
+    public boolean verifBolPneuAberto() {
         List<BoletimPneuBean> boletimPneuList = bolPneuAbertoList();
         boolean retorno = boletimPneuList.size() > 0;
         boletimPneuList.clear();
         return retorno;
     }
 
-    public BoletimPneuBean getBolPneuAberto(){
+    public BoletimPneuBean getBolPneuAberto() {
         List<BoletimPneuBean> boletimPneuList = bolPneuAbertoList();
         BoletimPneuBean boletimPneuBean = boletimPneuList.get(0);
         boletimPneuList.clear();
@@ -34,14 +34,14 @@ public class BoletimPneuDAO {
     }
 
 
-    public boolean verifBolPneuFechado(){
+    public boolean verifBolPneuFechado() {
         List<BoletimPneuBean> boletimPneuList = bolPneuFechadoList();
         boolean retorno = boletimPneuList.size() > 0;
         boletimPneuList.clear();
         return retorno;
     }
 
-    public void abrirBolPneu(Long idBolMMFert, Long matricFunc, Long idEquip, Long tipo){
+    public void abrirBolPneu(Long idBolMMFert, Long matricFunc, Long idEquip, Long tipo) {
         Long dthr = Tempo.getInstance().dthrAtualLong();
         BoletimPneuBean boletimPneuBean = new BoletimPneuBean();
         boletimPneuBean.setIdBolMMFertPneu(idBolMMFert);
@@ -54,18 +54,18 @@ public class BoletimPneuDAO {
         boletimPneuBean.insert();
     }
 
-    public void fecharBolPneu(){
+    public void fecharBolPneu() {
         BoletimPneuBean boletimPneuBean = getBolPneuAberto();
         boletimPneuBean.setStatusBolPneu(2L);
         boletimPneuBean.update();
     }
 
-    public void deleteBolPneuAberto(){
+    public void deleteBolPneuAberto() {
         BoletimPneuBean boletimPneuBean = getBolPneuAberto();
         boletimPneuBean.delete();
     }
 
-    public void updateBolPneu(ArrayList<Long> idBoletimPneuArrayList){
+    public void updateBolPneu(ArrayList<Long> idBoletimPneuArrayList) {
 
         List<BoletimPneuBean> boletimPneuList = bolPneuList(idBoletimPneuArrayList);
 
@@ -79,36 +79,51 @@ public class BoletimPneuDAO {
 
     }
 
-    public List<BoletimPneuBean> bolPneuAbertoList(){
+    public void updateBolPneu(Long idBoletimPneu) {
+
+        List<BoletimPneuBean> boletimPneuList = bolPneuList(idBoletimPneu);
+        BoletimPneuBean boletimPneuBean = boletimPneuList.get(0);
+        boletimPneuBean.setStatusBolPneu(3L);
+        boletimPneuBean.update();
+
+    }
+
+    public List<BoletimPneuBean> bolPneuAbertoList() {
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqBolPneuAberto());
         BoletimPneuBean boletimPneuBean = new BoletimPneuBean();
         return boletimPneuBean.get(pesqArrayList);
     }
 
-    public List<BoletimPneuBean> bolPneuFechadoList(){
+    public List<BoletimPneuBean> bolPneuFechadoList() {
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqBolPneuFechado());
         BoletimPneuBean boletimPneuBean = new BoletimPneuBean();
         return boletimPneuBean.get(pesqArrayList);
     }
 
-    public List<BoletimPneuBean> bolPneuList(Long idBolMMFert){
+    public List<BoletimPneuBean> bolPneuList(Long idBolMMFert) {
         BoletimPneuBean boletimPneuBean = new BoletimPneuBean();
         return boletimPneuBean.get("idBolMMFertPneu", idBolMMFert);
     }
 
-    public List<BoletimPneuBean> bolPneuEnvioList(ArrayList<Long> idBolMMFertList){
+    public List<BoletimPneuBean> bolPneuEnvioList(ArrayList<Long> idBolMMFertList) {
         BoletimPneuBean boletimPneuBean = new BoletimPneuBean();
         return boletimPneuBean.in("idBolMMFertPneu", idBolMMFertList);
     }
 
-    public List<BoletimPneuBean> bolPneuList(ArrayList<Long> idBolPneuArrayList){
+    public List<BoletimPneuBean> bolPneuEnvioListRetrofit(Long idBolMMFert) {
+        BoletimPneuBean boletimPneuBean = new BoletimPneuBean();
+        return boletimPneuBean.get("idBolMMFertPneu", idBolMMFert);
+    }
+
+
+    public List<BoletimPneuBean> bolPneuList(ArrayList<Long> idBolPneuArrayList) {
         BoletimPneuBean boletimPneuBean = new BoletimPneuBean();
         return boletimPneuBean.in("idBolPneu", idBolPneuArrayList);
     }
 
-    public ArrayList<Long> idBolPneuArrayList(List<BoletimPneuBean> boletimPneuList){
+    public ArrayList<Long> idBolPneuArrayList(List<BoletimPneuBean> boletimPneuList) {
         ArrayList<Long> idBolList = new ArrayList<Long>();
         for (BoletimPneuBean boletimPneuBean : boletimPneuList) {
             idBolList.add(boletimPneuBean.getIdBolPneu());
@@ -138,7 +153,7 @@ public class BoletimPneuDAO {
 
     }
 
-    public void deleteBolPneu(Long idBolMMFert){
+    public void deleteBolPneu(Long idBolMMFert) {
 
         List<BoletimPneuBean> boletimPneuList = bolPneuList(idBolMMFert);
 
@@ -150,7 +165,7 @@ public class BoletimPneuDAO {
 
     }
 
-    public String dadosEnvioBolPneu(List<BoletimPneuBean> boletimPneuList){
+    public String dadosEnvioBolPneu(List<BoletimPneuBean> boletimPneuList) {
 
         JsonArray jsonArrayBoletimPneu = new JsonArray();
 
@@ -168,7 +183,7 @@ public class BoletimPneuDAO {
 
     }
 
-    private EspecificaPesquisa getPesqBolPneuAberto(){
+    private EspecificaPesquisa getPesqBolPneuAberto() {
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("statusBolPneu");
         pesquisa.setValor(1L);
@@ -176,7 +191,7 @@ public class BoletimPneuDAO {
         return pesquisa;
     }
 
-    private EspecificaPesquisa getPesqBolPneuFechado(){
+    private EspecificaPesquisa getPesqBolPneuFechado() {
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("statusBolPneu");
         pesquisa.setValor(2L);

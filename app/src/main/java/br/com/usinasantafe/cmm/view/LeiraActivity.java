@@ -124,7 +124,7 @@ public class LeiraActivity extends ActivityGeneric {
                     }
 
                     LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                    cmmContext.getMotoMecFertCTR().salvarApontLeira(getLongitude(), getLatitude(), getLocalClassName());
+                    cmmContext.getMotoMecFertCTR().salvarApontLeira(cmmContext, getLongitude(), getLatitude(), getLocalClassName());
 
                     if (cmmContext.getConfigCTR().getConfig().getFuncaoComposto() == 2L) {
                         LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getFuncaoCompostagem() == 2L) {\n" +

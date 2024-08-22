@@ -105,7 +105,7 @@ public class MsgNumCarretaActivity extends ActivityGeneric {
                         cmmContext.getConfigCTR().setStatusConConfig(0L);
                     }
                     LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                    cmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+                    cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, getLongitude(), getLatitude(), getLocalClassName());
                 }
 
                 LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MsgNumCarretaActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
@@ -130,7 +130,7 @@ public class MsgNumCarretaActivity extends ActivityGeneric {
                         cmmContext.getConfigCTR().setStatusConConfig(0L);
                     }
                     LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                    cmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+                    cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, getLongitude(), getLatitude(), getLocalClassName());
                 }
                 LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MsgNumCarretaActivity.this, MenuParadaECMActivity.class);", getLocalClassName());
                 Intent it = new Intent(MsgNumCarretaActivity.this, ListaParadaECMActivity.class);

@@ -77,6 +77,11 @@ public class RendimentoMMDAO {
         return rendMMBean.in("idBolMMFert", idBolList);
     }
 
+    public List<RendMMBean> rendEnvioListRetrofit(Long idBol){
+        RendMMBean rendMMBean = new RendMMBean();
+        return rendMMBean.get("idBolMMFert", idBol);
+    }
+
     public List<RendMMBean> rendList(ArrayList<Long> idRendArrayList){
         RendMMBean rendMMBean = new RendMMBean();
         return rendMMBean.in("idRendMM", idRendArrayList);

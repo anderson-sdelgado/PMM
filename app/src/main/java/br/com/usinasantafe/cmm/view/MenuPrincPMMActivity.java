@@ -394,7 +394,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                                         "                                pmmContext.getMotoMecFertCTR().setContImplemento(1L);\n" +
                                         "                                customHandler.removeCallbacks(updateTimerThread);\n" +
                                         "                                Intent it = new Intent(MenuPrincPMMActivity.this, ImplementoActivity.class);", getLocalClassName());
-                                cmmContext.getMotoMecFertCTR().inserirParadaImplemento(getLocalClassName());
+                                cmmContext.getMotoMecFertCTR().inserirParadaImplemento(cmmContext, getLocalClassName());
                                 cmmContext.getConfigCTR().setPosicaoTela(10L);
                                 cmmContext.getMotoMecFertCTR().setContImplemento(1L);
                                 customHandler.removeCallbacks(updateTimerThread);
@@ -543,7 +543,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                                         "                            @Override\n" +
                                         "                            public void onClick(DialogInterface dialog, int which) {\n" +
                                         "                                pmmContext.getMecanicoCTR().finalizarApontMecan(getLocalClassName());", getLocalClassName());
-                                cmmContext.getMecanicoCTR().finalizarApontMecan(getLocalClassName());
+                                cmmContext.getMecanicoCTR().finalizarApontMecan(cmmContext, getLocalClassName());
                             }
                         });
 

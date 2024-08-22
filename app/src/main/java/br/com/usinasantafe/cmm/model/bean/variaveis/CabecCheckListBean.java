@@ -3,6 +3,8 @@ package br.com.usinasantafe.cmm.model.bean.variaveis;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.List;
+
 import br.com.usinasantafe.cmm.model.pst.Entidade;
 
 /**
@@ -27,6 +29,7 @@ public class CabecCheckListBean extends Entidade {
     private Long statusCabCL;  //1 - Aberto; 2 - Encerrado; 3 - Enviado
     @DatabaseField
     private Long dthrCabCLLong;
+    private List<RespItemCheckListBean> respItemCheckListList;
 
     public CabecCheckListBean() {
     }
@@ -81,5 +84,13 @@ public class CabecCheckListBean extends Entidade {
 
     public void setDthrCabCLLong(Long dthrCabCLLong) {
         this.dthrCabCLLong = dthrCabCLLong;
+    }
+
+    public List<RespItemCheckListBean> getRespItemCheckListList() {
+        return respItemCheckListList;
+    }
+
+    public void setRespItemCheckListList(List<RespItemCheckListBean> respItemCheckListList) {
+        this.respItemCheckListList = respItemCheckListList;
     }
 }

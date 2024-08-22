@@ -14,6 +14,7 @@ import br.com.usinasantafe.cmm.R;
 import br.com.usinasantafe.cmm.model.bean.estaticas.LeiraBean;
 import br.com.usinasantafe.cmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.cmm.util.EnvioDadosServ;
+import br.com.usinasantafe.cmm.util.workmanager.StartProcessEnvio;
 
 public class ListaLeiraActivity extends ActivityGeneric {
 
@@ -101,7 +102,10 @@ public class ListaLeiraActivity extends ActivityGeneric {
 
                 LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().envioDados(null);\n" +
                         "                    Intent it = new Intent(ListaLeiraActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                EnvioDadosServ.getInstance().envioDados(getLocalClassName());
+
+                StartProcessEnvio startProcessEnvio = new StartProcessEnvio();
+                startProcessEnvio.startProcessEnvio(cmmContext);
+
                 Intent it = new Intent(ListaLeiraActivity.this, MenuPrincPMMActivity.class);
                 startActivity(it);
                 finish();

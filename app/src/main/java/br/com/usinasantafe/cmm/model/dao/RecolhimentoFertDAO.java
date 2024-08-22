@@ -100,6 +100,11 @@ public class RecolhimentoFertDAO {
         return recolhFertBean.in("idBolMMFert", idBolList);
     }
 
+    public List<RecolhFertBean> recolhEnvioListRetrofit(Long idBol){
+        RecolhFertBean recolhFertBean = new RecolhFertBean();
+        return recolhFertBean.get("idBolMMFert", idBol);
+    }
+
     public List<RecolhFertBean> recolhList(ArrayList<Long> idRendArrayList){
         RecolhFertBean recolhFertBean = new RecolhFertBean();
         return recolhFertBean.in("idRecolhFert", idRendArrayList);
@@ -160,6 +165,16 @@ public class RecolhimentoFertDAO {
 
         recolhFertList.clear();
         idRecolhArrayList.clear();
+
+    }
+
+    public void updateRecolh(Long idRecolh) {
+
+        List<RecolhFertBean> recolhFertList = recolhList(idRecolh);
+        RecolhFertBean recolhFertBean = recolhFertList.get(0);
+        recolhFertList.clear();
+        recolhFertBean.setStatusRecolhFert(2L);
+        recolhFertBean.update();
 
     }
 

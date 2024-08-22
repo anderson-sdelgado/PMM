@@ -24,32 +24,32 @@ public class CarregCompDAO {
     public CarregCompDAO() {
     }
 
-    public boolean verLeiraExibir(){
+    public boolean verLeiraExibir() {
         List<CarregCompBean> carregList = leiraExibir();
         boolean ret = carregList.size() > 0;
         carregList.clear();
         return ret;
     }
 
-    public boolean verCarregInsumo(){
+    public boolean verCarregInsumo() {
         List<CarregCompBean> carregList = carregInsumoList();
         boolean ret = carregList.size() > 0;
         carregList.clear();
         return ret;
     }
 
-    private List<CarregCompBean> leiraExibir(){
+    private List<CarregCompBean> leiraExibir() {
         CarregCompBean carregCompBean = new CarregCompBean();
         return carregCompBean.dif("idLeiraCarreg", 0L);
     }
 
-    private List<CarregCompBean> carregInsumoList(){
+    private List<CarregCompBean> carregInsumoList() {
         CarregCompBean carregCompBean = new CarregCompBean();
         List<CarregCompBean> carregList = carregCompBean.get("statusCarreg", 1L);
         return carregList;
     }
 
-    public List<CarregCompBean> carregCompostoDescarregInsumo(ArrayList<Long> idApontList){
+    public List<CarregCompBean> carregCompostoDescarregInsumo(ArrayList<Long> idApontList) {
 
         CarregCompBean carregCompBean = new CarregCompBean();
 
@@ -64,43 +64,58 @@ public class CarregCompDAO {
 
     }
 
-    private List<CarregCompBean> ordCarregList(){
+    public List<CarregCompBean> carregCompostoDescarregInsumoRetrofit(Long idApont) {
+
+        CarregCompBean carregCompBean = new CarregCompBean();
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqDescarregEnvio());
+        pesqArrayList.add(getPesqIdApont(idApont));
+        return carregCompBean.get(pesqArrayList);
+
+    }
+
+    private List<CarregCompBean> ordCarregList() {
         CarregCompBean carregCompBean = new CarregCompBean();
         return carregCompBean.orderBy("idCarreg", false);
     }
 
-    public List<CarregCompBean> carregCompList(ArrayList<Long> idCarregArrayList){
+    public List<CarregCompBean> carregCompList(ArrayList<Long> idCarregArrayList) {
         CarregCompBean carregCompBean = new CarregCompBean();
         return carregCompBean.in("idCarreg", idCarregArrayList);
     }
 
-    private CarregCompBean getCarregInsumo(){
+    public List<CarregCompBean> carregCompList(Long idCarreg) {
+        CarregCompBean carregCompBean = new CarregCompBean();
+        return carregCompBean.get("idCarreg", idCarreg);
+    }
+
+    private CarregCompBean getCarregInsumo() {
         List<CarregCompBean> carregList = carregInsumoList();
         CarregCompBean carregCompBean = carregList.get(0);
         carregList.clear();
         return carregCompBean;
     }
 
-    public CarregCompBean getOrdCarreg(){
+    public CarregCompBean getOrdCarreg() {
         List<CarregCompBean> carregList = ordCarregList();
         CarregCompBean carregCompBean = carregList.get(0);
         carregList.clear();
         return carregCompBean;
     }
 
-    public boolean verEnvioCarregInsumoComposto(){
+    public boolean verEnvioCarregInsumoComposto() {
         List<CarregCompBean> carregList = carregInsumoList();
         boolean ret = carregList.size() > 0;
         carregList.clear();
         return ret;
     }
 
-    public boolean verOrdemCarregComLeira(){
+    public boolean verOrdemCarregComLeira() {
         List<CarregCompBean> carregList = ordCarregList();
         boolean ret = false;
-        if(carregList.size() > 0){
+        if (carregList.size() > 0) {
             CarregCompBean carregCompBean = carregList.get(0);
-            if(carregCompBean.getStatusCarreg() > 2L){
+            if (carregCompBean.getStatusCarreg() > 2L) {
                 ret = true;
             }
         }
@@ -108,7 +123,7 @@ public class CarregCompDAO {
         return ret;
     }
 
-    public void abrirCarregInsumo(Long matricFunc, Long idEquip, Long idProd){
+    public void abrirCarregInsumo(Long matricFunc, Long idEquip, Long idProd) {
         CarregCompBean carregCompBean = new CarregCompBean();
         carregCompBean.setDthrCarreg(Tempo.getInstance().dthrAtualString());
         carregCompBean.setDthrCarregLong(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthrAtualString()));
@@ -121,7 +136,7 @@ public class CarregCompDAO {
         carregCompBean.insert();
     }
 
-    public void abrirCarregComposto(Long matricFunc, Long idEquip, Long idLeira, Long os, Long idApont){
+    public void abrirCarregComposto(Long matricFunc, Long idEquip, Long idLeira, Long os, Long idApont) {
         CarregCompBean carregCompBean = new CarregCompBean();
         carregCompBean.setIdApontCarreg(idApont);
         carregCompBean.setDthrCarreg(Tempo.getInstance().dthrAtualString());
@@ -136,7 +151,7 @@ public class CarregCompDAO {
         carregCompBean.insert();
     }
 
-    public void salvarDescarregCarreg(Long idLeira, Long idApont){
+    public void salvarDescarregCarreg(Long idLeira, Long idApont) {
         CarregCompBean carregCompBean = getOrdCarreg();
         carregCompBean.setIdApontCarreg(idApont);
         carregCompBean.setIdLeiraCarreg(idLeira);
@@ -144,7 +159,7 @@ public class CarregCompDAO {
         carregCompBean.update();
     }
 
-    public void deleteCarreg(ArrayList<Long> idApontCarregArrayList){
+    public void deleteCarreg(ArrayList<Long> idApontCarregArrayList) {
 
         CarregCompBean carregCompBean = new CarregCompBean();
         List<CarregCompBean> carregCompList = carregCompBean.in("idApontCarreg", idApontCarregArrayList);
@@ -157,11 +172,11 @@ public class CarregCompDAO {
 
     }
 
-    public void verifDadosCarreg(String dados, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity){
+    public void verifDadosCarreg(String dados, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity) {
         VerifDadosServ.getInstance().verifDados(dados, "OrdCarreg", telaAtual, telaProx, progressDialog, activity);
     }
 
-    public String dadosEnvioCarreg(List<CarregCompBean> carregCompList){
+    public String dadosEnvioCarreg(List<CarregCompBean> carregCompList) {
 
         JsonArray carregJsonArray = new JsonArray();
 
@@ -179,7 +194,7 @@ public class CarregCompDAO {
 
     }
 
-    public String dadosEnvioCarregInsumo(){
+    public String dadosEnvioCarregInsumo() {
 
         JsonArray carregJsonArray = new JsonArray();
 
@@ -192,6 +207,10 @@ public class CarregCompDAO {
 
         return carregJsonObj.toString();
 
+    }
+
+    public CarregCompBean dadosEnvioCarregInsumoRetrofit() {
+        return getCarregInsumo();
     }
 
     public ArrayList<Long> idCarregArrayList(String objeto) throws Exception {
@@ -228,8 +247,17 @@ public class CarregCompDAO {
 
     }
 
-    public void updDescarregInsumoCarregComposto(ArrayList<Long> idCarregArrayList){
+    public void updCarregInsumo(CarregCompBean carregCompBean) {
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqIdCarreg(carregCompBean.getIdCarreg()));
+        List<CarregCompBean> carregList = carregCompBean.get(pesqArrayList);
+        CarregCompBean carregCompBDBean = carregList.get(0);
+        carregCompBDBean.setStatusCarreg(2L);
+        carregCompBDBean.update();
+    }
 
+
+    public void updDescarregInsumoCarregComposto(ArrayList<Long> idCarregArrayList) {
 
         List<CarregCompBean> carregCompList = carregCompList(idCarregArrayList);
 
@@ -242,6 +270,16 @@ public class CarregCompDAO {
         idCarregArrayList.clear();
     }
 
+    public void updDescarregInsumoCarregComposto(Long idCarreg) {
+
+        List<CarregCompBean> carregCompList = carregCompList(idCarreg);
+        CarregCompBean carregCompBean = carregCompList.get(0);
+        carregCompList.clear();
+        carregCompBean.setStatusCarreg(5L);
+        carregCompBean.update();
+
+    }
+
     public void recebOrdCarreg(JSONArray jsonArray) throws JSONException {
 
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -249,23 +287,21 @@ public class CarregCompDAO {
             Gson gson = new Gson();
             CarregCompBean carregCompBean = gson.fromJson(objeto.toString(), CarregCompBean.class);
             List<CarregCompBean> carregList = carregCompBean.get("dthrCarreg", carregCompBean.getDthrCarreg());
-            if(carregList.size() > 0){
+            if (carregList.size() > 0) {
                 CarregCompBean carregCompBeanBD = carregList.get(0);
                 carregCompBeanBD.setIdRegCompostoCarreg(carregCompBean.getIdRegCompostoCarreg());
                 carregCompBeanBD.setIdOrdCarreg(carregCompBean.getIdOrdCarreg());
                 carregCompBeanBD.setPesoEntradaCarreg(carregCompBean.getPesoEntradaCarreg());
                 carregCompBeanBD.setPesoSaidaCarreg(carregCompBean.getPesoSaidaCarreg());
                 carregCompBeanBD.setPesoLiquidoCarreg(carregCompBean.getPesoLiquidoCarreg());
-                if(carregCompBeanBD.getTipoCarreg() == 1L){
+                if (carregCompBeanBD.getTipoCarreg() == 1L) {
                     carregCompBeanBD.setStatusCarreg(3L);
                 }
                 carregCompBeanBD.update();
-            }
-            else{
-                if(carregCompBean.getTipoCarreg() == 1L){
+            } else {
+                if (carregCompBean.getTipoCarreg() == 1L) {
                     carregCompBean.setStatusCarreg(3L);
-                }
-                else{
+                } else {
                     carregCompBean.setStatusCarreg(5L);
                 }
                 carregCompBean.insert();
@@ -276,12 +312,12 @@ public class CarregCompDAO {
 
     }
 
-    private String dadosCarregComp(CarregCompBean carregCompBean){
+    private String dadosCarregComp(CarregCompBean carregCompBean) {
         Gson gsonItemImp = new Gson();
         return gsonItemImp.toJsonTree(carregCompBean, carregCompBean.getClass()).toString();
     }
 
-    public ArrayList<String> carregCompAllArrayList(ArrayList<String> dadosArrayList){
+    public ArrayList<String> carregCompAllArrayList(ArrayList<String> dadosArrayList) {
         dadosArrayList.add("CARREG. COMPOSTAGEM");
         CarregCompBean carregCompBean = new CarregCompBean();
         List<CarregCompBean> carregCompList = carregCompBean.orderBy("idCarreg", true);
@@ -291,5 +327,31 @@ public class CarregCompDAO {
         carregCompList.clear();
         return dadosArrayList;
     }
+
+
+    private EspecificaPesquisa getPesqDescarregEnvio() {
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("statusCarreg");
+        pesquisa.setValor(4L);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqIdApont(Long idApont) {
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("idApontCarreg");
+        pesquisa.setValor(idApont);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqIdCarreg(Long idCarreg) {
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("idCarreg");
+        pesquisa.setValor(idCarreg);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
 
 }

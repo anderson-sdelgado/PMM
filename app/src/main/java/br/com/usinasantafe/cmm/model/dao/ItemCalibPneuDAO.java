@@ -67,7 +67,6 @@ public class ItemCalibPneuDAO {
 
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqItemMedPneuIdBol(idBol));
-
         ItemCalibPneuBean itemCalibPneuBean = new ItemCalibPneuBean();
         return itemCalibPneuBean.getAndOrderBy(pesqArrayList, "idItemCalibPneu", true);
 

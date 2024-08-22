@@ -294,5 +294,5 @@
     <string name="texto_funcao">FUNÇÃO</string>
     <string name="texto_pneu_col">PNEU COLOCADO:</string>
     <string name="texto_pneu_ret">PNEU RETIRADO:</string>
-    <string name="texto_verificar_caminho">VERIFICAR CAMINHO</string>
+    <string name="texto_verificar_alocacao">VERIFICAR ALOCAÇÃO</string>
 </resources>

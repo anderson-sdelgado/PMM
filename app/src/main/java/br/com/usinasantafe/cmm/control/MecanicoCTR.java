@@ -1,7 +1,10 @@
 package br.com.usinasantafe.cmm.control;
 
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
+
+import androidx.annotation.NonNull;
 
 import org.json.JSONArray;
 
@@ -24,6 +27,7 @@ import br.com.usinasantafe.cmm.util.AtualDadosServ;
 import br.com.usinasantafe.cmm.util.EnvioDadosServ;
 import br.com.usinasantafe.cmm.util.Json;
 import br.com.usinasantafe.cmm.util.VerifDadosServ;
+import br.com.usinasantafe.cmm.util.workmanager.StartProcessEnvio;
 
 public class MecanicoCTR {
 
@@ -38,7 +42,7 @@ public class MecanicoCTR {
         return apontMecanDAO;
     }
 
-    public void salvarApontMecan(Long seqItemOS, String activity){
+    public void salvarApontMecan(@NonNull Application application, Long seqItemOS, String activity){
 
         LogProcessoDAO.getInstance().insertLogProcesso("BoletimMMFertDAO boletimDAO = new BoletimMMFertDAO();\n" +
                 "        ApontMecanDAO apontMecanDAO = new ApontMecanDAO();\n" +
@@ -46,8 +50,8 @@ public class MecanicoCTR {
         BoletimMMFertDAO boletimDAO = new BoletimMMFertDAO();
         apontMecanDAO.salvarApontMecan(seqItemOS, boletimDAO.getBoletimMMFertAberto().getIdBolMMFert());
 
-        LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().envioDados(activity);", activity);
-        EnvioDadosServ.getInstance().envioDados(activity);
+        StartProcessEnvio startProcessEnvio = new StartProcessEnvio();
+        startProcessEnvio.startProcessEnvio(application);
 
     }
 
@@ -92,7 +96,7 @@ public class MecanicoCTR {
         return qtde > 0;
     }
 
-    public void finalizarApontMecan(String activity){
+    public void finalizarApontMecan(@NonNull Application application, String activity){
 
         LogProcessoDAO.getInstance().insertLogProcesso("BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();\n" +
                 "        ApontMecanDAO apontMecanDAO = new ApontMecanDAO();\n" +
@@ -102,8 +106,9 @@ public class MecanicoCTR {
         ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
         apontMecanDAO.finalizarApont(boletimMMFertDAO.getBoletimMMFertAberto().getIdBolMMFert());
 
-        LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().envioDados(activity);", activity);
-        EnvioDadosServ.getInstance().envioDados(activity);
+        boletimMMFertDAO.updateBoletimMMFertEnviar(boletimMMFertDAO.getBoletimMMFertAberto());
+        StartProcessEnvio startProcessEnvio = new StartProcessEnvio();
+        startProcessEnvio.startProcessEnvio(application);
 
     }
 

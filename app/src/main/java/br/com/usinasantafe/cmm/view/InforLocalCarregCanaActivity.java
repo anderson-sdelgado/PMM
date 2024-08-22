@@ -25,18 +25,20 @@ public class InforLocalCarregCanaActivity extends ActivityGeneric {
         Button buttonOkLocalCarreg = findViewById(R.id.buttonOkLocalCarreg);
         TextView textViewFrente = findViewById(R.id.textViewFrente);
         TextView textViewSecao = findViewById(R.id.textViewSecao);
-        TextView textViewCaminho = findViewById(R.id.textViewCaminho);
 
         localCarregBean = cmmContext.getMotoMecFertCTR().getLocalCarreg();
-        textViewFrente.setText("FRENTE: " + localCarregBean.getCodFrente());
-        textViewSecao.setText("SEÇÃO: " + localCarregBean.getCodPropriedade() + " - " + localCarregBean.getDescrPropriedade());
-        textViewCaminho.setText("CAMINHO: " + localCarregBean.getDescrCaminho());
+        textViewFrente.setText("FRENTE: " + localCarregBean.getCodFrente() + "\n" +
+                "ORDEM DE SERVIÇO: " + localCarregBean.getDescrOS() + "\n" +
+                "LIBERAÇÃO: " + localCarregBean.getDescrLiberacao());
+        textViewSecao.setText("SEÇÃO: " + localCarregBean.getCodPropriedade() + " - " + localCarregBean.getDescrPropriedade() + "\n" +
+                "CAMINHO: " + localCarregBean.getDescrCaminho());
+
+        cmmContext.getConfigCTR().setFrentePropriedade(localCarregBean.getCodFrente(), localCarregBean.getCodPropriedade());
 
         if(cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2) {
-            cmmContext.getConfigCTR().setFrentePropriedade(localCarregBean.getCodFrente(), localCarregBean.getCodPropriedade());
             cmmContext.getConfigCTR().clearOSAtiv();
             cmmContext.getCecCTR().salvarPrecCECAberto();
-            cmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+            cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, getLongitude(), getLatitude(), getLocalClassName());
         }
 
         buttonOkLocalCarreg.setOnClickListener(v -> {

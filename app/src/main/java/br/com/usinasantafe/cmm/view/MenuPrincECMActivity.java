@@ -17,6 +17,7 @@ import br.com.usinasantafe.cmm.R;
 import br.com.usinasantafe.cmm.model.bean.estaticas.MotoMecBean;
 import br.com.usinasantafe.cmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.cmm.util.Tempo;
+import br.com.usinasantafe.cmm.util.workmanager.StartProcessEnvio;
 
 public class MenuPrincECMActivity extends ActivityGeneric {
 
@@ -40,7 +41,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
 
         Button buttonRetMotoMec = findViewById(R.id.buttonRetMotoMec);
         Button buttonParadaMotoMec = findViewById(R.id.buttonParadaMotoMec);
-        Button buttonVerificarCaminhoMotoMec = findViewById(R.id.buttonVerificarCaminhoMotoMec);
+        Button buttonVerificarAlocacaoMotoMec = findViewById(R.id.buttonVerificarCaminhoMotoMec);
         textViewMotorista = findViewById(R.id.textViewMotorista);
         textViewCarreta = findViewById(R.id.textViewCarreta);
         textViewUltimaViagem = findViewById(R.id.textViewUltimaViagem);
@@ -56,7 +57,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
         if(cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L){
             LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L){\n" +
                     "            pmmContext.getMotoMecFertCTR().inserirApontBolAnterior(getLocalClassName());", getLocalClassName());
-            cmmContext.getMotoMecFertCTR().inserirApontBolAnterior(getLocalClassName());
+            cmmContext.getMotoMecFertCTR().inserirApontBolAnterior(cmmContext, getLocalClassName());
         }
 
         if (Tempo.getInstance().verDthrServ(cmmContext.getConfigCTR().getConfig().getDtServConfig())) {
@@ -174,7 +175,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                             LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
                                     "                                    motoMecListView.setSelection(posicao + 1);\n" +
                                     "textViewStatus.setText(pmmContext.getMotoMecFertCTR().getUltApont());", getLocalClassName());
-                            cmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+                            cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, getLongitude(), getLatitude(), getLocalClassName());
                             motoMecListView.setSelection(posicao + 1);
 
                             textViewStatus.setText(cmmContext.getMotoMecFertCTR().getUltApont());
@@ -292,7 +293,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                                     }
                                     LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
                                             "textViewStatus.setText(pmmContext.getMotoMecFertCTR().getUltApont());", getLocalClassName());
-                                    cmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+                                    cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, getLongitude(), getLatitude(), getLocalClassName());
                                     textViewStatus.setText(cmmContext.getMotoMecFertCTR().getUltApont());
                                 }
                                 motoMecListView.setSelection(posicao + 1);
@@ -360,7 +361,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
 
                             LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
                                     "textViewStatus.setText(pmmContext.getMotoMecFertCTR().getUltApont());", getLocalClassName());
-                            cmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+                            cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, getLongitude(), getLatitude(), getLocalClassName());
                             textViewStatus.setText(cmmContext.getMotoMecFertCTR().getUltApont());
 
                         }
@@ -378,6 +379,9 @@ public class MenuPrincECMActivity extends ActivityGeneric {
 
                         cmmContext.getCecCTR().delPreCECAberto();
                         cmmContext.getCecCTR().verCEC(MenuPrincECMActivity.this, CECActivity.class, progressBar);
+
+                        StartProcessEnvio startProcessEnvio = new StartProcessEnvio();
+                        startProcessEnvio.startProcessEnvio(cmmContext);
 
                     } else if ((motoMecBean.getCodFuncaoOperMotoMec() == 8)
                             || (motoMecBean.getCodFuncaoOperMotoMec() == 19)) { // DESENGATE
@@ -545,16 +549,21 @@ public class MenuPrincECMActivity extends ActivityGeneric {
             finish();
         });
 
-        buttonVerificarCaminhoMotoMec.setOnClickListener(v -> {
-            LogProcessoDAO.getInstance().insertLogProcesso("buttonVerificarCaminhoMotoMec.setOnClickListener(v -> {", getLocalClassName());
+        buttonVerificarAlocacaoMotoMec.setOnClickListener(v -> {
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonVerificarAlocacaoMotoMec.setOnClickListener(v -> {", getLocalClassName());
             if (cmmContext.getCecCTR().verPreCECAberto()) {
                 LogProcessoDAO.getInstance().insertLogProcesso("if (cmmContext.getCecCTR().verPreCECAberto()) {\n" +
                         "                            cmmContext.getConfigCTR().setPosicaoTela(31L);\n" +
                         "                Intent it = new Intent(MenuPrincECMActivity.this, InforLocalCarregCanaActivity.class);", getLocalClassName());
+
+                progressBar = new ProgressDialog(v.getContext());
+                progressBar.setCancelable(true);
+                progressBar.setMessage("BUSCANDO LOCAL CARREGAMENTO...");
+                progressBar.show();
+
                 cmmContext.getConfigCTR().setPosicaoTela(31L);
-                Intent it = new Intent(MenuPrincECMActivity.this, InforLocalCarregCanaActivity.class);
-                startActivity(it);
-                finish();
+                cmmContext.getMotoMecFertCTR().verifLocalCarreg(MenuPrincECMActivity.this, InforLocalCarregCanaActivity.class, progressBar, getLocalClassName());
+
             }
         });
 

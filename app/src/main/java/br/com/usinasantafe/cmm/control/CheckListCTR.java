@@ -1,7 +1,10 @@
 package br.com.usinasantafe.cmm.control;
 
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
+
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,7 @@ import br.com.usinasantafe.cmm.model.bean.variaveis.RespItemCheckListBean;
 import br.com.usinasantafe.cmm.util.EnvioDadosServ;
 import br.com.usinasantafe.cmm.util.Json;
 import br.com.usinasantafe.cmm.util.VerifDadosServ;
+import br.com.usinasantafe.cmm.util.workmanager.StartProcessEnvio;
 
 public class CheckListCTR {
 
@@ -55,10 +59,11 @@ public class CheckListCTR {
         cabecCheckListDAO.createCabecAberto(configCTR.getEquip().getNroEquip() , motoMecFertCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert(), motoMecFertCTR.getBoletimMMFertAberto().getIdTurnoBolMMFert());
     }
 
-    public void salvarBolFechado(String activity){
+    public void salvarBolFechado(@NonNull Application application){
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
         cabecCheckListDAO.salvarFechCheckList();
-        EnvioDadosServ.getInstance().envioDados(activity);
+        StartProcessEnvio startProcessEnvio = new StartProcessEnvio();
+        startProcessEnvio.startProcessEnvio(application);
     }
 
     public boolean verAberturaCheckList(Long turno){
@@ -127,7 +132,7 @@ public class CheckListCTR {
     }
 
     public boolean verEnvioDados(){
-        return cabecCheckListList().size() > 0;
+        return !cabecCheckListList().isEmpty();
     }
 
     public String dadosEnvio(){
@@ -142,6 +147,21 @@ public class CheckListCTR {
 
     }
 
+    public List<CabecCheckListBean> dadosEnvioRetrofit(){
+
+        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
+        RespItemCheckListDAO respItemCheckListDAO = new RespItemCheckListDAO();
+        List<CabecCheckListBean> cabecCheckList = cabecCheckListDAO.cabecCheckListFechList();
+
+        for(int i = 0; i < cabecCheckList.size(); i++){
+            List<RespItemCheckListBean> respItemCheckListList = respItemCheckListDAO.respItemList(cabecCheckList.get(i).getIdCabCL());
+            cabecCheckList.get(i).setRespItemCheckListList(respItemCheckListList);
+        }
+
+        return cabecCheckList;
+
+    }
+
     public void updateRecebChecklist(String activity) {
 
         LogProcessoDAO.getInstance().insertLogProcesso("        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();\n" +
@@ -151,7 +171,13 @@ public class CheckListCTR {
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
         cabecCheckListDAO.updateCabecCLEnviado();
 
-        EnvioDadosServ.getInstance().envioDados(activity);
+    }
+
+    public void updateRecebChecklist(List<CabecCheckListBean> cabecCheckListBeanList) {
+
+        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
+        cabecCheckListDAO.updateCabecCLEnviado(cabecCheckListBeanList);
+
 
     }
 

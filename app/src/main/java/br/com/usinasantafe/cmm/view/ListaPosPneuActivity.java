@@ -91,7 +91,7 @@ public class ListaPosPneuActivity extends ActivityGeneric {
                     LogProcessoDAO.getInstance().insertLogProcesso("if(cmmContext.getPneuCTR().verifFinalItemPneuBolAberto()){\n" +
                             "                    cmmContext.getPneuCTR().fecharBolPneu(getLocalClassName());\n" +
                             "                    Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                    cmmContext.getPneuCTR().fecharBolPneu(getLocalClassName());
+                    cmmContext.getPneuCTR().fecharBolPneu(cmmContext, getLocalClassName());
                     Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincPMMActivity.class);
                     startActivity(it);
                     finish();
@@ -126,7 +126,7 @@ public class ListaPosPneuActivity extends ActivityGeneric {
                     LogProcessoDAO.getInstance().insertLogProcesso("if(cmmContext.getPneuCTR().hasItemPneuManutBolAberto()) {\n" +
                             "                    cmmContext.getPneuCTR().fecharBolPneu(getLocalClassName());\n" +
                             "                    Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                    cmmContext.getPneuCTR().fecharBolPneu(getLocalClassName());
+                    cmmContext.getPneuCTR().fecharBolPneu(cmmContext, getLocalClassName());
                     Intent it = new Intent(ListaPosPneuActivity.this, MenuPrincPMMActivity.class);
                     startActivity(it);
                     finish();

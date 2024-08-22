@@ -91,6 +91,13 @@ public class PreCECDAO {
 
     }
 
+    public PreCECBean dadosEnvioPreCECRetrofit(){
+        List<PreCECBean> preCECFechadoList = preCECListFechado();
+        PreCECBean preCECBean = preCECFechadoList.get(0);
+        preCECFechadoList.clear();
+        return preCECBean;
+    }
+
     public void atualPreCEC(String objeto) throws JSONException {
 
         JSONObject jsonObj = new JSONObject(objeto);
@@ -111,6 +118,14 @@ public class PreCECDAO {
             }
 
         }
+
+    }
+
+    public void atualPreCEC(PreCECBean preCECBean){
+        List<PreCECBean> preCECList = preCECBean.get("idPreCEC", preCECBean.getIdPreCEC());
+        PreCECBean preCECBDBean = preCECList.get(0);
+        preCECBDBean.setStatus(3L);
+        preCECBDBean.update();
 
     }
 
@@ -246,6 +261,14 @@ public class PreCECDAO {
         List<PreCECBean> preCECList = preCECBean.difAndOrderBy("status", 1L, "idPreCEC", true);
         return preCECList;
     }
+
+
+    private List<PreCECBean> preCECListIdPreCEC(Long idPreCEC){
+        PreCECBean preCECBean = new PreCECBean();
+        List<PreCECBean> preCECList = preCECBean.get("idPreCEC", idPreCEC);
+        return preCECList;
+    }
+
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -31,6 +31,14 @@ public class ImplementoMMDAO {
         return apontImplMMBean.inAndGetAndOrderBy("idApontMMFert", idApontList, pesqArrayList, "idApontImplMM", true);
     }
 
+    public List<ApontImplMMBean> apontImplEnvioListRetrofit(Long idApont){
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqStatusEnvioApontImpl());
+        pesqArrayList.add(getPesqIdApont(idApont));
+        ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
+        return apontImplMMBean.getAndOrderBy(pesqArrayList, "idApontImplMM", true);
+    }
+
     public ArrayList<String> apontImplAllArrayList(ArrayList<String> dadosArrayList){
         dadosArrayList.add("APONT. IMPLEMENTO");
         ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
@@ -123,6 +131,17 @@ public class ImplementoMMDAO {
 
     }
 
+    public void updateApontImpl(Long idApont){
+
+        List<ApontImplMMBean> apontImplList = apontImplMMList(idApont);
+        ApontImplMMBean apontImplMMBean = apontImplList.get(0);
+        apontImplList.clear();
+        apontImplMMBean.setStatusImplMM(2L);
+        apontImplMMBean.update();
+
+    }
+
+
     public void deleteApontImpl(ArrayList<Long> idApontImplMMArrayList){
 
         ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
@@ -141,10 +160,24 @@ public class ImplementoMMDAO {
         return apontImplMMBean.in("idApontImplMM", idApontImplMMArrayList);
     }
 
+    public List<ApontImplMMBean> apontImplMMList(Long idApontImplMM){
+        ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
+        return apontImplMMBean.get("idApontImplMM", idApontImplMM);
+    }
+
+
     private EspecificaPesquisa getPesqStatusEnvioApontImpl(){
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("statusImplMM");
         pesquisa.setValor(1L);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqIdApont(Long idApont){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("idApontMMFert");
+        pesquisa.setValor(idApont);
         pesquisa.setTipo(1);
         return pesquisa;
     }

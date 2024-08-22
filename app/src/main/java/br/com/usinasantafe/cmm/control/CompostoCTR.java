@@ -103,6 +103,12 @@ public class CompostoCTR {
         return carregCompDAO.dadosEnvioCarregInsumo();
     }
 
+    public CarregCompBean dadosEnvioCarregInsumoRetrofit(){
+        CarregCompDAO carregCompDAO = new CarregCompDAO();
+        return carregCompDAO.dadosEnvioCarregInsumoRetrofit();
+    }
+
+
     public boolean verProduto(String codProduto){
         ProdutoDAO produtoDAO = new ProdutoDAO();
         return produtoDAO.verProduto(codProduto);
@@ -177,14 +183,17 @@ public class CompostoCTR {
             CarregCompDAO carregCompDAO = new CarregCompDAO();
             carregCompDAO.updCarregInsumo(json.jsonArray(obj));
 
-            EnvioDadosServ.getInstance().envioDados(activity);
-
         }
         catch(Exception e){
             EnvioDadosServ.status = 1;
             LogErroDAO.getInstance().insertLogErro(e);
         }
 
+    }
+
+    public void updCarregInsumo(CarregCompBean carregCompBean) {
+        CarregCompDAO carregCompDAO = new CarregCompDAO();
+        carregCompDAO.updCarregInsumo(carregCompBean);
     }
 
     public boolean verifEnvioCarregInsumoComposto(){

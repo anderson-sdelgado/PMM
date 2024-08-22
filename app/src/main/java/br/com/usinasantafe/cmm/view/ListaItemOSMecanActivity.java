@@ -106,7 +106,7 @@ public class ListaItemOSMecanActivity extends ActivityGeneric {
         itemOSListView.setOnItemClickListener((l, v, position, id) -> {
 
             ItemOSMecanBean itemOSBean = itemOSList.get(position);
-            cmmContext.getMecanicoCTR().salvarApontMecan(itemOSBean.getSeqItemOS(), getLocalClassName());
+            cmmContext.getMecanicoCTR().salvarApontMecan(cmmContext, itemOSBean.getSeqItemOS(), getLocalClassName());
 
             LogProcessoDAO.getInstance().insertLogProcesso("itemOSListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n" +
                     "            @Override\n" +

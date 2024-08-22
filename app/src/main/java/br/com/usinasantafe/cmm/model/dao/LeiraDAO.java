@@ -186,6 +186,20 @@ public class LeiraDAO {
 
     }
 
+
+    public List<MovLeiraBean> movLeiraEnvioListRetrofit(Long idBol){
+
+        MovLeiraBean movLeiraBean = new MovLeiraBean();
+
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqStatusEnviar());
+        pesqArrayList.add(getPesqIdBol(idBol));
+
+        return movLeiraBean.get(pesqArrayList);
+
+    }
+
+
     public ArrayList<Long> idMovLeiraArrayList(String objeto) throws Exception {
 
         ArrayList<Long> idMovLeiraArrayList = new ArrayList<Long>();
@@ -245,6 +259,14 @@ public class LeiraDAO {
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("idBolMMFert");
         pesquisa.setValor(idBol);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqStatusEnviar(){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("statusMovLeira");
+        pesquisa.setValor(1L);
         pesquisa.setTipo(1);
         return pesquisa;
     }

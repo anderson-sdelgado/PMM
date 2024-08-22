@@ -137,7 +137,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                                     "                                public void onClick(DialogInterface dialog, int which) {\n" +
                                     "                                    pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
                                     "                                    motoMecListView.setSelection(posicao + 1);", getLocalClassName());
-                            cmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+                            cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, getLongitude(), getLatitude(), getLocalClassName());
                             motoMecListView.setSelection(posicao + 1);
 
                         });
@@ -162,7 +162,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                                     "                                        pmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());\n" +
                                     "                                        motoMecListView.setSelection(posicao + 1);", getLocalClassName());
 
-                            cmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+                            cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, getLongitude(), getLatitude(), getLocalClassName());
                             motoMecListView.setSelection(posicao + 1);
 
                         });
@@ -331,7 +331,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                     "                Intent it = new Intent(MenuPrincPCOMPActivity.this, TelaInicialActivity.class);", getLocalClassName());
             cmmContext.getConfigCTR().setPosicaoTela(26L);
             cmmContext.getConfigCTR().setHodometroFinalConfig(0D);
-            cmmContext.getMotoMecFertCTR().salvarBolMMFertFechado(getLocalClassName());
+            cmmContext.getMotoMecFertCTR().salvarBolMMFertFechado(cmmContext, getLocalClassName());
             Intent it = new Intent(MenuPrincPCOMPActivity.this, TelaInicialActivity.class);
             startActivity(it);
             finish();

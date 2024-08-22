@@ -203,7 +203,7 @@ public class ListaParadaPMMActivity extends ActivityGeneric {
                                 "                        pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());\n" +
                                 "                        Intent it = new Intent(ListaParadaPMMActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                         cmmContext.getConfigCTR().clearDadosFert();
-                        cmmContext.getMotoMecFertCTR().salvarApont(cmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
+                        cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, cmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
                         Intent it = new Intent(ListaParadaPMMActivity.this, MenuPrincPMMActivity.class);
                         startActivity(it);
                         finish();

@@ -195,8 +195,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 });
                 alerta.show();
 
-            }
-            else {
+            } else {
 
                 LogProcessoDAO.getInstance().insertLogProcesso("else {\n" +
                         "AtividadeBean atividadeBean = (AtividadeBean) ativArrayList.get(position);\n" +
@@ -339,7 +338,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                                 } else {
                                     LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                             "pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude());", getLocalClassName());
-                                    cmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
+                                    cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, 0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
 
                                     if (rendimento) {
                                         LogProcessoDAO.getInstance().insertLogProcesso("if (rendimento) {\n" +

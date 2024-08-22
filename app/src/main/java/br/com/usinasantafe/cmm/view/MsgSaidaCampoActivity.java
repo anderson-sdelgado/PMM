@@ -53,8 +53,8 @@ public class MsgSaidaCampoActivity extends ActivityGeneric {
 
                 LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());\n" +
                         "                pmmContext.getCecCTR().fechaPreCEC();", getLocalClassName());
-                cmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
-                cmmContext.getCecCTR().fechaPreCEC();
+                cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, 0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
+                cmmContext.getCecCTR().fechaPreCEC(cmmContext);
 
                 LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MsgSaidaCampoActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                 Intent it = new Intent(MsgSaidaCampoActivity.this, MenuPrincECMActivity.class);

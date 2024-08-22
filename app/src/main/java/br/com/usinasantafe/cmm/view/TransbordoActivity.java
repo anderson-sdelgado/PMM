@@ -167,10 +167,10 @@ public class TransbordoActivity extends ActivityGeneric {
                             LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
                             if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L) {
                                 LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(0L, " + idTransb + ", getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                                cmmContext.getMotoMecFertCTR().salvarApont(0L, idTransb, getLongitude(), getLatitude(), getLocalClassName());
+                                cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, 0L, idTransb, getLongitude(), getLatitude(), getLocalClassName());
                             } else {
                                 LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().inserirApontTransb(" + idTransb + ", getLocalClassName());", getLocalClassName());
-                                cmmContext.getMotoMecFertCTR().inserirApontTransb(idTransb, getLocalClassName());
+                                cmmContext.getMotoMecFertCTR().inserirApontTransb(cmmContext, idTransb, getLocalClassName());
                             }
 
                             LogProcessoDAO.getInstance().insertLogProcesso("List<RFuncaoAtivParBean> rFuncaoAtividadeList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());", getLocalClassName());

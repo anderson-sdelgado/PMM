@@ -180,7 +180,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                     rFuncaoAtivParList.clear();
 
                     LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont( 0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                    cmmContext.getMotoMecFertCTR().salvarApont( 0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
+                    cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, 0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
 
                     if (recolhimento) {
                         LogProcessoDAO.getInstance().insertLogProcesso("if (recolhimento) {\n" +

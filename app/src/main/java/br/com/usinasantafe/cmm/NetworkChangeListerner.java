@@ -33,11 +33,11 @@ public class NetworkChangeListerner extends BroadcastReceiver {
                     "Tempo.getInstance().zerarDifTempo()", context.getClass().getName());
             ActivityGeneric.connectNetwork = true;
             Tempo.getInstance().zerarDifTempo();
-            if (EnvioDadosServ.status == 1) {
-                LogProcessoDAO.getInstance().insertLogProcesso("if (EnvioDadosServ.status == 1) {\n" +
-                        "EnvioDadosServ.getInstance().envioDados(context.getClass().getName());", context.getClass().getName());
-                EnvioDadosServ.getInstance().envioDados(context.getClass().getName());
-            }
+//            if (EnvioDadosServ.status == 1) {
+//                LogProcessoDAO.getInstance().insertLogProcesso("if (EnvioDadosServ.status == 1) {\n" +
+//                        "EnvioDadosServ.getInstance().envioDados(context.getClass().getName());", context.getClass().getName());
+//                EnvioDadosServ.getInstance().envioDados(context.getClass().getName());
+//            }
         }
         else{
             LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +

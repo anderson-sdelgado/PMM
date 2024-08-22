@@ -56,7 +56,7 @@ public class ProdutoActivity extends ActivityGeneric {
                         "                    pmmContext.getConfigCTR().setPosFluxoCarregComposto(2L);\n" +
                         "                    pmmContext.getCompostoCTR().abrirCarregInsumo(produtoBean);\n" +
                         "                    Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
-                cmmContext.getMotoMecFertCTR().salvarApont(getLongitude(), getLatitude(), getLocalClassName());
+                cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, getLongitude(), getLatitude(), getLocalClassName());
                 cmmContext.getCompostoCTR().abrirCarregInsumo(produtoBean);
 
                 Intent it = new Intent(ProdutoActivity.this, MenuPrincPCOMPActivity.class);

@@ -75,4 +75,8 @@ public class CECDAO {
 
     }
 
+    public void recDadosCEC(CECBean cecBean){
+        cecBean.insert();
+    }
+
 }

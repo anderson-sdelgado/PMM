@@ -140,7 +140,7 @@ public class RecolhimentoActivity extends ActivityGeneric {
             if (cmmContext.getMotoMecFertCTR().qtdeRecolh() == cmmContext.getMotoMecFertCTR().getContRecolh()) {
                 LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().qtdeRecolh() == pmmContext.getMotoMecFertCTR().getContRecolh()) {\n" +
                         "                pmmContext.getMotoMecFertCTR().salvarBolMMFertFechado();", getLocalClassName());
-                cmmContext.getMotoMecFertCTR().salvarBolMMFertFechado(getLocalClassName());
+                cmmContext.getMotoMecFertCTR().salvarBolMMFertFechado(cmmContext, getLocalClassName());
                 LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(RecolhimentoActivity.this, TelaInicialActivity.class);", getLocalClassName());
                 Intent it = new Intent(RecolhimentoActivity.this, TelaInicialActivity.class);
                 startActivity(it);

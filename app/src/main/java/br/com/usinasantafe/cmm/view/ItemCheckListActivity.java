@@ -98,7 +98,7 @@ public class ItemCheckListActivity extends ActivityGeneric {
                         "                pmmContext.getConfigCTR().setCheckListConfig(pmmContext.getConfigCTR().getConfig().getIdTurnoConfig());\n" +
                         "                pmmContext.getCheckListCTR().salvarBolFechado();", getLocalClassName());
                 cmmContext.getConfigCTR().setCheckListConfig(cmmContext.getConfigCTR().getConfig().getIdTurnoConfig());
-                cmmContext.getCheckListCTR().salvarBolFechado(getLocalClassName());
+                cmmContext.getCheckListCTR().salvarBolFechado(cmmContext);
                 if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
                     LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {", getLocalClassName());
                     if(BuildConfig.FLAVOR.equals("pmm")){

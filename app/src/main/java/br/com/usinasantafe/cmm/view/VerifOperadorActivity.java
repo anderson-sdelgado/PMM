@@ -60,7 +60,7 @@ public class VerifOperadorActivity extends ActivityGeneric {
                         "                        pmmContext.getMotoMecFertCTR().inserirParadaTrocaMotorista(getLocalClassName());\n" +
                         "                        Intent it = new Intent(VerifOperadorActivity.this, HorimetroActivity.class);", getLocalClassName());
                 cmmContext.getConfigCTR().setPosicaoTela(17L);
-                cmmContext.getMotoMecFertCTR().inserirParadaTrocaMotorista(getLocalClassName());
+                cmmContext.getMotoMecFertCTR().inserirParadaTrocaMotorista(cmmContext, getLocalClassName());
                 Intent it = new Intent(VerifOperadorActivity.this, HorimetroActivity.class);
                 startActivity(it);
                 finish();

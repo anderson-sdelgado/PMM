@@ -16,7 +16,7 @@
         style="@style/TextViewMsgDescr"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         tools:text="FRENTE: 6" />
 
     <TextView
@@ -24,16 +24,8 @@
         style="@style/TextViewMsgDescr"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        tools:text=" SEÇÃO: 142 - JOSE ANTONIO GEROLAMO E OUTROS" />
-
-    <TextView
-        android:id="@+id/textViewCaminho"
-        style="@style/TextViewMsgDescr"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
         android:layout_weight="5"
-        tools:text="CAMINHO: Pontilhão da Usina sentido Ibitinga, faz o retorno no posto titico e pega voltando, entra a direita no Takashi ital, e acompanha emplacamento." />
+        tools:text=" SEÇÃO: 142 - JOSE ANTONIO GEROLAMO E OUTROS" />
 
     <Button
         android:id="@+id/buttonOkLocalCarreg"

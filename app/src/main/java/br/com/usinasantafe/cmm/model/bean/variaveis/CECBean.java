@@ -43,7 +43,7 @@ public class CECBean extends Entidade {
 	private Long unidadeSorteada4CEC;
 	@DatabaseField
     private Double pesoLiquidoCEC;
-	
+
 	public CECBean() {
 	}
 

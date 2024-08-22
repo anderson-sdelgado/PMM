@@ -143,6 +143,16 @@ public class VerifDadosServ {
 
     }
 
+    public void verifDados(Context telaAtual, Class telaProx, ProgressDialog progressDialog) {
+
+        status = 2;
+        this.urlsConexaoHttp = new UrlsConexaoHttp();
+        this.telaAtual = telaAtual;
+        this.telaProx = telaProx;
+        this.progressDialog = progressDialog;
+
+    }
+
     public void verifDados(String dados, String classe, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity) {
 
         this.urlsConexaoHttp = new UrlsConexaoHttp();

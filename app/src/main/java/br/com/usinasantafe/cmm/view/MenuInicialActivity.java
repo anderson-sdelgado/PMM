@@ -22,6 +22,7 @@ import br.com.usinasantafe.cmm.model.bean.variaveis.LogProcessoBean;
 import br.com.usinasantafe.cmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.cmm.util.EnvioDadosServ;
 import br.com.usinasantafe.cmm.util.VerifDadosServ;
+import br.com.usinasantafe.cmm.util.workmanager.StartProcessEnvio;
 
 public class MenuInicialActivity extends ActivityGeneric {
 

@@ -71,6 +71,8 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private Long statusRetVerif; // 0 - Não Verificando; 1 - Verificando
 	@DatabaseField
+	private Long statusPesqCEC; // 0 - Não Verificando; 1 - Verificando
+	@DatabaseField
 	private Long funcaoComposto; // 2 - Insumo; 3 - Composto
 	@DatabaseField
 	private Long posicaoTela;
@@ -358,7 +360,15 @@ public class ConfigBean extends Entidade {
 		return latitudeConfig;
 	}
 
-//	public Long getQtdeCarretaConfig() {
+	public Long getStatusPesqCEC() {
+		return statusPesqCEC;
+	}
+
+	public void setStatusPesqCEC(Long statusPesqCEC) {
+		this.statusPesqCEC = statusPesqCEC;
+	}
+
+	//	public Long getQtdeCarretaConfig() {
 //		return qtdeCarretaConfig;
 //	}
 //

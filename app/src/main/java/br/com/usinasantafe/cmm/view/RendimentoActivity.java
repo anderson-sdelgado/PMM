@@ -136,7 +136,7 @@ public class RendimentoActivity extends ActivityGeneric {
             if (cmmContext.getMotoMecFertCTR().qtdeRend() == cmmContext.getMotoMecFertCTR().getContRend()) {
                 LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().qtdeRend() == pmmContext.getMotoMecFertCTR().getContRend()) {\n" +
                         "                pmmContext.getMotoMecFertCTR().salvarBolMMFertFechado();", getLocalClassName());
-                cmmContext.getMotoMecFertCTR().salvarBolMMFertFechado(getLocalClassName());
+                cmmContext.getMotoMecFertCTR().salvarBolMMFertFechado(cmmContext, getLocalClassName());
                 LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(RendimentoActivity.this, TelaInicialActivity.class);", getLocalClassName());
                 Intent it = new Intent(RendimentoActivity.this, TelaInicialActivity.class);
                 startActivity(it);

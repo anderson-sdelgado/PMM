@@ -18,6 +18,7 @@ import br.com.usinasantafe.cmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.cmm.util.ConnectNetwork;
 import br.com.usinasantafe.cmm.util.EnvioDadosServ;
 import br.com.usinasantafe.cmm.util.VerifDadosServ;
+import br.com.usinasantafe.cmm.util.workmanager.StartProcessEnvio;
 
 public class TelaInicialActivity extends ActivityGeneric {
 
@@ -44,7 +45,10 @@ public class TelaInicialActivity extends ActivityGeneric {
             if(ConnectNetwork.isConnected(this)){
                 LogProcessoDAO.getInstance().insertLogProcesso("if(connectNetwork){\n" +
                         "EnvioDadosServ.getInstance().envioDados()", getLocalClassName());
-                EnvioDadosServ.getInstance().envioDados(getLocalClassName());
+
+                StartProcessEnvio startProcessEnvio = new StartProcessEnvio();
+                startProcessEnvio.startProcessEnvio(cmmContext);
+
             } else {
                 LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                         "                EnvioDadosServ.status = 1;", getLocalClassName());

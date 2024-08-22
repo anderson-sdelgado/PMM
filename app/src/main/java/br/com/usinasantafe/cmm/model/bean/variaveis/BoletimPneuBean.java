@@ -3,6 +3,8 @@ package br.com.usinasantafe.cmm.model.bean.variaveis;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.List;
+
 import br.com.usinasantafe.cmm.model.pst.Entidade;
 
 @DatabaseTable(tableName="tbbolpneuvar")
@@ -26,6 +28,8 @@ public class BoletimPneuBean extends Entidade {
     private Long dthrLongBolPneu;
     @DatabaseField
     private Long statusBolPneu;  // 1 - Aberto; 2 - Encerrado; 3 - Enviado
+    private List<ItemCalibPneuBean> itemCalibPneuList;
+    private List<ItemManutPneuBean> itemManutPneuBeanList;
 
     public BoletimPneuBean() {
     }
@@ -92,5 +96,21 @@ public class BoletimPneuBean extends Entidade {
 
     public void setDthrLongBolPneu(Long dthrLongBolPneu) {
         this.dthrLongBolPneu = dthrLongBolPneu;
+    }
+
+    public List<ItemCalibPneuBean> getItemCalibPneuList() {
+        return itemCalibPneuList;
+    }
+
+    public void setItemCalibPneuList(List<ItemCalibPneuBean> itemCalibPneuList) {
+        this.itemCalibPneuList = itemCalibPneuList;
+    }
+
+    public List<ItemManutPneuBean> getItemManutPneuBeanList() {
+        return itemManutPneuBeanList;
+    }
+
+    public void setItemManutPneuBeanList(List<ItemManutPneuBean> itemManutPneuBeanList) {
+        this.itemManutPneuBeanList = itemManutPneuBeanList;
     }
 }

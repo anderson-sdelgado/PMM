@@ -3,6 +3,8 @@ package br.com.usinasantafe.cmm.model.bean.variaveis;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.List;
+
 import br.com.usinasantafe.cmm.model.pst.Entidade;
 
 @DatabaseTable(tableName="tbapontmmfertvar")
@@ -46,6 +48,8 @@ public class ApontMMFertBean extends Entidade {
     private Long statusConApontMMFert;  //0 - OffLine; 1 - OnLine
     @DatabaseField
     private Long statusApontMMFert;  //1 - Aberto; 2 - Enviar; 3 - Enviado
+    private List<ApontImplMMBean> apontImplMMList;
+    private List<CarregCompBean> carregCompList;
 
     public ApontMMFertBean() {
     }
@@ -192,5 +196,21 @@ public class ApontMMFertBean extends Entidade {
 
     public void setIdProprApontMMFert(Long idProprApontMMFert) {
         this.idProprApontMMFert = idProprApontMMFert;
+    }
+
+    public List<CarregCompBean> getCarregCompList() {
+        return carregCompList;
+    }
+
+    public void setCarregCompList(List<CarregCompBean> carregCompList) {
+        this.carregCompList = carregCompList;
+    }
+
+    public List<ApontImplMMBean> getApontImplMMList() {
+        return apontImplMMList;
+    }
+
+    public void setApontImplMMList(List<ApontImplMMBean> apontImplMMList) {
+        this.apontImplMMList = apontImplMMList;
     }
 }

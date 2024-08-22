@@ -13,6 +13,10 @@ public class LocalCarregBean extends Entidade {
     @DatabaseField(generatedId=true)
     private Long idLocalCarreg;
     @DatabaseField
+    private String descrOS;
+    @DatabaseField
+    private String descrLiberacao;
+    @DatabaseField
     private String codFrente;
     @DatabaseField
     private String codPropriedade;
@@ -62,5 +66,21 @@ public class LocalCarregBean extends Entidade {
 
     public void setDescrCaminho(String descrCaminho) {
         this.descrCaminho = descrCaminho;
+    }
+
+    public String getDescrOS() {
+        return descrOS;
+    }
+
+    public void setDescrOS(String descrOS) {
+        this.descrOS = descrOS;
+    }
+
+    public String getDescrLiberacao() {
+        return descrLiberacao;
+    }
+
+    public void setDescrLiberacao(String descrLiberacao) {
+        this.descrLiberacao = descrLiberacao;
     }
 }

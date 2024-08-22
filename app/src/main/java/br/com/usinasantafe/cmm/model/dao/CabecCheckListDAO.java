@@ -139,16 +139,23 @@ public class CabecCheckListDAO {
     }
 
     public ArrayList<Long> idCabecCheckListArrayList(List<CabecCheckListBean> cabecCheckListList) {
-        ArrayList<Long> idCabecCheckListArrayList = new ArrayList<Long>();
+        ArrayList<Long> idCabecCheckListArrayList = new ArrayList<>();
         for (CabecCheckListBean cabecCheckListBean : cabecCheckListList) {
             idCabecCheckListArrayList.add(cabecCheckListBean.getIdCabCL());
         }
         return idCabecCheckListArrayList;
     }
 
-
     public void updateCabecCLEnviado(){
         List<CabecCheckListBean> cabecCheckListList = cabecCheckListFechList();
+        for(CabecCheckListBean cabecCheckListBean : cabecCheckListList){
+            cabecCheckListBean.setStatusCabCL(3L);
+            cabecCheckListBean.update();
+        }
+        cabecCheckListList.clear();
+    }
+
+    public void updateCabecCLEnviado(List<CabecCheckListBean> cabecCheckListList){
         for(CabecCheckListBean cabecCheckListBean : cabecCheckListList){
             cabecCheckListBean.setStatusCabCL(3L);
             cabecCheckListBean.update();

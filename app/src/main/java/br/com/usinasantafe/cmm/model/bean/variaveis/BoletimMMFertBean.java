@@ -3,6 +3,8 @@ package br.com.usinasantafe.cmm.model.bean.variaveis;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.List;
+
 import br.com.usinasantafe.cmm.model.pst.Entidade;
 
 @DatabaseTable(tableName="tbboletimmmfertvar")
@@ -37,6 +39,8 @@ public class BoletimMMFertBean extends Entidade {
     @DatabaseField
     private Long statusBolMMFert;  //0 - Esta apontando os implementos; 1 - Aberto; 2 - Encerrado; 3 - Enviado
     @DatabaseField
+    private Long statusEnviarMMFert;  //1 - Enviar; 2 - Enviado
+    @DatabaseField
     private Long statusConBolMMFert;  //0 - OffLine; 1 - OnLine
     @DatabaseField
     private Double longitudeBolMMFert;
@@ -46,6 +50,11 @@ public class BoletimMMFertBean extends Entidade {
     private Long tipoBolMMFert; //1 - Moto Mec; 2 - Fertirrigacao
     @DatabaseField
     private Long dthrLongFinalBolMMFert;
+    private List<ApontMMFertBean> apontMMFertList;
+    private List<BoletimPneuBean> boletimPneuList;
+    private List<ApontMecanBean> apontMecanList;
+    private List<RendMMBean> rendMMList;
+    private List<RecolhFertBean> recolhFertList;
 
     public BoletimMMFertBean() {
     }
@@ -186,5 +195,53 @@ public class BoletimMMFertBean extends Entidade {
 
     public void setDthrLongFinalBolMMFert(Long dthrLongFinalBolMMFert) {
         this.dthrLongFinalBolMMFert = dthrLongFinalBolMMFert;
+    }
+
+    public List<ApontMMFertBean> getApontMMFertList() {
+        return apontMMFertList;
+    }
+
+    public void setApontMMFertList(List<ApontMMFertBean> apontMMFertList) {
+        this.apontMMFertList = apontMMFertList;
+    }
+
+    public List<BoletimPneuBean> getBoletimPneuList() {
+        return boletimPneuList;
+    }
+
+    public void setBoletimPneuList(List<BoletimPneuBean> boletimPneuList) {
+        this.boletimPneuList = boletimPneuList;
+    }
+
+    public List<ApontMecanBean> getApontMecanList() {
+        return apontMecanList;
+    }
+
+    public void setApontMecanList(List<ApontMecanBean> apontMecanList) {
+        this.apontMecanList = apontMecanList;
+    }
+
+    public List<RendMMBean> getRendMMList() {
+        return rendMMList;
+    }
+
+    public void setRendMMList(List<RendMMBean> rendMMList) {
+        this.rendMMList = rendMMList;
+    }
+
+    public List<RecolhFertBean> getRecolhFertList() {
+        return recolhFertList;
+    }
+
+    public void setRecolhFertList(List<RecolhFertBean> recolhFertList) {
+        this.recolhFertList = recolhFertList;
+    }
+
+    public Long getStatusEnviarMMFert() {
+        return statusEnviarMMFert;
+    }
+
+    public void setStatusEnviarMMFert(Long statusEnviarMMFert) {
+        this.statusEnviarMMFert = statusEnviarMMFert;
     }
 }

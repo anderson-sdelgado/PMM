@@ -70,6 +70,22 @@ public class ApontMecanDAO {
 
     }
 
+    public void updateApontMecan(Long idApontMecan){
+
+        List<ApontMecanBean> apontMecanList = apontMecanList(idApontMecan);
+        ApontMecanBean apontMecanBean = apontMecanList.get(0);
+        apontMecanList.clear();
+
+        if(apontMecanBean.getStatusApontMecan() == 1L){
+            apontMecanBean.setStatusApontMecan(2L);
+        }
+        else if(apontMecanBean.getStatusApontMecan() == 3L){
+            apontMecanBean.setStatusApontMecan(4L);
+        }
+        apontMecanBean.update();
+
+    }
+
     public List<ApontMecanBean> apontMecanNEnviadoList() {
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqStatusAbertoNEnviadoMecan());
@@ -106,6 +122,13 @@ public class ApontMecanDAO {
     public List<ApontMecanBean> apontMecanEnvioList(ArrayList<Long> idBolList){
         ApontMecanBean apontMecanBean = new ApontMecanBean();
         return apontMecanBean.inAndOrderBy("idBolApontMecan", idBolList, "idApontMecan", true);
+    }
+
+    public List<ApontMecanBean> apontMecanEnvioListRetrofit(Long idBol){
+        ApontMecanBean apontMecanBean = new ApontMecanBean();
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqIdBolMecan(idBol));
+        return apontMecanBean.getAndOrderBy(pesqArrayList, "idApontMecan", true);
     }
 
     public ArrayList<Long> idApontMecanArrayList(String objeto) throws Exception {

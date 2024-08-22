@@ -207,7 +207,7 @@ public class ImplementoActivity extends ActivityGeneric {
                     "            pmmContext.getMotoMecFertCTR().inserirParadaCheckList(getLocalClassName());\n" +
                     "            pmmContext.getCheckListCTR().setPosCheckList(1);\n" +
                     "            pmmContext.getCheckListCTR().createCabecAberto(getLocalClassName());", getLocalClassName());
-            cmmContext.getMotoMecFertCTR().inserirParadaCheckList(getLocalClassName());
+            cmmContext.getMotoMecFertCTR().inserirParadaCheckList(cmmContext, getLocalClassName());
             cmmContext.getCheckListCTR().setPosCheckList(1);
             cmmContext.getCheckListCTR().createCabecAberto(getLocalClassName());
             if (cmmContext.getConfigCTR().getConfig().getAtualCheckList().equals(1L)) {

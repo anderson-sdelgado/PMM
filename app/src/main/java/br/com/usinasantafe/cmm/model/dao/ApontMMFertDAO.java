@@ -22,7 +22,7 @@ public class ApontMMFertDAO {
     public void salvarApont(ApontMMFertBean apontMMFertBean, int tipo, Long status){
 
         if(tipo == 1){
-            List<ApontMMFertBean> apontMMFertList = apontMMFertList(apontMMFertBean.getIdBolMMFert());
+            List<ApontMMFertBean> apontMMFertList = apontMMFertListIdBol(apontMMFertBean.getIdBolMMFert());
             if (apontMMFertList.size() > 0) {
                 ApontMMFertBean apontMMFertBeanBD = apontMMFertList.get(apontMMFertList.size() - 1);
                 apontMMFertList.clear();
@@ -45,7 +45,7 @@ public class ApontMMFertDAO {
 
     public boolean verifBackupApont(Long idBol, Long idMotoMec) {
         boolean v = false;
-        List<ApontMMFertBean> apontMMFertList = apontMMFertList(idBol);
+        List<ApontMMFertBean> apontMMFertList = apontMMFertListIdBol(idBol);
         if(apontMMFertList.size() > 0){
             ApontMMFertBean apontMMFertBean = apontMMFertList.get(apontMMFertList.size() - 1);
             if ((idMotoMec.equals(apontMMFertBean.getIdMotoMec()))) {
@@ -58,7 +58,7 @@ public class ApontMMFertDAO {
 
     public boolean verifBackupApont(Long idBol, Long os, Long atividade, Long idParada) {
         boolean v = false;
-        List<ApontMMFertBean> apontMMFertList = apontMMFertList(idBol);
+        List<ApontMMFertBean> apontMMFertList = apontMMFertListIdBol(idBol);
         if(apontMMFertList.size() > 0){
             ApontMMFertBean apontMMFertBean = apontMMFertList.get(apontMMFertList.size() - 1);
             if ((os.equals(apontMMFertBean.getOsApontMMFert()))
@@ -73,7 +73,7 @@ public class ApontMMFertDAO {
 
     public boolean verifBackupApontTransb(Long idBol, Long os, Long atividade, Long idParada, Long idTransb) {
         boolean v = false;
-        List<ApontMMFertBean> apontMMFertList = apontMMFertList(idBol);
+        List<ApontMMFertBean> apontMMFertList = apontMMFertListIdBol(idBol);
         if(apontMMFertList.size() > 0){
             ApontMMFertBean apontMMFertBean = apontMMFertList.get(apontMMFertList.size() - 1);
             if ((os.equals(apontMMFertBean.getOsApontMMFert()))
@@ -88,21 +88,21 @@ public class ApontMMFertDAO {
     }
 
     public boolean hasApontBol(Long idBol){
-        List<ApontMMFertBean> apontMMFertList = apontMMFertList(idBol);
+        List<ApontMMFertBean> apontMMFertList = apontMMFertListIdBol(idBol);
         boolean ret = apontMMFertList.size() > 0;
         apontMMFertList.clear();
         return ret;
     }
 
     public ApontMMFertBean getUltApont(Long idBol){
-        List<ApontMMFertBean> apontMMFertList = apontMMFertList(idBol);
+        List<ApontMMFertBean> apontMMFertList = apontMMFertListIdBol(idBol);
         ApontMMFertBean apontMMFertBean = apontMMFertList.get(apontMMFertList.size() - 1);
         apontMMFertList.clear();
         return apontMMFertBean;
     }
 
     public ApontMMFertBean getApontDthr(String dthr){
-        List<ApontMMFertBean> apontaMMFertList = apontMMFertList(dthr);
+        List<ApontMMFertBean> apontaMMFertList = apontMMFertListIdBol(dthr);
         ApontMMFertBean apontMMFertBean = apontaMMFertList.get(0);
         apontaMMFertList.clear();
         return apontMMFertBean;
@@ -124,7 +124,7 @@ public class ApontMMFertDAO {
         return apontMMFertBean.get(pesqArrayList);
     }
 
-    public List<ApontMMFertBean> apontMMFertList(Long idBol){
+    public List<ApontMMFertBean> apontMMFertListIdBol(Long idBol){
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqIdBolApont(idBol));
 
@@ -132,9 +132,14 @@ public class ApontMMFertDAO {
         return apontMMFertBean.getAndOrderBy(pesqArrayList, "idApontMMFert", true);
     }
 
-    public List<ApontMMFertBean> apontMMFertList(ArrayList<Long> idApontArrayList){
+    public List<ApontMMFertBean> apontMMFertListIdApont(ArrayList<Long> idApontArrayList){
         ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
         return apontMMFertBean.in("idApontMMFert", idApontArrayList);
+    }
+
+    public List<ApontMMFertBean> apontMMFertListIdApont(Long idApont){
+        ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
+        return apontMMFertBean.get("idApontMMFert", idApont);
     }
 
     public List<ApontMMFertBean> apontEnvioList() {
@@ -144,7 +149,7 @@ public class ApontMMFertDAO {
         return apontMMFertBean.get(pesqArrayList);
     }
 
-    private List<ApontMMFertBean> apontMMFertList(String dthr){
+    private List<ApontMMFertBean> apontMMFertListIdBol(String dthr){
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqDthrApont(dthr));
         ApontMMFertBean apontMMFertBeanBD = new ApontMMFertBean();
@@ -220,6 +225,14 @@ public class ApontMMFertDAO {
         return apontMMFertBean.inAndGetAndOrderBy("idBolMMFert", idBolList, pesqArrayList, "idApontMMFert", true);
     }
 
+    public List<ApontMMFertBean> apontEnvioListRetrofit(Long idBol){
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqStatusEnvioApont());
+        pesqArrayList.add(getPesqIdBolApont(idBol));
+        ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
+        return apontMMFertBean.getAndOrderBy(pesqArrayList, "idApontMMFert", true);
+    }
+
     public ArrayList<Long> idApontArrayList(List<ApontMMFertBean> apontMMFertList){
         ArrayList<Long> idApontList = new ArrayList<Long>();
         for (ApontMMFertBean apontMMFertBean : apontMMFertList) {
@@ -274,7 +287,7 @@ public class ApontMMFertDAO {
 
     public void updateApont(ArrayList<Long> idApontArrayList){
 
-        List<ApontMMFertBean> apontMMList = apontMMFertList(idApontArrayList);
+        List<ApontMMFertBean> apontMMList = apontMMFertListIdApont(idApontArrayList);
 
         for (ApontMMFertBean apontMMFertBean : apontMMList) {
             apontMMFertBean.setStatusApontMMFert(3L);
@@ -286,9 +299,19 @@ public class ApontMMFertDAO {
 
     }
 
+    public void updateApont(Long idApont){
+
+        List<ApontMMFertBean> apontMMList = apontMMFertListIdApont(idApont);
+        ApontMMFertBean apontMMFertBean = apontMMList.get(0);
+        apontMMFertBean.setStatusApontMMFert(3L);
+        apontMMFertBean.update();
+        apontMMList.clear();
+
+    }
+
     public void deleteApont(ArrayList<Long> idApontArrayList){
 
-        List<ApontMMFertBean> apontMMFertList = apontMMFertList(idApontArrayList);
+        List<ApontMMFertBean> apontMMFertList = apontMMFertListIdApont(idApontArrayList);
 
         for (ApontMMFertBean apontMMFertBean : apontMMFertList) {
             apontMMFertBean.delete();

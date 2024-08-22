@@ -91,4 +91,26 @@ public class AtualAplicDAO {
 
     }
 
+    public String token() {
+
+        String token = "";
+
+        try {
+
+            EquipDAO equipDAO = new EquipDAO();
+            token = BuildConfig.FLAVOR.toUpperCase() + "-VERSAO_" + BuildConfig.VERSION_NAME + "-" + equipDAO.getEquip().getIdEquip();
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.update(token.getBytes(),0, token.length());
+            BigInteger bigInteger = new BigInteger(1, m.digest());
+            String str = bigInteger.toString(16).toUpperCase();
+            token = Strings.padStart(str, 32, '0');
+
+
+        } catch (Exception e) {
+            LogErroDAO.getInstance().insertLogErro(e);
+        }
+
+        return token;
+    }
+
 }

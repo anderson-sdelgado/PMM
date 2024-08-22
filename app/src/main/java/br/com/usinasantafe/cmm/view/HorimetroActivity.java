@@ -205,7 +205,7 @@ public class HorimetroActivity extends ActivityGeneric {
                 if(cmmContext.getCheckListCTR().verAberturaCheckList(cmmContext.getConfigCTR().getConfig().getIdTurnoConfig())){
                     LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getConfigCTR().getConfig().getIdTurnoConfig())){\n" +
                             "pmmContext.getMotoMecFertCTR().inserirParadaCheckList();", getLocalClassName());
-                    cmmContext.getMotoMecFertCTR().inserirParadaCheckList(getLocalClassName());
+                    cmmContext.getMotoMecFertCTR().inserirParadaCheckList(cmmContext, getLocalClassName());
                     LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCheckListCTR().setPosCheckList(1);", getLocalClassName());
                     cmmContext.getCheckListCTR().setPosCheckList(1);
                     LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getCheckListCTR().createCabecAberto();", getLocalClassName());
@@ -280,7 +280,7 @@ public class HorimetroActivity extends ActivityGeneric {
             } else {
                 LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                         "                pmmContext.getMotoMecFertCTR().salvarBolMMFertFechado();", getLocalClassName());
-                cmmContext.getMotoMecFertCTR().salvarBolMMFertFechado(getLocalClassName());
+                cmmContext.getMotoMecFertCTR().salvarBolMMFertFechado(cmmContext, getLocalClassName());
                 if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {
                     LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 4L) {\n" +
                             "                    Intent it = new Intent(HorimetroActivity.this, TelaInicialActivity.class);", getLocalClassName());
@@ -305,8 +305,7 @@ public class HorimetroActivity extends ActivityGeneric {
                     finish();
                 }
             }
-        }
-        else{
+        } else {
             LogProcessoDAO.getInstance().insertLogProcesso("else{", getLocalClassName());
             if (cmmContext.getMotoMecFertCTR().verRecolh()) {
                 LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verRecolh()) {\n" +
@@ -319,7 +318,7 @@ public class HorimetroActivity extends ActivityGeneric {
                 LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                         "                pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());\n" +
                         "                Intent it = new Intent(HorimetroActivity.this, TelaInicialActivity.class);", getLocalClassName());
-                cmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());
+                cmmContext.getMotoMecFertCTR().salvarBolMMFertFechado(cmmContext, getLocalClassName());
                 Intent it = new Intent(HorimetroActivity.this, TelaInicialActivity.class);
                 startActivity(it);
             }

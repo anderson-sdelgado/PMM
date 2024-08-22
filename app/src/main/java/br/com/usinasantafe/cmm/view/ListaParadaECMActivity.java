@@ -129,14 +129,14 @@ public class ListaParadaECMActivity extends ActivityGeneric {
                             LogProcessoDAO.getInstance().insertLogProcesso("} else if(desengateEngate){\n" +
                                     "                                    pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());\n" +
                                     "                                    Intent it = new Intent(ListaParadaECMActivity.this, OpcaoDesengateEngateActivity.class);", getLocalClassName());
-                            cmmContext.getMotoMecFertCTR().salvarApont(cmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
+                            cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, cmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
                             Intent it = new Intent(ListaParadaECMActivity.this, OpcaoDesengateEngateActivity.class);
                             startActivity(it);
                             finish();
                         } else {
                             LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                     "                                    pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                            cmmContext.getMotoMecFertCTR().salvarApont(cmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
+                            cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, cmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
                         }
 
                     }
@@ -232,7 +232,7 @@ public class ListaParadaECMActivity extends ActivityGeneric {
                 }
 
                 LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                cmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
+                cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, 0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
 
                 LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(MenuParadaECMActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                 Intent it = new Intent(ListaParadaECMActivity.this, MenuPrincECMActivity.class);

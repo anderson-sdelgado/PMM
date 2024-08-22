@@ -33,6 +33,13 @@ public class BoletimMMFertDAO {
         return ret;
     }
 
+    public boolean verBoletimMMFertEnviar(){
+        List<BoletimMMFertBean> boletimMMList = boletimMMFertListEnviar();
+        boolean ret = (boletimMMList.size() > 0);
+        boletimMMList.clear();
+        return ret;
+    }
+
     public BoletimMMFertBean getBoletimMMFertAberto(){
         List<BoletimMMFertBean> boletimMMList = boletimMMFertAbertoList();
         BoletimMMFertBean boletimMMFertBean = boletimMMList.get(0);
@@ -50,6 +57,13 @@ public class BoletimMMFertDAO {
     public List<BoletimMMFertBean> boletimMMFertFechadoList(){
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqBoletimFechado());
+        BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
+        return boletimMMFertBean.get(pesqArrayList);
+    }
+
+    public List<BoletimMMFertBean> boletimMMFertListEnviar(){
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqBoletimEnviar());
         BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
         return boletimMMFertBean.get(pesqArrayList);
     }
@@ -85,6 +99,7 @@ public class BoletimMMFertDAO {
             boletimMMFertBean.setDthrInicialBolMMFert(dthr);
             boletimMMFertBean.setDthrLongFinalBolMMFert(0L);
             boletimMMFertBean.setStatusBolMMFert(1L);
+            boletimMMFertBean.setStatusEnviarMMFert(2L);
             boletimMMFertBean.insert();
         }
     }
@@ -99,6 +114,7 @@ public class BoletimMMFertDAO {
             LogProcessoDAO.getInstance().insertLogProcesso("for(BoletimMMFertBean boletimMMFertBeanBD : boletimMMList){ + Boletins = " + boletimMMFertBeanBD.getIdBolMMFert() , activity);
             boletimMMFertBeanBD.setDthrFinalBolMMFert(Tempo.getInstance().dthrAtualString());
             boletimMMFertBeanBD.setStatusBolMMFert(2L);
+            boletimMMFertBeanBD.setStatusEnviarMMFert(1L);
             boletimMMFertBeanBD.setHodometroFinalBolMMFert(hodometroFinal);
             boletimMMFertBeanBD.setDthrLongFinalBolMMFert(Tempo.getInstance().dthrStringToLong(Tempo.getInstance().dthrAtualString()));
             boletimMMFertBeanBD.update();
@@ -109,7 +125,7 @@ public class BoletimMMFertDAO {
 
     }
 
-    public void updateBoletimMMFertEnvio(ArrayList<BoletimMMFertBean> boletimArrayList){
+    public void updateBoletimMMFertEnvio(List<BoletimMMFertBean> boletimArrayList){
 
         for (BoletimMMFertBean boletimMMFertBean : boletimArrayList) {
 
@@ -122,6 +138,43 @@ public class BoletimMMFertDAO {
             boletimMMFertDB.update();
             boletimMMFertList.clear();
         }
+
+    }
+
+    public void updateBoletimMMFertEnviar(Long idBoletim){
+
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqIdBoletim(idBoletim));
+
+        BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
+        List<BoletimMMFertBean> boletimMMFertList = boletimMMFertBean.get(pesqArrayList);
+        BoletimMMFertBean boletimMMFertDB = boletimMMFertList.get(0);
+        boletimMMFertDB.setStatusEnviarMMFert(1L);
+        boletimMMFertDB.update();
+        boletimMMFertList.clear();
+
+    }
+
+    public void updateBoletimMMFertEnviar(BoletimMMFertBean boletimMMFertBean){
+
+        boletimMMFertBean.setStatusEnviarMMFert(1L);
+        boletimMMFertBean.update();
+
+    }
+
+    public void updateBoletimMMFertEnvio(BoletimMMFertBean boletimMMFertBean){
+
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqIdBoletim(boletimMMFertBean.getIdBolMMFert()));
+
+        List<BoletimMMFertBean> boletimMMFertList = boletimMMFertBean.get(pesqArrayList);
+        BoletimMMFertBean boletimMMFertDB = boletimMMFertList.get(0);
+        if(boletimMMFertDB.getStatusBolMMFert() == 2L){
+            boletimMMFertDB.setStatusBolMMFert(3L);
+        }
+        boletimMMFertDB.setStatusEnviarMMFert(2L);
+        boletimMMFertDB.update();
+        boletimMMFertList.clear();
 
     }
 
@@ -267,6 +320,14 @@ public class BoletimMMFertDAO {
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("statusBolMMFert");
         pesquisa.setValor(3L);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqBoletimEnviar(){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("statusEnviarMMFert");
+        pesquisa.setValor(1L);
         pesquisa.setTipo(1);
         return pesquisa;
     }

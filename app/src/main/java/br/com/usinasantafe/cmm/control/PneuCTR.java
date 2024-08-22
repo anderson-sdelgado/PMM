@@ -1,7 +1,10 @@
 package br.com.usinasantafe.cmm.control;
 
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
+
+import androidx.annotation.NonNull;
 
 import org.json.JSONArray;
 
@@ -25,6 +28,7 @@ import br.com.usinasantafe.cmm.model.dao.PneuDAO;
 import br.com.usinasantafe.cmm.util.EnvioDadosServ;
 import br.com.usinasantafe.cmm.util.Json;
 import br.com.usinasantafe.cmm.util.VerifDadosServ;
+import br.com.usinasantafe.cmm.util.workmanager.StartProcessEnvio;
 
 public class PneuCTR {
 
@@ -85,10 +89,16 @@ public class PneuCTR {
                 , this.tipoPneu);
     }
 
-    public void fecharBolPneu(String activity){
+    public void fecharBolPneu(@NonNull Application application, String activity){
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
         boletimPneuDAO.fecharBolPneu();
-        EnvioDadosServ.getInstance().envioDados(activity);
+
+        BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
+        boletimMMFertDAO.updateBoletimMMFertEnviar(boletimPneuDAO.getBolPneuAberto().getIdBolMMFertPneu());
+
+        StartProcessEnvio startProcessEnvio = new StartProcessEnvio();
+        startProcessEnvio.startProcessEnvio(application);
+
     }
 
     public void deleteBolPneuAberto(){

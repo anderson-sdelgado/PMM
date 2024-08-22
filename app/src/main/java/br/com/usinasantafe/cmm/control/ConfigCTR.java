@@ -89,6 +89,11 @@ public class ConfigCTR {
         configDAO.setStatusRetVerif(statusRetVerif);
     }
 
+    public void setStatusPesqCEC(Long statusPesqCEC){
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setStatusPesqCEC(statusPesqCEC);
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////// DATA HORA ///////////////////////////////////////////////
