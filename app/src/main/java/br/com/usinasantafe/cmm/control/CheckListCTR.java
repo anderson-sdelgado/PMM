@@ -19,7 +19,6 @@ import br.com.usinasantafe.cmm.model.dao.RespItemCheckListDAO;
 import br.com.usinasantafe.cmm.model.bean.estaticas.ItemCheckListBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.CabecCheckListBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.RespItemCheckListBean;
-import br.com.usinasantafe.cmm.util.EnvioDadosServ;
 import br.com.usinasantafe.cmm.util.Json;
 import br.com.usinasantafe.cmm.util.VerifDadosServ;
 import br.com.usinasantafe.cmm.util.workmanager.StartProcessEnvio;
@@ -135,18 +134,6 @@ public class CheckListCTR {
         return !cabecCheckListList().isEmpty();
     }
 
-    public String dadosEnvio(){
-
-        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
-        String dadosEnvioCabecCheckList = cabecCheckListDAO.dadosEnvioCabecCheckList();
-
-        RespItemCheckListDAO respItemCheckListDAO = new RespItemCheckListDAO();
-        String dadosEnvioRespItemCheckList = respItemCheckListDAO.dadosEnvioRespCheckList(respItemCheckListDAO.respItemList(cabecCheckListDAO.idCabecCheckListArrayList(cabecCheckListDAO.cabecCheckListFechList())));
-
-        return dadosEnvioCabecCheckList + "_" + dadosEnvioRespItemCheckList;
-
-    }
-
     public List<CabecCheckListBean> dadosEnvioRetrofit(){
 
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
@@ -162,22 +149,10 @@ public class CheckListCTR {
 
     }
 
-    public void updateRecebChecklist(String activity) {
-
-        LogProcessoDAO.getInstance().insertLogProcesso("        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();\n" +
-                "        cabecCheckListDAO.updateCabecCLEnviado();\n" +
-                "        EnvioDadosServ.getInstance().envioDados(activity);", activity);
-
-        CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
-        cabecCheckListDAO.updateCabecCLEnviado();
-
-    }
-
-    public void updateRecebChecklist(List<CabecCheckListBean> cabecCheckListBeanList) {
+    public void updateRecChecklistRetrofit(List<CabecCheckListBean> cabecCheckListBeanList) {
 
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
         cabecCheckListDAO.updateCabecCLEnviado(cabecCheckListBeanList);
-
 
     }
 

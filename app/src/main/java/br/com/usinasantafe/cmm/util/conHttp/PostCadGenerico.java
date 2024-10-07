@@ -103,7 +103,6 @@ public class PostCadGenerico extends AsyncTask<String, Void, String> {
 
 		try {
 			Log.i("PMM", "VALOR RECEBIDO CAD --> " + result);
-			EnvioDadosServ.getInstance().recDados(result, activity);
 		} catch (Exception e) {
 			EnvioDadosServ.status = 1;
 			LogErroDAO.getInstance().insertLogErro(e);

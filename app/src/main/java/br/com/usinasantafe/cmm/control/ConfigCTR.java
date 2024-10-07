@@ -8,11 +8,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import br.com.usinasantafe.cmm.model.bean.AtualAplicBean;
 import br.com.usinasantafe.cmm.model.bean.estaticas.OSBean;
 import br.com.usinasantafe.cmm.model.bean.estaticas.EquipBean;
-import br.com.usinasantafe.cmm.model.bean.estaticas.PropriedadeBean;
+import br.com.usinasantafe.cmm.model.bean.variaveis.ApontMMFertBean;
+import br.com.usinasantafe.cmm.model.bean.variaveis.BoletimMMFertBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.LogErroBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.LogProcessoBean;
@@ -56,8 +58,6 @@ public class ConfigCTR {
 
     /////////////////////////////////////// CONFIG ///////////////////////////////////////////////
 
-
-
     public boolean hasElemConfig(){
         ConfigDAO configDAO = new ConfigDAO();
         return configDAO.hasElements();
@@ -87,11 +87,6 @@ public class ConfigCTR {
     public void setStatusRetVerif(Long statusRetVerif){
         ConfigDAO configDAO = new ConfigDAO();
         configDAO.setStatusRetVerif(statusRetVerif);
-    }
-
-    public void setStatusPesqCEC(Long statusPesqCEC){
-        ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setStatusPesqCEC(statusPesqCEC);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,23 +150,30 @@ public class ConfigCTR {
 
     ///////////////////////////////////// EQUIP ///////////////////////////////////////////////////
 
-    public void salvarConfigInicial(String senha, EquipBean equipBean){
+    public void salvarConfigInicial(String senha, Long nroEquip){
         ConfigDAO configDAO = new ConfigDAO();
+        EquipDAO equipDAO = new EquipDAO();
+        EquipBean equipBean = equipDAO.getEquipNro(nroEquip);
         configDAO.salvarConfig(senha, equipBean);
     }
 
     public void verEquipConfig(String senha, String versao, String nroEquip, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo){
         EquipDAO equipDAO = new EquipDAO();
         LogProcessoDAO.getInstance().insertLogProcesso("equipDAO.verEquip(equipDAO.dadosVerEquip(Long.parseLong(nroEquip), versao), telaAtual, telaProx, progressDialog, activity, tipo);", activity);
-        equipDAO.verEquip(senha, equipDAO.dadosVerEquip(Long.parseLong(nroEquip), versao), telaAtual, telaProx, progressDialog, activity, tipo);
+        equipDAO.verEquip(Long.parseLong(nroEquip), senha, equipDAO.dadosVerEquip(Long.parseLong(nroEquip), versao), telaAtual, telaProx, progressDialog, activity, tipo);
     }
 
     public EquipBean getEquip(){
         EquipDAO equipDAO = new EquipDAO();
-        return equipDAO.getEquip();
+        return equipDAO.getEquipId(getConfig().getIdEquipApontConfig());
     }
 
-    public void receberVerifEquip(String senha, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String result, int tipo){
+    public EquipBean getEquip(Long idEquip){
+        EquipDAO equipDAO = new EquipDAO();
+        return equipDAO.getEquipId(idEquip);
+    }
+
+    public void receberVerifEquip(Long nroEquip, String senha, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String result, int tipo){
 
         try {
 
@@ -185,10 +187,11 @@ public class ConfigCTR {
                 if (jsonArray.length() > 0) {
 
                     EquipDAO equipDAO = new EquipDAO();
-                    EquipBean equipBean = equipDAO.recDadosEquip(jsonArray);
+                    equipDAO.recDadosEquip(jsonArray);
                     equipDAO.recDadosREquipAtiv(json.jsonArray(retorno[1]));
 
-                    salvarConfigInicial(senha, equipBean);
+                    salvarConfigInicial(senha, nroEquip);
+
                     progressDialog.dismiss();
                     progressDialog = new ProgressDialog(telaAtual);
                     progressDialog.setCancelable(true);
@@ -215,6 +218,29 @@ public class ConfigCTR {
 
     }
 
+    public boolean verifEquip(Long nroEquip){
+        EquipDAO equipDAO = new EquipDAO();
+        return equipDAO.verifEquip(nroEquip);
+    }
+
+    public boolean verifEquipApont(){
+        return Objects.equals(getConfig().getIdEquipConfig(), getConfig().getIdEquipApontConfig());
+    }
+
+    public boolean verifEquipApontCarretel(){
+        BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
+        BoletimMMFertBean boletimMMFertBean = boletimMMFertDAO.getBolMMFertAberto(getConfig().getIdEquipApontConfig());
+        ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
+        List<ApontMMFertBean> apontMMFertList = apontMMFertDAO.apontMMFertListIdBol(boletimMMFertBean.getIdBolMMFert());
+        RFuncaoAtivParDAO rFuncaoAtivParDAO = new RFuncaoAtivParDAO();
+        Long idParadaApontaCarretel = rFuncaoAtivParDAO.idParadaApontaCarretel();
+        for(ApontMMFertBean apontMMFertBean : apontMMFertList){
+            if(Objects.equals(idParadaApontaCarretel, apontMMFertBean.getParadaApontMMFert())) return true;
+        }
+        return false;
+    }
+
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////////// BOLETIM MM /////////////////////////////////////////////////
@@ -232,6 +258,23 @@ public class ConfigCTR {
     public void setIdEquipBombaBolConfig(Long idEquipBombaBolConfig) {
         ConfigDAO configDAO = new ConfigDAO();
         configDAO.setIdEquipBombaBolConfig(idEquipBombaBolConfig);
+    }
+
+    public void setIdEquipApontConfig() {
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setIdEquipApontConfig(configDAO.getConfig().getIdEquipConfig());
+    }
+
+    public void setIdEquipApontConfigNro(Long nroEquip) {
+        ConfigDAO configDAO = new ConfigDAO();
+        EquipDAO equipDAO = new EquipDAO();
+        Long idEquip = equipDAO.getEquipNro(nroEquip).getIdEquip();
+        configDAO.setIdEquipApontConfig(idEquip);
+    }
+
+    public void setIdEquipApontConfigId(Long idEquip) {
+        ConfigDAO configDAO = new ConfigDAO();
+        configDAO.setIdEquipApontConfig(idEquip);
     }
 
     public void setHodometroInicialConfig(Double hodometroInicialBolMMFert, Double longitudeBolMMFert, Double latitudeBolMMFert) {
@@ -476,7 +519,7 @@ public class ConfigCTR {
 
     public String getMsgPropriedade() {
         if (getConfig().getIdPropriedadeConfig() == 0L) {
-            return "NÃO POSSUE SEÇÃO AINDA";
+            return "";
         } else {
             return "SEÇÃO " + getConfig().getCodPropriedadeConfig() + " - " + getConfig().getDescrPropriedadeConfig();
         }
@@ -486,7 +529,12 @@ public class ConfigCTR {
         FrenteDAO frenteDAO = new FrenteDAO();
         PropriedadeDAO propriedadeDAO = new PropriedadeDAO();
         ConfigDAO configDAO = new ConfigDAO();
-        configDAO.setFrentePropriedade(frenteDAO.getFrente(Long.parseLong(codFrente)).getIdFrente(), propriedadeDAO.getPropriedadeCod(Long.parseLong(codPropriedade)));
+        if(frenteDAO.verFrente(Long.parseLong(codFrente))){
+            configDAO.setFrente(frenteDAO.getFrente(Long.parseLong(codFrente)).getIdFrente());
+        }
+        if(propriedadeDAO.verPropriedade(Long.parseLong(codPropriedade))){
+            configDAO.setPropriedade(propriedadeDAO.getPropriedadeCod(Long.parseLong(codPropriedade)));
+        }
     }
 
     public void setCarreta(Long carreta){
@@ -522,7 +570,7 @@ public class ConfigCTR {
 
     public void verAtualAplic(String versaoAplic, TelaInicialActivity telaInicialActivity, String activity) {
         EquipDAO equipDAO = new EquipDAO();
-        EquipBean equipBean = equipDAO.getEquip();
+        EquipBean equipBean = equipDAO.getEquipId(getConfig().getIdEquipConfig());
         AtualAplicDAO atualAplicDAO = new AtualAplicDAO();
         LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().verifAtualAplic(atualAplicDAO.dadosVerAtualAplicBean(equipBean.getNroEquip(), equipBean.getIdCheckList(), versaoAplic)\n" +
                 "                , telaInicialActivity, progressDialog);", activity);
@@ -559,7 +607,7 @@ public class ConfigCTR {
         CarregCompDAO carregCompDAO = new CarregCompDAO();
         CabecCheckListDAO cabecCheckListDAO = new CabecCheckListDAO();
         RespItemCheckListDAO respItemCheckListDAO = new RespItemCheckListDAO();
-        dadosArrayList = boletimMMFertDAO.boletimAllArrayList(dadosArrayList);
+        dadosArrayList = boletimMMFertDAO.bolAllArrayList(dadosArrayList);
         dadosArrayList = apontMMFertDAO.apontAllArrayList(dadosArrayList);
         dadosArrayList = implementoMMDAO.apontImplAllArrayList(dadosArrayList);
         dadosArrayList = recolhimentoFertDAO.recolAllArrayList(dadosArrayList);

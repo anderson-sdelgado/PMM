@@ -103,8 +103,7 @@ public class OSActivity extends ActivityGeneric {
                         AlertDialog.Builder alerta = new AlertDialog.Builder(OSActivity.this);
                         alerta.setTitle("ATENÇÃO");
                         alerta.setMessage("ORDEM SERVIÇO INCORRETA! POR FAVOR, VERIFIQUE A NUMERAÇÃO DIGITADA DA ORDEM SERVIÇO.");
-                        alerta.setPositiveButton("OK", (dialog, which) -> {
-                        });
+                        alerta.setPositiveButton("OK", (dialog, which) -> {});
                         alerta.show();
 
                     } else {
@@ -199,6 +198,12 @@ public class OSActivity extends ActivityGeneric {
             LogProcessoDAO.getInstance().insertLogProcesso("} else if(pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 29L) {\n" +
                     "Intent it = new Intent(OSActivity.this, ListaFuncaoPCOMPActivity.class);", getLocalClassName());
             Intent it = new Intent(OSActivity.this, ListaFuncaoCompActivity.class);
+            startActivity(it);
+            finish();
+        } else if(cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 32L) {
+            LogProcessoDAO.getInstance().insertLogProcesso("} else if(cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 33L) {\n" +
+                    "            Intent it = new Intent(OSActivity.this, CarretelActivity.class);", getLocalClassName());
+            Intent it = new Intent(OSActivity.this, CarretelActivity.class);
             startActivity(it);
             finish();
         } else {

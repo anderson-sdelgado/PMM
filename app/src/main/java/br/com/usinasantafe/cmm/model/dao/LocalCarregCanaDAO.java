@@ -43,4 +43,10 @@ public class LocalCarregCanaDAO {
 
     }
 
+    public void recLocalCarreg(LocalCarregBean localCarregBeanServer) {
+        LocalCarregBean localCarregBean = new LocalCarregBean();
+        localCarregBean.deleteAll();
+        localCarregBeanServer.insert();
+    }
+
 }

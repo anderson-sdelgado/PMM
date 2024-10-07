@@ -117,7 +117,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                     "                TextView textView = (TextView) v.findViewById(R.id.textViewItemList);\n" +
                     "                pmmContext.getConfigCTR().setVelocConfig(Long.parseLong(textView.getText().toString()));", getLocalClassName());
 
-            TextView textView = (TextView) v.findViewById(R.id.textViewItemList);
+            TextView textView = v.findViewById(R.id.textViewItemList);
             cmmContext.getConfigCTR().setVelocConfig(Long.parseLong(textView.getText().toString()));
 
             if (cmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
@@ -175,6 +175,7 @@ public class ListaVelocFertActivity extends ActivityGeneric {
                     for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtivParList) {
                         if (rFuncaoAtivParBean.getCodFuncao() == 4) {
                             recolhimento = true;
+                            break;
                         }
                     }
                     rFuncaoAtivParList.clear();

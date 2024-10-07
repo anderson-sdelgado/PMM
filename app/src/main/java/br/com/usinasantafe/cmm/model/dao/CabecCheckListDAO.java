@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import br.com.usinasantafe.cmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.cmm.util.Tempo;
@@ -56,15 +57,10 @@ public class CabecCheckListDAO {
     public boolean verAberturaCheckList(Long idTurno, Long idCheckList
             , Long ultTurnoCL, String dtUltCL){
 
-        if ((idCheckList > 0) &&
-                ((ultTurnoCL != idTurno)
-                        || ((ultTurnoCL == idTurno)
-                                    && (!dtUltCL.equals(Tempo.getInstance().dtAtualString()))))) {
-            return true;
-        }
-        else{
-            return false;
-        }
+        return (idCheckList > 0) &&
+                ((!Objects.equals(ultTurnoCL, idTurno))
+                        || ((Objects.equals(ultTurnoCL, idTurno))
+                        && (!dtUltCL.equals(Tempo.getInstance().dtAtualString()))));
 
     }
 

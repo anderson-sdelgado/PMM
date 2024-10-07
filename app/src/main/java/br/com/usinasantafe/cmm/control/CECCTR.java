@@ -11,15 +11,14 @@ import java.util.List;
 import br.com.usinasantafe.cmm.model.bean.estaticas.OSBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.CECBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.PreCECBean;
-import br.com.usinasantafe.cmm.model.dao.AtualAplicDAO;
 import br.com.usinasantafe.cmm.model.dao.CECDAO;
 import br.com.usinasantafe.cmm.model.dao.CarretaDAO;
-import br.com.usinasantafe.cmm.model.dao.EquipDAO;
 import br.com.usinasantafe.cmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.cmm.model.dao.OSDAO;
 import br.com.usinasantafe.cmm.model.dao.PreCECDAO;
 import br.com.usinasantafe.cmm.util.EnvioDadosServ;
 import br.com.usinasantafe.cmm.util.VerifDadosServ;
+import br.com.usinasantafe.cmm.util.retrofit.search.CECSearch;
 import br.com.usinasantafe.cmm.util.workmanager.StartProcessEnvio;
 
 public class CECCTR {
@@ -56,31 +55,9 @@ public class CECCTR {
 
     }
 
-    public String dadosEnvioPreCEC(){
-        PreCECDAO preCECDAO = new PreCECDAO();
-        return preCECDAO.dadosEnvioPreCEC();
-    }
-
     public PreCECBean dadosEnvioPreCECRetrofit(){
         PreCECDAO preCECDAO = new PreCECDAO();
         return preCECDAO.dadosEnvioPreCECRetrofit();
-    }
-
-    public void updPreCEC(String result, String activity){
-
-        try{
-
-            int pos1 = result.indexOf("_") + 1;
-            String objPrinc = result.substring(pos1);
-
-            PreCECDAO preCECDAO = new PreCECDAO();
-            preCECDAO.atualPreCEC(objPrinc);
-
-        } catch (Exception e) {
-            EnvioDadosServ.status = 1;
-            LogErroDAO.getInstance().insertLogErro(e);
-        }
-
     }
 
     public void atualPreCEC(PreCECBean preCECBean){
@@ -119,15 +96,9 @@ public class CECCTR {
 
     }
 
-    public void receberVerifCEC(CECBean cecBean){
+    public void receberVerifCEC(CECBean cecBean) {
 
-        CECDAO cecDAO = new CECDAO();
-        cecDAO.recDadosCEC(cecBean);
 
-        ConfigCTR configCTR = new ConfigCTR();
-        configCTR.setStatusPesqCEC(2L);
-
-        VerifDadosServ.getInstance().pulaTela();
 
     }
 
@@ -165,13 +136,20 @@ public class CECCTR {
         return cecDAO.verCEC();
     }
 
-    public void verCEC(Context telaAtual, Class telaProx, ProgressDialog progressDialog){
-
-        ConfigCTR configCTR = new ConfigCTR();
-        configCTR.setStatusPesqCEC(1L);
+    public void verCEC(Context telaAtual, Class telaProx, ProgressDialog progressDialog) {
 
         VerifDadosServ.getInstance().verifDados(telaAtual, telaProx, progressDialog);
 
+        ConfigCTR configCTR = new ConfigCTR();
+        CECSearch cecSearch = new CECSearch();
+        cecSearch.receberDadoCEC(configCTR.getConfig());
+
+    }
+
+    public void receberDadosCEC(CECBean cecBean) {
+        CECDAO cecDAO = new CECDAO();
+        cecDAO.recDadosCEC(cecBean);
+        VerifDadosServ.getInstance().pulaTela();
     }
 
     ////////////////////////////////////////////////////////////////////////////

@@ -138,7 +138,7 @@ public class LeiraActivity extends ActivityGeneric {
 
                     LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().fecharApont();\n" +
                             "                        Intent it = new Intent(LeiraActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
-                    cmmContext.getMotoMecFertCTR().fecharApont(getLocalClassName());
+                    cmmContext.getMotoMecFertCTR().fecharApont(cmmContext, getLocalClassName());
                     Intent it = new Intent(LeiraActivity.this, MenuPrincPCOMPActivity.class);
                     startActivity(it);
                     finish();

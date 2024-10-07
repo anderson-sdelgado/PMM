@@ -50,6 +50,8 @@ public class BoletimMMFertBean extends Entidade {
     private Long tipoBolMMFert; //1 - Moto Mec; 2 - Fertirrigacao
     @DatabaseField
     private Long dthrLongFinalBolMMFert;
+    @DatabaseField
+    private Long idBolPrincMMFert;
     private List<ApontMMFertBean> apontMMFertList;
     private List<BoletimPneuBean> boletimPneuList;
     private List<ApontMecanBean> apontMecanList;
@@ -243,5 +245,13 @@ public class BoletimMMFertBean extends Entidade {
 
     public void setStatusEnviarMMFert(Long statusEnviarMMFert) {
         this.statusEnviarMMFert = statusEnviarMMFert;
+    }
+
+    public Long getIdBolPrincMMFert() {
+        return idBolPrincMMFert;
+    }
+
+    public void setIdBolPrincMMFert(Long idBolPrincMMFert) {
+        this.idBolPrincMMFert = idBolPrincMMFert;
     }
 }

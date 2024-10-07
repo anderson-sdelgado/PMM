@@ -27,6 +27,19 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.ListaEquipOSRecolhActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.CarretelActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".view.ListaCarretelActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".view.InforLocalCarregCanaActivity"
             android:exported="true"
             android:screenOrientation="portrait"

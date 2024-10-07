@@ -40,25 +40,10 @@ public class TelaInicialActivity extends ActivityGeneric {
         LogProcessoDAO.getInstance().insertLogProcesso("clearBD();", getLocalClassName());
         clearBD();
 
-        if(EnvioDadosServ.getInstance().verifDadosEnvio()){
-            LogProcessoDAO.getInstance().insertLogProcesso("EnvioDadosServ.getInstance().verifDadosEnvio()", getLocalClassName());
-            if(ConnectNetwork.isConnected(this)){
-                LogProcessoDAO.getInstance().insertLogProcesso("if(connectNetwork){\n" +
-                        "EnvioDadosServ.getInstance().envioDados()", getLocalClassName());
-
-                StartProcessEnvio startProcessEnvio = new StartProcessEnvio();
-                startProcessEnvio.startProcessEnvio(cmmContext);
-
-            } else {
-                LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                        "                EnvioDadosServ.status = 1;", getLocalClassName());
-                EnvioDadosServ.status = 1;
-            }
-        } else {
-            LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
-                    "            EnvioDadosServ.status = 3;", getLocalClassName());
-            EnvioDadosServ.status = 3;
-        }
+        LogProcessoDAO.getInstance().insertLogProcesso("StartProcessEnvio startProcessEnvio = new StartProcessEnvio();\n" +
+                "        startProcessEnvio.startProcessEnvio(cmmContext);", getLocalClassName());
+        StartProcessEnvio startProcessEnvio = new StartProcessEnvio();
+        startProcessEnvio.startProcessEnvio(cmmContext);
 
         LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.status = 3;\n" +
                 "        atualizarAplic();", getLocalClassName());
@@ -142,6 +127,7 @@ public class TelaInicialActivity extends ActivityGeneric {
                         case "pmm":
                             LogProcessoDAO.getInstance().insertLogProcesso("case \"pmm\":\n" +
                                     "it = new Intent(TelaInicialActivity.this, MenuPrincPMMActivity.class)", getLocalClassName());
+                            cmmContext.getConfigCTR().setIdEquipApontConfig();
                             it = new Intent(TelaInicialActivity.this, MenuPrincPMMActivity.class);
                             break;
                         case "ecm":

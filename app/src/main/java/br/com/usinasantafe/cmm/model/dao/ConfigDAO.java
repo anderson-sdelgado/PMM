@@ -60,9 +60,9 @@ public class ConfigDAO {
         configBean.setIdFrenteConfig(0L);
         configBean.setIdPropriedadeConfig(0L);
         configBean.setCarretaConfig(0L);
-        configBean.setStatusPesqCEC(2L);
         configBean.setAtualCheckList(0L);
-        configBean.setEquipConfig(equipBean.getIdEquip());
+        configBean.setIdEquipConfig(equipBean.getIdEquip());
+        configBean.setIdEquipApontConfig(equipBean.getIdEquip());
         configBean.setHorimetroConfig(equipBean.getHorimetroEquip());
         configBean.insert();
         configBean.commit();
@@ -141,15 +141,14 @@ public class ConfigDAO {
         configBean.update();
     }
 
-    public void setStatusPesqCEC(Long statusPesqCEC){
+    public void setFrente(Long idFrente){
         ConfigBean configBean = getConfig();
-        configBean.setStatusPesqCEC(statusPesqCEC);
+        configBean.setIdFrenteConfig(idFrente);
         configBean.update();
     }
 
-    public void setFrentePropriedade(Long idFrente, PropriedadeBean propriedadeBean){
+    public void setPropriedade(PropriedadeBean propriedadeBean){
         ConfigBean configBean = getConfig();
-        configBean.setIdFrenteConfig(idFrente);
         configBean.setIdPropriedadeConfig(propriedadeBean.getIdPropriedade());
         configBean.setCodPropriedadeConfig(propriedadeBean.getCodPropriedade());
         configBean.setDescrPropriedadeConfig(propriedadeBean.getDescrPropriedade());
@@ -177,6 +176,12 @@ public class ConfigDAO {
     public void setIdEquipBombaBolConfig(Long idEquipBombaBolConfig) {
         ConfigBean configBean = getConfig();
         configBean.setIdEquipBombaBolConfig(idEquipBombaBolConfig);
+        configBean.update();
+    }
+
+    public void setIdEquipApontConfig(Long idEquipApontConfig) {
+        ConfigBean configBean = getConfig();
+        configBean.setIdEquipApontConfig(idEquipApontConfig);
         configBean.update();
     }
 

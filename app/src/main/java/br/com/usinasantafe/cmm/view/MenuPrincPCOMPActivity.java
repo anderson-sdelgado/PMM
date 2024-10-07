@@ -19,6 +19,7 @@ import br.com.usinasantafe.cmm.R;
 import br.com.usinasantafe.cmm.model.bean.estaticas.MotoMecBean;
 import br.com.usinasantafe.cmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.cmm.util.EnvioDadosServ;
+import br.com.usinasantafe.cmm.util.workmanager.StartProcessEnvio;
 
 public class MenuPrincPCOMPActivity extends ActivityGeneric {
 
@@ -216,7 +217,7 @@ public class MenuPrincPCOMPActivity extends ActivityGeneric {
                         progressBar.setMessage("BUSCANDO ORD. CARREGAMENTO...");
                         progressBar.show();
 
-                        cmmContext.getCompostoCTR().verifDadosCarreg(MenuPrincPCOMPActivity.this, InforCarregCompActivity.class, progressBar, getLocalClassName());
+                        cmmContext.getCompostoCTR().verCarregComp(MenuPrincPCOMPActivity.this, InforCarregCompActivity.class, progressBar);
 
                     } else if (motoMecBean.getCodFuncaoOperMotoMec() == 7) {
 

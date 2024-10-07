@@ -16,6 +16,7 @@ import java.util.List;
 
 import br.com.usinasantafe.cmm.CMMContext;
 import br.com.usinasantafe.cmm.R;
+import br.com.usinasantafe.cmm.model.bean.estaticas.EquipBean;
 import br.com.usinasantafe.cmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.cmm.util.EnvioDadosServ;
 import br.com.usinasantafe.cmm.util.Tempo;
@@ -29,6 +30,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
 
     private TextView textViewProcessoNormal;
     private TextView textViewDataHora;
+    private TextView textViewTituloEquip;
     private Handler customHandler = new Handler();
 
     @Override
@@ -39,9 +41,13 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
         cmmContext = (CMMContext) getApplication();
         textViewProcessoNormal = findViewById(R.id.textViewProcessoNormal);
         textViewDataHora = findViewById(R.id.textViewDataHora);
+        textViewTituloEquip = findViewById(R.id.textViewTituloEquip);
 
         LogProcessoDAO.getInstance().insertLogProcesso("customHandler.postDelayed(updateTimerThread, 0);", getLocalClassName());
         customHandler.postDelayed(updateTimerThread, 0);
+
+        EquipBean equipBean = cmmContext.getConfigCTR().getEquip();
+        textViewTituloEquip.setText(equipBean.getNroEquip() + " - " + equipBean.getDescrClasseEquip());
 
         if (Tempo.getInstance().verDthrServ(cmmContext.getConfigCTR().getConfig().getDtServConfig())) {
             LogProcessoDAO.getInstance().insertLogProcesso("if (Tempo.getInstance().verDthrServ(pmmContext.getConfigCTR().getConfig().getDtServConfig())) {\n" +
@@ -105,11 +111,13 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
 //                }
             }
             rFuncaoAtividadeList.clear();
-        }
-        else{
+
+        } else {
+
             LogProcessoDAO.getInstance().insertLogProcesso("else{\n" +
                     "            itens.add(\"RECOLHIMENTO MANGUEIRA\");", getLocalClassName());
             itens.add("RECOLHIMENTO MANGUEIRA");
+
         }
 
         LogProcessoDAO.getInstance().insertLogProcesso("itens.add(\"APONTAR MANUTENÇÃO\");\n" +
@@ -150,7 +158,16 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                 "        listViewAtiv = (ListView) findViewById(R.id.listViewMenuPrinc);\n" +
                 "        listViewAtiv.setAdapter(adapterList);", getLocalClassName());
 
-        itens.add("FINALIZAR BOLETIM");
+        if(cmmContext.getConfigCTR().verifEquipApontCarretel()) {
+            itens.add("APONTAR CARRETEL");
+        }
+
+        if(cmmContext.getConfigCTR().verifEquipApont()){
+            itens.add("FINALIZAR BOLETIM");
+        } else {
+            itens.add("RETORNAR PRA LISTA");
+        }
+
         itens.add("HISTORICO");
         itens.add("REENVIO DE DADOS");
         itens.add("DATA/HORA");
@@ -250,7 +267,7 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                             LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                                     "                            Toast.makeText(MenuPrincPMMActivity.this, \"POR FAVOR! INSIRA OS APONTAMENTOS AO BOLETIM!\",\n" +
                                     "                                    Toast.LENGTH_LONG).show();", getLocalClassName());
-                            Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! INSIRA OS APONTAMENTOS AO BOLETIM!",
+                            Toast.makeText(MenuPrincPMMActivity.this, "POR FAVOR! INSIRA OS APONTAMENTOS EM TODOS O(S) BOLETIM(INS)!",
                                     Toast.LENGTH_LONG).show();
                         }
                     } else {
@@ -371,10 +388,8 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                 }
                 case "RECOLHIMENTO MANGUEIRA": {
                     LogProcessoDAO.getInstance().insertLogProcesso("} else if (text.equals(\"RECOLHIMENTO MANGUEIRA\")) {\n" +
-                            "                    pmmContext.getConfigCTR().setPosicaoTela(9L);\n" +
                             "                    customHandler.removeCallbacks(updateTimerThread);\n" +
                             "                    Intent it = new Intent(MenuPrincPMMActivity.this, ListaOSRecolhActivity.class);", getLocalClassName());
-                    cmmContext.getConfigCTR().setPosicaoTela(9L);
                     customHandler.removeCallbacks(updateTimerThread);
                     Intent it = new Intent(MenuPrincPMMActivity.this, ListaOSRecolhActivity.class);
                     startActivity(it);
@@ -577,6 +592,13 @@ public class MenuPrincPMMActivity extends ActivityGeneric {
                 case "TROCA DE PNEU": {
                     cmmContext.getPneuCTR().setTipoPneu(2L);
                     Intent it = new Intent(MenuPrincPMMActivity.this, EquipPneuActivity.class);
+                    startActivity(it);
+                    finish();
+                    break;
+                }
+                case "APONTAR CARRETEL":
+                case "RETORNAR PRA LISTA": {
+                    Intent it = new Intent(MenuPrincPMMActivity.this, ListaCarretelActivity.class);
                     startActivity(it);
                     finish();
                     break;

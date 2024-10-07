@@ -23,14 +23,13 @@ public class InforLocalCarregCanaActivity extends ActivityGeneric {
         cmmContext = (CMMContext) getApplication();
 
         Button buttonOkLocalCarreg = findViewById(R.id.buttonOkLocalCarreg);
-        TextView textViewFrente = findViewById(R.id.textViewFrente);
-        TextView textViewSecao = findViewById(R.id.textViewSecao);
+        TextView textViewMsgLocal = findViewById(R.id.textViewMsgLocal);
 
         localCarregBean = cmmContext.getMotoMecFertCTR().getLocalCarreg();
-        textViewFrente.setText("FRENTE: " + localCarregBean.getCodFrente() + "\n" +
+        textViewMsgLocal.setText("FRENTE: " + localCarregBean.getCodFrente() + "\n" +
                 "ORDEM DE SERVIÇO: " + localCarregBean.getDescrOS() + "\n" +
-                "LIBERAÇÃO: " + localCarregBean.getDescrLiberacao());
-        textViewSecao.setText("SEÇÃO: " + localCarregBean.getCodPropriedade() + " - " + localCarregBean.getDescrPropriedade() + "\n" +
+                "LIBERAÇÃO: " + localCarregBean.getDescrLiberacao() + "\n" +
+                "SEÇÃO: " + localCarregBean.getCodPropriedade() + " - " + localCarregBean.getDescrPropriedade() + "\n" +
                 "CAMINHO: " + localCarregBean.getDescrCaminho());
 
         cmmContext.getConfigCTR().setFrentePropriedade(localCarregBean.getCodFrente(), localCarregBean.getCodPropriedade());

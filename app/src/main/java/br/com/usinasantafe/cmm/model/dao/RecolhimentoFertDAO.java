@@ -45,6 +45,7 @@ public class RecolhimentoFertDAO {
             recolhFertBean.setNroOSRecolhFert(nroOS);
             recolhFertBean.setValorRecolhFert(0L);
             recolhFertBean.setStatusRecolhFert(1L);
+            recolhFertBean.setDthrRecolhFert(Tempo.getInstance().dthrAtualString());
             recolhFertBean.insert();
             recolhFertBean.commit();
         }
@@ -70,20 +71,13 @@ public class RecolhimentoFertDAO {
         return dadosArrayList;
     }
 
-    public RecolhFertBean getRecolh(Long idBol, int pos){
+    public RecolhFertBean getRecolh(Long idRecolhFert){
         RecolhFertBean recolhFertBean = new RecolhFertBean();
-        List recolhFertList = recolhFertBean.getAndOrderBy("idBolMMFert", idBol, "idRecolhFert", true);
-        recolhFertBean = (RecolhFertBean) recolhFertList.get(pos);
+        List recolhFertList = recolhFertBean.get("idRecolhFert", idRecolhFert);
+        recolhFertBean = (RecolhFertBean) recolhFertList.get(0);
         recolhFertList.clear();
         return recolhFertBean;
     }
-
-    public int qtdeRecolh(Long idBol){
-        RecolhFertBean recolhFertBean = new RecolhFertBean();
-        List recolhList = recolhFertBean.get("idBolMMFert", idBol);
-        return recolhList.size();
-    }
-
     public void atualRecolh(RecolhFertBean recolhFertBean){
         recolhFertBean.setDthrRecolhFert(Tempo.getInstance().dthrAtualString());
         recolhFertBean.update();
@@ -95,77 +89,14 @@ public class RecolhimentoFertDAO {
         return recolhFertBean.getAndOrderBy("idBolMMFert",  idBol, "idRecolhFert", true);
     }
 
-    public List<RecolhFertBean> recolhEnvioList(ArrayList<Long> idBolList){
-        RecolhFertBean recolhFertBean = new RecolhFertBean();
-        return recolhFertBean.in("idBolMMFert", idBolList);
-    }
-
     public List<RecolhFertBean> recolhEnvioListRetrofit(Long idBol){
         RecolhFertBean recolhFertBean = new RecolhFertBean();
         return recolhFertBean.get("idBolMMFert", idBol);
     }
 
-    public List<RecolhFertBean> recolhList(ArrayList<Long> idRendArrayList){
-        RecolhFertBean recolhFertBean = new RecolhFertBean();
-        return recolhFertBean.in("idRecolhFert", idRendArrayList);
-    }
-
     public String dadosRecolh(RecolhFertBean recolhFertBean){
         Gson gsonRecol = new Gson();
         return gsonRecol.toJsonTree(recolhFertBean, recolhFertBean.getClass()).toString();
-    }
-
-    public ArrayList<Long> idRecolhArrayList(String objeto) throws Exception {
-
-        ArrayList<Long> idRecolhArrayList = new ArrayList<Long>();
-
-        JSONObject jObjRecolh = new JSONObject(objeto);
-        JSONArray jsonArrayRecolh = jObjRecolh.getJSONArray("recolh");
-
-        for (int i = 0; i < jsonArrayRecolh.length(); i++) {
-
-            JSONObject objRecolh = jsonArrayRecolh.getJSONObject(i);
-            Gson gsonRecolh = new Gson();
-            RecolhFertBean recolhFertBean = gsonRecolh.fromJson(objRecolh.toString(), RecolhFertBean.class);
-
-            idRecolhArrayList.add(recolhFertBean.getIdRecolhFert());
-
-        }
-
-        return idRecolhArrayList;
-
-    }
-
-    public String dadosEnvioRecolh(List<RecolhFertBean> recolhimentoList){
-
-        JsonArray jsonArrayRecolhimento = new JsonArray();
-
-        for (RecolhFertBean recolhFertBean : recolhimentoList) {
-            Gson gsonRecol = new Gson();
-            jsonArrayRecolhimento.add(gsonRecol.toJsonTree(recolhFertBean, recolhFertBean.getClass()));
-        }
-
-        recolhimentoList.clear();
-
-        JsonObject jsonRecolhimento = new JsonObject();
-        jsonRecolhimento.add("recolhimento", jsonArrayRecolhimento);
-
-        return jsonRecolhimento.toString();
-
-    }
-
-    public void updateRecolh(ArrayList<Long> idRecolhArrayList) {
-
-        List<RecolhFertBean> recolhFertList = recolhList(idRecolhArrayList);
-
-        for (RecolhFertBean recolhFertBean : recolhFertList) {
-            recolhFertBean.setStatusRecolhFert(2L);
-            recolhFertBean.update();
-        }
-
-        recolhFertList.clear();
-        idRecolhArrayList.clear();
-
     }
 
     public void updateRecolh(Long idRecolh) {

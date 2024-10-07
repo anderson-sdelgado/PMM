@@ -1,0 +1,21 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "br.com.usinasantafe.pmm.pcomp",
+  "variantName": "pcompDebug",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 22,
+      "versionName": "5.27",
+      "outputFile": "app-pcomp-debug.apk"
+    }
+  ],
+  "elementType": "File",
+  "minSdkVersionForDexing": 22
+}

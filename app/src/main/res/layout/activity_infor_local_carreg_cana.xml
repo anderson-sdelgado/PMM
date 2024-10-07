@@ -11,21 +11,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".view.InforLocalCarregCanaActivity">
 
-    <TextView
-        android:id="@+id/textViewFrente"
-        style="@style/TextViewMsgDescr"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        tools:text="FRENTE: 6" />
+        android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/textViewSecao"
-        style="@style/TextViewMsgDescr"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        tools:text=" SEÇÃO: 142 - JOSE ANTONIO GEROLAMO E OUTROS" />
+        <TextView
+            android:id="@+id/textViewMsgLocal"
+            style="@style/TextViewMsgDescr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="FRENTE: 6" />
+
+    </ScrollView>
+
 
     <Button
         android:id="@+id/buttonOkLocalCarreg"

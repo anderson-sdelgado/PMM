@@ -127,7 +127,6 @@ public class ApontMMFertDAO {
     public List<ApontMMFertBean> apontMMFertListIdBol(Long idBol){
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqIdBolApont(idBol));
-
         ApontMMFertBean apontMMFertBean = new ApontMMFertBean();
         return apontMMFertBean.getAndOrderBy(pesqArrayList, "idApontMMFert", true);
     }

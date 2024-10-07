@@ -122,6 +122,12 @@ public class ItemCheckListActivity extends ActivityGeneric {
                         startActivity(it);
                         finish();
                     }
+                } else if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 32L) {
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 32L) {\n" +
+                            "                Intent it = new Intent(ItemCheckListActivity.this, ListaCarretelActivity.class);", getLocalClassName());
+                    Intent it = new Intent(ItemCheckListActivity.this, ListaCarretelActivity.class);
+                    startActivity(it);
+                    finish();
                 } else {
                     LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                             "                    Intent it = new Intent(ItemCheckListActivity.this, VerifOperadorActivity.class);", getLocalClassName());
@@ -137,31 +143,35 @@ public class ItemCheckListActivity extends ActivityGeneric {
                 itemCheckListBean = (ItemCheckListBean) itemCheckListList.get(cmmContext.getCheckListCTR().getPosCheckList() - 1);
                 textViewItemChecklist.setText(cmmContext.getCheckListCTR().getPosCheckList() + " - " + itemCheckListBean.getDescrItemCheckList());
             }
-        }
-        else{
+        } else {
             if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {
                 LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L) {", getLocalClassName());
-                if(BuildConfig.FLAVOR.equals("pmm")){
+                if (BuildConfig.FLAVOR.equals("pmm")) {
                     LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
                             "                Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                     Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPMMActivity.class);
                     startActivity(it);
                     finish();
-                }
-                else if(BuildConfig.FLAVOR.equals("ecm")){
+                } else if (BuildConfig.FLAVOR.equals("ecm")) {
                     LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
                             "                Intent it = new Intent(ItemCheckListActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
                     Intent it = new Intent(ItemCheckListActivity.this, MenuPrincECMActivity.class);
                     startActivity(it);
                     finish();
-                }
-                else if(BuildConfig.FLAVOR.equals("pcomp")){
+                } else if (BuildConfig.FLAVOR.equals("pcomp")) {
                     LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
                             "                Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
                     Intent it = new Intent(ItemCheckListActivity.this, MenuPrincPCOMPActivity.class);
                     startActivity(it);
                     finish();
                 }
+
+            } else if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 32L) {
+                LogProcessoDAO.getInstance().insertLogProcesso("} else if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 32L) {\n" +
+                        "                Intent it = new Intent(ItemCheckListActivity.this, ListaCarretelActivity.class);", getLocalClassName());
+                Intent it = new Intent(ItemCheckListActivity.this, ListaCarretelActivity.class);
+                startActivity(it);
+                finish();
             } else {
                 LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                         "                Intent it = new Intent(ItemCheckListActivity.this, VerifOperadorActivity.class);", getLocalClassName());

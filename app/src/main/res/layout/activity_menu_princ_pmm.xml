@@ -12,7 +12,7 @@
     tools:telaAtual="br.com.usinasantafe.cmm.view.MenuPrincPMMActivity">
 
     <TextView
-        android:id="@+id/textViewTituloMenuPrinc"
+        android:id="@+id/textViewTituloEquip"
         style="@style/TextViewTituloLista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

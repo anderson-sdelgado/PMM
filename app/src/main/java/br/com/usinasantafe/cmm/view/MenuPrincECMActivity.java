@@ -135,8 +135,7 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                     AlertDialog.Builder alerta = new AlertDialog.Builder(MenuPrincECMActivity.this);
                     alerta.setTitle("ATENÇÃO");
                     alerta.setMessage("OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!");
-                    alerta.setPositiveButton("OK", (dialog, which) -> {
-                    });
+                    alerta.setPositiveButton("OK", (dialog, which) -> {});
                     alerta.show();
 
                 } else {
@@ -380,8 +379,6 @@ public class MenuPrincECMActivity extends ActivityGeneric {
                         cmmContext.getCecCTR().delPreCECAberto();
                         cmmContext.getCecCTR().verCEC(MenuPrincECMActivity.this, CECActivity.class, progressBar);
 
-                        StartProcessEnvio startProcessEnvio = new StartProcessEnvio();
-                        startProcessEnvio.startProcessEnvio(cmmContext);
 
                     } else if ((motoMecBean.getCodFuncaoOperMotoMec() == 8)
                             || (motoMecBean.getCodFuncaoOperMotoMec() == 19)) { // DESENGATE

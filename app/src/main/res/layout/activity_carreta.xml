@@ -18,9 +18,7 @@
 
     <EditText
         android:id="@+id/editTextPadrao"
-        style="@style/EditView"
-        >
-    </EditText>
+        style="@style/EditView" />
 
     <include
         android:id="@+id/layout_novo_botoes"

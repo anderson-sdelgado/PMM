@@ -157,10 +157,17 @@ public class EquipMBActivity extends ActivityGeneric {
     }
 
     public void salvarBoletimAberto() {
-        LogProcessoDAO.getInstance().insertLogProcesso("public void salvarBoletimAberto() {\n" +
-                "        pmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());", getLocalClassName());
-        cmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());
-        if(cmmContext.getCheckListCTR().verAberturaCheckList(cmmContext.getConfigCTR().getConfig().getIdTurnoConfig())){
+        LogProcessoDAO.getInstance().insertLogProcesso("public void salvarBoletimAberto() {", getLocalClassName());
+        if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 32L) {
+            LogProcessoDAO.getInstance().insertLogProcesso("if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 32L) {\n" +
+                    "            cmmContext.getMotoMecFertCTR().salvarBolMMFertAbertoCarretel(getLocalClassName());", getLocalClassName());
+            cmmContext.getMotoMecFertCTR().salvarBolMMFertAbertoCarretel(getLocalClassName());
+        } else {
+            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                    "            cmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());", getLocalClassName());
+            cmmContext.getMotoMecFertCTR().salvarBolMMFertAberto(getLocalClassName());
+        }
+        if (cmmContext.getCheckListCTR().verAberturaCheckList(cmmContext.getConfigCTR().getConfig().getIdTurnoConfig())) {
             LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getCheckListCTR().verAberturaCheckList(pmmContext.getConfigCTR().getConfig().getIdTurnoConfig())){\n" +
                     "            pmmContext.getMotoMecFertCTR().inserirParadaCheckList(getLocalClassName());\n" +
                     "            pmmContext.getCheckListCTR().setPosCheckList(1);\n" +
@@ -181,27 +188,18 @@ public class EquipMBActivity extends ActivityGeneric {
                 startActivity(it);
                 finish();
             }
-        }
-        else{
-            LogProcessoDAO.getInstance().insertLogProcesso("else{", getLocalClassName());
-            if(BuildConfig.FLAVOR.equals("pmm")){
-                LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
+        } else {
+            LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
+            if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 32L) {
+                LogProcessoDAO.getInstance().insertLogProcesso("if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 32L) {\n" +
+                        "                Intent it = new Intent(EquipMBActivity.this, ListaCarretelActivity.class);", getLocalClassName());
+                Intent it = new Intent(EquipMBActivity.this, ListaCarretelActivity.class);
+                startActivity(it);
+                finish();
+            } else {
+                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                         "                Intent it = new Intent(EquipMBActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
                 Intent it = new Intent(EquipMBActivity.this, MenuPrincPMMActivity.class);
-                startActivity(it);
-                finish();
-            }
-            else if(BuildConfig.FLAVOR.equals("ecm")){
-                LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
-                        "                Intent it = new Intent(EquipMBActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
-                Intent it = new Intent(EquipMBActivity.this, MenuPrincECMActivity.class);
-                startActivity(it);
-                finish();
-            }
-            else if(BuildConfig.FLAVOR.equals("pcomp")){
-                LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
-                        "                Intent it = new Intent(EquipMBActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
-                Intent it = new Intent(EquipMBActivity.this, MenuPrincPCOMPActivity.class);
                 startActivity(it);
                 finish();
             }
@@ -209,11 +207,21 @@ public class EquipMBActivity extends ActivityGeneric {
     }
 
     public void onBackPressed() {
-        LogProcessoDAO.getInstance().insertLogProcesso("public void onBackPressed() {\n" +
-                "        Intent it = new Intent(EquipMBActivity.this, HorimetroActivity.class);", getLocalClassName());
-        Intent it = new Intent(EquipMBActivity.this, HorimetroActivity.class);
-        startActivity(it);
-        finish();
+        LogProcessoDAO.getInstance().insertLogProcesso("public void onBackPressed() {", getLocalClassName());
+        if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 32L) {
+            LogProcessoDAO.getInstance().insertLogProcesso("if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 32L) {\n" +
+                    "            Intent it = new Intent(EquipMBActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
+            Intent it = new Intent(EquipMBActivity.this, ListaAtividadeActivity.class);
+            startActivity(it);
+            finish();
+        } else {
+            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                    "            Intent it = new Intent(EquipMBActivity.this, HorimetroActivity.class);", getLocalClassName());
+            Intent it = new Intent(EquipMBActivity.this, HorimetroActivity.class);
+            startActivity(it);
+            finish();
+        }
+
     }
 
 }

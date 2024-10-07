@@ -10,90 +10,71 @@ public class UrlsConexaoHttp {
 //    public static String url = "https://www.usinasantafe.com.br/pmmqa/view/";
 //    public static String url = "https://www.usinasantafe.com.br/pmmprod/" + versao + "/view/";
 
+    public static String urlBD = "https://www.usinasantafe.com.br/pmmprod/" + versao + "/view/";
+
     public static String localPSTEstatica = "br.com.usinasantafe.cmm.model.bean.estaticas.";
     public static String localUrl = "br.com.usinasantafe.cmm.util.conHttp.UrlsConexaoHttp";
 
-    public static String AtividadeBean = url + "atividade.php";
-    public static String BocalBean = url + "bocal.php";
-    public static String ComponenteBean = url + "componente.php";
-    public static String EquipSegBean = url + "equipseg.php";
-    public static String EquipPneuBean = url + "equippneu.php";
-    public static String FrenteBean = url + "frente.php";
-    public static String FuncBean = url + "funcionario.php";
-    public static String ItemCheckListBean = url + "itemchecklist.php";
-    public static String ItemOSMecanBean = url + "itemosmecan.php";
-    public static String LeiraBean = url + "leira.php";
-    public static String MotoMecBean = url + "motomec.php";
-    public static String OSBean = url + "os.php";
-    public static String ParadaBean = url + "parada.php";
-    public static String PressaoBocalBean = url + "pressaobocal.php";
-    public static String ProdutoBean = url + "produto.php";
-    public static String PropriedadeBean = url + "propriedade.php";
-    public static String RAtivParadaBean = url + "rativparada.php";
-    public static String REquipPneuBean = url + "requippneu.php";
-    public static String RFuncaoAtivParBean = url + "rfuncaoativpar.php";
-    public static String ROSAtivBean = url + "rosativ.php";
-    public static String ServicoBean = url + "servico.php";
-    public static String TurnoBean = url + "turno.php";
+    public static String AtividadeBean = urlBD + "atividade.php";
+    public static String BocalBean = urlBD + "bocal.php";
+    public static String ComponenteBean = urlBD + "componente.php";
+    public static String EquipSegBean = urlBD + "equipseg.php";
+    public static String EquipPneuBean = urlBD + "equippneu.php";
+    public static String FrenteBean = urlBD + "frente.php";
+    public static String FuncBean = urlBD + "funcionario.php";
+    public static String ItemCheckListBean = urlBD + "itemchecklist.php";
+    public static String ItemOSMecanBean = urlBD + "itemosmecan.php";
+    public static String LeiraBean = urlBD + "leira.php";
+    public static String MotoMecBean = urlBD + "motomec.php";
+    public static String OSBean = urlBD + "os.php";
+    public static String ParadaBean = urlBD + "parada.php";
+    public static String PressaoBocalBean = urlBD + "pressaobocal.php";
+    public static String ProdutoBean = urlBD + "produto.php";
+    public static String PropriedadeBean = urlBD + "propriedade.php";
+    public static String RAtivParadaBean = urlBD + "rativparada.php";
+    public static String REquipPneuBean = urlBD + "requippneu.php";
+    public static String RFuncaoAtivParBean = urlBD + "rfuncaoativpar.php";
+    public static String ROSAtivBean = urlBD + "rosativ.php";
+    public static String ServicoBean = urlBD + "servico.php";
+    public static String TurnoBean = urlBD + "turno.php";
 
-    public UrlsConexaoHttp() {
-    }
-
-    public String getsInsertCarreg() {
-        return url + "inserircarreg.php";
-    }
-
-    public String getsInserirCheckList() {
-        return url + "inserirchecklist.php";
-    }
-
-    public String getsInsertPreCEC() {
-        return url + "inserirprecec.php";
-    }
-
-    public String getsInsertBolAbertoMMFert() {
-        return url + "inserirbolabertommfert.php";
-    }
-
-    public String getsInsertBolFechadoMMFert() {
-        return url + "inserirbolfechadommfert.php";
-    }
+    public UrlsConexaoHttp() {}
 
     public String urlVerifica(String classe) {
         String retorno = "";
         switch (classe) {
             case "Equip":
-                retorno = url + "equip.php";
+                retorno = urlBD + "equip.php";
                 break;
             case "OS":
-                retorno = url + "pesqos.php";
+                retorno = urlBD + "pesqos.php";
                 break;
             case "Atividade":
-                retorno = url + "pesqativ.php";
+                retorno = urlBD + "pesqativ.php";
                 break;
             case "AtividadeECM":
-                retorno = url + "pesqativecm.php";
+                retorno = urlBD + "pesqativecm.php";
                 break;
             case "OSMecan":
-                retorno = url + "pesqosmecan.php";
+                retorno = urlBD + "pesqosmecan.php";
                 break;
             case "Atualiza":
-                retorno = url + "atualaplic.php";
+                retorno = urlBD + "atualaplic.php";
                 break;
             case "CheckList":
-                retorno = url + "atualchecklist.php";
+                retorno = urlBD + "atualchecklist.php";
                 break;
             case "Pneu":
-                retorno = url + "pesqpneu.php";
+                retorno = urlBD + "pesqpneu.php";
                 break;
             case "OrdCarreg":
-                retorno = url + "retcarreg.php";
+                retorno = urlBD + "retcarreg.php";
                 break;
             case "LocalCarreg":
-                retorno = url + "retlocalcarreg.php";
+                retorno = urlBD + "retlocalcarreg.php";
                 break;
             case "CEC":
-                retorno = url + "retcec.php";
+                retorno = urlBD + "retcec.php";
                 break;
         }
         return retorno;

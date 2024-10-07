@@ -220,11 +220,11 @@ public class PreCECDAO {
         List<PreCECBean> preCECList = preCECBean.all();
         String retorno;
         if (preCECList.size() == 0)  {
-            retorno = "NÃO POSSUE CARREGAMENTOS";
+            retorno = "";
         } else {
             preCECBean = preCECList.get(preCECList.size() - 1);
             if(preCECBean.getDataSaidaCampo().equals("")){
-                retorno = "NÃO POSSUE CARREGAMENTOS";
+                retorno = "";
             }
             else {
                 retorno = "ULT. VIAGEM: " + preCECBean.getDataSaidaCampo();

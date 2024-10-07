@@ -25,7 +25,6 @@ import br.com.usinasantafe.cmm.model.dao.ItemCalibPneuDAO;
 import br.com.usinasantafe.cmm.model.dao.ItemManutPneuDAO;
 import br.com.usinasantafe.cmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.cmm.model.dao.PneuDAO;
-import br.com.usinasantafe.cmm.util.EnvioDadosServ;
 import br.com.usinasantafe.cmm.util.Json;
 import br.com.usinasantafe.cmm.util.VerifDadosServ;
 import br.com.usinasantafe.cmm.util.workmanager.StartProcessEnvio;
@@ -82,7 +81,8 @@ public class PneuCTR {
         EquipPneuDAO equipPneuDAO = new EquipPneuDAO();
         BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
         BoletimPneuDAO boletimPneuDAO = new BoletimPneuDAO();
-        BoletimMMFertBean boletimMMFertBean = boletimMMFertDAO.getBoletimMMFertAberto();
+        ConfigCTR configCTR = new ConfigCTR();
+        BoletimMMFertBean boletimMMFertBean = boletimMMFertDAO.getBolMMFertAberto(configCTR.getConfig().getIdEquipApontConfig());
         boletimPneuDAO.abrirBolPneu(boletimMMFertBean.getIdBolMMFert()
                 , boletimMMFertBean.getMatricFuncBolMMFert()
                 , equipPneuDAO.getEquipPneuNro(nroEquip).getIdEquip()
@@ -94,7 +94,7 @@ public class PneuCTR {
         boletimPneuDAO.fecharBolPneu();
 
         BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
-        boletimMMFertDAO.updateBoletimMMFertEnviar(boletimPneuDAO.getBolPneuAberto().getIdBolMMFertPneu());
+        boletimMMFertDAO.updateBolMMFertEnviar(boletimPneuDAO.getBolPneuAberto().getIdBolMMFertPneu());
 
         StartProcessEnvio startProcessEnvio = new StartProcessEnvio();
         startProcessEnvio.startProcessEnvio(application);

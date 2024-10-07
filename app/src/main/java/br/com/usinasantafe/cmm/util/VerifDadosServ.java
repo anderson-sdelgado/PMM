@@ -42,6 +42,7 @@ public class VerifDadosServ {
     public static int status;
     private int tipo;
     private String senha;
+    private Long nroEquip;
     private ItemManutPneuBean itemManutPneuBean;
 
     public VerifDadosServ() {
@@ -67,7 +68,12 @@ public class VerifDadosServ {
             case "Equip":
                 LogProcessoDAO.getInstance().insertLogProcesso("if (this.tipo.equals(\"Equip\")) {\n" +
                         "            configCTR.receberVerifEquip(" + result + ");", activity);
-                configCTR.receberVerifEquip(senha, telaAtual, telaProx, progressDialog, result, this.tipo);
+                configCTR.receberVerifEquip(nroEquip, senha, telaAtual, telaProx, progressDialog, result, this.tipo);
+                break;
+            case "Carretel":
+                LogProcessoDAO.getInstance().insertLogProcesso("if (this.tipo.equals(\"Carretel\")) {\n" +
+                        "            motoMecFertCTR.receberVerifCarretel(" + result + ");", activity);
+                motoMecFertCTR.receberVerifCarretel(result, activity);
                 break;
             case "OS":
                 LogProcessoDAO.getInstance().insertLogProcesso("} else if (this.tipo.equals(\"OS\")) {\n" +
@@ -180,7 +186,7 @@ public class VerifDadosServ {
 
     }
 
-    public void verifDados(String senha, String dados, String classe, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo) {
+    public void verifDados(Long nroEquip, String senha, String dados, String classe, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo) {
 
         this.urlsConexaoHttp = new UrlsConexaoHttp();
         this.telaAtual = telaAtual;
@@ -190,6 +196,17 @@ public class VerifDadosServ {
         this.dados = dados;
         this.tipo = tipo;
         this.senha = senha;
+        this.nroEquip = nroEquip;
+
+        envioVerif(activity);
+
+    }
+
+    public void verifDados(String dados, ProgressDialog progressDialog, String activity) {
+
+        this.classe = "Carretel";
+        this.dados = dados;
+        this.progressDialog = progressDialog;
 
         envioVerif(activity);
 
@@ -226,7 +243,6 @@ public class VerifDadosServ {
             telaAtual.startActivity(it);
         }
     }
-
 
     public void msg(String texto){
         if(status < 3){

@@ -2,7 +2,6 @@ package br.com.usinasantafe.cmm.util.workmanager;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
@@ -13,16 +12,12 @@ import java.util.List;
 import br.com.usinasantafe.cmm.control.CECCTR;
 import br.com.usinasantafe.cmm.control.CheckListCTR;
 import br.com.usinasantafe.cmm.control.CompostoCTR;
-import br.com.usinasantafe.cmm.control.ConfigCTR;
 import br.com.usinasantafe.cmm.control.MotoMecFertCTR;
 import br.com.usinasantafe.cmm.model.bean.variaveis.BoletimMMFertBean;
-import br.com.usinasantafe.cmm.model.bean.variaveis.CECBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.CabecCheckListBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.CarregCompBean;
-import br.com.usinasantafe.cmm.model.bean.variaveis.ConfigBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.PreCECBean;
 import br.com.usinasantafe.cmm.util.EnvioDadosServ;
-import br.com.usinasantafe.cmm.util.retrofit.search.CECSearch;
 import br.com.usinasantafe.cmm.util.retrofit.send.BoletimMMFertSend;
 import br.com.usinasantafe.cmm.util.retrofit.send.CarregInsumoSend;
 import br.com.usinasantafe.cmm.util.retrofit.send.CheckListSend;
@@ -39,15 +34,6 @@ public class ProcessWorkManager extends Worker {
     @Override
     public Result doWork() {
         EnvioDadosServ.status = 2;
-        if(verifStatusPesqCEC()) {
-            try {
-                CECSearch cecSearch = new CECSearch();
-                insertCEC(cecSearch.receberDadoCEC(dadosConfig()));
-            } catch (Exception e) {
-                EnvioDadosServ.status = 1;
-                return Result.retry();
-            }
-        }
         if(verifChecklist()){
             try {
                 CheckListSend checkListSend = new CheckListSend();
@@ -100,7 +86,7 @@ public class ProcessWorkManager extends Worker {
 
     public void updateChecklist(List<CabecCheckListBean> cabecCheckListList) {
         CheckListCTR checkListCTR = new CheckListCTR();
-        checkListCTR.updateRecebChecklist(cabecCheckListList);
+        checkListCTR.updateRecChecklistRetrofit(cabecCheckListList);
     }
 
     public boolean verifEnvioCarregInsumo() {
@@ -115,7 +101,7 @@ public class ProcessWorkManager extends Worker {
 
     public void updateCarregInsumo(CarregCompBean carregCompBean) {
         CompostoCTR compostoCTR = new CompostoCTR();
-        compostoCTR.updCarregInsumo(carregCompBean);
+        compostoCTR.updCarregInsumoRetrofit(carregCompBean);
     }
 
     public boolean verifPreCEC() {
@@ -145,22 +131,7 @@ public class ProcessWorkManager extends Worker {
 
     public void updateBoletimMMFert(List<BoletimMMFertBean> boletimMMFertList){
         MotoMecFertCTR motoMecFertCTR = new MotoMecFertCTR();
-        motoMecFertCTR.updateBolEnviado(boletimMMFertList);
-    }
-
-    public boolean verifStatusPesqCEC() {
-        ConfigCTR configCTR = new ConfigCTR();
-        return configCTR.getConfig().getStatusPesqCEC() == 1L;
-    }
-
-    public ConfigBean dadosConfig() {
-        ConfigCTR configCTR = new ConfigCTR();
-        return configCTR.getConfig();
-    }
-
-    public void insertCEC(CECBean cecBean) {
-        CECCTR cecCTR = new CECCTR();
-        cecCTR.receberVerifCEC(cecBean);
+        motoMecFertCTR.updateBolEnviadoRetrofit(boletimMMFertList);
     }
 
 }

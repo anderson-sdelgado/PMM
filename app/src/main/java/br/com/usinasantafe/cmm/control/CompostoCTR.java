@@ -16,9 +16,9 @@ import br.com.usinasantafe.cmm.model.dao.LeiraDAO;
 import br.com.usinasantafe.cmm.model.dao.LogErroDAO;
 import br.com.usinasantafe.cmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.cmm.model.dao.ProdutoDAO;
-import br.com.usinasantafe.cmm.util.EnvioDadosServ;
 import br.com.usinasantafe.cmm.util.Json;
 import br.com.usinasantafe.cmm.util.VerifDadosServ;
+import br.com.usinasantafe.cmm.util.retrofit.search.CarregCompSearch;
 
 public class CompostoCTR {
 
@@ -75,7 +75,7 @@ public class CompostoCTR {
         ConfigCTR configCTR = new ConfigCTR();
         CarregCompDAO carregCompDAO = new CarregCompDAO();
         carregCompDAO.abrirCarregInsumo(motoMecFuncCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert()
-                , configCTR.getConfig().getEquipConfig()
+                , configCTR.getConfig().getIdEquipConfig()
                 , produtoBean.getIdProduto());
     }
 
@@ -84,7 +84,7 @@ public class CompostoCTR {
         ConfigCTR configCTR = new ConfigCTR();
         CarregCompDAO carregCompDAO = new CarregCompDAO();
         carregCompDAO.abrirCarregComposto(motoMecFuncCTR.getBoletimMMFertAberto().getMatricFuncBolMMFert()
-                , configCTR.getConfig().getEquipConfig()
+                , configCTR.getConfig().getIdEquipConfig()
                 , getLeiraCod(codLeira).getIdLeira()
                 , configCTR.getOS().getIdOS()
                 , motoMecFuncCTR.getApontAberto(motoMecFuncCTR.getBoletimMMFertAberto().getIdBolMMFert()).getIdApontMMFert());
@@ -96,11 +96,6 @@ public class CompostoCTR {
         CarregCompDAO carregCompDAO = new CarregCompDAO();
         carregCompDAO.salvarDescarregCarreg(getLeiraCod(codLeira).getIdLeira()
                 , motoMecFuncCTR.getApontAberto(motoMecFuncCTR.getBoletimMMFertAberto().getIdBolMMFert()).getIdApontMMFert());
-    }
-
-    public String dadosEnvioCarregInsumo(){
-        CarregCompDAO carregCompDAO = new CarregCompDAO();
-        return carregCompDAO.dadosEnvioCarregInsumo();
     }
 
     public CarregCompBean dadosEnvioCarregInsumoRetrofit(){
@@ -139,6 +134,23 @@ public class CompostoCTR {
         carregCompDAO.verifDadosCarreg(atualAplicDAO.getAtualIdEquip(configCTR.getEquip().getIdEquip()), telaAtual, telaProx, progressDialog, activity);
     }
 
+
+    public void verCarregComp(Context telaAtual, Class telaProx, ProgressDialog progressDialog){
+
+        VerifDadosServ.getInstance().verifDados(telaAtual, telaProx, progressDialog);
+
+        ConfigCTR configCTR = new ConfigCTR();
+        CarregCompSearch carregCompSearch = new CarregCompSearch();
+        carregCompSearch.receberDadoCarregComp(configCTR.getConfig());
+
+    }
+
+    public void receberCarregComp(CarregCompBean carregCompBean) {
+        CarregCompDAO carregCompDAO = new CarregCompDAO();
+        carregCompDAO.recOrdCarreg(carregCompBean);
+        VerifDadosServ.getInstance().pulaTela();
+    }
+
     public void receberVerifOrdCarreg(String result, String activity) {
 
         try {
@@ -151,13 +163,12 @@ public class CompostoCTR {
                 if (jsonArray.length() > 0) {
 
                     CarregCompDAO carregCompDAO = new CarregCompDAO();
-                    carregCompDAO.recebOrdCarreg(jsonArray);
+                    carregCompDAO.recOrdCarreg(jsonArray);
 
                     ConfigCTR configCTR = new ConfigCTR();
                     configCTR.setStatusRetVerif(0L);
 
-                }
-                else{
+                } else {
                     VerifDadosServ.status = 1;
                 }
 
@@ -172,26 +183,7 @@ public class CompostoCTR {
 
     }
 
-    public void updCarregInsumo(String retorno, String activity) {
-
-        try{
-
-            int pos1 = retorno.indexOf("_") + 1;
-            String obj = retorno.substring(pos1);
-
-            Json json = new Json();
-            CarregCompDAO carregCompDAO = new CarregCompDAO();
-            carregCompDAO.updCarregInsumo(json.jsonArray(obj));
-
-        }
-        catch(Exception e){
-            EnvioDadosServ.status = 1;
-            LogErroDAO.getInstance().insertLogErro(e);
-        }
-
-    }
-
-    public void updCarregInsumo(CarregCompBean carregCompBean) {
+    public void updCarregInsumoRetrofit(CarregCompBean carregCompBean) {
         CarregCompDAO carregCompDAO = new CarregCompDAO();
         carregCompDAO.updCarregInsumo(carregCompBean);
     }

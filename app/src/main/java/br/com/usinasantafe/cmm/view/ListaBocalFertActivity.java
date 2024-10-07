@@ -126,7 +126,7 @@ public class ListaBocalFertActivity extends ActivityGeneric {
                     "                startActivity(it);\n" +
                     "                finish();", getLocalClassName());
 
-            BocalBean bocalBean = (BocalBean) bocalList.get(position);
+            BocalBean bocalBean = bocalList.get(position);
             cmmContext.getConfigCTR().setBocalConfig(bocalBean.getIdBocal());
             bocalList.clear();
 
@@ -137,11 +137,9 @@ public class ListaBocalFertActivity extends ActivityGeneric {
         });
 
         buttonRetBocal.setOnClickListener(v -> {
-            LogProcessoDAO.getInstance().insertLogProcesso("buttonRetBocal.setOnClickListener(new View.OnClickListener() {\n" +
-                    "            @Override\n" +
-                    "            public void onClick(View v) {\n" +
-                    "                Intent it = new Intent(ListaBocalFertActivity.this, ListaPressaoFertActivity.class);", getLocalClassName());
-            Intent it = new Intent(ListaBocalFertActivity.this, ListaPressaoFertActivity.class);
+            LogProcessoDAO.getInstance().insertLogProcesso("buttonRetBocal.setOnClickListener(v -> {\n" +
+                    "            Intent it = new Intent(ListaBocalFertActivity.this, ListaAtividadeActivity.class);", getLocalClassName());
+            Intent it = new Intent(ListaBocalFertActivity.this, ListaAtividadeActivity.class);
             startActivity(it);
             finish();
         });

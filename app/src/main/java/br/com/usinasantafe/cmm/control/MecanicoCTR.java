@@ -14,6 +14,7 @@ import java.util.List;
 import br.com.usinasantafe.cmm.model.bean.estaticas.ComponenteBean;
 import br.com.usinasantafe.cmm.model.bean.estaticas.ItemOSMecanBean;
 import br.com.usinasantafe.cmm.model.bean.estaticas.ServicoBean;
+import br.com.usinasantafe.cmm.model.bean.variaveis.BoletimMMFertBean;
 import br.com.usinasantafe.cmm.model.dao.ApontMecanDAO;
 import br.com.usinasantafe.cmm.model.dao.AtualAplicDAO;
 import br.com.usinasantafe.cmm.model.dao.BoletimMMFertDAO;
@@ -24,7 +25,6 @@ import br.com.usinasantafe.cmm.model.dao.LogProcessoDAO;
 import br.com.usinasantafe.cmm.model.dao.OSDAO;
 import br.com.usinasantafe.cmm.model.dao.ServicoDAO;
 import br.com.usinasantafe.cmm.util.AtualDadosServ;
-import br.com.usinasantafe.cmm.util.EnvioDadosServ;
 import br.com.usinasantafe.cmm.util.Json;
 import br.com.usinasantafe.cmm.util.VerifDadosServ;
 import br.com.usinasantafe.cmm.util.workmanager.StartProcessEnvio;
@@ -48,7 +48,8 @@ public class MecanicoCTR {
                 "        ApontMecanDAO apontMecanDAO = new ApontMecanDAO();\n" +
                 "        apontMecanDAO.salvarApontMecan(seqItemOS, boletimDAO.getBolAbertoMMFert().getIdBolMMFert());", activity);
         BoletimMMFertDAO boletimDAO = new BoletimMMFertDAO();
-        apontMecanDAO.salvarApontMecan(seqItemOS, boletimDAO.getBoletimMMFertAberto().getIdBolMMFert());
+        ConfigCTR configCTR = new ConfigCTR();
+        apontMecanDAO.salvarApontMecan(seqItemOS, boletimDAO.getBolMMFertAberto(configCTR.getConfig().getIdEquipApontConfig()).getIdBolMMFert());
 
         StartProcessEnvio startProcessEnvio = new StartProcessEnvio();
         startProcessEnvio.startProcessEnvio(application);
@@ -85,15 +86,14 @@ public class MecanicoCTR {
     }
 
     public boolean verApontMecanAberto(){
-        BoletimMMFertDAO boletimDAO = new BoletimMMFertDAO();
         ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
-        return apontMecanDAO.verApontAberto(boletimDAO.getBoletimMMFertAberto().getIdBolMMFert());
-    }
-
-    public boolean verApontMecanNEnviado() {
-        ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
-        int qtde = apontMecanDAO.apontMecanNEnviadoList().size();
-        return qtde > 0;
+        BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
+        List<BoletimMMFertBean> boletimMMFertList = boletimMMFertDAO.bolMMFertAbertoList();
+        for(BoletimMMFertBean boletimMMFertBean : boletimMMFertList){
+            if(apontMecanDAO.verApontAberto(boletimMMFertBean.getIdBolMMFert())) return true;
+        }
+        boletimMMFertList.clear();
+        return false;
     }
 
     public void finalizarApontMecan(@NonNull Application application, String activity){
@@ -104,9 +104,10 @@ public class MecanicoCTR {
                 "", activity);
         BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
         ApontMecanDAO apontMecanDAO = new ApontMecanDAO();
-        apontMecanDAO.finalizarApont(boletimMMFertDAO.getBoletimMMFertAberto().getIdBolMMFert());
+        ConfigCTR configCTR = new ConfigCTR();
+        apontMecanDAO.finalizarApont(boletimMMFertDAO.getBolMMFertAberto(configCTR.getConfig().getIdEquipApontConfig()).getIdBolMMFert());
 
-        boletimMMFertDAO.updateBoletimMMFertEnviar(boletimMMFertDAO.getBoletimMMFertAberto());
+        boletimMMFertDAO.updateBolMMFertEnviar(boletimMMFertDAO.getBolMMFertAberto(configCTR.getConfig().getIdEquipApontConfig()));
         StartProcessEnvio startProcessEnvio = new StartProcessEnvio();
         startProcessEnvio.startProcessEnvio(application);
 

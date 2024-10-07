@@ -125,7 +125,6 @@
     <string name="wifi_changing_network">Requesting connection to network\u2026</string>
     <string name="wifi_ssid_label">Network Name</string>
     <string name="wifi_type_label">Type</string>
-    <!--    <string name="app_name">PMM</string>-->
     <string name="texto_menu_principal">PRINCIPAL</string>
     <string name="texto_item_list">TESTE</string>
     <string name="texto_num1">1</string>
@@ -182,6 +181,8 @@
     <string name="texto_pressao">PRESSÃO</string>
     <string name="texto_velocidade">VELOCIDADE (M)</string>
     <string name="texto_titulo_recolhimento">OS X RECOLHIMENTO</string>
+    <string name="texto_titulo_finalizer_recol">EQUIP x OS X RECOLHIMENTO</string>
+    <string name="texto_rec_mang_equip">NRO EQUIP: 565</string>
     <string name="texto_rec_mang_nro_os">NRO OS: 101946</string>
     <string name="texto_rec_mang_valor">RECOL. DE MANG.: 100</string>
     <string name="texto_acopla_carretel">ACOPLA CARRETEL</string>
@@ -206,7 +207,6 @@
     <string name="texto_fechar">FECHAR</string>
     <string name="texto_subtitulo_disp_oper">DISP. OPERAÇÃO</string>
     <string name="texto_subtitulo_campo">CAMPO</string>
-    <string name="texto_esp_graf">ATUALIZANDO DADOS...</string>
     <string name="texto_pos_pneu">POSIÇÃO PNEU</string>
     <string name="texto_pneu">NUM. DO PNEU:</string>
     <string name="texto_pressao_enc">PRESSÃO ENCONTRADA:</string>
@@ -285,7 +285,6 @@
     <string name="texto_titulo_log_base_dado">LOG - BASE DADO</string>
     <string name="texto_titulo_log_erro">LOG - ERRO</string>
     <string name="texto_log">LOG</string>
-    <string name="texto_inicio">INICIANDO O APLICATIVO...</string>
     <string name="texto_titulo_carreg">CARREGAMENTO</string>
     <string name="texto_item_os">ITEM(S) DA OS</string>
     <string name="texto_num_item">NUM. DO ITEM:</string>
@@ -295,4 +294,7 @@
     <string name="texto_pneu_col">PNEU COLOCADO:</string>
     <string name="texto_pneu_ret">PNEU RETIRADO:</string>
     <string name="texto_verificar_alocacao">VERIFICAR ALOCAÇÃO</string>
+    <string name="texto_padrao_inserir">INSERIR</string>
+    <string name="texto_titulo_carretel">CARRETEL(S)</string>
+    <string name="texto_inicio">INICIANDO O APLICATIVO...</string>
 </resources>

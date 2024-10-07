@@ -27,6 +27,16 @@ public class EquipDAO {
     public EquipDAO() {
     }
 
+    public boolean verifEquip(Long nroEquip){
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqNro(nroEquip));
+        EquipBean equipBean = new EquipBean();
+        List<EquipBean> equipList = equipBean.get(pesqArrayList);
+        boolean ret = equipList.size() > 0;
+        equipList.clear();
+        return ret;
+    }
+
     public String dadosVerEquip(Long nroEquip, String versaoAplic){
 
         AtualAplicBean atualAplicBean = new AtualAplicBean();
@@ -45,9 +55,9 @@ public class EquipDAO {
         return json.toString();
     }
 
-    public EquipBean getEquip(){
+    public EquipBean getEquipId(Long idEquip){
         EquipBean equipBean = new EquipBean();
-        List<EquipBean> equipList = equipBean.all();
+        List<EquipBean> equipList = equipBean.get("idEquip", idEquip);
         equipBean = equipList.get(0);
         equipList.clear();
         if ((equipBean.getTipoEquipFert() == 1) || (equipBean.getTipoEquipFert() == 2)) {
@@ -58,12 +68,20 @@ public class EquipDAO {
         return equipBean;
     }
 
-    public void verEquip(String senha, String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo){
-        LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().verifDados(dado, \"Equip\", telaAtual, telaProx, progressDialog, activity);", activity);
-        VerifDadosServ.getInstance().verifDados(senha, dado, "Equip", telaAtual, telaProx, progressDialog, activity, tipo);
+    public EquipBean getEquipNro(Long nroEquip){
+        EquipBean equipBean = new EquipBean();
+        List<EquipBean> equipList = equipBean.get("nroEquip", nroEquip);
+        equipBean = equipList.get(0);
+        equipList.clear();
+        return equipBean;
     }
 
-    public EquipBean recDadosEquip(JSONArray jsonArray) throws JSONException {
+    public void verEquip(Long nroEquip, String senha, String dado, Context telaAtual, Class telaProx, ProgressDialog progressDialog, String activity, int tipo){
+        LogProcessoDAO.getInstance().insertLogProcesso("VerifDadosServ.getInstance().verifDados(dado, \"Equip\", telaAtual, telaProx, progressDialog, activity);", activity);
+        VerifDadosServ.getInstance().verifDados(nroEquip, senha, dado, "Equip", telaAtual, telaProx, progressDialog, activity, tipo);
+    }
+
+    public void recDadosEquip(JSONArray jsonArray) throws JSONException {
 
         EquipBean equipBean = new EquipBean();
         equipBean.deleteAll();
@@ -72,12 +90,10 @@ public class EquipDAO {
 
             JSONObject objeto = jsonArray.getJSONObject(i);
             Gson gson = new Gson();
-            equipBean = gson.fromJson(objeto.toString(), EquipBean.class);
-            equipBean.insert();
+            EquipBean equipBeanServ = gson.fromJson(objeto.toString(), EquipBean.class);
+            equipBeanServ.insert();
 
         }
-
-        return equipBean;
 
     }
 
@@ -92,24 +108,6 @@ public class EquipDAO {
             REquipAtivBean rEquipAtiv = gson.fromJson(objeto.toString(), REquipAtivBean.class);
             rEquipAtiv.insert();
         }
-
-    }
-
-    public String dadosEnvioEquip(){
-
-        EquipBean equipBean = new EquipBean();
-        List<EquipBean> equipList = equipBean.all();
-        JsonArray equipJsonArray = new JsonArray();
-
-        equipBean = equipList.get(0);
-        Gson gson = new Gson();
-        equipJsonArray.add(gson.toJsonTree(equipBean, equipBean.getClass()));
-        equipList.clear();
-
-        JsonObject equipJsonObj = new JsonObject();
-        equipJsonObj.add("equip", equipJsonArray);
-
-        return equipJsonObj.toString();
 
     }
 

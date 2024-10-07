@@ -13,7 +13,9 @@ public class ConfigBean extends Entidade {
     @DatabaseField(generatedId=true)
     private Long idConfig;
 	@DatabaseField
-	private Long equipConfig;
+	private Long idEquipApontConfig;
+	@DatabaseField
+	private Long idEquipConfig;
     @DatabaseField
 	private String senhaConfig;
 	@DatabaseField
@@ -71,8 +73,6 @@ public class ConfigBean extends Entidade {
 	@DatabaseField
 	private Long statusRetVerif; // 0 - Não Verificando; 1 - Verificando
 	@DatabaseField
-	private Long statusPesqCEC; // 0 - Não Verificando; 1 - Verificando
-	@DatabaseField
 	private Long funcaoComposto; // 2 - Insumo; 3 - Composto
 	@DatabaseField
 	private Long posicaoTela;
@@ -106,6 +106,8 @@ public class ConfigBean extends Entidade {
 	// 29 - Troca Funcao PCOMP
 	// 30 - Calibragem Pneu
 	// 31 - Verificar Caminho
+	// 32 - Inserir Carretel
+	// 33 - Apontar MotoMec Carretel
 
 	public ConfigBean() {
 	}
@@ -118,12 +120,12 @@ public class ConfigBean extends Entidade {
 		this.idConfig = idConfig;
 	}
 
-	public Long getEquipConfig() {
-		return equipConfig;
+	public Long getIdEquipConfig() {
+		return idEquipConfig;
 	}
 
-	public void setEquipConfig(Long equipConfig) {
-		this.equipConfig = equipConfig;
+	public void setIdEquipConfig(Long idEquipConfig) {
+		this.idEquipConfig = idEquipConfig;
 	}
 
 	public String getSenhaConfig() {
@@ -360,19 +362,11 @@ public class ConfigBean extends Entidade {
 		return latitudeConfig;
 	}
 
-	public Long getStatusPesqCEC() {
-		return statusPesqCEC;
+	public Long getIdEquipApontConfig() {
+		return idEquipApontConfig;
 	}
 
-	public void setStatusPesqCEC(Long statusPesqCEC) {
-		this.statusPesqCEC = statusPesqCEC;
+	public void setIdEquipApontConfig(Long idEquipApontConfig) {
+		this.idEquipApontConfig = idEquipApontConfig;
 	}
-
-	//	public Long getQtdeCarretaConfig() {
-//		return qtdeCarretaConfig;
-//	}
-//
-//	public void setQtdeCarretaConfig(Long qtdeCarretaConfig) {
-//		this.qtdeCarretaConfig = qtdeCarretaConfig;
-//	}
 }

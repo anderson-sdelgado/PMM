@@ -290,8 +290,7 @@ public class ConfigActivity extends ActivityGeneric {
             AlertDialog.Builder alerta = new AlertDialog.Builder(ConfigActivity.this);
             alerta.setTitle("ATENÇÃO");
             alerta.setMessage("TODOS OS DADOS FORAM APAGADOS!");
-            alerta.setPositiveButton("OK", (dialog, which) -> {
-            });
+            alerta.setPositiveButton("OK", (dialog, which) -> {});
 
             alerta.show();
 

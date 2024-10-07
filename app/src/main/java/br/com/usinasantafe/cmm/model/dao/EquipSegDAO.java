@@ -1,8 +1,15 @@
 package br.com.usinasantafe.cmm.model.dao;
 
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.usinasantafe.cmm.model.bean.estaticas.EquipBean;
 import br.com.usinasantafe.cmm.model.pst.EspecificaPesquisa;
 import br.com.usinasantafe.cmm.model.bean.estaticas.EquipSegBean;
 import br.com.usinasantafe.cmm.model.bean.variaveis.ImplementoMMBean;
@@ -46,36 +53,61 @@ public class EquipSegDAO {
         return verEquipSeg(nroEquip, 2L);
     }
 
-    private boolean verEquipSeg(Long nroEquip, Long tipo){
+    public boolean verCarretel(Long nroEquip){
+        return verEquipSeg(nroEquip, 1L);
+    }
 
-        ArrayList pesqArrayList = new ArrayList();
+
+    public void recDadosEquipSeg(JSONArray jsonArray) throws JSONException {
+
         EquipSegBean equipSegBean = new EquipSegBean();
+        equipSegBean.deleteAll();
 
-        EspecificaPesquisa pesquisa1 = new EspecificaPesquisa();
-        pesquisa1.setCampo("nroEquip");
-        pesquisa1.setValor(nroEquip);
-        pesquisa1.setTipo(1);
-        pesqArrayList.add(pesquisa1);
+        for (int i = 0; i < jsonArray.length(); i++) {
 
-        EspecificaPesquisa pesquisa2 = new EspecificaPesquisa();
-        pesquisa2.setCampo("tipoEquip");
-        pesquisa2.setValor(tipo);
-        pesquisa2.setTipo(1);
-        pesqArrayList.add(pesquisa2);
+            JSONObject objeto = jsonArray.getJSONObject(i);
+            Gson gson = new Gson();
+            EquipSegBean equipSegBeanServ = gson.fromJson(objeto.toString(), EquipSegBean.class);
+            equipSegBeanServ.insert();
 
-        return (equipSegBean.get(pesqArrayList).size() > 0);
+        }
 
     }
 
-    public EquipSegBean getEquipSeg(Long nroEquip){
 
+    private boolean verEquipSeg(Long nroEquip, Long tipo){
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqNro(nroEquip));
+        pesqArrayList.add(getPesqTipo(tipo));
+        EquipSegBean equipSegBean = new EquipSegBean();
+        List<EquipSegBean> equipSegList = equipSegBean.get(pesqArrayList);
+        boolean ret = equipSegList.size() > 0;
+        equipSegList.clear();
+        return ret;
+    }
+
+    public EquipSegBean getEquipSeg(Long nroEquip){
         EquipSegBean equipSegBean = new EquipSegBean();
         List equipSegList = equipSegBean.get("nroEquip", nroEquip);
         equipSegBean = (EquipSegBean) equipSegList.get(0);
         equipSegList.clear();
-
         return equipSegBean;
+    }
 
+    private EspecificaPesquisa getPesqNro(Long nroEquip){
+        EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
+        especificaPesquisa.setCampo("nroEquip");
+        especificaPesquisa.setValor(nroEquip);
+        especificaPesquisa.setTipo(1);
+        return especificaPesquisa;
+    }
+
+    private EspecificaPesquisa getPesqTipo(Long tipo){
+        EspecificaPesquisa especificaPesquisa = new EspecificaPesquisa();
+        especificaPesquisa.setCampo("tipoEquip");
+        especificaPesquisa.setValor(tipo);
+        especificaPesquisa.setTipo(1);
+        return especificaPesquisa;
     }
 
 }

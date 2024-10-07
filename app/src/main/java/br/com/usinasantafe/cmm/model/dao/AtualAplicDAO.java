@@ -8,6 +8,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 
 import br.com.usinasantafe.cmm.BuildConfig;
+import br.com.usinasantafe.cmm.control.ConfigCTR;
 import br.com.usinasantafe.cmm.model.bean.AtualAplicBean;
 import com.google.common.base.Strings;
 
@@ -67,7 +68,8 @@ public class AtualAplicDAO {
         try {
 
             EquipDAO equipDAO = new EquipDAO();
-            token = BuildConfig.FLAVOR.toUpperCase() + "-VERSAO_" + BuildConfig.VERSION_NAME + "-" + equipDAO.getEquip().getIdEquip();
+            ConfigCTR configCTR = new ConfigCTR();
+            token = BuildConfig.FLAVOR.toUpperCase() + "-VERSAO_" + BuildConfig.VERSION_NAME + "-" + equipDAO.getEquipId(configCTR.getConfig().getIdEquipConfig()).getIdEquip();
             MessageDigest m = MessageDigest.getInstance("MD5");
             m.update(token.getBytes(),0, token.length());
             BigInteger bigInteger = new BigInteger(1, m.digest());
@@ -98,7 +100,8 @@ public class AtualAplicDAO {
         try {
 
             EquipDAO equipDAO = new EquipDAO();
-            token = BuildConfig.FLAVOR.toUpperCase() + "-VERSAO_" + BuildConfig.VERSION_NAME + "-" + equipDAO.getEquip().getIdEquip();
+            ConfigCTR configCTR = new ConfigCTR();
+            token = BuildConfig.FLAVOR.toUpperCase() + "-VERSAO_" + BuildConfig.VERSION_NAME + "-" + equipDAO.getEquipId(configCTR.getConfig().getIdEquipConfig()).getIdEquip();
             MessageDigest m = MessageDigest.getInstance("MD5");
             m.update(token.getBytes(),0, token.length());
             BigInteger bigInteger = new BigInteger(1, m.digest());

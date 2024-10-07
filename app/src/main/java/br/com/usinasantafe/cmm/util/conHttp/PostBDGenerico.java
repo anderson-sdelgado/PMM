@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -59,6 +60,7 @@ public class PostBDGenerico extends AsyncTask<String, Void, String> {
 
 			String parametros = getQueryString(parametrosPost);
 			URL urlCon = new URL(url);
+			Log.i("ECM", "URL -> " + url);
 			HttpsURLConnection connection = (HttpsURLConnection) urlCon.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setDoInput(true);

@@ -280,7 +280,7 @@ public class CarregCompDAO {
 
     }
 
-    public void recebOrdCarreg(JSONArray jsonArray) throws JSONException {
+    public void recOrdCarreg(JSONArray jsonArray) throws JSONException {
 
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject objeto = jsonArray.getJSONObject(i);
@@ -309,6 +309,31 @@ public class CarregCompDAO {
         }
 
         VerifDadosServ.getInstance().pulaTela();
+
+    }
+
+    public void recOrdCarreg(CarregCompBean carregCompBean){
+
+        List<CarregCompBean> carregList = carregCompBean.get("dthrCarreg", carregCompBean.getDthrCarreg());
+        if (!carregList.isEmpty()) {
+            CarregCompBean carregCompBeanBD = carregList.get(0);
+            carregCompBeanBD.setIdRegCompostoCarreg(carregCompBean.getIdRegCompostoCarreg());
+            carregCompBeanBD.setIdOrdCarreg(carregCompBean.getIdOrdCarreg());
+            carregCompBeanBD.setPesoEntradaCarreg(carregCompBean.getPesoEntradaCarreg());
+            carregCompBeanBD.setPesoSaidaCarreg(carregCompBean.getPesoSaidaCarreg());
+            carregCompBeanBD.setPesoLiquidoCarreg(carregCompBean.getPesoLiquidoCarreg());
+            if (carregCompBeanBD.getTipoCarreg() == 1L) {
+                carregCompBeanBD.setStatusCarreg(3L);
+            }
+            carregCompBeanBD.update();
+        } else {
+            if (carregCompBean.getTipoCarreg() == 1L) {
+                carregCompBean.setStatusCarreg(3L);
+            } else {
+                carregCompBean.setStatusCarreg(5L);
+            }
+            carregCompBean.insert();
+        }
 
     }
 
