@@ -26,7 +26,7 @@ public class EquipSegDAO {
     public void setImplemento(Long pos, Long impl){
         ImplementoMMBean implementoMMBean = new ImplementoMMBean();
         List<ImplementoMMBean> implList = implementoMMBean.get("posImplMM", pos);
-        if(implList.size() > 0) {
+        if(!implList.isEmpty()) {
             implementoMMBean = implList.get(0);
             implementoMMBean.setCodEquipImplMM(impl);
             implementoMMBean.update();
@@ -42,7 +42,7 @@ public class EquipSegDAO {
     public boolean verDuplicImple(Long nroEquip){
         ImplementoMMBean implementoMMBean = new ImplementoMMBean();
         List<ImplementoMMBean> implMMList = implementoMMBean.get("codEquipImplMM", nroEquip);
-        return (implMMList.size() == 0);
+        return (implMMList.isEmpty());
     }
 
     public boolean verMotoBomba(Long nroEquip){

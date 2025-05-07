@@ -98,7 +98,7 @@ public class CarretelActivity extends ActivityGeneric {
                     LogProcessoDAO.getInstance().insertLogProcesso("if(cmmContext.getConfigCTR().verifEquip(nroEquip) && cmmContext.getMotoMecFertCTR().verCarretel(nroEquip)){\n" +
                             "                    cmmContext.getConfigCTR().setEquipConfig(nroEquip);", getLocalClassName());
                     cmmContext.getConfigCTR().setIdEquipApontConfigNro(nroEquip);
-                    Intent it = new Intent(CarretelActivity.this, OSActivity.class);
+                    Intent it = new Intent(CarretelActivity.this, ListaAtividadeActivity.class);
                     startActivity(it);
                     finish();
 

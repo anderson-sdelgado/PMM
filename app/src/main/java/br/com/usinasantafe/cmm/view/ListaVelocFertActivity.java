@@ -120,81 +120,55 @@ public class ListaVelocFertActivity extends ActivityGeneric {
             TextView textView = v.findViewById(R.id.textViewItemList);
             cmmContext.getConfigCTR().setVelocConfig(Long.parseLong(textView.getText().toString()));
 
-            if (cmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
+            if (cmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
-                        "                    AlertDialog.Builder alerta = new AlertDialog.Builder(ListaVelocFertActivity.this);\n" +
-                        "                    alerta.setTitle(\"ATENÇÃO\");\n" +
-                        "                    alerta.setMessage(\"POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.\");", getLocalClassName());
-
+                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {\n" +
+                        "                        AlertDialog.Builder alerta = new AlertDialog.Builder(ListaVelocFertActivity.this);\n" +
+                        "                        alerta.setTitle(\"ATENÇÃO\");\n" +
+                        "                        alerta.setMessage(\"OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!\");", getLocalClassName());
                 AlertDialog.Builder alerta = new AlertDialog.Builder(ListaVelocFertActivity.this);
                 alerta.setTitle("ATENÇÃO");
-                alerta.setMessage("POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.");
-                alerta.setPositiveButton("OK", (dialog, which) -> {
-                    LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                            "                        @Override\n" +
-                            "                        public void onClick(DialogInterface dialog, int which) {\n" +
-                            "                            Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                    Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincPMMActivity.class);
-                    startActivity(it);
-                    finish();
-                });
+                alerta.setMessage("OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!");
+                alerta.setPositiveButton("OK", (dialog, which) -> LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                        "                            @Override\n" +
+                        "                            public void onClick(DialogInterface dialog, int which) {", getLocalClassName()));
+
                 alerta.show();
 
             } else {
 
-                LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
-                if (cmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {
+                LogProcessoDAO.getInstance().insertLogProcesso("List<RFuncaoAtivParBean> rFuncaoAtivParList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());\n" +
+                        "                        boolean recolhimento = false;\n" +
+                        "                        for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtivParList) {\n" +
+                        "                            if (rFuncaoAtivParBean.getCodFuncao() == 4) {\n" +
+                        "                                recolhimento = true;\n" +
+                        "                            }\n" +
+                        "                        }\n" +
+                        "                        rFuncaoAtivParList.clear();", getLocalClassName());
 
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {\n" +
-                            "                        AlertDialog.Builder alerta = new AlertDialog.Builder(ListaVelocFertActivity.this);\n" +
-                            "                        alerta.setTitle(\"ATENÇÃO\");\n" +
-                            "                        alerta.setMessage(\"OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!\");", getLocalClassName());
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(ListaVelocFertActivity.this);
-                    alerta.setTitle("ATENÇÃO");
-                    alerta.setMessage("OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!");
-                    alerta.setPositiveButton("OK", (dialog, which) -> LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                            "                            @Override\n" +
-                            "                            public void onClick(DialogInterface dialog, int which) {", getLocalClassName()));
-
-                    alerta.show();
-
-                } else {
-
-                    LogProcessoDAO.getInstance().insertLogProcesso("List<RFuncaoAtivParBean> rFuncaoAtivParList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());\n" +
-                            "                        boolean recolhimento = false;\n" +
-                            "                        for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtivParList) {\n" +
-                            "                            if (rFuncaoAtivParBean.getCodFuncao() == 4) {\n" +
-                            "                                recolhimento = true;\n" +
-                            "                            }\n" +
-                            "                        }\n" +
-                            "                        rFuncaoAtivParList.clear();", getLocalClassName());
-
-                    List<RFuncaoAtivParBean> rFuncaoAtivParList = cmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());
-                    boolean recolhimento = false;
-                    for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtivParList) {
-                        if (rFuncaoAtivParBean.getCodFuncao() == 4) {
-                            recolhimento = true;
-                            break;
-                        }
+                List<RFuncaoAtivParBean> rFuncaoAtivParList = cmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());
+                boolean recolhimento = false;
+                for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtivParList) {
+                    if (rFuncaoAtivParBean.getCodFuncao() == 4) {
+                        recolhimento = true;
+                        break;
                     }
-                    rFuncaoAtivParList.clear();
-
-                    LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont( 0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                    cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, 0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
-
-                    if (recolhimento) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("if (recolhimento) {\n" +
-                                "                            pmmContext.getMotoMecFertCTR().insRecolh();", getLocalClassName());
-                        cmmContext.getMotoMecFertCTR().insRecolh(getLocalClassName());
-                    }
-
-                    LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                    Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincPMMActivity.class);
-                    startActivity(it);
-                    finish();
-
                 }
+                rFuncaoAtivParList.clear();
+
+                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont( 0L, 0L, getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+                cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, 0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
+
+                if (recolhimento) {
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (recolhimento) {\n" +
+                            "                            pmmContext.getMotoMecFertCTR().insRecolh();", getLocalClassName());
+                    cmmContext.getMotoMecFertCTR().insRecolh(getLocalClassName());
+                }
+
+                LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                Intent it = new Intent(ListaVelocFertActivity.this, MenuPrincPMMActivity.class);
+                startActivity(it);
+                finish();
 
             }
 

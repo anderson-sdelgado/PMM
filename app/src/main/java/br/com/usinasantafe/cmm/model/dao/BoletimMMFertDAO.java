@@ -71,9 +71,17 @@ public class BoletimMMFertDAO {
         return boletimMMFertBean.get(pesqArrayList);
     }
 
+    public List<BoletimMMFertBean> bolMMFertSegList(Long idBolPrinc){
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqIdBolPrinc(idBolPrinc));
+        BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
+        return boletimMMFertBean.get(pesqArrayList);
+    }
+
     public List<BoletimMMFertBean> bolMMFertListEnviar(){
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqBolEnviar());
+        pesqArrayList.add(getPesqBolPrinc());
         BoletimMMFertBean boletimMMFertBean = new BoletimMMFertBean();
         return boletimMMFertBean.get(pesqArrayList);
     }
@@ -277,6 +285,14 @@ public class BoletimMMFertDAO {
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("statusEnviarMMFert");
         pesquisa.setValor(1L);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqBolPrinc(){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("idBolPrincMMFert");
+        pesquisa.setValor(0L);
         pesquisa.setTipo(1);
         return pesquisa;
     }

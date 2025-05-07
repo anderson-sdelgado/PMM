@@ -104,7 +104,7 @@ public class ListaAtividadeActivity extends ActivityGeneric {
             LogProcessoDAO.getInstance().insertLogProcesso("buttonRetAtividade.setOnClickListener(new View.OnClickListener() {\n" +
                     "            @Override\n" +
                     "            public void onClick(View v) {", getLocalClassName());
-            if(BuildConfig.FLAVOR.equals("ecm")){
+            if(BuildConfig.FLAVOR.equals("ecm")) {
                 LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2){", getLocalClassName());
                 if ((cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 1L)
                         || (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 18L)) {
@@ -121,6 +121,38 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                     startActivity(it);
                     finish();
                 }
+            } else if(BuildConfig.FLAVOR.equals("pmm")){
+
+                LogProcessoDAO.getInstance().insertLogProcesso("} else if(BuildConfig.FLAVOR.equals(\"pmm\")){", getLocalClassName());
+                if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L) {
+                    Intent it;
+                    if(cmmContext.getConfigCTR().verifEquipApont()){
+                        it = new Intent(ListaAtividadeActivity.this, OSActivity.class);
+                    } else {
+                        it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
+                    }
+                    startActivity(it);
+                    finish();
+                } else if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 3L) {
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 3L) {\n" +
+                            "                    Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                    Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
+                    startActivity(it);
+                    finish();
+                } else if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 32L) {
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 32L) {\n" +
+                            "                    Intent it = new Intent(ListaAtividadeActivity.this, CarretelActivity.class);", getLocalClassName());
+                    Intent it = new Intent(ListaAtividadeActivity.this, CarretelActivity.class);
+                    startActivity(it);
+                    finish();
+                } else {
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                            "                Intent it = new Intent(ListaAtividadeActivity.this, OSActivity.class);", getLocalClassName());
+                    Intent it = new Intent(ListaAtividadeActivity.this, OSActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+
             } else {
                 LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
                         "                Intent it = new Intent(ListaAtividadeActivity.this, OSActivity.class);", getLocalClassName());
@@ -128,7 +160,6 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 startActivity(it);
                 finish();
             }
-
 
         });
 
@@ -233,148 +264,106 @@ public class ListaAtividadeActivity extends ActivityGeneric {
                 } else if ((cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L)) {
 
                     LogProcessoDAO.getInstance().insertLogProcesso("} else if ((pmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L)) {", getLocalClassName());
-                    if (cmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
+
+                    if (cmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {
+
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {\n" +
                                 "AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);\n" +
-                                "                            alerta.setTitle(\"ATENÇÃO\");\n" +
-                                "                            alerta.setMessage(\"POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.\");\n" +
-                                "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {", getLocalClassName());
+                                "                                alerta.setTitle(\"ATENÇÃO\");\n" +
+                                "                                alerta.setMessage(\"OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!\");\n" +
+                                "                                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                "                                    @Override\n" +
+                                "                                    public void onClick(DialogInterface dialog, int which) {\n" +
+                                "                                    }\n" +
+                                "                                });\n" +
+                                "                                alerta.show();", getLocalClassName());
                         AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
                         alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.");
+                        alerta.setMessage("OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!");
                         alerta.setPositiveButton("OK", (dialog, which) -> {
-                            LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                                    "                                @Override\n" +
-                                    "                                public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
-                            if(BuildConfig.FLAVOR.equals("pmm")){
-                                LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
-                                        "                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                                Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
-                                startActivity(it);
-                                finish();
-                            }
-                            else if(BuildConfig.FLAVOR.equals("ecm")){
-                                LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 2){\n" +
-                                        "                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
-                                Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);
-                                startActivity(it);
-                                finish();
-                            }
-                            else if(BuildConfig.FLAVOR.equals("pcomp")){
-                                LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 3){\n" +
-                                        "                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
-                                Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);
-                                startActivity(it);
-                                finish();
-                            }
                         });
+
                         alerta.show();
 
                     } else {
 
                         LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
 
-                        if (cmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {
+                        if (cmmContext.getConfigCTR().getEquip().getTipoEquip() == 1) {
 
-                            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verifBackupApont(0L)) {\n" +
-                                    "AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);\n" +
-                                    "                                alerta.setTitle(\"ATENÇÃO\");\n" +
-                                    "                                alerta.setMessage(\"OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!\");\n" +
-                                    "                                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                                    "                                    @Override\n" +
-                                    "                                    public void onClick(DialogInterface dialog, int which) {\n" +
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1) {\n" +
+                                    "List<RFuncaoAtivParBean> rFuncaoAtivParList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList();", getLocalClassName());
+                            List<RFuncaoAtivParBean> rFuncaoAtivParList = cmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());
+
+                            boolean transbordo = false;
+                            boolean rendimento = false;
+
+                            LogProcessoDAO.getInstance().insertLogProcesso("for (int i = 0; i < rFuncaoAtivParList.size(); i++) {\n" +
+                                    "                                        RFuncaoAtivParBean rFuncaoAtivParBean = rFuncaoAtivParList.get(i);\n" +
+                                    "                                        if (rFuncaoAtivParBean.getCodFuncao() == 2) {\n" +
+                                    "                                            transbordo = true;\n" +
+                                    "                                        }\n" +
+                                    "                                        if (rFuncaoAtivParBean.getCodFuncao() == 1) {\n" +
+                                    "                                            rendimento = true;\n" +
+                                    "                                        }\n" +
                                     "                                    }\n" +
-                                    "                                });\n" +
-                                    "                                alerta.show();", getLocalClassName());
-                            AlertDialog.Builder alerta = new AlertDialog.Builder(ListaAtividadeActivity.this);
-                            alerta.setTitle("ATENÇÃO");
-                            alerta.setMessage("OPERAÇÃO JÁ APONTADA PARA O EQUIPAMENTO!");
-                            alerta.setPositiveButton("OK", (dialog, which) -> {
-                            });
-
-                            alerta.show();
-
-                        } else {
-
-                            LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
-
-                            if (cmmContext.getConfigCTR().getEquip().getTipoEquip() == 1) {
-
-                                LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getConfigCTR().getEquip().getTipoEquip() == 1) {\n" +
-                                        "List<RFuncaoAtivParBean> rFuncaoAtivParList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList();", getLocalClassName());
-                                List<RFuncaoAtivParBean> rFuncaoAtivParList = cmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());
-
-                                boolean transbordo = false;
-                                boolean rendimento = false;
-
-                                LogProcessoDAO.getInstance().insertLogProcesso("for (int i = 0; i < rFuncaoAtivParList.size(); i++) {\n" +
-                                        "                                        RFuncaoAtivParBean rFuncaoAtivParBean = rFuncaoAtivParList.get(i);\n" +
-                                        "                                        if (rFuncaoAtivParBean.getCodFuncao() == 2) {\n" +
-                                        "                                            transbordo = true;\n" +
-                                        "                                        }\n" +
-                                        "                                        if (rFuncaoAtivParBean.getCodFuncao() == 1) {\n" +
-                                        "                                            rendimento = true;\n" +
-                                        "                                        }\n" +
-                                        "                                    }\n" +
-                                        "                                    rFuncaoAtivParList.clear();", getLocalClassName());
-                                for (int i = 0; i < rFuncaoAtivParList.size(); i++) {
-                                    RFuncaoAtivParBean rFuncaoAtivParBean = rFuncaoAtivParList.get(i);
-                                    if (rFuncaoAtivParBean.getCodFuncao() == 2) {
-                                        transbordo = true;
-                                    }
-                                    if (rFuncaoAtivParBean.getCodFuncao() == 1) {
-                                        rendimento = true;
-                                    }
+                                    "                                    rFuncaoAtivParList.clear();", getLocalClassName());
+                            for (int i = 0; i < rFuncaoAtivParList.size(); i++) {
+                                RFuncaoAtivParBean rFuncaoAtivParBean = rFuncaoAtivParList.get(i);
+                                if (rFuncaoAtivParBean.getCodFuncao() == 2) {
+                                    transbordo = true;
                                 }
-                                rFuncaoAtivParList.clear();
-
-                                if (transbordo) {
-                                    LogProcessoDAO.getInstance().insertLogProcesso("if (transbordo) {\n" +
-                                            "Intent it = new Intent(ListaAtividadeActivity.this, TransbordoActivity.class);", getLocalClassName());
-                                    Intent it = new Intent(ListaAtividadeActivity.this, TransbordoActivity.class);
-                                    startActivity(it);
-                                    finish();
-                                } else {
-                                    LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                            "pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude());", getLocalClassName());
-                                    cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, 0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
-
-                                    if (rendimento) {
-                                        LogProcessoDAO.getInstance().insertLogProcesso("if (rendimento) {\n" +
-                                                "pmmContext.getMotoMecFertCTR().insRendBD(" + nroOS + ");", getLocalClassName());
-                                        cmmContext.getMotoMecFertCTR().insRendBD(nroOS, getLocalClassName());
-                                    }
-
-                                    if(BuildConfig.FLAVOR.equals("pmm")){
-                                        LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
-                                                "Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
-                                        startActivity(it);
-                                        finish();
-                                    }
-                                    else if(BuildConfig.FLAVOR.equals("ecm")){
-                                        LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
-                                                "Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
-                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);
-                                        startActivity(it);
-                                        finish();
-                                    }
-                                    else if(BuildConfig.FLAVOR.equals("pcomp")){
-                                        LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
-                                                "Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
-                                        Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);
-                                        startActivity(it);
-                                        finish();
-                                    }
+                                if (rFuncaoAtivParBean.getCodFuncao() == 1) {
+                                    rendimento = true;
                                 }
-                            } else {
-                                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                        "Intent it = new Intent(ListaAtividadeActivity.this, ListaBocalFertActivity.class);", getLocalClassName());
-                                Intent it = new Intent(ListaAtividadeActivity.this, ListaBocalFertActivity.class);
+                            }
+                            rFuncaoAtivParList.clear();
+
+                            if (transbordo) {
+                                LogProcessoDAO.getInstance().insertLogProcesso("if (transbordo) {\n" +
+                                        "Intent it = new Intent(ListaAtividadeActivity.this, TransbordoActivity.class);", getLocalClassName());
+                                Intent it = new Intent(ListaAtividadeActivity.this, TransbordoActivity.class);
                                 startActivity(it);
                                 finish();
-                            }
+                            } else {
+                                LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                        "pmmContext.getMotoMecFertCTR().salvarApont(0L, 0L, getLongitude(), getLatitude());", getLocalClassName());
+                                cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, 0L, 0L, getLongitude(), getLatitude(), getLocalClassName());
 
+                                if (rendimento) {
+                                    LogProcessoDAO.getInstance().insertLogProcesso("if (rendimento) {\n" +
+                                            "pmmContext.getMotoMecFertCTR().insRendBD(" + nroOS + ");", getLocalClassName());
+                                    cmmContext.getMotoMecFertCTR().insRendBD(nroOS, getLocalClassName());
+                                }
+
+                                if(BuildConfig.FLAVOR.equals("pmm")){
+                                    LogProcessoDAO.getInstance().insertLogProcesso("if(PMMContext.aplic == 1){\n" +
+                                            "Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                                    Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPMMActivity.class);
+                                    startActivity(it);
+                                    finish();
+                                }
+                                else if(BuildConfig.FLAVOR.equals("ecm")){
+                                    LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 2){\n" +
+                                            "Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);", getLocalClassName());
+                                    Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincECMActivity.class);
+                                    startActivity(it);
+                                    finish();
+                                }
+                                else if(BuildConfig.FLAVOR.equals("pcomp")){
+                                    LogProcessoDAO.getInstance().insertLogProcesso("else if(PMMContext.aplic == 3){\n" +
+                                            "Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);", getLocalClassName());
+                                    Intent it = new Intent(ListaAtividadeActivity.this, MenuPrincPCOMPActivity.class);
+                                    startActivity(it);
+                                    finish();
+                                }
+                            }
+                        } else {
+                            LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                                    "Intent it = new Intent(ListaAtividadeActivity.this, ListaBocalFertActivity.class);", getLocalClassName());
+                            Intent it = new Intent(ListaAtividadeActivity.this, ListaBocalFertActivity.class);
+                            startActivity(it);
+                            finish();
                         }
 
                     }

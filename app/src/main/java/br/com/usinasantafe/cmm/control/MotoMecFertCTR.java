@@ -219,12 +219,16 @@ public class MotoMecFertCTR {
 
         List<BoletimMMFertBean> boletimMMFertList = boletimMMFertDAO.bolMMFertListEnviar();
         for(int i = 0; i < boletimMMFertList.size(); i++){
+
             List<ApontMMFertBean> apontMMFertList = apontMMFertDAO.apontEnvioListRetrofit(boletimMMFertList.get(i).getIdBolMMFert());
             boletimMMFertList.get(i).setApontMMFertList(apontMMFertList);
+
             List<BoletimPneuBean> boletimPneuList = boletimPneuDAO.bolPneuEnvioListRetrofit(boletimMMFertList.get(i).getIdBolMMFert());
             boletimMMFertList.get(i).setBoletimPneuList(boletimPneuList);
+
             List<ApontMecanBean> apontMecanList = apontMecanDAO.apontMecanEnvioListRetrofit(boletimMMFertList.get(i).getIdBolMMFert());
             boletimMMFertList.get(i).setApontMecanList(apontMecanList);
+
             if(boletimMMFertList.get(i).getStatusBolMMFert() == 2L){
                 List<RendMMBean> rendList = rendimentoMMDAO.rendEnvioListRetrofit(boletimMMFertList.get(i).getIdBolMMFert());
                 boletimMMFertList.get(i).setRendMMList(rendList);
@@ -235,18 +239,35 @@ public class MotoMecFertCTR {
                 boletimMMFertList.get(i).setRecolhFertList(new ArrayList<>());
             }
 
-            for(int j = 0; j < apontMMFertList.size(); j++){
-                List<ApontImplMMBean> apontImplMMList = implementoMMDAO.apontImplEnvioListRetrofit(apontMMFertList.get(j).getIdApontMMFert());
-                apontMMFertList.get(j).setApontImplMMList(apontImplMMList);
-                List<CarregCompBean> carregCompList = carregCompDAO.carregCompostoDescarregInsumoRetrofit(apontMMFertList.get(j).getIdApontMMFert());
-                apontMMFertList.get(j).setCarregCompList(carregCompList);
+            List<BoletimMMFertBean> boletimFertList = boletimMMFertDAO.bolMMFertSegList(boletimMMFertList.get(i).getIdBolMMFert());
+            for(int j = 0; j < boletimFertList.size(); j++){
+                List<ApontMMFertBean> apontFertList = apontMMFertDAO.apontEnvioListRetrofit(boletimFertList.get(j).getIdBolMMFert());
+                boletimFertList.get(j).setApontMMFertList(apontFertList);
+
+                if(boletimFertList.get(j).getStatusBolMMFert() == 2L){
+                    List<RecolhFertBean> recolhList = recolhimentoFertDAO.recolhEnvioListRetrofit(boletimFertList.get(j).getIdBolMMFert());
+                    boletimFertList.get(j).setRecolhFertList(recolhList);
+                    boletimFertList.get(j).setRendMMList(new ArrayList<>());
+                } else {
+                    boletimFertList.get(j).setRendMMList(new ArrayList<>());
+                    boletimFertList.get(j).setRecolhFertList(new ArrayList<>());
+                }
             }
-            for(int l = 0; l < boletimPneuList.size(); l++){
-                List<ItemManutPneuBean> itemManutPneuList = itemManutPneuDAO.itemManutPneuIdBolList(boletimPneuList.get(l).getIdBolPneu());
-                boletimPneuList.get(l).setItemManutPneuBeanList(itemManutPneuList);
-                List<ItemCalibPneuBean> itemCalibPneuList = itemCalibPneuDAO.itemMedPneuIdBolList(boletimPneuList.get(l).getIdBolPneu());
-                boletimPneuList.get(l).setItemCalibPneuList(itemCalibPneuList);
+            boletimMMFertList.get(i).setBoletimFertList(boletimFertList);
+
+            for(int l = 0; l < apontMMFertList.size(); l++){
+                List<ApontImplMMBean> apontImplMMList = implementoMMDAO.apontImplEnvioListRetrofit(apontMMFertList.get(l).getIdApontMMFert());
+                apontMMFertList.get(l).setApontImplMMList(apontImplMMList);
+                List<CarregCompBean> carregCompList = carregCompDAO.carregCompostoDescarregInsumoRetrofit(apontMMFertList.get(l).getIdApontMMFert());
+                apontMMFertList.get(l).setCarregCompList(carregCompList);
             }
+            for(int m = 0; m < boletimPneuList.size(); m++){
+                List<ItemManutPneuBean> itemManutPneuList = itemManutPneuDAO.itemManutPneuIdBolList(boletimPneuList.get(m).getIdBolPneu());
+                boletimPneuList.get(m).setItemManutPneuBeanList(itemManutPneuList);
+                List<ItemCalibPneuBean> itemCalibPneuList = itemCalibPneuDAO.itemMedPneuIdBolList(boletimPneuList.get(m).getIdBolPneu());
+                boletimPneuList.get(m).setItemCalibPneuList(itemCalibPneuList);
+            }
+
         }
 
         return boletimMMFertList;
@@ -260,6 +281,21 @@ public class MotoMecFertCTR {
 
                 BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
                 boletimMMFertDAO.updateBolMMFertEnvio(boletimMMFertBean);
+
+                for(BoletimMMFertBean boletimSegFertBean: boletimMMFertBean.getBoletimFertList()){
+                    boletimMMFertDAO.updateBolMMFertEnvio(boletimSegFertBean);
+
+                    for(ApontMMFertBean apontMMFertBean: boletimSegFertBean.getApontMMFertList()){
+                        ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
+                        apontMMFertDAO.updateApont(apontMMFertBean.getIdApontMMFert());
+                    }
+
+                    for(RecolhFertBean recolhFertBean: boletimSegFertBean.getRecolhFertList()) {
+                        RecolhimentoFertDAO recolhimentoFertDAO = new RecolhimentoFertDAO();
+                        recolhimentoFertDAO.updateRecolh(recolhFertBean.getIdRecolhFert());
+                    }
+
+                }
 
                 for(ApontMMFertBean apontMMFertBean: boletimMMFertBean.getApontMMFertList()){
                     ApontMMFertDAO apontMMFertDAO = new ApontMMFertDAO();
@@ -1041,7 +1077,8 @@ public class MotoMecFertCTR {
         implementoMMDAO.salvarApontImpl(apontMMFertDAO.getApontDthr(dthr).getIdApontMMFert(), dthr, activity);
 
         BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
-        boletimMMFertDAO.updateBolMMFertEnviar(getBoletimMMFertAberto());
+        ConfigCTR configCTR = new ConfigCTR();
+        boletimMMFertDAO.updateBolMMFertEnviar(boletimMMFertDAO.getBolMMFertAberto(configCTR.getConfig().getIdEquipConfig()));
 
         StartProcessEnvio startProcessEnvio = new StartProcessEnvio();
         startProcessEnvio.startProcessEnvio(application);
@@ -1145,7 +1182,11 @@ public class MotoMecFertCTR {
         ApontMMFertDAO apontMMDAO = new ApontMMFertDAO();
         BoletimMMFertDAO boletimMMFertDAO = new BoletimMMFertDAO();
         ConfigCTR configCTR = new ConfigCTR();
-        return apontMMDAO.verDataHoraApont(boletimMMFertDAO.getBolMMFertAberto(configCTR.getConfig().getIdEquipApontConfig()).getIdBolMMFert());
+        return apontMMDAO.verDataHoraApont(
+                boletimMMFertDAO.getBolMMFertAberto(
+                        configCTR.getConfig().getIdEquipApontConfig()
+                ).getIdBolMMFert()
+        );
     }
 
     public boolean verDataHoraInsMovLeira(){

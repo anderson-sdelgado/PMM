@@ -57,6 +57,7 @@ public class BoletimMMFertBean extends Entidade {
     private List<ApontMecanBean> apontMecanList;
     private List<RendMMBean> rendMMList;
     private List<RecolhFertBean> recolhFertList;
+    private List<BoletimMMFertBean> boletimFertList;
 
     public BoletimMMFertBean() {
     }
@@ -253,5 +254,13 @@ public class BoletimMMFertBean extends Entidade {
 
     public void setIdBolPrincMMFert(Long idBolPrincMMFert) {
         this.idBolPrincMMFert = idBolPrincMMFert;
+    }
+
+    public List<BoletimMMFertBean> getBoletimFertList() {
+        return boletimFertList;
+    }
+
+    public void setBoletimFertList(List<BoletimMMFertBean> boletimFertList) {
+        this.boletimFertList = boletimFertList;
     }
 }

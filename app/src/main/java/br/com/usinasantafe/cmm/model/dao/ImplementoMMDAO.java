@@ -24,13 +24,6 @@ public class ImplementoMMDAO {
         implementoMMBean.deleteAll();
     }
 
-    public List<ApontImplMMBean> apontImplEnvioList(ArrayList<Long> idApontList){
-        ArrayList pesqArrayList = new ArrayList();
-        pesqArrayList.add(getPesqStatusEnvioApontImpl());
-        ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
-        return apontImplMMBean.inAndGetAndOrderBy("idApontMMFert", idApontList, pesqArrayList, "idApontImplMM", true);
-    }
-
     public List<ApontImplMMBean> apontImplEnvioListRetrofit(Long idApont){
         ArrayList pesqArrayList = new ArrayList();
         pesqArrayList.add(getPesqStatusEnvioApontImpl());
@@ -50,26 +43,38 @@ public class ImplementoMMDAO {
         return dadosArrayList;
     }
 
-    public void salvarApontImpl(Long idApont, String dthr, String activity){
+    private boolean checkAddCodImpl(Long idApont, Long codEquip, Long pos){
+        ArrayList pesqArrayList = new ArrayList();
+        pesqArrayList.add(getPesqIdApont(idApont));
+        pesqArrayList.add(getPesqCodEquip(codEquip));
+        pesqArrayList.add(getPesqPos(pos));
+        ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
+        List apontList = apontImplMMBean.get(pesqArrayList);
+        boolean ret = apontList.size() == 0;
+        apontList.clear();
+        return ret;
+    }
 
+    public void salvarApontImpl(Long idApont, String dthr, String activity){
         ImplementoMMBean implementoMMBean = new ImplementoMMBean();
         List<ImplementoMMBean> implementoList = implementoMMBean.all();
+        LogProcessoDAO.getInstance().insertLogProcesso("for (ImplementoMMBean implementoMMBeanBD : implementoList) {", activity);
         for (ImplementoMMBean implementoMMBeanBD : implementoList) {
-            LogProcessoDAO.getInstance().insertLogProcesso("ImplMMBean impleMMBean = new ImplMMBean();\n" +
-                    "        List<ImpleMMBean> implementoList = impleMMBean.all();\n" +
-                    "        for (ImpleMMBean impleMMBeanBD : implementoList) {\n" +
-                    "            ApontImpleMMBean apontImpleMMBean = new ApontImpleMMBean();\n" +
-                    "            apontImpleMMBean.setIdApontMMFert(" + idApont + ");\n" +
-                    "            apontImpleMMBean.setCodEquipImpleMM(" + implementoMMBeanBD.getCodEquipImplMM() + ");\n" +
-                    "            apontImpleMMBean.setPosImpleMM(" + implementoMMBeanBD.getPosImplMM() + ");\n" +
-                    "            apontImpleMMBean.setDthrImpleMM(" + dthr + ");", activity);
-            ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
-            apontImplMMBean.setIdApontMMFert(idApont);
-            apontImplMMBean.setCodEquipImplMM(implementoMMBeanBD.getCodEquipImplMM());
-            apontImplMMBean.setPosImplMM(implementoMMBeanBD.getPosImplMM());
-            apontImplMMBean.setDthrImplMM(dthr);
-            apontImplMMBean.setStatusImplMM(1L);
-            apontImplMMBean.insert();
+            LogProcessoDAO.getInstance().insertLogProcesso("if(checkAddCodImpl(idApont, implementoMMBeanBD.getCodEquipImplMM(), implementoMMBeanBD.getPosImplMM())){", activity);
+            if(checkAddCodImpl(idApont, implementoMMBeanBD.getCodEquipImplMM(), implementoMMBeanBD.getPosImplMM())){
+                LogProcessoDAO.getInstance().insertLogProcesso("ApontImpleMMBean apontImpleMMBean = new ApontImpleMMBean();\n" +
+                        "            apontImpleMMBean.setIdApontMMFert(" + idApont + ");\n" +
+                        "            apontImpleMMBean.setCodEquipImpleMM(" + implementoMMBeanBD.getCodEquipImplMM() + ");\n" +
+                        "            apontImpleMMBean.setPosImpleMM(" + implementoMMBeanBD.getPosImplMM() + ");\n" +
+                        "            apontImpleMMBean.setDthrImpleMM(" + dthr + ");", activity);
+                ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
+                apontImplMMBean.setIdApontMMFert(idApont);
+                apontImplMMBean.setCodEquipImplMM(implementoMMBeanBD.getCodEquipImplMM());
+                apontImplMMBean.setPosImplMM(implementoMMBeanBD.getPosImplMM());
+                apontImplMMBean.setDthrImplMM(dthr);
+                apontImplMMBean.setStatusImplMM(1L);
+                apontImplMMBean.insert();
+            }
         }
 
     }
@@ -77,58 +82,6 @@ public class ImplementoMMDAO {
     private String dadosApontImplMM(ApontImplMMBean apontImplMMBean){
         Gson gsonItemImp = new Gson();
         return gsonItemImp.toJsonTree(apontImplMMBean, apontImplMMBean.getClass()).toString();
-    }
-
-    public String dadosEnvioApontImplMM(List<ApontImplMMBean> apontImpleMMList){
-
-        JsonArray jsonArrayImplemento = new JsonArray();
-
-        for (ApontImplMMBean apontImplMMBean : apontImpleMMList) {
-            Gson gsonItemImp = new Gson();
-            jsonArrayImplemento.add(gsonItemImp.toJsonTree(apontImplMMBean, apontImplMMBean.getClass()));
-        }
-
-        apontImpleMMList.clear();
-
-        JsonObject jsonImplemento = new JsonObject();
-        jsonImplemento.add("implemento", jsonArrayImplemento);
-
-        return jsonImplemento.toString();
-
-    }
-
-    public ArrayList<Long> idApontImplArrayList(String objeto) throws Exception {
-
-        ArrayList<Long> idApontImplArrayList = new ArrayList<Long>();
-
-        JSONObject jObjApontImpl = new JSONObject(objeto);
-        JSONArray jsonArrayApontImpl = jObjApontImpl.getJSONArray("apontimpl");
-
-        for (int i = 0; i < jsonArrayApontImpl.length(); i++) {
-
-            JSONObject objApont = jsonArrayApontImpl.getJSONObject(i);
-            Gson gsonApont = new Gson();
-            ApontImplMMBean apontImplMMBean = gsonApont.fromJson(objApont.toString(), ApontImplMMBean.class);
-
-            idApontImplArrayList.add(apontImplMMBean.getIdApontMMFert());
-
-        }
-
-        return idApontImplArrayList;
-
-    }
-
-    public void updateApontImpl(ArrayList<Long> idApontImplMMArrayList){
-
-        List<ApontImplMMBean> apontImplList = apontImplMMList(idApontImplMMArrayList);
-
-        for (ApontImplMMBean apontImplMMBeanBD : apontImplList) {
-            apontImplMMBeanBD.setStatusImplMM(2L);
-            apontImplMMBeanBD.update();
-        }
-
-        idApontImplMMArrayList.clear();
-
     }
 
     public void updateApontImpl(Long idApont){
@@ -155,11 +108,6 @@ public class ImplementoMMDAO {
 
     }
 
-    public List<ApontImplMMBean> apontImplMMList(ArrayList<Long> idApontImplMMArrayList){
-        ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
-        return apontImplMMBean.in("idApontImplMM", idApontImplMMArrayList);
-    }
-
     public List<ApontImplMMBean> apontImplMMList(Long idApontImplMM){
         ApontImplMMBean apontImplMMBean = new ApontImplMMBean();
         return apontImplMMBean.get("idApontImplMM", idApontImplMM);
@@ -178,6 +126,22 @@ public class ImplementoMMDAO {
         EspecificaPesquisa pesquisa = new EspecificaPesquisa();
         pesquisa.setCampo("idApontMMFert");
         pesquisa.setValor(idApont);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqCodEquip(Long codEquip){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("codEquipImplMM");
+        pesquisa.setValor(codEquip);
+        pesquisa.setTipo(1);
+        return pesquisa;
+    }
+
+    private EspecificaPesquisa getPesqPos(Long pos){
+        EspecificaPesquisa pesquisa = new EspecificaPesquisa();
+        pesquisa.setCampo("posImplMM");
+        pesquisa.setValor(pos);
         pesquisa.setTipo(1);
         return pesquisa;
     }

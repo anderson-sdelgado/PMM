@@ -164,51 +164,29 @@ public class ListaParadaPMMActivity extends ActivityGeneric {
                 LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"SIM\", new DialogInterface.OnClickListener() {\n" +
                         "                    @Override\n" +
                         "                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName());
-                if (cmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
-                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {\n" +
-                            "                            AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);\n" +
-                            "                            alerta.setTitle(\"ATENÇÃO\");\n" +
-                            "                            alerta.setMessage(\"POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.\");", getLocalClassName());
+
+                if (cmmContext.getMotoMecFertCTR().verifBackupApont(cmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada())) {
+                    LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verifBackupApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada())) {\n" +
+                            "                                AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);\n" +
+                            "                                alerta.setTitle(\"ATENÇÃO\");\n" +
+                            "                                alerta.setMessage(\"PARADA JÁ APONTADA PARA O EQUIPAMENTO!\");", getLocalClassName());
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListaParadaPMMActivity.this);
                     alertDialog.setTitle("ATENÇÃO");
-                    alertDialog.setMessage("POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.");
-                    alertDialog.setPositiveButton("OK", (dialog1, which1) -> {
-                        LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                                "                                @Override\n" +
-                                "                                public void onClick(DialogInterface dialog, int which) {\n" +
-                                "                                    Intent it = new Intent(ListaParadaActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                        Intent it = new Intent(ListaParadaPMMActivity.this, MenuPrincPMMActivity.class);
-                        startActivity(it);
-                        finish();
-                    });
+                    alertDialog.setMessage("PARADA JÁ APONTADA PARA O EQUIPAMENTO!");
+                    alertDialog.setPositiveButton("OK", (dialog12, which12) -> LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                            "                                    @Override\n" +
+                            "                                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName()));
                     alertDialog.show();
-
                 } else {
-                    LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
-                    if (cmmContext.getMotoMecFertCTR().verifBackupApont(cmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada())) {
-                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verifBackupApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada())) {\n" +
-                                "                                AlertDialog.Builder alerta = new AlertDialog.Builder(ListaParadaActivity.this);\n" +
-                                "                                alerta.setTitle(\"ATENÇÃO\");\n" +
-                                "                                alerta.setMessage(\"PARADA JÁ APONTADA PARA O EQUIPAMENTO!\");", getLocalClassName());
-                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListaParadaPMMActivity.this);
-                        alertDialog.setTitle("ATENÇÃO");
-                        alertDialog.setMessage("PARADA JÁ APONTADA PARA O EQUIPAMENTO!");
-                        alertDialog.setPositiveButton("OK", (dialog12, which12) -> LogProcessoDAO.getInstance().insertLogProcesso("alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                                "                                    @Override\n" +
-                                "                                    public void onClick(DialogInterface dialog, int which) {", getLocalClassName()));
-                        alertDialog.show();
-                    } else {
-                        LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
-                                "                        pmmContext.getConfigCTR().clearDadosFert();\n" +
-                                "                        pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());\n" +
-                                "                        Intent it = new Intent(ListaParadaPMMActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                        cmmContext.getConfigCTR().clearDadosFert();
-                        cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, cmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
-                        Intent it = new Intent(ListaParadaPMMActivity.this, MenuPrincPMMActivity.class);
-                        startActivity(it);
-                        finish();
-                    }
-
+                    LogProcessoDAO.getInstance().insertLogProcesso("} else {\n" +
+                            "                        pmmContext.getConfigCTR().clearDadosFert();\n" +
+                            "                        pmmContext.getMotoMecFertCTR().salvarApont(pmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());\n" +
+                            "                        Intent it = new Intent(ListaParadaPMMActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                    cmmContext.getConfigCTR().clearDadosFert();
+                    cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, cmmContext.getMotoMecFertCTR().getParadaBean(paradaString).getIdParada(), 0L, getLongitude(), getLatitude(), getLocalClassName());
+                    Intent it = new Intent(ListaParadaPMMActivity.this, MenuPrincPMMActivity.class);
+                    startActivity(it);
+                    finish();
                 }
 
                 paradaList.clear();

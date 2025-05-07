@@ -91,6 +91,9 @@ public class RFuncaoAtivParDAO {
         pesqList.add(pesq2);
 
         List<RFuncaoAtivParBean> rFuncaoAtivParList = rFuncaoAtivParBean.get(pesqList);
+
+        if(rFuncaoAtivParList.isEmpty()) return 0L;
+
         rFuncaoAtivParBean = rFuncaoAtivParList.get(0);
         rFuncaoAtivParList.clear();
 
@@ -116,6 +119,9 @@ public class RFuncaoAtivParDAO {
         pesqList.add(pesq2);
 
         List<RFuncaoAtivParBean> rFuncaoAtivParList = rFuncaoAtivParBean.get(pesqList);
+
+        if(rFuncaoAtivParList.isEmpty()) return 0L;
+
         rFuncaoAtivParBean = rFuncaoAtivParList.get(0);
         rFuncaoAtivParList.clear();
 
@@ -141,6 +147,9 @@ public class RFuncaoAtivParDAO {
         pesqList.add(pesq2);
 
         List rFuncaoAtivParList =   rFuncaoAtivParBean.get(pesqList);
+
+        if(rFuncaoAtivParList.isEmpty()) return 0L;
+
         rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtivParList.get(0);
         rFuncaoAtivParList.clear();
 
@@ -166,6 +175,9 @@ public class RFuncaoAtivParDAO {
         pesqList.add(pesq2);
 
         List rFuncaoAtivParList =   rFuncaoAtivParBean.get(pesqList);
+
+        if(rFuncaoAtivParList.isEmpty()) return 0L;
+
         rFuncaoAtivParBean = (RFuncaoAtivParBean) rFuncaoAtivParList.get(0);
         rFuncaoAtivParList.clear();
 

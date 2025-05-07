@@ -11,8 +11,8 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 23,
-      "versionName": "5.28",
+      "versionCode": 30,
+      "versionName": "5.35",
       "outputFile": "app-pmm-debug.apk"
     }
   ],

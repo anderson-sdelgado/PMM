@@ -113,95 +113,64 @@ public class TransbordoActivity extends ActivityGeneric {
                 if(cmmContext.getMotoMecFertCTR().verTransb(idTransb)) {
 
                     LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verTransb(idTransb)) {", getLocalClassName());
-                    if (cmmContext.getMotoMecFertCTR().verDataHoraInsApontMMFert()) {
+                    if (cmmContext.getMotoMecFertCTR().verifBackupApontTransb(0L, idTransb)) {
 
-                        LogProcessoDAO.getInstance().insertLogProcesso("if(pmmContext.getMotoMecFertCTR().verTransb(idTransb)) {\n" +
-                                "                            AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);\n" +
-                                "                            alerta.setTitle(\"ATENÇÃO\");\n" +
-                                "                            alerta.setMessage(\"POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.\");\n" +
-                                "                            alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                                "                                @Override\n" +
-                                "                                public void onClick(DialogInterface dialog, int which) {\n" +
-                                "                                    Intent it = new Intent(TransbordoActivity.this, MenuPrincPMMActivity.class);\n" +
-                                "                                    startActivity(it);\n" +
-                                "                                    finish();\n" +
-                                "                                }\n" +
-                                "                            });\n" +
-                                "                            alerta.show();", getLocalClassName());
+                        LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verifBackupApontTransb(0L, idTransb)) {\n" +
+                                "AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);\n" +
+                                "                                alerta.setTitle(\"ATENÇÃO\");\n" +
+                                "                                alerta.setMessage(\"NUMERAÇÃO DE TRANSBORDO COM MESMO VALOR DO APONTAMENTO ANTERIOR. FAVOR, VERIFICAR A NUMERAÇÃO DIGITADA!\");\n" +
+                                "                                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
+                                "                                    @Override\n" +
+                                "                                    public void onClick(DialogInterface dialog, int which) {\n" +
+                                "                                    }\n" +
+                                "                                });\n" +
+                                "                                alerta.show();", getLocalClassName());
 
                         AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);
                         alerta.setTitle("ATENÇÃO");
-                        alerta.setMessage("POR FAVOR, AGUARDE UM MINUTO ANTES DE REALIZAR UM NOVO APONTAMENTO.");
+                        alerta.setMessage("NUMERAÇÃO DE TRANSBORDO COM MESMO VALOR DO APONTAMENTO ANTERIOR. FAVOR, VERIFICAR A NUMERAÇÃO DIGITADA!");
                         alerta.setPositiveButton("OK", (dialog, which) -> {
-                            Intent it = new Intent(TransbordoActivity.this, MenuPrincPMMActivity.class);
-                            startActivity(it);
-                            finish();
                         });
                         alerta.show();
 
                     } else {
 
                         LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
-                        if (cmmContext.getMotoMecFertCTR().verifBackupApontTransb(0L, idTransb)) {
-
-                            LogProcessoDAO.getInstance().insertLogProcesso("if (pmmContext.getMotoMecFertCTR().verifBackupApontTransb(0L, idTransb)) {\n" +
-                                    "AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);\n" +
-                                    "                                alerta.setTitle(\"ATENÇÃO\");\n" +
-                                    "                                alerta.setMessage(\"NUMERAÇÃO DE TRANSBORDO COM MESMO VALOR DO APONTAMENTO ANTERIOR. FAVOR, VERIFICAR A NUMERAÇÃO DIGITADA!\");\n" +
-                                    "                                alerta.setPositiveButton(\"OK\", new DialogInterface.OnClickListener() {\n" +
-                                    "                                    @Override\n" +
-                                    "                                    public void onClick(DialogInterface dialog, int which) {\n" +
-                                    "                                    }\n" +
-                                    "                                });\n" +
-                                    "                                alerta.show();", getLocalClassName());
-
-                            AlertDialog.Builder alerta = new AlertDialog.Builder(TransbordoActivity.this);
-                            alerta.setTitle("ATENÇÃO");
-                            alerta.setMessage("NUMERAÇÃO DE TRANSBORDO COM MESMO VALOR DO APONTAMENTO ANTERIOR. FAVOR, VERIFICAR A NUMERAÇÃO DIGITADA!");
-                            alerta.setPositiveButton("OK", (dialog, which) -> {
-                            });
-                            alerta.show();
-
+                        if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L) {
+                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(0L, " + idTransb + ", getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
+                            cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, 0L, idTransb, getLongitude(), getLatitude(), getLocalClassName());
                         } else {
-
-                            LogProcessoDAO.getInstance().insertLogProcesso("} else {", getLocalClassName());
-                            if (cmmContext.getConfigCTR().getConfig().getPosicaoTela() == 2L) {
-                                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().salvarApont(0L, " + idTransb + ", getLongitude(), getLatitude(), getLocalClassName());", getLocalClassName());
-                                cmmContext.getMotoMecFertCTR().salvarApont(cmmContext, 0L, idTransb, getLongitude(), getLatitude(), getLocalClassName());
-                            } else {
-                                LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().inserirApontTransb(" + idTransb + ", getLocalClassName());", getLocalClassName());
-                                cmmContext.getMotoMecFertCTR().inserirApontTransb(cmmContext, idTransb, getLocalClassName());
-                            }
-
-                            LogProcessoDAO.getInstance().insertLogProcesso("List<RFuncaoAtivParBean> rFuncaoAtividadeList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());", getLocalClassName());
-                            List<RFuncaoAtivParBean> rFuncaoAtividadeList = cmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());
-
-                            boolean rendimento = false;
-
-                            for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtividadeList) {
-                                LogProcessoDAO.getInstance().insertLogProcesso("for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtividadeList) {", getLocalClassName());
-                                if (rFuncaoAtivParBean.getCodFuncao() == 1) {
-                                    LogProcessoDAO.getInstance().insertLogProcesso("if (rFuncaoAtivParBean.getCodFuncao() == 1) {\n" +
-                                            "                                        rendimento = true;", getLocalClassName());
-                                    rendimento = true;
-                                }
-                            }
-                            rFuncaoAtividadeList.clear();
-
-                            if (rendimento) {
-                                LogProcessoDAO.getInstance().insertLogProcesso("if (rendimento) {\n" +
-                                        "                                    ConfigCTR configCTR = new ConfigCTR();\n" +
-                                        "                                    pmmContext.getMotoMecFertCTR().insRendBD(configCTR.getConfig().getNroOSConfig(), getLocalClassName());", getLocalClassName());
-                                ConfigCTR configCTR = new ConfigCTR();
-                                cmmContext.getMotoMecFertCTR().insRendBD(configCTR.getConfig().getNroOSConfig(), getLocalClassName());
-                            }
-
-                            LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(TransbordoActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
-                            Intent it = new Intent(TransbordoActivity.this, MenuPrincPMMActivity.class);
-                            startActivity(it);
-                            finish();
-
+                            LogProcessoDAO.getInstance().insertLogProcesso("pmmContext.getMotoMecFertCTR().inserirApontTransb(" + idTransb + ", getLocalClassName());", getLocalClassName());
+                            cmmContext.getMotoMecFertCTR().inserirApontTransb(cmmContext, idTransb, getLocalClassName());
                         }
+
+                        LogProcessoDAO.getInstance().insertLogProcesso("List<RFuncaoAtivParBean> rFuncaoAtividadeList = pmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());", getLocalClassName());
+                        List<RFuncaoAtivParBean> rFuncaoAtividadeList = cmmContext.getMotoMecFertCTR().getFuncaoAtividadeList(getLocalClassName());
+
+                        boolean rendimento = false;
+
+                        for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtividadeList) {
+                            LogProcessoDAO.getInstance().insertLogProcesso("for (RFuncaoAtivParBean rFuncaoAtivParBean : rFuncaoAtividadeList) {", getLocalClassName());
+                            if (rFuncaoAtivParBean.getCodFuncao() == 1) {
+                                LogProcessoDAO.getInstance().insertLogProcesso("if (rFuncaoAtivParBean.getCodFuncao() == 1) {\n" +
+                                        "                                        rendimento = true;", getLocalClassName());
+                                rendimento = true;
+                            }
+                        }
+                        rFuncaoAtividadeList.clear();
+
+                        if (rendimento) {
+                            LogProcessoDAO.getInstance().insertLogProcesso("if (rendimento) {\n" +
+                                    "                                    ConfigCTR configCTR = new ConfigCTR();\n" +
+                                    "                                    pmmContext.getMotoMecFertCTR().insRendBD(configCTR.getConfig().getNroOSConfig(), getLocalClassName());", getLocalClassName());
+                            ConfigCTR configCTR = new ConfigCTR();
+                            cmmContext.getMotoMecFertCTR().insRendBD(configCTR.getConfig().getNroOSConfig(), getLocalClassName());
+                        }
+
+                        LogProcessoDAO.getInstance().insertLogProcesso("Intent it = new Intent(TransbordoActivity.this, MenuPrincPMMActivity.class);", getLocalClassName());
+                        Intent it = new Intent(TransbordoActivity.this, MenuPrincPMMActivity.class);
+                        startActivity(it);
+                        finish();
 
                     }
 

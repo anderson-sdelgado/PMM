@@ -11,8 +11,8 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 22,
-      "versionName": "5.27",
+      "versionCode": 30,
+      "versionName": "5.35",
       "outputFile": "app-pcomp-debug.apk"
     }
   ],
